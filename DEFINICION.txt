@@ -59,7 +59,7 @@ A continuacion se listan los operadores:
 Categoría				Operadores
 ------------------------------------------------------------
 Aritmético			|	+ - * / % (Modulo)
-Lógico				  	| 	y o no
+Lógico			  	| 	y o no
 Concatenación	    		|	+
 Incremento, decremento		|	++ --
 Relacional			|	== != < > <= >=
