@@ -228,3 +228,5 @@ clase Bochito: Auto
           esta.NoPuertas = 2
       fin
 fin
+
+
