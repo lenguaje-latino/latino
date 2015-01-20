@@ -1,10 +1,9 @@
-# latino
-===
+﻿# latino
 
 Nuevo lenguaje de programación para latinos y de habla hispana.
 ---
 
-Este proyecto nace debido a la necesidad de incrementar la educación de nivel basico (primaria y secundaria)
+Este proyecto nace debido a la necesidad de incrementar la educación de nivel básico (primaria y secundaria)
 esto debido a que los niños a muy temprana edad tiene la capacidad de entender la lógica y es en esta edad cuando más aprenden.
 también personas aficionadas que les llame la atención la tecnología y la programación,
 que no hablan el ingles o que se les dificulta, pero sobre todo no necesitan esperar hasta el nivel medio superior
@@ -17,4 +16,3 @@ http://opensource.org/licenses/MIT
 Leer LICENSE.txt
 
 Cualquier aportación o sugerencia es bienvenida.
----

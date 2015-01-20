@@ -1,0 +1,90 @@
+#CODING STYLE
+switch
+===
+switch (suffix) {
+case 'G':
+case 'g':
+    mem <<= 30;
+    break;
+case 'M':
+case 'm':
+    mem <<= 20;
+    break;
+case 'K':
+case 'k':
+    mem <<= 10;
+    /* fall through */
+default:
+    break;
+}
+
+function
+===
+int function(int x)
+{
+    body of function
+}
+
+do
+===
+do {
+    body of do-loop
+} while (condition);
+
+ifelse
+===
+if (x == y) {
+    ..
+} else if (x > y) {
+    ...
+} else {
+    ....
+}
+Do not unnecessarily use braces where a single statement will do.
+if (condition)
+    action();
+and
+
+if (condition)
+    do_this();
+else
+    do_that();
+This does not apply if only one branch of a conditional statement is a single
+statement; in the latter case use braces in both branches:
+if (condition) {
+    do_this();
+    do_that();
+} else {
+    otherwise();
+}
+
+Spaces
+===
+So use a space after these keywords:
+if, switch, case, for, do, while
+but not with sizeof, typeof, alignof, or __attribute__.  E.g.,
+s = sizeof(struct file);
+Do not add spaces around (inside) parenthesized expressions
+
+When declaring pointer data or a function that returns a pointer type, the
+preferred use of '*' is adjacent to the data name or function name and not
+adjacent to the type name.  Examples:
+	char *linux_banner;
+	unsigned long long memparse(char *ptr, char **retptr);
+	char *match_strdup(substring_t *s);
+Use one space around (on each side of) most binary and ternary operators,
+such as any of these:
+	=  +  -  <  >  *  /  %  |  &  ^  <=  >=  ==  !=  ?  :
+but no space after unary operators:
+	&  *  +  -  ~  !  sizeof  typeof  alignof  __attribute__  defined
+no space before the postfix increment & decrement unary operators:
+	++  --
+no space after the prefix increment & decrement unary operators:
+	++  --
+and no space around the '.' and "->" structure member operators.
+Do not leave trailing whitespace at the ends of lines.
+
+Comments
+===
+Linux style for comments is the C89 "/* ... */" style.
+Don't use C99-style "// ..." comments.
