@@ -1,12 +1,12 @@
-DEFINICIÓN
-===
+#DEFINICIÓN
+
 Este documento pretende explicar de manera general la definición del nuevo 
 lenguaje de programación para latinos.
 
 Comentarios:
 ---
-Los comentarios estaran delimitados por comillas dobles ("), solo sera considerado
-como comentario si la linea empieza con dicho caracter,o es precedido con espacios o tabuladores.
+Los comentarios estaran delimitados por comillas dobles ("), sólo será considerado
+como comentario si la línea empieza con dicho cáracter,o es precedido con espacios o tabuladores.
 
 "Este es un comentario de una linea"
 "Este es 
@@ -19,14 +19,14 @@ Variables:
 ---
 Las variables son identificadores asociados a valores. Se declaran indicando el 
 tipo de dato que almacenará y su identificador.
-El tipo de dato es opcional cuando se inicializa con un valor la variable
+El tipo de dato es opcional cuando se inicializa con un valor la variable.
 
 identificador = valor
 [tipo_dato] identificador
 entero numero = 1
 
 Un identificador puede:
-* empezar por guion bajo (_)
+* empezar por guión bajo (_)
 * contener caracteres en mayúsculas y minúsculas (sensible a mayúsculas y minúsculas)
 Un identificador NO puede:
 * empezar por un número.
@@ -58,18 +58,18 @@ A continuacion se listan los operadores:
 ------------------------------------------------------------
 Categoría				Operadores
 ------------------------------------------------------------
-Aritmético			|	+ - * / % (Modulo)
-Lógico			  	| 	y o no
-Concatenación	    		|	+
+Aritmético			          |	+ - * / % (Modulo)
+Lógico			  	          | 	y o no
+Concatenación	            |	+
 Incremento, decremento		|	++ --
-Relacional			|	== != < > <= >=
-Asignación			|	= 
-Acceso a miembro		|	.
+Relacional			          |	== != < > <= >=
+Asignación			          |	= 
+Acceso a miembro		      |	.
 ------------------------------------------------------------
 
 Estructuras de control:
 ---
-si (if): Evalua una condicion y si el resultado es [cierto] ejecuta 
+si (if): Evalua una condicion y si el resultado es [verdadero] ejecuta 
 las instrucciones a continuacion.
 
 si (condicion)
@@ -128,18 +128,18 @@ fin
 salida: 10 20 30 40 50
 
 mientras (while): Hace que una instrucción o bloque de instrucciones se repitan
-mientras la condicion sea [cierto]
+mientras la condicion sea [verdadero]
 
 mientras (condicion)
       "codigo"
 fin
 
-mientras (cierto)
+mientras (verdadero)
       "codigo"
 fin
 
 hacer-mientras (do-while): Hace que una instrucción o bloque de instrucciones 
-se repitan mientra la condicion sea [cierto],
+se repitan mientra la condicion sea [verdadero],
 las intrucciones de codigo se ejecutan al menos una vez.
 
 hacer
@@ -167,7 +167,6 @@ desde i hasta 10
 fin
 salida: 0 1 2 3 4 6 7 8 9 10
 
-
 Metodos
 ---
 un método consiste generalmente de una serie de sentencias para llevar a cabo una acción,
@@ -187,7 +186,19 @@ NombreMetodo (tipo_dato variable, tipo_dato variable2) tipo_dato_retorno
     retorno i
 fin
 
-Se puede sobrecargar un metodo siempre y cuando los parametros varien.
+Se puede sobrecargar un método siempre y cuando los parámetros varien en numero.
+NombreMetodo (tipo_dato variable, tipo_dato variable2, tipo_dato variable3) tipo_dato_retorno
+    entero i;
+    "codigo"
+    retorno i
+fin
+
+También se le pueden pasar valores por defecto a los parametros especificandoles un valor.
+NombreMetodo (tipo_dato variable, tipo_dato variable2="defecto") tipo_dato_retorno
+    entero i;
+    "codigo"
+    retorno i
+fin
 
 
 Clases
@@ -211,22 +222,47 @@ clase Auto
     constructor ()
     fin
 
-    constructor (entero marca, noPuertas)
+    constructor (cadena marca, entero noPuertas)
         "se define el valor de la propiedad con la palabra clave [esta]"
         esta.Marca = marca
-	esta.NoPuertas
+	      esta.NoPuertas
     fin
 
     "método ejemplo"
-    Encender ()
+    privado Encender ()
     fin
 fin
 
+Ámbito: Se puede definir el ámbito a una clase, sus propiedades y funciones con las palabras
+reservadas:
+
+publico: 
+Una variable/función pública puede ser accedida desde fuera de la clase. Es decir, 
+puedo acceder desde la instancia de la clase y no sólo desde el código interno de la clase.
+
+privado:
+Al contrario que las públicas, las variables/funciones privadas sólo pueden ser accedidas 
+desde dentro de la misma clase.
+
+protegido:
+Existe un tipo intermedio de ámbito, entre público y privado llamado "protegido".
+Básicamente significa que, si una clase hereda de otra, tendrá acceso a las variables/funciones 
+protegidas de la super-clase, de lo contrario, no podrá acceder a ellas.
+
+Por default se definen publicas las variables/funciones.
+
 Herencia: Se puede heredar de una clase con dos puntos (:) ClaseHijo : ClasePadre
+---
+
 clase Bochito: Auto
       constructor ()
           esta.NoPuertas = 2
       fin
 fin
 
-
+Palabras reservadas hasta el momento:
+---
+constante    logico    entero    decimal    caracter    cadena    constante    
+si    verdadero    falso    fin    otro    elegir    caso    desde    hasta
+incremento    mientras    hacer    romper    continuar    clase    propiedad
+constructor    esta    publico    privado    protegido    lista diccionario
