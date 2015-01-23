@@ -1,38 +1,45 @@
 #Listas
 
-Una lista es un tipo de colección. Sería equivalente a lo que en otros lenguajes se conoce por arreglos o vectores.
+Una lista es un tipo de colección. Sería equivalente a lo que en otros lenguajes 
+se conoce por arreglos o vectores. 
 Las listas pueden contener cualquier tipo de dato: logico, entero, decimal, caracter, cadena, 
 tipos definidos por el usuario (clases) y también listas.
-Crear una lista es tan sencillo como indicar entre corchetes y separados por comas los valores que queremos incluir en la lista.
+Crear una lista es tan sencillo como indicar entre corchetes y separados por comas
+los valores que queremos incluir en la lista.
 Se usa la palabra reservada [lista]
 
 lista lst = [1, 2, 3, 4, 5]
 lista vacia = []
 
-Podemos acceder a cada uno de los elementos de la lista escribiendo el nombre de la lista e indicando el índice
-del elemento entre corchetes. Ten en cuenta sin embargo que el índice del primer elemento de la lista es 0:
+Podemos acceder a cada uno de los elementos de la lista escribiendo el nombre de
+la lista e indicando el índice del elemento entre corchetes. 
+Ten en cuenta sin embargo que el índice del primer elemento de la lista es 0:
 
 imprimir(lst[1])
 salida: 2
 
-También podemos utilizar este operador para modificar un elemento de la lista si lo colocamos en la parte izquierda de una asignación:
+También podemos utilizar este operador para modificar un elemento de la lista si lo
+colocamos en la parte izquierda de una asignación:
 
 lst[0] = 99
 imprimir(lst)
 salida: [99, 2, 3, 4, 5]
 
-Podemos utilizar también números negativos. Si se utiliza un número negativo como índice, esto se traduce 
-en que el índice empieza a contar desde el final, hacia la izquierda; es decir, con [-1] accederíamos al último 
+Podemos utilizar también números negativos. Si se utiliza un número negativo 
+como índice, esto se traduce en que el índice empieza a contar desde el final, 
+hacia la izquierda; es decir, con [-1] accederíamos al último 
 elemento de la lista, con [-2] al penúltimo, con [-3], al antepenúltimo, y así sucesivamente.
 
 imprimir(lst[-1])
 salida: 5
 
-Se puede también hacer un particionado, y que consiste en ampliar este mecanismo para permitir seleccionar porciones de la lista. 
-Si en lugar de un número escribimos dos números inicio y fin separados por dos puntos (inicio:fin) se interpretará que queremos 
-una lista que vaya desde la posición inicio a la posición fin, sin incluir este último. 
-Si escribimos tres números (inicio:fin:salto) en lugar de dos, el tercero se utiliza para determinar cada 
-cuantas posiciones añadir un elemento a la lista.
+Se puede también hacer un particionado, y que consiste en ampliar este mecanismo 
+para permitir seleccionar porciones de la lista. 
+Si en lugar de un número escribimos dos números inicio y fin separados por 
+dos puntos (inicio:fin) se interpretará que queremos una lista que vaya desde la posición
+ inicio a la posición fin, sin incluir este último. 
+Si escribimos tres números (inicio:fin:salto) en lugar de dos, el tercero se utiliza para 
+determinar cada cuantas posiciones añadir un elemento a la lista.
 
 imprimir(lst[0:2])
 salida: [99, 2]
@@ -40,10 +47,12 @@ salida: [99, 2]
 imprimir(lst[0:4:2]
 salida: [99, 3, 5]
 
-Los números negativos también se pueden utilizar, con el mismo comportamiento que se comentó anteriormente.
+Los números negativos también se pueden utilizar, con el mismo comportamiento que 
+se comentó anteriormente.
 
-Hay que mencionar así mismo que no es necesario indicar el principio y el final del particionamiento, sino que, 
-si estos se omiten, se usarán por defecto las posiciones de inicio y final de la lista respectivamente:
+Hay que mencionar así mismo que no es necesario indicar el principio y el final 
+del particionamiento, sino que, si estos se omiten, se usarán por defecto las posiciones
+de inicio y final de la lista respectivamente:
 
 imprimir(lst[1:])
 salida: [2, 3, 4, 5]
@@ -63,8 +72,8 @@ lst[0:2] = [0, 1]
 imprimir(lst)
 salida: [0, 1, 3, 4, 5]
 
-pudiendo incluso modificar el tamaño de la lista si la lista de la parte derecha de la asignación tiene un 
-tamaño menor o mayor que el de la selección de la parte izquierda de la asignación:
+pudiendo incluso modificar el tamaño de la lista si la lista de la parte derecha de la asignación 
+tiene un tamaño menor o mayor que el de la selección de la parte izquierda de la asignación:
 
 lst[0:2] = [verdadero]
 salida: [verdadero, 3, 4, 5]

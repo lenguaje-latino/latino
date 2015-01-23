@@ -1,7 +1,7 @@
 #Diccionarios
 
-Los diccionarios, también llamados matrices asociativas, deben su nombre a que son colecciones que relacionan una clave y un valor, entre llaves
-y separado el valor de la clave con dos puntos.
+Los diccionarios, también llamados matrices asociativas, deben su nombre a que son colecciones que
+relacionan una clave y un valor, entre llaves y separado el valor de la clave con dos puntos.
 
 Por ejemplo, veamos un diccionario de películas y directores:
 
@@ -9,9 +9,16 @@ diccionario d = { "Love Actually ": "Richard Curtis",
      "Kill Bill": "Tarantino",
      "Amélie": "Jean-Pierre Jeunet" }
 
-El primer valor se trata de la clave y el segundo del valor asociado a la clave. Como clave podemos utilizar cualquier valor inmutable: podríamos usar números, cadenas, booleanos; pero no listas o diccionarios, dado que son mutables. Esto es así porque los diccionarios se implementan como tablas hash, y a la hora de introducir un nuevo par clave-valor en el diccionario se calcula el hash de la clave para después poder encontrar la entrada correspondiente rápidamente. Si se modificara el objeto clave después de haber sido introducido en el diccionario, evidentemente, su hash también cambiaría y no podría ser encontrado.
+El primer valor se trata de la clave y el segundo del valor asociado a la clave. 
+Como clave podemos utilizar cualquier valor inmutable: podríamos usar números, cadenas, booleanos; 
+pero no listas o diccionarios, dado que son mutables. Esto es así porque los diccionarios se implementan 
+como tablas hash, y a la hora de introducir un nuevo par clave-valor en el diccionario se calcula 
+el hash de la clave para después poder encontrar la entrada correspondiente rápidamente. 
+Si se modificara el objeto clave después de haber sido introducido en el diccionario, evidentemente, 
+su hash también cambiaría y no podría ser encontrado.
 
-La diferencia principal entre los diccionarios y las listas es que a los valores almacenados en un diccionario se les accede no por su índice, porque de hecho no tienen orden, sino por su clave, utilizando de nuevo el operador [].
+La diferencia principal entre los diccionarios y las listas es que a los valores almacenados en un diccionario
+se les accede no por su índice, porque de hecho no tienen orden, sino por su clave, utilizando de nuevo el operador [].
 
 d["Love Actually "] 
 devuelve "Richard Curtis"
@@ -20,4 +27,5 @@ Al igual que en listas también se puede utilizar este operador para reasignar v
 
 d["Kill Bill"] = "Quentin Tarantino"
 
-Sin embargo en este caso no se puede utilizar particiones, entre otras cosas porque los diccionarios no son secuencias, si no mappings (mapeados, asociaciones).
+Sin embargo en este caso no se puede utilizar particiones, entre otras cosas porque los diccionarios 
+no son secuencias, si no mappings (mapeados, asociaciones).
