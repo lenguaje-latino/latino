@@ -97,7 +97,7 @@ fin
 
 elegir (switch): Evalua una opción de multiples posibles casos. 
 
-elegir (opcion):
+elegir (opcion)
     caso "1":
 	 "codigo"
     caso "2":
