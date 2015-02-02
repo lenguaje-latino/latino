@@ -14,6 +14,7 @@ con sintaxis en español, y entonces ¿por qué no hacer uno?
 Pues bien si este proyecto suena ambicioso, realmente les puedo decir que dependerá de la participación de todos nosotros para que esto sea posible.
 
 A continuación menciono las principales caracteristas de este proyecto:
+
 1. Simplicidad: La sintaxis debera de ser lo más natural posible al lenguaje español.
 2. Sencillo de aprender: Al ser simple aprenderas más rápido este nuevo lenguaje.
 3. Libre: Cualquiera puede descargar el código fuente del lenguaje, extender las librerias basicas y crear sus propias librerias si asi lo desea.
