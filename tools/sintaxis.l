@@ -7,7 +7,7 @@ int yylineno;
 %}
 
 %option noyywrap
-%option yylineno 
+%option yylineno
 
 ignora  " "|\t\n
 letra [A-Za-z]
@@ -17,7 +17,7 @@ com "#"
 
 %%
 {ignora}*                                   {;}
-{ignora}*{com}({letra}|{digito}|{ignora})*                       {;}
+{ignora}*{com}.*                            {;}
 "."                                         {return ('.');}
 ";"                                         {return (';');}
 ":"                                         {return (':');}
@@ -27,6 +27,7 @@ com "#"
 "}"                                         {return ('}');}
 "("                                         {return ('(');}
 ")"                                         {return (')');}
+","                                         {return (',');}
 "principal"                                 {return PRINCIPAL;}
 "fin"                                       {return FIN;}
 "="                                         {return ASIGNADOR;}
@@ -43,11 +44,13 @@ com "#"
 "!="                                        {return NOIGUAL;}
 "++"                                        {return AUMENTAR;}
 "--"                                        {return DISMINUIR;}
+"constante"                                 {return CONSTANTE;}
 "si"                                        {return SI;}
 "desde"                                     {return DESDE;}
 "hacer"                                     {return HACER;}
 "incremento"                                {return INCREMENTO;}
 "mientras"                                  {return MIENTRAS;}
+"cuando"                                    {return CUANDO;}
 "otro"                                      {return OTRO;}
 "elegir"                                    {return ELEGIR;}
 "caso"                                      {return CASO;}
@@ -57,8 +60,10 @@ com "#"
 "entero"                                    {return T_ENTERO;}
 "decimal"                                   {return T_DECIMAL;}
 "caracter"                                  {return T_CARACTER;}
+"continuar"                                 {return CONTINUAR;}
+"romper"                                    {return ROMPER;}
 
-{digito}+                                   {return ENTERO;}
+{digito}+|"-"{digito}+                      {return ENTERO;}
 {digito}+"."{digito}+                       {return DECIMAL;}
 {boleano}                                   {return LOGICO;}
 {letra}({letra}|{digito})*                  {return NOMBRECAMPO;}

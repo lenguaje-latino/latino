@@ -1,0 +1,30 @@
+principal()
+    #valor logico directo
+    si(verdadero)
+        imprimir("es verdad")
+    fin
+
+    #asignado a una variable
+    b = verdadero
+    si(b)
+        imprimir("hola mundo")
+    fin
+
+    #si-otro
+    si(b)
+        imprimir("hola")
+    otro
+        imprimir("mundo")
+    fin
+
+    #si anidado
+    entero i = 10
+    si(i == 0)
+        imprimir("es igual a cero")
+    otro si(i > 0)
+            imprimir("es mayor a cero")
+        otro
+            imprimir("es menor a cero")
+        fin
+    fin
+fin

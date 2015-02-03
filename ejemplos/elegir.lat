@@ -1,0 +1,25 @@
+principal()
+    #sin opcion otro
+    caracter c = 'y'
+    elegir(x)
+    caso 'y':
+        imprimir("c vale y")
+    caso 'x':
+        imprimir("c vale x")
+    caso 'z':
+        imprimir("c vale z")
+    fin
+
+    #con opcion otro
+    i = 0
+    elegir(i)
+    caso 0:
+        imprimir("i vale 0")
+    caso 1:
+        imprimir("i vale 1")
+    caso 2:
+        imprimir("i vale 2")
+    otro:
+        imprimir("i vale 100")
+    fin
+fin

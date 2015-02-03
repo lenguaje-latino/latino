@@ -15,6 +15,7 @@ mv *.c ../src/
 cd ..
 make
 echo "terminado."
+cd tools/
 #generar el executable
 #gcc sintaxis.c -o sintaxis
 

@@ -11,4 +11,7 @@ principal()
     decimal d = 10.0
     caracter c = 'a'
     s = "se asigna valor a variable"
+
+    #constantes
+    constante decimal PI = 3.14
 fin

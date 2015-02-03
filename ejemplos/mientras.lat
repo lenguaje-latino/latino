@@ -1,0 +1,17 @@
+principal()
+    entero i = 0
+    mientras (i < 10)
+        imprimir(i)
+        i = i + 1
+    fin
+
+    mientras (verdadero)
+        imprimir(i)
+        #i = i + 1
+        i++
+
+        si (i == 5)
+             romper
+        fin
+    fin
+fin
