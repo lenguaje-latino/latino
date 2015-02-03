@@ -1,0 +1,4 @@
+principal()
+    "error: se manda ; al final"
+    imprimir("hola mundo")
+fin

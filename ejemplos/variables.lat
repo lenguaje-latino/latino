@@ -1,0 +1,14 @@
+principal()
+    #sin tipo de dato
+    numero = 0
+    b = verdadero
+
+    #sin valor
+    cadena s
+
+    #con tipo de dato
+    entero i = 100
+    decimal d = 10.0
+    caracter c = 'a'
+    s = "se asigna valor a variable"
+fin

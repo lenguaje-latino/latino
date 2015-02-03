@@ -2,7 +2,7 @@
 int yystopparser=0;
 %}
 
-%token MAIN FIN NOMBRECAMPO ENTERO DECIMAL LOGICO CARACTER CADENA T_CADENA T_LOGICO T_ENTERO T_DECIMAL T_CARACTER ASIGNADOR SUMA RESTA MULTIPLICACION DIVISION MODULO AUMENTAR DISMINUIR SI MAYOR MENOR IGUAL MAYORIGUAL MENORIGUAL NOIGUAL DESDE HACER INCREMENTO MIENTRAS OTRO ELEGIR CASO HASTA
+%token PRINCIPAL FIN NOMBRECAMPO ENTERO DECIMAL LOGICO CARACTER CADENA T_CADENA T_LOGICO T_ENTERO T_DECIMAL T_CARACTER ASIGNADOR SUMA RESTA MULTIPLICACION DIVISION MODULO AUMENTAR DISMINUIR SI MAYOR MENOR IGUAL MAYORIGUAL MENORIGUAL NOIGUAL DESDE HACER INCREMENTO MIENTRAS OTRO ELEGIR CASO HASTA
 
 %start programa
 
@@ -10,7 +10,7 @@ int yystopparser=0;
 
 programa                    : principal funciones | principal;
 
-principal                   : MAIN '(' ')' lineascodigo FIN;
+principal                   : PRINCIPAL '(' parametrosenvio ')' lineascodigo FIN;
 
 lineascodigo                : lineacodigo |;
 
@@ -28,7 +28,7 @@ penvio                      : valor | NOMBRECAMPO;
 
 valor                       : LOGICO | ENTERO | DECIMAL | CARACTER |  CADENA;
 
-crearvariable               : tipodato NOMBRECAMPO | tipodato NOMBRECAMPO asignarvalor;
+crearvariable               : tipodato NOMBRECAMPO | tipodato NOMBRECAMPO asignarvalor | NOMBRECAMPO asignarvalor;
 
 tipodato                    : T_LOGICO | T_ENTERO | T_DECIMAL | T_CARACTER | T_CADENA;
 
@@ -60,7 +60,7 @@ condicionif                 : condicionsi | condicionsi condicionno;
 
 condicionsi                 : SI '(' condicion ')' lineascodigo FIN;
 
-condicion                   : valor condicional valor | valor condicional NOMBRECAMPO | NOMBRECAMPO condicional valor | NOMBRECAMPO condicional NOMBRECAMPO;
+condicion                   : valor condicional valor | valor condicional NOMBRECAMPO | NOMBRECAMPO condicional valor | NOMBRECAMPO condicional NOMBRECAMPO | NOMBRECAMPO;
 
 condicional                 : MAYOR | MENOR | IGUAL | MAYORIGUAL | MENORIGUAL | NOIGUAL;
 
