@@ -2,13 +2,13 @@
 int yystopparser=0;
 %}
 
-%token PRINCIPAL FIN NOMBRECAMPO ENTERO DECIMAL LOGICO CARACTER CADENA T_CADENA T_LOGICO T_ENTERO T_DECIMAL T_CARACTER ASIGNADOR SUMA RESTA MULTIPLICACION DIVISION MODULO AUMENTAR DISMINUIR SI MAYOR MENOR IGUAL MAYORIGUAL MENORIGUAL NOIGUAL DESDE HACER INCREMENTO MIENTRAS OTRO ELEGIR CASO HASTA CONTINUAR ROMPER CONSTANTE CUANDO
+%token PRINCIPAL FIN NOMBRECAMPO ENTERO DECIMAL LOGICO CARACTER CADENA T_CADENA T_LOGICO T_ENTERO T_DECIMAL T_CARACTER ASIGNADOR SUMA RESTA MULTIPLICACION DIVISION MODULO AUMENTAR DISMINUIR SI MAYOR MENOR IGUAL MAYORIGUAL MENORIGUAL NOIGUAL DESDE HACER INCREMENTO MIENTRAS SINO ELEGIR CASO HASTA CONTINUAR ROMPER CONSTANTE CUANDO DEFECTO FUNCION CLASE PROPIEDAD PUBLICA PRIVADA PROTEGIDA ESTA
 
 %start programa
 
 %%
 
-programa                    : principal funciones | principal;
+programa                    : principal funciones clases | principal funciones | principal  clases| clases funciones| principal | funciones | clases;
 
 principal                   : PRINCIPAL '(' parametrosrecibe ')' lineascodigo FIN;
 
@@ -16,7 +16,7 @@ lineascodigo                : lineacodigo |;
 
 lineacodigo                 : lineacodigo linea | linea;
 
-linea                       : invocarmetodo | crearvariable | crearconstante | buclecondicion | CONTINUAR | ROMPER | incredismivariable;
+linea                       : invocarmetodo | crearvariable | crearconstante | buclecondicion | CONTINUAR | ROMPER | incredismivariable | propiedades | asignaProp | funciones;
 
 invocarmetodo               : NOMBRECAMPO '(' parametrosenvio ')';
 
@@ -68,7 +68,7 @@ condicion                   : valor condicional valor | valor condicional NOMBRE
 
 condicional                 : MAYOR | MENOR | IGUAL | MAYORIGUAL | MENORIGUAL | NOIGUAL;
 
-condicionno                 : OTRO lineascodigo FIN;
+condicionno                 : SINO lineascodigo FIN;
 
 condicionswitch             : ELEGIR '(' NOMBRECAMPO ')' casos FIN | ELEGIR '(' NOMBRECAMPO ')' casos elegirotro;
 
@@ -76,7 +76,7 @@ casos                       : casos uncaso | uncaso;
 
 uncaso                      : CASO valor ':' lineascodigo |;
 
-elegirotro                  : OTRO ':' lineascodigo FIN;
+elegirotro                  : DEFECTO ':' lineascodigo FIN;
 
 buclefor                    : DESDE iniciafor HASTA finfor lineascodigo FIN | DESDE iniciafor HASTA iniciafor inc lineascodigo FIN;
 
@@ -90,6 +90,18 @@ buclewhile                  : MIENTRAS '(' condicion ')' lineascodigo FIN;
 
 bucledo                     : HACER lineascodigo CUANDO '(' condicion ')';
 
-funciones                   : funciones funcion | funcion;
+funciones                   : funciones func | func;
 
-funcion                     : NOMBRECAMPO '(' parametrosrecibe ')' lineascodigo FIN | NOMBRECAMPO '(' parametrosrecibe ')' tipodato lineascodigo FIN | NOMBRECAMPO '(' parametrosenvio ')';
+func                        : FUNCION NOMBRECAMPO '(' parametrosrecibe ')' lineascodigo FIN | ambito FUNCION NOMBRECAMPO '(' parametrosrecibe ')' lineascodigo FIN;
+
+clases                      : clases clas | clas;
+
+clas                        : CLASE NOMBRECAMPO lineascodigo FIN | CLASE NOMBRECAMPO ':' NOMBRECAMPO lineascodigo FIN | ambito CLASE NOMBRECAMPO lineascodigo FIN | ambito CLASE NOMBRECAMPO ':' NOMBRECAMPO lineascodigo FIN;
+
+propiedades                 : propiedades prop | prop;
+
+prop                        : ambito PROPIEDAD tipodato NOMBRECAMPO;
+
+ambito                      : PUBLICA | PRIVADA | PROTEGIDA |;
+
+asignaProp                  : ESTA '.' NOMBRECAMPO asignarvalor;

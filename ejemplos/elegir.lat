@@ -1,5 +1,5 @@
 principal()
-    #sin opcion otro
+    #sin opcion defecto
     caracter c = 'y'
     elegir(x)
     caso 'y':
@@ -10,7 +10,7 @@ principal()
         imprimir("c vale z")
     fin
 
-    #con opcion otro
+    #con opcion defecto
     i = 0
     elegir(i)
     caso 0:
@@ -19,7 +19,7 @@ principal()
         imprimir("i vale 1")
     caso 2:
         imprimir("i vale 2")
-    otro:
+    defecto:
         imprimir("i vale 100")
     fin
 fin

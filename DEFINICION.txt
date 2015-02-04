@@ -165,34 +165,35 @@ desde i hasta 10
 fin
 salida: 0 1 2 3 4 6 7 8 9 10
 
-Metodos
+Metodos / Funciones
 ---
 un método consiste generalmente de una serie de sentencias para llevar a cabo una acción,
-un juego de parámetros de entrada que regularán dicha acción o, posiblemente, un valor de salida.
+un juego de parámetros de entrada que regularán dicha acción o, se definen con
+la palabra [funcion]:
 La estructura de un método es la siguiente:
 
-NombreMetodo (tipo_dato variable, tipo_dato variable2)
-
+funcion NombreFuncion ()
+    #codigo
+    retorno
 fin
 
-Se puede especificar un tipo de valor devuelto a continuacion de los parametros y
-regresar el valor con la palabra clave [retorno]
+Se puede regresar el valor con la palabra clave [retorno]
 
-NombreMetodo (tipo_dato variable, tipo_dato variable2) tipo_dato_retorno
+funcion NombreFuncion (tipo_dato variable, tipo_dato variable2)
     entero i;
     #codigo
     retorno i
 fin
 
 Se puede sobrecargar un método siempre y cuando los parámetros varien en numero.
-NombreMetodo (tipo_dato variable, tipo_dato variable2, tipo_dato variable3) tipo_dato_retorno
+funcion NombreFuncion (tipo_dato variable, tipo_dato variable2, tipo_dato variable3) tipo_dato_retorno
     entero i;
     #codigo
     retorno i
 fin
 
 También se le pueden pasar valores por defecto a los parametros especificandoles un valor.
-NombreMetodo (tipo_dato variable, tipo_dato variable2="defecto") tipo_dato_retorno
+funcion NombreFuncion (tipo_dato variable, tipo_dato variable2="defecto")
     entero i;
     #codigo
     retorno i
@@ -201,7 +202,7 @@ fin
 
 Clases
 ---
-una clase (class) es una plantilla para la creación de objetos de datos según un modelo predefinido.
+Una clase (class) es una plantilla para la creación de objetos de datos según un modelo predefinido.
 Las clases se utilizan para representar entidades o conceptos, como los sustantivos en el lenguaje.
 Se definen con la palabra clave [clase]
 
@@ -226,24 +227,24 @@ clase Auto
           esta.NoPuertas
     fin
 
-    #método ejemplo
-    privado Encender ()
+    #funcion ejemplo
+    funcion Encender ()
     fin
 fin
 
 Ámbito: Se puede definir el ámbito a una clase, sus propiedades y funciones con las palabras
 reservadas:
 
-publico:
+publica:
 Una variable/función pública puede ser accedida desde fuera de la clase. Es decir,
 puedo acceder desde la instancia de la clase y no sólo desde el código interno de la clase.
 
-privado:
+privada:
 Al contrario que las públicas, las variables/funciones privadas sólo pueden ser accedidas
 desde dentro de la misma clase.
 
-protegido:
-Existe un tipo intermedio de ámbito, entre público y privado llamado "protegido".
+protegida:
+Existe un tipo intermedio de ámbito, entre público y privada llamado "protegida".
 Básicamente significa que, si una clase hereda de otra, tendrá acceso a las variables/funciones
 protegidas de la super-clase, de lo contrario, no podrá acceder a ellas.
 
@@ -263,4 +264,5 @@ Palabras reservadas hasta el momento:
 constante    logico    entero    decimal    caracter    cadena    si    defecto
 verdadero    falso    fin    sino    elegir    caso    desde    hasta    cuando
 incremento    mientras    hacer    romper    continuar    clase    propiedad
-constructor    esta    publico    privado    protegido    lista diccionario
+constructor    esta    publica    privada    protegida    lista diccionario
+retorno    funcion

@@ -71,14 +71,22 @@
      HACER = 287,
      INCREMENTO = 288,
      MIENTRAS = 289,
-     OTRO = 290,
+     SINO = 290,
      ELEGIR = 291,
      CASO = 292,
      HASTA = 293,
      CONTINUAR = 294,
      ROMPER = 295,
      CONSTANTE = 296,
-     CUANDO = 297
+     CUANDO = 297,
+     DEFECTO = 298,
+     FUNCION = 299,
+     CLASE = 300,
+     PROPIEDAD = 301,
+     PUBLICA = 302,
+     PRIVADA = 303,
+     PROTEGIDA = 304,
+     ESTA = 305
    };
 #endif
 

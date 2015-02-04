@@ -51,9 +51,10 @@ com "#"
 "incremento"                                {return INCREMENTO;}
 "mientras"                                  {return MIENTRAS;}
 "cuando"                                    {return CUANDO;}
-"otro"                                      {return OTRO;}
+"sino"                                      {return SINO;}
 "elegir"                                    {return ELEGIR;}
 "caso"                                      {return CASO;}
+"defecto"                                   {return DEFECTO;}
 "hasta"                                     {return HASTA;}
 "cadena"                                    {return T_CADENA;}
 "logico"                                    {return T_LOGICO;}
@@ -62,6 +63,13 @@ com "#"
 "caracter"                                  {return T_CARACTER;}
 "continuar"                                 {return CONTINUAR;}
 "romper"                                    {return ROMPER;}
+"funcion"                                   {return FUNCION;}
+"clase"                                     {return CLASE;}
+"propiedad"                                 {return PROPIEDAD;}
+"publica"                                   {return PUBLICA;}
+"privada"                                   {return PRIVADA;}
+"protegida"                                 {return PROTEGIDA;}
+"esta"                                      {return ESTA;}
 
 {digito}+|"-"{digito}+                      {return ENTERO;}
 {digito}+"."{digito}+                       {return DECIMAL;}

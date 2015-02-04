@@ -10,10 +10,10 @@ principal()
         imprimir("hola mundo")
     fin
 
-    #si-otro
+    #si-sino
     si(b)
         imprimir("hola")
-    otro
+    sino
         imprimir("mundo")
     fin
 
@@ -21,9 +21,9 @@ principal()
     entero i = 10
     si(i == 0)
         imprimir("es igual a cero")
-    otro si(i > 0)
+    sino si(i > 0)
             imprimir("es mayor a cero")
-        otro
+        sino
             imprimir("es menor a cero")
         fin
     fin
