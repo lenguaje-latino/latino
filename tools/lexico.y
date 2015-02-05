@@ -2,7 +2,11 @@
 int yystopparser=0;
 %}
 
-%token PRINCIPAL FIN NOMBRECAMPO ENTERO DECIMAL LOGICO CARACTER CADENA T_CADENA T_LOGICO T_ENTERO T_DECIMAL T_CARACTER ASIGNADOR SUMA RESTA MULTIPLICACION DIVISION MODULO AUMENTAR DISMINUIR SI MAYOR MENOR IGUAL MAYORIGUAL MENORIGUAL NOIGUAL DESDE HACER INCREMENTO MIENTRAS SINO ELEGIR CASO HASTA CONTINUAR ROMPER CONSTANTE CUANDO DEFECTO FUNCION CLASE PROPIEDAD PUBLICA PRIVADA PROTEGIDA ESTA
+%token PRINCIPAL FIN NOMBRECAMPO ENTERO DECIMAL LOGICO CARACTER CADENA T_CADENA
+T_LOGICO T_ENTERO T_DECIMAL T_CARACTER ASIGNADOR SUMA RESTA MULTIPLICACION
+DIVISION MODULO AUMENTAR DISMINUIR SI MAYOR MENOR IGUAL MAYORIGUAL MENORIGUAL
+NOIGUAL DESDE HACER SALTO MIENTRAS SINO ELEGIR CASO HASTA CONTINUAR ROMPER
+CONSTANTE CUANDO DEFECTO FUNCION CLASE PROPIEDAD ESTA CONSTRUCTOR RETORNO
 
 %start programa
 
@@ -16,7 +20,7 @@ lineascodigo                : lineacodigo |;
 
 lineacodigo                 : lineacodigo linea | linea;
 
-linea                       : invocarmetodo | crearvariable | crearconstante | buclecondicion | CONTINUAR | ROMPER | incredismivariable | propiedades | asignaProp | funciones;
+linea                       : invocarmetodo | crearvariable | crearconstante | buclecondicion | CONTINUAR | ROMPER | incredismivariable | propiedades | asignaProp | funciones | ctor | regresar;
 
 invocarmetodo               : NOMBRECAMPO '(' parametrosenvio ')';
 
@@ -30,7 +34,7 @@ parametrosrecibe            : parecibe |;
 
 parecibe                    : precibe ',' precibe | precibe;
 
-precibe                     : tipodato NOMBRECAMPO |;
+precibe                     : tipodato NOMBRECAMPO ASIGNADOR valor | tipodato NOMBRECAMPO;
 
 valor                       : LOGICO | ENTERO | DECIMAL | CARACTER |  CADENA;
 
@@ -46,13 +50,15 @@ operasignacion              : aritmetico | invocarmetodo | incredismivariable;
 
 aritmetico                  : oprcomun | oprcomun oprcomplemento;
 
-oprcomun                    : valor tipoopr valor | valor tipoopr NOMBRECAMPO | NOMBRECAMPO tipoopr valor | NOMBRECAMPO tipoopr NOMBRECAMPO;
+oprcomun                    : valor tipoopr valor | valor tipoopr NOMBRECAMPO | NOMBRECAMPO tipoopr valor | NOMBRECAMPO tipoopr NOMBRECAMPO | valor tipoopr oprcompuesto | oprcompuesto tipoopr valor | NOMBRECAMPO tipoopr oprcompuesto | oprcompuesto tipoopr NOMBRECAMPO | oprcompuesto tipoopr oprcompuesto;
 
 tipoopr                     : SUMA | RESTA | MULTIPLICACION | DIVISION | MODULO;
 
 oprcomplemento              : oprcomplemento oprcom | oprcom;
 
-oprcom                      : tipoopr valor | tipoopr NOMBRECAMPO;
+oprcom                      : tipoopr valor | tipoopr NOMBRECAMPO | tipoopr oprcompuesto;
+
+oprcompuesto                : '(' valor tipoopr valor ')' | '('valor tipoopr NOMBRECAMPO ')' | '('NOMBRECAMPO tipoopr valor ')' |'('NOMBRECAMPO tipoopr NOMBRECAMPO ')';
 
 incredismivariable          : NOMBRECAMPO incdis | incdis NOMBRECAMPO;
 
@@ -84,7 +90,7 @@ iniciafor                   : tipodato NOMBRECAMPO asignarvalor | NOMBRECAMPO as
 
 finfor                      : NOMBRECAMPO | valor;
 
-inc                         : INCREMENTO asignarvalor;
+inc                         : SALTO asignarvalor;
 
 buclewhile                  : MIENTRAS '(' condicion ')' lineascodigo FIN;
 
@@ -92,16 +98,18 @@ bucledo                     : HACER lineascodigo CUANDO '(' condicion ')';
 
 funciones                   : funciones func | func;
 
-func                        : FUNCION NOMBRECAMPO '(' parametrosrecibe ')' lineascodigo FIN | ambito FUNCION NOMBRECAMPO '(' parametrosrecibe ')' lineascodigo FIN;
+func                        : FUNCION NOMBRECAMPO '(' parametrosrecibe ')' lineascodigo FIN;
 
 clases                      : clases clas | clas;
 
-clas                        : CLASE NOMBRECAMPO lineascodigo FIN | CLASE NOMBRECAMPO ':' NOMBRECAMPO lineascodigo FIN | ambito CLASE NOMBRECAMPO lineascodigo FIN | ambito CLASE NOMBRECAMPO ':' NOMBRECAMPO lineascodigo FIN;
+clas                        : CLASE NOMBRECAMPO lineascodigo FIN | CLASE NOMBRECAMPO ':' NOMBRECAMPO lineascodigo FIN;
 
 propiedades                 : propiedades prop | prop;
 
-prop                        : ambito PROPIEDAD tipodato NOMBRECAMPO;
-
-ambito                      : PUBLICA | PRIVADA | PROTEGIDA |;
+prop                        : PROPIEDAD tipodato NOMBRECAMPO;
 
 asignaProp                  : ESTA '.' NOMBRECAMPO asignarvalor;
+
+ctor                        : CONSTRUCTOR '(' parametrosrecibe ')' lineascodigo FIN;
+
+regresar                    : RETORNO valor | RETORNO NOMBRECAMPO | RETORNO operasignacion | RETORNO;

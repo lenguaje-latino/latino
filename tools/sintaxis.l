@@ -48,7 +48,7 @@ com "#"
 "si"                                        {return SI;}
 "desde"                                     {return DESDE;}
 "hacer"                                     {return HACER;}
-"incremento"                                {return INCREMENTO;}
+"salto"                                     {return SALTO;}
 "mientras"                                  {return MIENTRAS;}
 "cuando"                                    {return CUANDO;}
 "sino"                                      {return SINO;}
@@ -66,15 +66,14 @@ com "#"
 "funcion"                                   {return FUNCION;}
 "clase"                                     {return CLASE;}
 "propiedad"                                 {return PROPIEDAD;}
-"publica"                                   {return PUBLICA;}
-"privada"                                   {return PRIVADA;}
-"protegida"                                 {return PROTEGIDA;}
 "esta"                                      {return ESTA;}
+"constructor"                               {return CONSTRUCTOR;}
+"retorno"                                   {return RETORNO;}
 
 {digito}+|"-"{digito}+                      {return ENTERO;}
 {digito}+"."{digito}+                       {return DECIMAL;}
 {boleano}                                   {return LOGICO;}
-{letra}({letra}|{digito})*                  {return NOMBRECAMPO;}
+({letra}|"_")({letra}|{digito}|"_")*                  {return NOMBRECAMPO;}
 "\'"({letra}|{digito})"\'"                  {return CARACTER;}
 "\""({letra}|{digito}|{ignora})*"\""        {return CADENA;}
 

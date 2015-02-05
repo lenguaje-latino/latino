@@ -1,6 +1,7 @@
 principal()
     #sin tipo de dato
     numero = 0
+    _numero = 0
     b = verdadero
 
     #sin valor
@@ -14,4 +15,15 @@ principal()
 
     #constantes
     constante decimal PI = 3.14
+
+    x = a + b
+    x = a + (b * 1)
+    x = a + b + (b * 1)
+    x = (b * 1) + a
+    x = (b * 1) + (a - 2)
+
+    x = my_function(_numero)
+    x = c++
+
+    #x = (b * 1) + (a - func())
 fin

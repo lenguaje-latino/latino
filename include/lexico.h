@@ -69,7 +69,7 @@
      NOIGUAL = 285,
      DESDE = 286,
      HACER = 287,
-     INCREMENTO = 288,
+     SALTO = 288,
      MIENTRAS = 289,
      SINO = 290,
      ELEGIR = 291,
@@ -83,10 +83,9 @@
      FUNCION = 299,
      CLASE = 300,
      PROPIEDAD = 301,
-     PUBLICA = 302,
-     PRIVADA = 303,
-     PROTEGIDA = 304,
-     ESTA = 305
+     ESTA = 302,
+     CONSTRUCTOR = 303,
+     RETORNO = 304
    };
 #endif
 

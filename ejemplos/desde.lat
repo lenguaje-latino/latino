@@ -1,6 +1,6 @@
 principal()
     i = 10
-    desde i hasta 50 incremento = 10
+    desde i hasta 50 salto = 10
         imprimir(i)
     fin
     desde i = 0 hasta 10
@@ -14,7 +14,7 @@ principal()
         si (i == 5)
             continuar
             imprimir(i)
-        otro
+        sino
             romper
         fin
     fin

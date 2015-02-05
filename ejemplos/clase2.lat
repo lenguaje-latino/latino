@@ -4,18 +4,18 @@ clase Auto
     propiedad cadena Placas
 
     #propiedades privadas
-    privada propiedad cadena Pasajeros
+    propiedad cadena Pasajeros
 
     #constructor
-    funcion constructor (entero serie)
+    constructor (entero serie)
         esta.Serie = serie
     fin
 
     #funciones sobrecargadas
-    protegida funcion Encender()
+    funcion Encender()
     fin
 
-    protegida funcion Encender(logico l)
+    funcion Encender(logico l)
         si (l)
             #codigo
         fin

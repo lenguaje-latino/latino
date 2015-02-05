@@ -1,4 +1,4 @@
-#DEFINICIÓN
+#DEFINICIÓN (latino)
 
 Este documento pretende explicar de manera general la definición del nuevo
 lenguaje de programación para latinos.
@@ -7,7 +7,7 @@ Comentarios:
 ---
 Los comentarios empezaran por el signo de numero (#), sólo será considerado
 como comentario si la línea empieza con dicho cáracter,o es precedido con espacios o tabuladores.
-no existe comentarios multilinea
+no existe comentarios multilinea.
 
 #Este es un comentario de una linea
     #Este es un comentario con espacios al inicio de la linea
@@ -20,11 +20,11 @@ tipo de dato que almacenará y su identificador.
 El tipo de dato es opcional cuando se inicializa con un valor la variable.
 
 identificador = valor
-[tipo_dato] identificador
+[tipo_dato] identificador = valor
 entero numero = 1
 
 Un identificador puede:
-* empezar por guión bajo (_)
+* empezar por guión bajo (_) o letras
 * contener caracteres en mayúsculas y minúsculas (sensible a mayúsculas y minúsculas)
 Un identificador NO puede:
 * empezar por un número.
@@ -56,13 +56,13 @@ A continuacion se listan los operadores:
 ------------------------------------------------------------
 Categoría               Operadores
 ------------------------------------------------------------
-Aritmético                  |   + - * / % (Modulo)
-Lógico                      |   y o no
-Concatenación               |   +
-Incremento, decremento      |   ++ --
-Relacional                  |   == != < > <= >=
-Asignación                  |   =
-Acceso a miembro            |   .
+Aritmético             |   + - * / % (Modulo)
+Lógico                 |   y o no
+Concatenación          |   +
+salto, decremento |   ++ --
+Relacional             |   == != < > <= >=
+Asignación             |   =
+Acceso a miembro       |   .
 ------------------------------------------------------------
 
 Estructuras de control:
@@ -87,9 +87,9 @@ Es posible el anidamiento de las sentencias [si] de la siguiente manera:
 si (condicion)
    #codigo
 sino si (condicion)
-         #codigo
+        #codigo
      sino
-     #codigo
+        #codigo
      fin
 fin
 
@@ -97,11 +97,13 @@ elegir (switch): Evalua una opción de multiples posibles casos.
 
 elegir (opcion)
     caso "1":
-     #codigo
+        #codigo
     caso "2":
-         #codigo
+        #codigo
+    caso "3":
+        #codigo
     defecto:
-         #codigo
+        #codigo
 fin
 
 desde (for): Hace que una instrucción o bloque de instrucciones se repitan
@@ -117,11 +119,11 @@ desde 10 hasta 0
 fin
 salida: 10 9 8 7 6 5 4 3 2 1 0
 
-Se puede especificar el incremento del ciclo con la palabra clave [incremento]
+Se puede especificar el salto del ciclo con la palabra clave [salto]
 
 i = 10
-desde i hasta 50 incremento = 10
-      imprimir(i)
+desde i hasta 50 salto = 10
+    imprimir(i)
 fin
 salida: 10 20 30 40 50
 
@@ -129,11 +131,11 @@ mientras (while): Hace que una instrucción o bloque de instrucciones se repitan
 mientras la condicion sea [verdadero]
 
 mientras (condicion)
-      #codigo
+    #codigo
 fin
 
 mientras (verdadero)
-      #codigo
+    #codigo
 fin
 
 hacer-cuando (do-while): Hace que una instrucción o bloque de instrucciones
@@ -141,7 +143,7 @@ se repitan mientra la condicion sea [verdadero],
 las intrucciones de codigo se ejecutan al menos una vez.
 
 hacer
-     #codigo
+    #codigo
 cuando (condicion)
 
 se puede condicionar salir del bucle o continuar con la siguiente permutación
@@ -149,27 +151,27 @@ con las palabrar clave [romper y continuar]
 
 i = 0
 desde i hasta 10
-      si (i == 5)
-         romper
+    si (i == 5)
+        romper
      imprimir(i)
-      fin
+    fin
 fin
 salida: 0 1 2 3 4 5
 
 i = 0
 desde i hasta 10
-      si (i == 5)
-         continuar
-         imprimir(i)
-      fin
+    si (i == 5)
+        continuar
+        imprimir(i)
+    fin
 fin
 salida: 0 1 2 3 4 6 7 8 9 10
 
 Metodos / Funciones
 ---
 un método consiste generalmente de una serie de sentencias para llevar a cabo una acción,
-un juego de parámetros de entrada que regularán dicha acción o, se definen con
-la palabra [funcion]:
+un juego de parámetros de entrada que regularán dicha acción o, las funciones se definen con
+la palabra reservada[funcion]:
 La estructura de un método es la siguiente:
 
 funcion NombreFuncion ()
@@ -186,7 +188,7 @@ funcion NombreFuncion (tipo_dato variable, tipo_dato variable2)
 fin
 
 Se puede sobrecargar un método siempre y cuando los parámetros varien en numero.
-funcion NombreFuncion (tipo_dato variable, tipo_dato variable2, tipo_dato variable3) tipo_dato_retorno
+funcion NombreFuncion (tipo_dato variable, tipo_dato variable2, tipo_dato variable3)
     entero i;
     #codigo
     retorno i
@@ -198,7 +200,6 @@ funcion NombreFuncion (tipo_dato variable, tipo_dato variable2="defecto")
     #codigo
     retorno i
 fin
-
 
 Clases
 ---
@@ -222,47 +223,28 @@ clase Auto
     fin
 
     constructor (cadena marca, entero noPuertas)
-        #se define el valor de la propiedad con la palabra clave [esta]
+        #se asigna el valor de la propiedad con la palabra clave [esta]
         esta.Marca = marca
-          esta.NoPuertas
+        esta.NoPuertas
     fin
 
     #funcion ejemplo
     funcion Encender ()
+        retorno
     fin
 fin
 
-Ámbito: Se puede definir el ámbito a una clase, sus propiedades y funciones con las palabras
-reservadas:
-
-publica:
-Una variable/función pública puede ser accedida desde fuera de la clase. Es decir,
-puedo acceder desde la instancia de la clase y no sólo desde el código interno de la clase.
-
-privada:
-Al contrario que las públicas, las variables/funciones privadas sólo pueden ser accedidas
-desde dentro de la misma clase.
-
-protegida:
-Existe un tipo intermedio de ámbito, entre público y privada llamado "protegida".
-Básicamente significa que, si una clase hereda de otra, tendrá acceso a las variables/funciones
-protegidas de la super-clase, de lo contrario, no podrá acceder a ellas.
-
-Por default se definen publicas las variables/funciones.
-
 Herencia: Se puede heredar de una clase con dos puntos (:) ClaseHijo : ClasePadre
 ---
-
-clase Bochito: Auto
-      constructor ()
-          esta.NoPuertas = 2
-      fin
+clase Bochito : Auto
+     constructor ()
+         esta.NoPuertas = 2
+     fin
 fin
 
 Palabras reservadas hasta el momento:
 ---
 constante    logico    entero    decimal    caracter    cadena    si    defecto
 verdadero    falso    fin    sino    elegir    caso    desde    hasta    cuando
-incremento    mientras    hacer    romper    continuar    clase    propiedad
-constructor    esta    publica    privada    protegida    lista diccionario
-retorno    funcion
+salto    mientras    hacer    romper    continuar    clase    propiedad
+constructor    esta    lista    diccionario    retorno    funcion
