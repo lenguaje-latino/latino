@@ -1,13 +1,12 @@
+#ejecutar con el comando:
+#mingw32-make -f Makefile.mingw
+
 YACC = bison -y -d
 LEX = flex
 TARGET = bin/latino
 CFLAGS = -g -Wall
 LIBS =
 CC = gcc
-
-#ifeq (Windows_NT,$(OS))
-#TARGET:=$(TARGET).exe
-#endif
 
 TESTS=$(wildcard ejemplos/*.lat)
 
@@ -33,7 +32,7 @@ src/main.o : src/main.c
 	$(CC) -g -c src/main.c -o src/main.o
 
 $(TARGET) : src/parse.o src/main.o
-	mkdir -p "$$(dirname $(TARGET))"
+	mkdir -p $(dir $(TARGET))
 	$(CC) $(CFLAGS) src/parse.o src/main.o -o $(TARGET) $(LIBS)
 
 clean :
