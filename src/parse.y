@@ -113,3 +113,5 @@ asignaProp                  : ESTA '.' NOMBRECAMPO asignarvalor;
 ctor                        : CONSTRUCTOR '(' parametrosrecibe ')' lineascodigo FIN;
 
 regresar                    : RETORNO valor | RETORNO NOMBRECAMPO | RETORNO operasignacion | RETORNO;
+
+%%

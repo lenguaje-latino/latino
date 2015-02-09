@@ -1,31 +1,43 @@
-#define el compilador C
-CC=gcc
+YACC = bison -y -d 
+LEX = flex
+TARGET = bin/latino
+CFLAGS = -g -Wall
+LIBS =
+CC = gcc
 
-VPATH=src:../include
+ifeq (Windows_NT,$(OS))
+TARGET:=$(TARGET).exe
+endif
 
-#define flags para el compilador
-CFLAGS=-Wall -g
+TESTS=$(wildcard ejemplos/*.lat)
 
-#define los directorios para las headers
-INCLUDES = -Iinclude
-SOURCE=$(exec_prefix)src/
-BIN=$(exec_prefix)bin/
+all : $(TARGET)
 
-#define los archivos C
-SRCS=$(SOURCE)lexico.c $(SOURCE)sintaxis.c
+.PHONY : all
 
-#define los objetos de los fuentes
-OBJS=$(SRCS:.c=.o)
+test : all
+	$(TARGET) $(TESTS)
 
-#define el archivo ejecutable
-TARGET=sintaxis
+.PHONY : test
 
-#genera el comando de compilado
-all: $(TARGET)
+src/y.tab.c : src/parse.y
+	$(YACC) -o src/y.tab.c src/parse.y
 
-$(TARGET): $(TARGET).c
-	$(CC) $(CFLAGS) -o $(BIN)$(TARGET) $(INCLUDES) $(SRCS)
+src/lex.yy.c : src/lex.l
+	$(LEX) -osrc/lex.yy.c src/lex.l
 
-#limpia el directorio
-clean:
-		rm -f *.o
+src/parse.o : src/y.tab.c src/lex.yy.c
+	$(CC) -g -c src/y.tab.c -o src/parse.o
+
+src/main.o : src/main.c
+	$(CC) -g -c src/main.c -o src/main.o
+
+$(TARGET) : src/parse.o src/main.o
+	mkdir -p "$$(dirname $(TARGET))"
+	$(CC) $(CFLAGS) src/parse.o src/main.o -o $(TARGET) $(LIBS)
+
+clean :
+	rm -f src/y.output src/y.tab.c
+	rm -f src/lex.yy.c
+	rm -f src/*.o $(TARGET)
+.PHONY : clean
