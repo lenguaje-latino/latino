@@ -1,11 +1,11 @@
 ﻿#Latino
 
-Este proyecto nace de la necesidad de incrementar la educación de nivel básico (primaria y secundaria) 
-debido a que los niños tienen la capacidad de entender la lógica a muy temprana edad y es en esta edad 
+Este proyecto nace de la necesidad de incrementar la educación de nivel básico (primaria y secundaria)
+debido a que los niños tienen la capacidad de entender la lógica a muy temprana edad y es en esta edad
 cuando más aprenden, esto motivará a los niños y jovenes por interesarse en el mundo del desarrollo de aplicaciones.
 
 ¿Y por que un lenguaje de programación más?
-Si es bien sabido que ya hay muchos lenguajes de programación; pero no tenemos un lenguaje para programar 
+Si es bien sabido que ya hay muchos lenguajes de programación; pero no tenemos un lenguaje para programar
 con sintaxis en español, y entonces ¿por qué no hacer uno?
 
 ¿Cuantos de ustedes no batallaron con el inglés?
@@ -26,5 +26,15 @@ El lenguaje deberá de ser de código abierto bajo la licencia del MIT por ser l
 http://opensource.org/licenses/MIT
 
 Leer LICENSE.txt
+
+###COMPILAR
+
+#####Linux
+
+`make`
+
+#####Windows
+
+`mingw32-make -f Makefile.mingw`
 
 Cualquier aportación o sugerencia es bienvenida.

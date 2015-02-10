@@ -55,7 +55,7 @@
      ASIGNADOR = 271,
      SUMA = 272,
      RESTA = 273,
-     MULTIPLICACION = 274,
+     MULTIP = 274,
      DIVISION = 275,
      MODULO = 276,
      AUMENTAR = 277,
@@ -85,7 +85,10 @@
      PROPIEDAD = 301,
      ESTA = 302,
      CONSTRUCTOR = 303,
-     RETORNO = 304
+     RETORNO = 304,
+     NEGATIVO = 305,
+     PAREN_IZQ = 306,
+     PAREN_DER = 307
    };
 #endif
 /* Tokens.  */
@@ -105,7 +108,7 @@
 #define ASIGNADOR 271
 #define SUMA 272
 #define RESTA 273
-#define MULTIPLICACION 274
+#define MULTIP 274
 #define DIVISION 275
 #define MODULO 276
 #define AUMENTAR 277
@@ -136,6 +139,9 @@
 #define ESTA 302
 #define CONSTRUCTOR 303
 #define RETORNO 304
+#define NEGATIVO 305
+#define PAREN_IZQ 306
+#define PAREN_DER 307
 
 
 

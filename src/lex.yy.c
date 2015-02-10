@@ -945,12 +945,12 @@ YY_RULE_SETUP
 case 10:
 YY_RULE_SETUP
 #line 28 "src/lex.l"
-{return ('(');}
+{return PAREN_IZQ; }
 	YY_BREAK
 case 11:
 YY_RULE_SETUP
 #line 29 "src/lex.l"
-{return (')');}
+{return PAREN_DER; }
 	YY_BREAK
 case 12:
 YY_RULE_SETUP
@@ -985,7 +985,7 @@ YY_RULE_SETUP
 case 18:
 YY_RULE_SETUP
 #line 36 "src/lex.l"
-{return MULTIPLICACION;}
+{return  MULTIP;}
 	YY_BREAK
 case 19:
 YY_RULE_SETUP

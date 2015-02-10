@@ -3,10 +3,24 @@ int yystopparser=0;
 %}
 
 %token PRINCIPAL FIN NOMBRECAMPO ENTERO DECIMAL LOGICO CARACTER CADENA T_CADENA
-T_LOGICO T_ENTERO T_DECIMAL T_CARACTER ASIGNADOR SUMA RESTA MULTIPLICACION
+T_LOGICO T_ENTERO T_DECIMAL T_CARACTER ASIGNADOR SUMA RESTA MULTIP
 DIVISION MODULO AUMENTAR DISMINUIR SI MAYOR MENOR IGUAL MAYORIGUAL MENORIGUAL
 NOIGUAL DESDE HACER SALTO MIENTRAS SINO ELEGIR CASO HASTA CONTINUAR ROMPER
 CONSTANTE CUANDO DEFECTO FUNCION CLASE PROPIEDAD ESTA CONSTRUCTOR RETORNO
+NEGATIVO PAREN_IZQ PAREN_DER
+
+/*
+ * presedencia de operadores
+ * 0: -
+ * 1: * /
+ * 2: + -
+ *
+ */
+
+%left SUMA RESTA
+%left MULTIP DIVISION MODULO
+%left NEGATIVO
+
 
 %start programa
 
@@ -23,7 +37,7 @@ principal funciones clases
 ;
 
 principal:
-PRINCIPAL '(' parametrosrecibe ')' lineascodigo FIN;
+PRINCIPAL PAREN_IZQ parametrosrecibe PAREN_DER lineascodigo FIN;
 
 lineascodigo:
 lineacodigo
@@ -51,7 +65,7 @@ invocarmetodo
 ;
 
 invocarmetodo:
-NOMBRECAMPO '(' parametrosenvio ')'
+NOMBRECAMPO PAREN_IZQ parametrosenvio PAREN_DER
 ;
 
 parametrosenvio:
@@ -116,52 +130,30 @@ ASIGNADOR operasignacion
 ;
 
 operasignacion:
-aritmetico
+expresion
 | invocarmetodo
 | incredismivariable
 ;
 
-aritmetico:
-oprcomun
-| oprcomun oprcomplemento
+expresion:
+primary
+| primary SUMA primary
+| primary RESTA primary
+| primary MULTIP primary
+| primary DIVISION primary
+| primary MODULO primary
+| expresion SUMA primary
+| expresion RESTA primary
+| expresion MULTIP primary
+| expresion DIVISION primary
+| expresion MODULO primary
 ;
 
-oprcomun:
-valor tipoopr valor
-| valor tipoopr NOMBRECAMPO
-| NOMBRECAMPO tipoopr valor
-| NOMBRECAMPO tipoopr NOMBRECAMPO
-| valor tipoopr oprcompuesto
-| oprcompuesto tipoopr valor
-| NOMBRECAMPO tipoopr oprcompuesto
-| oprcompuesto tipoopr NOMBRECAMPO
-| oprcompuesto tipoopr oprcompuesto
-;
-
-tipoopr:
-SUMA
-| RESTA
-| MULTIPLICACION
-| DIVISION
-| MODULO
-;
-
-oprcomplemento:
-oprcomplemento oprcom
-| oprcom
-;
-
-oprcom:
-tipoopr valor
-| tipoopr NOMBRECAMPO
-| tipoopr oprcompuesto
-;
-
-oprcompuesto:
-'(' valor tipoopr valor ')'
-| '('valor tipoopr NOMBRECAMPO ')'
-| '('NOMBRECAMPO tipoopr valor ')'
-|'('NOMBRECAMPO tipoopr NOMBRECAMPO ')'
+primary:
+valor
+| NOMBRECAMPO
+| PAREN_IZQ expresion PAREN_DER
+| invocarmetodo
 ;
 
 incredismivariable:
@@ -188,8 +180,8 @@ condicionsi
 ;
 
 condicionsi:
-SI '(' condicion ')' lineascodigo FIN
-| SI '(' condicion ')' lineascodigo condicionno
+SI PAREN_IZQ condicion PAREN_DER lineascodigo FIN
+| SI PAREN_IZQ condicion PAREN_DER lineascodigo condicionno
 ;
 
 condicion:
@@ -215,8 +207,8 @@ SINO lineascodigo FIN
 ;
 
 condicionswitch:
-ELEGIR '(' NOMBRECAMPO ')' casos FIN
-| ELEGIR '(' NOMBRECAMPO ')' casos elegirotro
+ELEGIR PAREN_IZQ NOMBRECAMPO PAREN_DER casos FIN
+| ELEGIR PAREN_IZQ NOMBRECAMPO PAREN_DER casos elegirotro
 ;
 
 casos:
@@ -255,11 +247,11 @@ SALTO asignarvalor
 ;
 
 buclewhile:
-MIENTRAS '(' condicion ')' lineascodigo FIN
+MIENTRAS PAREN_IZQ condicion PAREN_DER lineascodigo FIN
 ;
 
 bucledo:
-HACER lineascodigo CUANDO '(' condicion ')'
+HACER lineascodigo CUANDO PAREN_IZQ condicion PAREN_DER
 ;
 
 funciones:
@@ -268,7 +260,7 @@ funciones func
 ;
 
 func:
-FUNCION NOMBRECAMPO '(' parametrosrecibe ')' lineascodigo FIN
+FUNCION NOMBRECAMPO PAREN_IZQ parametrosrecibe PAREN_DER lineascodigo FIN
 ;
 
 clases:
@@ -295,13 +287,11 @@ ESTA '.' NOMBRECAMPO asignarvalor
 ;
 
 ctor:
-CONSTRUCTOR '(' parametrosrecibe ')' lineascodigo FIN
+CONSTRUCTOR PAREN_IZQ parametrosrecibe PAREN_DER lineascodigo FIN
 ;
 
 regresar:
-RETORNO valor
-| RETORNO NOMBRECAMPO
-| RETORNO operasignacion
+RETORNO operasignacion
 | RETORNO
 ;
 

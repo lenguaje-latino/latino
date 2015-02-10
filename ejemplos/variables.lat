@@ -25,5 +25,5 @@ principal()
     x = my_function(_numero)
     x = c++
 
-    #x = (b * 1) + (a - func())
+    x = (b * 1) + (a - (func()))
 fin

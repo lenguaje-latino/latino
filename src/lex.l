@@ -25,15 +25,15 @@ com "#"
 "]"                                         {return (']');}
 "{"                                         {return ('{');}
 "}"                                         {return ('}');}
-"("                                         {return ('(');}
-")"                                         {return (')');}
+"("                                         {return PAREN_IZQ; }
+")"                                         {return PAREN_DER; }
 ","                                         {return (',');}
 "principal"                                 {return PRINCIPAL;}
 "fin"                                       {return FIN;}
 "="                                         {return ASIGNADOR;}
 "+"                                         {return SUMA;}
 "-"                                         {return RESTA;}
-"*"                                         {return MULTIPLICACION;}
+"*"                                         {return  MULTIP;}
 "/"                                         {return DIVISION;}
 "%"                                         {return MODULO;}
 ">"                                         {return MAYOR;}
@@ -73,7 +73,7 @@ com "#"
 {digito}+|"-"{digito}+                      {return ENTERO;}
 {digito}+"."{digito}+                       {return DECIMAL;}
 {boleano}                                   {return LOGICO;}
-({letra}|"_")({letra}|{digito}|"_")*                  {return NOMBRECAMPO;}
+({letra}|"_")({letra}|{digito}|"_")*        {return NOMBRECAMPO;}
 "\'"({letra}|{digito})"\'"                  {return CARACTER;}
 "\""({letra}|{digito}|{ignora})*"\""        {return CADENA;}
 
