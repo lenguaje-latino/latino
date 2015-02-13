@@ -1,81 +1,68 @@
+%option noyywrap
+
 %{
-#include <stdio.h>
-#include "y.tab.h"
-int nchar, nword, nline;
-int lineno;
-int yylineno;
+#include "latino.h"
+
+#define YY_INPUT(buf,result,max_size)  {\
+    result = GetNextChar(buf, max_size); \
+    if (  result <= 0  ) \
+      result = YY_NULL; \
+    }
 %}
 
-%option noyywrap
-%option yylineno
-
-ignora  " "|\t\n
-letra [A-Za-z]
-digito [0-9]
-boleano "verdadero"|"falso"
-com "#"
-
-%%
-{ignora}*                                   {;}
-{ignora}*{com}.*                            {;}
-"."                                         {return ('.');}
-";"                                         {return (';');}
-":"                                         {return (':');}
-"["                                         {return ('[');}
-"]"                                         {return (']');}
-"{"                                         {return ('{');}
-"}"                                         {return ('}');}
-"("                                         {return PAREN_IZQ; }
-")"                                         {return PAREN_DER; }
-","                                         {return (',');}
-"principal"                                 {return PRINCIPAL;}
-"fin"                                       {return FIN;}
-"="                                         {return ASIGNADOR;}
-"+"                                         {return SUMA;}
-"-"                                         {return RESTA;}
-"*"                                         {return  MULTIP;}
-"/"                                         {return DIVISION;}
-"%"                                         {return MODULO;}
-">"                                         {return MAYOR;}
-"<"                                         {return MENOR;}
-"<="                                        {return MENORIGUAL;}
-">="                                        {return MAYORIGUAL;}
-"=="                                        {return IGUAL;}
-"!="                                        {return NOIGUAL;}
-"++"                                        {return AUMENTAR;}
-"--"                                        {return DISMINUIR;}
-"constante"                                 {return CONSTANTE;}
-"si"                                        {return SI;}
-"desde"                                     {return DESDE;}
-"hacer"                                     {return HACER;}
-"salto"                                     {return SALTO;}
-"mientras"                                  {return MIENTRAS;}
-"cuando"                                    {return CUANDO;}
-"sino"                                      {return SINO;}
-"elegir"                                    {return ELEGIR;}
-"caso"                                      {return CASO;}
-"defecto"                                   {return DEFECTO;}
-"hasta"                                     {return HASTA;}
-"cadena"                                    {return T_CADENA;}
-"logico"                                    {return T_LOGICO;}
-"entero"                                    {return T_ENTERO;}
-"decimal"                                   {return T_DECIMAL;}
-"caracter"                                  {return T_CARACTER;}
-"continuar"                                 {return CONTINUAR;}
-"romper"                                    {return ROMPER;}
-"funcion"                                   {return FUNCION;}
-"clase"                                     {return CLASE;}
-"propiedad"                                 {return PROPIEDAD;}
-"esta"                                      {return ESTA;}
-"constructor"                               {return CONSTRUCTOR;}
-"retorno"                                   {return RETORNO;}
-
-{digito}+|"-"{digito}+                      {return ENTERO;}
-{digito}+"."{digito}+                       {return DECIMAL;}
-{boleano}                                   {return LOGICO;}
-({letra}|"_")({letra}|{digito}|"_")*        {return NOMBRECAMPO;}
-"\'"({letra}|{digito})"\'"                  {return CARACTER;}
-"\""({letra}|{digito}|{ignora})*"\""        {return CADENA;}
+/*--------------------------------------------------------------------
+ *
+ * flex definitions
+ *
+ *------------------------------------------------------------------*/
+DIGIT    [0-9]
+ID       [_a-zA-Z][_a-zA-Z0-9]*
 
 %%
 
+[ \t\r\n]+  {
+    /* eat up whitespace */
+    BeginToken(yytext);
+    }
+{DIGIT}+  {
+    BeginToken(yytext);
+    yylval.value = atof(yytext);
+    return VALUE;
+    }
+{DIGIT}+"."{DIGIT}*        {
+    BeginToken(yytext);
+    yylval.value = atof(yytext);
+    return VALUE;
+    }
+{DIGIT}+[eE]["+""-"]?{DIGIT}*        {
+    BeginToken(yytext);
+    yylval.value = atof(yytext);
+    return VALUE;
+    }
+{DIGIT}+"."{DIGIT}*[eE]["+""-"]?{DIGIT}*        {
+    BeginToken(yytext);
+    yylval.value = atof(yytext);
+    return VALUE;
+    }
+{ID}        {
+    BeginToken(yytext);
+    yylval.string = malloc(strlen(yytext)+1);
+    strcpy(yylval.string, yytext);
+    return IDENTIFIER;
+    }
+"+"       { BeginToken(yytext); return ADD; }
+"-"       { BeginToken(yytext); return SUB; }
+"*"       { BeginToken(yytext); return MULT; }
+"/"       { BeginToken(yytext); return DIV; }
+"%"       { BeginToken(yytext); return MOD; }
+"("       { BeginToken(yytext); return LBRACE; }
+")"       { BeginToken(yytext); return RBRACE; }
+";"       { BeginToken(yytext); return SEMICOLON; }
+"="       { BeginToken(yytext); return ASSIGN; }
+.         {
+    BeginToken(yytext);
+    return yytext[0];
+}
+
+
+%%

@@ -1,29 +1,4 @@
-principal()
-    #sin tipo de dato
-    numero = 0
-    _numero = 0
-    b = verdadero
-
-    #sin valor
-    cadena s
-
-    #con tipo de dato
-    entero i = 100
-    decimal d = 10.0
-    caracter c = 'a'
-    s = "se asigna valor a variable"
-
-    #constantes
-    constante decimal PI = 3.14
-
-    x = a + b
-    x = a + (b * 1)
-    x = a + b + (b * 1)
-    x = (b * 1) + a
-    x = (b * 1) + (a - 2)
-
-    x = my_function(_numero)
-    x = c++
-
-    x = (b * 1) + (a - (func()))
-fin
+a = 3
+aa = a * 4
+b = aa / ( a - 1 )
+e = aa % b

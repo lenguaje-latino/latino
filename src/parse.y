@@ -1,13 +1,25 @@
 %{
-int yystopparser=0;
+#include "latino.h"
+
+#define YYERROR_VERBOSE 1
+
+static Variable *var;
 %}
 
-%token PRINCIPAL FIN NOMBRECAMPO ENTERO DECIMAL LOGICO CARACTER CADENA T_CADENA
-T_LOGICO T_ENTERO T_DECIMAL T_CARACTER ASIGNADOR SUMA RESTA MULTIP
-DIVISION MODULO AUMENTAR DISMINUIR SI MAYOR MENOR IGUAL MAYORIGUAL MENORIGUAL
-NOIGUAL DESDE HACER SALTO MIENTRAS SINO ELEGIR CASO HASTA CONTINUAR ROMPER
-CONSTANTE CUANDO DEFECTO FUNCION CLASE PROPIEDAD ESTA CONSTRUCTOR RETORNO
-NEGATIVO PAREN_IZQ PAREN_DER
+%defines
+%union {
+    double value;
+    char *string;
+}
+
+%token <string>   IDENTIFIER
+%token <value>    VALUE
+%type <value> expression
+
+%token LBRACE
+%token RBRACE
+%token ASSIGN
+%token SEMICOLON
 
 /*
  * presedencia de operadores
@@ -17,282 +29,97 @@ NEGATIVO PAREN_IZQ PAREN_DER
  *
  */
 
-%left SUMA RESTA
-%left MULTIP DIVISION MODULO
-%left NEGATIVO
+%left ADD SUB
+%left MULT DIV MOD
+%left NEG
 
 
-%start programa
+%start program
+
+%%
+
+
+program
+    : statement
+    | statement program
+    | statement error program
+      {
+      yyerrok;
+      }
+    ;
+
+statement
+    : IDENTIFIER
+      {
+        var = VarGet($1, &@1);
+      }
+      ASSIGN expression
+      {
+        VarSetValue(var, $4);
+      }
+    | expression
+    ;
+
+expression
+    : LBRACE expression RBRACE
+      {
+        $$ = $2;
+      }
+    | SUB expression %prec NEG
+      {
+        $$ = - $2;
+      }
+    | expression ADD expression
+      {
+        $$ = ReduceAdd($1, $3, &@3);
+        if (  debug  )
+          printf("reduce %lf + %lf => %lf\n", $1, $3, $$);
+      }
+    | expression SUB expression
+      {
+        $$ = ReduceSub($1, $3, &@3);
+        if (  debug  )
+          printf("reduce %lf - %lf => %lf\n", $1, $3, $$);
+      }
+    | expression MULT expression
+      {
+        $$ = ReduceMult($1, $3, &@3);
+        if (  debug  )
+          printf("reduce %lf * %lf => %lf\n", $1, $3, $$);
+      }
+    | expression DIV expression
+      {
+        $$ = ReduceDiv($1, $3, &@3);
+        if (  debug  )
+          printf("reduce %lf / %lf => %lf\n", $1, $3, $$);
+      }
+    | VALUE
+      {
+        $$ = $1;
+      }
+    | expression MOD expression
+      {
+        $$ = ReduceMod($1, $3, &@3);
+        if (  debug  )
+          printf("reduce %lf % %lf => %lf\n", $1, $3, $$);
+      }
+    | VALUE
+      {
+        $$ = $1;
+      }
+    | IDENTIFIER
+      {
+        $$ = VarGetValue($1, &@1);
+        if (  debug  )
+          printf("identifier %s => %lf\n", $1, $$);
+      }
+    ;
 
 %%
 
-programa:
-principal funciones clases
-| principal funciones
-| principal  clases
-| clases funciones
-| principal
-| funciones
-| clases
-;
+extern
+void yyerror(char *s)
+{
+    PrintError(s);
+}
 
-principal:
-PRINCIPAL PAREN_IZQ parametrosrecibe PAREN_DER lineascodigo FIN;
-
-lineascodigo:
-lineacodigo
-|
-;
-
-lineacodigo:
-lineacodigo linea
-| linea
-;
-
-linea:
-invocarmetodo
-| crearvariable
-| crearconstante
-| buclecondicion
-| CONTINUAR
-| ROMPER
-| incredismivariable
-| propiedades
-| asignaProp
-| funciones
-| ctor
-| regresar
-;
-
-invocarmetodo:
-NOMBRECAMPO PAREN_IZQ parametrosenvio PAREN_DER
-;
-
-parametrosenvio:
-parenvio
-|
-;
-
-parenvio:
-penvio ',' penvio
-| penvio
-;
-
-penvio:
-valor
-| NOMBRECAMPO;
-
-parametrosrecibe:
-parecibe
-|
-;
-
-parecibe:
-precibe ',' precibe
-| precibe
-;
-
-precibe:
-tipodato NOMBRECAMPO ASIGNADOR valor
-| tipodato NOMBRECAMPO
-;
-
-valor:
-LOGICO
-| ENTERO
-| DECIMAL
-| CARACTER
-| CADENA;
-
-crearvariable:
-tipodato NOMBRECAMPO
-| tipodato NOMBRECAMPO asignarvalor
-| NOMBRECAMPO asignarvalor
-;
-
-crearconstante:
-CONSTANTE tipodato NOMBRECAMPO ASIGNADOR valor
-| CONSTANTE NOMBRECAMPO ASIGNADOR valor
-;
-
-tipodato:
-T_LOGICO
-| T_ENTERO
-| T_DECIMAL
-| T_CARACTER
-| T_CADENA
-;
-
-asignarvalor:
-ASIGNADOR operasignacion
-| ASIGNADOR valor
-| ASIGNADOR NOMBRECAMPO
-;
-
-operasignacion:
-expresion
-| invocarmetodo
-| incredismivariable
-;
-
-expresion:
-primary
-| primary SUMA primary
-| primary RESTA primary
-| primary MULTIP primary
-| primary DIVISION primary
-| primary MODULO primary
-| expresion SUMA primary
-| expresion RESTA primary
-| expresion MULTIP primary
-| expresion DIVISION primary
-| expresion MODULO primary
-;
-
-primary:
-valor
-| NOMBRECAMPO
-| PAREN_IZQ expresion PAREN_DER
-| invocarmetodo
-;
-
-incredismivariable:
-NOMBRECAMPO incdis
-| incdis NOMBRECAMPO
-;
-
-incdis:
-AUMENTAR
-| DISMINUIR
-;
-
-buclecondicion:
-condicionif
-| condicionswitch
-| buclefor
-| buclewhile
-| bucledo
-;
-
-condicionif:
-condicionsi
-| condicionsi condicionno
-;
-
-condicionsi:
-SI PAREN_IZQ condicion PAREN_DER lineascodigo FIN
-| SI PAREN_IZQ condicion PAREN_DER lineascodigo condicionno
-;
-
-condicion:
-valor condicional valor
-| valor condicional NOMBRECAMPO
-| NOMBRECAMPO condicional valor
-| NOMBRECAMPO condicional NOMBRECAMPO
-| NOMBRECAMPO
-| LOGICO
-;
-
-condicional:
-MAYOR
-| MENOR
-| IGUAL
-| MAYORIGUAL
-| MENORIGUAL
-| NOIGUAL
-;
-
-condicionno:
-SINO lineascodigo FIN
-;
-
-condicionswitch:
-ELEGIR PAREN_IZQ NOMBRECAMPO PAREN_DER casos FIN
-| ELEGIR PAREN_IZQ NOMBRECAMPO PAREN_DER casos elegirotro
-;
-
-casos:
-casos uncaso
-| uncaso
-;
-
-uncaso:
-CASO valor ':' lineascodigo
-|
-;
-
-elegirotro:
-DEFECTO ':' lineascodigo FIN
-;
-
-buclefor:
-DESDE iniciafor HASTA finfor lineascodigo FIN
-| DESDE iniciafor HASTA iniciafor inc lineascodigo FIN
-;
-
-iniciafor:
-tipodato NOMBRECAMPO asignarvalor
-| NOMBRECAMPO asignarvalor
-| NOMBRECAMPO
-| valor
-;
-
-finfor:
-NOMBRECAMPO
-| valor
-;
-
-inc:
-SALTO asignarvalor
-;
-
-buclewhile:
-MIENTRAS PAREN_IZQ condicion PAREN_DER lineascodigo FIN
-;
-
-bucledo:
-HACER lineascodigo CUANDO PAREN_IZQ condicion PAREN_DER
-;
-
-funciones:
-funciones func
-| func
-;
-
-func:
-FUNCION NOMBRECAMPO PAREN_IZQ parametrosrecibe PAREN_DER lineascodigo FIN
-;
-
-clases:
-clases clas
-| clas
-;
-
-clas:
-CLASE NOMBRECAMPO lineascodigo FIN
-| CLASE NOMBRECAMPO ':' NOMBRECAMPO lineascodigo FIN
-;
-
-propiedades:
-propiedades prop
-| prop
-;
-
-prop:
-PROPIEDAD tipodato NOMBRECAMPO
-;
-
-asignaProp:
-ESTA '.' NOMBRECAMPO asignarvalor
-;
-
-ctor:
-CONSTRUCTOR PAREN_IZQ parametrosrecibe PAREN_DER lineascodigo FIN
-;
-
-regresar:
-RETORNO operasignacion
-| RETORNO
-;
-
-%%

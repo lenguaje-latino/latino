@@ -9,7 +9,7 @@
 #include <stdlib.h>
 #include <stdarg.h>
 #include <float.h>
-#include "lex.yy.c"
+#include "parse.h"
 
 /*
  * global variable
@@ -43,6 +43,7 @@ extern double ReduceAdd(double, double, YYLTYPE*);
 extern double ReduceSub(double, double, YYLTYPE*);
 extern double ReduceMult(double, double, YYLTYPE*);
 extern double ReduceDiv(double, double, YYLTYPE*);
+extern double ReduceMod(double, double, YYLTYPE*);
 
 extern Variable *VarGet(char*, YYLTYPE*);
 extern void VarSetValue(Variable*, double);
