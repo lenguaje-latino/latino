@@ -1,17 +1,3 @@
-/*! @file cmath.c
- * @brief mathematical functions
- *********************************************************************
- * a simple calculator with variables
- *
- * sample-files for a artikel in developerworks.ibm.com
- * Author: Christian Hagen, chagen@de.ibm.com
- *
- * @par cmath.c
- * basic mathematical functions
- * + some functions for handling variables
- *
- *********************************************************************
- */
 #include "latino.h"
 #include <math.h>
 
