@@ -1,4 +1,5 @@
 %option noyywrap
+%option warn
 
 %{
 #include "latino.h"
@@ -17,12 +18,19 @@
  *------------------------------------------------------------------*/
 DIGIT    [0-9]
 ID       [_a-zA-Z][_a-zA-Z0-9]*
+IGNORE   [ \t\r\n]+
+COMMENT  "#".*
 
 %%
 
-[ \t\r\n]+  {
+{IGNORE} {
     /* eat up whitespace */
     BeginToken(yytext);
+    }
+{COMMENT} {
+    /* ignore comments */
+    BeginToken(yytext);
+    return VALUE;
     }
 {DIGIT}+  {
     BeginToken(yytext);
@@ -59,10 +67,6 @@ ID       [_a-zA-Z][_a-zA-Z0-9]*
 ")"       { BeginToken(yytext); return RBRACE; }
 ";"       { BeginToken(yytext); return SEMICOLON; }
 "="       { BeginToken(yytext); return ASSIGN; }
-.         {
-    BeginToken(yytext);
-    return yytext[0];
-}
-
+.         { BeginToken(yytext); return yytext[0]; }
 
 %%

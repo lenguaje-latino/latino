@@ -12,6 +12,8 @@ static Variable *var;
     char *string;
 }
 
+%token COMMENT
+%token <string> T_DECIMAL
 %token <string>   IDENTIFIER
 %token <value>    VALUE
 %type <value> expression
@@ -41,6 +43,7 @@ static Variable *var;
 
 program
     : statement
+    | COMMENT
     | statement program
     | statement error program
       {
@@ -92,10 +95,6 @@ expression
         $$ = ReduceDiv($1, $3, &@3);
         if (  debug  )
           printf("reduce %lf / %lf => %lf\n", $1, $3, $$);
-      }
-    | VALUE
-      {
-        $$ = $1;
       }
     | expression MOD expression
       {

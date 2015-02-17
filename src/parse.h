@@ -39,20 +39,38 @@
    /* Put the tokens into the symbol table, so that GDB and other debuggers
       know about them.  */
    enum yytokentype {
-     IDENTIFIER = 258,
-     VALUE = 259,
-     LBRACE = 260,
-     RBRACE = 261,
-     ASSIGN = 262,
-     SEMICOLON = 263,
-     SUB = 264,
-     ADD = 265,
-     MOD = 266,
-     DIV = 267,
-     MULT = 268,
-     NEG = 269
+     COMMENT = 258,
+     T_DECIMAL = 259,
+     IDENTIFIER = 260,
+     VALUE = 261,
+     LBRACE = 262,
+     RBRACE = 263,
+     ASSIGN = 264,
+     SEMICOLON = 265,
+     SUB = 266,
+     ADD = 267,
+     MOD = 268,
+     DIV = 269,
+     MULT = 270,
+     NEG = 271
    };
 #endif
+/* Tokens.  */
+#define COMMENT 258
+#define T_DECIMAL 259
+#define IDENTIFIER 260
+#define VALUE 261
+#define LBRACE 262
+#define RBRACE 263
+#define ASSIGN 264
+#define SEMICOLON 265
+#define SUB 266
+#define ADD 267
+#define MOD 268
+#define DIV 269
+#define MULT 270
+#define NEG 271
+
 
 
 
@@ -69,7 +87,7 @@ typedef union YYSTYPE
 
 
 /* Line 1676 of yacc.c  */
-#line 73 "src/parse.h"
+#line 91 "src/parse.h"
 } YYSTYPE;
 # define YYSTYPE_IS_TRIVIAL 1
 # define yystype YYSTYPE /* obsolescent; will be withdrawn */

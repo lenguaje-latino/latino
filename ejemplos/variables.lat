@@ -1,4 +1,8 @@
+#este es un comentario
 a = 3
 aa = a * 4
-b = aa / ( a - 1 )
+b = aa / ( a - 1 ) #calcula b
 e = aa % b
+
+#pending
+decimal d = 10.589
