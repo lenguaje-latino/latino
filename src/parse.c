@@ -74,7 +74,7 @@
 
 #define YYERROR_VERBOSE 1
 
-static Variable *var;
+static variable *var;
 
 
 /* Line 189 of yacc.c  */
@@ -469,8 +469,8 @@ static const yytype_int8 yyrhs[] =
 /* YYRLINE[YYN] -- source line where rule number YYN was defined.  */
 static const yytype_uint8 yyrline[] =
 {
-       0,    45,    45,    46,    47,    48,    56,    55,    63,    67,
-      71,    75,    81,    87,    93,    99,   105,   109
+       0,    43,    43,    44,    45,    46,    54,    53,    61,    65,
+      69,    73,    79,    85,    91,    97,   103,   107
 };
 #endif
 
@@ -1420,34 +1420,34 @@ yyreduce:
         case 5:
 
 /* Line 1455 of yacc.c  */
-#line 49 "src/parse.y"
+#line 47 "src/parse.y"
     {
-      yyerrok;
+        yyerrok;
       }
     break;
 
   case 6:
 
 /* Line 1455 of yacc.c  */
-#line 56 "src/parse.y"
+#line 54 "src/parse.y"
     {
-        var = VarGet((yyvsp[(1) - (1)].string), &(yylsp[(1) - (1)]));
+        var = var_get((yyvsp[(1) - (1)].string), &(yylsp[(1) - (1)]));
       }
     break;
 
   case 7:
 
 /* Line 1455 of yacc.c  */
-#line 60 "src/parse.y"
+#line 58 "src/parse.y"
     {
-        VarSetValue(var, (yyvsp[(4) - (4)].value));
+        var_set_value(var, (yyvsp[(4) - (4)].value));
       }
     break;
 
   case 9:
 
 /* Line 1455 of yacc.c  */
-#line 68 "src/parse.y"
+#line 66 "src/parse.y"
     {
         (yyval.value) = (yyvsp[(2) - (3)].value);
       }
@@ -1456,7 +1456,7 @@ yyreduce:
   case 10:
 
 /* Line 1455 of yacc.c  */
-#line 72 "src/parse.y"
+#line 70 "src/parse.y"
     {
         (yyval.value) = - (yyvsp[(2) - (2)].value);
       }
@@ -1465,9 +1465,9 @@ yyreduce:
   case 11:
 
 /* Line 1455 of yacc.c  */
-#line 76 "src/parse.y"
+#line 74 "src/parse.y"
     {
-        (yyval.value) = ReduceAdd((yyvsp[(1) - (3)].value), (yyvsp[(3) - (3)].value), &(yylsp[(3) - (3)]));
+        (yyval.value) = reduce_add((yyvsp[(1) - (3)].value), (yyvsp[(3) - (3)].value), &(yylsp[(3) - (3)]));
         if (  debug  )
           printf("reduce %lf + %lf => %lf\n", (yyvsp[(1) - (3)].value), (yyvsp[(3) - (3)].value), (yyval.value));
       }
@@ -1476,9 +1476,9 @@ yyreduce:
   case 12:
 
 /* Line 1455 of yacc.c  */
-#line 82 "src/parse.y"
+#line 80 "src/parse.y"
     {
-        (yyval.value) = ReduceSub((yyvsp[(1) - (3)].value), (yyvsp[(3) - (3)].value), &(yylsp[(3) - (3)]));
+        (yyval.value) = reduce_sub((yyvsp[(1) - (3)].value), (yyvsp[(3) - (3)].value), &(yylsp[(3) - (3)]));
         if (  debug  )
           printf("reduce %lf - %lf => %lf\n", (yyvsp[(1) - (3)].value), (yyvsp[(3) - (3)].value), (yyval.value));
       }
@@ -1487,9 +1487,9 @@ yyreduce:
   case 13:
 
 /* Line 1455 of yacc.c  */
-#line 88 "src/parse.y"
+#line 86 "src/parse.y"
     {
-        (yyval.value) = ReduceMult((yyvsp[(1) - (3)].value), (yyvsp[(3) - (3)].value), &(yylsp[(3) - (3)]));
+        (yyval.value) = reduce_mult((yyvsp[(1) - (3)].value), (yyvsp[(3) - (3)].value), &(yylsp[(3) - (3)]));
         if (  debug  )
           printf("reduce %lf * %lf => %lf\n", (yyvsp[(1) - (3)].value), (yyvsp[(3) - (3)].value), (yyval.value));
       }
@@ -1498,9 +1498,9 @@ yyreduce:
   case 14:
 
 /* Line 1455 of yacc.c  */
-#line 94 "src/parse.y"
+#line 92 "src/parse.y"
     {
-        (yyval.value) = ReduceDiv((yyvsp[(1) - (3)].value), (yyvsp[(3) - (3)].value), &(yylsp[(3) - (3)]));
+        (yyval.value) = reduce_div((yyvsp[(1) - (3)].value), (yyvsp[(3) - (3)].value), &(yylsp[(3) - (3)]));
         if (  debug  )
           printf("reduce %lf / %lf => %lf\n", (yyvsp[(1) - (3)].value), (yyvsp[(3) - (3)].value), (yyval.value));
       }
@@ -1509,9 +1509,9 @@ yyreduce:
   case 15:
 
 /* Line 1455 of yacc.c  */
-#line 100 "src/parse.y"
+#line 98 "src/parse.y"
     {
-        (yyval.value) = ReduceMod((yyvsp[(1) - (3)].value), (yyvsp[(3) - (3)].value), &(yylsp[(3) - (3)]));
+        (yyval.value) = reduce_mod((yyvsp[(1) - (3)].value), (yyvsp[(3) - (3)].value), &(yylsp[(3) - (3)]));
         if (  debug  )
           printf("reduce %lf % %lf => %lf\n", (yyvsp[(1) - (3)].value), (yyvsp[(3) - (3)].value), (yyval.value));
       }
@@ -1520,7 +1520,7 @@ yyreduce:
   case 16:
 
 /* Line 1455 of yacc.c  */
-#line 106 "src/parse.y"
+#line 104 "src/parse.y"
     {
         (yyval.value) = (yyvsp[(1) - (1)].value);
       }
@@ -1529,9 +1529,9 @@ yyreduce:
   case 17:
 
 /* Line 1455 of yacc.c  */
-#line 110 "src/parse.y"
+#line 108 "src/parse.y"
     {
-        (yyval.value) = VarGetValue((yyvsp[(1) - (1)].string), &(yylsp[(1) - (1)]));
+        (yyval.value) = var_get_value((yyvsp[(1) - (1)].string), &(yylsp[(1) - (1)]));
         if (  debug  )
           printf("identifier %s => %lf\n", (yyvsp[(1) - (1)].string), (yyval.value));
       }
@@ -1759,13 +1759,12 @@ yyreturn:
 
 
 /* Line 1675 of yacc.c  */
-#line 117 "src/parse.y"
+#line 115 "src/parse.y"
 
 
 extern
 void yyerror(char *s)
 {
-    PrintError(s);
+    print_error(s);
 }
-
 

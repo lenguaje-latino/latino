@@ -47,12 +47,12 @@ char *dumpString(char *s) {
     return buf;
 }
 /*--------------------------------------------------------------------
- * DumpRow
+ * dump_row
  *
  * dumps the contents of the current row
  *------------------------------------------------------------------*/
 extern
-void DumpRow(void) {
+void dump_row(void) {
     if (  nRow == 0  ) {
         int i;
         fprintf(stdout, "       |");
@@ -74,7 +74,7 @@ void DumpRow(void) {
  * marks the current read token
  *------------------------------------------------------------------*/
 extern
-void PrintError(char *errorstring, ...) {
+void print_error(char *errorstring, ...) {
     static char errmsg[10000];
     va_list args;
 
@@ -119,19 +119,19 @@ int getNextLine(void) {
 
     nRow += 1;
     lBuffer = strlen(buffer);
-    DumpRow();
+    dump_row();
 
     /*================================================================*/
     /* that's it -----------------------------------------------------*/
     return 0;
 }
 /*--------------------------------------------------------------------
- * GetNextChar
+ * get_next_char
  *
  * reads a character from input for flex
  *------------------------------------------------------------------*/
 extern
-int GetNextChar(char *b, int maxBuffer) {
+int get_next_char(char *b, int maxBuffer) {
     int frc;
 
     /*================================================================*/
@@ -153,17 +153,17 @@ int GetNextChar(char *b, int maxBuffer) {
     nBuffer += 1;
 
     if (  debug  )
-        printf("GetNextChar() => '%c'0x%02x at %d\n",
+        printf("get_next_char() => '%c'0x%02x at %d\n",
                dumpChar(b[0]), b[0], nBuffer);
     return b[0]==0?0:1;
 }
 /*--------------------------------------------------------------------
- * BeginToken
+ * begin_token
  *
  * marks the beginning of a new token
  *------------------------------------------------------------------*/
 extern
-void BeginToken(char *t) {
+void begin_token(char *t) {
     /*================================================================*/
     /* remember last read token --------------------------------------*/
     nTokenStart = nTokenNextStart;
@@ -233,7 +233,7 @@ int main(int argc, char *argv[]) {
 
     /*================================================================*/
     /* parse it ------------------------------------------------------*/
-    DumpRow();
+    dump_row();
     if (  getNextLine() == 0  )
         yyparse();
 
@@ -242,6 +242,6 @@ int main(int argc, char *argv[]) {
     free(buffer);
     fclose(file);
     printf("Contenido final de las variables:\n");
-    DumpVariables("  ");
+    dump_variables("  ");
     return 0;
 }

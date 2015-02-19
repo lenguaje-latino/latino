@@ -5,191 +5,168 @@
  * local variables
  */
 #define MAXVARS 1000
-static Variable vars[MAXVARS];
+static variable vars[MAXVARS];
 static int nVars=0;
 
 /*--------------------------------------------------------------------
- * ReduceAdd
+ * reduce_add
  *
  * add two numbers
  *------------------------------------------------------------------*/
 extern
-double ReduceAdd(double a, double b, YYLTYPE *bloc) {
-  return a + b;
+double reduce_add(double a, double b, YYLTYPE *bloc) {
+    return a + b;
 }
 /*--------------------------------------------------------------------
- * ReduceSub
+ * reduce_sub
  *
  * sub two numbers
  *------------------------------------------------------------------*/
 extern
-double ReduceSub(double a, double b, YYLTYPE *bloc) {
-  return a - b;
+double reduce_sub(double a, double b, YYLTYPE *bloc) {
+    return a - b;
 }
 /*--------------------------------------------------------------------
- * ReduceMult
+ * reduce_mult
  *
  * multiply two numbers
  *------------------------------------------------------------------*/
 extern
-double ReduceMult(double a, double b, YYLTYPE *bloc) {
-  return a * b;
+double reduce_mult(double a, double b, YYLTYPE *bloc) {
+    return a * b;
 }
 /*--------------------------------------------------------------------
- * ReduceDiv
+ * reduce_div
  *
  * divide two numbers, check for zero
  *------------------------------------------------------------------*/
 extern
-double ReduceDiv(double a, double b, YYLTYPE *bloc) {
-  if (  b == 0  ) {
-// simple error-message
-/*
-    printf("division by zero!\n");
-*/
-// complex error-meessage
-/*
-    PrintError("division by zero!");
-*/
-
-// complex error-printing
-/* */
-    PrintError("division by zero! Line %d:c%d to %d:c%d",
-                        bloc->first_line, bloc->first_column,
-                        bloc->last_line, bloc->last_column);
-/* */
-    return FLT_MAX;
-  }
-  return a / b;
+double reduce_div(double a, double b, YYLTYPE *bloc) {
+    if (  b == 0  ) {
+        print_error("division by zero! Line %d:c%d to %d:c%d",
+                    bloc->first_line, bloc->first_column,
+                    bloc->last_line, bloc->last_column);
+        return FLT_MAX;
+    }
+    return a / b;
 }
 /*--------------------------------------------------------------------
- * ReduceMod
+ * reduce_mod
  *
  * divide two numbers and return remainder check for zero
  *------------------------------------------------------------------*/
 extern
-double ReduceMod(double a, double b, YYLTYPE *bloc) {
-  if (  b == 0  ) {
-// simple error-message
-/*
-    printf("division by zero!\n");
-*/
-// complex error-meessage
-/*
-    PrintError("division by zero!");
-*/
-
-// complex error-printing
-/* */
-    PrintError("division by zero! Line %d:c%d to %d:c%d",
-                        bloc->first_line, bloc->first_column,
-                        bloc->last_line, bloc->last_column);
-/* */
-    return FLT_MAX;
-  }
-  return fmod(a, b);
+double reduce_mod(double a, double b, YYLTYPE *bloc) {
+    if (  b == 0  ) {
+        print_error("division by zero! Line %d:c%d to %d:c%d",
+                    bloc->first_line, bloc->first_column,
+                    bloc->last_line, bloc->last_column);
+        return FLT_MAX;
+    }
+    return fmod(a, b);
 }
 /*--------------------------------------------------------------------
- * findVar
+ * find_var
  *
  * simple search for a variable
  *------------------------------------------------------------------*/
 static
-Variable *findVar(char *varname) {
-  int i;
-  if (  varname == NULL  )
+variable *find_var(char *varname) {
+    int i;
+    if (  varname == NULL  )
+        return NULL;
+    for (i=0; i<nVars; i++)
+        if (  strcmp(vars[i].name, varname) == 0  )
+            return vars+i;
     return NULL;
-  for (i=0; i<nVars; i++)
-    if (  strcmp(vars[i].name, varname) == 0  )
-      return vars+i;
-  return NULL;
 }
 /*--------------------------------------------------------------------
- * addVar
+ * add_var
  *
  * simple search for a variable
  *------------------------------------------------------------------*/
 static
-Variable *addVar(char *varname) {
+variable *add_var(char *varname) {
 
-  if (  varname == NULL  )
-    return NULL;
-  if (  nVars >= MAXVARS  ) {
-    PrintError("maximum number (%d) of variables reached", MAXVARS);
-    return NULL;
-  }
-  vars[nVars].value = 0;
-  vars[nVars].name = malloc(strlen(varname)+1);
-  if (  vars[nVars].name == NULL  ) {
-    PrintError("internal error creating variable '%s'", varname);
-    return NULL;
-  }
-  strcpy(vars[nVars].name, varname);
-  nVars += 1;
+    if (  varname == NULL  )
+        return NULL;
+    if (  nVars >= MAXVARS  ) {
+        print_error("maximum number (%d) of variables reached", MAXVARS);
+        return NULL;
+    }
+    vars[nVars].value = 0;
+    vars[nVars].name = malloc(strlen(varname)+1);
+    if (  vars[nVars].name == NULL  ) {
+        print_error("internal error creating variable '%s'", varname);
+        return NULL;
+    }
+    strcpy(vars[nVars].name, varname);
+    nVars += 1;
 
-  return vars+nVars-1;
+    return vars+nVars-1;
 }
 /*--------------------------------------------------------------------
- * VarGet
+ * var_get
  *
  * gets a variable for reference, create if necessary
  *------------------------------------------------------------------*/
 extern
-Variable *VarGet(char *varname, YYLTYPE *bloc) {
-  Variable *var;
+variable *var_get(char *varname, YYLTYPE *bloc) {
+    variable *var;
 
-  if (  debug  )
-    printf("get var %s\n", varname);
-  var = findVar(varname);
-  if (  var == NULL  )
-    var = addVar(varname);
-  return var;
+    if (  debug  )
+        printf("get var %s\n", varname);
+    var = find_var(varname);
+    if (  var == NULL  )
+        var = add_var(varname);
+    return var;
 }
 /*--------------------------------------------------------------------
- * VarSetValue
+ * var_set_value
  *
  * sets a varible to a value
  *------------------------------------------------------------------*/
 extern
-void VarSetValue(Variable *var, double value) {
-  if (  var == NULL  )
-    return;
-  if (  debug  )
-    printf("set var %s to %lf\n", var->name, value);
-  var->value = value;
-}
-/*--------------------------------------------------------------------
- * VarGetValue
- *
- * get the contents of a variable
- *------------------------------------------------------------------*/
-extern
-double VarGetValue(char *varname, YYLTYPE *bloc) {
-  Variable *var = NULL;
-
-  var = findVar(varname);
-  if (  var == NULL  ) {
-    PrintError("reference to unknown variable '%s'", varname);
-    var = addVar(varname);
+void var_set_value(variable *var, double value) {
     if (  var == NULL  )
-      return 0;
-  }
-  if (  debug  )
-    printf("get var %s => %lf\n", var->name, var->value);
-  return var->value;
+        return;
+    if (  debug  )
+        printf("set var %s to %lf\n", var->name, value);
+    var->value = value;
 }
 /*--------------------------------------------------------------------
- * DumpVariables
+ * var_get_value
  *
  * get the contents of a variable
  *------------------------------------------------------------------*/
 extern
-void DumpVariables(char *prefix) {
-  int i;
+double var_get_value(char *varname, YYLTYPE *bloc) {
+    variable *var = NULL;
 
-  printf("%s Name------------------ Value----------\n", prefix);
-  for (i=0; i<nVars; i++)
-    printf("%s '%-20.20s' %g\n", prefix,
-                        vars[i].name, vars[i].value);
-  return;
+    var = find_var(varname);
+    if (  var == NULL  ) {
+        print_error("reference to unknown variable '%s'", varname);
+        var = add_var(varname);
+        if (  var == NULL  )
+            return 0;
+    }
+    if (  debug  )
+        printf("get var %s => %lf\n", var->name, var->value);
+    return var->value;
 }
+/*--------------------------------------------------------------------
+ * dump_variables
+ *
+ * get the contents of a variable
+ *------------------------------------------------------------------*/
+extern
+void dump_variables(char *prefix) {
+    int i;
+
+    printf("%s Name------------------ Value----------\n", prefix);
+    for (i=0; i<nVars; i++)
+        printf("%s '%-20.20s' %g\n", prefix,
+               vars[i].name, vars[i].value);
+    return;
+}
+

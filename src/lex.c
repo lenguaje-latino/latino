@@ -484,7 +484,7 @@ char *yytext;
 #include "latino.h"
 
 #define YY_INPUT(buf,result,max_size)  {\
-    result = GetNextChar(buf, max_size); \
+    result = get_next_char(buf, max_size); \
     if (  result <= 0  ) \
       result = YY_NULL; \
     }
@@ -772,7 +772,7 @@ YY_RULE_SETUP
 #line 26 "src/lex.l"
 {
     /* eat up whitespace */
-    BeginToken(yytext);
+    begin_token(yytext);
     }
 	YY_BREAK
 case 2:
@@ -780,7 +780,7 @@ YY_RULE_SETUP
 #line 30 "src/lex.l"
 {
     /* ignore comments */
-    BeginToken(yytext);
+    begin_token(yytext);
     return VALUE;
     }
 	YY_BREAK
@@ -788,7 +788,7 @@ case 3:
 YY_RULE_SETUP
 #line 35 "src/lex.l"
 {
-    BeginToken(yytext);
+    begin_token(yytext);
     yylval.value = atof(yytext);
     return VALUE;
     }
@@ -797,7 +797,7 @@ case 4:
 YY_RULE_SETUP
 #line 40 "src/lex.l"
 {
-    BeginToken(yytext);
+    begin_token(yytext);
     yylval.value = atof(yytext);
     return VALUE;
     }
@@ -806,7 +806,7 @@ case 5:
 YY_RULE_SETUP
 #line 45 "src/lex.l"
 {
-    BeginToken(yytext);
+    begin_token(yytext);
     yylval.value = atof(yytext);
     return VALUE;
     }
@@ -815,7 +815,7 @@ case 6:
 YY_RULE_SETUP
 #line 50 "src/lex.l"
 {
-    BeginToken(yytext);
+    begin_token(yytext);
     yylval.value = atof(yytext);
     return VALUE;
     }
@@ -824,7 +824,7 @@ case 7:
 YY_RULE_SETUP
 #line 55 "src/lex.l"
 {
-    BeginToken(yytext);
+    begin_token(yytext);
     yylval.string = malloc(strlen(yytext)+1);
     strcpy(yylval.string, yytext);
     return IDENTIFIER;
@@ -833,52 +833,52 @@ YY_RULE_SETUP
 case 8:
 YY_RULE_SETUP
 #line 61 "src/lex.l"
-{ BeginToken(yytext); return ADD; }
+{ begin_token(yytext); return ADD; }
 	YY_BREAK
 case 9:
 YY_RULE_SETUP
 #line 62 "src/lex.l"
-{ BeginToken(yytext); return SUB; }
+{ begin_token(yytext); return SUB; }
 	YY_BREAK
 case 10:
 YY_RULE_SETUP
 #line 63 "src/lex.l"
-{ BeginToken(yytext); return MULT; }
+{ begin_token(yytext); return MULT; }
 	YY_BREAK
 case 11:
 YY_RULE_SETUP
 #line 64 "src/lex.l"
-{ BeginToken(yytext); return DIV; }
+{ begin_token(yytext); return DIV; }
 	YY_BREAK
 case 12:
 YY_RULE_SETUP
 #line 65 "src/lex.l"
-{ BeginToken(yytext); return MOD; }
+{ begin_token(yytext); return MOD; }
 	YY_BREAK
 case 13:
 YY_RULE_SETUP
 #line 66 "src/lex.l"
-{ BeginToken(yytext); return LBRACE; }
+{ begin_token(yytext); return LBRACE; }
 	YY_BREAK
 case 14:
 YY_RULE_SETUP
 #line 67 "src/lex.l"
-{ BeginToken(yytext); return RBRACE; }
+{ begin_token(yytext); return RBRACE; }
 	YY_BREAK
 case 15:
 YY_RULE_SETUP
 #line 68 "src/lex.l"
-{ BeginToken(yytext); return SEMICOLON; }
+{ begin_token(yytext); return SEMICOLON; }
 	YY_BREAK
 case 16:
 YY_RULE_SETUP
 #line 69 "src/lex.l"
-{ BeginToken(yytext); return ASSIGN; }
+{ begin_token(yytext); return ASSIGN; }
 	YY_BREAK
 case 17:
 YY_RULE_SETUP
 #line 70 "src/lex.l"
-{ BeginToken(yytext); return yytext[0]; }
+{ begin_token(yytext); return yytext[0]; }
 	YY_BREAK
 case 18:
 YY_RULE_SETUP

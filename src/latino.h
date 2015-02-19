@@ -26,28 +26,28 @@ extern void yyerror(char*);
 /*
  * ccalc.c
  */
-extern void DumpRow(void);
-extern int GetNextChar(char *b, int maxBuffer);
-extern void BeginToken(char*);
-extern void PrintError(char *s, ...);
+extern void dump_row(void);
+extern int get_next_char(char *b, int maxBuffer);
+extern void begin_token(char*);
+extern void print_error(char *s, ...);
 
 /*
  * cmath.c
  */
-typedef struct _Variable {
+typedef struct _variable {
   char    *name;
   double  value;
-} Variable;
+} variable;
 
-extern double ReduceAdd(double, double, YYLTYPE*);
-extern double ReduceSub(double, double, YYLTYPE*);
-extern double ReduceMult(double, double, YYLTYPE*);
-extern double ReduceDiv(double, double, YYLTYPE*);
-extern double ReduceMod(double, double, YYLTYPE*);
+extern double reduce_add(double, double, YYLTYPE*);
+extern double reduce_sub(double, double, YYLTYPE*);
+extern double reduce_mult(double, double, YYLTYPE*);
+extern double reduce_div(double, double, YYLTYPE*);
+extern double reduce_mod(double, double, YYLTYPE*);
 
-extern Variable *VarGet(char*, YYLTYPE*);
-extern void VarSetValue(Variable*, double);
-extern double VarGetValue(char*, YYLTYPE*);
-extern void DumpVariables(char *prefix);
+extern variable *var_get(char*, YYLTYPE*);
+extern void var_set_value(variable*, double);
+extern double var_get_value(char*, YYLTYPE*);
+extern void dump_variables(char *prefix);
 
 #endif /* LATINO_H */

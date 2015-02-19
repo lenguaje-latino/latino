@@ -3,7 +3,7 @@
 
 #define YYERROR_VERBOSE 1
 
-static Variable *var;
+static variable *var;
 %}
 
 %defines
@@ -35,11 +35,9 @@ static Variable *var;
 %left MULT DIV MOD
 %left NEG
 
-
 %start program
 
 %%
-
 
 program
     : statement
@@ -47,18 +45,18 @@ program
     | statement program
     | statement error program
       {
-      yyerrok;
+        yyerrok;
       }
     ;
 
 statement
     : IDENTIFIER
       {
-        var = VarGet($1, &@1);
+        var = var_get($1, &@1);
       }
       ASSIGN expression
       {
-        VarSetValue(var, $4);
+        var_set_value(var, $4);
       }
     | expression
     ;
@@ -74,31 +72,31 @@ expression
       }
     | expression ADD expression
       {
-        $$ = ReduceAdd($1, $3, &@3);
+        $$ = reduce_add($1, $3, &@3);
         if (  debug  )
           printf("reduce %lf + %lf => %lf\n", $1, $3, $$);
       }
     | expression SUB expression
       {
-        $$ = ReduceSub($1, $3, &@3);
+        $$ = reduce_sub($1, $3, &@3);
         if (  debug  )
           printf("reduce %lf - %lf => %lf\n", $1, $3, $$);
       }
     | expression MULT expression
       {
-        $$ = ReduceMult($1, $3, &@3);
+        $$ = reduce_mult($1, $3, &@3);
         if (  debug  )
           printf("reduce %lf * %lf => %lf\n", $1, $3, $$);
       }
     | expression DIV expression
       {
-        $$ = ReduceDiv($1, $3, &@3);
+        $$ = reduce_div($1, $3, &@3);
         if (  debug  )
           printf("reduce %lf / %lf => %lf\n", $1, $3, $$);
       }
     | expression MOD expression
       {
-        $$ = ReduceMod($1, $3, &@3);
+        $$ = reduce_mod($1, $3, &@3);
         if (  debug  )
           printf("reduce %lf % %lf => %lf\n", $1, $3, $$);
       }
@@ -108,7 +106,7 @@ expression
       }
     | IDENTIFIER
       {
-        $$ = VarGetValue($1, &@1);
+        $$ = var_get_value($1, &@1);
         if (  debug  )
           printf("identifier %s => %lf\n", $1, $$);
       }
@@ -119,6 +117,5 @@ expression
 extern
 void yyerror(char *s)
 {
-    PrintError(s);
+    print_error(s);
 }
-
