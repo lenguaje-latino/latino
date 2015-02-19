@@ -26,7 +26,7 @@ El lenguaje deberá de ser de código abierto bajo la licencia del MIT por ser l
 http://opensource.org/licenses/MIT
 
 Leer LICENSE.txt
-### Requirement
+### Requiere:
 * bison
 * flex
 * gcc / mingw32 (windows)
