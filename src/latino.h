@@ -21,7 +21,7 @@ extern int debug;
  */
 extern int yylex(void);
 extern int yyparse(void);
-extern void yyerror(char*);
+//extern void yyerror(char*);
 
 /*
  * ccalc.c
@@ -38,6 +38,17 @@ typedef struct _variable {
   char    *name;
   double  value;
 } variable;
+
+//extern double reduce_add(double, double, YYLTYPE*);
+//extern double reduce_sub(double, double, YYLTYPE*);
+//extern double reduce_mult(double, double, YYLTYPE*);
+//extern double reduce_div(double, double, YYLTYPE*);
+//extern double reduce_mod(double, double, YYLTYPE*);
+
+//extern variable *var_get(char*, YYLTYPE*);
+//extern void var_set_value(variable*, double);
+//extern double var_get_value(char*, YYLTYPE*);
+//extern void dump_variables(char *prefix);
 
 /* symbol table */
 struct symbol{  /* a variable name */
@@ -59,7 +70,7 @@ struct symlist {
     struct symbol *next;
 };
 
-struct symlist *newsymlist(struct symlist *sym, struct symlist *next);
+struct symlist *newsymlist(struct symbol *sym, struct symlist *next);
 void symlistfree(struct symlist *sl);
 
 /* node types
@@ -91,6 +102,12 @@ struct ast {
     struct ast *r;
 };
 
+struct fncall {     /* built-in function */
+    int nodetype;   /* type C */
+    struct ast *l;
+    enum bifs functype;
+};
+
 struct ufncall {
     int nodetype;
     struct ast *l;
@@ -114,6 +131,12 @@ struct symref {
     struct symbol *s;
 };
 
+struct symasgn {
+    int nodetype;   /* type = */
+    struct symbol *s;
+    struct ast *v;
+};
+
 /* build AST */
 struct ast *newast(int nodetype, struct ast *l, struct ast *r);
 struct ast *newcmp(int cmptype, struct ast *l, struct ast *r);
@@ -125,14 +148,15 @@ struct ast *newnum(double d);
 struct ast *newflow(int nodetype, struct ast *cond, struct ast *tl, struct ast *tr);
 
 /* define a function */
-void dodef(struct symbol *name, struct symlist *syms, struct ast *stmts);
+void
+dodef(struct symbol *name, struct symlist *syms, struct ast *func);
 
 /* evaluate an AST */
 double eval(struct ast *);
 
 /* delete and free an AST */
 void treefree(struct ast *);
-//void yyerror(char *s, ...);
+void yyerror(char *s, ...);
 /* interface to the lexer */
 extern int yylineno;    /* from lexer */
 

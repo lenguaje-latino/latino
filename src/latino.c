@@ -166,22 +166,22 @@ extern
 void begin_token(char *t) {
     /*================================================================*/
     /* remember last read token --------------------------------------*/
-    nTokenStart = nTokenNextStart;
-    nTokenLength = strlen(t);
-    nTokenNextStart = nBuffer; // + 1;
+    /*nTokenStart = nTokenNextStart;*/
+    /*nTokenLength = strlen(t);*/
+    /*nTokenNextStart = nBuffer; // + 1;*/
 
     /*================================================================*/
     /* location for bison --------------------------------------------*/
-    yylloc.first_line = nRow;
-    yylloc.first_column = nTokenStart;
-    yylloc.last_line = nRow;
-    yylloc.last_column = nTokenStart + nTokenLength - 1;
+    /*yylloc.first_line = nRow;*/
+    /*yylloc.first_column = nTokenStart;*/
+    /*yylloc.last_line = nRow;*/
+    /*yylloc.last_column = nTokenStart + nTokenLength - 1;*/
 
-    if (  debug  ) {
-        printf("Token '%s' a %d:%d siguiente a %d\n", dump_string(t),
-               yylloc.first_column,
-               yylloc.last_column, nTokenNextStart);
-    }
+    /*if (  debug  ) {*/
+        /*printf("Token '%s' a %d:%d siguiente a %d\n", dump_string(t),*/
+               /*yylloc.first_column,*/
+               /*yylloc.last_column, nTokenNextStart);*/
+    /*}*/
 }
 /*--------------------------------------------------------------------
  * main
@@ -242,6 +242,6 @@ int main(int argc, char *argv[]) {
     free(buffer);
     fclose(file);
     printf("Contenido final de las variables:\n");
-    dump_variables("  ");
+    /*dump_variables("  ");*/
     return 0;
 }

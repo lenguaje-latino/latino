@@ -1,6 +1,4 @@
 %{
-#include <stdio.h>
-#include <stdlib.h>
 #include "latino.h"
 
 #define YYERROR_VERBOSE 1
@@ -13,7 +11,7 @@ static variable *var;
     struct ast *a;
     double d;
     struct symbol *s;   /* which symbol */
-    struct symbol *sl;  
+    struct symbol *sl;
     int fn; /* which function */
 }
 
@@ -49,7 +47,7 @@ static variable *var;
 
 %%
 
-calclist: /* nothing */ 
+calclist: /* nothing */
     | calclist stmt EOL {
         printf("= %4.4g\n> ", eval($2));
         treefree($2);
@@ -58,12 +56,10 @@ calclist: /* nothing */
         dodef($3, $5, $8);
         printf("Define %s\n> ", $3->name);
     }
-    | COMMENT
-    | calclist error EOL
-      {
+    | calclist error EOL {
         yyerrok;
         printf("> ");
-      }
+    }
     ;
 
 stmt:
@@ -135,7 +131,7 @@ exp
     }
     ;
 
-list:   /* nothing */ 
+list:   /* nothing */
     { $$ = NULL; }
     | stmt list {
         if ($2 == NULL)
@@ -145,8 +141,8 @@ list:   /* nothing */
     }
     ;
 
-explist: 
-    exp 
+explist:
+    exp
     | exp ',' explist {
         $$ = newast('L', $1, $3);
     }
@@ -164,7 +160,7 @@ symlist:
 %%
 
 extern
-void yyerror(char *s)
+void yyerror(char *s, ...)
 {
     print_error(s);
 }
