@@ -17,23 +17,23 @@ static int lMaxBuffer      = 1000;
 static char *buffer;
 
 /*--------------------------------------------------------------------
- * dumpChar
+ * dump_char
  *
  * printable version of a char
  *------------------------------------------------------------------*/
 static
-char dumpChar(char c) {
+char dump_char(char c) {
     if (  isprint(c)  )
         return c;
     return '@';
 }
 /*--------------------------------------------------------------------
- * dumpString
+ * dump_string
  *
  * printable version of a string upto 100 character
  *------------------------------------------------------------------*/
 static
-char *dumpString(char *s) {
+char *dump_string(char *s) {
     static char buf[101];
     int i;
     int n = strlen(s);
@@ -42,7 +42,7 @@ char *dumpString(char *s) {
         n = 100;
 
     for (i=0; i<n; i++)
-        buf[i] = dumpChar(s[i]);
+        buf[i] = dump_char(s[i]);
     buf[i] = 0;
     return buf;
 }
@@ -91,12 +91,12 @@ void print_error(char *errorstring, ...) {
     fprintf(stdout, "Error: %s\n", errmsg);
 }
 /*--------------------------------------------------------------------
- * getNextLine
+ * get_next_line
  *
  * reads a line into the buffer
  *------------------------------------------------------------------*/
 static
-int getNextLine(void) {
+int get_next_line(void) {
     int i;
     char *p;
 
@@ -142,7 +142,7 @@ int get_next_char(char *b, int maxBuffer) {
     /*================================================================*/
     /* read next line if at the end of the current -------------------*/
     while (  nBuffer >= lBuffer  ) {
-        frc = getNextLine();
+        frc = get_next_line();
         if (  frc != 0  )
             return 0;
     }
@@ -154,7 +154,7 @@ int get_next_char(char *b, int maxBuffer) {
 
     if (  debug  )
         printf("get_next_char() => '%c'0x%02x at %d\n",
-               dumpChar(b[0]), b[0], nBuffer);
+               dump_char(b[0]), b[0], nBuffer);
     return b[0]==0?0:1;
 }
 /*--------------------------------------------------------------------
@@ -178,7 +178,7 @@ void begin_token(char *t) {
     yylloc.last_column = nTokenStart + nTokenLength - 1;
 
     if (  debug  ) {
-        printf("Token '%s' a %d:%d siguiente a %d\n", dumpString(t),
+        printf("Token '%s' a %d:%d siguiente a %d\n", dump_string(t),
                yylloc.first_column,
                yylloc.last_column, nTokenNextStart);
     }
@@ -234,7 +234,7 @@ int main(int argc, char *argv[]) {
     /*================================================================*/
     /* parse it ------------------------------------------------------*/
     dump_row();
-    if (  getNextLine() == 0  )
+    if (  get_next_line() == 0  )
         yyparse();
 
     /*================================================================*/

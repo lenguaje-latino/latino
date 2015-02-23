@@ -39,15 +39,101 @@ typedef struct _variable {
   double  value;
 } variable;
 
-extern double reduce_add(double, double, YYLTYPE*);
-extern double reduce_sub(double, double, YYLTYPE*);
-extern double reduce_mult(double, double, YYLTYPE*);
-extern double reduce_div(double, double, YYLTYPE*);
-extern double reduce_mod(double, double, YYLTYPE*);
+/* symbol table */
+struct symbol{  /* a variable name */
+    char *name;
+    double value;
+    struct ast *func;   /* stmt for the function */
+    struct symlist *syms;   /* list of dummy args */
+};
 
-extern variable *var_get(char*, YYLTYPE*);
-extern void var_set_value(variable*, double);
-extern double var_get_value(char*, YYLTYPE*);
-extern void dump_variables(char *prefix);
+/* simple symtab of fixed size */
+#define NHASH 9997
+struct symbol symtab[NHASH];
+
+struct symbol *lookup(char*);
+
+/* list of symbols, for an argument list */
+struct symlist {
+    struct symbol *sym;
+    struct symbol *next;
+};
+
+struct symlist *newsymlist(struct symlist *sym, struct symlist *next);
+void symlistfree(struct symlist *sl);
+
+/* node types
+ * + - * / |
+ * 0-7 comparison ops, bit coded 04 equal, 02 less, 01 grieta
+ * M unary minus
+ * L expression or statement list
+ * I IF statement
+ * W WHILE statement
+ * N symbol ref
+ * = assigment
+ * S list of symbols
+ * F built in function call
+ * C user function call
+ */
+
+enum bifs {
+    B_sqrt = 1,
+    B_exp,
+    B_log,
+    B_print
+};
+
+/* nodes in the abstract syntax tree */
+/* all have common initial nodetype */
+struct ast {
+    int nodetype;
+    struct ast *l;
+    struct ast *r;
+};
+
+struct ufncall {
+    int nodetype;
+    struct ast *l;
+    struct symbol *s;
+};
+
+struct flow {
+    int nodetype;   /* type I or W */
+    struct ast *cond;   /* condition */
+    struct ast *tl; /* then branch or do list */
+    struct ast *el;
+};
+
+struct numval {
+    int nodetype;   /* type K */
+    double number;
+};
+
+struct symref {
+    int nodetype;   /* type N */
+    struct symbol *s;
+};
+
+/* build AST */
+struct ast *newast(int nodetype, struct ast *l, struct ast *r);
+struct ast *newcmp(int cmptype, struct ast *l, struct ast *r);
+struct ast *newfunc(int functype, struct ast *l);
+struct ast *newcall(struct symbol *s, struct ast *l);
+struct ast *newref(struct symbol *s);
+struct ast *newasgn(struct symbol *s, struct ast *v);
+struct ast *newnum(double d);
+struct ast *newflow(int nodetype, struct ast *cond, struct ast *tl, struct ast *tr);
+
+/* define a function */
+void dodef(struct symbol *name, struct symlist *syms, struct ast *stmts);
+
+/* evaluate an AST */
+double eval(struct ast *);
+
+/* delete and free an AST */
+void treefree(struct ast *);
+//void yyerror(char *s, ...);
+/* interface to the lexer */
+extern int yylineno;    /* from lexer */
 
 #endif /* LATINO_H */

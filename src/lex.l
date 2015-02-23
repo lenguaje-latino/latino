@@ -1,4 +1,3 @@
-%option noyywrap
 %option warn
 
 %{
@@ -58,15 +57,40 @@ COMMENT  "#".*
     strcpy(yylval.string, yytext);
     return IDENTIFIER;
     }
-"+"       { begin_token(yytext); return ADD; }
-"-"       { begin_token(yytext); return SUB; }
-"*"       { begin_token(yytext); return MULT; }
-"/"       { begin_token(yytext); return DIV; }
-"%"       { begin_token(yytext); return MOD; }
-"("       { begin_token(yytext); return LBRACE; }
-")"       { begin_token(yytext); return RBRACE; }
-";"       { begin_token(yytext); return SEMICOLON; }
-"="       { begin_token(yytext); return ASSIGN; }
-.         { begin_token(yytext); return yytext[0]; }
+
+ /* single character ops */
+"+" |
+"-" |
+"*" |
+"/" |
+"%" |
+"(" |
+")" |
+";" |
+"="     { return yytext[0];}
+
+ /* comparison ops, all are CMP token */
+">"     { yylval.fn = 1; return CMP; } 
+"<"     { yylval.fn = 2; return CMP; } 
+"!="    { yylval.fn = 3; return CMP; } 
+"=="    { yylval.fn = 4; return CMP; } 
+">="    { yylval.fn = 5; return CMP; } 
+"<="    { yylval.fn = 6; return CMP; } 
+
+ /* keywords */
+
+"si"        { return IF; }
+"sino"      { return ELSE; }
+"mietras"   { return WHILE; }
+"hacer"     { return DO; }
+"decimal"   { return LET; }
+
+ /* built-in functions */
+"raiz"          { yylval.fn = B_sqrt; return FUNC; }
+"exp"           { yylval.fn = B_exp; return FUNC; }
+"log"           { yylval.fn = B_log; return FUNC; }
+"imprimir"      { yylval.fn = B_print; return FUNC; }
+
+.       { begin_token(yytext); return yytext[0]; }
 
 %%

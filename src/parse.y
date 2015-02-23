@@ -1,4 +1,6 @@
 %{
+#include <stdio.h>
+#include <stdlib.h>
 #include "latino.h"
 
 #define YYERROR_VERBOSE 1
@@ -8,20 +10,29 @@ static variable *var;
 
 %defines
 %union {
-    double value;
-    char *string;
+    struct ast *a;
+    double d;
+    struct symbol *s;   /* which symbol */
+    struct symbol *sl;  
+    int fn; /* which function */
 }
 
+/* declare tokens */
+%token <d> NUMBER
+%token <s> NAME
+%token <fn> FUNC
+%token EOL
+%token IF ELSE WHILE DO LET
 %token COMMENT
-%token <string> T_DECIMAL
-%token <string>   IDENTIFIER
-%token <value>    VALUE
-%type <value> expression
-
 %token LBRACE
 %token RBRACE
 %token ASSIGN
 %token SEMICOLON
+
+%nonassoc <fn> CMP
+%nonassoc '|' UMINUS
+%type <a> exp stmt list explist
+%type <sl> symlist
 
 /*
  * presedencia de operadores
@@ -30,86 +41,124 @@ static variable *var;
  * 2: + -
  *
  */
-
 %left ADD SUB
 %left MULT DIV MOD
 %left NEG
 
-%start program
+%start calclist
 
 %%
 
-program
-    : statement
+calclist: /* nothing */ 
+    | calclist stmt EOL {
+        printf("= %4.4g\n> ", eval($2));
+        treefree($2);
+    }
+    | calclist LET NAME '(' symlist ')' '=' list EOL {
+        dodef($3, $5, $8);
+        printf("Define %s\n> ", $3->name);
+    }
     | COMMENT
-    | statement program
-    | statement error program
+    | calclist error EOL
       {
         yyerrok;
+        printf("> ");
       }
     ;
 
-statement
-    : IDENTIFIER
-      {
-        var = var_get($1, &@1);
-      }
-      ASSIGN expression
-      {
-        var_set_value(var, $4);
-      }
-    | expression
+stmt:
+    IF exp list {
+        $$ = newflow('I', $2, $3, NULL);
+    }
+    | IF exp list ELSE list {
+        $$ = newflow('I', $2, $3, $5);
+    }
+    | WHILE exp DO list {
+        $$ = newflow('W', $2, $4, NULL);
+    }
+    | exp
     ;
 
-expression
-    : LBRACE expression RBRACE
+exp
+    : LBRACE exp RBRACE
       {
         $$ = $2;
       }
-    | SUB expression %prec NEG
+    | '-' exp %prec UMINUS {
+        $$ = newast('M', $2, NULL);
+    }
+    | exp ADD exp
       {
-        $$ = - $2;
-      }
-    | expression ADD expression
-      {
-        $$ = reduce_add($1, $3, &@3);
+        $$ = newast('+', $1, $3);
         if (  debug  )
           printf("reduce %lf + %lf => %lf\n", $1, $3, $$);
       }
-    | expression SUB expression
+    | exp SUB exp
       {
-        $$ = reduce_sub($1, $3, &@3);
+        $$ = newast('-', $1, $3);
         if (  debug  )
           printf("reduce %lf - %lf => %lf\n", $1, $3, $$);
       }
-    | expression MULT expression
+    | exp MULT exp
       {
-        $$ = reduce_mult($1, $3, &@3);
+        $$ = newast('*', $1, $3);
         if (  debug  )
           printf("reduce %lf * %lf => %lf\n", $1, $3, $$);
       }
-    | expression DIV expression
+    | exp DIV exp
       {
-        $$ = reduce_div($1, $3, &@3);
+        $$ = newast('/', $1, $3);
         if (  debug  )
           printf("reduce %lf / %lf => %lf\n", $1, $3, $$);
       }
-    | expression MOD expression
+    | exp MOD exp
       {
-        $$ = reduce_mod($1, $3, &@3);
+        $$ = newast('%', $1, $3);
         if (  debug  )
           printf("reduce %lf % %lf => %lf\n", $1, $3, $$);
       }
-    | VALUE
+    | NUMBER
       {
-        $$ = $1;
+        $$ = newnum($1);
       }
-    | IDENTIFIER
-      {
-        $$ = var_get_value($1, &@1);
-        if (  debug  )
-          printf("identifier %s => %lf\n", $1, $$);
-      }
+    | NAME {
+        $$ = newref($1);
+    }
+    | NAME '=' exp {
+        $$ = newasgn($1, $3);
+    }
+    | FUNC '(' explist ')' {
+        $$ = newfunc($1, $3);
+    }
+    | NAME '(' explist ')' {
+        $$ = newcall($1, $3);
+    }
+    ;
+
+list:   /* nothing */ 
+    { $$ = NULL; }
+    | stmt list {
+        if ($2 == NULL)
+            $$ = $1;
+        else
+            $$ = newast('L', $1, $2);
+    }
+    ;
+
+explist: 
+    exp 
+    | exp ',' explist {
+        $$ = newast('L', $1, $3);
+    }
+    ;
+
+symlist:
+    NAME {
+        $$ = newsymlist($1, NULL);
+    }
+    | NAME ',' symlist {
+        $$ = newsymlist($1, $3);
+    }
     ;
 
 %%

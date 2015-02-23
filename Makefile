@@ -43,5 +43,8 @@ $(TARGET) : src/parse.o src/latino.o src/lex.o src/cmath.o
 	$(CC) $(CFLAGS) src/parse.o src/latino.o src/lex.o src/cmath.o -o $(TARGET) $(LIBS)
 
 clean :
+	rm -f src/lex.c
+	rm -f src/parse.h
+	rm -f src/parse.c
 	rm -f src/*.o
 .PHONY : clean

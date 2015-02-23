@@ -1,21 +1,19 @@
+/* A Bison parser, made by GNU Bison 3.0.2.  */
 
-/* A Bison parser, made by GNU Bison 2.4.1.  */
+/* Bison interface for Yacc-like parsers in C
 
-/* Skeleton interface for Bison's Yacc-like parsers in C
-   
-      Copyright (C) 1984, 1989, 1990, 2000, 2001, 2002, 2003, 2004, 2005, 2006
-   Free Software Foundation, Inc.
-   
+   Copyright (C) 1984, 1989-1990, 2000-2013 Free Software Foundation, Inc.
+
    This program is free software: you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
    the Free Software Foundation, either version 3 of the License, or
    (at your option) any later version.
-   
+
    This program is distributed in the hope that it will be useful,
    but WITHOUT ANY WARRANTY; without even the implied warranty of
    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
    GNU General Public License for more details.
-   
+
    You should have received a copy of the GNU General Public License
    along with this program.  If not, see <http://www.gnu.org/licenses/>.  */
 
@@ -28,86 +26,72 @@
    special exception, which will cause the skeleton and the resulting
    Bison output files to be licensed under the GNU General Public
    License without this special exception.
-   
+
    This special exception was added by the Free Software Foundation in
    version 2.2 of Bison.  */
 
+#ifndef YY_YY_SRC_PARSE_H_INCLUDED
+# define YY_YY_SRC_PARSE_H_INCLUDED
+/* Debug traces.  */
+#ifndef YYDEBUG
+# define YYDEBUG 0
+#endif
+#if YYDEBUG
+extern int yydebug;
+#endif
 
-/* Tokens.  */
+/* Token type.  */
 #ifndef YYTOKENTYPE
 # define YYTOKENTYPE
-   /* Put the tokens into the symbol table, so that GDB and other debuggers
-      know about them.  */
-   enum yytokentype {
-     COMMENT = 258,
-     T_DECIMAL = 259,
-     IDENTIFIER = 260,
-     VALUE = 261,
-     LBRACE = 262,
-     RBRACE = 263,
-     ASSIGN = 264,
-     SEMICOLON = 265,
-     SUB = 266,
-     ADD = 267,
-     MOD = 268,
-     DIV = 269,
-     MULT = 270,
-     NEG = 271
-   };
+  enum yytokentype
+  {
+    NUMBER = 258,
+    NAME = 259,
+    FUNC = 260,
+    EOL = 261,
+    IF = 262,
+    ELSE = 263,
+    WHILE = 264,
+    DO = 265,
+    LET = 266,
+    COMMENT = 267,
+    LBRACE = 268,
+    RBRACE = 269,
+    ASSIGN = 270,
+    SEMICOLON = 271,
+    CMP = 272,
+    UMINUS = 273,
+    ADD = 274,
+    SUB = 275,
+    MULT = 276,
+    DIV = 277,
+    MOD = 278,
+    NEG = 279
+  };
 #endif
-/* Tokens.  */
-#define COMMENT 258
-#define T_DECIMAL 259
-#define IDENTIFIER 260
-#define VALUE 261
-#define LBRACE 262
-#define RBRACE 263
-#define ASSIGN 264
-#define SEMICOLON 265
-#define SUB 266
-#define ADD 267
-#define MOD 268
-#define DIV 269
-#define MULT 270
-#define NEG 271
 
-
-
-
+/* Value type.  */
 #if ! defined YYSTYPE && ! defined YYSTYPE_IS_DECLARED
-typedef union YYSTYPE
+typedef union YYSTYPE YYSTYPE;
+union YYSTYPE
 {
+#line 12 "src/parse.y" /* yacc.c:1909  */
 
-/* Line 1676 of yacc.c  */
-#line 10 "src/parse.y"
+    struct ast *a;
+    double d;
+    struct symbol *s;   /* which symbol */
+    struct symbol *sl;  
+    int fn; /* which function */
 
-    double value;
-    char *string;
-
-
-
-/* Line 1676 of yacc.c  */
-#line 91 "src/parse.h"
-} YYSTYPE;
+#line 87 "src/parse.h" /* yacc.c:1909  */
+};
 # define YYSTYPE_IS_TRIVIAL 1
-# define yystype YYSTYPE /* obsolescent; will be withdrawn */
 # define YYSTYPE_IS_DECLARED 1
 #endif
 
+
 extern YYSTYPE yylval;
 
-#if ! defined YYLTYPE && ! defined YYLTYPE_IS_DECLARED
-typedef struct YYLTYPE
-{
-  int first_line;
-  int first_column;
-  int last_line;
-  int last_column;
-} YYLTYPE;
-# define yyltype YYLTYPE /* obsolescent; will be withdrawn */
-# define YYLTYPE_IS_DECLARED 1
-# define YYLTYPE_IS_TRIVIAL 1
-#endif
+int yyparse (void);
 
-extern YYLTYPE yylloc;
-
+#endif /* !YY_YY_SRC_PARSE_H_INCLUDED  */
