@@ -65,8 +65,9 @@ void dump_row(void) {
                 fprintf(stdout, ".");
         fprintf(stdout, "\n");
     }
-    else
+    else {
         fprintf(stdout, "%6d |%.*s", nRow, lBuffer, buffer);
+    }
 }
 /*--------------------------------------------------------------------
  * MarkToken
@@ -193,13 +194,6 @@ int main(int argc, char *argv[]) {
     int i;
     char *infile=NULL;
 
-    /*================================================================*/
-    /*----------------------------------------------------------------*/
-    debug = 0;
-    /*printf("  ===  latino: Nuevo lenguaje de programacion     ===  \n");*/
-    /*printf("  ***  author: primitivo.roman.montero@gmail.com  *** \n");*/
-    /*printf("  \n");*/
-
     for (i=1; i<argc; i++) {
         if (  strcmp(argv[i], "-debug") == 0  ) {
             printf("Debugging activado\n");
@@ -213,17 +207,12 @@ int main(int argc, char *argv[]) {
     if (  infile == NULL  )
         printf("Especifique un archivo\n");
 
-    /*================================================================*/
-    /* opening input -------------------------------------------------*/
-    /*printf("reading file '%s'\n", infile);*/
     file = fopen(infile, "r");
     if (  file == NULL  ) {
         printf("No se pudo abrir el archivo\n");
         return 12;
     }
 
-    /*================================================================*/
-    /*----------------------------------------------------------------*/
     buffer = malloc(lMaxBuffer);
     if (  buffer == NULL  ) {
         printf("No se pudo asignar %d bytes de memoria\n", lMaxBuffer);
@@ -231,17 +220,12 @@ int main(int argc, char *argv[]) {
         return 12;
     }
 
-    /*================================================================*/
-    /* parse it ------------------------------------------------------*/
-    dump_row();
-    if (  get_next_line() == 0  )
-        yyparse();
+    /*dump_row();*/
+    /*if ( get_next_line() == 0  )*/
+    yyparse();
 
-    /*================================================================*/
-    /* ending... -----------------------------------------------------*/
     free(buffer);
     fclose(file);
     printf("Contenido final de las variables:\n");
-    /*dump_variables("  ");*/
     return 0;
 }

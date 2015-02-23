@@ -20,7 +20,7 @@ extern int debug;
  * lex & parse
  */
 extern int yylex(void);
-extern int yyparse(void);
+//extern int yyparse(void);
 //extern void yyerror(char*);
 
 /*
@@ -67,7 +67,7 @@ struct symbol *lookup(char*);
 /* list of symbols, for an argument list */
 struct symlist {
     struct symbol *sym;
-    struct symbol *next;
+    struct symlist *next;
 };
 
 struct symlist *newsymlist(struct symbol *sym, struct symlist *next);
@@ -149,7 +149,7 @@ struct ast *newflow(int nodetype, struct ast *cond, struct ast *tl, struct ast *
 
 /* define a function */
 void
-dodef(struct symbol *name, struct symlist *syms, struct ast *func);
+dodef(struct symbol *name, struct symlist *syms, struct ast *stmts);
 
 /* evaluate an AST */
 double eval(struct ast *);

@@ -32,15 +32,15 @@ src/parse.o : src/parse.c
 src/latino.o : src/latino.c src/latino.h
 	$(CC) -g -c src/latino.c -o src/latino.o
 
-src/cmath.o : src/cmath.c src/latino.h
-	$(CC) -g -c src/cmath.c -o src/cmath.o
+src/eval.o : src/eval.c src/latino.h
+	$(CC) -g -c src/eval.c -o src/eval.o
 
 src/lex.o : src/lex.c
 	$(CC) -g -c src/lex.c -o src/lex.o
 
-$(TARGET) : src/parse.o src/latino.o src/lex.o src/cmath.o
+$(TARGET) : src/parse.o src/latino.o src/lex.o src/eval.o
 	mkdir -p "$$(dirname $(TARGET))"
-	$(CC) $(CFLAGS) src/parse.o src/latino.o src/lex.o src/cmath.o -o $(TARGET) $(LIBS)
+	$(CC) $(CFLAGS) src/parse.o src/latino.o src/lex.o src/eval.o -o $(TARGET) $(LIBS)
 
 clean :
 	rm -f src/lex.c

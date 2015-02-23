@@ -1,10 +1,2 @@
-#este es un comentario
-sq(10)
-#let sq(n)=e=1; while |((t=n/e)-e)>.001 do e=avg(e,t);;
-#a = 3
-#aa = a * 4
-#b = aa / ( a - 1 ) #calcula b
-#e = aa % b
-
-#pending
-#decimal d = 10.589
+funcion avg(a,b) = (a+b)/2.0;
+avg(3, sqrt(25))

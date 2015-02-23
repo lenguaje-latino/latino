@@ -44,23 +44,14 @@
      FUNC = 260,
      EOL = 261,
      IF = 262,
-     ELSE = 263,
-     WHILE = 264,
-     DO = 265,
-     LET = 266,
-     COMMENT = 267,
-     LBRACE = 268,
-     RBRACE = 269,
-     ASSIGN = 270,
-     SEMICOLON = 271,
-     CMP = 272,
-     UMINUS = 273,
-     SUB = 274,
-     ADD = 275,
-     MOD = 276,
-     DIV = 277,
-     MULT = 278,
-     NEG = 279
+     THEN = 263,
+     ELSE = 264,
+     WHILE = 265,
+     DO = 266,
+     LET = 267,
+     FUNCTION = 268,
+     CMP = 269,
+     UMINUS = 270
    };
 #endif
 /* Tokens.  */
@@ -69,23 +60,14 @@
 #define FUNC 260
 #define EOL 261
 #define IF 262
-#define ELSE 263
-#define WHILE 264
-#define DO 265
-#define LET 266
-#define COMMENT 267
-#define LBRACE 268
-#define RBRACE 269
-#define ASSIGN 270
-#define SEMICOLON 271
-#define CMP 272
-#define UMINUS 273
-#define SUB 274
-#define ADD 275
-#define MOD 276
-#define DIV 277
-#define MULT 278
-#define NEG 279
+#define THEN 263
+#define ELSE 264
+#define WHILE 265
+#define DO 266
+#define LET 267
+#define FUNCTION 268
+#define CMP 269
+#define UMINUS 270
 
 
 
@@ -95,18 +77,18 @@ typedef union YYSTYPE
 {
 
 /* Line 1676 of yacc.c  */
-#line 14 "src/parse.y"
+#line 7 "src/parse.y"
 
     struct ast *a;
     double d;
     struct symbol *s;   /* which symbol */
-    struct symbol *sl;
+    struct symlist *sl;
     int fn; /* which function */
 
 
 
 /* Line 1676 of yacc.c  */
-#line 110 "src/parse.h"
+#line 92 "src/parse.h"
 } YYSTYPE;
 # define YYSTYPE_IS_TRIVIAL 1
 # define yystype YYSTYPE /* obsolescent; will be withdrawn */

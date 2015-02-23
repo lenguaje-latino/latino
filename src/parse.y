@@ -1,9 +1,6 @@
 %{
 #include "latino.h"
-
 #define YYERROR_VERBOSE 1
-
-static variable *var;
 %}
 
 %defines
@@ -11,7 +8,7 @@ static variable *var;
     struct ast *a;
     double d;
     struct symbol *s;   /* which symbol */
-    struct symbol *sl;
+    struct symlist *sl;
     int fn; /* which function */
 }
 
@@ -20,12 +17,7 @@ static variable *var;
 %token <s> NAME
 %token <fn> FUNC
 %token EOL
-%token IF ELSE WHILE DO LET
-%token COMMENT
-%token LBRACE
-%token RBRACE
-%token ASSIGN
-%token SEMICOLON
+%token IF THEN ELSE WHILE DO LET FUNCTION
 
 %nonassoc <fn> CMP
 %nonassoc '|' UMINUS
@@ -39,9 +31,9 @@ static variable *var;
  * 2: + -
  *
  */
-%left ADD SUB
-%left MULT DIV MOD
-%left NEG
+%right '='
+%left '+' '-'
+%left '*' '/' '%'
 
 %start calclist
 
@@ -52,109 +44,50 @@ calclist: /* nothing */
         printf("= %4.4g\n> ", eval($2));
         treefree($2);
     }
-    | calclist LET NAME '(' symlist ')' '=' list EOL {
+    | calclist FUNCTION NAME '(' symlist ')' '=' list EOL {
         dodef($3, $5, $8);
         printf("Define %s\n> ", $3->name);
     }
-    | calclist error EOL {
-        yyerrok;
-        printf("> ");
-    }
+    | calclist error EOL { yyerrok; printf("> "); }
     ;
 
 stmt:
-    IF exp list {
-        $$ = newflow('I', $2, $3, NULL);
-    }
-    | IF exp list ELSE list {
-        $$ = newflow('I', $2, $3, $5);
-    }
-    | WHILE exp DO list {
-        $$ = newflow('W', $2, $4, NULL);
-    }
+    IF exp THEN list { $$ = newflow('I', $2, $4, NULL); }
+    | IF exp THEN list ELSE list { $$ = newflow('I', $2, $4, $6); }
+    | WHILE exp DO list { $$ = newflow('W', $2, $4, NULL); }
     | exp
     ;
 
-exp
-    : LBRACE exp RBRACE
-      {
-        $$ = $2;
-      }
-    | '-' exp %prec UMINUS {
-        $$ = newast('M', $2, NULL);
-    }
-    | exp ADD exp
-      {
-        $$ = newast('+', $1, $3);
-        if (  debug  )
-          printf("reduce %lf + %lf => %lf\n", $1, $3, $$);
-      }
-    | exp SUB exp
-      {
-        $$ = newast('-', $1, $3);
-        if (  debug  )
-          printf("reduce %lf - %lf => %lf\n", $1, $3, $$);
-      }
-    | exp MULT exp
-      {
-        $$ = newast('*', $1, $3);
-        if (  debug  )
-          printf("reduce %lf * %lf => %lf\n", $1, $3, $$);
-      }
-    | exp DIV exp
-      {
-        $$ = newast('/', $1, $3);
-        if (  debug  )
-          printf("reduce %lf / %lf => %lf\n", $1, $3, $$);
-      }
-    | exp MOD exp
-      {
-        $$ = newast('%', $1, $3);
-        if (  debug  )
-          printf("reduce %lf % %lf => %lf\n", $1, $3, $$);
-      }
-    | NUMBER
-      {
-        $$ = newnum($1);
-      }
-    | NAME {
-        $$ = newref($1);
-    }
-    | NAME '=' exp {
-        $$ = newasgn($1, $3);
-    }
-    | FUNC '(' explist ')' {
-        $$ = newfunc($1, $3);
-    }
-    | NAME '(' explist ')' {
-        $$ = newcall($1, $3);
-    }
-    ;
-
-list:   /* nothing */
-    { $$ = NULL; }
-    | stmt list {
-        if ($2 == NULL)
+list:   /* nothing */ { $$ = NULL; }
+    | stmt ';' list {
+        if ($3 == NULL)
             $$ = $1;
         else
-            $$ = newast('L', $1, $2);
+            $$ = newast('L', $1, $3);
     }
     ;
 
-explist:
-    exp
-    | exp ',' explist {
-        $$ = newast('L', $1, $3);
-    }
+exp: exp CMP exp { $$ = newcmp($2, $1, $3); }
+    | exp '+' exp { $$ = newast('+', $1, $3); }
+    | exp '-' exp { $$ = newast('-', $1, $3); }
+    | exp '*' exp { $$ = newast('*', $1, $3); }
+    | exp '/' exp { $$ = newast('/', $1, $3); }
+    | exp '%' exp { $$ = newast('%', $1, $3); }
+    | '(' exp ')' { $$ = $2; }
+    | '-' exp %prec UMINUS { $$ = newast('M', $2, NULL); }
+    | NUMBER { $$ = newnum($1); }
+    | NAME { $$ = newref($1); }
+    | NAME '=' exp { $$ = newasgn($1, $3); }
+    | FUNC '(' explist ')' { $$ = newfunc($1, $3); }
+    | NAME '(' explist ')' { $$ = newcall($1, $3); }
     ;
 
-symlist:
-    NAME {
-        $$ = newsymlist($1, NULL);
-    }
-    | NAME ',' symlist {
-        $$ = newsymlist($1, $3);
-    }
+explist: exp
+    | exp ',' explist { $$ = newast('L', $1, $3); }
+    ;
+
+symlist: NAME { $$ = newsymlist($1, NULL); }
+    | NAME ',' symlist { $$ = newsymlist($1, $3); }
     ;
 
 %%

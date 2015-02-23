@@ -11,9 +11,7 @@ static unsigned
 symhash(char *sym) {
     unsigned int hash = 0;
     unsigned c;
-
     while(c = *sym++) hash = hash*9 ^ c;
-
     return hash;
 }
 
@@ -21,7 +19,6 @@ struct symbol *
 lookup(char* sym) {
     struct symbol *sp = &symtab[symhash(sym)%NHASH];
     int scount        = NHASH; /* how many have we looked at */
-
     while(--scount >= 0) {
         if(sp->name && !strcmp(sp->name, sym)) {
             return sp;
@@ -63,6 +60,8 @@ newnum(double d)
     }
     a->nodetype = 'K';
     a->number = d;
+    //debug
+    printf("%d", d);
     return (struct ast *)a;
 }
 
@@ -372,7 +371,6 @@ calluser(struct ufncall *f)
     sl = fn->syms;
     for(nargs = 0; sl; sl = sl->next)
         nargs++;
-
     /* prepare to save them */
     oldval = (double *)malloc(nargs * sizeof(double));
     newval = (double *)malloc(nargs * sizeof(double));

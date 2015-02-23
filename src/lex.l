@@ -1,6 +1,7 @@
 %option yylineno
 %option noyywrap
 %option warn
+%option nodefault
 
 %{
 #include "latino.h"
@@ -12,29 +13,10 @@
     }
 %}
 
-DIGIT    [0-9]
-ID       [_a-zA-Z][_a-zA-Z0-9]*
-IGNORE   [ \t\r\n]+
-COMMENT  "#".*
+ /* float exponent */
+EXP ([Ee][-+]?[0-9]+)
 
 %%
-
-{IGNORE} {
-    /* eat up whitespace */
-    }
-{COMMENT} {
-    /* ignore comments */
-    }
-{DIGIT}+  {
-    }
-{DIGIT}+"."{DIGIT}*        {
-    }
-{DIGIT}+[eE]["+""-"]?{DIGIT}*        {
-    }
-{DIGIT}+"."{DIGIT}*[eE]["+""-"]?{DIGIT}*        {
-    }
-{ID}        {
-    }
 
  /* single character ops */
 "+" |
@@ -44,8 +26,10 @@ COMMENT  "#".*
 "%" |
 "(" |
 ")" |
+"," |
+"|" |
 ";" |
-"="     { return yytext[0];}
+"="     { return yytext[0]; }
 
  /* comparison ops, all are CMP token */
 ">"     { yylval.fn = 1; return CMP; }
@@ -57,17 +41,27 @@ COMMENT  "#".*
 
  /* keywords */
 "si"        { return IF; }
+"entonces"        { return IF; }
 "sino"      { return ELSE; }
-"mietras"   { return WHILE; }
+"mientras"   { return WHILE; }
 "hacer"     { return DO; }
-"decimal"   { return LET; }
+"funcion"   { return FUNCTION; }
+"let"   { return LET; }
 
  /*built-in functions */
-"raiz"          { yylval.fn = B_sqrt; return FUNC; }
+"sqrt"          { yylval.fn = B_sqrt; return FUNC; }
 "exp"           { yylval.fn = B_exp; return FUNC; }
 "log"           { yylval.fn = B_log; return FUNC; }
-"imprimir"      { yylval.fn = B_print; return FUNC; }
+"print"      { yylval.fn = B_print; return FUNC; }
 
-.       { begin_token(yytext); return yytext[0]; }
+ /* names */
+[_a-zA-Z][_a-zA-Z0-9]* { yylval.s = lookup(yytext); return NAME; }
+[0-9]+"."[0-9]*{EXP}? |
+"."?[0-9]+{EXP}? { yylval.d = atof(yytext); return NUMBER; }
+"#".* /* ignore comments */
+\\\n { printf("c> "); } /* ignore line continuation */
+[ \t] /* ignore whitespace */
+\n { return EOL; }
+.       { yyerror("Mystery character %c\n", *yytext); }
 
 %%
