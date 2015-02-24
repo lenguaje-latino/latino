@@ -18,9 +18,9 @@
 %token <fn> FUNC
 %token EOL
 %token IF END ELSE WHILE DO LET FUNCTION
+%token TOKEN_V TOKEN_F
 
 %nonassoc <fn> CMP
-%nonassoc '|' UMINUS
 %type <a> exp stmt list explist
 %type <sl> symlist
 
@@ -34,6 +34,7 @@
 %right '='
 %left '+' '-'
 %left '*' '/' '%'
+%left UMINUS
 
 %start calclist
 
@@ -69,6 +70,7 @@ list:   /* nothing */ { $$ = NULL; }
     ;
 
 exp: exp CMP exp { $$ = newcmp($2, $1, $3); }
+    | CMP        { $$ = newcmp($1, NULL, NULL); }
     | exp '+' exp { $$ = newast('+', $1, $3); }
     | exp '-' exp { $$ = newast('-', $1, $3); }
     | exp '*' exp { $$ = newast('*', $1, $3); }
@@ -82,7 +84,8 @@ exp: exp CMP exp { $$ = newcmp($2, $1, $3); }
     | NAME '(' explist ')' { $$ = newcall($1, $3); }
     ;
 
-explist: exp
+explist: /* nothing */ { $$ = NULL; }
+    | exp
     | exp ',' explist { $$ = newast('L', $1, $3); }
     ;
 

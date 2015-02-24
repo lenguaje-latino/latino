@@ -1,0 +1,28 @@
+#valor logico directo
+si(V)
+    imprimir(1)
+fin
+
+#asignado a una variable
+b = V
+si(b)
+    imprimir(1)
+fin
+
+#si-sino
+si(b)
+    imprimir(1)
+sino
+    imprimir(0)
+fin
+
+#si anidado
+entero i = 10
+si(i == 0)
+    imprimir(0)
+sino si(i > 0)
+        imprimir(1)
+    sino
+        imprimir(-1)
+    fin
+fin

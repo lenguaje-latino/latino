@@ -183,7 +183,7 @@ treefree(struct ast *a)
         if( ((struct flow *)a)->el) treefree( ((struct flow *)a)->el);
         break;
     default:
-        printf("internal error: free bad node %c\n", a->nodetype);
+        printf("error interno: nodo mal liberado %c\n", a->nodetype);
     }
     free(a); /* always free the node itself */
 }
@@ -247,7 +247,10 @@ eval(struct ast *a)
         v = eval(a->l) * eval(a->r);
         break;
     case '/':
-        v = eval(a->l) / eval(a->r);
+        if(eval(a->r) == 0)
+            printf("error: division por 0 \"%c\"\n", a->nodetype);
+        else
+            v = eval(a->l) / eval(a->r);
         break;
     case '|':
         v = fabs(eval(a->l));
@@ -273,6 +276,12 @@ eval(struct ast *a)
         break;
     case '6':
         v = (eval(a->l) <= eval(a->r))? 1 : 0;
+        break;
+    case '7':
+        v = 1;
+        break;
+    case '8':
+        v = 0;
         break;
     /* control flow */
     /* null expressions allowed in the grammar, so check for them */
@@ -315,7 +324,7 @@ eval(struct ast *a)
         v = calluser((struct ufncall *)a);
         break;
     default:
-        printf("internal error: bad node %c\n", a->nodetype);
+        printf("error interno: nodo incorrecto %c\n", a->nodetype);
     }
     return v;
 }
@@ -336,7 +345,7 @@ callbuiltin(struct fncall *f)
         printf("=> %4.4g\n", v);
         return v;
     default:
-        yyerror("definicion de funcion desconocida %d", functype);
+        yyerror("error: definicion de funcion desconocida %d", functype);
         return 0.0;
     }
 }
