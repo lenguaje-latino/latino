@@ -1,9 +1,0 @@
-principal()
-    i=0
-    hacer
-        si (i == 5)
-            romper
-        fin
-        ++i
-    cuando (verdadero)
-fin

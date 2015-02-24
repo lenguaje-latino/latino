@@ -190,6 +190,7 @@ treefree(struct ast *a)
 struct symlist *
 newsymlist(struct symbol *sym, struct symlist *next)
 {
+    //printf("newsymlist: %s\n", sym->name);
     struct symlist *sl = malloc(sizeof(struct symlist));
     if(!sl) {
         yyerror("sin espacio");
@@ -223,6 +224,7 @@ eval(struct ast *a)
         return 0.0;
     }
     switch(a->nodetype) {
+    /*printf("%s", a->nodetype);*/
     /* constant */
     case 'K':
         v = ((struct numval *)a)->number;
@@ -313,6 +315,14 @@ eval(struct ast *a)
         }
         break; /* value of last statement is value of while/do */
     /* list of statements */
+    case 'D':
+        v = 0.0;    /*a default value */
+        if(((struct flow *)a)->tl) {
+            do{
+                v = eval(((struct flow *)a)->tl);
+            }while (eval(((struct flow *)a)->cond) != 0);
+        }
+        break;
     case 'L':
         eval(a->l);
         v = eval(a->r);
@@ -372,7 +382,7 @@ calluser(struct ufncall *f)
     int i;
     if(!fn->func) {
         yyerror("llamada a funcion indefinida", fn->name);
-        return 0;
+        return 0.0;
     }
     /* count the arguments */
     sl = fn->syms;
@@ -420,5 +430,6 @@ calluser(struct ufncall *f)
         sl = sl->next;
     }
     free(oldval);
+    /*printf("%d", v);*/
     return v;
 }

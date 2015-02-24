@@ -42,24 +42,24 @@ EXP ([Ee][-+]?[0-9]+)
 "F"    { yylval.fn = 8; return CMP; }
 
  /* keywords */
-"si"        { return IF; }
-"fin"        { return END; }
-"sino"      { return ELSE; }
-"mientras"   { return WHILE; }
-"hacer"     { return DO; }
-"funcion"   { return FUNCTION; }
-"let"   { return LET; }
+"si"        { return KEYWORD_IF; }
+"fin"        { return KEYWORD_END; }
+"sino"      { return KEYWORD_ELSE; }
+"mientras"   { return KEYWORD_WHILE; }
+"hacer"     { return KEYWORD_DO; }
+"cuando"   { return KEYWORD_WHEN; }
+"funcion"   { return KEYWORD_FUNCTION; }
 
  /*built-in functions */
-"raiz"          { yylval.fn = B_sqrt; return FUNC; }
-"exponente"           { yylval.fn = B_exp; return FUNC; }
-"logaritmo"           { yylval.fn = B_log; return FUNC; }
-"imprimir"      { yylval.fn = B_print; return FUNC; }
+"raiz"          { yylval.fn = B_sqrt; return TOKEN_FUNC; }
+"exponente"           { yylval.fn = B_exp; return TOKEN_FUNC; }
+"logaritmo"           { yylval.fn = B_log; return TOKEN_FUNC; }
+"imprimir"      { yylval.fn = B_print; return TOKEN_FUNC; }
 
  /* names */
-[_a-zA-Z][_a-zA-Z0-9]* { yylval.s = lookup(yytext); return NAME; }
+[_a-zA-Z][_a-zA-Z0-9]* { yylval.s = lookup(yytext); return TOKEN_NAME; }
 [0-9]+"."[0-9]*{EXP}? |
-"."?[0-9]+{EXP}? { yylval.d = atof(yytext); return NUMBER; }
+"."?[0-9]+{EXP}? { yylval.d = atof(yytext); return TOKEN_NUMBER; }
 "#".* /* ignore comments */
 \\\n { ; } /* ignore line continuation */
 [ \t\n] /* ignore whitespace  tabs and eol */

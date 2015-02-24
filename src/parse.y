@@ -1,5 +1,6 @@
 %{
 #include "latino.h"
+#define YYDEBUG 1
 #define YYERROR_VERBOSE 1
 %}
 
@@ -13,12 +14,19 @@
 }
 
 /* declare tokens */
-%token <d> NUMBER
-%token <s> NAME
-%token <fn> FUNC
-%token EOL
-%token IF END ELSE WHILE DO LET FUNCTION
-%token TOKEN_V TOKEN_F
+%token <d> TOKEN_NUMBER
+%token <s> TOKEN_NAME
+%token <fn> TOKEN_FUNC
+%token
+    KEYWORD_IF
+    KEYWORD_END
+    KEYWORD_ELSE
+    KEYWORD_WHILE
+    KEYWORD_DO
+    KEYWORD_WHEN
+    KEYWORD_FUNCTION
+    KEYWORD_V
+    KEYWORD_F
 
 %nonassoc <fn> CMP
 %type <a> exp stmt list explist
@@ -40,13 +48,13 @@
 
 %%
 
-calclist: /* nothing */
+calclist: /* empty */
     | calclist stmt {
         //printf("= %4.4g\n> ", eval($2));
         eval($2);
         treefree($2);
     }
-    | calclist FUNCTION NAME '(' symlist ')' list END {
+    | calclist KEYWORD_FUNCTION TOKEN_NAME '(' symlist ')' list KEYWORD_END {
         dodef($3, $5, $7);
         //printf("Define %s\n> ", $3->name);
     }
@@ -54,13 +62,14 @@ calclist: /* nothing */
     ;
 
 stmt:
-    IF '(' exp ')' list END { $$ = newflow('I', $3, $5, NULL); }
-    | IF '(' exp ')' list ELSE list END { $$ = newflow('I', $3, $5, $7); }
-    | WHILE '(' exp ')' list END { $$ = newflow('W', $3, $5, NULL); }
+    KEYWORD_IF '(' exp ')' list KEYWORD_END { $$ = newflow('I', $3, $5, NULL); }
+    | KEYWORD_IF '(' exp ')' list KEYWORD_ELSE list KEYWORD_END { $$ = newflow('I', $3, $5, $7); }
+    | KEYWORD_WHILE '(' exp ')' list KEYWORD_END { $$ = newflow('W', $3, $5, NULL); }
+    | KEYWORD_DO list KEYWORD_WHEN '(' exp ')' { $$ = newflow('D', $5, $2, NULL); }
     | exp
     ;
 
-list:   /* nothing */ { $$ = NULL; }
+list:   /* empty */ { $$ = NULL; }
     | stmt list {
         if ($2 == NULL)
             $$ = $1;
@@ -77,20 +86,21 @@ exp: exp CMP exp { $$ = newcmp($2, $1, $3); }
     | exp '/' exp { $$ = newast('/', $1, $3); }
     | '(' exp ')' { $$ = $2; }
     | '-' exp %prec UMINUS { $$ = newast('M', $2, NULL); }
-    | NUMBER { $$ = newnum($1); }
-    | NAME { $$ = newref($1); }
-    | NAME '=' exp { $$ = newasgn($1, $3); }
-    | FUNC '(' explist ')' { $$ = newfunc($1, $3); }
-    | NAME '(' explist ')' { $$ = newcall($1, $3); }
+    | TOKEN_NUMBER { $$ = newnum($1); }
+    | TOKEN_NAME { $$ = newref($1); }
+    | TOKEN_NAME '=' exp { $$ = newasgn($1, $3); }
+    | TOKEN_FUNC '(' explist ')' { $$ = newfunc($1, $3); }
+    | TOKEN_NAME '(' explist ')' { $$ = newcall($1, $3); }
     ;
 
-explist: /* nothing */ { $$ = NULL; }
+explist: /* empty */ { $$ = NULL; }
     | exp
     | exp ',' explist { $$ = newast('L', $1, $3); }
     ;
 
-symlist: NAME { $$ = newsymlist($1, NULL); }
-    | NAME ',' symlist { $$ = newsymlist($1, $3); }
+symlist: /* empty */ { $$ = NULL; }
+    | TOKEN_NAME { $$ = newsymlist($1, NULL); }
+    | TOKEN_NAME ',' symlist { $$ = newsymlist($1, $3); }
     ;
 
 %%

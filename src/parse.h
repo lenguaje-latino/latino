@@ -39,39 +39,37 @@
    /* Put the tokens into the symbol table, so that GDB and other debuggers
       know about them.  */
    enum yytokentype {
-     NUMBER = 258,
-     NAME = 259,
-     FUNC = 260,
-     EOL = 261,
-     IF = 262,
-     END = 263,
-     ELSE = 264,
-     WHILE = 265,
-     DO = 266,
-     LET = 267,
-     FUNCTION = 268,
-     TOKEN_V = 269,
-     TOKEN_F = 270,
-     CMP = 271,
-     UMINUS = 272
+     TOKEN_NUMBER = 258,
+     TOKEN_NAME = 259,
+     TOKEN_FUNC = 260,
+     KEYWORD_IF = 261,
+     KEYWORD_END = 262,
+     KEYWORD_ELSE = 263,
+     KEYWORD_WHILE = 264,
+     KEYWORD_DO = 265,
+     KEYWORD_WHEN = 266,
+     KEYWORD_FUNCTION = 267,
+     KEYWORD_V = 268,
+     KEYWORD_F = 269,
+     CMP = 270,
+     UMINUS = 271
    };
 #endif
 /* Tokens.  */
-#define NUMBER 258
-#define NAME 259
-#define FUNC 260
-#define EOL 261
-#define IF 262
-#define END 263
-#define ELSE 264
-#define WHILE 265
-#define DO 266
-#define LET 267
-#define FUNCTION 268
-#define TOKEN_V 269
-#define TOKEN_F 270
-#define CMP 271
-#define UMINUS 272
+#define TOKEN_NUMBER 258
+#define TOKEN_NAME 259
+#define TOKEN_FUNC 260
+#define KEYWORD_IF 261
+#define KEYWORD_END 262
+#define KEYWORD_ELSE 263
+#define KEYWORD_WHILE 264
+#define KEYWORD_DO 265
+#define KEYWORD_WHEN 266
+#define KEYWORD_FUNCTION 267
+#define KEYWORD_V 268
+#define KEYWORD_F 269
+#define CMP 270
+#define UMINUS 271
 
 
 
@@ -81,7 +79,7 @@ typedef union YYSTYPE
 {
 
 /* Line 1676 of yacc.c  */
-#line 7 "src/parse.y"
+#line 8 "src/parse.y"
 
     struct ast *a;
     double d;
@@ -92,7 +90,7 @@ typedef union YYSTYPE
 
 
 /* Line 1676 of yacc.c  */
-#line 96 "src/parse.h"
+#line 94 "src/parse.h"
 } YYSTYPE;
 # define YYSTYPE_IS_TRIVIAL 1
 # define yystype YYSTYPE /* obsolescent; will be withdrawn */

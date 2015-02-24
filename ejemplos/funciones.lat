@@ -1,5 +1,5 @@
-funcion avg(a,b) 
-    (a+b)/2.0 
+funcion avg(a,b)
+    (a+b)/2.0
 fin
 
 funcion max(a,b)
@@ -10,10 +10,26 @@ funcion max(a,b)
     fin
 fin
 
-a = avg(3, sqrt(25))
-b = max(3, 5)
+a = avg(3, raiz(25))
+#error muy pocos argumentos
+b = max(3)
 
 #imprime 4
 imprimir(a)
 #imprime 5
 imprimir(b)
+
+funcion fun()
+    #empty function
+    imprimir(1)
+fin
+
+funcion fun_1(a)
+    imprimir(a)
+fin
+
+#TODO: error al llamar a funcion sin parametros
+fun(0)
+#TODO: no evia error cuando se pasan mas argumentos
+fun_1(100, 2, 1)
+
