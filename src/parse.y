@@ -17,7 +17,7 @@
 %token <s> NAME
 %token <fn> FUNC
 %token EOL
-%token IF THEN ELSE WHILE DO LET FUNCTION
+%token IF END ELSE WHILE DO LET FUNCTION
 
 %nonassoc <fn> CMP
 %nonassoc '|' UMINUS
@@ -40,30 +40,31 @@
 %%
 
 calclist: /* nothing */
-    | calclist stmt EOL {
-        printf("= %4.4g\n> ", eval($2));
+    | calclist stmt {
+        //printf("= %4.4g\n> ", eval($2));
+        eval($2);
         treefree($2);
     }
-    | calclist FUNCTION NAME '(' symlist ')' '=' list EOL {
-        dodef($3, $5, $8);
-        printf("Define %s\n> ", $3->name);
+    | calclist FUNCTION NAME '(' symlist ')' list END {
+        dodef($3, $5, $7);
+        //printf("Define %s\n> ", $3->name);
     }
-    | calclist error EOL { yyerrok; printf("> "); }
+    | calclist error { yyerrok; printf("=> "); }
     ;
 
 stmt:
-    IF exp THEN list { $$ = newflow('I', $2, $4, NULL); }
-    | IF exp THEN list ELSE list { $$ = newflow('I', $2, $4, $6); }
-    | WHILE exp DO list { $$ = newflow('W', $2, $4, NULL); }
+    IF '(' exp ')' list END { $$ = newflow('I', $3, $5, NULL); }
+    | IF '(' exp ')' list ELSE list END { $$ = newflow('I', $3, $5, $7); }
+    | WHILE '(' exp ')' list END { $$ = newflow('W', $3, $5, NULL); }
     | exp
     ;
 
 list:   /* nothing */ { $$ = NULL; }
-    | stmt ';' list {
-        if ($3 == NULL)
+    | stmt list {
+        if ($2 == NULL)
             $$ = $1;
         else
-            $$ = newast('L', $1, $3);
+            $$ = newast('L', $1, $2);
     }
     ;
 
@@ -72,7 +73,6 @@ exp: exp CMP exp { $$ = newcmp($2, $1, $3); }
     | exp '-' exp { $$ = newast('-', $1, $3); }
     | exp '*' exp { $$ = newast('*', $1, $3); }
     | exp '/' exp { $$ = newast('/', $1, $3); }
-    | exp '%' exp { $$ = newast('%', $1, $3); }
     | '(' exp ')' { $$ = $2; }
     | '-' exp %prec UMINUS { $$ = newast('M', $2, NULL); }
     | NUMBER { $$ = newnum($1); }

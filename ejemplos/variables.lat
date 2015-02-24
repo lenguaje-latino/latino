@@ -1,2 +1,5 @@
-funcion avg(a,b) = (a+b)/2.0;
-avg(3, sqrt(25))
+x=2
+y=3
+z = x + y
+
+imprimir(z)

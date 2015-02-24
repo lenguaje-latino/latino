@@ -41,7 +41,7 @@ EXP ([Ee][-+]?[0-9]+)
 
  /* keywords */
 "si"        { return IF; }
-"entonces"        { return IF; }
+"fin"        { return END; }
 "sino"      { return ELSE; }
 "mientras"   { return WHILE; }
 "hacer"     { return DO; }
@@ -52,16 +52,15 @@ EXP ([Ee][-+]?[0-9]+)
 "sqrt"          { yylval.fn = B_sqrt; return FUNC; }
 "exp"           { yylval.fn = B_exp; return FUNC; }
 "log"           { yylval.fn = B_log; return FUNC; }
-"print"      { yylval.fn = B_print; return FUNC; }
+"imprimir"      { yylval.fn = B_print; return FUNC; }
 
  /* names */
 [_a-zA-Z][_a-zA-Z0-9]* { yylval.s = lookup(yytext); return NAME; }
 [0-9]+"."[0-9]*{EXP}? |
 "."?[0-9]+{EXP}? { yylval.d = atof(yytext); return NUMBER; }
 "#".* /* ignore comments */
-\\\n { printf("c> "); } /* ignore line continuation */
-[ \t] /* ignore whitespace */
-\n { return EOL; }
-.       { yyerror("Mystery character %c\n", *yytext); }
+\\\n { ; } /* ignore line continuation */
+[ \t\n] /* ignore whitespace  tabs and eol */
+.       { ; }
 
 %%

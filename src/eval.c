@@ -32,7 +32,7 @@ lookup(char* sym) {
         }
         if (++sp >= symtab + NHASH) sp = symtab; /* try the next entry */
     }
-    yyerror("symbol table overflow\n");
+    yyerror("desbordamiento de la tabla de simbolos\n");
     abort();    /* tried them all, table is full */
 }
 
@@ -41,7 +41,7 @@ newast(int nodetype, struct ast *l, struct ast *r)
 {
     struct ast *a = malloc(sizeof(struct ast));
     if(!a) {
-        yyerror("out of space");
+        yyerror("sin espacio");
         exit(0);
     }
     a->nodetype = nodetype;
@@ -55,13 +55,11 @@ newnum(double d)
 {
     struct numval *a = malloc(sizeof(struct numval));
     if(!a) {
-        yyerror("out of space");
+        yyerror("sin espacio");
         exit(0);
     }
     a->nodetype = 'K';
     a->number = d;
-    //debug
-    printf("%d", d);
     return (struct ast *)a;
 }
 
@@ -70,7 +68,7 @@ newcmp(int cmptype, struct ast *l, struct ast *r)
 {
     struct ast *a = malloc(sizeof(struct ast));
     if(!a) {
-        yyerror("out of space");
+        yyerror("sin espacio");
         exit(0);
     }
     a->nodetype = '0' + cmptype;
@@ -84,7 +82,7 @@ newfunc(int functype, struct ast *l)
 {
     struct fncall *a = malloc(sizeof(struct fncall));
     if(!a) {
-        yyerror("out of space");
+        yyerror("sin espacio");
         exit(0);
     }
     a->nodetype = 'F';
@@ -98,7 +96,7 @@ newcall(struct symbol *s, struct ast *l)
 {
     struct ufncall *a = malloc(sizeof(struct ufncall));
     if(!a) {
-        yyerror("out of space");
+        yyerror("sin espacio");
         exit(0);
     }
     a->nodetype = 'C';
@@ -111,7 +109,7 @@ newref(struct symbol *s)
 {
     struct symref *a = malloc(sizeof(struct symref));
     if(!a) {
-        yyerror("out of space");
+        yyerror("sin espacio");
         exit(0);
     }
     a->nodetype = 'N';
@@ -124,7 +122,7 @@ newasgn(struct symbol *s, struct ast *v)
 {
     struct symasgn *a = malloc(sizeof(struct symasgn));
     if(!a) {
-        yyerror("out of space");
+        yyerror("sin espacio");
         exit(0);
     }
     a->nodetype = '=';
@@ -137,7 +135,7 @@ newflow(int nodetype, struct ast *cond, struct ast *tl, struct ast *el)
 {
     struct flow *a = malloc(sizeof(struct flow));
     if(!a) {
-        yyerror("out of space");
+        yyerror("sin espacio");
         exit(0);
     }
     a->nodetype = nodetype;
@@ -194,7 +192,7 @@ newsymlist(struct symbol *sym, struct symlist *next)
 {
     struct symlist *sl = malloc(sizeof(struct symlist));
     if(!sl) {
-        yyerror("out of space");
+        yyerror("sin espacio");
         exit(0);
     }
     sl->sym = sym;
@@ -221,7 +219,7 @@ eval(struct ast *a)
 {
     double v;
     if(!a) {
-        yyerror("internal error, null eval");
+        yyerror("error interno, eval es nulo");
         return 0.0;
     }
     switch(a->nodetype) {
@@ -335,10 +333,10 @@ callbuiltin(struct fncall *f)
     case B_log:
         return log(v);
     case B_print:
-        printf("= %4.4g\n", v);
+        printf("=> %4.4g\n", v);
         return v;
     default:
-        yyerror("Unknown built-in function %d", functype);
+        yyerror("definicion de funcion desconocida %d", functype);
         return 0.0;
     }
 }
@@ -364,7 +362,7 @@ calluser(struct ufncall *f)
     int nargs;
     int i;
     if(!fn->func) {
-        yyerror("call to undefined function", fn->name);
+        yyerror("llamada a funcion indefinida", fn->name);
         return 0;
     }
     /* count the arguments */
@@ -375,13 +373,13 @@ calluser(struct ufncall *f)
     oldval = (double *)malloc(nargs * sizeof(double));
     newval = (double *)malloc(nargs * sizeof(double));
     if(!oldval || !newval) {
-        yyerror("Out of space in %s", fn->name);
+        yyerror("sin espacio en %s", fn->name);
         return 0.0;
     }
     /* evaluate the arguments */
     for(i = 0; i < nargs; i++) {
         if(!args) {
-            yyerror("too few args in call to %s", fn->name);
+            yyerror("muy pocos argumentos en llamada a funcion %s", fn->name);
             free(oldval);
             free(newval);
             return 0.0;

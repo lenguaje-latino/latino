@@ -1,0 +1,19 @@
+funcion avg(a,b) 
+    (a+b)/2.0 
+fin
+
+funcion max(a,b)
+    si (a >= b)
+        a
+    sino
+        b
+    fin
+fin
+
+a = avg(3, sqrt(25))
+b = max(3, 5)
+
+#imprime 4
+imprimir(a)
+#imprime 5
+imprimir(b)
