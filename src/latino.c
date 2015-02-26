@@ -144,4 +144,3 @@ char *dump_string(char *s) {
     buf[i] = 0;
     return buf;
 }
-

@@ -11,10 +11,12 @@
     struct symbol *s;   /* which symbol */
     struct symlist *sl;
     int fn; /* which function */
+    struct lat_string *str;
 }
 
 /* declare tokens */
 %token <d> TOKEN_NUMBER
+%token <s> TOKEN_STRING
 %token <s> TOKEN_NAME
 %token <fn> TOKEN_FUNC
 %token
@@ -27,6 +29,12 @@
     KEYWORD_FUNCTION
     KEYWORD_V
     KEYWORD_F
+    KEYWORD_FROM
+    KEYWORD_TO
+    KEYWORD_STEP
+
+%token
+    LIT_STRING
 
 %nonassoc <fn> CMP
 %type <a> exp stmt list explist
@@ -91,6 +99,7 @@ exp: exp CMP exp { $$ = newcmp($2, $1, $3); }
     | TOKEN_NAME '=' exp { $$ = newasgn($1, $3); }
     | TOKEN_FUNC '(' explist ')' { $$ = newfunc($1, $3); }
     | TOKEN_NAME '(' explist ')' { $$ = newcall($1, $3); }
+    | TOKEN_STRING { $$ = $<str>1; }
     ;
 
 explist: /* empty */ { $$ = NULL; }

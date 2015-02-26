@@ -37,7 +37,7 @@ lookup(char* sym) {
 }
 
 struct ast *
-newast(int nodetype, struct ast *l, struct ast *r)
+newast(node_type nodetype, struct ast *l, struct ast *r)
 {
     struct ast *a = malloc(sizeof(struct ast));
     if(!a) {
@@ -58,8 +58,37 @@ newnum(double d)
         yyerror("sin espacio");
         exit(0);
     }
-    a->nodetype = 'K';
+    a->nodetype = NODE_DECIMAL;
     a->number = d;
+    return (struct ast *)a;
+}
+
+static char*
+strndup0(const char *s, size_t n)
+{
+  size_t i;
+  const char *p = s;
+  char *new;
+  for (i=0; i<n && *p; i++,p++)
+    ;
+  new = (char*)malloc(i+1);
+  if (new) {
+    memcpy(new, s, i);
+    new[i] = '\0';
+  }
+  return new;
+}
+
+struct ast *
+newstr(lat_string s, size_t l)
+{
+    struct strval *a = malloc(sizeof(struct strval));
+    if(!a){
+        yyerror("sin espacio");
+        exit(0);
+    }
+    a->nodetype = NODE_STRING;
+    a->str      = strndup0(s, l);
     return (struct ast *)a;
 }
 
@@ -71,7 +100,8 @@ newcmp(int cmptype, struct ast *l, struct ast *r)
         yyerror("sin espacio");
         exit(0);
     }
-    a->nodetype = '0' + cmptype;
+    //a->nodetype = '0' + nodetype;
+    a->nodetype = cmptype;
     a->l = l;
     a->r = r;
     return a;
@@ -85,7 +115,7 @@ newfunc(int functype, struct ast *l)
         yyerror("sin espacio");
         exit(0);
     }
-    a->nodetype = 'F';
+    a->nodetype = NODE_BUILTIN_FUNCTION;
     a->l = l;
     a->functype = functype;
     return (struct ast *)a;
@@ -99,7 +129,7 @@ newcall(struct symbol *s, struct ast *l)
         yyerror("sin espacio");
         exit(0);
     }
-    a->nodetype = 'C';
+    a->nodetype = NODE_USER_FUNCTION;
     a->l = l;
     a->s = s;
     return (struct ast *)a;
@@ -112,7 +142,7 @@ newref(struct symbol *s)
         yyerror("sin espacio");
         exit(0);
     }
-    a->nodetype = 'N';
+    a->nodetype = NODE_SYMBOL;
     a->s = s;
     return (struct ast *)a;
 }
@@ -125,13 +155,13 @@ newasgn(struct symbol *s, struct ast *v)
         yyerror("sin espacio");
         exit(0);
     }
-    a->nodetype = '=';
+    a->nodetype = NODE_ASSIGMENT;
     a->s = s;
     a->v = v;
     return (struct ast *)a;
 }
 struct ast *
-newflow(int nodetype, struct ast *cond, struct ast *tl, struct ast *el)
+newflow(node_type nodetype, struct ast *cond, struct ast *tl, struct ast *el)
 {
     struct flow *a = malloc(sizeof(struct flow));
     if(!a) {
@@ -150,37 +180,41 @@ treefree(struct ast *a)
 {
     switch(a->nodetype) {
     /* two subtrees */
-    case '+':
-    case '-':
-    case '*':
-    case '/':
-    case '1':
-    case '2':
-    case '3':
-    case '4':
-    case '5':
-    case '6':
-    case 'L':
+    case NODE_ADD:
+    case NODE_SUB:
+    case NODE_MULT:
+    case NODE_DIV:
+    case NODE_EQUAL:
+    case NODE_NOT_EQUAL:
+    case NODE_GREATER_THAN:
+    case NODE_LESS_THAN:
+    case NODE_GREATER_THAN_EQUAL:
+    case NODE_LESS_THAN_EQUAL:
+    case NODE_EXPRESION:
         treefree(a->r);
     /* one subtree */
     case '|':
-    case 'M':
-    case 'C':
-    case 'F':
+    case NODE_UNARY_MINUS:
+    case NODE_USER_FUNCTION_CALL:
+    case NODE_BUILTIN_FUNCTION:
         treefree(a->l);
     /* no subtree */
-    case 'K':
-    case 'N':
+    case NODE_DECIMAL:
+    case NODE_SYMBOL:
         break;
-    case '=':
+    case NODE_ASSIGMENT:
         free( ((struct symasgn *)a)->v);
         break;
     /* up to three subtrees */
-    case 'I':
-    case 'W':
+    case NODE_IF:
+    case NODE_WHILE:
         free( ((struct flow *)a)->cond);
         if( ((struct flow *)a)->tl) treefree( ((struct flow *)a)->tl);
         if( ((struct flow *)a)->el) treefree( ((struct flow *)a)->el);
+        break;
+    case NODE_STRING:
+        //free( ((struct symasgn *)a)->v);
+        free( ((struct strval *)a)->str);
         break;
     default:
         printf("error interno: nodo mal liberado %c\n", a->nodetype);
@@ -226,57 +260,54 @@ eval(struct ast *a)
     switch(a->nodetype) {
     /*printf("%s", a->nodetype);*/
     /* constant */
-    case 'K':
+    case NODE_DECIMAL:
         v = ((struct numval *)a)->number;
         break;
     /* name reference */
-    case 'N':
+    case NODE_SYMBOL:
         v = ((struct symref *)a)->s->value;
         break;
     /* assignment */
-    case '=':
+    case NODE_ASSIGMENT:
         v = ((struct symasgn *)a)->s->value =
                 eval(((struct symasgn *)a)->v);
         break;
     /* expressions */
-    case '+':
+    case NODE_ADD:
         v = eval(a->l) + eval(a->r);
         break;
-    case '-':
+    case NODE_SUB:
         v = eval(a->l) - eval(a->r);
         break;
-    case '*':
+    case NODE_MULT:
         v = eval(a->l) * eval(a->r);
         break;
-    case '/':
+    case NODE_DIV:
         if(eval(a->r) == 0)
             printf("error: division por 0 \"%c\"\n", a->nodetype);
         else
             v = eval(a->l) / eval(a->r);
         break;
-    case '|':
-        v = fabs(eval(a->l));
-        break;
-    case 'M':
+    case NODE_UNARY_MINUS:
         v = -eval(a->l);
         break;
     /* comparisons */
-    case '1':
+    case NODE_GREATER_THAN:
         v = (eval(a->l) > eval(a->r))? 1 : 0;
         break;
-    case '2':
+    case NODE_LESS_THAN:
         v = (eval(a->l) < eval(a->r))? 1 : 0;
         break;
-    case '3':
+    case NODE_NOT_EQUAL:
         v = (eval(a->l) != eval(a->r))? 1 : 0;
         break;
-    case '4':
+    case NODE_EQUAL:
         v = (eval(a->l) == eval(a->r))? 1 : 0;
         break;
-    case '5':
+    case NODE_GREATER_THAN_EQUAL:
         v = (eval(a->l) >= eval(a->r))? 1 : 0;
         break;
-    case '6':
+    case NODE_LESS_THAN_EQUAL:
         v = (eval(a->l) <= eval(a->r))? 1 : 0;
         break;
     case '7':
@@ -288,7 +319,7 @@ eval(struct ast *a)
     /* control flow */
     /* null expressions allowed in the grammar, so check for them */
     /* if/then/else */
-    case 'I':
+    case NODE_IF:
         if( eval( ((struct flow *)a)->cond) != 0) {
             /*check the condition*/
             if( ((struct flow *)a)->tl) {
@@ -305,7 +336,7 @@ eval(struct ast *a)
         }
         break;
     /* while/do */
-    case 'W':
+    case NODE_WHILE:
         v = 0.0; /* a default value */
         if( ((struct flow *)a)->tl) {
             while( eval(((struct flow *)a)->cond) != 0)
@@ -315,7 +346,7 @@ eval(struct ast *a)
         }
         break; /* value of last statement is value of while/do */
     /* list of statements */
-    case 'D':
+    case NODE_DO:
         v = 0.0;    /*a default value */
         if(((struct flow *)a)->tl) {
             do{
@@ -323,15 +354,20 @@ eval(struct ast *a)
             }while (eval(((struct flow *)a)->cond) != 0);
         }
         break;
-    case 'L':
+    case NODE_EXPRESION:
         eval(a->l);
         v = eval(a->r);
         break;
-    case 'F':
+    case NODE_BUILTIN_FUNCTION:
         v = callbuiltin((struct fncall *)a);
         break;
-    case 'C':
+    case NODE_USER_FUNCTION_CALL:
         v = calluser((struct ufncall *)a);
+        break;
+    case NODE_STRING:
+        //v = eval(a->str);
+        //v = ((struct numval *)a)->number;
+        printf("se encontro cadena: %s\n", ((struct strval *)a)->str);
         break;
     default:
         printf("error interno: nodo incorrecto %c\n", a->nodetype);
@@ -352,7 +388,8 @@ callbuiltin(struct fncall *f)
     case B_log:
         return log(v);
     case B_print:
-        printf("=> %4.4g\n", v);
+        //printf("=> %4.4g\n", v);
+        printf("=> %s\n", v);
         return v;
     default:
         yyerror("error: definicion de funcion desconocida %d", functype);

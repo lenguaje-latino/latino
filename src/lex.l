@@ -4,6 +4,7 @@
 %option nodefault
 
 %{
+#include <string.h>
 #include "latino.h"
 
 #define YY_INPUT(buf,result,max_size)  {\
@@ -59,10 +60,11 @@ EXP ([Ee][-+]?[0-9]+)
  /* names */
 [_a-zA-Z][_a-zA-Z0-9]* { yylval.s = lookup(yytext); return TOKEN_NAME; }
 [0-9]+"."[0-9]*{EXP}? |
-"."?[0-9]+{EXP}? { yylval.d = atof(yytext); return TOKEN_NUMBER; }
+"."?[0-9]+{EXP}?       { yylval.d = atof(yytext); return TOKEN_NUMBER; }
+\"([^\\\"]|\\.)*\"     { yylval.s = newstr(yytext+1, strlen(yytext)-2);return TOKEN_STRING; }
 "#".* /* ignore comments */
-\\\n { ; } /* ignore line continuation */
+\\\n                   { ; } /* ignore line continuation */
 [ \t\n] /* ignore whitespace  tabs and eol */
-.       { ; }
+.                      { fprintf(stderr, "error lexico ('%s').\n", yytext); }
 
 %%

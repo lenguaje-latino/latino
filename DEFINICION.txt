@@ -59,7 +59,7 @@ Categoría               Operadores
 Aritmético             |   + - * / % (Modulo)
 Lógico                 |   y o no
 Concatenación          |   +
-salto, decremento |   ++ --
+salto, decremento      |   ++ --
 Relacional             |   == != < > <= >=
 Asignación             |   =
 Acceso a miembro       |   .

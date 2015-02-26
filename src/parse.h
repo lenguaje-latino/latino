@@ -40,36 +40,46 @@
       know about them.  */
    enum yytokentype {
      TOKEN_NUMBER = 258,
-     TOKEN_NAME = 259,
-     TOKEN_FUNC = 260,
-     KEYWORD_IF = 261,
-     KEYWORD_END = 262,
-     KEYWORD_ELSE = 263,
-     KEYWORD_WHILE = 264,
-     KEYWORD_DO = 265,
-     KEYWORD_WHEN = 266,
-     KEYWORD_FUNCTION = 267,
-     KEYWORD_V = 268,
-     KEYWORD_F = 269,
-     CMP = 270,
-     UMINUS = 271
+     TOKEN_STRING = 259,
+     TOKEN_NAME = 260,
+     TOKEN_FUNC = 261,
+     KEYWORD_IF = 262,
+     KEYWORD_END = 263,
+     KEYWORD_ELSE = 264,
+     KEYWORD_WHILE = 265,
+     KEYWORD_DO = 266,
+     KEYWORD_WHEN = 267,
+     KEYWORD_FUNCTION = 268,
+     KEYWORD_V = 269,
+     KEYWORD_F = 270,
+     KEYWORD_FROM = 271,
+     KEYWORD_TO = 272,
+     KEYWORD_STEP = 273,
+     LIT_STRING = 274,
+     CMP = 275,
+     UMINUS = 276
    };
 #endif
 /* Tokens.  */
 #define TOKEN_NUMBER 258
-#define TOKEN_NAME 259
-#define TOKEN_FUNC 260
-#define KEYWORD_IF 261
-#define KEYWORD_END 262
-#define KEYWORD_ELSE 263
-#define KEYWORD_WHILE 264
-#define KEYWORD_DO 265
-#define KEYWORD_WHEN 266
-#define KEYWORD_FUNCTION 267
-#define KEYWORD_V 268
-#define KEYWORD_F 269
-#define CMP 270
-#define UMINUS 271
+#define TOKEN_STRING 259
+#define TOKEN_NAME 260
+#define TOKEN_FUNC 261
+#define KEYWORD_IF 262
+#define KEYWORD_END 263
+#define KEYWORD_ELSE 264
+#define KEYWORD_WHILE 265
+#define KEYWORD_DO 266
+#define KEYWORD_WHEN 267
+#define KEYWORD_FUNCTION 268
+#define KEYWORD_V 269
+#define KEYWORD_F 270
+#define KEYWORD_FROM 271
+#define KEYWORD_TO 272
+#define KEYWORD_STEP 273
+#define LIT_STRING 274
+#define CMP 275
+#define UMINUS 276
 
 
 
@@ -86,11 +96,12 @@ typedef union YYSTYPE
     struct symbol *s;   /* which symbol */
     struct symlist *sl;
     int fn; /* which function */
+    struct lat_string *str;
 
 
 
 /* Line 1676 of yacc.c  */
-#line 94 "src/parse.h"
+#line 105 "src/parse.h"
 } YYSTYPE;
 # define YYSTYPE_IS_TRIVIAL 1
 # define yystype YYSTYPE /* obsolescent; will be withdrawn */
