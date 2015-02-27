@@ -474,10 +474,10 @@ static const yytype_int8 yyrhs[] =
 /* YYRLINE[YYN] -- source line where rule number YYN was defined.  */
 static const yytype_uint8 yyrline[] =
 {
-       0,    59,    59,    60,    65,    69,    73,    74,    75,    76,
-      77,    80,    81,    89,    90,    91,    92,    93,    94,    95,
-      96,    97,    98,    99,   100,   101,   102,   105,   106,   107,
-     110,   111,   112
+       0,    59,    59,    60,    65,    69,    73,    75,    77,    79,
+      81,    84,    85,    93,    94,    95,    96,    97,    98,    99,
+     100,   101,   102,   103,   104,   105,   106,   109,   110,   111,
+     114,   115,   116
 };
 #endif
 
@@ -1458,186 +1458,190 @@ yyreduce:
 
 /* Line 1455 of yacc.c  */
 #line 73 "src/parse.y"
-    { (yyval.a) = newflow('I', (yyvsp[(3) - (6)].a), (yyvsp[(5) - (6)].a), NULL); }
+    {
+        (yyval.a) = newflow(NODE_IF, (yyvsp[(3) - (6)].a), (yyvsp[(5) - (6)].a), NULL); }
     break;
 
   case 7:
 
 /* Line 1455 of yacc.c  */
-#line 74 "src/parse.y"
-    { (yyval.a) = newflow('I', (yyvsp[(3) - (8)].a), (yyvsp[(5) - (8)].a), (yyvsp[(7) - (8)].a)); }
+#line 75 "src/parse.y"
+    {
+        (yyval.a) = newflow(NODE_IF, (yyvsp[(3) - (8)].a), (yyvsp[(5) - (8)].a), (yyvsp[(7) - (8)].a)); }
     break;
 
   case 8:
 
 /* Line 1455 of yacc.c  */
-#line 75 "src/parse.y"
-    { (yyval.a) = newflow('W', (yyvsp[(3) - (6)].a), (yyvsp[(5) - (6)].a), NULL); }
+#line 77 "src/parse.y"
+    {
+        (yyval.a) = newflow(NODE_WHILE, (yyvsp[(3) - (6)].a), (yyvsp[(5) - (6)].a), NULL); }
     break;
 
   case 9:
 
 /* Line 1455 of yacc.c  */
-#line 76 "src/parse.y"
-    { (yyval.a) = newflow('D', (yyvsp[(5) - (6)].a), (yyvsp[(2) - (6)].a), NULL); }
+#line 79 "src/parse.y"
+    {
+        (yyval.a) = newflow(NODE_DO, (yyvsp[(5) - (6)].a), (yyvsp[(2) - (6)].a), NULL); }
     break;
 
   case 11:
 
 /* Line 1455 of yacc.c  */
-#line 80 "src/parse.y"
+#line 84 "src/parse.y"
     { (yyval.a) = NULL; }
     break;
 
   case 12:
 
 /* Line 1455 of yacc.c  */
-#line 81 "src/parse.y"
+#line 85 "src/parse.y"
     {
         if ((yyvsp[(2) - (2)].a) == NULL)
             (yyval.a) = (yyvsp[(1) - (2)].a);
         else
-            (yyval.a) = newast('L', (yyvsp[(1) - (2)].a), (yyvsp[(2) - (2)].a));
+            (yyval.a) = newast(NODE_EXPRESION, (yyvsp[(1) - (2)].a), (yyvsp[(2) - (2)].a));
     }
     break;
 
   case 13:
 
 /* Line 1455 of yacc.c  */
-#line 89 "src/parse.y"
+#line 93 "src/parse.y"
     { (yyval.a) = newcmp((yyvsp[(2) - (3)].fn), (yyvsp[(1) - (3)].a), (yyvsp[(3) - (3)].a)); }
     break;
 
   case 14:
 
 /* Line 1455 of yacc.c  */
-#line 90 "src/parse.y"
+#line 94 "src/parse.y"
     { (yyval.a) = newcmp((yyvsp[(1) - (1)].fn), NULL, NULL); }
     break;
 
   case 15:
 
 /* Line 1455 of yacc.c  */
-#line 91 "src/parse.y"
-    { (yyval.a) = newast('+', (yyvsp[(1) - (3)].a), (yyvsp[(3) - (3)].a)); }
+#line 95 "src/parse.y"
+    { (yyval.a) = newast(NODE_ADD, (yyvsp[(1) - (3)].a), (yyvsp[(3) - (3)].a)); }
     break;
 
   case 16:
 
 /* Line 1455 of yacc.c  */
-#line 92 "src/parse.y"
-    { (yyval.a) = newast('-', (yyvsp[(1) - (3)].a), (yyvsp[(3) - (3)].a)); }
+#line 96 "src/parse.y"
+    { (yyval.a) = newast(NODE_SUB, (yyvsp[(1) - (3)].a), (yyvsp[(3) - (3)].a)); }
     break;
 
   case 17:
 
 /* Line 1455 of yacc.c  */
-#line 93 "src/parse.y"
-    { (yyval.a) = newast('*', (yyvsp[(1) - (3)].a), (yyvsp[(3) - (3)].a)); }
+#line 97 "src/parse.y"
+    { (yyval.a) = newast(NODE_MULT, (yyvsp[(1) - (3)].a), (yyvsp[(3) - (3)].a)); }
     break;
 
   case 18:
 
 /* Line 1455 of yacc.c  */
-#line 94 "src/parse.y"
-    { (yyval.a) = newast('/', (yyvsp[(1) - (3)].a), (yyvsp[(3) - (3)].a)); }
+#line 98 "src/parse.y"
+    { (yyval.a) = newast(NODE_DIV, (yyvsp[(1) - (3)].a), (yyvsp[(3) - (3)].a)); }
     break;
 
   case 19:
 
 /* Line 1455 of yacc.c  */
-#line 95 "src/parse.y"
+#line 99 "src/parse.y"
     { (yyval.a) = (yyvsp[(2) - (3)].a); }
     break;
 
   case 20:
 
 /* Line 1455 of yacc.c  */
-#line 96 "src/parse.y"
-    { (yyval.a) = newast('M', (yyvsp[(2) - (2)].a), NULL); }
+#line 100 "src/parse.y"
+    { (yyval.a) = newast(NODE_UNARY_MINUS, (yyvsp[(2) - (2)].a), NULL); }
     break;
 
   case 21:
 
 /* Line 1455 of yacc.c  */
-#line 97 "src/parse.y"
+#line 101 "src/parse.y"
     { (yyval.a) = newnum((yyvsp[(1) - (1)].d)); }
     break;
 
   case 22:
 
 /* Line 1455 of yacc.c  */
-#line 98 "src/parse.y"
+#line 102 "src/parse.y"
     { (yyval.a) = newref((yyvsp[(1) - (1)].s)); }
     break;
 
   case 23:
 
 /* Line 1455 of yacc.c  */
-#line 99 "src/parse.y"
+#line 103 "src/parse.y"
     { (yyval.a) = newasgn((yyvsp[(1) - (3)].s), (yyvsp[(3) - (3)].a)); }
     break;
 
   case 24:
 
 /* Line 1455 of yacc.c  */
-#line 100 "src/parse.y"
+#line 104 "src/parse.y"
     { (yyval.a) = newfunc((yyvsp[(1) - (4)].fn), (yyvsp[(3) - (4)].a)); }
     break;
 
   case 25:
 
 /* Line 1455 of yacc.c  */
-#line 101 "src/parse.y"
+#line 105 "src/parse.y"
     { (yyval.a) = newcall((yyvsp[(1) - (4)].s), (yyvsp[(3) - (4)].a)); }
     break;
 
   case 26:
 
 /* Line 1455 of yacc.c  */
-#line 102 "src/parse.y"
+#line 106 "src/parse.y"
     { (yyval.a) = (yyvsp[(1) - (1)].str); }
     break;
 
   case 27:
 
 /* Line 1455 of yacc.c  */
-#line 105 "src/parse.y"
+#line 109 "src/parse.y"
     { (yyval.a) = NULL; }
     break;
 
   case 29:
 
 /* Line 1455 of yacc.c  */
-#line 107 "src/parse.y"
-    { (yyval.a) = newast('L', (yyvsp[(1) - (3)].a), (yyvsp[(3) - (3)].a)); }
+#line 111 "src/parse.y"
+    { (yyval.a) = newast(NODE_EXPRESION, (yyvsp[(1) - (3)].a), (yyvsp[(3) - (3)].a)); }
     break;
 
   case 30:
 
 /* Line 1455 of yacc.c  */
-#line 110 "src/parse.y"
+#line 114 "src/parse.y"
     { (yyval.sl) = NULL; }
     break;
 
   case 31:
 
 /* Line 1455 of yacc.c  */
-#line 111 "src/parse.y"
+#line 115 "src/parse.y"
     { (yyval.sl) = newsymlist((yyvsp[(1) - (1)].s), NULL); }
     break;
 
   case 32:
 
 /* Line 1455 of yacc.c  */
-#line 112 "src/parse.y"
+#line 116 "src/parse.y"
     { (yyval.sl) = newsymlist((yyvsp[(1) - (3)].s), (yyvsp[(3) - (3)].sl)); }
     break;
 
 
 
 /* Line 1455 of yacc.c  */
-#line 1641 "src/parse.c"
+#line 1645 "src/parse.c"
       default: break;
     }
   YY_SYMBOL_PRINT ("-> $$ =", yyr1[yyn], &yyval, &yyloc);
@@ -1849,7 +1853,7 @@ yyreturn:
 
 
 /* Line 1675 of yacc.c  */
-#line 115 "src/parse.y"
+#line 119 "src/parse.y"
 
 
 extern

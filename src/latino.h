@@ -1,5 +1,7 @@
 #ifndef LATINO_H
-#define LATINO_H
+#define LATINO_H 1
+
+#define LATINO_HUGE 1
 
 #include <stdio.h>
 #include <math.h>

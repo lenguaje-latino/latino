@@ -380,6 +380,7 @@ callbuiltin(struct fncall *f)
 {
     enum bifs functype = f->functype;
     double v = eval(f->l);
+    //printf("=> %4.4g\n", v);
     switch(functype) {
     case B_sqrt:
         return sqrt(v);
@@ -389,7 +390,7 @@ callbuiltin(struct fncall *f)
         return log(v);
     case B_print:
         //printf("=> %4.4g\n", v);
-        printf("=> %s\n", v);
+        printf("=> %s\n", f->l);
         return v;
     default:
         yyerror("error: definicion de funcion desconocida %d", functype);

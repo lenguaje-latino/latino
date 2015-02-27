@@ -70,10 +70,14 @@ calclist: /* empty */
     ;
 
 stmt:
-    KEYWORD_IF '(' exp ')' list KEYWORD_END { $$ = newflow('I', $3, $5, NULL); }
-    | KEYWORD_IF '(' exp ')' list KEYWORD_ELSE list KEYWORD_END { $$ = newflow('I', $3, $5, $7); }
-    | KEYWORD_WHILE '(' exp ')' list KEYWORD_END { $$ = newflow('W', $3, $5, NULL); }
-    | KEYWORD_DO list KEYWORD_WHEN '(' exp ')' { $$ = newflow('D', $5, $2, NULL); }
+    KEYWORD_IF '(' exp ')' list KEYWORD_END {
+        $$ = newflow(NODE_IF, $3, $5, NULL); }
+    | KEYWORD_IF '(' exp ')' list KEYWORD_ELSE list KEYWORD_END {
+        $$ = newflow(NODE_IF, $3, $5, $7); }
+    | KEYWORD_WHILE '(' exp ')' list KEYWORD_END {
+        $$ = newflow(NODE_WHILE, $3, $5, NULL); }
+    | KEYWORD_DO list KEYWORD_WHEN '(' exp ')' {
+        $$ = newflow(NODE_DO, $5, $2, NULL); }
     | exp
     ;
 
@@ -82,18 +86,18 @@ list:   /* empty */ { $$ = NULL; }
         if ($2 == NULL)
             $$ = $1;
         else
-            $$ = newast('L', $1, $2);
+            $$ = newast(NODE_EXPRESION, $1, $2);
     }
     ;
 
 exp: exp CMP exp { $$ = newcmp($2, $1, $3); }
     | CMP        { $$ = newcmp($1, NULL, NULL); }
-    | exp '+' exp { $$ = newast('+', $1, $3); }
-    | exp '-' exp { $$ = newast('-', $1, $3); }
-    | exp '*' exp { $$ = newast('*', $1, $3); }
-    | exp '/' exp { $$ = newast('/', $1, $3); }
+    | exp '+' exp { $$ = newast(NODE_ADD, $1, $3); }
+    | exp '-' exp { $$ = newast(NODE_SUB, $1, $3); }
+    | exp '*' exp { $$ = newast(NODE_MULT, $1, $3); }
+    | exp '/' exp { $$ = newast(NODE_DIV, $1, $3); }
     | '(' exp ')' { $$ = $2; }
-    | '-' exp %prec UMINUS { $$ = newast('M', $2, NULL); }
+    | '-' exp %prec UMINUS { $$ = newast(NODE_UNARY_MINUS, $2, NULL); }
     | TOKEN_NUMBER { $$ = newnum($1); }
     | TOKEN_NAME { $$ = newref($1); }
     | TOKEN_NAME '=' exp { $$ = newasgn($1, $3); }
@@ -104,7 +108,7 @@ exp: exp CMP exp { $$ = newcmp($2, $1, $3); }
 
 explist: /* empty */ { $$ = NULL; }
     | exp
-    | exp ',' explist { $$ = newast('L', $1, $3); }
+    | exp ',' explist { $$ = newast(NODE_EXPRESION, $1, $3); }
     ;
 
 symlist: /* empty */ { $$ = NULL; }
