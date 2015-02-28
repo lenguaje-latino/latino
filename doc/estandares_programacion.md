@@ -67,16 +67,16 @@ Alinear los case's a la misma altura de la intrucción switch:
 switch (suffix) {
 case 'G':
 case 'g':
-    mem <<= 30;
+    /* codigo */
     break;
 case 'M':
 case 'm':
-    mem <<= 20;
+    /* codigo */
     break;
 case 'K':
 case 'k':
-    mem <<= 10;
-    /* fall through */
+    /* codigo */
+    break;
 default:
     break;
 }
