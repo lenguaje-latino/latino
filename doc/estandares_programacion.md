@@ -95,11 +95,15 @@ int function(int x)
 ###Espacios
 Utilice un espacio después de las siguientes palabras reservadas:
 
-```if, switch, case, for, do, while```
+```
+if, switch, case, for, do, while
+```
 
 Pero no con sizeof, typeof, defined, alignof, or __attribute__
 
-```s = sizeof(struct file);```
+```
+s = sizeof(struct file);
+```
 
 No agregar espacios dentro de las expresiones con parentesis.
 Incorrecto:
