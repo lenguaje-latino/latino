@@ -1,4 +1,4 @@
-#Estandares de programacion
+#Estandares de programación
 
 A continuación se describen algunas sugerencias a seguir para la codificación en C / C++
 
@@ -99,7 +99,7 @@ Utilice un espacio después de las siguientes palabras reservadas:
 if, switch, case, for, do, while
 ```
 
-Pero no con sizeof, typeof, defined, alignof, or __attribute__
+Pero no con sizeof, typeof, defined, alignof, or `__attribute__`
 
 ```
 s = sizeof(struct file);
