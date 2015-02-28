@@ -25,7 +25,8 @@ if (condition)
 ```
 y
 
-```if (condition)
+```
+if (condition)
     do_this();
 else
     do_that();
