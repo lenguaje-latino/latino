@@ -1,5 +1,5 @@
-entero x=-2
-decimal y=3
+x=-2
+y=3
 z = x + y
 imprimir(z)
 z = z * -4 + (2-1)

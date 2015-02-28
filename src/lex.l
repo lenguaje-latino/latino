@@ -39,22 +39,22 @@ EXP ([Ee][-+]?[0-9]+)
 "=="    { yylval.fn = 4; return CMP; }
 ">="    { yylval.fn = 5; return CMP; }
 "<="    { yylval.fn = 6; return CMP; }
-"V"    { yylval.fn = 7; return CMP; }
-"F"    { yylval.fn = 8; return CMP; }
+"V"     { yylval.fn = 7; return CMP; }
+"F"     { yylval.fn = 8; return CMP; }
 
  /* keywords */
 "si"        { return KEYWORD_IF; }
-"fin"        { return KEYWORD_END; }
+"fin"       { return KEYWORD_END; }
 "sino"      { return KEYWORD_ELSE; }
-"mientras"   { return KEYWORD_WHILE; }
+"mientras"  { return KEYWORD_WHILE; }
 "hacer"     { return KEYWORD_DO; }
-"cuando"   { return KEYWORD_WHEN; }
+"cuando"    { return KEYWORD_WHEN; }
 "funcion"   { return KEYWORD_FUNCTION; }
 
  /*built-in functions */
 "raiz"          { yylval.fn = B_sqrt; return TOKEN_FUNC; }
-"exponente"           { yylval.fn = B_exp; return TOKEN_FUNC; }
-"logaritmo"           { yylval.fn = B_log; return TOKEN_FUNC; }
+"exponente"     { yylval.fn = B_exp; return TOKEN_FUNC; }
+"logaritmo"     { yylval.fn = B_log; return TOKEN_FUNC; }
 "imprimir"      { yylval.fn = B_print; return TOKEN_FUNC; }
 
  /* names */
@@ -65,6 +65,7 @@ EXP ([Ee][-+]?[0-9]+)
 "#".* /* ignore comments */
 \\\n                   { ; } /* ignore line continuation */
 [ \t\n] /* ignore whitespace  tabs and eol */
-.                      { fprintf(stderr, "error lexico ('%s').\n", yytext); }
+ /*.                      { printf("error lexico %s ", yytext); }*/
+.                      {;}
 
 %%

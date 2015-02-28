@@ -258,7 +258,7 @@ eval(struct ast *a)
         return 0.0;
     }
     switch(a->nodetype) {
-    /*printf("%s", a->nodetype);*/
+    printf("%s", a->nodetype);
     /* constant */
     case NODE_DECIMAL:
         v = ((struct numval *)a)->number;
@@ -389,8 +389,8 @@ callbuiltin(struct fncall *f)
     case B_log:
         return log(v);
     case B_print:
-        //printf("=> %4.4g\n", v);
-        printf("=> %s\n", f->l);
+        printf("=> %4.4g\n", v);
+        //printf("=> %s\n", f->l);
         return v;
     default:
         yyerror("error: definicion de funcion desconocida %d", functype);

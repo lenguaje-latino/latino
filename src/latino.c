@@ -3,7 +3,7 @@
 #define true 1
 #define false 0
 
-int debug=1;
+int debug=0;
 
 static FILE *file;
 static char *buffer;
