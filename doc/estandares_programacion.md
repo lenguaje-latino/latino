@@ -7,51 +7,51 @@ A continuación se describen algunas sugerencias a seguir para la codificación 
 Utilizar identado de 4 espacios, incluir la llave que abre ({) en la misma linea 
 de la instrucción de la siguiente manera:
 
-if (x == y) {
+```if (x == y) {
     ...
 } else if (x > y) {
     ...
 } else {
     ....
-}
+}```
 
 No es necesario usar llaves cuando se trata de una sola instrucción:
 
-if (condition)
-    action();
+```if (condition)
+    action();```
 y
 
-if (condition)
+```if (condition)
     do_this();
 else
-    do_that();
+    do_that();```
 
 Lo anterior no aplica si solo una parte de la sentencia (if) contiene una sola instrucción:
 
-if (condition) {
+```if (condition) {
     do_this();
     do_that();
 } else {
     otherwise();
-}
+}```
 
 ###do
 
 
-do {
+```do {
     /* codigo */
-} while (condition);
+} while (condition);```
 
 ###while
 
-while (condicion) {
+```while (condicion) {
     /* codigo */
-}
+}```
 
 ###switch
 Alinear los case's a la misma altura de la intrucción switch:
 
-switch (suffix) {
+```switch (suffix) {
 case 'G':
 case 'g':
     mem <<= 30;
@@ -66,15 +66,15 @@ case 'k':
     /* fall through */
 default:
     break;
-}
+}```
 
 ###Funcciones
 Para el caso unico de las funciones iniciar la llave que abre en la siguiente línea:
 
-int function(int x)
+```int function(int x)
 {
     /* cuerpo de la función */
-}
+}```
 
 ###Espacios
 Utilice un espacio después de las siguientes palabras reservadas:
@@ -87,11 +87,11 @@ s = sizeof(struct file);
 
 No agregar espacios dentro de las expresiones con parentesis.
 Incorrecto:
-if ( x == y ) {
+```if ( x == y ) {
     ...
 } else if ( x > y ) {
     ...
-}
+}```
 
 Cuando declaren un apuntador o una función que regrese un apuntador, de preferencia
 use el '*' adjunto al nombre de la variable y no adjunto al tipo de dato:
