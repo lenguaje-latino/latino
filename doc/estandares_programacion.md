@@ -1,9 +1,9 @@
-#Estilo del código
+#Estandares de programacion
 
 A continuación se describen algunas sugerencias a seguir para la codificación en C / C++
 
-ifelse
-===
+###ifelse
+
 Utilizar identado de 4 espacios, incluir la llave que abre ({) en la misma linea 
 de la instrucción de la siguiente manera:
 
@@ -35,22 +35,20 @@ if (condition) {
     otherwise();
 }
 
-do
-===
+###do
+
 
 do {
     /* codigo */
 } while (condition);
 
-while
-===
+###while
 
 while (condicion) {
     /* codigo */
 }
 
-switch
-===
+###switch
 Alinear los case's a la misma altura de la intrucción switch:
 
 switch (suffix) {
@@ -70,8 +68,7 @@ default:
     break;
 }
 
-Funcciones
-===
+###Funcciones
 Para el caso unico de las funciones iniciar la llave que abre en la siguiente línea:
 
 int function(int x)
@@ -79,8 +76,7 @@ int function(int x)
     /* cuerpo de la función */
 }
 
-Espacios
-===
+###Espacios
 Utilice un espacio después de las siguientes palabras reservadas:
 
 if, switch, case, for, do, while
@@ -122,8 +118,7 @@ No use espacios alrededor de miembros de las estructuras '.' y '->'
 
 Elimine los espacios al final de la línea.
 
-Comentarios
-===
+###Comentarios
 Use los comentarios al estilo Linux C89: 
 
 	/* ... */
