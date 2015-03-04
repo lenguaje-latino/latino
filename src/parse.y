@@ -1,5 +1,6 @@
 %{
 #include "latino.h"
+#include "structs.h"
 #define YYDEBUG 1
 #define YYERROR_VERBOSE 1
 %}

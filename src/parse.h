@@ -89,7 +89,7 @@ typedef union YYSTYPE
 {
 
 /* Line 1676 of yacc.c  */
-#line 8 "src/parse.y"
+#line 9 "src/parse.y"
 
     struct ast *a;
     double d;

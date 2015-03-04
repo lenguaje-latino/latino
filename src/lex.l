@@ -6,6 +6,7 @@
 %{
 #include <string.h>
 #include "latino.h"
+#include "structs.h"
 
 #define YY_INPUT(buf,result,max_size)  {\
     result = get_next_char(buf, max_size); \

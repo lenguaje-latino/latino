@@ -4,6 +4,7 @@
 #include <string.h>
 #include <math.h>
 #include "latino.h"
+#include "structs.h"
 
 /* symbol table */
 /* hash symbol */
@@ -193,7 +194,6 @@ treefree(struct ast *a)
     case NODE_EXPRESION:
         treefree(a->r);
     /* one subtree */
-    case '|':
     case NODE_UNARY_MINUS:
     case NODE_USER_FUNCTION_CALL:
     case NODE_BUILTIN_FUNCTION:
