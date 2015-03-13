@@ -258,7 +258,7 @@ eval(struct ast *a)
         return 0.0;
     }
     switch(a->nodetype) {
-    printf("%s", a->nodetype);
+    printf("%i", a->nodetype);
     /* constant */
     case NODE_DECIMAL:
         v = ((struct numval *)a)->number;
@@ -382,12 +382,12 @@ callbuiltin(struct fncall *f)
     double v = eval(f->l);
     //printf("=> %4.4g\n", v);
     switch(functype) {
-    case B_sqrt:
+    /*case B_sqrt:
         return sqrt(v);
     case B_exp:
         return exp(v);
     case B_log:
-        return log(v);
+        return log(v);*/
     case B_print:
         printf("=> %4.4g\n", v);
         //printf("=> %s\n", f->l);
