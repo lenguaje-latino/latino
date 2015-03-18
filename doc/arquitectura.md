@@ -14,7 +14,7 @@ __Facilidad de depuración:__ La ejecución del programa puede interrumpirse en
 cualquier momento, corregir o modificar el programa sin necesidad de compilar
 nuevamente el código.
 
-__Rapidez en el desarrollo:__ Los programadores que que utilizan un lenguaje 
+__Rapidez en el desarrollo:__ Los programadores que utilizan un lenguaje 
 interpretado suelen conseguir mayor eficiencia de programación que los que 
 programan en lenguajes compilables.
 
