@@ -1,9 +1,10 @@
 #include "latino.h"
+#include "parse.h"
 
 #define true 1
 #define false 0
 
-int debug=0;
+int debug=1;
 
 static FILE *file;
 static char *buffer;
@@ -16,11 +17,6 @@ static int nTokenStart     = 0;
 static int nTokenLength    = 0;
 static int nTokenNextStart = 0;
 
-/*--------------------------------------------------------------------
- * main
- *
- * the master
- *------------------------------------------------------------------*/
 extern
 int main(int argc, char *argv[]) {
     int i;
@@ -126,9 +122,9 @@ int get_next_char(char *b, int maxBuffer) {
     }
     b[0] = buffer[nBuffer];
     nBuffer += 1;
-    if (  debug  )
-        printf("get_next_char() => '%c'0x%02x at %d\n",
-               dump_char(b[0]), b[0], nBuffer);
+    /*if (  debug  )*/
+        /*printf("get_next_char() => '%c'0x%02x at %d\n",*/
+               /*dump_char(b[0]), b[0], nBuffer);*/
     return b[0]==0?0:1;
 }
 
@@ -144,3 +140,4 @@ char *dump_string(char *s) {
     buf[i] = 0;
     return buf;
 }
+

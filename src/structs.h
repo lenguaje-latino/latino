@@ -93,7 +93,7 @@ typedef struct
     varinteger_T v_integer;
     vardecimal_T v_decimal;
     char_u       *v_string;
-} typeval_T;
+} node_value;
 
 /* Values for "v_type". */
 #define VAR_UNKNOWN 0

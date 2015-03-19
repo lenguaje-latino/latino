@@ -1,7 +1,6 @@
 %{
 #include "latino.h"
 #include "structs.h"
-#define YYDEBUG 1
 #define YYERROR_VERBOSE 1
 %}
 
@@ -17,8 +16,8 @@
 
 /* declare tokens */
 %token <d> TOKEN_NUMBER
-%token <s> TOKEN_STRING
-%token <s> TOKEN_NAME
+%token <str> TOKEN_STRING
+%token <s> TOKEN_IDENTIFIER
 %token <fn> TOKEN_FUNC
 %token
     KEYWORD_IF
@@ -28,17 +27,22 @@
     KEYWORD_DO
     KEYWORD_WHEN
     KEYWORD_FUNCTION
-    KEYWORD_V
-    KEYWORD_F
+    KEYWORD_TRUE
+    KEYWORD_FALSE
     KEYWORD_FROM
     KEYWORD_TO
     KEYWORD_STEP
+    KEYWORD_BOOL
+    KEYWORD_INT
+    KEYWORD_DECIMAL
+    KEYWORD_CHAR
+    KEYWORD_STRING
 
 %token
     LIT_STRING
 
 %nonassoc <fn> CMP
-%type <a> exp stmt list explist
+%type <a> exp stmt list explist var
 %type <sl> symlist
 
 /*
@@ -53,21 +57,21 @@
 %left '*' '/' '%'
 %left UMINUS
 
-%start calclist
+%start program
 
 %%
 
-calclist: /* empty */
-    | calclist stmt {
+program: /* empty */
+    | program stmt {
         //printf("= %4.4g\n> ", eval($2));
         eval($2);
         treefree($2);
     }
-    | calclist KEYWORD_FUNCTION TOKEN_NAME '(' symlist ')' list KEYWORD_END {
+    | program KEYWORD_FUNCTION TOKEN_IDENTIFIER '(' symlist ')' list KEYWORD_END {
         dodef($3, $5, $7);
         //printf("Define %s\n> ", $3->name);
     }
-    | calclist error { yyerrok; printf("=> "); }
+    | program error { yyerrok; printf("=> "); }
     ;
 
 stmt:
@@ -99,12 +103,27 @@ exp: exp CMP exp { $$ = newcmp($2, $1, $3); }
     | exp '/' exp { $$ = newast(NODE_DIV, $1, $3); }
     | '(' exp ')' { $$ = $2; }
     | '-' exp %prec UMINUS { $$ = newast(NODE_UNARY_MINUS, $2, NULL); }
-    | TOKEN_NUMBER { $$ = newnum($1); }
-    | TOKEN_NAME { $$ = newref($1); }
-    | TOKEN_NAME '=' exp { $$ = newasgn($1, $3); }
-    | TOKEN_FUNC '(' explist ')' { $$ = newfunc($1, $3); }
-    | TOKEN_NAME '(' explist ')' { $$ = newcall($1, $3); }
     | TOKEN_STRING { $$ = $<str>1; }
+    | var
+    | KEYWORD_TRUE { ; }
+    | KEYWORD_FALSE { ; }
+    ;
+
+var: TOKEN_NUMBER { $$ = newnum($1); }
+    | TOKEN_IDENTIFIER { $$ = newref($1); }
+    | KEYWORD_BOOL TOKEN_IDENTIFIER '=' exp { $$ = newasgn($2, $4); }
+    | KEYWORD_INT TOKEN_IDENTIFIER '=' exp { $$ = newasgn($2, $4); }
+    | KEYWORD_DECIMAL TOKEN_IDENTIFIER '=' exp { $$ = newasgn($2, $4); }
+    | KEYWORD_CHAR TOKEN_IDENTIFIER '=' exp { $$ = newasgn($2, $4); }
+    | KEYWORD_STRING TOKEN_IDENTIFIER '=' exp { $$ = newasgn($2, $4); }
+    | KEYWORD_BOOL TOKEN_IDENTIFIER { $$ = newref($2); }
+    | KEYWORD_INT TOKEN_IDENTIFIER { $$ = newref($2); }
+    | KEYWORD_DECIMAL TOKEN_IDENTIFIER { $$ = newref($2); }
+    | KEYWORD_CHAR TOKEN_IDENTIFIER { $$ = newref($2); }
+    | KEYWORD_STRING TOKEN_IDENTIFIER { $$ = newref($2); }
+    | TOKEN_IDENTIFIER '=' exp { $$ = newasgn($1, $3); }
+    | TOKEN_FUNC '(' explist ')' { $$ = newfunc($1, $3); }
+    | TOKEN_IDENTIFIER '(' explist ')' { $$ = newcall($1, $3); }
     ;
 
 explist: /* empty */ { $$ = NULL; }
@@ -113,8 +132,8 @@ explist: /* empty */ { $$ = NULL; }
     ;
 
 symlist: /* empty */ { $$ = NULL; }
-    | TOKEN_NAME { $$ = newsymlist($1, NULL); }
-    | TOKEN_NAME ',' symlist { $$ = newsymlist($1, $3); }
+    | TOKEN_IDENTIFIER { $$ = newsymlist($1, NULL); }
+    | TOKEN_IDENTIFIER ',' symlist { $$ = newsymlist($1, $3); }
     ;
 
 %%

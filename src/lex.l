@@ -51,6 +51,13 @@ EXP ([Ee][-+]?[0-9]+)
 "hacer"     { return KEYWORD_DO; }
 "cuando"    { return KEYWORD_WHEN; }
 "funcion"   { return KEYWORD_FUNCTION; }
+"verdadero"   { return KEYWORD_TRUE; }
+"falso"   { return KEYWORD_FALSE; }
+"logico"   { return KEYWORD_BOOL; }
+"entero"   { return KEYWORD_INT; }
+"decimal"   { return KEYWORD_DECIMAL; }
+"caracter"   { return KEYWORD_CHAR; }
+"cadena"   { return KEYWORD_STRING; }
 
  /*built-in functions */
 "raiz"          { yylval.fn = B_sqrt; return TOKEN_FUNC; }
@@ -59,7 +66,7 @@ EXP ([Ee][-+]?[0-9]+)
 "imprimir"      { yylval.fn = B_print; return TOKEN_FUNC; }
 
  /* names */
-[_a-zA-Z][_a-zA-Z0-9]* { yylval.s = lookup(yytext); return TOKEN_NAME; }
+[_a-zA-Z][_a-zA-Z0-9]* { yylval.s = lookup(yytext); return TOKEN_IDENTIFIER; }
 [0-9]+"."[0-9]*{EXP}? |
 "."?[0-9]+{EXP}?       { yylval.d = atof(yytext); return TOKEN_NUMBER; }
 \"([^\\\"]|\\.)*\"     { yylval.s = newstr(yytext+1, strlen(yytext)-2);return TOKEN_STRING; }

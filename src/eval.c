@@ -59,6 +59,8 @@ newnum(double d)
         yyerror("sin espacio");
         exit(0);
     }
+    if(debug)
+        printf("newnum=%d\n", d);
     a->nodetype = NODE_DECIMAL;
     a->number = d;
     return (struct ast *)a;
@@ -83,6 +85,7 @@ strndup0(const char *s, size_t n)
 struct ast *
 newstr(lat_string s, size_t l)
 {
+    printf("newstr=%s\n", s);
     struct strval *a = malloc(sizeof(struct strval));
     if(!a){
         yyerror("sin espacio");
@@ -143,6 +146,8 @@ newref(struct symbol *s)
         yyerror("sin espacio");
         exit(0);
     }
+    if(debug)
+        printf("newref=%s\n", s->name);
     a->nodetype = NODE_SYMBOL;
     a->s = s;
     return (struct ast *)a;
@@ -365,12 +370,15 @@ eval(struct ast *a)
         v = calluser((struct ufncall *)a);
         break;
     case NODE_STRING:
-        //v = eval(a->str);
-        //v = ((struct numval *)a)->number;
-        printf("se encontro cadena: %s\n", ((struct strval *)a)->str);
+        /*v = eval(a->str);*/
+        /*v = ((struct numval *)a)->number;*/
+        printf("node_string=\"%s\"\n", ((struct strval *)a)->str);
+        v = 0;
         break;
     default:
+        v = 0;
         printf("error interno: nodo incorrecto %c\n", a->nodetype);
+        break;
     }
     return v;
 }

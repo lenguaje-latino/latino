@@ -1,15 +1,17 @@
-x=-2
-y=3
-z = x + y
-imprimir(z)
-z = z * -4 + (2-1)
-imprimir(z)
-
-#division por 0
-x = 10 / 0
-imprimir(x)
-
-#TODO: Pendiente
-#imprime 0
-#imprimir("hola")
-str = "esta es una cadena"
+#ejemplos de declaracion de variables validas
+logico l=verdadero
+l=falso
+logico l1
+entero e=0
+e=10
+entero e1
+decimal d=0.0
+d=3.1416
+decimal d1
+caracter c='\0'
+c='a'
+caracter c1
+cadena s = "hola mundo"
+s="hola de nuevo"
+cadena s1
+constante decimal PI=3.1416
