@@ -39,57 +39,59 @@
    /* Put the tokens into the symbol table, so that GDB and other debuggers
       know about them.  */
    enum yytokentype {
-     TOKEN_NUMBER = 258,
-     TOKEN_STRING = 259,
-     TOKEN_IDENTIFIER = 260,
-     TOKEN_FUNC = 261,
-     KEYWORD_IF = 262,
-     KEYWORD_END = 263,
-     KEYWORD_ELSE = 264,
-     KEYWORD_WHILE = 265,
-     KEYWORD_DO = 266,
-     KEYWORD_WHEN = 267,
-     KEYWORD_FUNCTION = 268,
-     KEYWORD_TRUE = 269,
-     KEYWORD_FALSE = 270,
-     KEYWORD_FROM = 271,
-     KEYWORD_TO = 272,
-     KEYWORD_STEP = 273,
-     KEYWORD_BOOL = 274,
-     KEYWORD_INT = 275,
-     KEYWORD_DECIMAL = 276,
-     KEYWORD_CHAR = 277,
-     KEYWORD_STRING = 278,
-     LIT_STRING = 279,
-     CMP = 280,
-     UMINUS = 281
+     KEYWORD_TRUE = 258,
+     KEYWORD_FALSE = 259,
+     TOKEN_CHAR = 260,
+     TOKEN_NUMBER = 261,
+     TOKEN_STRING = 262,
+     TOKEN_IDENTIFIER = 263,
+     TOKEN_FUNC = 264,
+     KEYWORD_IF = 265,
+     KEYWORD_END = 266,
+     KEYWORD_ELSE = 267,
+     KEYWORD_WHILE = 268,
+     KEYWORD_DO = 269,
+     KEYWORD_WHEN = 270,
+     KEYWORD_FUNCTION = 271,
+     KEYWORD_FROM = 272,
+     KEYWORD_TO = 273,
+     KEYWORD_STEP = 274,
+     KEYWORD_BOOL = 275,
+     KEYWORD_INT = 276,
+     KEYWORD_DECIMAL = 277,
+     KEYWORD_CHAR = 278,
+     KEYWORD_STRING = 279,
+     LIT_STRING = 280,
+     CMP = 281,
+     UMINUS = 282
    };
 #endif
 /* Tokens.  */
-#define TOKEN_NUMBER 258
-#define TOKEN_STRING 259
-#define TOKEN_IDENTIFIER 260
-#define TOKEN_FUNC 261
-#define KEYWORD_IF 262
-#define KEYWORD_END 263
-#define KEYWORD_ELSE 264
-#define KEYWORD_WHILE 265
-#define KEYWORD_DO 266
-#define KEYWORD_WHEN 267
-#define KEYWORD_FUNCTION 268
-#define KEYWORD_TRUE 269
-#define KEYWORD_FALSE 270
-#define KEYWORD_FROM 271
-#define KEYWORD_TO 272
-#define KEYWORD_STEP 273
-#define KEYWORD_BOOL 274
-#define KEYWORD_INT 275
-#define KEYWORD_DECIMAL 276
-#define KEYWORD_CHAR 277
-#define KEYWORD_STRING 278
-#define LIT_STRING 279
-#define CMP 280
-#define UMINUS 281
+#define KEYWORD_TRUE 258
+#define KEYWORD_FALSE 259
+#define TOKEN_CHAR 260
+#define TOKEN_NUMBER 261
+#define TOKEN_STRING 262
+#define TOKEN_IDENTIFIER 263
+#define TOKEN_FUNC 264
+#define KEYWORD_IF 265
+#define KEYWORD_END 266
+#define KEYWORD_ELSE 267
+#define KEYWORD_WHILE 268
+#define KEYWORD_DO 269
+#define KEYWORD_WHEN 270
+#define KEYWORD_FUNCTION 271
+#define KEYWORD_FROM 272
+#define KEYWORD_TO 273
+#define KEYWORD_STEP 274
+#define KEYWORD_BOOL 275
+#define KEYWORD_INT 276
+#define KEYWORD_DECIMAL 277
+#define KEYWORD_CHAR 278
+#define KEYWORD_STRING 279
+#define LIT_STRING 280
+#define CMP 281
+#define UMINUS 282
 
 
 
@@ -101,8 +103,10 @@ typedef union YYSTYPE
 /* Line 1676 of yacc.c  */
 #line 8 "src/parse.y"
 
+    char *b;
     struct ast *a;
     double d;
+    char *c;
     struct symbol *s;   /* which symbol */
     struct symlist *sl;
     int fn; /* which function */
@@ -111,7 +115,7 @@ typedef union YYSTYPE
 
 
 /* Line 1676 of yacc.c  */
-#line 115 "src/parse.h"
+#line 119 "src/parse.h"
 } YYSTYPE;
 # define YYSTYPE_IS_TRIVIAL 1
 # define yystype YYSTYPE /* obsolescent; will be withdrawn */

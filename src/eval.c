@@ -3,6 +3,7 @@
 #include <stdarg.h>
 #include <string.h>
 #include <math.h>
+#include <stdbool.h>
 #include "latino.h"
 #include "structs.h"
 
@@ -16,6 +17,19 @@ symhash(char *sym) {
     return hash;
 }
 
+static char*
+strdup0(const char *s)
+{
+  size_t len = strlen(s);
+  char *p;
+
+  p = (char*)malloc(len+1);
+  if (p) {
+    strcpy(p, s);
+  }
+  return p;
+}
+
 struct symbol *
 lookup(char* sym) {
     struct symbol *sp = &symtab[symhash(sym)%NHASH];
@@ -25,7 +39,7 @@ lookup(char* sym) {
             return sp;
         }
         if (!sp->name) { /* new entry*/
-            sp->name  = strdup(sym);
+            sp->name  = strdup0(sym);
             sp->value = 0;
             sp->func  = NULL;
             sp->syms  = NULL;
@@ -59,10 +73,32 @@ newnum(double d)
         yyerror("sin espacio");
         exit(0);
     }
-    if(debug)
-        printf("newnum=%d\n", d);
     a->nodetype = NODE_DECIMAL;
     a->number = d;
+    if(debug)
+        printf("newnum=%lf\n", d);
+    return (struct ast *)a;
+}
+
+
+struct ast *
+newbool(char *b)
+{
+    struct boolval *a = malloc(sizeof(struct boolval));
+    if(!a) {
+        yyerror("sin espacio");
+        exit(0);
+    }
+    a->nodetype = NODE_BOOLEAN;
+    char *t = "verdadero";
+    int ret = strncmp(t, b, 5);
+    if (ret == 0){
+        a->value = 1;
+    } else{
+        a->value = 0;
+    }
+    if(debug)
+        printf("newbool=%i\n", a->value);
     return (struct ast *)a;
 }
 
@@ -83,9 +119,26 @@ strndup0(const char *s, size_t n)
 }
 
 struct ast *
+newchar(lat_string c, size_t l)
+{
+
+    if(debug)
+        printf("newchar=\'%c\'\n", c[0]);
+    struct charval *a = malloc(sizeof(struct charval));
+    if(!a){
+        yyerror("sin espacio");
+        exit(0);
+    }
+    a->nodetype = NODE_CHAR;
+    a->c = c[0];
+    return (struct ast *)a;
+}
+
+struct ast *
 newstr(lat_string s, size_t l)
 {
-    printf("newstr=%s\n", s);
+    if(debug)
+        printf("newstr=\"%s\"\n", s);
     struct strval *a = malloc(sizeof(struct strval));
     if(!a){
         yyerror("sin espacio");
@@ -204,6 +257,7 @@ treefree(struct ast *a)
     case NODE_BUILTIN_FUNCTION:
         treefree(a->l);
     /* no subtree */
+    case NODE_CHAR:
     case NODE_DECIMAL:
     case NODE_SYMBOL:
         break;
@@ -288,6 +342,7 @@ eval(struct ast *a)
         v = eval(a->l) * eval(a->r);
         break;
     case NODE_DIV:
+        v=0;
         if(eval(a->r) == 0)
             printf("error: division por 0 \"%c\"\n", a->nodetype);
         else
@@ -314,12 +369,6 @@ eval(struct ast *a)
         break;
     case NODE_LESS_THAN_EQUAL:
         v = (eval(a->l) <= eval(a->r))? 1 : 0;
-        break;
-    case '7':
-        v = 1;
-        break;
-    case '8':
-        v = 0;
         break;
     /* control flow */
     /* null expressions allowed in the grammar, so check for them */
@@ -370,10 +419,16 @@ eval(struct ast *a)
         v = calluser((struct ufncall *)a);
         break;
     case NODE_STRING:
-        /*v = eval(a->str);*/
-        /*v = ((struct numval *)a)->number;*/
         printf("node_string=\"%s\"\n", ((struct strval *)a)->str);
         v = 0;
+        break;
+    case NODE_BOOLEAN:
+        v = 0;
+        printf("node_boolean=\"%i\"\n", ((struct boolval *)a)->value);
+        break;
+    case NODE_CHAR:
+        v = 0;
+        printf("node_char=\'%c\'\n", ((struct charval *)a)->c);
         break;
     default:
         v = 0;

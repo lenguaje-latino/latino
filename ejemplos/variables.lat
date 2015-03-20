@@ -2,13 +2,13 @@
 logico l=verdadero
 l=falso
 logico l1
-entero e=0
+entero e=5
 e=10
 entero e1
-decimal d=0.0
+decimal d=3.5
 d=3.1416
 decimal d1
-caracter c='\0'
+caracter c='4'
 c='a'
 caracter c1
 cadena s = "hola mundo"

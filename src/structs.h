@@ -82,6 +82,7 @@ typedef enum {
     NODE_INT,
     NODE_DECIMAL,
     NODE_STRING,
+    NODE_CHAR,
     NODE_BOOLEAN
 } node_type;
 
@@ -136,11 +137,22 @@ struct numval {
     double number;
 };
 
+struct boolval {
+    node_type nodetype;   /* type K */
+    int value;
+};
+
 typedef char* lat_string;
 
 struct strval {
     node_type nodetype;  /* type ? */
     lat_string str;
+};
+
+
+struct charval {
+    node_type nodetype;  /* type ? */
+    char c;
 };
 
 struct symref {

@@ -5,6 +5,7 @@
 
 %{
 #include <string.h>
+#include <stdlib.h>
 #include "latino.h"
 #include "structs.h"
 
@@ -50,9 +51,9 @@ EXP ([Ee][-+]?[0-9]+)
 "mientras"  { return KEYWORD_WHILE; }
 "hacer"     { return KEYWORD_DO; }
 "cuando"    { return KEYWORD_WHEN; }
-"funcion"   { return KEYWORD_FUNCTION; }
-"verdadero"   { return KEYWORD_TRUE; }
-"falso"   { return KEYWORD_FALSE; }
+"funcion"   {  return KEYWORD_FUNCTION; }
+"verdadero"   { yylval.b = yytext; return KEYWORD_TRUE; }
+"falso"   { yylval.b = yytext; return KEYWORD_FALSE; }
 "logico"   { return KEYWORD_BOOL; }
 "entero"   { return KEYWORD_INT; }
 "decimal"   { return KEYWORD_DECIMAL; }
@@ -68,8 +69,10 @@ EXP ([Ee][-+]?[0-9]+)
  /* names */
 [_a-zA-Z][_a-zA-Z0-9]* { yylval.s = lookup(yytext); return TOKEN_IDENTIFIER; }
 [0-9]+"."[0-9]*{EXP}? |
-"."?[0-9]+{EXP}?       { yylval.d = atof(yytext); return TOKEN_NUMBER; }
-\"([^\\\"]|\\.)*\"     { yylval.s = newstr(yytext+1, strlen(yytext)-2);return TOKEN_STRING; }
+"."?[0-9]+{EXP}?       { yylval.d = strtod(yytext, NULL);
+                         return TOKEN_NUMBER; }
+\"([^\\\"]|\\.)*\"     { yylval.str = newstr(yytext+1, strlen(yytext)-2);return TOKEN_STRING; }
+'([^'\\\n]|\\.)'       { yylval.c = newchar(yytext+1, strlen(yytext)-2); return TOKEN_CHAR; }
 "#".* /* ignore comments */
 \\\n                   { ; } /* ignore line continuation */
 [ \t\n] /* ignore whitespace  tabs and eol */

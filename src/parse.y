@@ -6,8 +6,10 @@
 
 %defines
 %union {
+    char *b;
     struct ast *a;
     double d;
+    char *c;
     struct symbol *s;   /* which symbol */
     struct symlist *sl;
     int fn; /* which function */
@@ -15,6 +17,8 @@
 }
 
 /* declare tokens */
+%token <b> KEYWORD_TRUE KEYWORD_FALSE
+%token <c> TOKEN_CHAR
 %token <d> TOKEN_NUMBER
 %token <str> TOKEN_STRING
 %token <s> TOKEN_IDENTIFIER
@@ -103,27 +107,28 @@ exp: exp CMP exp { $$ = newcmp($2, $1, $3); }
     | exp '/' exp { $$ = newast(NODE_DIV, $1, $3); }
     | '(' exp ')' { $$ = $2; }
     | '-' exp %prec UMINUS { $$ = newast(NODE_UNARY_MINUS, $2, NULL); }
-    | TOKEN_STRING { $$ = $<str>1; }
     | var
-    | KEYWORD_TRUE { ; }
-    | KEYWORD_FALSE { ; }
     ;
 
 var: TOKEN_NUMBER { $$ = newnum($1); }
+    | TOKEN_STRING { $$ = $<str>1; }
     | TOKEN_IDENTIFIER { $$ = newref($1); }
-    | KEYWORD_BOOL TOKEN_IDENTIFIER '=' exp { $$ = newasgn($2, $4); }
-    | KEYWORD_INT TOKEN_IDENTIFIER '=' exp { $$ = newasgn($2, $4); }
-    | KEYWORD_DECIMAL TOKEN_IDENTIFIER '=' exp { $$ = newasgn($2, $4); }
-    | KEYWORD_CHAR TOKEN_IDENTIFIER '=' exp { $$ = newasgn($2, $4); }
-    | KEYWORD_STRING TOKEN_IDENTIFIER '=' exp { $$ = newasgn($2, $4); }
     | KEYWORD_BOOL TOKEN_IDENTIFIER { $$ = newref($2); }
     | KEYWORD_INT TOKEN_IDENTIFIER { $$ = newref($2); }
     | KEYWORD_DECIMAL TOKEN_IDENTIFIER { $$ = newref($2); }
     | KEYWORD_CHAR TOKEN_IDENTIFIER { $$ = newref($2); }
     | KEYWORD_STRING TOKEN_IDENTIFIER { $$ = newref($2); }
+    | KEYWORD_BOOL TOKEN_IDENTIFIER '=' exp { $$ = newasgn($2, $4); }
+    | KEYWORD_INT TOKEN_IDENTIFIER '=' exp { $$ = newasgn($2, $4); }
+    | KEYWORD_DECIMAL TOKEN_IDENTIFIER '=' exp { $$ = newasgn($2, $4); }
+    | KEYWORD_CHAR TOKEN_IDENTIFIER '=' exp { $$ = newasgn($2, $4); }
+    | KEYWORD_STRING TOKEN_IDENTIFIER '=' exp { $$ = newasgn($2, $4); }
     | TOKEN_IDENTIFIER '=' exp { $$ = newasgn($1, $3); }
     | TOKEN_FUNC '(' explist ')' { $$ = newfunc($1, $3); }
     | TOKEN_IDENTIFIER '(' explist ')' { $$ = newcall($1, $3); }
+    | KEYWORD_TRUE { $$ = newbool($1); }
+    | KEYWORD_FALSE { $$ = newbool($1); }
+    | TOKEN_CHAR { $$ = $<c>1; }
     ;
 
 explist: /* empty */ { $$ = NULL; }
