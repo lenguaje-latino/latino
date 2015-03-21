@@ -276,7 +276,7 @@ treefree(struct ast *a)
         free( ((struct strval *)a)->str);
         break;
     default:
-        printf("error interno: nodo mal liberado %c\n", a->nodetype);
+        printf("=> error interno: nodo mal liberado %i\n", a->nodetype);
     }
     free(a); /* always free the node itself */
 }
@@ -347,6 +347,9 @@ eval(struct ast *a)
             printf("error: division por 0 \"%c\"\n", a->nodetype);
         else
             v = eval(a->l) / eval(a->r);
+        break;
+    case NODE_MOD:
+        v = 0;
         break;
     case NODE_UNARY_MINUS:
         v = -eval(a->l);
@@ -419,12 +422,14 @@ eval(struct ast *a)
         v = calluser((struct ufncall *)a);
         break;
     case NODE_STRING:
-        printf("node_string=\"%s\"\n", ((struct strval *)a)->str);
+        if(debug)
+            printf("node_string=\"%s\"\n", ((struct strval *)a)->str);
         v = 0;
         break;
     case NODE_BOOLEAN:
-        v = 0;
-        printf("node_boolean=\"%i\"\n", ((struct boolval *)a)->value);
+        v = ((struct boolval *)a)->value;
+        if(debug)
+            printf("node_boolean=\"%i\"\n", ((struct boolval *)a)->value);
         break;
     case NODE_CHAR:
         v = 0;
@@ -432,7 +437,7 @@ eval(struct ast *a)
         break;
     default:
         v = 0;
-        printf("error interno: nodo incorrecto %c\n", a->nodetype);
+        printf("=> error interno: nodo incorrecto %i\n", a->nodetype );
         break;
     }
     return v;
@@ -442,7 +447,9 @@ static double
 callbuiltin(struct fncall *f)
 {
     enum bifs functype = f->functype;
-    double v = eval(f->l);
+    double v = 0;
+    if(f->l->nodetype == NODE_DECIMAL)
+        v = eval(f->l);
     //printf("=> %4.4g\n", v);
     switch(functype) {
     /*case B_sqrt:
@@ -452,8 +459,10 @@ callbuiltin(struct fncall *f)
     case B_log:
         return log(v);*/
     case B_print:
-        printf("=> %4.4g\n", v);
-        //printf("=> %s\n", f->l);
+        if(f->l->nodetype == NODE_STRING)
+            printf("=>\"%s\"\n", ((struct strval *)f->l)->str);
+        else
+            printf("=> %4.4g\n", v);
         return v;
     default:
         yyerror("error: definicion de funcion desconocida %d", functype);

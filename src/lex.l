@@ -31,7 +31,6 @@ EXP ([Ee][-+]?[0-9]+)
 ")" |
 "," |
 "|" |
-";" |
 "="     { return yytext[0]; }
 
  /* comparison ops, all are CMP token */
@@ -77,6 +76,6 @@ EXP ([Ee][-+]?[0-9]+)
 \\\n                   { ; } /* ignore line continuation */
 [ \t\n] /* ignore whitespace  tabs and eol */
  /*.                      { printf("error lexico %s ", yytext); }*/
-.                      {;}
+.                      { ; }
 
 %%

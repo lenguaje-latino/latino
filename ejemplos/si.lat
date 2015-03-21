@@ -1,10 +1,10 @@
 #valor logico directo
-si(V)
+si(verdadero)
     imprimir(1)
 fin
 
 #asignado a una variable
-b = V
+b = verdadero
 si(b)
     imprimir(1)
 fin
@@ -26,3 +26,13 @@ sino si(i > 0)
         imprimir(-1)
     fin
 fin
+
+si(verdadero)
+    imprimir("hola latino")
+fin
+
+logico g = verdadero
+si(g)
+    imprimir("verdadero")
+fin
+
