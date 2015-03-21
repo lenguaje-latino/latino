@@ -34,14 +34,12 @@ EXP ([Ee][-+]?[0-9]+)
 "="     { return yytext[0]; }
 
  /* comparison ops, all are CMP token */
-">"     { yylval.fn = 1; return CMP; }
-"<"     { yylval.fn = 2; return CMP; }
-"!="    { yylval.fn = 3; return CMP; }
-"=="    { yylval.fn = 4; return CMP; }
-">="    { yylval.fn = 5; return CMP; }
-"<="    { yylval.fn = 6; return CMP; }
-"V"     { yylval.fn = 7; return CMP; }
-"F"     { yylval.fn = 8; return CMP; }
+">"     { yylval.fn = NODE_GREATER_THAN; return CMP; }
+"<"     { yylval.fn = NODE_LESS_THAN; return CMP; }
+"!="    { yylval.fn = NODE_NOT_EQUAL; return CMP; }
+"=="    { yylval.fn = NODE_EQUAL; return CMP; }
+">="    { yylval.fn = NODE_GREATER_THAN_EQUAL; return CMP; }
+"<="    { yylval.fn = NODE_LESS_THAN_EQUAL; return CMP; }
 
  /* keywords */
 "si"        { return KEYWORD_IF; }

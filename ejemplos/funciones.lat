@@ -32,4 +32,3 @@ fin
 fun(0)
 #TODO: no evia error cuando se pasan mas argumentos
 fun_1(100, 2, 1)
-

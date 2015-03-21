@@ -6,13 +6,13 @@
 
 %defines
 %union {
+    int fn; /* which function */
     char *b;
-    struct ast *a;
-    double d;
     char *c;
+    double d;
+    struct ast *a;
     struct symbol *s;   /* which symbol */
     struct symlist *sl;
-    int fn; /* which function */
     struct lat_string *str;
 }
 

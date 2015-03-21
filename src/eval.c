@@ -157,7 +157,6 @@ newcmp(int cmptype, struct ast *l, struct ast *r)
         yyerror("sin espacio");
         exit(0);
     }
-    //a->nodetype = '0' + nodetype;
     a->nodetype = cmptype;
     a->l = l;
     a->r = r;
@@ -260,6 +259,7 @@ treefree(struct ast *a)
     case NODE_CHAR:
     case NODE_DECIMAL:
     case NODE_SYMBOL:
+    case NODE_BOOLEAN:
         break;
     case NODE_ASSIGMENT:
         free( ((struct symasgn *)a)->v);
@@ -313,7 +313,7 @@ eval(struct ast *a)
 {
     double v;
     if(!a) {
-        yyerror("error interno, eval es nulo");
+        yyerror("=> error interno: eval es nulo");
         return 0.0;
     }
     switch(a->nodetype) {
@@ -396,9 +396,10 @@ eval(struct ast *a)
     case NODE_WHILE:
         v = 0.0; /* a default value */
         if( ((struct flow *)a)->tl) {
-            while( eval(((struct flow *)a)->cond) != 0)
+            while( eval(((struct flow *)a)->cond) != 0) {
                 /*evaluate the condition*/
                 v = eval(((struct flow *)a)->tl);
+            }
             /*evaluate the target statements*/
         }
         break; /* value of last statement is value of while/do */
@@ -433,7 +434,8 @@ eval(struct ast *a)
         break;
     case NODE_CHAR:
         v = 0;
-        printf("node_char=\'%c\'\n", ((struct charval *)a)->c);
+        if(debug)
+            printf("node_char=\'%c\'\n", ((struct charval *)a)->c);
         break;
     default:
         v = 0;
@@ -452,17 +454,34 @@ callbuiltin(struct fncall *f)
         v = eval(f->l);
     //printf("=> %4.4g\n", v);
     switch(functype) {
-    /*case B_sqrt:
+    case B_sqrt:
         return sqrt(v);
     case B_exp:
         return exp(v);
     case B_log:
-        return log(v);*/
+        return log(v);
     case B_print:
-        if(f->l->nodetype == NODE_STRING)
-            printf("=>\"%s\"\n", ((struct strval *)f->l)->str);
-        else
-            printf("=> %4.4g\n", v);
+        switch(f->l->nodetype){
+            case NODE_STRING:
+                printf("=> \"%s\"\n", ((struct strval *)f->l)->str);
+                break;
+            case NODE_BOOLEAN:
+                if(((struct boolval *)f->l)->value)
+                    printf("=> verdadero\n");
+                else
+                    printf("=> falso\n");
+                break;
+            case NODE_CHAR:
+                printf("=> \'%c\'\n", ((struct charval *)f->l)->c);
+                break;
+            case NODE_DECIMAL:
+                printf("=> %lf\n", v);
+                break;
+            default:
+                v = eval(f->l);
+                printf("=> %i\n", (int)floor(v));
+                break;
+        }
         return v;
     default:
         yyerror("error: definicion de funcion desconocida %d", functype);

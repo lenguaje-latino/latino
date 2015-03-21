@@ -1,21 +1,19 @@
-principal()
-    i = 10
-    desde i hasta 50 salto = 10
-        imprimir(i)
-    fin
-    desde i = 0 hasta 10
-        imprimir(i)
-    fin
-    desde entero x=10 hasta 50
-        imprimir(x)
-    fin
-
-    desde i hasta 10
-        si (i == 5)
-            continuar
-            imprimir(i)
-        sino
-            romper
-        fin
-    fin
+i = 10
+desde i hasta 10
+    imprimir(i)
 fin
+#desde i hasta 50 salto = 10
+#    imprimir(i)
+#fin
+#desde entero x=10 hasta 50
+#    imprimir(x)
+#fin
+#
+#desde i hasta 10
+#    si (i == 5)
+#        continuar
+#        imprimir(i)
+#    sino
+#        romper
+#    fin
+#fin

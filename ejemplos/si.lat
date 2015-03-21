@@ -33,6 +33,7 @@ fin
 
 logico g = verdadero
 si(g)
-    imprimir("verdadero")
+    imprimir(verdadero)
+    imprimir('a')
 fin
 

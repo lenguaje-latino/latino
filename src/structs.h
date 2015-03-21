@@ -57,7 +57,7 @@ enum bifs {
  */
 
 typedef enum {
-    NODE_ADD,
+    NODE_ADD=0,
     NODE_SUB,
     NODE_MULT,
     NODE_DIV,

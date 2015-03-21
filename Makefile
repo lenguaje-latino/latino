@@ -1,8 +1,9 @@
 YACC = bison -y
 LEX = flex
 TARGET = bin/latino
-CFLAGS = -g -Wall -lm
-LIBS =
+CFLAGS = -g -Wall
+MATH = -lm
+LIBS = -I/usr/include
 CC = gcc
 
 #ifeq (Windows_NT,$(OS))
@@ -40,7 +41,7 @@ src/lex.o : src/lex.c
 
 $(TARGET) : src/parse.o src/latino.o src/lex.o src/eval.o
 	mkdir -p "$$(dirname $(TARGET))"
-	$(CC) $(CFLAGS) src/parse.o src/latino.o src/lex.o src/eval.o -o $(TARGET) $(LIBS)
+	$(CC) $(CFLAGS) src/parse.o src/latino.o src/lex.o src/eval.o -o $(TARGET) $(MATH) $(LIBS)
 
 clean :
 	rm -f src/lex.c
