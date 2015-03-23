@@ -42,7 +42,7 @@ lookup(char* sym) {
             sp->name  = strdup0(sym);
             sp->value = 0;
             sp->func  = NULL;
-            sp->syms  = NULL;
+            sp->syms  = NULL;	    
             return sp;
         }
         if (++sp >= symtab + NHASH) sp = symtab; /* try the next entry */
