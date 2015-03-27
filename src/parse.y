@@ -42,11 +42,9 @@
     KEYWORD_CHAR
     KEYWORD_STRING
 
-%token
-    LIT_STRING
 
 %nonassoc <fn> CMP
-%type <a> exp stmt list explist var
+%type <a> exp stmt list explist var value
 %type <sl> symlist
 
 /*
@@ -75,7 +73,7 @@ program: /* empty */
         dodef($3, $5, $7);
         //printf("Define %s\n> ", $3->name);
     }
-    | program error { yyerrok; printf("=> "); }
+    /* | error { yyerrok; printf("=> "); } */
     ;
 
 stmt:
@@ -87,7 +85,8 @@ stmt:
         $$ = newflow(NODE_WHILE, $3, $5, NULL); }
     | KEYWORD_DO list KEYWORD_WHEN '(' exp ')' {
         $$ = newflow(NODE_DO, $5, $2, NULL); }
-    | exp
+    | var
+    /*| exp { double  d = eval($1); printf("=> %lf\n", d); }*/
     ;
 
 list:   /* empty */ { $$ = NULL; }
@@ -107,25 +106,18 @@ exp: exp CMP exp { $$ = newcmp($2, $1, $3); }
     | exp '/' exp { $$ = newast(NODE_DIV, $1, $3); }
     | '(' exp ')' { $$ = $2; }
     | '-' exp %prec UMINUS { $$ = newast(NODE_UNARY_MINUS, $2, NULL); }
-    | var
+    | value
     ;
 
-var: TOKEN_NUMBER { $$ = newnum($1); }
-    | TOKEN_STRING { $$ = $<str>1; }
-    | TOKEN_IDENTIFIER { $$ = newref($1); }
-    | KEYWORD_BOOL TOKEN_IDENTIFIER { $$ = newref($2); }
-    | KEYWORD_INT TOKEN_IDENTIFIER { $$ = newref($2); }
-    | KEYWORD_DECIMAL TOKEN_IDENTIFIER { $$ = newref($2); }
-    | KEYWORD_CHAR TOKEN_IDENTIFIER { $$ = newref($2); }
-    | KEYWORD_STRING TOKEN_IDENTIFIER { $$ = newref($2); }
-    | KEYWORD_BOOL TOKEN_IDENTIFIER '=' exp { $$ = newasgn($2, $4); }
-    | KEYWORD_INT TOKEN_IDENTIFIER '=' exp { $$ = newasgn($2, $4); }
-    | KEYWORD_DECIMAL TOKEN_IDENTIFIER '=' exp { $$ = newasgn($2, $4); }
-    | KEYWORD_CHAR TOKEN_IDENTIFIER '=' exp { $$ = newasgn($2, $4); }
-    | KEYWORD_STRING TOKEN_IDENTIFIER '=' exp { $$ = newasgn($2, $4); }
-    | TOKEN_IDENTIFIER '=' exp { $$ = newasgn($1, $3); }
+var: TOKEN_IDENTIFIER '=' exp { $$ = newasgn($1, $3); }
+    | TOKEN_IDENTIFIER '=' value { $$ = newasgn($1, $3); }
     | TOKEN_FUNC '(' explist ')' { $$ = newfunc($1, $3); }
     | TOKEN_IDENTIFIER '(' explist ')' { $$ = newcall($1, $3); }
+    ;
+
+value: TOKEN_NUMBER { $$ = newnum($1); }
+    | TOKEN_STRING { $$ = $<str>1; }
+    | TOKEN_IDENTIFIER { $$ = newref($1); }
     | KEYWORD_TRUE { $$ = newbool($1); }
     | KEYWORD_FALSE { $$ = newbool($1); }
     | TOKEN_CHAR { $$ = $<c>1; }
@@ -146,5 +138,5 @@ symlist: /* empty */ { $$ = NULL; }
 extern
 void yyerror(char *s, ...)
 {
-    print_error(s);
+    print_error("linea %i, %s", yylineno, s);
 }

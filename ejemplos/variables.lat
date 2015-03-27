@@ -1,18 +1,19 @@
 #ejemplos de declaracion de variables validas
-logico l=verdadero
-l=falso
-logico l1
-entero e=5
+l=verdadero
+imprimir(l)
 e=10
-entero e1
-decimal d=3.5
+imprimir(e)
 d=3.1416
-decimal d1
-caracter c='4'
+imprimir(d)
 c='a'
-caracter c1
-cadena s = "hola mundo"
+imprimir(c)
 s="hola de nuevo"
-cadena s1
+imprimir(s)
 #todo: pendiente implementar constantes
-constante decimal PI=3.1416
+PI=3.1416
+imprimir(PI)
+
+#test imprimir cadena
+imprimir("hello world")
+imprimir('a')
+imprimir(10.0)

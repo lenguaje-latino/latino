@@ -17,17 +17,16 @@ symhash(char *sym) {
     return hash;
 }
 
-static char*
+    static char*
 strdup0(const char *s)
 {
-  size_t len = strlen(s);
-  char *p;
-
-  p = (char*)malloc(len+1);
-  if (p) {
-    strcpy(p, s);
-  }
-  return p;
+    size_t len = strlen(s);
+    char *p;
+    p = (char*)malloc(len+1);
+    if (p) {
+        strcpy(p, s);
+    }
+    return p;
 }
 
 struct symbol *
@@ -51,7 +50,7 @@ lookup(char* sym) {
     abort();    /* tried them all, table is full */
 }
 
-struct ast *
+    struct ast *
 newast(node_type nodetype, struct ast *l, struct ast *r)
 {
     struct ast *a = malloc(sizeof(struct ast));
@@ -65,7 +64,7 @@ newast(node_type nodetype, struct ast *l, struct ast *r)
     return a;
 }
 
-struct ast *
+    struct ast *
 newnum(double d)
 {
     struct numval *a = malloc(sizeof(struct numval));
@@ -81,7 +80,7 @@ newnum(double d)
 }
 
 
-struct ast *
+    struct ast *
 newbool(char *b)
 {
     struct boolval *a = malloc(sizeof(struct boolval));
@@ -102,23 +101,23 @@ newbool(char *b)
     return (struct ast *)a;
 }
 
-static char*
+    static char*
 strndup0(const char *s, size_t n)
 {
-  size_t i;
-  const char *p = s;
-  char *new;
-  for (i=0; i<n && *p; i++,p++)
-    ;
-  new = (char*)malloc(i+1);
-  if (new) {
-    memcpy(new, s, i);
-    new[i] = '\0';
-  }
-  return new;
+    size_t i;
+    const char *p = s;
+    char *new;
+    for (i=0; i<n && *p; i++,p++)
+        ;
+    new = (char*)malloc(i+1);
+    if (new) {
+        memcpy(new, s, i);
+        new[i] = '\0';
+    }
+    return new;
 }
 
-struct ast *
+    struct ast *
 newchar(lat_string c, size_t l)
 {
 
@@ -134,7 +133,7 @@ newchar(lat_string c, size_t l)
     return (struct ast *)a;
 }
 
-struct ast *
+    struct ast *
 newstr(lat_string s, size_t l)
 {
     if(debug)
@@ -149,7 +148,7 @@ newstr(lat_string s, size_t l)
     return (struct ast *)a;
 }
 
-struct ast *
+    struct ast *
 newcmp(int cmptype, struct ast *l, struct ast *r)
 {
     struct ast *a = malloc(sizeof(struct ast));
@@ -163,7 +162,7 @@ newcmp(int cmptype, struct ast *l, struct ast *r)
     return a;
 }
 
-struct ast *
+    struct ast *
 newfunc(int functype, struct ast *l)
 {
     struct fncall *a = malloc(sizeof(struct fncall));
@@ -177,7 +176,7 @@ newfunc(int functype, struct ast *l)
     return (struct ast *)a;
 }
 
-struct ast *
+    struct ast *
 newcall(struct symbol *s, struct ast *l)
 {
     struct ufncall *a = malloc(sizeof(struct ufncall));
@@ -190,7 +189,7 @@ newcall(struct symbol *s, struct ast *l)
     a->s = s;
     return (struct ast *)a;
 }
-struct ast *
+    struct ast *
 newref(struct symbol *s)
 {
     struct symref *a = malloc(sizeof(struct symref));
@@ -205,7 +204,7 @@ newref(struct symbol *s)
     return (struct ast *)a;
 }
 
-struct ast *
+    struct ast *
 newasgn(struct symbol *s, struct ast *v)
 {
     struct symasgn *a = malloc(sizeof(struct symasgn));
@@ -218,7 +217,7 @@ newasgn(struct symbol *s, struct ast *v)
     a->v = v;
     return (struct ast *)a;
 }
-struct ast *
+    struct ast *
 newflow(node_type nodetype, struct ast *cond, struct ast *tl, struct ast *el)
 {
     struct flow *a = malloc(sizeof(struct flow));
@@ -233,54 +232,54 @@ newflow(node_type nodetype, struct ast *cond, struct ast *tl, struct ast *el)
     return (struct ast *)a;
 }
 /* free a tree of ASTs */
-void
+    void
 treefree(struct ast *a)
 {
     switch(a->nodetype) {
-    /* two subtrees */
-    case NODE_ADD:
-    case NODE_SUB:
-    case NODE_MULT:
-    case NODE_DIV:
-    case NODE_EQUAL:
-    case NODE_NOT_EQUAL:
-    case NODE_GREATER_THAN:
-    case NODE_LESS_THAN:
-    case NODE_GREATER_THAN_EQUAL:
-    case NODE_LESS_THAN_EQUAL:
-    case NODE_EXPRESION:
-        treefree(a->r);
-    /* one subtree */
-    case NODE_UNARY_MINUS:
-    case NODE_USER_FUNCTION_CALL:
-    case NODE_BUILTIN_FUNCTION:
-        treefree(a->l);
-    /* no subtree */
-    case NODE_CHAR:
-    case NODE_DECIMAL:
-    case NODE_SYMBOL:
-    case NODE_BOOLEAN:
-        break;
-    case NODE_ASSIGMENT:
-        free( ((struct symasgn *)a)->v);
-        break;
-    /* up to three subtrees */
-    case NODE_IF:
-    case NODE_WHILE:
-        free( ((struct flow *)a)->cond);
-        if( ((struct flow *)a)->tl) treefree( ((struct flow *)a)->tl);
-        if( ((struct flow *)a)->el) treefree( ((struct flow *)a)->el);
-        break;
-    case NODE_STRING:
-        //free( ((struct symasgn *)a)->v);
-        free( ((struct strval *)a)->str);
-        break;
-    default:
-        printf("=> error interno: nodo mal liberado %i\n", a->nodetype);
+        /* two subtrees */
+        case NODE_ADD:
+        case NODE_SUB:
+        case NODE_MULT:
+        case NODE_DIV:
+        case NODE_EQUAL:
+        case NODE_NOT_EQUAL:
+        case NODE_GREATER_THAN:
+        case NODE_LESS_THAN:
+        case NODE_GREATER_THAN_EQUAL:
+        case NODE_LESS_THAN_EQUAL:
+        case NODE_EXPRESION:
+            treefree(a->r);
+            /* one subtree */
+        case NODE_UNARY_MINUS:
+        case NODE_USER_FUNCTION_CALL:
+        case NODE_BUILTIN_FUNCTION:
+            treefree(a->l);
+            /* no subtree */
+        case NODE_CHAR:
+        case NODE_DECIMAL:
+        case NODE_SYMBOL:
+        case NODE_BOOLEAN:
+            break;
+        case NODE_ASSIGMENT:
+            free( ((struct symasgn *)a)->v);
+            break;
+            /* up to three subtrees */
+        case NODE_IF:
+        case NODE_WHILE:
+            free( ((struct flow *)a)->cond);
+            if( ((struct flow *)a)->tl) treefree( ((struct flow *)a)->tl);
+            if( ((struct flow *)a)->el) treefree( ((struct flow *)a)->el);
+            break;
+        case NODE_STRING:
+            //free( ((struct symasgn *)a)->v);
+            free( ((struct strval *)a)->str);
+            break;
+        default:
+            printf("=> error interno: nodo mal liberado %i\n", a->nodetype);
     }
     free(a); /* always free the node itself */
 }
-struct symlist *
+    struct symlist *
 newsymlist(struct symbol *sym, struct symlist *next)
 {
     //printf("newsymlist: %s\n", sym->name);
@@ -294,7 +293,7 @@ newsymlist(struct symbol *sym, struct symlist *next)
     return sl;
 }
 /* free a list of symbols */
-void
+    void
 symlistfree(struct symlist *sl)
 {
     struct symlist *nsl;
@@ -308,8 +307,7 @@ symlistfree(struct symlist *sl)
 static double callbuiltin(struct fncall *);
 static double calluser(struct ufncall *);
 
-double
-eval(struct ast *a)
+double eval(struct ast *a)
 {
     double v;
     if(!a) {
@@ -317,66 +315,67 @@ eval(struct ast *a)
         return 0.0;
     }
     switch(a->nodetype) {
-    printf("%i", a->nodetype);
-    /* constant */
-    case NODE_DECIMAL:
+        if(debug)
+            printf("%i", a->nodetype);
+        /* constant */
+        case NODE_DECIMAL:
         v = ((struct numval *)a)->number;
         break;
-    /* name reference */
-    case NODE_SYMBOL:
+        /* name reference */
+        case NODE_SYMBOL:
         v = ((struct symref *)a)->s->value;
         break;
-    /* assignment */
-    case NODE_ASSIGMENT:
+        /* assignment */
+        case NODE_ASSIGMENT:
         v = ((struct symasgn *)a)->s->value =
-                eval(((struct symasgn *)a)->v);
+            eval(((struct symasgn *)a)->v);
         break;
-    /* expressions */
-    case NODE_ADD:
+        /* expressions */
+        case NODE_ADD:
         v = eval(a->l) + eval(a->r);
         break;
-    case NODE_SUB:
+        case NODE_SUB:
         v = eval(a->l) - eval(a->r);
         break;
-    case NODE_MULT:
+        case NODE_MULT:
         v = eval(a->l) * eval(a->r);
         break;
-    case NODE_DIV:
+        case NODE_DIV:
         v=0;
         if(eval(a->r) == 0)
             printf("error: division por 0 \"%c\"\n", a->nodetype);
         else
             v = eval(a->l) / eval(a->r);
         break;
-    case NODE_MOD:
+        case NODE_MOD:
         v = 0;
         break;
-    case NODE_UNARY_MINUS:
+        case NODE_UNARY_MINUS:
         v = -eval(a->l);
         break;
-    /* comparisons */
-    case NODE_GREATER_THAN:
+        /* comparisons */
+        case NODE_GREATER_THAN:
         v = (eval(a->l) > eval(a->r))? 1 : 0;
         break;
-    case NODE_LESS_THAN:
+        case NODE_LESS_THAN:
         v = (eval(a->l) < eval(a->r))? 1 : 0;
         break;
-    case NODE_NOT_EQUAL:
+        case NODE_NOT_EQUAL:
         v = (eval(a->l) != eval(a->r))? 1 : 0;
         break;
-    case NODE_EQUAL:
+        case NODE_EQUAL:
         v = (eval(a->l) == eval(a->r))? 1 : 0;
         break;
-    case NODE_GREATER_THAN_EQUAL:
+        case NODE_GREATER_THAN_EQUAL:
         v = (eval(a->l) >= eval(a->r))? 1 : 0;
         break;
-    case NODE_LESS_THAN_EQUAL:
+        case NODE_LESS_THAN_EQUAL:
         v = (eval(a->l) <= eval(a->r))? 1 : 0;
         break;
-    /* control flow */
-    /* null expressions allowed in the grammar, so check for them */
-    /* if/then/else */
-    case NODE_IF:
+        /* control flow */
+        /* null expressions allowed in the grammar, so check for them */
+        /* if/then/else */
+        case NODE_IF:
         if( eval( ((struct flow *)a)->cond) != 0) {
             /*check the condition*/
             if( ((struct flow *)a)->tl) {
@@ -392,8 +391,8 @@ eval(struct ast *a)
                 v = 0.0; /* a default value */
         }
         break;
-    /* while/do */
-    case NODE_WHILE:
+        /* while/do */
+        case NODE_WHILE:
         v = 0.0; /* a default value */
         if( ((struct flow *)a)->tl) {
             while( eval(((struct flow *)a)->cond) != 0) {
@@ -403,8 +402,8 @@ eval(struct ast *a)
             /*evaluate the target statements*/
         }
         break; /* value of last statement is value of while/do */
-    /* list of statements */
-    case NODE_DO:
+        /* list of statements */
+        case NODE_DO:
         v = 0.0;    /*a default value */
         if(((struct flow *)a)->tl) {
             do{
@@ -412,32 +411,32 @@ eval(struct ast *a)
             }while (eval(((struct flow *)a)->cond) != 0);
         }
         break;
-    case NODE_EXPRESION:
+        case NODE_EXPRESION:
         eval(a->l);
         v = eval(a->r);
         break;
-    case NODE_BUILTIN_FUNCTION:
+        case NODE_BUILTIN_FUNCTION:
         v = callbuiltin((struct fncall *)a);
         break;
-    case NODE_USER_FUNCTION_CALL:
+        case NODE_USER_FUNCTION_CALL:
         v = calluser((struct ufncall *)a);
         break;
-    case NODE_STRING:
+        case NODE_STRING:
         if(debug)
             printf("node_string=\"%s\"\n", ((struct strval *)a)->str);
         v = 0;
         break;
-    case NODE_BOOLEAN:
+        case NODE_BOOLEAN:
         v = ((struct boolval *)a)->value;
         if(debug)
             printf("node_boolean=\"%i\"\n", ((struct boolval *)a)->value);
         break;
-    case NODE_CHAR:
+        case NODE_CHAR:
         v = 0;
         if(debug)
             printf("node_char=\'%c\'\n", ((struct charval *)a)->c);
         break;
-    default:
+        default:
         v = 0;
         printf("=> error interno: nodo incorrecto %i\n", a->nodetype );
         break;
@@ -445,8 +444,42 @@ eval(struct ast *a)
     return v;
 }
 
-static double
-callbuiltin(struct fncall *f)
+void imprimir(struct ast *a)
+{
+    //if(debug)
+    printf("node_type=%i\n", a->nodetype);
+    double v = 0;
+    switch(a->nodetype){
+        case NODE_STRING:
+            printf("=> \"%s\"\n", ((struct strval *)a)->str);
+            break;
+        case NODE_BOOLEAN:
+            if(((struct boolval *)a)->value)
+                printf("=> verdadero\n");
+            else
+                printf("=> falso\n");
+            break;
+        case NODE_CHAR:
+            printf("=> \'%c\'\n", ((struct charval *)a)->c);
+            break;
+        case NODE_DECIMAL:
+            //v = eval(a->l);
+            printf("=> %lf\n", ((struct numval *)a)->number);
+            break;
+        case NODE_SYMBOL:
+            /* TODO: Identificar tipo de simbolo */
+            v = ((struct symref *)a)->s->value;
+            printf("=>%lf\n", v);
+            break;
+        default:
+            /*printf("node_type=%i\n", a->l->nodetype);*/
+            v = eval(a->l);
+            printf("=> %i\n", (int)floor(v));
+            break;
+    }
+}
+
+static double callbuiltin(struct fncall *f)
 {
     enum bifs functype = f->functype;
     double v = 0;
@@ -454,43 +487,23 @@ callbuiltin(struct fncall *f)
         v = eval(f->l);
     //printf("=> %4.4g\n", v);
     switch(functype) {
-    case B_sqrt:
-        return sqrt(v);
-    case B_exp:
-        return exp(v);
-    case B_log:
-        return log(v);
-    case B_print:
-        switch(f->l->nodetype){
-            case NODE_STRING:
-                printf("=> \"%s\"\n", ((struct strval *)f->l)->str);
-                break;
-            case NODE_BOOLEAN:
-                if(((struct boolval *)f->l)->value)
-                    printf("=> verdadero\n");
-                else
-                    printf("=> falso\n");
-                break;
-            case NODE_CHAR:
-                printf("=> \'%c\'\n", ((struct charval *)f->l)->c);
-                break;
-            case NODE_DECIMAL:
-                printf("=> %lf\n", v);
-                break;
-            default:
-                v = eval(f->l);
-                printf("=> %i\n", (int)floor(v));
-                break;
-        }
-        return v;
-    default:
-        yyerror("error: definicion de funcion desconocida %d", functype);
-        return 0.0;
+        case B_sqrt:
+            return sqrt(v);
+        case B_exp:
+            return exp(v);
+        case B_log:
+            return log(v);
+        case B_print:
+            imprimir(f->l);
+            return v;
+        default:
+            yyerror("error: definicion de funcion desconocida %d", functype);
+            return 0.0;
     }
 }
 
 /* define a function */
-void
+    void
 dodef(struct symbol *name, struct symlist *syms, struct ast *func)
 {
     if(name->syms) symlistfree(name->syms);
@@ -499,7 +512,7 @@ dodef(struct symbol *name, struct symlist *syms, struct ast *func)
     name->func = func;
 }
 
-static double
+    static double
 calluser(struct ufncall *f)
 {
     struct symbol *fn = f->s; /* function name */

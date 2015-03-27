@@ -51,11 +51,6 @@ EXP ([Ee][-+]?[0-9]+)
 "funcion"   {  return KEYWORD_FUNCTION; }
 "verdadero"   { yylval.b = yytext; return KEYWORD_TRUE; }
 "falso"   { yylval.b = yytext; return KEYWORD_FALSE; }
-"logico"   { return KEYWORD_BOOL; }
-"entero"   { return KEYWORD_INT; }
-"decimal"   { return KEYWORD_DECIMAL; }
-"caracter"   { return KEYWORD_CHAR; }
-"cadena"   { return KEYWORD_STRING; }
 
  /*built-in functions */
 "raiz"          { yylval.fn = B_sqrt; return TOKEN_FUNC; }

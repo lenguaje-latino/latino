@@ -67,9 +67,8 @@ extern int yydebug;
     KEYWORD_DECIMAL = 277,
     KEYWORD_CHAR = 278,
     KEYWORD_STRING = 279,
-    LIT_STRING = 280,
-    CMP = 281,
-    UMINUS = 282
+    CMP = 280,
+    UMINUS = 281
   };
 #endif
 /* Tokens.  */
@@ -95,9 +94,8 @@ extern int yydebug;
 #define KEYWORD_DECIMAL 277
 #define KEYWORD_CHAR 278
 #define KEYWORD_STRING 279
-#define LIT_STRING 280
-#define CMP 281
-#define UMINUS 282
+#define CMP 280
+#define UMINUS 281
 
 /* Value type.  */
 #if ! defined YYSTYPE && ! defined YYSTYPE_IS_DECLARED
@@ -115,7 +113,7 @@ union YYSTYPE
     struct symlist *sl;
     struct lat_string *str;
 
-#line 119 "src/parse.h" /* yacc.c:1909  */
+#line 117 "src/parse.h" /* yacc.c:1909  */
 };
 # define YYSTYPE_IS_TRIVIAL 1
 # define YYSTYPE_IS_DECLARED 1
