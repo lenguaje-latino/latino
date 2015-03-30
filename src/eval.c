@@ -61,7 +61,7 @@ newast(node_type nodetype, struct ast *l, struct ast *r)
 {
     struct ast *a = malloc(sizeof(struct ast));
     if(!a) {
-        yyerror("sin espacio");
+        yyerror("sin espacio\n");
         exit(0);
     }
     a->nodetype = nodetype;
@@ -75,7 +75,7 @@ newnum(double d)
 {
     node *a = malloc(sizeof(node));
     if(!a) {
-        yyerror("sin espacio");
+        yyerror("sin espacio\n");
         exit(0);
     }
     a->nodetype = NODE_DECIMAL;
@@ -92,7 +92,7 @@ newbool(char *b)
 {
     node *a = malloc(sizeof(node));
     if(!a) {
-        yyerror("sin espacio");
+        yyerror("sin espacio\n");
         exit(0);
     }
     a->nodetype = NODE_BOOLEAN;
@@ -131,7 +131,7 @@ newchar(lat_string c, size_t l)
 
     node *a = malloc(sizeof(node));
     if(!a) {
-        yyerror("sin espacio");
+        yyerror("sin espacio\n");
         exit(0);
     }
     a->nodetype = NODE_CHAR;
@@ -147,7 +147,7 @@ newstr(lat_string s, size_t l)
 {
     node *a = malloc(sizeof(node));
     if(!a) {
-        yyerror("sin espacio");
+        yyerror("sin espacio\n");
         exit(0);
     }
     a->nodetype = NODE_STRING;
@@ -163,7 +163,7 @@ newcmp(int cmptype, struct ast *l, struct ast *r)
 {
     struct ast *a = malloc(sizeof(struct ast));
     if(!a) {
-        yyerror("sin espacio");
+        yyerror("sin espacio\n");
         exit(0);
     }
     a->nodetype = cmptype;
@@ -177,7 +177,7 @@ newfunc(int functype, struct ast *l)
 {
     struct fncall *a = malloc(sizeof(struct fncall));
     if(!a) {
-        yyerror("sin espacio");
+        yyerror("sin espacio\n");
         exit(0);
     }
     a->nodetype = NODE_BUILTIN_FUNCTION;
@@ -191,7 +191,7 @@ newcall(struct symbol *s, struct ast *l)
 {
     struct ufncall *a = malloc(sizeof(struct ufncall));
     if(!a) {
-        yyerror("sin espacio");
+        yyerror("sin espacio\n");
         exit(0);
     }
     a->nodetype = NODE_USER_FUNCTION;
@@ -205,7 +205,7 @@ newref(struct symbol *s)
 {
     struct symref *a = malloc(sizeof(struct symref));
     if(!a) {
-        yyerror("sin espacio");
+        yyerror("sin espacio\n");
         exit(0);
     }
     a->nodetype = NODE_SYMBOL;
@@ -218,7 +218,7 @@ newasgn(struct symbol *s, struct ast *v)
 {
     struct symasgn *a = malloc(sizeof(struct symasgn));
     if(!a) {
-        yyerror("sin espacio");
+        yyerror("sin espacio\n");
         exit(0);
     }
     a->nodetype = NODE_ASSIGMENT;
@@ -260,7 +260,7 @@ newflow(node_type nodetype, struct ast *cond, struct ast *tl, struct ast *el)
 {
     struct flow *a = malloc(sizeof(struct flow));
     if(!a) {
-        yyerror("sin espacio");
+        yyerror("sin espacio\n");
         exit(0);
     }
     a->nodetype = nodetype;
@@ -324,7 +324,7 @@ newsymlist(struct symbol *sym, struct symlist *next)
 {
     struct symlist *sl = malloc(sizeof(struct symlist));
     if(!sl) {
-        yyerror("sin espacio");
+        yyerror("sin espacio\n");
         exit(0);
     }
     sl->sym = sym;
@@ -351,7 +351,7 @@ double eval(struct ast *a)
 {
     double v;
     if(!a) {
-        yyerror("=> error interno: eval es nulo");
+        yyerror("eval es nulo\n");
         return 0.0;
     }
     switch(a->nodetype) {
@@ -513,10 +513,12 @@ void imprimir(struct ast *a)
                 printf("=> %lf\n", s->value->v.d);
                 break;
             default:
-                printf("%s\n", "undefined type");
+                yyerror("tipo indefinido\n");
                 break;
 
             }
+        }else{
+            yyerror("variable sin definir\n", s->name);
         }
     }
     break;
@@ -544,7 +546,7 @@ static double callbuiltin(struct fncall *f)
         imprimir(f->l);
         return v;
     default:
-        yyerror("error: definicion de funcion desconocida %d", functype);
+        yyerror("definicion de funcion desconocida\n");
         return 0.0;
     }
 }
@@ -570,7 +572,7 @@ calluser(struct ufncall *f)
     int nargs;
     int i;
     if(!fn->func) {
-        yyerror("llamada a funcion indefinida", fn->name);
+        yyerror("llamada a funcion indefinida\n");
         return 0.0;
     }
     /* count the arguments */

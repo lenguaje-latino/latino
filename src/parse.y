@@ -31,8 +31,6 @@
     KEYWORD_DO
     KEYWORD_WHEN
     KEYWORD_FUNCTION
-    KEYWORD_TRUE
-    KEYWORD_FALSE
     KEYWORD_FROM
     KEYWORD_TO
     KEYWORD_STEP
@@ -65,15 +63,12 @@
 
 program: /* empty */
     | program stmt {
-        //printf("= %4.4g\n> ", eval($2));
         eval($2);
         treefree($2);
     }
     | program KEYWORD_FUNCTION TOKEN_IDENTIFIER '(' symlist ')' list KEYWORD_END {
         dodef($3, $5, $7);
-        //printf("Define %s\n> ", $3->name);
     }
-    /* | error { yyerrok; printf("=> "); } */
     ;
 
 stmt:
@@ -110,7 +105,6 @@ exp: exp CMP exp { $$ = newcmp($2, $1, $3); }
     ;
 
 var: TOKEN_IDENTIFIER '=' exp { $$ = newasgn($1, $3); }
-    | TOKEN_IDENTIFIER '=' value { $$ = newasgn($1, $3); }
     | TOKEN_FUNC '(' explist ')' { $$ = newfunc($1, $3); }
     | TOKEN_IDENTIFIER '(' explist ')' { $$ = newcall($1, $3); }
     ;
