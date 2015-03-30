@@ -98,8 +98,8 @@ list:   /* empty */ { $$ = NULL; }
     }
     ;
 
+    /*| CMP        { $$ = newcmp($1, NULL, NULL); }*/
 exp: exp CMP exp { $$ = newcmp($2, $1, $3); }
-    | CMP        { $$ = newcmp($1, NULL, NULL); }
     | exp '+' exp { $$ = newast(NODE_ADD, $1, $3); }
     | exp '-' exp { $$ = newast(NODE_SUB, $1, $3); }
     | exp '*' exp { $$ = newast(NODE_MULT, $1, $3); }
@@ -116,11 +116,11 @@ var: TOKEN_IDENTIFIER '=' exp { $$ = newasgn($1, $3); }
     ;
 
 value: TOKEN_NUMBER { $$ = newnum($1); }
-    | TOKEN_STRING { $$ = $<str>1; }
     | TOKEN_IDENTIFIER { $$ = newref($1); }
     | KEYWORD_TRUE { $$ = newbool($1); }
     | KEYWORD_FALSE { $$ = newbool($1); }
     | TOKEN_CHAR { $$ = $<c>1; }
+    | TOKEN_STRING { $$ = $<str>1; }
     ;
 
 explist: /* empty */ { $$ = NULL; }

@@ -4,18 +4,31 @@
 
 #include "latino.h"
 
-#ifdef LATINO_HUGE
-typedef long int varinteger_T;
-typedef long double vardecimal_T;
-#else
-typedef int varinteger_T;
-typedef double vardecimal_T;
-#endif
+typedef enum{
+    VALUE_BOOL,
+    VALUE_INT,
+    VALUE_DOUBLE,
+    VALUE_CHAR,
+    VALUE_STRING
+} lat_value_type; 
+
+typedef char* lat_string;
+
+typedef struct{
+    lat_value_type t;
+    union{
+        int b;
+        int i;
+        double d;
+        char c;
+        lat_string s;
+    }v;
+} lat_value;
 
 /* symbol table */
 struct symbol{  /* a variable name */
     char *name;
-    double value;
+    lat_value *value;
     struct ast *func;   /* stmt for the function */
     struct symlist *syms;   /* list of dummy args */
 };
@@ -41,20 +54,6 @@ enum bifs {
     B_log,
     B_print
 };
-
-/* node types
- * + - * /
- * 0-7 comparison ops, bit coded 04 equal, 02 less, 01 grieta
- * M unary minus
- * L expression or statement list
- * I IF statement
- * W WHILE statement
- * N symbol ref
- * = assigment
- * S list of symbols
- * F built in function call
- * C user function call
- */
 
 typedef enum {
     NODE_ADD=0,
@@ -86,25 +85,6 @@ typedef enum {
     NODE_BOOLEAN=26
 } node_type;
 
-typedef unsigned char	char_u;
-
-typedef struct
-{
-    char         v_type;
-    varinteger_T v_integer;
-    vardecimal_T v_decimal;
-    char_u       *v_string;
-} node_value;
-
-/* Values for "v_type". */
-#define VAR_UNKNOWN 0
-#define VAR_INTEGER 1	/* "v_integer" is used */
-#define VAR_STRING  2	/* "v_string" is used */
-#define VAR_FUNC    3	/* "v_string" is function name */
-#define VAR_LIST    4	/* "v_list" is used */
-#define VAR_DICT    5	/* "v_dict" is used */
-#define VAR_DECIMAL 6	/* "v_decimal" is used */
-
 /* nodes in the abstract syntax tree */
 /* all have common initial nodetype */
 struct ast {
@@ -132,17 +112,15 @@ struct flow {
     struct ast *el;
 };
 
-struct numval {
+typedef struct{
     node_type nodetype;   /* type K */
-    double number;
-};
+    lat_value *value;
+}numval;
 
 struct boolval {
     node_type nodetype;   /* type K */
     int value;
 };
-
-typedef char* lat_string;
 
 struct strval {
     node_type nodetype;  /* type ? */

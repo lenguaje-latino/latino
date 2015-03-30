@@ -4,7 +4,7 @@
 #define true 1
 #define false 0
 
-int debug=0;
+int debug=1;
 
 static FILE *file;
 static char *buffer;
