@@ -10,7 +10,7 @@ typedef enum{
     VALUE_DOUBLE,
     VALUE_CHAR,
     VALUE_STRING
-} lat_value_type; 
+} lat_value_type;
 
 typedef char* lat_string;
 
@@ -37,7 +37,7 @@ struct symbol{  /* a variable name */
 #define NHASH 9997
 struct symbol symtab[NHASH];
 
-struct symbol *lookup(char*);
+struct symbol *lookup(char*, lat_value*);
 
 /* list of symbols, for an argument list */
 struct symlist {
@@ -115,23 +115,7 @@ struct flow {
 typedef struct{
     node_type nodetype;   /* type K */
     lat_value *value;
-}numval;
-
-struct boolval {
-    node_type nodetype;   /* type K */
-    int value;
-};
-
-struct strval {
-    node_type nodetype;  /* type ? */
-    lat_string str;
-};
-
-
-struct charval {
-    node_type nodetype;  /* type ? */
-    char c;
-};
+}node;
 
 struct symref {
     node_type nodetype;   /* type N */

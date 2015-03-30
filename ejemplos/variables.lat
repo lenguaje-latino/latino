@@ -3,7 +3,7 @@ l=verdadero
 imprimir(l)
 e=10
 imprimir(e)
-d=3.1416
+d=1.5
 imprimir(d)
 c='a'
 imprimir(c)
@@ -17,3 +17,4 @@ imprimir(PI)
 imprimir("hello world")
 imprimir('a')
 imprimir(10.0)
+imprimir(verdadero)

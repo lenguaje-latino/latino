@@ -1010,7 +1010,7 @@ YY_RULE_SETUP
 case 30:
 YY_RULE_SETUP
 #line 62 "src/lex.l"
-{ yylval.s = lookup(yytext); return TOKEN_IDENTIFIER; }
+{ yylval.s = lookup(yytext, NULL); return TOKEN_IDENTIFIER; }
 	YY_BREAK
 case 31:
 #line 64 "src/lex.l"

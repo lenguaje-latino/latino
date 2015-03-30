@@ -59,7 +59,7 @@ EXP ([Ee][-+]?[0-9]+)
 "imprimir"      { yylval.fn = B_print; return TOKEN_FUNC; }
 
  /* names */
-[_a-zA-Z][_a-zA-Z0-9]* { yylval.s = lookup(yytext); return TOKEN_IDENTIFIER; }
+[_a-zA-Z][_a-zA-Z0-9]* { yylval.s = lookup(yytext, NULL); return TOKEN_IDENTIFIER; }
 [0-9]+"."[0-9]*{EXP}? |
 "."?[0-9]+{EXP}?       { yylval.d = strtod(yytext, NULL);
                          return TOKEN_NUMBER; }
