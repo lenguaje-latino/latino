@@ -41,55 +41,59 @@
    enum yytokentype {
      KEYWORD_TRUE = 258,
      KEYWORD_FALSE = 259,
-     TOKEN_CHAR = 260,
-     TOKEN_NUMBER = 261,
-     TOKEN_STRING = 262,
-     TOKEN_IDENTIFIER = 263,
-     TOKEN_FUNC = 264,
-     KEYWORD_IF = 265,
-     KEYWORD_END = 266,
-     KEYWORD_ELSE = 267,
-     KEYWORD_WHILE = 268,
-     KEYWORD_DO = 269,
-     KEYWORD_WHEN = 270,
-     KEYWORD_FUNCTION = 271,
-     KEYWORD_FROM = 272,
-     KEYWORD_TO = 273,
-     KEYWORD_STEP = 274,
-     KEYWORD_BOOL = 275,
-     KEYWORD_INT = 276,
-     KEYWORD_DECIMAL = 277,
-     KEYWORD_CHAR = 278,
-     KEYWORD_STRING = 279,
-     CMP = 280,
-     UMINUS = 281
+     TOKEN_INT = 260,
+     TOKEN_CHAR = 261,
+     TOKEN_NUMBER = 262,
+     TOKEN_STRING = 263,
+     TOKEN_IDENTIFIER = 264,
+     TOKEN_FUNC = 265,
+     KEYWORD_IF = 266,
+     KEYWORD_END = 267,
+     KEYWORD_ELSE = 268,
+     KEYWORD_WHILE = 269,
+     KEYWORD_DO = 270,
+     KEYWORD_WHEN = 271,
+     KEYWORD_FUNCTION = 272,
+     KEYWORD_FROM = 273,
+     KEYWORD_TO = 274,
+     KEYWORD_STEP = 275,
+     KEYWORD_BOOL = 276,
+     OP_GT = 277,
+     OP_LT = 278,
+     OP_GE = 279,
+     OP_LE = 280,
+     OP_EQ = 281,
+     OP_NEQ = 282,
+     UMINUS = 283
    };
 #endif
 /* Tokens.  */
 #define KEYWORD_TRUE 258
 #define KEYWORD_FALSE 259
-#define TOKEN_CHAR 260
-#define TOKEN_NUMBER 261
-#define TOKEN_STRING 262
-#define TOKEN_IDENTIFIER 263
-#define TOKEN_FUNC 264
-#define KEYWORD_IF 265
-#define KEYWORD_END 266
-#define KEYWORD_ELSE 267
-#define KEYWORD_WHILE 268
-#define KEYWORD_DO 269
-#define KEYWORD_WHEN 270
-#define KEYWORD_FUNCTION 271
-#define KEYWORD_FROM 272
-#define KEYWORD_TO 273
-#define KEYWORD_STEP 274
-#define KEYWORD_BOOL 275
-#define KEYWORD_INT 276
-#define KEYWORD_DECIMAL 277
-#define KEYWORD_CHAR 278
-#define KEYWORD_STRING 279
-#define CMP 280
-#define UMINUS 281
+#define TOKEN_INT 260
+#define TOKEN_CHAR 261
+#define TOKEN_NUMBER 262
+#define TOKEN_STRING 263
+#define TOKEN_IDENTIFIER 264
+#define TOKEN_FUNC 265
+#define KEYWORD_IF 266
+#define KEYWORD_END 267
+#define KEYWORD_ELSE 268
+#define KEYWORD_WHILE 269
+#define KEYWORD_DO 270
+#define KEYWORD_WHEN 271
+#define KEYWORD_FUNCTION 272
+#define KEYWORD_FROM 273
+#define KEYWORD_TO 274
+#define KEYWORD_STEP 275
+#define KEYWORD_BOOL 276
+#define OP_GT 277
+#define OP_LT 278
+#define OP_GE 279
+#define OP_LE 280
+#define OP_EQ 281
+#define OP_NEQ 282
+#define UMINUS 283
 
 
 
@@ -102,18 +106,19 @@ typedef union YYSTYPE
 #line 8 "src/parse.y"
 
     int fn; /* which function */
-    char *b;
-    char *c;
-    double d;
-    struct ast *a;
+    char *b; /* boolean type*/
+    char *c; /* char type */
+    int i;  /* int type */
+    double d; /* double type */
+    struct lat_string *str; /* string type */
+    struct ast *a; /* astract syntax tree */
     struct symbol *s;   /* which symbol */
     struct symlist *sl;
-    struct lat_string *str;
 
 
 
 /* Line 1676 of yacc.c  */
-#line 117 "src/parse.h"
+#line 122 "src/parse.h"
 } YYSTYPE;
 # define YYSTYPE_IS_TRIVIAL 1
 # define yystype YYSTYPE /* obsolescent; will be withdrawn */

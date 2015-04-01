@@ -63,12 +63,12 @@ typedef enum {
     NODE_MOD=4,
     NODE_ASSIGMENT=5,
     NODE_UNARY_MINUS=6,
-    NODE_EQUAL=7,
-    NODE_NOT_EQUAL=8,
-    NODE_GREATER_THAN=9,
-    NODE_LESS_THAN=10,
-    NODE_GREATER_THAN_EQUAL=11,
-    NODE_LESS_THAN_EQUAL=12,
+    NODE_EQ=7,
+    NODE_NEQ=8,
+    NODE_GT=9,
+    NODE_LT=10,
+    NODE_GE=11,
+    NODE_LE=12,
     NODE_EXPRESION=13,
     NODE_IF=14,
     NODE_WHILE=15,
@@ -136,6 +136,7 @@ struct ast *newcall(struct symbol *s, struct ast *l);
 struct ast *newref(struct symbol *s);
 struct ast *newasgn(struct symbol *s, struct ast *v);
 struct ast *newnum(double d);
+struct ast *newint(int i);
 struct ast *newstr(lat_string, size_t);
 struct ast *newflow(node_type nodetype, struct ast *cond, struct ast *tl, struct ast *tr);
 
@@ -144,5 +145,5 @@ void
 dodef(struct symbol *name, struct symlist *syms, struct ast *stmts);
 
 /* evaluate an AST */
-double eval(struct ast *);
+lat_value* eval(struct ast *);
 

@@ -71,6 +71,22 @@ newast(node_type nodetype, struct ast *l, struct ast *r)
 }
 
 struct ast *
+newint(int i)
+{
+    node *a = malloc(sizeof(node));
+    if(!a) {
+        yyerror("sin espacio\n");
+        exit(0);
+    }
+    a->nodetype = NODE_INT;
+    lat_value *val = malloc(sizeof(lat_value));
+    val->t = VALUE_INT;
+    val->v.i = i;
+    a->value = val;
+    return (struct ast *)a;
+}
+
+struct ast *
 newnum(double d)
 {
     node *a = malloc(sizeof(node));
@@ -175,6 +191,7 @@ newcmp(int cmptype, struct ast *l, struct ast *r)
 struct ast *
 newfunc(int functype, struct ast *l)
 {
+    /*printf("%s\n", "newfunc");*/
     struct fncall *a = malloc(sizeof(struct fncall));
     if(!a) {
         yyerror("sin espacio\n");
@@ -189,6 +206,7 @@ newfunc(int functype, struct ast *l)
 struct ast *
 newcall(struct symbol *s, struct ast *l)
 {
+    /*printf("%s\n", "newcall");*/
     struct ufncall *a = malloc(sizeof(struct ufncall));
     if(!a) {
         yyerror("sin espacio\n");
@@ -216,6 +234,7 @@ newref(struct symbol *s)
 struct ast *
 newasgn(struct symbol *s, struct ast *v)
 {
+    /*printf("%s\n", "newasgn");*/
     struct symasgn *a = malloc(sizeof(struct symasgn));
     if(!a) {
         yyerror("sin espacio\n");
@@ -229,6 +248,12 @@ newasgn(struct symbol *s, struct ast *v)
         a->s->value = malloc(sizeof(lat_value));
         a->s->value->t   = VALUE_BOOL;
         a->s->value->v.b = ((node *)v)->value->v.b;
+        lookup(s->name, a->s->value);
+        break;
+    case NODE_INT:
+        a->s->value = malloc(sizeof(lat_value));
+        a->s->value->t   = VALUE_INT;
+        a->s->value->v.i = ((node *)v)->value->v.i;
         lookup(s->name, a->s->value);
         break;
     case NODE_DECIMAL:
@@ -249,7 +274,15 @@ newasgn(struct symbol *s, struct ast *v)
         a->s->value->v.s = ((node *)v)->value->v.s;
         lookup(s->name, a->s->value);
         break;
+    case NODE_ADD:
+    case NODE_SUB:
+    case NODE_DIV:
+    case NODE_MULT:
+        a->s->value = eval(a->v);
+        lookup(s->name, a->s->value);
+        break;
     default:
+        /*printf("newasgn=%i\n", v->nodetype);*/
         break;
     }
     return (struct ast *)a;
@@ -280,12 +313,12 @@ treefree(struct ast *a)
     case NODE_SUB:
     case NODE_MULT:
     case NODE_DIV:
-    case NODE_EQUAL:
-    case NODE_NOT_EQUAL:
-    case NODE_GREATER_THAN:
-    case NODE_LESS_THAN:
-    case NODE_GREATER_THAN_EQUAL:
-    case NODE_LESS_THAN_EQUAL:
+    case NODE_EQ:
+    case NODE_NEQ:
+    case NODE_GT:
+    case NODE_LT:
+    case NODE_GE:
+    case NODE_LE:
     case NODE_EXPRESION:
         treefree(a->r);
     /* one subtree */
@@ -294,6 +327,7 @@ treefree(struct ast *a)
     case NODE_BUILTIN_FUNCTION:
         treefree(a->l);
     /* no subtree */
+    case NODE_INT:
     case NODE_CHAR:
     case NODE_DECIMAL:
     case NODE_SYMBOL:
@@ -314,7 +348,7 @@ treefree(struct ast *a)
         free( ((node *)a)->value->v.s);
         break;
     default:
-        printf("=> error interno: nodo mal liberado %i\n", a->nodetype);
+        printf("error interno: nodo mal liberado %i\n", a->nodetype);
     }
     free(a); /* always free the node itself */
 }
@@ -347,66 +381,148 @@ symlistfree(struct symlist *sl)
 static double callbuiltin(struct fncall *);
 static double calluser(struct ufncall *);
 
-double eval(struct ast *a)
+static lat_string * concat (lat_string s1, lat_string s2);
+
+static lat_string * concat (lat_string s1, lat_string s2){
+    lat_string *s3 = malloc(strlen(s1) + strlen(s2) + 1);
+    strcpy(s3, s1);
+    strcat(s3, s2);
+    return s3;
+}
+
+static lat_string * int2str(int i){
+    /*printf("%s\n", "int2str");*/
+    char s[50];
+    lat_string *r = malloc(strlen(s) + 1);
+    snprintf(s, 50, "%i", i);
+    /*printf("%s\n", s);*/
+    strcpy(r, s);
+    /*printf("r=%s\n", (lat_string)r);*/
+    return r;
+}
+
+static lat_string * double2str(double d){
+    /*printf("%s\n", "double2str");*/
+    char s[50];
+    lat_string *r = malloc(strlen(s) + 1);
+    snprintf(s, 50, "%f", (float)d);
+    /*printf("%s\n", s);*/
+    strcpy(r, s);
+    /*printf("r=%s\n", (lat_string)r);*/
+    return (lat_string)r;
+}
+
+
+lat_value* eval(struct ast *a)
 {
     double v;
     if(!a) {
         yyerror("eval es nulo\n");
-        return 0.0;
+        return NULL;
     }
+    lat_value *val = malloc(sizeof(lat_value));
+    lat_value *arg1 = malloc(sizeof(lat_value));
+    lat_value *arg2 = malloc(sizeof(lat_value));
     switch(a->nodetype) {
     /* constant */
+    case NODE_BOOLEAN:
+    case NODE_CHAR:
     case NODE_DECIMAL:
-        v = ((node *)a)->value->v.d;
+    case NODE_INT:
+    case NODE_STRING:
+        val = ((node *)a)->value;
         break;
     /* name reference */
     case NODE_SYMBOL:
-        v = ((struct symref *)a)->s->value->v.d;
+        val = ((struct symref *)a)->s->value;
         break;
     /* assignment */
     case NODE_ASSIGMENT:
-        v = eval(((struct symasgn *)a)->v);
+        /*v = eval(((struct symasgn *)a)->v);*/
         break;
     /* expressions */
     case NODE_ADD:
-        v = eval(a->l) + eval(a->r);
+        /*printf("%s\n", "NODE_ADD");*/
+        arg1 = eval(a->l);
+        arg2 = eval(a->r);
+        /*printf("arg1%i\n", arg1->t);*/
+        /*printf("arg2%i\n", arg2->t);*/
+        if (arg1->t == VALUE_INT && arg2->t == VALUE_INT)
+        {
+            val->t = VALUE_INT;
+            val->v.i = arg1->v.i + arg2->v.i;
+            return val;
+        }
+        if ((arg1->t == VALUE_DOUBLE && arg2->t == VALUE_INT) || (arg1->t == VALUE_INT && arg2->t == VALUE_DOUBLE))
+        {
+            val->t = VALUE_DOUBLE;
+            double d1 = arg1->t == VALUE_INT ? (double)arg1->v.i : arg1->v.d;
+            double d2 = arg2->t == VALUE_INT ? (double)arg2->v.i : arg2->v.d;
+            val->v.d  = d1 + d2;
+            return val;
+        }
+        if (arg1->t == VALUE_STRING && arg2->t == VALUE_STRING)
+        {
+            val->t = VALUE_STRING;
+            val->v.s = concat(arg1->v.s, arg2->v.s);
+            return val;
+        }
+        if (arg1->t == VALUE_STRING || arg2->t == VALUE_STRING)
+        {
+            //TODO: cast types to string
+            lat_string *ls1 = malloc(254);
+            lat_string *ls2 = malloc(254);
+            val->t = VALUE_STRING;
+            if(arg1->t != VALUE_STRING){
+                ls1 = arg1->t == VALUE_INT ? int2str(arg1->v.i) : double2str(arg1->v.d);
+                /*printf("ls1=%s\n", ls1);*/
+                val->v.s = concat(ls1, arg2->v.s);
+                return val;
+            }
+            if(arg2->t != VALUE_STRING){
+                ls2 = arg2->t == VALUE_INT ? int2str(arg2->v.i) : double2str(arg2->v.d);
+                /*printf("ls2=%s\n", ls2);*/
+                val->v.s = concat(arg1->v.s, ls2);
+                return val;
+            }
+        }
         break;
     case NODE_SUB:
-        v = eval(a->l) - eval(a->r);
+        /*v = eval(a->l) - eval(a->r);*/
         break;
     case NODE_MULT:
-        v = eval(a->l) * eval(a->r);
+        /*v = eval(a->l) * eval(a->r);*/
         break;
     case NODE_DIV:
         v=0;
         if(eval(a->r) == 0)
             printf("error: division por 0 \"%c\"\n", a->nodetype);
         else
-            v = eval(a->l) / eval(a->r);
+            /*v = eval(a->l) / eval(a->r);*/
         break;
     case NODE_MOD:
         v = 0;
         break;
     case NODE_UNARY_MINUS:
-        v = -eval(a->l);
+        /*v = -eval(a->l);*/
         break;
     /* comparisons */
-    case NODE_GREATER_THAN:
+    case NODE_GT:
         v = (eval(a->l) > eval(a->r))? 1 : 0;
         break;
-    case NODE_LESS_THAN:
+    case NODE_LT:
         v = (eval(a->l) < eval(a->r))? 1 : 0;
         break;
-    case NODE_NOT_EQUAL:
+    case NODE_NEQ:
         v = (eval(a->l) != eval(a->r))? 1 : 0;
         break;
-    case NODE_EQUAL:
+    case NODE_EQ:
         v = (eval(a->l) == eval(a->r))? 1 : 0;
         break;
-    case NODE_GREATER_THAN_EQUAL:
+    case NODE_GE:
         v = (eval(a->l) >= eval(a->r))? 1 : 0;
         break;
-    case NODE_LESS_THAN_EQUAL:
+    case NODE_LE:
         v = (eval(a->l) <= eval(a->r))? 1 : 0;
         break;
     /* control flow */
@@ -417,13 +533,13 @@ double eval(struct ast *a)
             /*check the condition*/
             if( ((struct flow *)a)->tl) {
                 /*the true branch*/
-                v = eval( ((struct flow *)a)->tl);
+                /*v = eval( ((struct flow *)a)->tl);*/
             } else
                 v = 0.0; /* a default value */
         } else {
             if( ((struct flow *)a)->el) {
                 /*the false branch*/
-                v = eval(((struct flow *)a)->el);
+                /*v = eval(((struct flow *)a)->el);*/
             } else
                 v = 0.0; /* a default value */
         }
@@ -434,7 +550,7 @@ double eval(struct ast *a)
         if( ((struct flow *)a)->tl) {
             while( eval(((struct flow *)a)->cond) != 0) {
                 /*evaluate the condition*/
-                v = eval(((struct flow *)a)->tl);
+                /*v = eval(((struct flow *)a)->tl);*/
             }
             /*evaluate the target statements*/
         }
@@ -444,78 +560,82 @@ double eval(struct ast *a)
         v = 0.0;    /*a default value */
         if(((struct flow *)a)->tl) {
             do {
-                v = eval(((struct flow *)a)->tl);
+                /*v = eval(((struct flow *)a)->tl);*/
             } while (eval(((struct flow *)a)->cond) != 0);
         }
         break;
     case NODE_EXPRESION:
         eval(a->l);
-        v = eval(a->r);
+        /*v = eval(a->r);*/
         break;
     case NODE_BUILTIN_FUNCTION:
+        /*printf("%s\n", "case NODE_BUILTIN_FUNCTION");*/
         v = callbuiltin((struct fncall *)a);
         break;
     case NODE_USER_FUNCTION_CALL:
         v = calluser((struct ufncall *)a);
         break;
-    case NODE_STRING:
-    case NODE_BOOLEAN:
-    case NODE_CHAR:
-        v = 0;
-        break;
     default:
         v = 0;
-        printf("=> error interno: nodo incorrecto %i\n", a->nodetype );
+        printf("error interno: nodo incorrecto %i\n", a->nodetype );
         break;
     }
-    return v;
+    return val;
 }
 
 void imprimir(struct ast *a)
 {
+    /*printf("%s\n", "imprimir");*/
     double v = 0;
     switch(a->nodetype) {
     case NODE_STRING:
-        printf("=> \"%s\"\n", ((node *)a)->value->v.s);
+        /*printf("%s\n", "NODE_STRING");*/
+        printf("\"%s\"\n", ((node *)a)->value->v.s);
         break;
     case NODE_BOOLEAN:
         if(((node *)a)->value->v.b)
-            printf("=> verdadero\n");
+            printf("verdadero\n");
         else
-            printf("=> falso\n");
+            printf("falso\n");
         break;
     case NODE_CHAR:
-        printf("=> \'%c\'\n", ((node *)a)->value->v.c);
+        printf("\'%c\'\n", ((node *)a)->value->v.c);
+        break;
+    case NODE_INT:
+        printf("%i\n", ((node *)a)->value->v.i);
         break;
     case NODE_DECIMAL:
         //v = eval(a->l);
-        printf("=> %lf\n", ((node *)a)->value->v.d);
+        printf("%lf\n", ((node *)a)->value->v.d);
         break;
     case NODE_SYMBOL:
     {
+        /*printf("%s\n", "NODE_SYMBOL");*/
         struct symbol *s = malloc(sizeof(struct symbol));
         s = lookup(((struct symref *) a)->s->name, NULL);
         if(s->value != NULL) {
             switch (s->value->t) {
             case VALUE_STRING:
-                printf("=> \"%s\"\n", s->value->v.s);
+                printf("\"%s\"\n", s->value->v.s);
                 break;
             case VALUE_BOOL:
                 if(s->value->v.b)
-                    printf("=> verdadero\n");
+                    printf("verdadero\n");
                 else
-                    printf("=> falso\n");
+                    printf("falso\n");
                 break;
             case VALUE_CHAR:
-                printf("=> \'%c\'\n", s->value->v.c);
+                printf("\'%c\'\n", s->value->v.c);
+                break;
+            case VALUE_INT:
+                printf("%i\n", s->value->v.i);
                 break;
             case VALUE_DOUBLE:
-                printf("=> %lf\n", s->value->v.d);
+                printf("%lf\n", s->value->v.d);
                 break;
             default:
                 yyerror("tipo indefinido\n");
                 break;
-
             }
         }else{
             yyerror("variable sin definir\n", s->name);
@@ -523,18 +643,19 @@ void imprimir(struct ast *a)
     }
     break;
     default:
-        v = eval(a->l);
-        printf("=> %i\n", (int)floor(v));
+        /*v = eval(a->l);*/
+        printf("%i\n", (int)floor(v));
         break;
     }
 }
 
 static double callbuiltin(struct fncall *f)
 {
+    /*printf("%s\n", "callbuiltin");*/
     enum bifs functype = f->functype;
     double v = 0;
-    if(f->l->nodetype == NODE_DECIMAL)
-        v = eval(f->l);
+    /*if(f->l->nodetype == NODE_DECIMAL)*/
+        /*v = eval(f->l);*/
     switch(functype) {
     case B_sqrt:
         return sqrt(v);
@@ -549,6 +670,7 @@ static double callbuiltin(struct fncall *f)
         yyerror("definicion de funcion desconocida\n");
         return 0.0;
     }
+    return 0.0;
 }
 
 /* define a function */
@@ -595,10 +717,10 @@ calluser(struct ufncall *f)
             return 0.0;
         }
         if(args->nodetype == NODE_LIST_SYMBOLS) { /* if this is a list node */
-            newval[i] = eval(args->l);
+            /*newval[i] = eval(args->l);*/
             args = args->r;
         } else { /* if it's the end of the list */
-            newval[i] = eval(args);
+            /*newval[i] = eval(args);*/
             args = NULL;
         }
     }
@@ -613,7 +735,7 @@ calluser(struct ufncall *f)
     }
     free(newval);
     /* evaluate the function */
-    v = eval(fn->func);
+    /*v = eval(fn->func);*/
     /* put the real values of the dummies back */
     sl = fn->syms;
     for(i = 0; i < nargs; i++) {

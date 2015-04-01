@@ -34,12 +34,12 @@ EXP ([Ee][-+]?[0-9]+)
 "="     { return yytext[0]; }
 
  /* comparison ops, all are CMP token */
-">"     { yylval.fn = NODE_GREATER_THAN; return CMP; }
-"<"     { yylval.fn = NODE_LESS_THAN; return CMP; }
-"!="    { yylval.fn = NODE_NOT_EQUAL; return CMP; }
-"=="    { yylval.fn = NODE_EQUAL; return CMP; }
-">="    { yylval.fn = NODE_GREATER_THAN_EQUAL; return CMP; }
-"<="    { yylval.fn = NODE_LESS_THAN_EQUAL; return CMP; }
+">"     { return OP_GT; }
+"<"     { return OP_LT; }
+">="    { return OP_GE; }
+"<="    { return OP_LE; }
+"!="    { return OP_NEQ; }
+"=="    { return OP_EQ; }
 
  /* keywords */
 "si"        { return KEYWORD_IF; }
@@ -49,8 +49,8 @@ EXP ([Ee][-+]?[0-9]+)
 "hacer"     { return KEYWORD_DO; }
 "cuando"    { return KEYWORD_WHEN; }
 "funcion"   {  return KEYWORD_FUNCTION; }
-"verdadero"   { yylval.b = yytext; return KEYWORD_TRUE; }
-"falso"   { yylval.b = yytext; return KEYWORD_FALSE; }
+"verdadero" { yylval.b = yytext; return KEYWORD_TRUE; }
+"falso"     { yylval.b = yytext; return KEYWORD_FALSE; }
 
  /*built-in functions */
 "raiz"          { yylval.fn = B_sqrt; return TOKEN_FUNC; }
@@ -60,9 +60,9 @@ EXP ([Ee][-+]?[0-9]+)
 
  /* names */
 [_a-zA-Z][_a-zA-Z0-9]* { yylval.s = lookup(yytext, NULL); return TOKEN_IDENTIFIER; }
-[0-9]+"."[0-9]*{EXP}? |
-"."?[0-9]+{EXP}?       { yylval.d = strtod(yytext, NULL);
-                         return TOKEN_NUMBER; }
+ /*[0-9]+"."[0-9]*{EXP}? | "."?[0-9]+{EXP}?       { yylval.d = strtod(yytext, NULL); return TOKEN_NUMBER; }*/
+[0-9]+"."+[0-9]*       { yylval.d = strtod(yytext, NULL); return TOKEN_NUMBER; }
+[0-9]+                 { yytext); yylval.i = strtol(yytext, NULL, 0); return TOKEN_INT; }
 \"([^\\\"]|\\.)*\"     { yylval.str = newstr(yytext+1, strlen(yytext)-2);return TOKEN_STRING; }
 '([^'\\\n]|\\.)'       { yylval.c = newchar(yytext+1, strlen(yytext)-2); return TOKEN_CHAR; }
 "#".* /* ignore comments */

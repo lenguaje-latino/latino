@@ -7,17 +7,19 @@
 %defines
 %union {
     int fn; /* which function */
-    char *b;
-    char *c;
-    double d;
-    struct ast *a;
+    char *b; /* boolean type*/
+    char *c; /* char type */
+    int i;  /* int type */
+    double d; /* double type */
+    struct lat_string *str; /* string type */
+    struct ast *a; /* astract syntax tree */
     struct symbol *s;   /* which symbol */
     struct symlist *sl;
-    struct lat_string *str;
 }
 
 /* declare tokens */
 %token <b> KEYWORD_TRUE KEYWORD_FALSE
+%token <i> TOKEN_INT
 %token <c> TOKEN_CHAR
 %token <d> TOKEN_NUMBER
 %token <str> TOKEN_STRING
@@ -35,13 +37,17 @@
     KEYWORD_TO
     KEYWORD_STEP
     KEYWORD_BOOL
-    KEYWORD_INT
-    KEYWORD_DECIMAL
-    KEYWORD_CHAR
-    KEYWORD_STRING
+
+%token
+    OP_GT
+    OP_LT
+    OP_GE
+    OP_LE
+    OP_EQ
+    OP_NEQ
 
 
-%nonassoc <fn> CMP
+%nonassoc <fn> OP_EQ OP_GE OP_GT OP_LE OP_LT OP_NEQ
 %type <a> exp stmt list explist var value
 %type <sl> symlist
 
@@ -66,9 +72,6 @@ program: /* empty */
         eval($2);
         treefree($2);
     }
-    | program KEYWORD_FUNCTION TOKEN_IDENTIFIER '(' symlist ')' list KEYWORD_END {
-        dodef($3, $5, $7);
-    }
     ;
 
 stmt:
@@ -80,6 +83,9 @@ stmt:
         $$ = newflow(NODE_WHILE, $3, $5, NULL); }
     | KEYWORD_DO list KEYWORD_WHEN '(' exp ')' {
         $$ = newflow(NODE_DO, $5, $2, NULL); }
+    | KEYWORD_FUNCTION TOKEN_IDENTIFIER '(' symlist ')' list KEYWORD_END {
+        dodef($2, $4, $6);
+    }
     | var
     /*| exp { double  d = eval($1); printf("=> %lf\n", d); }*/
     ;
@@ -94,7 +100,12 @@ list:   /* empty */ { $$ = NULL; }
     ;
 
     /*| CMP        { $$ = newcmp($1, NULL, NULL); }*/
-exp: exp CMP exp { $$ = newcmp($2, $1, $3); }
+exp: exp OP_GT  exp { $$ = newcmp(NODE_GT, $1, $3); }
+    | exp OP_LT exp { $$ = newcmp(NODE_LT, $1, $3); }
+    | exp OP_GE exp { $$ = newcmp(NODE_GE, $1, $3); }
+    | exp OP_LE exp { $$ = newcmp(NODE_LE, $1, $3); }
+    | exp OP_NEQ exp { $$ = newcmp(NODE_NEQ, $1, $3); }
+    | exp OP_EQ exp { $$ = newcmp(NODE_EQ, $1, $3); }
     | exp '+' exp { $$ = newast(NODE_ADD, $1, $3); }
     | exp '-' exp { $$ = newast(NODE_SUB, $1, $3); }
     | exp '*' exp { $$ = newast(NODE_MULT, $1, $3); }
@@ -110,6 +121,7 @@ var: TOKEN_IDENTIFIER '=' exp { $$ = newasgn($1, $3); }
     ;
 
 value: TOKEN_NUMBER { $$ = newnum($1); }
+    | TOKEN_INT { $$ = newint($1); }
     | TOKEN_IDENTIFIER { $$ = newref($1); }
     | KEYWORD_TRUE { $$ = newbool($1); }
     | KEYWORD_FALSE { $$ = newbool($1); }

@@ -1,0 +1,22 @@
+#variable no definida
+imprimir(x)
+#ejemplos de declaracion de variables validas
+l=verdadero
+imprimir(l)
+e=10
+imprimir(e)
+d=1.5
+imprimir(d)
+c='a'
+imprimir(c)
+s="hola de nuevo"
+imprimir(s)
+#todo: pendiente implementar constantes
+PI=3.1416
+imprimir(PI)
+
+#test imprimir cadena
+imprimir("hello world")
+imprimir('a')
+imprimir(10.0)
+imprimir(verdadero)

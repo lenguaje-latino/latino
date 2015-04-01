@@ -1,0 +1,35 @@
+i1 = 10
+d1 = 5.5
+d3 = i1 + d1
+
+#int + double
+imprimir(i1)
+imprimir(d1)
+imprimir(d3)
+
+#error de sintaxis
+#1 + 2 * 3
+i = 23 #- (5*2) + 3
+i = 43 + 1
+
+imprimir(i)
+a = i+1
+imprimir(a)
+
+#string concatenacion
+s1 = "hola"
+s2 = " mundo"
+s3 = s1 + s2
+imprimir(s3)
+
+#string + int
+r = s1 + i
+imprimir(r)
+
+#string + double
+x = s1 + d1
+imprimir(x)
+#TODO: corregir error
+#imprimir(s1)
+#solo cuando imprimir s1 esta al final del archivo
+#i=0
