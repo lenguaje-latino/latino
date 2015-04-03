@@ -110,6 +110,7 @@ exp: exp OP_GT  exp { $$ = newcmp(NODE_GT, $1, $3); }
     | exp '-' exp { $$ = newast(NODE_SUB, $1, $3); }
     | exp '*' exp { $$ = newast(NODE_MULT, $1, $3); }
     | exp '/' exp { $$ = newast(NODE_DIV, $1, $3); }
+    | exp '%' exp { $$ = newast(NODE_MOD, $1, $3); }
     | '(' exp ')' { $$ = $2; }
     | '-' exp %prec UMINUS { $$ = newast(NODE_UNARY_MINUS, $2, NULL); }
     | value

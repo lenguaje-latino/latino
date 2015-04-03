@@ -10,11 +10,14 @@ imprimir(d3)
 #error de sintaxis
 #1 + 2 * 3
 i = 23 #- (5*2) + 3
-i = 43 + 1
+i = 43 + 1 - 2
 
 imprimir(i)
 a = i+1
 imprimir(a)
+
+y = a / 0
+imprimir(y)
 
 #string concatenacion
 s1 = "hola"
@@ -29,7 +32,16 @@ imprimir(r)
 #string + double
 x = s1 + d1
 imprimir(x)
+
+imprimir(a)
+x = a * 3
+imprimir(x)
+
+z = 130 % 3
+imprimir(z)
+
 #TODO: corregir error
-#imprimir(s1)
+imprimir(s1)
 #solo cuando imprimir s1 esta al final del archivo
-#i=0
+i=0
+imprimir(i)

@@ -1,21 +1,19 @@
+/* A Bison parser, made by GNU Bison 3.0.2.  */
 
-/* A Bison parser, made by GNU Bison 2.4.1.  */
+/* Bison interface for Yacc-like parsers in C
 
-/* Skeleton interface for Bison's Yacc-like parsers in C
-   
-      Copyright (C) 1984, 1989, 1990, 2000, 2001, 2002, 2003, 2004, 2005, 2006
-   Free Software Foundation, Inc.
-   
+   Copyright (C) 1984, 1989-1990, 2000-2013 Free Software Foundation, Inc.
+
    This program is free software: you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
    the Free Software Foundation, either version 3 of the License, or
    (at your option) any later version.
-   
+
    This program is distributed in the hope that it will be useful,
    but WITHOUT ANY WARRANTY; without even the implied warranty of
    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
    GNU General Public License for more details.
-   
+
    You should have received a copy of the GNU General Public License
    along with this program.  If not, see <http://www.gnu.org/licenses/>.  */
 
@@ -28,44 +26,52 @@
    special exception, which will cause the skeleton and the resulting
    Bison output files to be licensed under the GNU General Public
    License without this special exception.
-   
+
    This special exception was added by the Free Software Foundation in
    version 2.2 of Bison.  */
 
+#ifndef YY_YY_SRC_PARSE_H_INCLUDED
+# define YY_YY_SRC_PARSE_H_INCLUDED
+/* Debug traces.  */
+#ifndef YYDEBUG
+# define YYDEBUG 0
+#endif
+#if YYDEBUG
+extern int yydebug;
+#endif
 
-/* Tokens.  */
+/* Token type.  */
 #ifndef YYTOKENTYPE
 # define YYTOKENTYPE
-   /* Put the tokens into the symbol table, so that GDB and other debuggers
-      know about them.  */
-   enum yytokentype {
-     KEYWORD_TRUE = 258,
-     KEYWORD_FALSE = 259,
-     TOKEN_INT = 260,
-     TOKEN_CHAR = 261,
-     TOKEN_NUMBER = 262,
-     TOKEN_STRING = 263,
-     TOKEN_IDENTIFIER = 264,
-     TOKEN_FUNC = 265,
-     KEYWORD_IF = 266,
-     KEYWORD_END = 267,
-     KEYWORD_ELSE = 268,
-     KEYWORD_WHILE = 269,
-     KEYWORD_DO = 270,
-     KEYWORD_WHEN = 271,
-     KEYWORD_FUNCTION = 272,
-     KEYWORD_FROM = 273,
-     KEYWORD_TO = 274,
-     KEYWORD_STEP = 275,
-     KEYWORD_BOOL = 276,
-     OP_GT = 277,
-     OP_LT = 278,
-     OP_GE = 279,
-     OP_LE = 280,
-     OP_EQ = 281,
-     OP_NEQ = 282,
-     UMINUS = 283
-   };
+  enum yytokentype
+  {
+    KEYWORD_TRUE = 258,
+    KEYWORD_FALSE = 259,
+    TOKEN_INT = 260,
+    TOKEN_CHAR = 261,
+    TOKEN_NUMBER = 262,
+    TOKEN_STRING = 263,
+    TOKEN_IDENTIFIER = 264,
+    TOKEN_FUNC = 265,
+    KEYWORD_IF = 266,
+    KEYWORD_END = 267,
+    KEYWORD_ELSE = 268,
+    KEYWORD_WHILE = 269,
+    KEYWORD_DO = 270,
+    KEYWORD_WHEN = 271,
+    KEYWORD_FUNCTION = 272,
+    KEYWORD_FROM = 273,
+    KEYWORD_TO = 274,
+    KEYWORD_STEP = 275,
+    KEYWORD_BOOL = 276,
+    OP_GT = 277,
+    OP_LT = 278,
+    OP_GE = 279,
+    OP_LE = 280,
+    OP_EQ = 281,
+    OP_NEQ = 282,
+    UMINUS = 283
+  };
 #endif
 /* Tokens.  */
 #define KEYWORD_TRUE 258
@@ -95,15 +101,12 @@
 #define OP_NEQ 282
 #define UMINUS 283
 
-
-
-
+/* Value type.  */
 #if ! defined YYSTYPE && ! defined YYSTYPE_IS_DECLARED
-typedef union YYSTYPE
+typedef union YYSTYPE YYSTYPE;
+union YYSTYPE
 {
-
-/* Line 1676 of yacc.c  */
-#line 8 "src/parse.y"
+#line 8 "src/parse.y" /* yacc.c:1909  */
 
     int fn; /* which function */
     char *b; /* boolean type*/
@@ -115,16 +118,15 @@ typedef union YYSTYPE
     struct symbol *s;   /* which symbol */
     struct symlist *sl;
 
-
-
-/* Line 1676 of yacc.c  */
-#line 122 "src/parse.h"
-} YYSTYPE;
+#line 122 "src/parse.h" /* yacc.c:1909  */
+};
 # define YYSTYPE_IS_TRIVIAL 1
-# define yystype YYSTYPE /* obsolescent; will be withdrawn */
 # define YYSTYPE_IS_DECLARED 1
 #endif
 
+
 extern YYSTYPE yylval;
 
+int yyparse (void);
 
+#endif /* !YY_YY_SRC_PARSE_H_INCLUDED  */

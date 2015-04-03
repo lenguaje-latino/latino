@@ -30,7 +30,6 @@ EXP ([Ee][-+]?[0-9]+)
 "(" |
 ")" |
 "," |
-"|" |
 "="     { return yytext[0]; }
 
  /* comparison ops, all are CMP token */
@@ -62,7 +61,7 @@ EXP ([Ee][-+]?[0-9]+)
 [_a-zA-Z][_a-zA-Z0-9]* { yylval.s = lookup(yytext, NULL); return TOKEN_IDENTIFIER; }
  /*[0-9]+"."[0-9]*{EXP}? | "."?[0-9]+{EXP}?       { yylval.d = strtod(yytext, NULL); return TOKEN_NUMBER; }*/
 [0-9]+"."+[0-9]*       { yylval.d = strtod(yytext, NULL); return TOKEN_NUMBER; }
-[0-9]+                 { yytext); yylval.i = strtol(yytext, NULL, 0); return TOKEN_INT; }
+[0-9]+                 { yylval.i = strtol(yytext, NULL, 0); return TOKEN_INT; }
 \"([^\\\"]|\\.)*\"     { yylval.str = newstr(yytext+1, strlen(yytext)-2);return TOKEN_STRING; }
 '([^'\\\n]|\\.)'       { yylval.c = newchar(yytext+1, strlen(yytext)-2); return TOKEN_CHAR; }
 "#".* /* ignore comments */

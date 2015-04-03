@@ -102,7 +102,6 @@ newnum(double d)
     return (struct ast *)a;
 }
 
-
 struct ast *
 newbool(char *b)
 {
@@ -277,6 +276,7 @@ newasgn(struct symbol *s, struct ast *v)
     case NODE_ADD:
     case NODE_SUB:
     case NODE_DIV:
+    case NODE_MOD:
     case NODE_MULT:
         a->s->value = eval(a->v);
         lookup(s->name, a->s->value);
@@ -313,6 +313,7 @@ treefree(struct ast *a)
     case NODE_SUB:
     case NODE_MULT:
     case NODE_DIV:
+    case NODE_MOD:
     case NODE_EQ:
     case NODE_NEQ:
     case NODE_GT:
@@ -391,27 +392,20 @@ static lat_string * concat (lat_string s1, lat_string s2){
 }
 
 static lat_string * int2str(int i){
-    /*printf("%s\n", "int2str");*/
     char s[50];
     lat_string *r = malloc(strlen(s) + 1);
     snprintf(s, 50, "%i", i);
-    /*printf("%s\n", s);*/
     strcpy(r, s);
-    /*printf("r=%s\n", (lat_string)r);*/
     return r;
 }
 
 static lat_string * double2str(double d){
-    /*printf("%s\n", "double2str");*/
     char s[50];
     lat_string *r = malloc(strlen(s) + 1);
-    snprintf(s, 50, "%f", (float)d);
-    /*printf("%s\n", s);*/
+    snprintf(s, 50, "%g", (float)d);
     strcpy(r, s);
-    /*printf("r=%s\n", (lat_string)r);*/
     return (lat_string)r;
 }
-
 
 lat_value* eval(struct ast *a)
 {
@@ -442,11 +436,8 @@ lat_value* eval(struct ast *a)
         break;
     /* expressions */
     case NODE_ADD:
-        /*printf("%s\n", "NODE_ADD");*/
         arg1 = eval(a->l);
         arg2 = eval(a->r);
-        /*printf("arg1%i\n", arg1->t);*/
-        /*printf("arg2%i\n", arg2->t);*/
         if (arg1->t == VALUE_INT && arg2->t == VALUE_INT)
         {
             val->t = VALUE_INT;
@@ -461,6 +452,7 @@ lat_value* eval(struct ast *a)
             val->v.d  = d1 + d2;
             return val;
         }
+        /* concat with + */
         if (arg1->t == VALUE_STRING && arg2->t == VALUE_STRING)
         {
             val->t = VALUE_STRING;
@@ -469,39 +461,100 @@ lat_value* eval(struct ast *a)
         }
         if (arg1->t == VALUE_STRING || arg2->t == VALUE_STRING)
         {
-            //TODO: cast types to string
             lat_string *ls1 = malloc(254);
             lat_string *ls2 = malloc(254);
             val->t = VALUE_STRING;
             if(arg1->t != VALUE_STRING){
                 ls1 = arg1->t == VALUE_INT ? int2str(arg1->v.i) : double2str(arg1->v.d);
-                /*printf("ls1=%s\n", ls1);*/
                 val->v.s = concat(ls1, arg2->v.s);
                 return val;
             }
             if(arg2->t != VALUE_STRING){
                 ls2 = arg2->t == VALUE_INT ? int2str(arg2->v.i) : double2str(arg2->v.d);
-                /*printf("ls2=%s\n", ls2);*/
                 val->v.s = concat(arg1->v.s, ls2);
                 return val;
             }
         }
         break;
     case NODE_SUB:
-        /*v = eval(a->l) - eval(a->r);*/
+        arg1 = eval(a->l);
+        arg2 = eval(a->r);
+        if (arg1->t == VALUE_INT && arg2->t == VALUE_INT)
+        {
+            val->t = VALUE_INT;
+            val->v.i = arg1->v.i - arg2->v.i;
+            return val;
+        }
+        if ((arg1->t == VALUE_DOUBLE && arg2->t == VALUE_INT) || (arg1->t == VALUE_INT && arg2->t == VALUE_DOUBLE))
+        {
+            val->t = VALUE_DOUBLE;
+            double d1 = arg1->t == VALUE_INT ? (double)arg1->v.i : arg1->v.d;
+            double d2 = arg2->t == VALUE_INT ? (double)arg2->v.i : arg2->v.d;
+            val->v.d  = d1 - d2;
+            return val;
+        }
+        /*TODO: manejar error para los demas tipos de datos*/
         break;
     case NODE_MULT:
-        /*v = eval(a->l) * eval(a->r);*/
+        arg1 = eval(a->l);
+        arg2 = eval(a->r);
+        if (arg1->t == VALUE_INT && arg2->t == VALUE_INT)
+        {
+            val->t = VALUE_INT;
+            val->v.i = arg1->v.i * arg2->v.i;
+            return val;
+        }
+        if ((arg1->t == VALUE_DOUBLE && arg2->t == VALUE_INT) || (arg1->t == VALUE_INT && arg2->t == VALUE_DOUBLE))
+        {
+            val->t = VALUE_DOUBLE;
+            double d1 = arg1->t == VALUE_INT ? (double)arg1->v.i : arg1->v.d;
+            double d2 = arg2->t == VALUE_INT ? (double)arg2->v.i : arg2->v.d;
+            val->v.d  = d1 * d2;
+            return val;
+        }
+        yyerror("multiplicacion tipos incompatibles");
         break;
     case NODE_DIV:
-        v=0;
-        if(eval(a->r) == 0)
-            printf("error: division por 0 \"%c\"\n", a->nodetype);
-        else
-            /*v = eval(a->l) / eval(a->r);*/
+        arg1 = eval(a->l);
+        arg2 = eval(a->r);
+        if (arg1->t == VALUE_INT && arg2->t == VALUE_INT)
+        {
+            val->t = VALUE_INT;
+            if (arg2->v.i != 0){
+                val->v.i = arg1->v.i / arg2->v.i;
+            }else{
+                yyerror("division por cero");
+            }
+            return val;
+        }
+        if ((arg1->t == VALUE_DOUBLE && arg2->t == VALUE_INT) || (arg1->t == VALUE_INT && arg2->t == VALUE_DOUBLE))
+        {
+            val->t = VALUE_DOUBLE;
+            double d1 = arg1->t == VALUE_INT ? (double)arg1->v.i : arg1->v.d;
+            double d2 = arg2->t == VALUE_INT ? (double)arg2->v.i : arg2->v.d;
+            if (d2 != 0){
+                val->v.d  = d1 / d2;
+            }else{
+                yyerror("division por cero");
+            }
+            return val;
+        }
+        yyerror("division tipos incompatibles");
         break;
     case NODE_MOD:
-        v = 0;
+        arg1 = eval(a->l);
+        arg2 = eval(a->r);
+        if (arg1->t == VALUE_INT && arg2->t == VALUE_INT)
+        {
+            val->t = VALUE_INT;
+            if (arg2->v.i != 0){
+                val->v.i = arg1->v.i % arg2->v.i;
+            }else{
+                yyerror("division por cero");
+            }
+            return val;
+        }
+        yyerror("modulo tipos incompatibles");
         break;
     case NODE_UNARY_MINUS:
         /*v = -eval(a->l);*/
@@ -616,7 +669,7 @@ void imprimir(struct ast *a)
         if(s->value != NULL) {
             switch (s->value->t) {
             case VALUE_STRING:
-                printf("\"%s\"\n", s->value->v.s);
+                printf("%s\n", s->value->v.s);
                 break;
             case VALUE_BOOL:
                 if(s->value->v.b)
@@ -625,16 +678,16 @@ void imprimir(struct ast *a)
                     printf("falso\n");
                 break;
             case VALUE_CHAR:
-                printf("\'%c\'\n", s->value->v.c);
+                printf("%c\n", s->value->v.c);
                 break;
             case VALUE_INT:
                 printf("%i\n", s->value->v.i);
                 break;
             case VALUE_DOUBLE:
-                printf("%lf\n", s->value->v.d);
+                printf("%g\n", s->value->v.d);
                 break;
             default:
-                yyerror("tipo indefinido\n");
+                yyerror("imprimir -> tipo indefinido\n");
                 break;
             }
         }else{
