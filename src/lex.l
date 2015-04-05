@@ -17,7 +17,7 @@
 %}
 
  /* float exponent */
-EXP ([Ee][-+]?[0-9]+)
+ /* EXP ([Ee][-+]?[0-9]+) */
 
 %%
 
@@ -39,6 +39,8 @@ EXP ([Ee][-+]?[0-9]+)
 "<="    { return OP_LE; }
 "!="    { return OP_NEQ; }
 "=="    { return OP_EQ; }
+"&&"    { return OP_AND; }
+"||"    { return OP_OR; }
 
  /* keywords */
 "si"        { return KEYWORD_IF; }

@@ -1,23 +1,24 @@
 #valor logico directo
 si(verdadero)
-    imprimir(1)
+    imprimir("es verdadero")
 fin
 
 #asignado a una variable
 b = verdadero
 si(b)
-    imprimir(1)
+    imprimir("es verdad")
 fin
 
 #si-sino
+b = falso
 si(b)
-    imprimir(1)
+    imprimir("verdad")
 sino
-    imprimir(0)
+    imprimir("falsedad")
 fin
 
 #si anidado
-entero i = 10
+i = 10
 si(i == 0)
     imprimir(0)
 sino si(i > 0)
@@ -31,9 +32,11 @@ si(verdadero)
     imprimir("hola latino")
 fin
 
-logico g = verdadero
+g = verdadero
+imprimir(g)
 si(g)
     imprimir(verdadero)
     imprimir('a')
+sino 
+    imprimir("error")
 fin
-

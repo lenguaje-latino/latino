@@ -5,11 +5,12 @@
 #include "latino.h"
 
 typedef enum{
-    VALUE_BOOL,
-    VALUE_INT,
-    VALUE_DOUBLE,
-    VALUE_CHAR,
-    VALUE_STRING
+    VALUE_NULL = 0,
+    VALUE_BOOL = 1,
+    VALUE_INT = 2,
+    VALUE_CHAR = 3,
+    VALUE_DOUBLE = 4,    
+    VALUE_STRING = 5
 } lat_value_type;
 
 typedef char* lat_string;
@@ -82,7 +83,9 @@ typedef enum {
     NODE_DECIMAL=23,
     NODE_STRING=24,
     NODE_CHAR=25,
-    NODE_BOOLEAN=26
+    NODE_BOOLEAN=26,
+    NODE_AND =27,
+    NODE_OR = 28
 } node_type;
 
 /* nodes in the abstract syntax tree */
@@ -130,7 +133,7 @@ struct symasgn {
 
 /* build AST */
 struct ast *newast(node_type nodetype, struct ast *l, struct ast *r);
-struct ast *newcmp(int cmptype, struct ast *l, struct ast *r);
+/*struct ast *newcmp(int cmptype, struct ast *l, struct ast *r);*/
 struct ast *newfunc(int functype, struct ast *l);
 struct ast *newcall(struct symbol *s, struct ast *l);
 struct ast *newref(struct symbol *s);

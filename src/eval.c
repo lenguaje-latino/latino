@@ -174,20 +174,6 @@ newstr(lat_string s, size_t l)
 }
 
 struct ast *
-newcmp(int cmptype, struct ast *l, struct ast *r)
-{
-    struct ast *a = malloc(sizeof(struct ast));
-    if(!a) {
-        yyerror("sin espacio\n");
-        exit(0);
-    }
-    a->nodetype = cmptype;
-    a->l = l;
-    a->r = r;
-    return a;
-}
-
-struct ast *
 newfunc(int functype, struct ast *l)
 {
     /*printf("%s\n", "newfunc");*/
@@ -278,11 +264,19 @@ newasgn(struct symbol *s, struct ast *v)
     case NODE_DIV:
     case NODE_MOD:
     case NODE_MULT:
+    case NODE_AND:
+    case NODE_OR:
+    case NODE_EQ:
+    case NODE_NEQ:
+    case NODE_GT:
+    case NODE_LT:
+    case NODE_GE:
+    case NODE_LE:
         a->s->value = eval(a->v);
         lookup(s->name, a->s->value);
-        break;
+        break;    
     default:
-        /*printf("newasgn=%i\n", v->nodetype);*/
+        printf("newasgn=%i\n", v->nodetype);
         break;
     }
     return (struct ast *)a;
@@ -314,6 +308,8 @@ treefree(struct ast *a)
     case NODE_MULT:
     case NODE_DIV:
     case NODE_MOD:
+    case NODE_AND:
+    case NODE_OR:
     case NODE_EQ:
     case NODE_NEQ:
     case NODE_GT:
@@ -322,11 +318,13 @@ treefree(struct ast *a)
     case NODE_LE:
     case NODE_EXPRESION:
         treefree(a->r);
+        break;
     /* one subtree */
     case NODE_UNARY_MINUS:
     case NODE_USER_FUNCTION_CALL:
     case NODE_BUILTIN_FUNCTION:
         treefree(a->l);
+        break;
     /* no subtree */
     case NODE_INT:
     case NODE_CHAR:
@@ -350,6 +348,7 @@ treefree(struct ast *a)
         break;
     default:
         printf("error interno: nodo mal liberado %i\n", a->nodetype);
+        break;
     }
     free(a); /* always free the node itself */
 }
@@ -381,8 +380,6 @@ symlistfree(struct symlist *sl)
 
 static double callbuiltin(struct fncall *);
 static double calluser(struct ufncall *);
-
-static lat_string * concat (lat_string s1, lat_string s2);
 
 static lat_string * concat (lat_string s1, lat_string s2){
     lat_string *s3 = malloc(strlen(s1) + strlen(s2) + 1);
@@ -425,14 +422,21 @@ lat_value* eval(struct ast *a)
     case NODE_INT:
     case NODE_STRING:
         val = ((node *)a)->value;
+        return val;
         break;
     /* name reference */
-    case NODE_SYMBOL:
-        val = ((struct symref *)a)->s->value;
+    case NODE_SYMBOL:        
+	if(((struct symref *)a)->s->value == NULL){
+	    yyerror("variable sin definir");	    
+	}else{
+	  val = ((struct symref *)a)->s->value;
+	}	
+        return val;
         break;
     /* assignment */
     case NODE_ASSIGMENT:
-        /*v = eval(((struct symasgn *)a)->v);*/
+        val = ((struct symasgn *)a)->v;
+        return val;
         break;
     /* expressions */
     case NODE_ADD:
@@ -461,8 +465,8 @@ lat_value* eval(struct ast *a)
         }
         if (arg1->t == VALUE_STRING || arg2->t == VALUE_STRING)
         {
-            lat_string *ls1 = malloc(254);
-            lat_string *ls2 = malloc(254);
+            lat_string *ls1 = malloc(256);
+            lat_string *ls2 = malloc(256);
             val->t = VALUE_STRING;
             if(arg1->t != VALUE_STRING){
                 ls1 = arg1->t == VALUE_INT ? int2str(arg1->v.i) : double2str(arg1->v.d);
@@ -475,6 +479,7 @@ lat_value* eval(struct ast *a)
                 return val;
             }
         }
+        /* TODO: pendiente concat con boolean y char*/
         break;
     case NODE_SUB:
         arg1 = eval(a->l);
@@ -493,7 +498,7 @@ lat_value* eval(struct ast *a)
             val->v.d  = d1 - d2;
             return val;
         }
-        /*TODO: manejar error para los demas tipos de datos*/
+        yyerror("- tipos incompatibles");
         break;
     case NODE_MULT:
         arg1 = eval(a->l);
@@ -512,7 +517,7 @@ lat_value* eval(struct ast *a)
             val->v.d  = d1 * d2;
             return val;
         }
-        yyerror("multiplicacion tipos incompatibles");
+        yyerror("* tipos incompatibles");
         break;
     case NODE_DIV:
         arg1 = eval(a->l);
@@ -539,7 +544,7 @@ lat_value* eval(struct ast *a)
             }
             return val;
         }
-        yyerror("division tipos incompatibles");
+        yyerror("/ tipos incompatibles");
         break;
     case NODE_MOD:
         arg1 = eval(a->l);
@@ -554,47 +559,247 @@ lat_value* eval(struct ast *a)
             }
             return val;
         }
-        yyerror("modulo tipos incompatibles");
+        yyerror("\% tipos incompatibles");
+        break;
+    case NODE_AND:
+        arg1 = eval(a->l);
+        arg2 = eval(a->r);
+        if(arg1->t == VALUE_BOOL && arg2->t == VALUE_BOOL){
+            val->t = VALUE_BOOL;
+            val->v.b = arg1->v.b && arg2->v.b;
+            return val;
+        }
+        yyerror("&& tipos incompatible"); 
+        break;
+    case NODE_OR:
+        arg1 = eval(a->l);
+        arg2 = eval(a->r);
+        if(arg1->t == VALUE_BOOL && arg2->t == VALUE_BOOL){
+            val->t = VALUE_BOOL;
+            val->v.b = arg1->v.b || arg2->v.b;
+            return val;
+        }
+        yyerror("|| tipos incompatible"); 
         break;
     case NODE_UNARY_MINUS:
         /*v = -eval(a->l);*/
+        arg1 = eval(a->l);
+        if (arg1->t == VALUE_INT)
+        {
+            val->t = VALUE_INT;
+            val->v.i = - (arg1->v.i);
+            return val;
+        }
+        if (arg1->t == VALUE_DOUBLE)
+        {
+            val->t = VALUE_DOUBLE;
+            val->v.d  = - (arg1->v.d) ;
+            return val;
+        }
+        yyerror("- tipos incompatible"); 
         break;
     /* comparisons */
     case NODE_GT:
-        v = (eval(a->l) > eval(a->r))? 1 : 0;
+        arg1 = eval(a->l);
+        arg2 = eval(a->r);
+        val->t = VALUE_BOOL;
+	if (arg1->t == VALUE_BOOL && arg2->t == VALUE_BOOL)
+        {
+            val->v.b = arg1->v.b > arg2->v.b;
+            return val;
+        }
+	if (arg1->t == VALUE_CHAR && arg2->t == VALUE_CHAR)
+        {
+            val->v.b = arg1->v.c > arg2->v.c;
+            return val;
+        }
+        if (arg1->t == VALUE_INT && arg2->t == VALUE_INT)
+        {
+            val->v.b = arg1->v.i > arg2->v.i;
+            return val;
+        }
+        if (arg1->t == VALUE_DOUBLE && arg2->t == VALUE_DOUBLE)
+        {
+            val->v.b = arg1->v.d > arg2->v.d;
+            return val;
+        }
+        if (arg1->t == VALUE_STRING && arg2->t == VALUE_STRING)
+        {
+            val->v.b = arg1->v.s > arg2->v.s;
+            return val;
+        }
+        yyerror("> tipos incompatibles");
         break;
     case NODE_LT:
-        v = (eval(a->l) < eval(a->r))? 1 : 0;
+        arg1 = eval(a->l);
+        arg2 = eval(a->r);
+        val->t = VALUE_BOOL;
+	if (arg1->t == VALUE_BOOL && arg2->t == VALUE_BOOL)
+        {
+            val->v.b = arg1->v.b < arg2->v.b;
+            return val;
+        }
+	if (arg1->t == VALUE_CHAR && arg2->t == VALUE_CHAR)
+        {
+            val->v.b = arg1->v.c < arg2->v.c;
+            return val;
+        }
+        if (arg1->t == VALUE_INT && arg2->t == VALUE_INT)
+        {
+            val->v.b = arg1->v.i < arg2->v.i;
+            return val;
+        }
+        if (arg1->t == VALUE_DOUBLE && arg2->t == VALUE_DOUBLE)
+        {
+            val->v.b = arg1->v.d < arg2->v.d;
+            return val;
+        }
+        if (arg1->t == VALUE_STRING && arg2->t == VALUE_STRING)
+        {
+            val->v.b = arg1->v.s < arg2->v.s;
+            return val;
+        }
+        yyerror("< tipos incompatibles");
         break;
     case NODE_NEQ:
-        v = (eval(a->l) != eval(a->r))? 1 : 0;
+        arg1 = eval(a->l);
+        arg2 = eval(a->r);
+        val->t = VALUE_BOOL;
+	if (arg1->t == VALUE_BOOL && arg2->t == VALUE_BOOL)
+        {
+            val->v.b = arg1->v.b != arg2->v.b;
+            return val;
+        }
+	if (arg1->t == VALUE_CHAR && arg2->t == VALUE_CHAR)
+        {
+            val->v.b = arg1->v.c != arg2->v.c;
+            return val;
+        }
+        if (arg1->t == VALUE_INT && arg2->t == VALUE_INT)
+        {
+            val->v.b = arg1->v.i != arg2->v.i;
+            return val;
+        }
+        if (arg1->t == VALUE_DOUBLE && arg2->t == VALUE_DOUBLE)
+        {
+            val->v.b = arg1->v.d != arg2->v.d;
+            return val;
+        }
+        if (arg1->t == VALUE_STRING && arg2->t == VALUE_STRING)
+        {
+            val->v.b = arg1->v.s != arg2->v.s;
+            return val;
+        }
+        yyerror("!= tipos incompatibles");
         break;
     case NODE_EQ:
-        v = (eval(a->l) == eval(a->r))? 1 : 0;
+        arg1 = eval(a->l);
+        arg2 = eval(a->r);
+        val->t = VALUE_BOOL;
+	if (arg1->t == VALUE_BOOL && arg2->t == VALUE_BOOL)
+        {
+            val->v.b = arg1->v.b == arg2->v.b;
+            return val;
+        }
+	if (arg1->t == VALUE_CHAR && arg2->t == VALUE_CHAR)
+        {
+            val->v.b = arg1->v.c == arg2->v.c;
+            return val;
+        }
+        if (arg1->t == VALUE_INT && arg2->t == VALUE_INT)
+        {
+            val->v.b = arg1->v.i == arg2->v.i;
+            return val;
+        }
+        if (arg1->t == VALUE_DOUBLE && arg2->t == VALUE_DOUBLE)
+        {
+            val->v.b = arg1->v.d == arg2->v.d;
+            return val;
+        }
+        if (arg1->t == VALUE_STRING && arg2->t == VALUE_STRING)
+        {
+            val->v.b = arg1->v.s == arg2->v.s;
+            return val;
+        }
+        yyerror("== tipos incompatibles");
         break;
     case NODE_GE:
-        v = (eval(a->l) >= eval(a->r))? 1 : 0;
+        arg1 = eval(a->l);
+        arg2 = eval(a->r);
+        val->t = VALUE_BOOL;
+	if (arg1->t == VALUE_BOOL && arg2->t == VALUE_BOOL)
+        {
+            val->v.b = arg1->v.b >= arg2->v.b;
+            return val;
+        }
+	if (arg1->t == VALUE_CHAR && arg2->t == VALUE_CHAR)
+        {
+            val->v.b = arg1->v.c >= arg2->v.c;
+            return val;
+        }
+        if (arg1->t == VALUE_INT && arg2->t == VALUE_INT)
+        {
+            val->v.b = arg1->v.i >= arg2->v.i;
+            return val;
+        }
+        if (arg1->t == VALUE_DOUBLE && arg2->t == VALUE_DOUBLE)
+        {
+            val->v.b = arg1->v.d >= arg2->v.d;
+            return val;
+        }
+        if (arg1->t == VALUE_STRING && arg2->t == VALUE_STRING)
+        {
+            val->v.b = arg1->v.s >= arg2->v.s;
+            return val;
+        }
+        yyerror(">= tipos incompatibles");
         break;
     case NODE_LE:
-        v = (eval(a->l) <= eval(a->r))? 1 : 0;
+        arg1 = eval(a->l);
+        arg2 = eval(a->r);
+        val->t = VALUE_BOOL;
+	if (arg1->t == VALUE_BOOL && arg2->t == VALUE_BOOL)
+        {
+            val->v.b = arg1->v.b <= arg2->v.b;
+            return val;
+        }
+	if (arg1->t == VALUE_CHAR && arg2->t == VALUE_CHAR)
+        {
+            val->v.b = arg1->v.c <= arg2->v.c;
+            return val;
+        }
+        if (arg1->t == VALUE_INT && arg2->t == VALUE_INT)
+        {
+            val->v.b = arg1->v.i <= arg2->v.i;
+            return val;
+        }
+        if (arg1->t == VALUE_DOUBLE && arg2->t == VALUE_DOUBLE)
+        {
+            val->v.b = arg1->v.d <= arg2->v.d;
+            return val;
+        }
+        if (arg1->t == VALUE_STRING && arg2->t == VALUE_STRING)
+        {
+            val->v.b = arg1->v.s <= arg2->v.s;
+            return val;
+        }
+        yyerror("<= tipos incompatibles");
         break;
     /* control flow */
     /* null expressions allowed in the grammar, so check for them */
     /* if/then/else */
     case NODE_IF:
-        if( eval( ((struct flow *)a)->cond) != 0) {
+        if((eval(((struct flow *)a)->cond))->v.b != 0) {
             /*check the condition*/
             if( ((struct flow *)a)->tl) {
                 /*the true branch*/
-                /*v = eval( ((struct flow *)a)->tl);*/
-            } else
-                v = 0.0; /* a default value */
+                val = eval(((struct flow *)a)->tl);
+            } 
         } else {
             if( ((struct flow *)a)->el) {
                 /*the false branch*/
-                /*v = eval(((struct flow *)a)->el);*/
-            } else
-                v = 0.0; /* a default value */
+                val = eval(((struct flow *)a)->el);
+	    }
         }
         break;
     /* while/do */
@@ -618,7 +823,7 @@ lat_value* eval(struct ast *a)
         }
         break;
     case NODE_EXPRESION:
-        eval(a->l);
+        /*eval(a->l);*/
         /*v = eval(a->r);*/
         break;
     case NODE_BUILTIN_FUNCTION:
@@ -629,76 +834,39 @@ lat_value* eval(struct ast *a)
         v = calluser((struct ufncall *)a);
         break;
     default:
-        v = 0;
+        /*v = 0;*/
         printf("error interno: nodo incorrecto %i\n", a->nodetype );
         break;
     }
     return val;
 }
 
-void imprimir(struct ast *a)
-{
-    /*printf("%s\n", "imprimir");*/
-    double v = 0;
-    switch(a->nodetype) {
-    case NODE_STRING:
-        /*printf("%s\n", "NODE_STRING");*/
-        printf("\"%s\"\n", ((node *)a)->value->v.s);
-        break;
-    case NODE_BOOLEAN:
-        if(((node *)a)->value->v.b)
-            printf("verdadero\n");
-        else
-            printf("falso\n");
-        break;
-    case NODE_CHAR:
-        printf("\'%c\'\n", ((node *)a)->value->v.c);
-        break;
-    case NODE_INT:
-        printf("%i\n", ((node *)a)->value->v.i);
-        break;
-    case NODE_DECIMAL:
-        //v = eval(a->l);
-        printf("%lf\n", ((node *)a)->value->v.d);
-        break;
-    case NODE_SYMBOL:
-    {
-        /*printf("%s\n", "NODE_SYMBOL");*/
-        struct symbol *s = malloc(sizeof(struct symbol));
-        s = lookup(((struct symref *) a)->s->name, NULL);
-        if(s->value != NULL) {
-            switch (s->value->t) {
-            case VALUE_STRING:
-                printf("%s\n", s->value->v.s);
-                break;
-            case VALUE_BOOL:
-                if(s->value->v.b)
-                    printf("verdadero\n");
-                else
-                    printf("falso\n");
-                break;
-            case VALUE_CHAR:
-                printf("%c\n", s->value->v.c);
-                break;
-            case VALUE_INT:
-                printf("%i\n", s->value->v.i);
-                break;
-            case VALUE_DOUBLE:
-                printf("%g\n", s->value->v.d);
-                break;
-            default:
-                yyerror("imprimir -> tipo indefinido\n");
-                break;
-            }
-        }else{
-            yyerror("variable sin definir\n", s->name);
-        }
-    }
-    break;
-    default:
-        /*v = eval(a->l);*/
-        printf("%i\n", (int)floor(v));
-        break;
+void imprimir(lat_value *val)
+{       
+    if(val != NULL){        
+	switch(val->t){
+	  case VALUE_BOOL:
+	    if(val->v.b)
+		printf("verdadero\n");
+	    else
+		printf("falso\n");
+	    break;
+	  case VALUE_INT:
+	    printf("%i\n", val->v.i);
+	    break;
+	  case VALUE_CHAR:
+	    printf("%c\n", val->v.c);
+	    break;
+	  case VALUE_DOUBLE:
+	    printf("%g\n", val->v.d);
+	    break;
+	  case VALUE_STRING:
+	    printf("%s\n", val->v.s);
+	    break;
+	  default:
+	    yyerror("variable no definida");
+	    break;
+	}  
     }
 }
 
@@ -717,8 +885,13 @@ static double callbuiltin(struct fncall *f)
     case B_log:
         return log(v);
     case B_print:
-        imprimir(f->l);
+    {
+	lat_value *val = malloc(sizeof(lat_value));
+	val =  eval(f->l);
+	imprimir(val);        
         return v;
+    }
+    break;
     default:
         yyerror("definicion de funcion desconocida\n");
         return 0.0;
@@ -800,4 +973,3 @@ calluser(struct ufncall *f)
     free(oldval);
     return v;
 }
-

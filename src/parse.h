@@ -70,7 +70,9 @@ extern int yydebug;
     OP_LE = 280,
     OP_EQ = 281,
     OP_NEQ = 282,
-    UMINUS = 283
+    OP_AND = 283,
+    OP_OR = 284,
+    UMINUS = 285
   };
 #endif
 /* Tokens.  */
@@ -99,7 +101,9 @@ extern int yydebug;
 #define OP_LE 280
 #define OP_EQ 281
 #define OP_NEQ 282
-#define UMINUS 283
+#define OP_AND 283
+#define OP_OR 284
+#define UMINUS 285
 
 /* Value type.  */
 #if ! defined YYSTYPE && ! defined YYSTYPE_IS_DECLARED
@@ -118,7 +122,7 @@ union YYSTYPE
     struct symbol *s;   /* which symbol */
     struct symlist *sl;
 
-#line 122 "src/parse.h" /* yacc.c:1909  */
+#line 126 "src/parse.h" /* yacc.c:1909  */
 };
 # define YYSTYPE_IS_TRIVIAL 1
 # define YYSTYPE_IS_DECLARED 1

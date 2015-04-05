@@ -45,6 +45,8 @@
     OP_LE
     OP_EQ
     OP_NEQ
+    OP_AND
+    OP_OR
 
 
 %nonassoc <fn> OP_EQ OP_GE OP_GT OP_LE OP_LT OP_NEQ
@@ -99,13 +101,15 @@ list:   /* empty */ { $$ = NULL; }
     }
     ;
 
-    /*| CMP        { $$ = newcmp($1, NULL, NULL); }*/
-exp: exp OP_GT  exp { $$ = newcmp(NODE_GT, $1, $3); }
-    | exp OP_LT exp { $$ = newcmp(NODE_LT, $1, $3); }
-    | exp OP_GE exp { $$ = newcmp(NODE_GE, $1, $3); }
-    | exp OP_LE exp { $$ = newcmp(NODE_LE, $1, $3); }
-    | exp OP_NEQ exp { $$ = newcmp(NODE_NEQ, $1, $3); }
-    | exp OP_EQ exp { $$ = newcmp(NODE_EQ, $1, $3); }
+    /*| CMP        { $$ = newast($1, NULL, NULL); }*/
+exp: exp OP_GT  exp { $$ = newast(NODE_GT, $1, $3); }
+    | exp OP_LT exp { $$ = newast(NODE_LT, $1, $3); }
+    | exp OP_GE exp { $$ = newast(NODE_GE, $1, $3); }
+    | exp OP_LE exp { $$ = newast(NODE_LE, $1, $3); }
+    | exp OP_NEQ exp { $$ = newast(NODE_NEQ, $1, $3); }
+    | exp OP_EQ exp { $$ = newast(NODE_EQ, $1, $3); }
+    | exp OP_AND exp { $$ = newast(NODE_AND, $1, $3); }
+    | exp OP_OR exp { $$ = newast(NODE_OR, $1, $3); }
     | exp '+' exp { $$ = newast(NODE_ADD, $1, $3); }
     | exp '-' exp { $$ = newast(NODE_SUB, $1, $3); }
     | exp '*' exp { $$ = newast(NODE_MULT, $1, $3); }

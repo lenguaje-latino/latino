@@ -15,7 +15,6 @@ imprimir(s)
 PI=3.1416
 imprimir(PI)
 
-#test imprimir cadena
 imprimir("hello world")
 imprimir('a')
 imprimir(10.0)
