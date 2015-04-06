@@ -97,7 +97,7 @@ list:   /* empty */ { $$ = NULL; }
         if ($2 == NULL)
             $$ = $1;
         else
-            $$ = newast(NODE_EXPRESION, $1, $2);
+            $$ = newast(NODE_EXPRESSION, $1, $2);
     }
     ;
 
@@ -136,7 +136,7 @@ value: TOKEN_NUMBER { $$ = newnum($1); }
 
 explist: /* empty */ { $$ = NULL; }
     | exp
-    | exp ',' explist { $$ = newast(NODE_EXPRESION, $1, $3); }
+    | exp ',' explist { $$ = newast(NODE_EXPRESSION, $1, $3); }
     ;
 
 symlist: /* empty */ { $$ = NULL; }

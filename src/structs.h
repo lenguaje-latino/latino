@@ -9,7 +9,7 @@ typedef enum{
     VALUE_BOOL = 1,
     VALUE_INT = 2,
     VALUE_CHAR = 3,
-    VALUE_DOUBLE = 4,    
+    VALUE_DOUBLE = 4,
     VALUE_STRING = 5
 } lat_value_type;
 
@@ -50,10 +50,10 @@ struct symlist *newsymlist(struct symbol *sym, struct symlist *next);
 void symlistfree(struct symlist *sl);
 
 enum bifs {
-    B_sqrt = 1,
-    B_exp,
-    B_log,
-    B_print
+    B_sqrt = 0,
+    B_exp   = 1,
+    B_log   = 2 ,
+    B_print = 3
 };
 
 typedef enum {
@@ -70,7 +70,7 @@ typedef enum {
     NODE_LT=10,
     NODE_GE=11,
     NODE_LE=12,
-    NODE_EXPRESION=13,
+    NODE_EXPRESSION=13,
     NODE_IF=14,
     NODE_WHILE=15,
     NODE_DO=16,

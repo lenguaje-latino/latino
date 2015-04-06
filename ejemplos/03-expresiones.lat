@@ -40,9 +40,8 @@ imprimir(x)
 z = 130 % 3
 imprimir(z)
 
-#TODO: corregir error
 imprimir(s1)
-#solo cuando imprimir s1 esta al final del archivo
+
 i=0
 imprimir(i)
 
@@ -50,3 +49,7 @@ l1 = (verdadero == verdadero)
 imprimir(l1)
 
 imprimir("1 < 5? " + (1 < 5))
+
+str = l1 / " hola "
+
+#imprimir(str)
