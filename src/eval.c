@@ -286,6 +286,7 @@ treefree(struct ast *a)
         break;
     /* up to three subtrees */
     case NODE_IF:
+    case NODE_DO:
     case NODE_WHILE:
         free( ((struct flow *)a)->cond);
         if( ((struct flow *)a)->tl) treefree( ((struct flow *)a)->tl);
@@ -361,11 +362,14 @@ static lat_string * char2str(char c) {
 }
 
 static lat_string * bool2str(int i){
-    lat_string *r = malloc(sizeof(lat_string));
+    char s[10];
+    lat_string *r = malloc(11);
     if(i){
-        r="verdadero";
+        snprintf(s, 10, "%s", "verdadero");
+        strcpy(r, s);
     }else{
-        r="falso";
+        snprintf(s, 10, "%s", "falso");
+        strcpy(r, s);
     }
     return r;
 }
@@ -939,21 +943,17 @@ lat_value* eval(struct ast *a)
         break;
     /* while */
     case NODE_WHILE:
-        /*evaluate the condition*/
         while((eval(((struct flow *)a)->cond))->v.b != 0) {
             val = eval(((struct flow *)a)->tl);
         }
         return val;
-        free(cond);
         break;
     /* do */
     case NODE_DO:
-        cond = eval(((struct flow *)a)->cond);
         do {
             val = eval(((struct flow *)a)->tl);
-        } while (cond->v.b != 0);
+        } while ((eval(((struct flow *)a)->cond))->v.b != 0);
         return val;
-        free(cond);
         break;
     /* list of statements */
     case NODE_EXPRESSION:
@@ -981,7 +981,7 @@ void imprimir(lat_value *val)
     if(val != NULL) {
         switch(val->t) {
         case VALUE_BOOL:
-            printf(bool2str(val.b));
+            printf("%s\n", bool2str(val->v.b));
             break;
         case VALUE_INT:
             printf("%i\n", val->v.i);
@@ -995,32 +995,31 @@ void imprimir(lat_value *val)
         case VALUE_STRING:
             printf("%s\n", val->v.s);
             break;
-        default:
-            yyerror("variable no definida");
-            break;
         }
     }
 }
 
 static double callbuiltin(struct fncall *f)
 {
-    enum bifs functype = f->functype;
     double v = 0;
-    switch(functype) {
+    switch(f->functype) {
     case B_sqrt:
         return sqrt(v);
+        break;
     case B_exp:
         return exp(v);
+        break;
     case B_log:
         return log(v);
+        break;
     case B_print:
-    {
-        lat_value *val = malloc(sizeof(lat_value));
-        val =  eval(f->l);
-        imprimir(val);
-        return v;
-    }
-    break;
+        {
+            lat_value *val = malloc(sizeof(lat_value));
+            val =  eval(f->l);
+            imprimir(val);
+            return v;
+        }
+        break;
     default:
         yyerror("definicion de funcion desconocida\n");
         return 0.0;

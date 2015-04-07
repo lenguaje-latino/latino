@@ -50,10 +50,10 @@ struct symlist *newsymlist(struct symbol *sym, struct symlist *next);
 void symlistfree(struct symlist *sl);
 
 enum bifs {
-    B_sqrt = 0,
-    B_exp   = 1,
-    B_log   = 2 ,
-    B_print = 3
+    B_sqrt = 1,
+    B_exp,
+    B_log,
+    B_print
 };
 
 typedef enum {
