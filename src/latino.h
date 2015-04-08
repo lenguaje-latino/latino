@@ -28,8 +28,6 @@ extern int get_next_char(char *b, int maxBuffer);
 extern void begin_token(char*);
 extern void print_error(char *s, ...);
 
-/* delete and free an AST */
-void treefree(struct ast *);
 void yyerror(char *s, ...);
 /* interface to the lexer */
 extern int yylineno;    /* from lexer */

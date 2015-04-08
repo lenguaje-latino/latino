@@ -66,7 +66,9 @@
      OP_NEQ = 282,
      OP_AND = 283,
      OP_OR = 284,
-     UMINUS = 285
+     OP_NEG = 285,
+     UNEG = 286,
+     UMINUS = 287
    };
 #endif
 /* Tokens.  */
@@ -97,7 +99,9 @@
 #define OP_NEQ 282
 #define OP_AND 283
 #define OP_OR 284
-#define UMINUS 285
+#define OP_NEG 285
+#define UNEG 286
+#define UMINUS 287
 
 
 
@@ -122,7 +126,7 @@ typedef union YYSTYPE
 
 
 /* Line 1676 of yacc.c  */
-#line 126 "src/parse.h"
+#line 130 "src/parse.h"
 } YYSTYPE;
 # define YYSTYPE_IS_TRIVIAL 1
 # define yystype YYSTYPE /* obsolescent; will be withdrawn */

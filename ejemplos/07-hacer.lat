@@ -3,9 +3,11 @@
     hacer
         si (i == 5)
             #romper
-            #imprimir(5)
+            imprimir("cinco")
+	#sino
+	    #imprimir(i)
         fin
-        imprimir(i)
+	imprimir(i)
         i = i + 1
     cuando (i < 10)
 #fin

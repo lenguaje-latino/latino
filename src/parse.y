@@ -47,9 +47,10 @@
     OP_NEQ
     OP_AND
     OP_OR
+    OP_NEG
 
 
-%nonassoc <fn> OP_EQ OP_GE OP_GT OP_LE OP_LT OP_NEQ
+%nonassoc <fn> OP_EQ OP_GE OP_GT OP_LE OP_LT OP_NEQ OP_NEG
 %type <a> exp stmt list explist var value
 %type <sl> symlist
 
@@ -63,7 +64,7 @@
 %right '='
 %left '+' '-'
 %left '*' '/' '%'
-%left UMINUS
+%left UMINUS UNEG
 
 %start program
 
@@ -110,6 +111,7 @@ exp: exp OP_GT  exp { $$ = newast(NODE_GT, $1, $3); }
     | exp OP_EQ exp { $$ = newast(NODE_EQ, $1, $3); }
     | exp OP_AND exp { $$ = newast(NODE_AND, $1, $3); }
     | exp OP_OR exp { $$ = newast(NODE_OR, $1, $3); }
+    | OP_NEG exp %prec UNEG { $$ = newast(NODE_NEG, $2, NULL); }
     | exp '+' exp { $$ = newast(NODE_ADD, $1, $3); }
     | exp '-' exp { $$ = newast(NODE_SUB, $1, $3); }
     | exp '*' exp { $$ = newast(NODE_MULT, $1, $3); }

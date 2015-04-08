@@ -4,7 +4,7 @@
 
 #include "latino.h"
 
-typedef enum{
+typedef enum {
     VALUE_NULL = 0,
     VALUE_BOOL = 1,
     VALUE_INT = 2,
@@ -13,140 +13,145 @@ typedef enum{
     VALUE_STRING = 5
 } lat_value_type;
 
-typedef char* lat_string;
+typedef unsigned char lat_string;
 
-typedef struct{
+typedef struct {
     lat_value_type t;
-    union{
+    union {
         int b;
         int i;
         double d;
         char c;
-        lat_string s;
-    }v;
+        lat_string *s;
+    } v;
 } lat_value;
 
-/* symbol table */
-struct symbol{  /* a variable name */
-    char *name;
-    lat_value *value;
-    struct ast *func;   /* stmt for the function */
-    struct symlist *syms;   /* list of dummy args */
-};
-
-/* simple symtab of fixed size */
-#define NHASH 9997
-struct symbol symtab[NHASH];
-
-struct symbol *lookup(char*, lat_value*);
-
-/* list of symbols, for an argument list */
-struct symlist {
-    struct symbol *sym;
-    struct symlist *next;
-};
-
-struct symlist *newsymlist(struct symbol *sym, struct symlist *next);
-void symlistfree(struct symlist *sl);
-
-enum bifs {
-    B_sqrt = 1,
-    B_exp,
-    B_log,
-    B_print
-};
+typedef enum {
+    B_sqrt = 0,
+    B_exp   = 1,
+    B_log   = 2 ,
+    B_print = 3
+} bifs;
 
 typedef enum {
-    NODE_ADD=0,
-    NODE_SUB=1,
-    NODE_MULT=2,
-    NODE_DIV=3,
-    NODE_MOD=4,
-    NODE_ASSIGMENT=5,
-    NODE_UNARY_MINUS=6,
-    NODE_EQ=7,
-    NODE_NEQ=8,
-    NODE_GT=9,
-    NODE_LT=10,
-    NODE_GE=11,
-    NODE_LE=12,
-    NODE_EXPRESSION=13,
-    NODE_IF=14,
-    NODE_WHILE=15,
-    NODE_DO=16,
-    NODE_SYMBOL=17,
-    NODE_LIST_SYMBOLS=18,
-    NODE_BUILTIN_FUNCTION=19,
-    NODE_USER_FUNCTION=20,
-    NODE_USER_FUNCTION_CALL=21,
-    NODE_INT=22,
-    NODE_DECIMAL=23,
-    NODE_STRING=24,
-    NODE_CHAR=25,
-    NODE_BOOLEAN=26,
-    NODE_AND =27,
-    NODE_OR = 28
+    NODE_ADD = 0,
+    NODE_SUB = 1,
+    NODE_MULT = 2,
+    NODE_DIV = 3,
+    NODE_MOD = 4,
+    NODE_ASSIGMENT = 5,
+    NODE_UNARY_MINUS = 6,
+    NODE_EQ = 7,
+    NODE_NEQ = 8,
+    NODE_GT = 9,
+    NODE_LT = 10,
+    NODE_GE = 11,
+    NODE_LE = 12,
+    NODE_EXPRESSION = 13,
+    NODE_IF = 14,
+    NODE_WHILE = 15,
+    NODE_DO = 16,
+    NODE_SYMBOL = 17,
+    NODE_LIST_SYMBOLS = 18,
+    NODE_BUILTIN_FUNCTION = 19,
+    NODE_USER_FUNCTION = 20,
+    NODE_USER_FUNCTION_CALL = 21,
+    NODE_INT = 22,
+    NODE_DECIMAL = 23,
+    NODE_STRING = 24,
+    NODE_CHAR = 25,
+    NODE_BOOLEAN = 26,
+    NODE_AND = 27,
+    NODE_OR = 28,
+    NODE_NEG = 29
 } node_type;
 
 /* nodes in the abstract syntax tree */
 /* all have common initial nodetype */
-struct ast {
+typedef struct ast {
     node_type nodetype;
     struct ast *l;
     struct ast *r;
-};
+} ast;
 
-struct fncall {     /* built-in function */
+typedef struct {     /* built-in function */
     node_type nodetype;   /* type C */
     struct ast *l;
-    enum bifs functype;
-};
+    bifs functype;
+} fncall ;
 
-struct ufncall {
+/* symbol table */
+typedef struct { /* a variable name */
+    char *name;
+    lat_value *value;
+    struct ast *func;   /* stmt for the function */
+    struct symlist *syms;   /* list of dummy args */
+} symbol;
+
+/* simple symtab of fixed size */
+#define NHASH 9997
+symbol symtab[NHASH];
+
+
+/* list of symbols, for an argument list */
+typedef struct symlist {
+    symbol *sym;
+    struct symlist *next;
+} symlist;
+
+
+typedef struct {
     node_type nodetype;
     struct ast *l;
-    struct symbol *s;
-};
+    symbol *s;
+} ufncall ;
 
-struct flow {
+typedef struct {
     node_type nodetype;   /* type I or W */
     struct ast *cond;   /* condition */
     struct ast *tl; /* then branch or do list */
     struct ast *el;
-};
+} flow ;
 
-typedef struct{
+typedef struct {
     node_type nodetype;   /* type K */
     lat_value *value;
-}node;
+} node;
 
-struct symref {
+typedef struct {
     node_type nodetype;   /* type N */
-    struct symbol *s;
-};
+    symbol *s;
+} symref ;
 
-struct symasgn {
+typedef struct {
     node_type nodetype;   /* type = */
-    struct symbol *s;
+    symbol *s;
     struct ast *v;
-};
+} symasgn;
 
 /* build AST */
-struct ast *newast(node_type nodetype, struct ast *l, struct ast *r);
+ast *newast(node_type nodetype, ast *l, ast *r);
 /*struct ast *newcmp(int cmptype, struct ast *l, struct ast *r);*/
-struct ast *newfunc(int functype, struct ast *l);
-struct ast *newcall(struct symbol *s, struct ast *l);
-struct ast *newref(struct symbol *s);
-struct ast *newasgn(struct symbol *s, struct ast *v);
-struct ast *newnum(double d);
-struct ast *newint(int i);
-struct ast *newstr(lat_string, size_t);
-struct ast *newflow(node_type nodetype, struct ast *cond, struct ast *tl, struct ast *tr);
+ast *newfunc(int functype, ast *l);
+ast *newcall(symbol *s, ast *l);
+ast *newref(symbol *s);
+ast *newasgn(symbol *s, ast *v);
+ast *newnum(double d);
+ast *newint(int i);
+ast *newstr(lat_string *, size_t);
+ast *newflow(node_type nodetype, ast *cond, ast *tl, ast *tr);
+static double callbuiltin(fncall *);
+static double calluser(ufncall *);
+
+symlist *newsymlist(symbol *sym, symlist *next);
+void symlistfree(symlist *sl);
+symbol *lookup(char *, lat_value *);
 
 /* define a function */
 void
-dodef(struct symbol *name, struct symlist *syms, struct ast *stmts);
+dodef(symbol *name, symlist *syms, ast *stmts);
 
+/* delete and free an AST */
+void treefree(ast *);
 /* evaluate an AST */
-lat_value* eval(struct ast *);
-
+lat_value *eval(ast *);

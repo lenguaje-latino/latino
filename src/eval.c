@@ -10,33 +10,34 @@
 /* symbol table */
 /* hash symbol */
 static unsigned
-symhash(char *sym) {
+symhash(char *sym)
+{
     unsigned int hash = 0;
     unsigned c;
-    while(c = *sym++) hash = hash*9 ^ c;
+    while (c = *sym++) hash = hash * 9 ^ c;
     return hash;
 }
 
-static char*
+static char *
 strdup0(const char *s)
 {
     size_t len = strlen(s);
     char *p;
-    p = (char*)malloc(len+1);
+    p = (char *)malloc(len + 1);
     if (p) {
         strcpy(p, s);
     }
     return p;
 }
 
-struct symbol *
-lookup(char* sym, lat_value *v) {
-    struct symbol *sp = &symtab[symhash(sym)%NHASH];
+symbol *
+lookup(char *sym, lat_value *v)
+{
+    symbol *sp = &symtab[symhash(sym) % NHASH];
     int scount        = NHASH; /* how many have we looked at */
-    while(--scount >= 0) {
-        if(sp->name && !strcmp(sp->name, sym)) {
-            if (v != NULL)
-            {
+    while (--scount >= 0) {
+        if (sp->name && !strcmp(sp->name, sym)) {
+            if (v != NULL) {
                 /* set value to symbol if exists */
                 sp->value = v;
             }
@@ -56,11 +57,11 @@ lookup(char* sym, lat_value *v) {
     abort();    /* tried them all, table is full */
 }
 
-struct ast *
-newast(node_type nodetype, struct ast *l, struct ast *r)
+ast *
+newast(node_type nodetype, ast *l, ast *r)
 {
-    struct ast *a = malloc(sizeof(struct ast));
-    if(!a) {
+    ast *a = malloc(sizeof(ast));
+    if (!a) {
         yyerror("sin espacio\n");
         exit(0);
     }
@@ -70,11 +71,11 @@ newast(node_type nodetype, struct ast *l, struct ast *r)
     return a;
 }
 
-struct ast *
+ast *
 newint(int i)
 {
     node *a = malloc(sizeof(node));
-    if(!a) {
+    if (!a) {
         yyerror("sin espacio\n");
         exit(0);
     }
@@ -83,14 +84,14 @@ newint(int i)
     val->t = VALUE_INT;
     val->v.i = i;
     a->value = val;
-    return (struct ast *)a;
+    return (ast *)a;
 }
 
-struct ast *
+ast *
 newnum(double d)
 {
     node *a = malloc(sizeof(node));
-    if(!a) {
+    if (!a) {
         yyerror("sin espacio\n");
         exit(0);
     }
@@ -99,14 +100,14 @@ newnum(double d)
     val->t = VALUE_DOUBLE;
     val->v.d = d;
     a->value = val;
-    return (struct ast *)a;
+    return (ast *)a;
 }
 
-struct ast *
+ast *
 newbool(char *b)
 {
     node *a = malloc(sizeof(node));
-    if(!a) {
+    if (!a) {
         yyerror("sin espacio\n");
         exit(0);
     }
@@ -121,18 +122,18 @@ newbool(char *b)
         val->v.b = 0;
     }
     a->value = val;
-    return (struct ast *)a;
+    return (ast *)a;
 }
 
-static char*
+static char *
 strndup0(const char *s, size_t n)
 {
     size_t i;
     const char *p = s;
     char *new;
-    for (i=0; i<n && *p; i++,p++)
+    for (i = 0; i < n && *p; i++, p++)
         ;
-    new = (char*)malloc(i+1);
+    new = (char *)malloc(i + 1);
     if (new) {
         memcpy(new, s, i);
         new[i] = '\0';
@@ -140,12 +141,11 @@ strndup0(const char *s, size_t n)
     return new;
 }
 
-struct ast *
-newchar(lat_string c, size_t l)
+ast *
+newchar(lat_string *c, size_t l)
 {
-
     node *a = malloc(sizeof(node));
-    if(!a) {
+    if (!a) {
         yyerror("sin espacio\n");
         exit(0);
     }
@@ -154,14 +154,14 @@ newchar(lat_string c, size_t l)
     val->t = VALUE_CHAR;
     val->v.c = c[0];
     a->value = val;
-    return (struct ast *)a;
+    return (ast *)a;
 }
 
-struct ast *
-newstr(lat_string s, size_t l)
+ast *
+newstr(lat_string *s, size_t l)
 {
     node *a = malloc(sizeof(node));
-    if(!a) {
+    if (!a) {
         yyerror("sin espacio\n");
         exit(0);
     }
@@ -170,72 +170,72 @@ newstr(lat_string s, size_t l)
     val->t = VALUE_STRING;
     val->v.s = strndup0(s, l);
     a->value = val;
-    return (struct ast *)a;
+    return (ast *)a;
 }
 
-struct ast *
-newfunc(int functype, struct ast *l)
+ast *
+newfunc(int functype, ast *l)
 {
     /*printf("%s\n", "newfunc");*/
-    struct fncall *a = malloc(sizeof(struct fncall));
-    if(!a) {
+    fncall *a = malloc(sizeof(fncall));
+    if (!a) {
         yyerror("sin espacio\n");
         exit(0);
     }
     a->nodetype = NODE_BUILTIN_FUNCTION;
     a->l = l;
     a->functype = functype;
-    return (struct ast *)a;
+    return (ast *)a;
 }
 
-struct ast *
-newcall(struct symbol *s, struct ast *l)
+ast *
+newcall(symbol *s, ast *l)
 {
     /*printf("%s\n", "newcall");*/
-    struct ufncall *a = malloc(sizeof(struct ufncall));
-    if(!a) {
+    ufncall *a = malloc(sizeof(ufncall));
+    if (!a) {
         yyerror("sin espacio\n");
         exit(0);
     }
     a->nodetype = NODE_USER_FUNCTION;
     a->l = l;
     a->s = s;
-    return (struct ast *)a;
+    return (ast *)a;
 }
 
-struct ast *
-newref(struct symbol *s)
+ast *
+newref(symbol *s)
 {
-    struct symref *a = malloc(sizeof(struct symref));
-    if(!a) {
+    symref *a = malloc(sizeof(symref));
+    if (!a) {
         yyerror("sin espacio\n");
         exit(0);
     }
     a->nodetype = NODE_SYMBOL;
     a->s = lookup(s->name, NULL);
-    return (struct ast *)a;
+    return (ast *)a;
 }
 
-struct ast *
-newasgn(struct symbol *s, struct ast *v)
+ast *
+newasgn(symbol *s, ast *v)
 {
     /*printf("%s\n", "newasgn");*/
-    struct symasgn *a = malloc(sizeof(struct symasgn));
-    if(!a) {
+    symasgn *a = malloc(sizeof(symasgn));
+    if (!a) {
         yyerror("sin espacio\n");
         exit(0);
     }
     a->nodetype = NODE_ASSIGMENT;
     a->s = s;
     a->v = v;
-    return (struct ast *)a;
+    return (ast *)a;
 }
 
-struct ast *
-newflow(node_type nodetype, struct ast *cond, struct ast *tl, struct ast *el)
+ast *
+newflow(node_type nodetype, ast *cond, ast *tl, ast *el)
 {
-    struct flow *a = malloc(sizeof(struct flow));
-    if(!a) {
+    flow *a = malloc(sizeof(flow));
+    if (!a) {
         yyerror("sin espacio\n");
         exit(0);
     }
@@ -243,14 +243,14 @@ newflow(node_type nodetype, struct ast *cond, struct ast *tl, struct ast *el)
     a->cond = cond;
     a->tl = tl;
     a->el = el;
-    return (struct ast *)a;
+    return (ast *)a;
 }
 
 /* free a tree of ASTs */
 void
-treefree(struct ast *a)
+treefree(ast *a)
 {
-    switch(a->nodetype) {
+    switch (a->nodetype) {
     /* two subtrees */
     case NODE_ADD:
     case NODE_SUB:
@@ -269,6 +269,7 @@ treefree(struct ast *a)
         treefree(a->r);
         break;
     /* one subtree */
+    case NODE_NEG:
     case NODE_UNARY_MINUS:
     case NODE_USER_FUNCTION_CALL:
     case NODE_BUILTIN_FUNCTION:
@@ -282,18 +283,18 @@ treefree(struct ast *a)
     case NODE_BOOLEAN:
         break;
     case NODE_ASSIGMENT:
-        free( ((struct symasgn *)a)->v);
+        free(((symasgn *)a)->v);
         break;
     /* up to three subtrees */
     case NODE_IF:
     case NODE_DO:
     case NODE_WHILE:
-        free( ((struct flow *)a)->cond);
-        if( ((struct flow *)a)->tl) treefree( ((struct flow *)a)->tl);
-        if( ((struct flow *)a)->el) treefree( ((struct flow *)a)->el);
+        free(((flow *)a)->cond);
+        if (((flow *)a)->tl) treefree(((flow *)a)->tl);
+        if (((flow *)a)->el) treefree(((flow *)a)->el);
         break;
     case NODE_STRING:
-        free( ((node *)a)->value->v.s);
+        free(((node *)a)->value->v.s);
         break;
     default:
         printf("error interno: nodo mal liberado %i\n", a->nodetype);
@@ -302,11 +303,11 @@ treefree(struct ast *a)
     free(a); /* always free the node itself */
 }
 
-struct symlist *
-newsymlist(struct symbol *sym, struct symlist *next)
+symlist *
+newsymlist(symbol *sym, symlist *next)
 {
-    struct symlist *sl = malloc(sizeof(struct symlist));
-    if(!sl) {
+    symlist *sl = malloc(sizeof(symlist));
+    if (!sl) {
         yyerror("sin espacio\n");
         exit(0);
     }
@@ -317,27 +318,28 @@ newsymlist(struct symbol *sym, struct symlist *next)
 
 /* free a list of symbols */
 void
-symlistfree(struct symlist *sl)
+symlistfree(symlist *sl)
 {
-    struct symlist *nsl;
-    while(sl) {
+    symlist *nsl;
+    while (sl) {
         nsl = sl->next;
         free(sl);
         sl = nsl;
     }
 }
 
-static double callbuiltin(struct fncall *);
-static double calluser(struct ufncall *);
-
-static lat_string * concat (lat_string s1, lat_string s2) {
+static lat_string *
+concat(lat_string *s1, lat_string *s2)
+{
     lat_string *s3 = malloc(strlen(s1) + strlen(s2) + 1);
     strcpy(s3, s1);
     strcat(s3, s2);
     return s3;
 }
 
-static lat_string * int2str(int i) {
+static lat_string *
+int2str(int i)
+{
     char s[50];
     lat_string *r = malloc(strlen(s) + 1);
     snprintf(s, 50, "%i", i);
@@ -345,47 +347,856 @@ static lat_string * int2str(int i) {
     return r;
 }
 
-static lat_string * double2str(double d) {
+static lat_string *
+double2str(double d)
+{
     char s[50];
     lat_string *r = malloc(strlen(s) + 1);
     snprintf(s, 50, "%g", (float)d);
     strcpy(r, s);
-    return (lat_string)r;
+    return r;
 }
 
-static lat_string * char2str(char c) {
+static lat_string *
+char2str(char c)
+{
     char s[2];
     lat_string *r = malloc(2);
     snprintf(s, 2, "%c", c);
     strcpy(r, s);
-    return (lat_string)r;
+    return r;
 }
 
-static lat_string * bool2str(int i){
+static lat_string *
+bool2str(int i)
+{
     char s[10];
     lat_string *r = malloc(11);
-    if(i){
+    if (i) {
         snprintf(s, 10, "%s", "verdadero");
         strcpy(r, s);
-    }else{
+    } else {
         snprintf(s, 10, "%s", "falso");
         strcpy(r, s);
     }
     return r;
 }
 
-lat_value* eval(struct ast *a)
+lat_value *
+eval_node_add(lat_value *left, lat_value *right)
+{
+    lat_value *result = malloc(sizeof(lat_value));
+    switch (left->t) {
+    case VALUE_BOOL:
+        if (right->t == VALUE_STRING) {
+            result->t = VALUE_STRING;
+            result->v.s = concat(bool2str(left->v.b), right->v.s);
+            return result;
+        }
+        break;
+    case VALUE_INT:
+        if (right->t == VALUE_INT) {
+            result->t = VALUE_INT;
+            result->v.i  = left->v.i + right->v.i;
+            return result;
+        }
+        if (right->t == VALUE_DOUBLE) {
+            result->t = VALUE_DOUBLE;
+            result->v.d  = left->v.i + right->v.d;
+            return result;
+        }
+        if (right->t == VALUE_CHAR) {
+            result->t = VALUE_CHAR;
+            result->v.c  = left->v.i + right->v.c;
+            return result;
+        }
+        if (right->t == VALUE_STRING) {
+            result->t   = VALUE_STRING;
+            result->v.s = concat(int2str(left->v.i), right->v.s);
+            return result;
+        }
+        break;
+    case VALUE_DOUBLE:
+        if (right->t == VALUE_INT) {
+            result->t = VALUE_DOUBLE;
+            result->v.d  = left->v.d + right->v.i;
+            return result;
+        }
+        if (right->t == VALUE_DOUBLE) {
+            result->t = VALUE_DOUBLE;
+            result->v.d  = left->v.d + right->v.d;
+            return result;
+        }
+        if (right->t == VALUE_STRING) {
+            result->t   = VALUE_STRING;
+            result->v.s = concat(int2str(left->v.d), right->v.s);
+            return result;
+        }
+        break;
+    case VALUE_CHAR:
+        if (right->t == VALUE_INT) {
+            result->t = VALUE_CHAR;
+            result->v.c  = left->v.c + right->v.i;
+            return result;
+        }
+        if (right->t == VALUE_CHAR) {
+            result->t = VALUE_CHAR;
+            result->v.c  = left->v.c + right->v.c;
+            return result;
+        }
+        if (right->t == VALUE_STRING) {
+            result->t   = VALUE_STRING;
+            result->v.s = concat(char2str(left->v.c), right->v.s);
+            return result;
+        }
+        break;
+    case VALUE_STRING:
+        if (right->t == VALUE_BOOL) {
+            result->t = VALUE_STRING;
+            result->v.s = concat(left->v.s, bool2str(right->v.b));
+            return result;
+        }
+        if (right->t == VALUE_INT) {
+            result->t = VALUE_STRING;
+            result->v.s  = concat(left->v.s, int2str(right->v.i));
+            return result;
+        }
+        if (right->t == VALUE_DOUBLE) {
+            result->t = VALUE_STRING;
+            result->v.s  = concat(left->v.s, double2str(right->v.d));
+            return result;
+        }
+        if (right->t == VALUE_CHAR) {
+            result->t = VALUE_STRING;
+            result->v.s  = concat(left->v.s, char2str(right->v.c));
+            return result;
+        }
+        if (right->t == VALUE_STRING) {
+            result->t   = VALUE_STRING;
+            result->v.s = concat(left->v.s, right->v.s);
+            return result;
+        }
+        break;
+    default:
+        break;
+    }
+    yyerror("+ tipos incompatibles");
+    return result;
+}
+
+lat_value *
+eval_node_sub(lat_value *left, lat_value *right)
+{
+    lat_value *result = malloc(sizeof(lat_value));
+    switch (left->t) {
+    case VALUE_INT:
+        if (right->t == VALUE_INT) {
+            result->t = VALUE_INT;
+            result->v.i  = left->v.i - right->v.i;
+            return result;
+        }
+        if (right->t == VALUE_DOUBLE) {
+            result->t = VALUE_DOUBLE;
+            result->v.d  = left->v.i - right->v.d;
+            return result;
+        }
+        if (right->t == VALUE_CHAR) {
+            result->t = VALUE_CHAR;
+            result->v.c  = left->v.i - right->v.c;
+            return result;
+        }
+        break;
+    case VALUE_DOUBLE:
+        if (right->t == VALUE_INT) {
+            result->t = VALUE_DOUBLE;
+            result->v.d  = left->v.d - right->v.i;
+            return result;
+        }
+        if (right->t == VALUE_DOUBLE) {
+            result->t = VALUE_DOUBLE;
+            result->v.d  = left->v.d - right->v.d;
+            return result;
+        }
+        break;
+    case VALUE_CHAR:
+        if (right->t == VALUE_INT) {
+            result->t = VALUE_CHAR;
+            result->v.c  = left->v.c - right->v.i;
+            return result;
+        }
+        if (right->t == VALUE_CHAR) {
+            result->t = VALUE_CHAR;
+            result->v.c  = left->v.c - right->v.c;
+            return result;
+        }
+        break;
+    default:
+        break;
+    }
+    yyerror("- tipos incompatibles");
+    return result;
+}
+
+lat_value *
+eval_node_mult(lat_value *left, lat_value *right)
+{
+    lat_value *result = malloc(sizeof(lat_value));
+    switch (left->t) {
+    case VALUE_INT:
+        if (right->t == VALUE_INT) {
+            result->t = VALUE_INT;
+            result->v.i  = left->v.i * right->v.i;
+            return result;
+        }
+        if (right->t == VALUE_DOUBLE) {
+            result->t = VALUE_DOUBLE;
+            result->v.d  = left->v.i * right->v.d;
+            return result;
+        }
+        break;
+    case VALUE_DOUBLE:
+        if (right->t == VALUE_INT) {
+            result->t = VALUE_DOUBLE;
+            result->v.d  = left->v.d * right->v.i;
+            return result;
+        }
+        if (right->t == VALUE_DOUBLE) {
+            result->t = VALUE_DOUBLE;
+            result->v.d  = left->v.d * right->v.d;
+            return result;
+        }
+        break;
+    default:
+        break;
+    }
+    yyerror("* tipos incompatibles");
+    return result;
+}
+
+lat_value *
+eval_node_div(lat_value *left, lat_value *right)
+{
+    lat_value *result = malloc(sizeof(lat_value));
+    switch (left->t) {
+    case VALUE_INT:
+        if (right->t == VALUE_INT) {
+            result->t = VALUE_INT;
+            if (right->v.i == 0) {
+                yyerror("/ division por cero");
+            } else {
+                result->v.i  = left->v.i / right->v.i;
+            }
+            return result;
+        }
+        if (right->t == VALUE_DOUBLE) {
+            result->t = VALUE_DOUBLE;
+            if (right->v.d == 0) {
+                yyerror("/ division por cero");
+            } else {
+                result->v.d  = left->v.i / right->v.d;
+            }
+            return result;
+        }
+        break;
+    case VALUE_DOUBLE:
+        if (right->t == VALUE_INT) {
+            result->t = VALUE_DOUBLE;
+            if (right->v.i == 0) {
+                yyerror("/ division por cero");
+            } else {
+                result->v.d  = left->v.d / right->v.i;
+            }
+            return result;
+        }
+        if (right->t == VALUE_DOUBLE) {
+            result->t = VALUE_DOUBLE;
+            if (right->v.d == 0) {
+                yyerror("/ division por cero");
+            } else {
+                result->v.d  = left->v.d / right->v.d;
+            }
+            return result;
+        }
+        break;
+    default:
+        break;
+    }
+    yyerror("/ tipos incompatibles");
+    return result;
+}
+
+lat_value *
+eval_node_mod(lat_value *left, lat_value *right)
+{
+    lat_value *result = malloc(sizeof(lat_value));
+    switch (left->t) {
+    case VALUE_INT:
+        if (right->t == VALUE_INT) {
+            result->t = VALUE_INT;
+            if (right->v.i == 0) {
+                yyerror("\% division por cero");
+            } else {
+                result->v.i  = left->v.i % right->v.i;
+            }
+            return result;
+        }
+        break;
+    default:
+        break;
+    }
+    yyerror("\% tipos incompatibles");
+    return result;
+}
+
+lat_value *
+eval_node_unary_minus(lat_value *left)
+{
+    lat_value *result = malloc(sizeof(lat_value));
+    if (left->t == VALUE_INT) {
+        result->t = VALUE_INT;
+        result->v.i = - (left->v.i);
+        return result;
+    }
+    if (left->t == VALUE_DOUBLE) {
+        result->t = VALUE_DOUBLE;
+        result->v.d  = - (left->v.d);
+        return result;
+    }
+    yyerror("- tipos incompatible");
+    return result;
+}
+
+lat_value *
+eval_node_and(lat_value *left, lat_value *right)
+{
+    lat_value *result = malloc(sizeof(lat_value));
+    if (left->t == VALUE_BOOL && right->t == VALUE_BOOL) {
+        result->t = VALUE_BOOL;
+        result->v.b = left->v.b && right->v.b;
+        return result;
+    }
+    yyerror("&& tipos incompatible");
+    return result;
+}
+
+lat_value *
+eval_node_or(lat_value *left, lat_value *right)
+{
+    lat_value *result = malloc(sizeof(lat_value));
+    if (left->t == VALUE_BOOL && right->t == VALUE_BOOL) {
+        result->t = VALUE_BOOL;
+        result->v.b = left->v.b || right->v.b;
+        return result;
+    }
+    yyerror("|| tipos incompatible");
+    return result;
+}
+
+lat_value *
+eval_node_neg(lat_value *left)
+{
+    lat_value *result = malloc(sizeof(lat_value));
+    if (left->t == VALUE_BOOL) {
+        result->t = VALUE_BOOL;
+        result->v.b = !(left->v.b);
+        return result;
+    }
+    yyerror("! tipos incompatible");
+    return result;
+}
+
+lat_value *
+eval_node_gt(lat_value *left, lat_value *right)
+{
+    lat_value *result = malloc(sizeof(lat_value));
+    result->t = VALUE_BOOL;
+    switch (left->t) {
+    case VALUE_CHAR:
+        if (right->t == VALUE_INT) {
+            result->v.b = left->v.c > right->v.i;
+            return result;
+        }
+        if (right->t == VALUE_STRING) {
+            result->v.b = strcmp(char2str(left->v.c), right->v.s) > 0 ? 1 : 0;
+            return result;
+        }
+        break;
+    case VALUE_INT:
+        if (right->t == VALUE_CHAR) {
+            result->v.b = left->v.i > right->v.c;
+            return result;
+        }
+        if (right->t == VALUE_INT) {
+            result->v.b = left->v.i > right->v.i;
+            return result;
+        }
+        if (right->t == VALUE_DOUBLE) {
+            result->v.b = left->v.i > right->v.d;
+            return result;
+        }
+        if (right->t == VALUE_STRING) {
+            result->v.b = strcmp(int2str(left->v.i), right->v.s) > 0 ?  1 : 0;
+            return result;
+        }
+        break;
+    case VALUE_DOUBLE :
+        if (right->t == VALUE_INT) {
+            result->v.b = left->v.i > right->v.d;
+            return result;
+        }
+        if (right->t == VALUE_DOUBLE) {
+            result->v.b = left->v.d > right->v.d;
+            return result;
+        }
+        if (right->t == VALUE_STRING) {
+            result->v.b = strcmp(double2str(left->v.d), right->v.s) > 0 ? 1 : 0;
+            return result;
+        }
+        break;
+    case VALUE_STRING:
+        if (right->t == VALUE_INT) {
+            result->v.b  = strcmp(left->v.s, int2str(right->v.i)) > 0 ? 1 : 0;
+            return result;
+        }
+        if (right->t == VALUE_DOUBLE) {
+            result->v.b  = strcmp(left->v.s, double2str(right->v.d)) > 0 ? 1 : 0;
+            return result;
+        }
+        if (right->t == VALUE_CHAR) {
+            result->v.b  = strcmp(left->v.s, char2str(right->v.c)) > 0 ? 1 : 0;
+            return result;
+        }
+        if (right->t == VALUE_STRING) {
+            result->v.b = strcmp(left->v.s, right->v.s) > 0 ? 1 : 0;
+            return result;
+        }
+        break;
+    default:
+        break;
+    }
+    yyerror("> tipos incompatibles");
+    return result;
+}
+
+lat_value *
+eval_node_lt(lat_value *left, lat_value *right)
+{
+    lat_value *result = malloc(sizeof(lat_value));
+    result->t = VALUE_BOOL;
+    switch (left->t) {
+    case VALUE_CHAR:
+        if (right->t == VALUE_INT) {
+            result->v.b = left->v.c < right->v.i;
+            return result;
+        }
+        if (right->t == VALUE_STRING) {
+            result->v.b = strcmp(char2str(left->v.c), right->v.s) < 0 ? 1 : 0;
+            return result;
+        }
+        break;
+    case VALUE_INT:
+        if (right->t == VALUE_CHAR) {
+            result->v.b = left->v.i < right->v.c;
+            return result;
+        }
+        if (right->t == VALUE_INT) {
+            result->v.b = left->v.i < right->v.i;
+            return result;
+        }
+        if (right->t == VALUE_DOUBLE) {
+            result->v.b = left->v.i < right->v.d;
+            return result;
+        }
+        if (right->t == VALUE_STRING) {
+            result->v.b = strcmp(int2str(left->v.i), right->v.s) < 0 ?  1 : 0;
+            return result;
+        }
+        break;
+    case VALUE_DOUBLE :
+        if (right->t == VALUE_INT) {
+            result->v.b = left->v.i < right->v.d;
+            return result;
+        }
+        if (right->t == VALUE_DOUBLE) {
+            result->v.b = left->v.d < right->v.d;
+            return result;
+        }
+        if (right->t == VALUE_STRING) {
+            result->v.b = strcmp(double2str(left->v.d), right->v.s) < 0 ? 1 : 0;
+            return result;
+        }
+        break;
+    case VALUE_STRING:
+        if (right->t == VALUE_INT) {
+            result->v.b  = strcmp(left->v.s, int2str(right->v.i)) < 0 ? 1 : 0;
+            return result;
+        }
+        if (right->t == VALUE_DOUBLE) {
+            result->v.b  = strcmp(left->v.s, double2str(right->v.d)) < 0 ? 1 : 0;
+            return result;
+        }
+        if (right->t == VALUE_CHAR) {
+            result->v.b  = strcmp(left->v.s, char2str(right->v.c)) < 0 ? 1 : 0;
+            return result;
+        }
+        if (right->t == VALUE_STRING) {
+            result->v.b = strcmp(left->v.s, right->v.s) < 0 ? 1 : 0;
+            return result;
+        }
+        break;
+    default:
+        break;
+    }
+    yyerror("> tipos incompatibles");
+    return result;
+}
+
+lat_value *
+eval_node_neq(lat_value *left, lat_value *right)
+{
+    lat_value *result = malloc(sizeof(lat_value));
+    result->t = VALUE_BOOL;
+    switch (left->t) {
+    case VALUE_BOOL:
+        if (right->t == VALUE_BOOL) {
+            result->v.b = left->v.b != right->v.b;
+            return result;
+        }
+        if (right->t == VALUE_INT) {
+            result->v.b = left->v.b != right->v.i;
+            return result;
+        }
+        if (right->t == VALUE_STRING) {
+            result->v.b = strcmp(bool2str(left->v.b), right->v.s) != 0 ? 1 : 0;
+            return result;
+        }
+        break;
+    case VALUE_CHAR:
+        if (right->t == VALUE_INT) {
+            result->v.b = left->v.c != right->v.i;
+            return result;
+        }
+        if (right->t == VALUE_STRING) {
+            result->v.b = strcmp(char2str(left->v.c), right->v.s) != 0 ? 1 : 0;
+            return result;
+        }
+        break;
+    case VALUE_INT:
+        if (right->t == VALUE_BOOL) {
+            result->v.b = left->v.i != right->v.b;
+            return result;
+        }
+        if (right->t == VALUE_CHAR) {
+            result->v.b = left->v.i != right->v.c;
+            return result;
+        }
+        if (right->t == VALUE_INT) {
+            result->v.b = left->v.i != right->v.i;
+            return result;
+        }
+        if (right->t == VALUE_DOUBLE) {
+            result->v.b = left->v.i != right->v.d;
+            return result;
+        }
+        if (right->t == VALUE_STRING) {
+            result->v.b = strcmp(int2str(left->v.i), right->v.s) != 0 ?  1 : 0;
+            return result;
+        }
+        break;
+    case VALUE_DOUBLE:
+        if (right->t == VALUE_INT) {
+            result->v.b = left->v.i != right->v.d;
+            return result;
+        }
+        if (right->t == VALUE_DOUBLE) {
+            result->v.b = left->v.d != right->v.d;
+            return result;
+        }
+        if (right->t == VALUE_STRING) {
+            result->v.b = strcmp(double2str(left->v.d), right->v.s) != 0 ? 1 : 0;
+            return result;
+        }
+        break;
+    case VALUE_STRING:
+        if (right->t == VALUE_BOOL) {
+            result->v.b = strcmp(left->v.s, bool2str(right->v.b)) != 0 ? 1 : 0;
+            return result;
+        }
+        if (right->t == VALUE_INT) {
+            result->v.b  = strcmp(left->v.s, int2str(right->v.i)) != 0 ? 1 : 0;
+            return result;
+        }
+        if (right->t == VALUE_DOUBLE) {
+            result->v.b  = strcmp(left->v.s, double2str(right->v.d)) != 0 ? 1 : 0;
+            return result;
+        }
+        if (right->t == VALUE_CHAR) {
+            result->v.b  = strcmp(left->v.s, char2str(right->v.c)) != 0 ? 1 : 0;
+            return result;
+        }
+        if (right->t == VALUE_STRING) {
+            result->v.b = strcmp(left->v.s, right->v.s) != 0 ? 1 : 0;
+            return result;
+        }
+        break;
+    default:
+        break;
+    }
+    yyerror("> tipos incompatibles");
+    return result;
+}
+
+lat_value *
+eval_node_eq(lat_value *left, lat_value *right)
+{
+    lat_value *result = malloc(sizeof(lat_value));
+    result->t = VALUE_BOOL;
+    switch (left->t) {
+    case VALUE_BOOL:
+        if (right->t == VALUE_BOOL) {
+            result->v.b = left->v.b == right->v.b;
+            return result;
+        }
+        if (right->t == VALUE_INT) {
+            result->v.b = left->v.b == right->v.i;
+            return result;
+        }
+        if (right->t == VALUE_STRING) {
+            result->v.b = strcmp(bool2str(left->v.b), right->v.s) == 0 ? 1 : 0;
+            return result;
+        }
+        break;
+    case VALUE_CHAR:
+        if (right->t == VALUE_INT) {
+            result->v.b = left->v.c == right->v.i;
+            return result;
+        }
+        if (right->t == VALUE_STRING) {
+            result->v.b = strcmp(char2str(left->v.c), right->v.s) == 0 ? 1 : 0;
+            return result;
+        }
+        break;
+    case VALUE_INT:
+        if (right->t == VALUE_BOOL) {
+            result->v.b = left->v.i == right->v.b;
+            return result;
+        }
+        if (right->t == VALUE_CHAR) {
+            result->v.b = left->v.i == right->v.c;
+            return result;
+        }
+        if (right->t == VALUE_INT) {
+            result->v.b = left->v.i == right->v.i;
+            return result;
+        }
+        if (right->t == VALUE_DOUBLE) {
+            result->v.b = left->v.i == right->v.d;
+            return result;
+        }
+        if (right->t == VALUE_STRING) {
+            result->v.b = strcmp(int2str(left->v.i), right->v.s) == 0 ?  1 : 0;
+            return result;
+        }
+        break;
+    case VALUE_DOUBLE :
+        if (right->t == VALUE_INT) {
+            result->v.b = left->v.i == right->v.d;
+            return result;
+        }
+        if (right->t == VALUE_DOUBLE) {
+            result->v.b = left->v.d == right->v.d;
+            return result;
+        }
+        if (right->t == VALUE_STRING) {
+            result->v.b = strcmp(double2str(left->v.d), right->v.s) == 0 ? 1 : 0;
+            return result;
+        }
+        break;
+    case VALUE_STRING:
+        if (right->t == VALUE_BOOL) {
+            result->v.b = strcmp(left->v.s, bool2str(right->v.b)) == 0 ? 1 : 0;
+            return result;
+        }
+        if (right->t == VALUE_INT) {
+            result->v.b  = strcmp(left->v.s, int2str(right->v.i)) == 0 ? 1 : 0;
+            return result;
+        }
+        if (right->t == VALUE_DOUBLE) {
+            result->v.b  = strcmp(left->v.s, double2str(right->v.d)) == 0 ? 1 : 0;
+            return result;
+        }
+        if (right->t == VALUE_CHAR) {
+            result->v.b  = strcmp(left->v.s, char2str(right->v.c)) == 0 ? 1 : 0;
+            return result;
+        }
+        if (right->t == VALUE_STRING) {
+            result->v.b = strcmp(left->v.s, right->v.s) == 0 ? 1 : 0;
+            return result;
+        }
+        break;
+    default:
+        break;
+    }
+    yyerror("> tipos incompatibles");
+    return result;
+}
+
+lat_value *
+eval_node_ge(lat_value *left, lat_value *right)
+{
+    lat_value *result = malloc(sizeof(lat_value));
+    result->t = VALUE_BOOL;
+    switch (left->t) {
+    case VALUE_CHAR:
+        if (right->t >= VALUE_INT) {
+            result->v.b = left->v.c >= right->v.i;
+            return result;
+        }
+        if (right->t >= VALUE_STRING) {
+            result->v.b = strcmp(char2str(left->v.c), right->v.s) >= 0 ? 1 : 0;
+            return result;
+        }
+        break;
+    case VALUE_INT:
+        if (right->t >= VALUE_CHAR) {
+            result->v.b = left->v.i >= right->v.c;
+            return result;
+        }
+        if (right->t >= VALUE_INT) {
+            result->v.b = left->v.i >= right->v.i;
+            return result;
+        }
+        if (right->t >= VALUE_DOUBLE) {
+            result->v.b = left->v.i >= right->v.d;
+            return result;
+        }
+        if (right->t >= VALUE_STRING) {
+            result->v.b = strcmp(int2str(left->v.i), right->v.s) >= 0 ?  1 : 0;
+            return result;
+        }
+        break;
+    case VALUE_DOUBLE :
+        if (right->t >= VALUE_INT) {
+            result->v.b = left->v.i >= right->v.d;
+            return result;
+        }
+        if (right->t >= VALUE_DOUBLE) {
+            result->v.b = left->v.d >= right->v.d;
+            return result;
+        }
+        if (right->t >= VALUE_STRING) {
+            result->v.b = strcmp(double2str(left->v.d), right->v.s) >= 0 ? 1 : 0;
+            return result;
+        }
+        break;
+    case VALUE_STRING:
+        if (right->t >= VALUE_INT) {
+            result->v.b  = strcmp(left->v.s, int2str(right->v.i)) >= 0 ? 1 : 0;
+            return result;
+        }
+        if (right->t >= VALUE_DOUBLE) {
+            result->v.b  = strcmp(left->v.s, double2str(right->v.d)) >= 0 ? 1 : 0;
+            return result;
+        }
+        if (right->t >= VALUE_CHAR) {
+            result->v.b  = strcmp(left->v.s, char2str(right->v.c)) >= 0 ? 1 : 0;
+            return result;
+        }
+        if (right->t >= VALUE_STRING) {
+            result->v.b = strcmp(left->v.s, right->v.s) >= 0 ? 1 : 0;
+            return result;
+        }
+        break;
+    default:
+        break;
+    }
+    yyerror("> tipos incompatibles");
+    return result;
+}
+
+lat_value *
+eval_node_le(lat_value *left, lat_value *right)
+{
+    lat_value *result = malloc(sizeof(lat_value));
+    result->t = VALUE_BOOL;
+    switch (left->t) {
+    case VALUE_CHAR:
+        if (right->t <= VALUE_INT) {
+            result->v.b = left->v.c <= right->v.i;
+            return result;
+        }
+        if (right->t <= VALUE_STRING) {
+            result->v.b = strcmp(char2str(left->v.c), right->v.s) <= 0 ? 1 : 0;
+            return result;
+        }
+        break;
+    case VALUE_INT:
+        if (right->t <= VALUE_CHAR) {
+            result->v.b = left->v.i <= right->v.c;
+            return result;
+        }
+        if (right->t <= VALUE_INT) {
+            result->v.b = left->v.i <= right->v.i;
+            return result;
+        }
+        if (right->t <= VALUE_DOUBLE) {
+            result->v.b = left->v.i <= right->v.d;
+            return result;
+        }
+        if (right->t <= VALUE_STRING) {
+            result->v.b = strcmp(int2str(left->v.i), right->v.s) <= 0 ?  1 : 0;
+            return result;
+        }
+        break;
+    case VALUE_DOUBLE :
+        if (right->t <= VALUE_INT) {
+            result->v.b = left->v.i <= right->v.d;
+            return result;
+        }
+        if (right->t <= VALUE_DOUBLE) {
+            result->v.b = left->v.d <= right->v.d;
+            return result;
+        }
+        if (right->t <= VALUE_STRING) {
+            result->v.b = strcmp(double2str(left->v.d), right->v.s) <= 0 ? 1 : 0;
+            return result;
+        }
+        break;
+    case VALUE_STRING:
+        if (right->t <= VALUE_INT) {
+            result->v.b  = strcmp(left->v.s, int2str(right->v.i)) <= 0 ? 1 : 0;
+            return result;
+        }
+        if (right->t <= VALUE_DOUBLE) {
+            result->v.b  = strcmp(left->v.s, double2str(right->v.d)) <= 0 ? 1 : 0;
+            return result;
+        }
+        if (right->t <= VALUE_CHAR) {
+            result->v.b  = strcmp(left->v.s, char2str(right->v.c)) <= 0 ? 1 : 0;
+            return result;
+        }
+        if (right->t <= VALUE_STRING) {
+            result->v.b = strcmp(left->v.s, right->v.s) <= 0 ? 1 : 0;
+            return result;
+        }
+        break;
+    default:
+        break;
+    }
+    yyerror("> tipos incompatibles");
+    return result;
+}
+
+lat_value *
+eval(ast *a)
 {
     double v;
-    if(!a) {
-        yyerror("eval es nulo\n");
-        return NULL;
-    }
     lat_value *val = malloc(sizeof(lat_value));
-    lat_value *arg1 = malloc(sizeof(lat_value));
-    lat_value *arg2 = malloc(sizeof(lat_value));
-    lat_value *cond = malloc(sizeof(lat_value));
-    switch(a->nodetype) {
+    if (!a) {
+        yyerror("eval es nulo\n");
+        return val;
+    }
+    switch (a->nodetype) {
     /* constant */
     case NODE_BOOLEAN:
     case NODE_CHAR:
@@ -398,561 +1209,109 @@ lat_value* eval(struct ast *a)
     /* name reference */
     case NODE_SYMBOL:
         //printf("%s\n", "NODE_SYMBOL");
-        if(((struct symref *)a)->s->value == NULL) {
+        if (((symref *)a)->s->value == NULL) {
             yyerror("variable sin definir");
         } else {
-            val = ((struct symref *)a)->s->value;
+            val = ((symref *)a)->s->value;
         }
         return val;
         break;
     /* assignment */
     case NODE_ASSIGMENT:
         //printf("%s\n", "NODE_ASSIGMENT");
-        val = eval(((struct symasgn *)a)->v);
-        ((struct symasgn *)a)->s->value = val;
+        val = eval(((symasgn *)a)->v);
+        ((symasgn *)a)->s->value = val;
+        return val;
+        break;
+    case NODE_UNARY_MINUS:
+        val = eval_node_unary_minus(eval(a->l));
         return val;
         break;
     /* expressions */
     case NODE_ADD:
-        arg1 = eval(a->l);
-        arg2 = eval(a->r);
-        switch (arg1->t) {
-            case VALUE_BOOL:
-                if (arg2->t == VALUE_STRING)
-                {
-                    val->t = VALUE_STRING;
-                    val->v.s = concat(bool2str(arg1->v.b), arg2->v.s);
-                    return val;
-                }
-                yyerror("+ tipos incompatibles");
-                break;
-            case VALUE_INT:
-                if (arg2->t == VALUE_INT)
-                {
-                    val->t = VALUE_INT;
-                    val->v.i  = arg1->v.i + arg2->v.i;
-                    return val;
-                }
-                if (arg2->t == VALUE_DOUBLE)
-                {
-                    val->t = VALUE_DOUBLE;
-                    val->v.d  = arg1->v.i + arg2->v.d;
-                    return val;
-                }
-                if (arg2->t == VALUE_CHAR)
-                {
-                    val->t = VALUE_CHAR;
-                    val->v.c  = arg1->v.i + arg2->v.c;
-                    return val;
-                }
-                if (arg2->t == VALUE_STRING)
-                {
-                    val->t   = VALUE_STRING;
-                    val->v.s = concat(int2str(arg1->v.i), arg2->v.s);
-                    return val;
-                }
-                break;
-            case VALUE_DOUBLE:
-                if (arg2->t == VALUE_INT)
-                {
-                    val->t = VALUE_DOUBLE;
-                    val->v.d  = arg1->v.d + arg2->v.i;
-                    return val;
-                }
-                if (arg2->t == VALUE_DOUBLE)
-                {
-                    val->t = VALUE_DOUBLE;
-                    val->v.d  = arg1->v.d + arg2->v.d;
-                    return val;
-                }
-                if (arg2->t == VALUE_STRING)
-                {
-                    val->t   = VALUE_STRING;
-                    val->v.s = concat(int2str(arg1->v.d), arg2->v.s);
-                    return val;
-                }
-                yyerror("+ tipos incompatibles");
-                break;
-            case VALUE_CHAR:
-                if (arg2->t == VALUE_INT)
-                {
-                    val->t = VALUE_CHAR;
-                    val->v.c  = arg1->v.c + arg2->v.i;
-                    return val;
-                }
-                if (arg2->t == VALUE_CHAR)
-                {
-                    val->t = VALUE_CHAR;
-                    val->v.c  = arg1->v.c + arg2->v.c;
-                    return val;
-                }
-                if (arg2->t == VALUE_STRING)
-                {
-                    val->t   = VALUE_STRING;
-                    val->v.s = concat(char2str(arg1->v.c), arg2->v.s);
-                    return val;
-                }
-                yyerror("+ tipos incompatibles");
-                break;
-            case VALUE_STRING:
-                if (arg2->t == VALUE_BOOL)
-                {
-                    val->t = VALUE_STRING;
-                    val->v.s = concat(arg1->v.s, bool2str(arg2->v.b));
-                    return val;
-                }
-                if (arg2->t == VALUE_INT)
-                {
-                    val->t = VALUE_STRING;
-                    val->v.s  = concat(arg1->v.s, int2str(arg2->v.i));
-                    return val;
-                }
-                if (arg2->t == VALUE_DOUBLE)
-                {
-                    val->t = VALUE_STRING;
-                    val->v.s  = concat(arg1->v.s, double2str(arg2->v.d));
-                    return val;
-                }
-                if (arg2->t == VALUE_CHAR)
-                {
-                    val->t = VALUE_STRING;
-                    val->v.s  = concat(arg1->v.s, char2str(arg2->v.c));
-                    return val;
-                }
-                if (arg2->t == VALUE_STRING)
-                {
-                    val->t   = VALUE_STRING;
-                    val->v.s = concat(arg1->v.s, arg2->v.s);
-                    return val;
-                }
-                break;
-            default:
-                yyerror("+ tipos incompatibles");
-        }
+        val = eval_node_add(eval(a->l), eval(a->r));
+        return val;
         break;
     case NODE_SUB:
-        arg1 = eval(a->l);
-        arg2 = eval(a->r);
-        switch (arg1->t) {
-            case VALUE_INT:
-                if (arg2->t == VALUE_INT)
-                {
-                    val->t = VALUE_INT;
-                    val->v.i  = arg1->v.i - arg2->v.i;
-                    return val;
-                }
-                if (arg2->t == VALUE_DOUBLE)
-                {
-                    val->t = VALUE_DOUBLE;
-                    val->v.d  = arg1->v.i - arg2->v.d;
-                    return val;
-                }
-                if (arg2->t == VALUE_CHAR)
-                {
-                    val->t = VALUE_CHAR;
-                    val->v.c  = arg1->v.i - arg2->v.c;
-                    return val;
-                }
-                yyerror("- tipos incompatibles");
-                break;
-            case VALUE_DOUBLE:
-                if (arg2->t == VALUE_INT)
-                {
-                    val->t = VALUE_DOUBLE;
-                    val->v.d  = arg1->v.d - arg2->v.i;
-                    return val;
-                }
-                if (arg2->t == VALUE_DOUBLE)
-                {
-                    val->t = VALUE_DOUBLE;
-                    val->v.d  = arg1->v.d - arg2->v.d;
-                    return val;
-                }
-                yyerror("+ tipos incompatibles");
-                break;
-            case VALUE_CHAR:
-                if (arg2->t == VALUE_INT)
-                {
-                    val->t = VALUE_CHAR;
-                    val->v.c  = arg1->v.c - arg2->v.i;
-                    return val;
-                }
-                if (arg2->t == VALUE_CHAR)
-                {
-                    val->t = VALUE_CHAR;
-                    val->v.c  = arg1->v.c - arg2->v.c;
-                    return val;
-                }
-                yyerror("- tipos incompatibles");
-                break;
-            default:
-                yyerror("- tipos incompatibles");
-        }
+        val = eval_node_sub(eval(a->l), eval(a->r));
+        return val;
         break;
     case NODE_MULT:
-        arg1 = eval(a->l);
-        arg2 = eval(a->r);
-        switch (arg1->t) {
-            case VALUE_INT:
-                if (arg2->t == VALUE_INT)
-                {
-                    val->t = VALUE_INT;
-                    val->v.i  = arg1->v.i * arg2->v.i;
-                    return val;
-                }
-                if (arg2->t == VALUE_DOUBLE)
-                {
-                    val->t = VALUE_DOUBLE;
-                    val->v.d  = arg1->v.i * arg2->v.d;
-                    return val;
-                }
-                yyerror("* tipos incompatibles");
-                break;
-            case VALUE_DOUBLE:
-                if (arg2->t == VALUE_INT)
-                {
-                    val->t = VALUE_DOUBLE;
-                    val->v.d  = arg1->v.d * arg2->v.i;
-                    return val;
-                }
-                if (arg2->t == VALUE_DOUBLE)
-                {
-                    val->t = VALUE_DOUBLE;
-                    val->v.d  = arg1->v.d * arg2->v.d;
-                    return val;
-                }
-                yyerror("* tipos incompatibles");
-                break;
-            default:
-                yyerror("* tipos incompatibles");
-        }
+        val = eval_node_mult(eval(a->l), eval(a->r));
+        return val;
         break;
     case NODE_DIV:
-        //printf("%s\n", "NODE_DIV");
-        arg1 = eval(a->l);
-        arg2 = eval(a->r);
-        switch (arg1->t) {
-            case VALUE_INT:
-                if (arg2->t == VALUE_INT)
-                {
-                    val->t = VALUE_INT;
-                    if (arg2->v.i == 0) {
-                        yyerror("/ division por cero");
-                    }else{
-                        val->v.i  = arg1->v.i / arg2->v.i;
-                    }
-                    return val;
-                }
-                if (arg2->t == VALUE_DOUBLE)
-                {
-                    val->t = VALUE_DOUBLE;
-                    if (arg2->v.d == 0) {
-                        yyerror("/ division por cero");
-                    }else{
-                        val->v.d  = arg1->v.i / arg2->v.d;
-                    }
-                    return val;
-                }
-                yyerror("/ tipos incompatibles");
-                break;
-            case VALUE_DOUBLE:
-                if (arg2->t == VALUE_INT)
-                {
-                    val->t = VALUE_DOUBLE;
-                    if (arg2->v.i == 0) {
-                        yyerror("/ division por cero");
-                    }else{
-                        val->v.d  = arg1->v.d / arg2->v.i;
-                    }
-                    return val;
-                }
-                if (arg2->t == VALUE_DOUBLE)
-                {
-                    val->t = VALUE_DOUBLE;
-                    if (arg2->v.d == 0) {
-                        yyerror("/ division por cero");
-                    }else{
-                        val->v.d  = arg1->v.d / arg2->v.d;
-                    }
-                    return val;
-                }
-                yyerror("/ tipos incompatibles");
-                break;
-            default:
-                yyerror("/ tipos incompatibles");
-        }
-        //printf("%s\n", val->v);
+        val = eval_node_div(eval(a->l), eval(a->r));
         return val;
         break;
     case NODE_MOD:
-        arg1 = eval(a->l);
-        arg2 = eval(a->r);
-        switch (arg1->t) {
-            case VALUE_INT:
-                if (arg2->t == VALUE_INT)
-                {
-                    val->t = VALUE_INT;
-                    if (arg2->v.i == 0) {
-                        yyerror("\% division por cero");
-                    }else{
-                        val->v.i  = arg1->v.i % arg2->v.i;
-                    }
-                    return val;
-                }
-                yyerror("/ tipos incompatibles");
-                break;
-            default:
-                yyerror("/ tipos incompatibles");
-        }
+        val = eval_node_mod(eval(a->l), eval(a->r));
+        return val;
         break;
     case NODE_AND:
-        arg1 = eval(a->l);
-        arg2 = eval(a->r);
-        if(arg1->t == VALUE_BOOL && arg2->t == VALUE_BOOL) {
-            val->t = VALUE_BOOL;
-            val->v.b = arg1->v.b && arg2->v.b;
-            return val;
-        }
-        yyerror("&& tipos incompatible");
+        val = eval_node_and(eval(a->l), eval(a->r));
+        return val;
         break;
     case NODE_OR:
-        arg1 = eval(a->l);
-        arg2 = eval(a->r);
-        if(arg1->t == VALUE_BOOL && arg2->t == VALUE_BOOL) {
-            val->t = VALUE_BOOL;
-            val->v.b = arg1->v.b || arg2->v.b;
-            return val;
-        }
-        yyerror("|| tipos incompatible");
+        val = eval_node_or(eval(a->l), eval(a->r));
+        return val;
         break;
-    case NODE_UNARY_MINUS:
-        arg1 = eval(a->l);
-        if (arg1->t == VALUE_INT)
-        {
-            val->t = VALUE_INT;
-            val->v.i = - (arg1->v.i);
-            return val;
-        }
-        if (arg1->t == VALUE_DOUBLE)
-        {
-            val->t = VALUE_DOUBLE;
-            val->v.d  = - (arg1->v.d) ;
-            return val;
-        }
-        yyerror("- tipos incompatible");
+    case NODE_NEG:
+        val = eval_node_neg(eval(a->l));
+        return val;
         break;
     /* comparisons */
     case NODE_GT:
-        arg1 = eval(a->l);
-        arg2 = eval(a->r);
-        val->t = VALUE_BOOL;
-        if (arg1->t == VALUE_BOOL && arg2->t == VALUE_BOOL)
-        {
-            val->v.b = arg1->v.b > arg2->v.b;
-            return val;
-        }
-        if (arg1->t == VALUE_CHAR && arg2->t == VALUE_CHAR)
-        {
-            val->v.b = arg1->v.c > arg2->v.c;
-            return val;
-        }
-        if (arg1->t == VALUE_INT && arg2->t == VALUE_INT)
-        {
-            val->v.b = arg1->v.i > arg2->v.i;
-            return val;
-        }
-        if (arg1->t == VALUE_DOUBLE && arg2->t == VALUE_DOUBLE)
-        {
-            val->v.b = arg1->v.d > arg2->v.d;
-            return val;
-        }
-        if (arg1->t == VALUE_STRING && arg2->t == VALUE_STRING)
-        {
-            val->v.b = arg1->v.s > arg2->v.s;
-            return val;
-        }
-        yyerror("> tipos incompatibles");
+        val = eval_node_gt(eval(a->l), eval(a->r));
+        return val;
         break;
     case NODE_LT:
-        arg1 = eval(a->l);
-        arg2 = eval(a->r);
-        val->t = VALUE_BOOL;
-        if (arg1->t == VALUE_BOOL && arg2->t == VALUE_BOOL)
-        {
-            val->v.b = arg1->v.b < arg2->v.b;
-            return val;
-        }
-        if (arg1->t == VALUE_CHAR && arg2->t == VALUE_CHAR)
-        {
-            val->v.b = arg1->v.c < arg2->v.c;
-            return val;
-        }
-        if (arg1->t == VALUE_INT && arg2->t == VALUE_INT)
-        {
-            val->v.b = arg1->v.i < arg2->v.i;
-            return val;
-        }
-        if (arg1->t == VALUE_DOUBLE && arg2->t == VALUE_DOUBLE)
-        {
-            val->v.b = arg1->v.d < arg2->v.d;
-            return val;
-        }
-        if (arg1->t == VALUE_STRING && arg2->t == VALUE_STRING)
-        {
-            val->v.b = arg1->v.s < arg2->v.s;
-            return val;
-        }
-        yyerror("< tipos incompatibles");
+        val = eval_node_lt(eval(a->l), eval(a->r));
+        return val;
         break;
     case NODE_NEQ:
-        arg1 = eval(a->l);
-        arg2 = eval(a->r);
-        val->t = VALUE_BOOL;
-        if (arg1->t == VALUE_BOOL && arg2->t == VALUE_BOOL)
-        {
-            val->v.b = arg1->v.b != arg2->v.b;
-            return val;
-        }
-        if (arg1->t == VALUE_CHAR && arg2->t == VALUE_CHAR)
-        {
-            val->v.b = arg1->v.c != arg2->v.c;
-            return val;
-        }
-        if (arg1->t == VALUE_INT && arg2->t == VALUE_INT)
-        {
-            val->v.b = arg1->v.i != arg2->v.i;
-            return val;
-        }
-        if (arg1->t == VALUE_DOUBLE && arg2->t == VALUE_DOUBLE)
-        {
-            val->v.b = arg1->v.d != arg2->v.d;
-            return val;
-        }
-        if (arg1->t == VALUE_STRING && arg2->t == VALUE_STRING)
-        {
-            val->v.b = arg1->v.s != arg2->v.s;
-            return val;
-        }
-        yyerror("!= tipos incompatibles");
+        val = eval_node_neq(eval(a->l), eval(a->r));
+        return val;
         break;
     case NODE_EQ:
-        arg1 = eval(a->l);
-        arg2 = eval(a->r);
-        val->t = VALUE_BOOL;
-        if (arg1->t == VALUE_BOOL && arg2->t == VALUE_BOOL)
-        {
-            val->v.b = arg1->v.b == arg2->v.b;
-            return val;
-        }
-        if (arg1->t == VALUE_CHAR && arg2->t == VALUE_CHAR)
-        {
-            val->v.b = arg1->v.c == arg2->v.c;
-            return val;
-        }
-        if (arg1->t == VALUE_INT && arg2->t == VALUE_INT)
-        {
-            val->v.b = arg1->v.i == arg2->v.i;
-            return val;
-        }
-        if (arg1->t == VALUE_DOUBLE && arg2->t == VALUE_DOUBLE)
-        {
-            val->v.b = arg1->v.d == arg2->v.d;
-            return val;
-        }
-        if (arg1->t == VALUE_STRING && arg2->t == VALUE_STRING)
-        {
-            val->v.b = arg1->v.s == arg2->v.s;
-            return val;
-        }
-        yyerror("== tipos incompatibles");
+        val = eval_node_eq(eval(a->l), eval(a->r));
+        return val;
         break;
     case NODE_GE:
-        arg1 = eval(a->l);
-        arg2 = eval(a->r);
-        val->t = VALUE_BOOL;
-        if (arg1->t == VALUE_BOOL && arg2->t == VALUE_BOOL)
-        {
-            val->v.b = arg1->v.b >= arg2->v.b;
-            return val;
-        }
-        if (arg1->t == VALUE_CHAR && arg2->t == VALUE_CHAR)
-        {
-            val->v.b = arg1->v.c >= arg2->v.c;
-            return val;
-        }
-        if (arg1->t == VALUE_INT && arg2->t == VALUE_INT)
-        {
-            val->v.b = arg1->v.i >= arg2->v.i;
-            return val;
-        }
-        if (arg1->t == VALUE_DOUBLE && arg2->t == VALUE_DOUBLE)
-        {
-            val->v.b = arg1->v.d >= arg2->v.d;
-            return val;
-        }
-        if (arg1->t == VALUE_STRING && arg2->t == VALUE_STRING)
-        {
-            val->v.b = arg1->v.s >= arg2->v.s;
-            return val;
-        }
-        yyerror(">= tipos incompatibles");
+        val = eval_node_ge(eval(a->l), eval(a->r));
+        return val;
         break;
     case NODE_LE:
-        arg1 = eval(a->l);
-        arg2 = eval(a->r);
-        val->t = VALUE_BOOL;
-        if (arg1->t == VALUE_BOOL && arg2->t == VALUE_BOOL)
-        {
-            val->v.b = arg1->v.b <= arg2->v.b;
-            return val;
-        }
-        if (arg1->t == VALUE_CHAR && arg2->t == VALUE_CHAR)
-        {
-            val->v.b = arg1->v.c <= arg2->v.c;
-            return val;
-        }
-        if (arg1->t == VALUE_INT && arg2->t == VALUE_INT)
-        {
-            val->v.b = arg1->v.i <= arg2->v.i;
-            return val;
-        }
-        if (arg1->t == VALUE_DOUBLE && arg2->t == VALUE_DOUBLE)
-        {
-            val->v.b = arg1->v.d <= arg2->v.d;
-            return val;
-        }
-        if (arg1->t == VALUE_STRING && arg2->t == VALUE_STRING)
-        {
-            val->v.b = arg1->v.s <= arg2->v.s;
-            return val;
-        }
-        yyerror("<= tipos incompatibles");
+        val = eval_node_le(eval(a->l), eval(a->r));
+        return val;
         break;
     /* control flow */
-    /* null expressions allowed in the grammar, so check for them */
     /* if/then/else */
+    /* null expressions allowed in the grammar, so check for them */
     case NODE_IF:
-        cond = eval(((struct flow *)a)->cond);
-        if(cond->v.b != 0) {
-            val = eval(((struct flow *)a)->tl);
+        if ((eval(((flow *)a)->cond))->v.b != 0) {
+            if (((flow *)a)->tl != NULL) {
+                eval(((flow *)a)->tl);
+            }
         } else {
-            val = eval(((struct flow *)a)->el);
+            if (((flow *)a)->el != NULL) {
+                eval(((flow *)a)->el);
+            }
         }
         return val;
-        free(cond);
         break;
     /* while */
     case NODE_WHILE:
-        while((eval(((struct flow *)a)->cond))->v.b != 0) {
-            val = eval(((struct flow *)a)->tl);
+        while ((eval(((flow *)a)->cond))->v.b != 0) {
+            eval(((flow *)a)->tl);
         }
         return val;
         break;
     /* do */
     case NODE_DO:
         do {
-            val = eval(((struct flow *)a)->tl);
-        } while ((eval(((struct flow *)a)->cond))->v.b != 0);
+            eval(((flow *)a)->tl);
+        } while ((eval(((flow *)a)->cond))->v.b != 0);
         return val;
         break;
     /* list of statements */
@@ -963,23 +1322,25 @@ lat_value* eval(struct ast *a)
         break;
     case NODE_BUILTIN_FUNCTION:
         /*printf("%s\n", "case NODE_BUILTIN_FUNCTION");*/
-        v = callbuiltin((struct fncall *)a);
+        v = callbuiltin((fncall *)a);
         break;
     case NODE_USER_FUNCTION_CALL:
-        v = calluser((struct ufncall *)a);
+        v = calluser((ufncall *)a);
         break;
     default:
         /*v = 0;*/
-        printf("error interno: nodo incorrecto %i\n", a->nodetype );
+        printf("error interno: nodo incorrecto %i\n", a->nodetype);
         break;
     }
     return val;
 }
 
-void imprimir(lat_value *val)
+void
+imprimir(lat_value *val)
 {
-    if(val != NULL) {
-        switch(val->t) {
+    //printf("%s\n", "imprimir");
+    if (val != NULL) {
+        switch (val->t) {
         case VALUE_BOOL:
             printf("%s\n", bool2str(val->v.b));
             break;
@@ -999,78 +1360,74 @@ void imprimir(lat_value *val)
     }
 }
 
-static double callbuiltin(struct fncall *f)
+static double
+callbuiltin(fncall *f)
 {
     double v = 0;
-    switch(f->functype) {
+    //printf("%s-functype%i\n", "callbuiltin", f->functype);
+    switch (f->functype) {
     case B_sqrt:
         return sqrt(v);
-        break;
     case B_exp:
         return exp(v);
-        break;
     case B_log:
         return log(v);
-        break;
-    case B_print:
-        {
-            lat_value *val = malloc(sizeof(lat_value));
-            val =  eval(f->l);
-            imprimir(val);
-            return v;
-        }
-        break;
+    case B_print: {
+        lat_value *val;
+        val =  eval(f->l);
+        imprimir(val);
+    }
+    return v;
     default:
         yyerror("definicion de funcion desconocida\n");
-        return 0.0;
     }
     return v;
 }
 
 /* define a function */
 void
-dodef(struct symbol *name, struct symlist *syms, struct ast *func)
+dodef(symbol *name, symlist *syms, ast *func)
 {
-    if(name->syms) symlistfree(name->syms);
-    if(name->func) treefree(name->func);
+    if (name->syms) symlistfree(name->syms);
+    if (name->func) treefree(name->func);
     name->syms = syms;
     name->func = func;
 }
 
 static double
-calluser(struct ufncall *f)
+calluser(ufncall *f)
 {
-    struct symbol *fn = f->s; /* function name */
-    struct symlist *sl; /* dummy arguments */
-    struct ast *args = f->l; /* actual arguments */
+    symbol *fn = f->s; /* function name */
+    symlist *sl; /* dummy arguments */
+    ast *args = f->l; /* actual arguments */
     double *oldval, *newval; /* saved arg values */
     double v;
     int nargs;
     int i;
-    if(!fn->func) {
+    if (!fn->func) {
         yyerror("llamada a funcion indefinida\n");
         return 0.0;
     }
     /* count the arguments */
     sl = fn->syms;
-    for(nargs = 0; sl; sl = sl->next)
+    for (nargs = 0; sl; sl = sl->next)
         nargs++;
     /* prepare to save them */
     oldval = (double *)malloc(nargs * sizeof(double));
     newval = (double *)malloc(nargs * sizeof(double));
-    if(!oldval || !newval) {
+    if (!oldval || !newval) {
         yyerror("sin espacio en %s", fn->name);
         return 0.0;
     }
     /* evaluate the arguments */
-    for(i = 0; i < nargs; i++) {
-        if(!args) {
+    for (i = 0; i < nargs; i++) {
+        if (!args) {
             yyerror("muy pocos argumentos en llamada a funcion %s", fn->name);
             free(oldval);
             free(newval);
             return 0.0;
         }
-        if(args->nodetype == NODE_LIST_SYMBOLS) { /* if this is a list node */
+        if (args->nodetype == NODE_LIST_SYMBOLS) { /* if this is a list node */
             /*newval[i] = eval(args->l);*/
             args = args->r;
         } else { /* if it's the end of the list */
@@ -1080,8 +1437,8 @@ calluser(struct ufncall *f)
     }
     /* save old values of dummies, assign new ones */
     sl = fn->syms;
-    for(i = 0; i < nargs; i++) {
-        struct symbol *s = sl->sym;
+    for (i = 0; i < nargs; i++) {
+        symbol *s = sl->sym;
         //TODO: Pendiente
         /*oldval[i] = s->value.v.d;*/
         /*s->valuev.d = newval[i];*/
@@ -1092,8 +1449,8 @@ calluser(struct ufncall *f)
     /*v = eval(fn->func);*/
     /* put the real values of the dummies back */
     sl = fn->syms;
-    for(i = 0; i < nargs; i++) {
-        struct symbol *s = sl->sym;
+    for (i = 0; i < nargs; i++) {
+        symbol *s = sl->sym;
         //TODO: Pendiente
         /*s->value = oldval[i];*/
         sl = sl->next;
@@ -1101,3 +1458,4 @@ calluser(struct ufncall *f)
     free(oldval);
     return v;
 }
+

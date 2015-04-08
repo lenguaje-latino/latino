@@ -41,6 +41,7 @@
 "=="    { return OP_EQ; }
 "&&"    { return OP_AND; }
 "||"    { return OP_OR; }
+"!"     { return OP_NEG; }
 
  /* keywords */
 "si"        { return KEYWORD_IF; }
