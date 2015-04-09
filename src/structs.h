@@ -4,6 +4,7 @@
 
 #include "latino.h"
 
+/* data types */
 typedef enum {
     VALUE_NULL = 0,
     VALUE_BOOL = 1,
@@ -13,8 +14,10 @@ typedef enum {
     VALUE_STRING = 5
 } lat_value_type;
 
+/* string */
 typedef unsigned char lat_string;
 
+/* values for data */
 typedef struct {
     lat_value_type t;
     union {
@@ -33,6 +36,7 @@ typedef enum {
     B_print = 3
 } bifs;
 
+/* node types in the abstract syntax tree */
 typedef enum {
     NODE_ADD = 0,
     NODE_SUB = 1,
@@ -63,8 +67,13 @@ typedef enum {
     NODE_BOOLEAN = 26,
     NODE_AND = 27,
     NODE_OR = 28,
-    NODE_NEG = 29
+    NODE_NEG = 29,
+    NODE_SWITCH  = 30,
+    NODE_CASE = 31,
+    NODE_DEFAULT = 32,
+    NODE_CASES = 33
 } node_type;
+
 
 /* nodes in the abstract syntax tree */
 /* all have common initial nodetype */
@@ -74,31 +83,30 @@ typedef struct ast {
     struct ast *r;
 } ast;
 
-typedef struct {     /* built-in function */
-    node_type nodetype;   /* type C */
+/* built-in function */
+typedef struct {
+    node_type nodetype;
     struct ast *l;
     bifs functype;
 } fncall ;
 
 /* symbol table */
-typedef struct { /* a variable name */
-    char *name;
-    lat_value *value;
-    struct ast *func;   /* stmt for the function */
-    struct symlist *syms;   /* list of dummy args */
+typedef struct {
+    char *name; /* a variable name */
+    lat_value *value; /* value's variable*/
+    struct ast *func; /* stmt for the function */
+    struct symlist *syms; /* list of dummy args */
 } symbol;
 
 /* simple symtab of fixed size */
 #define NHASH 9997
 symbol symtab[NHASH];
 
-
 /* list of symbols, for an argument list */
 typedef struct symlist {
     symbol *sym;
     struct symlist *next;
 } symlist;
-
 
 typedef struct {
     node_type nodetype;
@@ -107,31 +115,33 @@ typedef struct {
 } ufncall ;
 
 typedef struct {
-    node_type nodetype;   /* type I or W */
+    node_type nodetype;
     struct ast *cond;   /* condition */
     struct ast *tl; /* then branch or do list */
-    struct ast *el;
+    struct ast *el; /* else branch */
 } flow ;
 
+/* node values */
 typedef struct {
-    node_type nodetype;   /* type K */
+    node_type nodetype;
     lat_value *value;
 } node;
 
+/* symbol reference */
 typedef struct {
-    node_type nodetype;   /* type N */
+    node_type nodetype;
     symbol *s;
 } symref ;
 
+/* symbol assignment */
 typedef struct {
-    node_type nodetype;   /* type = */
+    node_type nodetype;
     symbol *s;
     struct ast *v;
 } symasgn;
 
 /* build AST */
 ast *newast(node_type nodetype, ast *l, ast *r);
-/*struct ast *newcmp(int cmptype, struct ast *l, struct ast *r);*/
 ast *newfunc(int functype, ast *l);
 ast *newcall(symbol *s, ast *l);
 ast *newref(symbol *s);
@@ -140,6 +150,7 @@ ast *newnum(double d);
 ast *newint(int i);
 ast *newstr(lat_string *, size_t);
 ast *newflow(node_type nodetype, ast *cond, ast *tl, ast *tr);
+
 static double callbuiltin(fncall *);
 static double calluser(ufncall *);
 
@@ -148,10 +159,11 @@ void symlistfree(symlist *sl);
 symbol *lookup(char *, lat_value *);
 
 /* define a function */
-void
-dodef(symbol *name, symlist *syms, ast *stmts);
+void dodef(symbol *name, symlist *syms, ast *stmts);
 
 /* delete and free an AST */
 void treefree(ast *);
+
 /* evaluate an AST */
 lat_value *eval(ast *);
+

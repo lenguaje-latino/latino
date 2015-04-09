@@ -289,6 +289,10 @@ treefree(ast *a)
     case NODE_IF:
     case NODE_DO:
     case NODE_WHILE:
+    case NODE_SWITCH:
+    case NODE_CASES:
+    case NODE_CASE:
+    case NODE_DEFAULT:
         free(((flow *)a)->cond);
         if (((flow *)a)->tl) treefree(((flow *)a)->tl);
         if (((flow *)a)->el) treefree(((flow *)a)->el);
@@ -872,6 +876,10 @@ eval_node_neq(lat_value *left, lat_value *right)
         }
         break;
     case VALUE_CHAR:
+        if (right->t == VALUE_CHAR) {
+            result->v.b = left->v.c == right->v.c;
+            return result;
+        }
         if (right->t == VALUE_INT) {
             result->v.b = left->v.c != right->v.i;
             return result;
@@ -967,6 +975,10 @@ eval_node_eq(lat_value *left, lat_value *right)
         }
         break;
     case VALUE_CHAR:
+        if (right->t == VALUE_CHAR) {
+            result->v.b = left->v.c == right->v.c;
+            return result;
+        }
         if (right->t == VALUE_INT) {
             result->v.b = left->v.c == right->v.i;
             return result;
@@ -1187,6 +1199,7 @@ eval_node_le(lat_value *left, lat_value *right)
     return result;
 }
 
+/* evaluar ast */
 lat_value *
 eval(ast *a)
 {
@@ -1314,6 +1327,55 @@ eval(ast *a)
         } while ((eval(((flow *)a)->cond))->v.b != 0);
         return val;
         break;
+    case NODE_SWITCH:
+        /*printf("%s\n", "NODE_SWITCH");*/
+        val = eval(((flow *)a)->cond);
+        ((flow *)(((flow *)a)->tl))->cond = ((flow *)a)->cond;
+        /* evaluar los casos */
+        val = eval(((flow *)a)->tl);
+        /* si ningun caso se evaluo */
+        if(!val->v.b){
+            /* evaluar default si existe */
+            if((((flow *)a)->el)){
+                val = eval(((flow *)a)->el);
+            }
+        }
+        return val;
+        break;
+    case NODE_CASES:
+        /*printf("%s\n", "NODE_CASES");*/
+        val = eval(((flow *)a)->cond);
+        /* pasa la condicion a los nodos hijos */
+        ((flow *)(((flow *)a)->tl))->cond = ((flow *)a)->cond;
+        ((flow *)(((flow *)a)->el))->cond = ((flow *)a)->cond;
+        /* evaluar caso */
+        val = eval(((flow *)a)->el);
+        if(!val->v.b){
+            /* evaluar otros casos */
+            val = eval(((flow *)a)->tl);
+        }
+        return val;
+        break;
+    case NODE_CASE:
+        /*printf("%s\n", "NODE_CASE");*/
+        val = eval(((flow *)a)->cond);
+        lat_value *val1;
+        /* evaluar valor del caso */
+        val1 = eval(((flow *)a)->tl);
+        /*si el caso es igual a la condicion */
+        if((eval_node_eq(val, val1))->v.b){
+            /* evaluar bloque de codigo */
+            eval(((flow *)a)->el);
+            val1->v.b = 1;
+        }else{
+            val1->v.b = 0;
+        }
+        return val1;
+        break;
+    case NODE_DEFAULT:
+        /*printf("%s\n", "NODE_DEFAULT");*/
+        eval(((flow *)a)->tl);
+        break;
     /* list of statements */
     case NODE_EXPRESSION:
         eval(a->l);
@@ -1329,7 +1391,7 @@ eval(ast *a)
         break;
     default:
         /*v = 0;*/
-        printf("error interno: nodo incorrecto %i\n", a->nodetype);
+        printf("nodo incorrecto %i\n", a->nodetype);
         break;
     }
     return val;

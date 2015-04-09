@@ -14,7 +14,7 @@
     struct lat_string *str; /* string type */
     struct ast *a; /* astract syntax tree */
     struct symbol *s;   /* which symbol */
-    struct symlist *sl;
+    struct symlist *sl; /* symbol list */
 }
 
 /* declare tokens */
@@ -31,6 +31,10 @@
     KEYWORD_ELSE
     KEYWORD_WHILE
     KEYWORD_DO
+    KEYWORD_SWITCH
+    KEYWORD_CASE
+    KEYWORD_BREAK
+    KEYWORD_DEFAULT
     KEYWORD_WHEN
     KEYWORD_FUNCTION
     KEYWORD_FROM
@@ -51,7 +55,7 @@
 
 
 %nonassoc <fn> OP_EQ OP_GE OP_GT OP_LE OP_LT OP_NEQ OP_NEG
-%type <a> exp stmt list explist var value
+%type <a> exp stmt list explist var value cases case default atom_value
 %type <sl> symlist
 
 /*
@@ -86,11 +90,38 @@ stmt:
         $$ = newflow(NODE_WHILE, $3, $5, NULL); }
     | KEYWORD_DO list KEYWORD_WHEN '(' exp ')' {
         $$ = newflow(NODE_DO, $5, $2, NULL); }
+    | KEYWORD_SWITCH '(' value ')' cases KEYWORD_END {
+        $$ = newflow(NODE_SWITCH, $3, $5, NULL); }
+    | KEYWORD_SWITCH '(' value ')' cases default KEYWORD_END {
+        $$ = newflow(NODE_SWITCH, $3, $5, $6); }
     | KEYWORD_FUNCTION TOKEN_IDENTIFIER '(' symlist ')' list KEYWORD_END {
         dodef($2, $4, $6);
     }
     | var
-    /*| exp { double  d = eval($1); printf("=> %lf\n", d); }*/
+    ;
+
+cases:
+     cases case {
+        /*printf("parse cases\n");*/
+        $$ = newflow(NODE_CASES, NULL, $1, $2);
+     }
+     | case {
+            $$ = $1;
+        }
+     ;
+
+case:
+    KEYWORD_CASE atom_value ':' list {
+        /*printf("parse simple case\n");*/
+        $$ = newflow(NODE_CASE, NULL, $2, $4);
+    }
+    ;
+
+default:
+    KEYWORD_DEFAULT ':' list {
+        /*printf("parse default\n");*/
+        $$ = newflow(NODE_DEFAULT, NULL, $3, NULL);
+    }
     ;
 
 list:   /* empty */ { $$ = NULL; }
@@ -102,7 +133,6 @@ list:   /* empty */ { $$ = NULL; }
     }
     ;
 
-    /*| CMP        { $$ = newast($1, NULL, NULL); }*/
 exp: exp OP_GT  exp { $$ = newast(NODE_GT, $1, $3); }
     | exp OP_LT exp { $$ = newast(NODE_LT, $1, $3); }
     | exp OP_GE exp { $$ = newast(NODE_GE, $1, $3); }
@@ -127,11 +157,16 @@ var: TOKEN_IDENTIFIER '=' exp { $$ = newasgn($1, $3); }
     | TOKEN_IDENTIFIER '(' explist ')' { $$ = newcall($1, $3); }
     ;
 
-value: TOKEN_NUMBER { $$ = newnum($1); }
-    | TOKEN_INT { $$ = newint($1); }
-    | TOKEN_IDENTIFIER { $$ = newref($1); }
+value:
+      TOKEN_IDENTIFIER { $$ = newref($1); }
     | KEYWORD_TRUE { $$ = newbool($1); }
     | KEYWORD_FALSE { $$ = newbool($1); }
+    | atom_value { $$ = $1; }
+    ;
+
+atom_value:
+      TOKEN_INT { $$ = newint($1); }
+    | TOKEN_NUMBER { $$ = newnum($1); }
     | TOKEN_CHAR { $$ = $<c>1; }
     | TOKEN_STRING { $$ = $<str>1; }
     ;

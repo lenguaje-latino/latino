@@ -52,23 +52,27 @@
      KEYWORD_ELSE = 268,
      KEYWORD_WHILE = 269,
      KEYWORD_DO = 270,
-     KEYWORD_WHEN = 271,
-     KEYWORD_FUNCTION = 272,
-     KEYWORD_FROM = 273,
-     KEYWORD_TO = 274,
-     KEYWORD_STEP = 275,
-     KEYWORD_BOOL = 276,
-     OP_GT = 277,
-     OP_LT = 278,
-     OP_GE = 279,
-     OP_LE = 280,
-     OP_EQ = 281,
-     OP_NEQ = 282,
-     OP_AND = 283,
-     OP_OR = 284,
-     OP_NEG = 285,
-     UNEG = 286,
-     UMINUS = 287
+     KEYWORD_SWITCH = 271,
+     KEYWORD_CASE = 272,
+     KEYWORD_BREAK = 273,
+     KEYWORD_DEFAULT = 274,
+     KEYWORD_WHEN = 275,
+     KEYWORD_FUNCTION = 276,
+     KEYWORD_FROM = 277,
+     KEYWORD_TO = 278,
+     KEYWORD_STEP = 279,
+     KEYWORD_BOOL = 280,
+     OP_GT = 281,
+     OP_LT = 282,
+     OP_GE = 283,
+     OP_LE = 284,
+     OP_EQ = 285,
+     OP_NEQ = 286,
+     OP_AND = 287,
+     OP_OR = 288,
+     OP_NEG = 289,
+     UNEG = 290,
+     UMINUS = 291
    };
 #endif
 /* Tokens.  */
@@ -85,23 +89,27 @@
 #define KEYWORD_ELSE 268
 #define KEYWORD_WHILE 269
 #define KEYWORD_DO 270
-#define KEYWORD_WHEN 271
-#define KEYWORD_FUNCTION 272
-#define KEYWORD_FROM 273
-#define KEYWORD_TO 274
-#define KEYWORD_STEP 275
-#define KEYWORD_BOOL 276
-#define OP_GT 277
-#define OP_LT 278
-#define OP_GE 279
-#define OP_LE 280
-#define OP_EQ 281
-#define OP_NEQ 282
-#define OP_AND 283
-#define OP_OR 284
-#define OP_NEG 285
-#define UNEG 286
-#define UMINUS 287
+#define KEYWORD_SWITCH 271
+#define KEYWORD_CASE 272
+#define KEYWORD_BREAK 273
+#define KEYWORD_DEFAULT 274
+#define KEYWORD_WHEN 275
+#define KEYWORD_FUNCTION 276
+#define KEYWORD_FROM 277
+#define KEYWORD_TO 278
+#define KEYWORD_STEP 279
+#define KEYWORD_BOOL 280
+#define OP_GT 281
+#define OP_LT 282
+#define OP_GE 283
+#define OP_LE 284
+#define OP_EQ 285
+#define OP_NEQ 286
+#define OP_AND 287
+#define OP_OR 288
+#define OP_NEG 289
+#define UNEG 290
+#define UMINUS 291
 
 
 
@@ -121,12 +129,12 @@ typedef union YYSTYPE
     struct lat_string *str; /* string type */
     struct ast *a; /* astract syntax tree */
     struct symbol *s;   /* which symbol */
-    struct symlist *sl;
+    struct symlist *sl; /* symbol list */
 
 
 
 /* Line 1676 of yacc.c  */
-#line 130 "src/parse.h"
+#line 138 "src/parse.h"
 } YYSTYPE;
 # define YYSTYPE_IS_TRIVIAL 1
 # define yystype YYSTYPE /* obsolescent; will be withdrawn */

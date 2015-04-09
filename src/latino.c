@@ -4,7 +4,7 @@
 #define true 1
 #define false 0
 
-int debug=1;
+int debug = 1;
 
 static FILE *file;
 static char *buffer;
@@ -18,28 +18,27 @@ static int nTokenLength    = 0;
 static int nTokenNextStart = 0;
 
 extern
-int main(int argc, char *argv[]) {
+int main(int argc, char *argv[])
+{
     int i;
-    char *infile=NULL;
-
-    for (i=1; i<argc; i++) {
-        if (  strcmp(argv[i], "-debug") == 0  ) {
+    char *infile = NULL;
+    for (i = 1; i < argc; i++) {
+        if (strcmp(argv[i], "-debug") == 0) {
             printf("Debugging activado\n");
             debug = 1;
-        }
-        else {
+        } else {
             infile = argv[i];
         }
     }
-    if (  infile == NULL  )
+    if (infile == NULL)
         printf("Especifique un archivo\n");
     file = fopen(infile, "r");
-    if (  file == NULL  ) {
+    if (file == NULL) {
         printf("No se pudo abrir el archivo\n");
         return 12;
     }
     buffer = malloc(lMaxBuffer);
-    if (  buffer == NULL  ) {
+    if (buffer == NULL) {
         printf("No se pudo asignar %d bytes de memoria\n", lMaxBuffer);
         fclose(file);
         return 12;
@@ -51,11 +50,12 @@ int main(int argc, char *argv[]) {
 }
 
 extern
-void print_error(char *errorstring, ...) {
+void print_error(char *errorstring, ...)
+{
     static char errmsg[10000];
     va_list args;
-    int start=nTokenStart;
-    int end=start + nTokenLength - 1;
+    int start = nTokenStart;
+    int end = start + nTokenLength - 1;
     int i;
     va_start(args, errorstring);
     vsprintf(errmsg, errorstring, args);
@@ -64,26 +64,27 @@ void print_error(char *errorstring, ...) {
 }
 
 extern
-void dump_row(void) {
-    if (  nRow == 0  ) {
+void dump_row(void)
+{
+    if (nRow == 0) {
         int i;
         fprintf(stdout, "       |");
-        for (i=1; i<71; i++)
-            if (  i % 10 == 0  )
+        for (i = 1; i < 71; i++)
+            if (i % 10 == 0)
                 fprintf(stdout, ":");
-            else if (  i % 5 == 0  )
+            else if (i % 5 == 0)
                 fprintf(stdout, "+");
             else
                 fprintf(stdout, ".");
         fprintf(stdout, "\n");
-    }
-    else {
+    } else {
         fprintf(stdout, "%6d |%.*s", nRow, lBuffer, buffer);
     }
 }
 
 static
-int get_next_line(void) {
+int get_next_line(void)
+{
     int i;
     char *p;
     nBuffer = 0;
@@ -91,8 +92,8 @@ int get_next_line(void) {
     nTokenNextStart = 1;
     eof = false;
     p = fgets(buffer, lMaxBuffer, file);
-    if (  p == NULL  ) {
-        if (  ferror(file)  )
+    if (p == NULL) {
+        if (ferror(file))
             return -1;
         eof = true;
         return 1;
@@ -104,40 +105,42 @@ int get_next_line(void) {
 }
 
 static
-char dump_char(char c) {
-    if (  isprint(c)  )
+char dump_char(char c)
+{
+    if (isprint(c))
         return c;
     return '@';
 }
 
 extern
-int get_next_char(char *b, int maxBuffer) {
+int get_next_char(char *b, int maxBuffer)
+{
     int frc;
-    if (  eof  )
+    if (eof)
         return 0;
-    while (  nBuffer >= lBuffer  ) {
+    while (nBuffer >= lBuffer) {
         frc = get_next_line();
-        if (  frc != 0  )
+        if (frc != 0)
             return 0;
     }
     b[0] = buffer[nBuffer];
     nBuffer += 1;
     /*if (  debug  )*/
-        /*printf("get_next_char() => '%c'0x%02x at %d\n",*/
-               /*dump_char(b[0]), b[0], nBuffer);*/
-    return b[0]==0?0:1;
+    /*printf("get_next_char() => '%c'0x%02x at %d\n",*/
+    /*dump_char(b[0]), b[0], nBuffer);*/
+    return b[0] == 0 ? 0 : 1;
 }
 
 static
-char *dump_string(char *s) {
+char *dump_string(char *s)
+{
     static char buf[101];
     int i;
     int n = strlen(s);
-    if (  n > 100  )
+    if (n > 100)
         n = 100;
-    for (i=0; i<n; i++)
+    for (i = 0; i < n; i++)
         buf[i] = dump_char(s[i]);
     buf[i] = 0;
     return buf;
 }
-

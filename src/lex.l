@@ -30,6 +30,7 @@
 "(" |
 ")" |
 "," |
+":" |
 "="     { return yytext[0]; }
 
  /* comparison ops, all are CMP token */
@@ -51,6 +52,9 @@
 "hacer"     { return KEYWORD_DO; }
 "cuando"    { return KEYWORD_WHEN; }
 "funcion"   {  return KEYWORD_FUNCTION; }
+"elegir"   {  return KEYWORD_SWITCH; }
+"caso"   {  return KEYWORD_CASE; }
+"defecto"   {  return KEYWORD_DEFAULT; }
 "verdadero" { yylval.b = yytext; return KEYWORD_TRUE; }
 "falso"     { yylval.b = yytext; return KEYWORD_FALSE; }
 

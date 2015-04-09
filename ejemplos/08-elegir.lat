@@ -1,0 +1,70 @@
+#funcion principal()
+c = 'y'
+
+#erro construccion elegir
+#elegir(c)
+#fin
+#TODO: detiene el programa
+
+#error solo default
+#elegir(c)
+#default:
+#     imprimir("default")
+#fin
+#TODO: detiene el programa
+
+## un solo caso
+elegir(c)
+caso 'y':
+     imprimir("c vale y")
+fin
+
+## multiples casos sin opcion defecto
+elegir(c)
+caso 'x':
+    imprimir("c vale x")
+caso 'y':
+    imprimir("c vale y")
+caso 'z':
+    imprimir("c vale z")
+fin
+
+## multiples casos con opcion defecto
+elegir(c)
+caso 'x':
+    imprimir("c vale x")
+caso 'a':
+    imprimir("c vale a")
+caso 'z':
+    imprimir("c vale z")
+defecto:
+    imprimir("default")
+fin
+
+#con opcion defecto enteros
+i = 2
+elegir(i)
+caso 0:
+    imprimir("i vale 0")
+caso 1:
+    imprimir("i vale 1")
+caso 2:
+    imprimir("i vale 2")
+defecto:
+    imprimir("i vale 100")
+fin
+
+#switch con cadenas
+elegir("hola")
+caso 1: 
+     imprimir("1")
+caso "hola":
+     imprimir("hola ")
+     imprimir("mundo")
+caso "dos":
+     imprimir(2)
+fin
+
+#fin
+
+#principal(0)
