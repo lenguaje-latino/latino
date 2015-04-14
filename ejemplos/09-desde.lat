@@ -1,7 +1,23 @@
-i = 10
+i = 0
 desde i hasta 10
     imprimir(i)
 fin
+
+i = 20
+desde i hasta 0
+    imprimir(i)
+fin
+
+i = 2
+desde i hasta 2
+    imprimir(i)
+fin
+
+i = 0
+desde i hasta 20 salto=2
+    imprimir(i)
+fin
+
 #desde i hasta 50 salto = 10
 #    imprimir(i)
 #fin
