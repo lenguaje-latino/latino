@@ -55,6 +55,9 @@
 "elegir"   {  return KEYWORD_SWITCH; }
 "caso"   {  return KEYWORD_CASE; }
 "defecto"   {  return KEYWORD_DEFAULT; }
+"desde"   {  return KEYWORD_FROM; }
+"hasta"   {  return KEYWORD_TO; }
+"salto"   {  return KEYWORD_STEP; }
 "verdadero" { yylval.b = yytext; return KEYWORD_TRUE; }
 "falso"     { yylval.b = yytext; return KEYWORD_FALSE; }
 

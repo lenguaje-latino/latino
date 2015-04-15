@@ -246,6 +246,22 @@ newflow(node_type nodetype, ast *cond, ast *tl, ast *el)
     return (ast *)a;
 }
 
+ast *
+newfor(node_type nodetype, ast *begin, ast *end, ast *stmts, ast *step)
+{
+    node_for *a = malloc(sizeof(node_for));
+    if (!a) {
+        yyerror("sin espacio\n");
+        exit(0);
+    }
+    a->nodetype = nodetype;
+    a->begin = begin;
+    a->end = end;
+    a->stmts = stmts;
+    a->step = step;
+    return (ast *)a;
+}
+
 /* free a tree of ASTs */
 void
 treefree(ast *a)
@@ -296,6 +312,12 @@ treefree(ast *a)
         free(((flow *)a)->cond);
         if (((flow *)a)->tl) treefree(((flow *)a)->tl);
         if (((flow *)a)->el) treefree(((flow *)a)->el);
+        break;
+    case NODE_FROM:
+        free(((node_for *)a)->begin);
+        free(((node_for *)a)->end);
+        if (((node_for *)a)->stmts) treefree(((node_for *)a)->stmts);
+        if (((node_for *)a)->step) treefree(((node_for *)a)->step);
         break;
     case NODE_STRING:
         free(((node *)a)->value->v.s);
@@ -1377,6 +1399,36 @@ eval(ast *a)
         eval(((flow *)a)->tl);
         break;
     /* list of statements */
+    case NODE_FROM:
+        /*printf("%s\n", "NODE_FROM");*/
+        if ((eval(((node_for *)a)->begin))->t == VALUE_INT && (eval(((node_for *)a)->end))->t == VALUE_INT)
+        {
+            int begin = (eval(((node_for *)a)->begin))->v.i;
+            int end   = (eval(((node_for *)a)->end))->v.i;
+            int step = 1;
+            if (((node_for *)a)->step != NULL)
+            {
+                step = (eval(((node_for *)a)->step))->v.i;
+            }
+            if (begin < end)
+            {
+                while (begin < end) {
+                    eval(((node_for *)a)->stmts);
+                    (eval(((node_for *)a)->begin))->v.i += step;
+                    begin += step;
+                }
+            }
+            if (begin > end)
+            {
+                while (begin > end) {
+                    eval(((node_for *)a)->stmts);
+                    (eval(((node_for *)a)->begin))->v.i -= step;
+                    begin -= step;
+                }
+            }
+        }
+        return val;
+        break;
     case NODE_EXPRESSION:
         eval(a->l);
         val = eval(a->r);

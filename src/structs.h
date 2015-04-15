@@ -71,7 +71,8 @@ typedef enum {
     NODE_SWITCH  = 30,
     NODE_CASE = 31,
     NODE_DEFAULT = 32,
-    NODE_CASES = 33
+    NODE_CASES = 33,
+    NODE_FROM = 34
 } node_type;
 
 
@@ -121,6 +122,14 @@ typedef struct {
     struct ast *el; /* else branch */
 } flow ;
 
+typedef struct {
+    node_type nodetype;
+    struct ast *begin;
+    struct ast *end;
+    struct ast *stmts;
+    struct ast *step;
+} node_for ;
+
 /* node values */
 typedef struct {
     node_type nodetype;
@@ -150,6 +159,7 @@ ast *newnum(double d);
 ast *newint(int i);
 ast *newstr(lat_string *, size_t);
 ast *newflow(node_type nodetype, ast *cond, ast *tl, ast *tr);
+ast *newfor(node_type nodetype, ast *begin, ast *end, ast *stmts, ast *step);
 
 static double callbuiltin(fncall *);
 static double calluser(ufncall *);
