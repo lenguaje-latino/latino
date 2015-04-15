@@ -30,10 +30,10 @@ typedef struct {
 } lat_value;
 
 typedef enum {
-    B_sqrt = 0,
+    B_print = 0,
     B_exp   = 1,
     B_log   = 2 ,
-    B_print = 3
+    B_sqrt = 3
 } bifs;
 
 /* node types in the abstract syntax tree */
