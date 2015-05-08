@@ -176,6 +176,7 @@ newstr(lat_string *s, size_t l)
 ast *
 newfunc(int functype, ast *l)
 {
+    /*printf("%s: %i\n", "functype", functype);*/
     /*printf("%s\n", "newfunc");*/
     fncall *a = malloc(sizeof(fncall));
     if (!a) {
@@ -191,7 +192,7 @@ newfunc(int functype, ast *l)
 ast *
 newcall(symbol *s, ast *l)
 {
-    /*printf("%s\n", "newcall");*/
+    /*printf("%s:%s\n", "begin newcall", s->name);*/
     ufncall *a = malloc(sizeof(ufncall));
     if (!a) {
         yyerror("sin espacio\n");
@@ -200,6 +201,7 @@ newcall(symbol *s, ast *l)
     a->nodetype = NODE_USER_FUNCTION;
     a->l = l;
     a->s = s;
+    /*printf("%s:%s\n", "end newcall", s->name);*/
     return (ast *)a;
 }
 
@@ -287,6 +289,8 @@ treefree(ast *a)
     /* one subtree */
     case NODE_NEG:
     case NODE_UNARY_MINUS:
+    case NODE_USER_FUNCTION:
+    case NODE_LIST_SYMBOLS:
     case NODE_USER_FUNCTION_CALL:
     case NODE_BUILTIN_FUNCTION:
         treefree(a->l);
@@ -332,6 +336,7 @@ treefree(ast *a)
 symlist *
 newsymlist(symbol *sym, symlist *next)
 {
+    /*printf("%s\n", "newsymlist");*/
     symlist *sl = malloc(sizeof(symlist));
     if (!sl) {
         yyerror("sin espacio\n");
@@ -1430,6 +1435,7 @@ eval(ast *a)
         return val;
         break;
     case NODE_EXPRESSION:
+        /*printf("%s\n", "case NODE_EXPRESSION");*/
         eval(a->l);
         val = eval(a->r);
         return val;
@@ -1439,10 +1445,22 @@ eval(ast *a)
         v = callbuiltin((fncall *)a);
         break;
     case NODE_USER_FUNCTION_CALL:
-        v = calluser((ufncall *)a);
+        /*printf("%s\n", "case NODE_USER_FUNCTION_CALL");*/
+        val = calluser((ufncall *)a);
+        return val;
+        break;
+    case NODE_USER_FUNCTION:
+        /*printf("%s\n", "case NODE_USER_FUNCTION");*/
+        val = calluser((ufncall *)a);
+        return val;
+        break;
+    case NODE_LIST_SYMBOLS:
+        /*printf("%s\n", "case NODE_LIST_SYMBOLS");*/
+        val = eval(a->l);
+        //val = eval(a->r);
+        return val;
         break;
     default:
-        /*v = 0;*/
         printf("nodo incorrecto %i\n", a->nodetype);
         break;
     }
@@ -1502,50 +1520,54 @@ callbuiltin(fncall *f)
 void
 dodef(symbol *name, symlist *syms, ast *func)
 {
+    /*printf("%s%s\n", "begin dodef:", name->name);*/
     if (name->syms) symlistfree(name->syms);
     if (name->func) treefree(name->func);
     name->syms = syms;
     name->func = func;
+    /*printf("%s%s\n", "end dodef:", name->name);*/
 }
 
-static double
+static lat_value *
 calluser(ufncall *f)
 {
+    /*printf("%s:%s\n", "calluser", f->s->name);*/
     symbol *fn = f->s; /* function name */
     symlist *sl; /* dummy arguments */
     ast *args = f->l; /* actual arguments */
-    double *oldval, *newval; /* saved arg values */
-    double v;
+    lat_value **oldval;
+    lat_value **newval; /* saved arg values */
+    lat_value *v;
     int nargs;
     int i;
     if (!fn->func) {
         yyerror("llamada a funcion indefinida\n");
-        return 0.0;
+        return v;
     }
     /* count the arguments */
     sl = fn->syms;
     for (nargs = 0; sl; sl = sl->next)
         nargs++;
     /* prepare to save them */
-    oldval = (double *)malloc(nargs * sizeof(double));
-    newval = (double *)malloc(nargs * sizeof(double));
+    oldval = malloc(nargs * sizeof(lat_value));
+    newval = malloc(nargs * sizeof(lat_value));
     if (!oldval || !newval) {
         yyerror("sin espacio en %s", fn->name);
-        return 0.0;
+        return v;
     }
     /* evaluate the arguments */
     for (i = 0; i < nargs; i++) {
         if (!args) {
-            yyerror("muy pocos argumentos en llamada a funcion %s", fn->name);
+            yyerror("muy pocos argumentos en llamada a funcion");
             free(oldval);
             free(newval);
-            return 0.0;
+            return v;
         }
         if (args->nodetype == NODE_LIST_SYMBOLS) { /* if this is a list node */
-            /*newval[i] = eval(args->l);*/
+            newval[i] = eval(args->l);
             args = args->r;
         } else { /* if it's the end of the list */
-            /*newval[i] = eval(args);*/
+            newval[i] = eval(args);
             args = NULL;
         }
     }
@@ -1553,20 +1575,18 @@ calluser(ufncall *f)
     sl = fn->syms;
     for (i = 0; i < nargs; i++) {
         symbol *s = sl->sym;
-        //TODO: Pendiente
-        /*oldval[i] = s->value.v.d;*/
-        /*s->valuev.d = newval[i];*/
+        oldval[i] = s->value;
+        s->value = newval[i];
         sl = sl->next;
     }
     free(newval);
     /* evaluate the function */
-    /*v = eval(fn->func);*/
+    v = eval(fn->func);
     /* put the real values of the dummies back */
     sl = fn->syms;
     for (i = 0; i < nargs; i++) {
         symbol *s = sl->sym;
-        //TODO: Pendiente
-        /*s->value = oldval[i];*/
+        s->value = oldval[i];
         sl = sl->next;
     }
     free(oldval);

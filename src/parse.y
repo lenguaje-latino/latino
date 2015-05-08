@@ -76,8 +76,10 @@
 
 program: /* empty */
     | program stmt {
-        eval($2);
-        treefree($2);
+        if($2 != NULL) {
+            eval($2);
+            treefree($2);
+        }
     }
     ;
 
@@ -100,6 +102,7 @@ stmt:
         $$ = newfor(NODE_FROM, $2, $4, $8, $7); }
     | KEYWORD_FUNCTION TOKEN_IDENTIFIER '(' symlist ')' list KEYWORD_END {
         dodef($2, $4, $6);
+        $$ = NULL;
     }
     | var
     ;
@@ -157,8 +160,8 @@ exp: exp OP_GT  exp { $$ = newast(NODE_GT, $1, $3); }
     ;
 
 var: TOKEN_IDENTIFIER '=' exp { $$ = newasgn($1, $3); }
-    | TOKEN_FUNC '(' explist ')' { $$ = newfunc($1, $3); }
     | TOKEN_IDENTIFIER '(' explist ')' { $$ = newcall($1, $3); }
+    | TOKEN_FUNC '(' explist ')' { $$ = newfunc($1, $3); }
     ;
 
 value:
@@ -176,8 +179,8 @@ atom_value:
     ;
 
 explist: /* empty */ { $$ = NULL; }
-    | exp
-    | exp ',' explist { $$ = newast(NODE_EXPRESSION, $1, $3); }
+    | exp { $$ = newast(NODE_LIST_SYMBOLS, $1, NULL); }
+    | exp ',' explist { $$ = newast(NODE_LIST_SYMBOLS, $1, $3); }
     ;
 
 symlist: /* empty */ { $$ = NULL; }
