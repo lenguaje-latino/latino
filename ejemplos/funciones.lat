@@ -1,27 +1,24 @@
 funcion avg(a,b)
-    (a+b)/2.0
+    #imprimir((a+b)/2.0)
+    x = (a+b)/2.0
+    imprimir(x)
 fin
 
 funcion max(a,b)
     si (a >= b)
-        a
+        imprimir(a)
     sino
-        b
+        imprimir(b)
     fin
 fin
 
-a = avg(3, raiz(25))
+avg(3, 5)
 #error muy pocos argumentos
-b = max(3)
-
-#imprime 4
-imprimir(a)
-#imprime 5
-imprimir(b)
+max(3)
 
 funcion fun()
-    #empty function
-    imprimir(1)
+   #empty function
+   #imprimir("funcion indefinida")
 fin
 
 funcion fun_1(a)

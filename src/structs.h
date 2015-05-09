@@ -162,7 +162,7 @@ ast *newflow(node_type nodetype, ast *cond, ast *tl, ast *tr);
 ast *newfor(node_type nodetype, ast *begin, ast *end, ast *stmts, ast *step);
 
 static double callbuiltin(fncall *);
-static double calluser(ufncall *);
+static lat_value *calluser(ufncall *);
 
 symlist *newsymlist(symbol *sym, symlist *next);
 void symlistfree(symlist *sl);
