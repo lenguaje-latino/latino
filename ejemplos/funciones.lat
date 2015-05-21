@@ -1,7 +1,9 @@
 funcion avg(a,b)
     #imprimir((a+b)/2.0)
     x = (a+b)/2.0
-    imprimir(x)
+    #retorno
+    retorno 5
+    imprimir("esto no se debe de imprimir")
 fin
 
 funcion max(a,b)
@@ -12,7 +14,9 @@ funcion max(a,b)
     fin
 fin
 
-avg(3, 5)
+x = avg(3, 5)
+imprimir("x vale:" + x)
+
 #error muy pocos argumentos
 max(3)
 
@@ -23,6 +27,9 @@ fin
 
 funcion fun_1(a)
     imprimir(a)
+    #retorno 0
+    #imprimir(10);
+    #retorno 0
 fin
 
 #TODO: error al llamar a funcion sin parametros

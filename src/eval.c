@@ -283,7 +283,7 @@ treefree(ast *a)
     case NODE_LT:
     case NODE_GE:
     case NODE_LE:
-    case NODE_EXPRESSION:
+    case NODE_BLOCK:
         treefree(a->r);
         break;
     /* one subtree */
@@ -291,7 +291,7 @@ treefree(ast *a)
     case NODE_UNARY_MINUS:
     case NODE_USER_FUNCTION:
     case NODE_LIST_SYMBOLS:
-    case NODE_USER_FUNCTION_CALL:
+    case NODE_RETURN:
     case NODE_BUILTIN_FUNCTION:
         treefree(a->l);
         break;
@@ -1232,6 +1232,7 @@ eval(ast *a)
 {
     double v;
     lat_value *val = malloc(sizeof(lat_value));
+    lat_value *val1 = malloc(sizeof(lat_value));
     if (!a) {
         yyerror("eval es nulo\n");
         return val;
@@ -1258,7 +1259,7 @@ eval(ast *a)
         break;
     /* assignment */
     case NODE_ASSIGMENT:
-        //printf("%s\n", "NODE_ASSIGMENT");
+        /*printf("%s\n", "case NODE_ASSIGMENT");*/
         val = eval(((symasgn *)a)->v);
         ((symasgn *)a)->s->value = val;
         return val;
@@ -1386,7 +1387,6 @@ eval(ast *a)
     case NODE_CASE:
         /*printf("%s\n", "NODE_CASE");*/
         val = eval(((flow *)a)->cond);
-        lat_value *val1;
         /* evaluar valor del caso */
         val1 = eval(((flow *)a)->tl);
         /*si el caso es igual a la condicion */
@@ -1434,20 +1434,23 @@ eval(ast *a)
         }
         return val;
         break;
-    case NODE_EXPRESSION:
-        /*printf("%s\n", "case NODE_EXPRESSION");*/
-        eval(a->l);
-        val = eval(a->r);
+    case NODE_BLOCK:
+        if(a->l){
+            if(a->l->nodetype == NODE_RETURN){
+                val = eval(a->l);
+                return val;
+                break;
+            }
+            eval(a->l);
+        }
+        if(a->r){
+            val = eval(a->r);
+        }
         return val;
         break;
     case NODE_BUILTIN_FUNCTION:
         /*printf("%s\n", "case NODE_BUILTIN_FUNCTION");*/
         v = callbuiltin((fncall *)a);
-        break;
-    case NODE_USER_FUNCTION_CALL:
-        /*printf("%s\n", "case NODE_USER_FUNCTION_CALL");*/
-        val = calluser((ufncall *)a);
-        return val;
         break;
     case NODE_USER_FUNCTION:
         /*printf("%s\n", "case NODE_USER_FUNCTION");*/
@@ -1458,6 +1461,12 @@ eval(ast *a)
         /*printf("%s\n", "case NODE_LIST_SYMBOLS");*/
         val = eval(a->l);
         //val = eval(a->r);
+        return val;
+        break;
+    case NODE_RETURN:
+        if(a->l){
+            val = eval(a->l);
+        }
         return val;
         break;
     default:
@@ -1518,13 +1527,13 @@ callbuiltin(fncall *f)
 
 /* define a function */
 void
-dodef(symbol *name, symlist *syms, ast *func)
+dodef(symbol *s, symlist *syms, ast *func)
 {
-    /*printf("%s%s\n", "begin dodef:", name->name);*/
-    if (name->syms) symlistfree(name->syms);
-    if (name->func) treefree(name->func);
-    name->syms = syms;
-    name->func = func;
+    /*printf("%s%s\n", "begin dodef:", s->name);*/
+    /*if (s->syms) symlistfree(s->syms);*/
+    /*if (s->func) treefree(s->func);*/
+    s->syms = syms;
+    s->func = func;
     /*printf("%s%s\n", "end dodef:", name->name);*/
 }
 

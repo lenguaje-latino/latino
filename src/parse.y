@@ -41,6 +41,7 @@
     KEYWORD_TO
     KEYWORD_STEP
     KEYWORD_BOOL
+    KEYWORD_RETURN
 
 %token
     OP_GT
@@ -55,7 +56,7 @@
 
 
 %nonassoc <fn> OP_EQ OP_GE OP_GT OP_LE OP_LT OP_NEQ OP_NEG
-%type <a> exp stmt list explist var value cases case default atom_value
+%type <a> exp stmt list explist var value cases case default atom_value callfunc jump_stmt
 %type <sl> symlist
 
 /*
@@ -105,6 +106,11 @@ stmt:
         $$ = NULL;
     }
     | var
+    | callfunc
+    | jump_stmt
+    ;
+
+jump_stmt : KEYWORD_RETURN exp { $$ = newast(NODE_RETURN, $2, NULL);}
     ;
 
 cases:
@@ -134,9 +140,9 @@ default:
 list:   /* empty */ { $$ = NULL; }
     | stmt list {
         if ($2 == NULL)
-            $$ = $1;
+            $$ = newast(NODE_BLOCK, $1, NULL);
         else
-            $$ = newast(NODE_EXPRESSION, $1, $2);
+            $$ = newast(NODE_BLOCK, $1, $2);
     }
     ;
 
@@ -159,9 +165,13 @@ exp: exp OP_GT  exp { $$ = newast(NODE_GT, $1, $3); }
     | value
     ;
 
-var: TOKEN_IDENTIFIER '=' exp { $$ = newasgn($1, $3); }
-    | TOKEN_IDENTIFIER '(' explist ')' { $$ = newcall($1, $3); }
+callfunc:
+     TOKEN_IDENTIFIER '(' explist ')' { $$ = newcall($1, $3); }
     | TOKEN_FUNC '(' explist ')' { $$ = newfunc($1, $3); }
+    ;
+
+var: TOKEN_IDENTIFIER '=' exp { $$ = newasgn($1, $3); }
+    | TOKEN_IDENTIFIER '=' callfunc { $$ = newasgn($1, $3); }
     ;
 
 value:
