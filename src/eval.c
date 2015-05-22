@@ -304,6 +304,7 @@ treefree(ast *a)
         break;
     case NODE_ASSIGMENT:
         free(((symasgn *)a)->v);
+        free(((symasgn *)a)->s);
         break;
     /* up to three subtrees */
     case NODE_IF:
