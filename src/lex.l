@@ -60,6 +60,7 @@
 "salto"   {  return KEYWORD_STEP; }
 "verdadero" { yylval.b = yytext; return KEYWORD_TRUE; }
 "falso"     { yylval.b = yytext; return KEYWORD_FALSE; }
+"retorno"     { return KEYWORD_RETURN; }
 
  /*built-in functions */
 "raiz"          { yylval.fn = B_sqrt; return TOKEN_FUNC; }

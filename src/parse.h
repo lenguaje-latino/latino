@@ -62,17 +62,18 @@
      KEYWORD_TO = 278,
      KEYWORD_STEP = 279,
      KEYWORD_BOOL = 280,
-     OP_GT = 281,
-     OP_LT = 282,
-     OP_GE = 283,
-     OP_LE = 284,
-     OP_EQ = 285,
-     OP_NEQ = 286,
-     OP_AND = 287,
-     OP_OR = 288,
-     OP_NEG = 289,
-     UNEG = 290,
-     UMINUS = 291
+     KEYWORD_RETURN = 281,
+     OP_GT = 282,
+     OP_LT = 283,
+     OP_GE = 284,
+     OP_LE = 285,
+     OP_EQ = 286,
+     OP_NEQ = 287,
+     OP_AND = 288,
+     OP_OR = 289,
+     OP_NEG = 290,
+     UNEG = 291,
+     UMINUS = 292
    };
 #endif
 /* Tokens.  */
@@ -99,17 +100,18 @@
 #define KEYWORD_TO 278
 #define KEYWORD_STEP 279
 #define KEYWORD_BOOL 280
-#define OP_GT 281
-#define OP_LT 282
-#define OP_GE 283
-#define OP_LE 284
-#define OP_EQ 285
-#define OP_NEQ 286
-#define OP_AND 287
-#define OP_OR 288
-#define OP_NEG 289
-#define UNEG 290
-#define UMINUS 291
+#define KEYWORD_RETURN 281
+#define OP_GT 282
+#define OP_LT 283
+#define OP_GE 284
+#define OP_LE 285
+#define OP_EQ 286
+#define OP_NEQ 287
+#define OP_AND 288
+#define OP_OR 289
+#define OP_NEG 290
+#define UNEG 291
+#define UMINUS 292
 
 
 
@@ -134,7 +136,7 @@ typedef union YYSTYPE
 
 
 /* Line 1676 of yacc.c  */
-#line 138 "src/parse.h"
+#line 140 "src/parse.h"
 } YYSTYPE;
 # define YYSTYPE_IS_TRIVIAL 1
 # define yystype YYSTYPE /* obsolescent; will be withdrawn */
