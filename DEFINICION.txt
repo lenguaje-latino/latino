@@ -15,13 +15,10 @@ no existe comentarios multilinea.
 
 Variables:
 ---
-Las variables son identificadores asociados a valores. Se declaran indicando el
-tipo de dato que almacenará y su identificador.
-El tipo de dato es opcional cuando se inicializa con un valor la variable.
+Las variables son identificadores asociados a valores.
 
 identificador = valor
-[tipo_dato] identificador = valor
-entero numero = 1
+numero = 1
 
 Un identificador puede:
 * empezar por guión bajo (_) o letras
@@ -43,11 +40,10 @@ cadena      |   string / String
 
 Constantes:
 ---
-Las constantes son valores inmutables, y por tanto no se pueden cambiar.
-Cuando se declara una constante con la palabra clave [constante], también
-se debe asignar el valor forzosamente.
+Cuando se declara una constante, también se debe asignar el valor forzosamente.
+Las costantes se deben de declarar en mayúsculas
 
-constante decimal PI = 3.1416
+PI = 3.1416
 
 Operadores:
 ---
@@ -57,7 +53,7 @@ A continuacion se listan los operadores:
 Categoría               Operadores
 ------------------------------------------------------------
 Aritmético             |   + - * / % (Modulo)
-Lógico                 |   y o no
+Lógico                 |   & |
 Concatenación          |   +
 Incremento, decremento |   ++ --
 Relacional             |   == != < > <= >=
@@ -107,7 +103,7 @@ elegir (opcion)
 fin
 
 desde (for): Hace que una instrucción o bloque de instrucciones se repitan
-desde un valor inicial hasta un final
+desde un valor inicial hasta uno final
 ---
 desde 0 hasta 10
       imprimir(i)
@@ -181,22 +177,15 @@ fin
 
 Se puede regresar el valor con la palabra clave [retorno]
 
-funcion NombreFuncion (tipo_dato variable, tipo_dato variable2)
-    entero i;
+funcion NombreFuncion (variable, variable2)
+    i = 10;
     #codigo
     retorno i
 fin
 
 Se puede sobrecargar un método siempre y cuando los parámetros varien en numero.
-funcion NombreFuncion (tipo_dato variable, tipo_dato variable2, tipo_dato variable3)
-    entero i;
-    #codigo
-    retorno i
-fin
-
-También se le pueden pasar valores por defecto a los parametros especificandoles un valor.
-funcion NombreFuncion (tipo_dato variable, tipo_dato variable2="defecto")
-    entero i;
+funcion NombreFuncion (variable, variable2, variable3)
+    i = 10;
     #codigo
     retorno i
 fin
@@ -215,21 +204,22 @@ las clases pueden contener constructor (inicialización de la clase), propiedade
 
 clase Auto
     #se define una propiedad con la palabra reservada propiedad
-    propiedad cadena Marca
-    propiedad entero NoPuertas
+    propiedad Marca
+    propiedad NoPuertas
 
     #se define un constructor con la palabra reservada constructor
     constructor ()
     fin
 
-    constructor (cadena marca, entero noPuertas)
+    constructor (marca, noPuertas)
         #se asigna el valor de la propiedad con la palabra clave [esta]
         esta.Marca = marca
-        esta.NoPuertas
+        esta.NoPuertas = noPuertas
     fin
 
     #funcion ejemplo
     funcion Encender ()
+        #codigo
         retorno
     fin
 fin
@@ -244,7 +234,6 @@ fin
 
 Palabras reservadas hasta el momento:
 ---
-constante    logico    entero    decimal    caracter    cadena    si    defecto
-verdadero    falso    fin    sino    elegir    caso    desde    hasta    cuando
-salto    mientras    hacer    romper    continuar    clase    propiedad
-constructor    esta    lista    diccionario    retorno    funcion
+si    defecto verdadero    falso    fin    sino    elegir    caso    desde
+hasta    cuando salto    mientras    hacer    romper    continuar    clase
+propiedad    constructor    esta    lista    diccionario    retorno    funcion

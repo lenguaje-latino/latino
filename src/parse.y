@@ -111,6 +111,7 @@ stmt:
     ;
 
 jump_stmt : KEYWORD_RETURN exp { $$ = newast(NODE_RETURN, $2, NULL);}
+    | KEYWORD_RETURN callfunc { $$ = newast(NODE_RETURN, $2, NULL);}
     ;
 
 cases:
@@ -163,15 +164,16 @@ exp: exp OP_GT  exp { $$ = newast(NODE_GT, $1, $3); }
     | '(' exp ')' { $$ = $2; }
     | '-' exp %prec UMINUS { $$ = newast(NODE_UNARY_MINUS, $2, NULL); }
     | value
+    | callfunc
+    ;
+
+var: TOKEN_IDENTIFIER '=' exp { $$ = newasgn($1, $3); }
+    | TOKEN_IDENTIFIER '=' callfunc { $$ = newasgn($1, $3); }
     ;
 
 callfunc:
      TOKEN_IDENTIFIER '(' explist ')' { $$ = newcall($1, $3); }
     | TOKEN_FUNC '(' explist ')' { $$ = newfunc($1, $3); }
-    ;
-
-var: TOKEN_IDENTIFIER '=' exp { $$ = newasgn($1, $3); }
-    | TOKEN_IDENTIFIER '=' callfunc { $$ = newasgn($1, $3); }
     ;
 
 value:

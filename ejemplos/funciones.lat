@@ -36,3 +36,19 @@ fin
 fun(0)
 #TODO: no evia error cuando se pasan mas argumentos
 fun_1(100, 2, 1)
+
+
+funcion fibo(n)
+    si (n < 2)
+        imprimir("n vale: " + n)
+        retorno 1
+    sino
+        imprimir("n vale: " + n)
+        #num1 = fibo(n-1)
+        #num2 = fibo(n-2)
+        retorno fibo(n - 1) + fibo(n - 2)
+    fin
+fin
+
+result = fibo(5)
+imprimir(result)

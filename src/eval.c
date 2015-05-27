@@ -176,7 +176,7 @@ newstr(lat_string *s, size_t l)
 ast *
 newfunc(int functype, ast *l)
 {
-    /*printf("%s: %i\n", "functype", functype);*/
+    /*printf("%s: %i\n", "newfunc", functype);*/
     /*printf("%s\n", "newfunc");*/
     fncall *a = malloc(sizeof(fncall));
     if (!a) {
@@ -186,6 +186,7 @@ newfunc(int functype, ast *l)
     a->nodetype = NODE_BUILTIN_FUNCTION;
     a->l = l;
     a->functype = functype;
+    /*printf("%s:\n", "end newfunc");*/
     return (ast *)a;
 }
 
@@ -1535,7 +1536,7 @@ dodef(symbol *s, symlist *syms, ast *func)
     /*if (s->func) treefree(s->func);*/
     s->syms = syms;
     s->func = func;
-    /*printf("%s%s\n", "end dodef:", name->name);*/
+    /*printf("%s%s\n", "end dodef:", s->name);*/
 }
 
 static lat_value *
@@ -1600,6 +1601,7 @@ calluser(ufncall *f)
         sl = sl->next;
     }
     free(oldval);
+    /*printf("%s:%s\n", "end calluser", f->s->name);*/
     return v;
 }
 
