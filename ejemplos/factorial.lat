@@ -1,0 +1,18 @@
+funcion factorial(n)
+    x = 1
+    i = 2
+    imprimir("i="+i)
+    imprimir("n="+n)
+    desde i hasta n
+        x = x * i
+        imprimir("i = " + i)
+        imprimir("x =" + x)
+    fin
+    retorno x
+fin
+
+#y = factorial(5)
+imprimir(factorial(5))
+
+y = factorial(5)
+imprimir("y = " + y)
