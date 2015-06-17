@@ -176,4 +176,3 @@ void treefree(ast *);
 
 /* evaluate an AST */
 lat_value *eval(ast *);
-

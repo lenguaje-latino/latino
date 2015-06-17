@@ -17,6 +17,8 @@ static int nTokenStart     = 0;
 static int nTokenLength    = 0;
 static int nTokenNextStart = 0;
 
+int yyparse();
+
 extern
 int main(int argc, char *argv[])
 {
@@ -35,28 +37,25 @@ int main(int argc, char *argv[])
     file = fopen(infile, "r");
     if (file == NULL) {
         printf("No se pudo abrir el archivo\n");
-        return 12;
+        return EXIT_FAILURE;
     }
     buffer = malloc(lMaxBuffer);
     if (buffer == NULL) {
         printf("No se pudo asignar %d bytes de memoria\n", lMaxBuffer);
         fclose(file);
-        return 12;
+        return EXIT_FAILURE;
     }
     yyparse();
     free(buffer);
     fclose(file);
-    return 0;
+    return EXIT_SUCCESS;
 }
 
 extern
 void print_error(char *errorstring, ...)
 {
-    static char errmsg[10000];
+    static char errmsg[1024];
     va_list args;
-    int start = nTokenStart;
-    int end = start + nTokenLength - 1;
-    int i;
     va_start(args, errorstring);
     vsprintf(errmsg, errorstring, args);
     va_end(args);
@@ -85,7 +84,6 @@ void dump_row(void)
 static
 int get_next_line(void)
 {
-    int i;
     char *p;
     nBuffer = 0;
     nTokenStart = -1;
@@ -100,7 +98,9 @@ int get_next_line(void)
     }
     nRow += 1;
     lBuffer = strlen(buffer);
-    dump_row();
+    if(debug){
+        dump_row();    
+    }
     return 0;
 }
 

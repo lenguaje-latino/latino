@@ -97,9 +97,9 @@ stmt:
         $$ = newflow(NODE_SWITCH, $3, $5, NULL); }
     | KEYWORD_SWITCH '(' value ')' cases default KEYWORD_END {
         $$ = newflow(NODE_SWITCH, $3, $5, $6); }
-    | KEYWORD_FROM value KEYWORD_TO value list KEYWORD_END {
+    | KEYWORD_FROM exp KEYWORD_TO exp list KEYWORD_END {
         $$ = newfor(NODE_FROM, $2, $4, $5, NULL); }
-    | KEYWORD_FROM value KEYWORD_TO value KEYWORD_STEP '=' value list  KEYWORD_END {
+    | KEYWORD_FROM exp KEYWORD_TO exp KEYWORD_STEP '=' value list  KEYWORD_END {
         $$ = newfor(NODE_FROM, $2, $4, $8, $7); }
     | KEYWORD_FUNCTION TOKEN_IDENTIFIER '(' symlist ')' list KEYWORD_END {
         dodef($2, $4, $6);
@@ -168,7 +168,6 @@ exp: exp OP_GT  exp { $$ = newast(NODE_GT, $1, $3); }
     ;
 
 var: TOKEN_IDENTIFIER '=' exp { $$ = newasgn($1, $3); }
-    | TOKEN_IDENTIFIER '=' callfunc { $$ = newasgn($1, $3); }
     ;
 
 callfunc:
