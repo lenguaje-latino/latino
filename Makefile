@@ -1,7 +1,7 @@
 YACC = bison -y
 LEX = flex
 TARGET = bin/latino
-CFLAGS = -g -Wall
+CFLAGS = -g -Wall -std=c11
 MATH = -lm
 LIBS = -I/usr/include
 CC = gcc

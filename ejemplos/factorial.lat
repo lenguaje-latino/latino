@@ -1,0 +1,26 @@
+funcion factorial(n)
+    i = 2
+    x = 1
+    imprimir("i = " + i)
+    imprimir("x = " + x)
+    desde i hasta (n + 1)
+        x = x * i
+        imprimir("i = " + i)
+        imprimir("x = " + x)
+    fin
+    #mientras (i <= n)
+    #    x = x * i
+    #    i = i + 1
+    #    imprimir("i = " + i)
+    #    imprimir("x = " + x)
+    #fin
+    retorno x
+fin
+
+#y = factorial(5)
+imprimir(factorial(5))
+f3 = 20
+imprimir(f3)
+#f3 = factorial(3)
+#imprimir(f3)
+imprimir("presione una tecla para continuar...")

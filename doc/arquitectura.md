@@ -30,12 +30,12 @@ siguientes archivos dentro de la carpeta src/
 
 __structs.h:__  Contiene las estructuras de datos necesarias para el manejo del lenguaje.
 
-__parse.y:__ Contiene las reglas gramáticales para el analizador gramátical del
+__parse.y:__ Contiene las reglas para el analizador gramátical del
 lenguaje, se utiliza el programa bison para la generación del código en C.
 
 para más información ver http://www.gnu.org/software/bison/manual/bison.html
 
-__lex.l:__ Contiene las reglas lexicas para el analizador lexico del lenguaje, se utiliza el programa flex para la generación del código en C.
+__lex.l:__ Contiene las reglas para el analizador lexico del lenguaje, se utiliza el programa flex para la generación del código en C.
 
 para más información ver http://flex.sourceforge.net/manual/
 

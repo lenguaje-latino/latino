@@ -1,7 +1,7 @@
 YACC = bison -y
 LEX = flex
 TARGET = bin/latino
-CFLAGS = -g -Wall -lm
+CFLAGS = -g -Wall -lm -std=c11
 LIBS =
 CC = gcc
 
@@ -38,8 +38,8 @@ src/eval.o : src/eval.c src/latino.h src/structs.h
 src/lex.o : src/lex.c
 	$(CC) -g -c src/lex.c -o src/lex.o
 
+#mkdir -p $(dir $(TARGET))
 $(TARGET) : src/parse.o src/latino.o src/lex.o src/eval.o
-	mkdir -p $(dir $(TARGET))
 	$(CC) $(CFLAGS) src/parse.o src/latino.o src/lex.o src/eval.o -o $(TARGET) $(LIBS)
 
 clean :
