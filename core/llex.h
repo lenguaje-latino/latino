@@ -29,12 +29,12 @@ enum RESERVED {
     TK_CONSTRUCTOR,
     TK_ESTA,
     /* data types */
-    TK_CHAR,
-    TK_ENTERO,
+    TK_CARACTER,
+    TK_ENTERO, /*280*/
     TK_DECIMAL,
     TK_CADENA,
     TK_IDENT,
-    TK_EOS /*280*/
+    TK_EOS
 };
 
 typedef union {
@@ -51,6 +51,7 @@ typedef struct lex_state {
     lint current; /* current character */
     lint linenumber; /* line counter */
     lint colnumber; /* column counter */
+    lint pos; /* position in buffer */
     lint lastline; /* line of last token consumed */
     token currtoken; /* current token */
     token lookahead; /* look ahead token */
