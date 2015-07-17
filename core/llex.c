@@ -63,6 +63,15 @@ static void next_char(lex_state *ls)
     ls->pos++;
 }
 
+static lchar lookahead_char(lex_state *ls){
+    lint pos = ls->pos+1;
+    if (pos < ls->inputfile->size) {
+        return ls->inputfile->buffer[pos];
+    }else{
+        return EOS;
+    }
+}
+
 static void increment_line(lex_state *ls)
 {
     ++ls->linenumber;
@@ -198,8 +207,6 @@ static void read_string(lex_state *ls, int del, semantic *sem)
 
 static void read_char(lex_state *ls, int del, semantic *sem)
 {
-    lint escape = lfalse;
-    lint len    = 0;
     next_char(ls);
     while (ls->current != del) {
         switch (ls->current) {
@@ -280,20 +287,14 @@ static void read_char(lex_state *ls, int del, semantic *sem)
                 break;
             }
             }
-            escape = ltrue;
             break;
         }
         default: {
             next_char(ls);
-            len++;
             break;
         }
         }
     }
-    if (!escape && len != 1) {
-        lex_error(ls, "Caracter invalido", TK_CARACTER);
-    }
-    next_char(ls);
 }
 
 static lint llex(lex_state *ls, semantic *sem)
@@ -370,5 +371,3 @@ LAT_FUNC lint lex_lookahead(lex_state *ls)
     ls->pos       = pos;
     return ls->lookahead.token;
 }
-
-
