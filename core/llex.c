@@ -42,7 +42,8 @@ LAT_FUNC lex_state *lex_init()
 {
     lex_state *ls  = (lex_state *) lmalloc(sizeof(lex_state));
     ls->linenumber = 1;
-    ls->colnumber  = 0;
+    ls->colnumber  = 1;
+    ls->pos  = 0;
     ls->lastline   = 1;
     ls->inputfile  = (lbuffer *) lmalloc(sizeof(lbuffer));
     ls->inputfile->buffer = NULL;
@@ -52,23 +53,34 @@ LAT_FUNC lex_state *lex_init()
 
 static void next_char(lex_state *ls)
 {
-    ls->colnumber++;
-    if (ls->colnumber < ls->inputfile->size) {
-        ls->current   = ls->inputfile->buffer[ls->colnumber - 1];
-        printf("(%i, %i) = %c\n", ls->linenumber, (ls->colnumber - 1), ls->current);
+    if (ls->pos < ls->inputfile->size) {
+        ls->current   = ls->inputfile->buffer[ls->pos];
+        printf("(%i, %i) = %c\n", ls->linenumber, (ls->colnumber), ls->current);
     } else {
         ls->current = EOS;
+    }
+    ls->colnumber++;
+    ls->pos++;
+}
+
+static lchar lookahead_char(lex_state *ls){
+    lint pos = ls->pos+1;
+    if (pos < ls->inputfile->size) {
+        return ls->inputfile->buffer[pos];
+    }else{
+        return EOS;
     }
 }
 
 static void increment_line(lex_state *ls)
 {
+    ++ls->linenumber;
+    ls->colnumber = 1;
     lint old = ls->current;
     next_char(ls);
     if (is_new_line(ls) && ls->current != old) {
         next_char(ls);
     }
-    ++ls->linenumber;
 }
 
 static lstring new_string(lex_state *ls)
@@ -97,6 +109,194 @@ static lint is_reserved(lstring tk)
     return 0;
 }
 
+static void lex_error(lex_state *ls, lstring msg, lint token)
+{
+    printf("Error de sintaxis linea %d, columna %d: %s , token %i\n", ls->linenumber, ls->colnumber, msg, token);
+}
+
+static void read_string(lex_state *ls, int del, semantic *sem)
+{
+    next_char(ls);
+    while (ls->current != del) {
+        switch (ls->current) {
+        case EOS:
+            lex_error(ls, "Cadena sin terminar", TK_EOS);
+            break;
+        case '\n':
+        case '\r':
+            lex_error(ls, "Cadena sin terminar", TK_CADENA);
+            increment_line(ls);
+            break;
+        case '\\': {
+            lint c;
+            lint i;
+            next_char(ls);
+            switch (ls->current) {
+            case 'a':
+                c = '\a';
+                next_char(ls);
+                break;
+            case 'b':
+                c = '\b';
+                next_char(ls);
+                break;
+            case 'f':
+                c = '\f';
+                next_char(ls);
+                break;
+            case 'n':
+                c = '\n';
+                next_char(ls);
+                break;
+            case 'r':
+                c = '\r';
+                next_char(ls);
+                break;
+            case 't':
+                c = '\t';
+                next_char(ls);
+                break;
+            case 'v':
+                c = '\v';
+                next_char(ls);
+                break;
+            case 'x':
+                next_char(ls);
+                for (i = 0; i < 2; i++) {
+                    c = ls->current;
+                    if (!lisxdigit(c))
+                        lex_error(ls, "Secuencia de escape invalida", TK_CADENA);
+                    next_char(ls);
+                }
+                break;
+            case '\n':
+            case '\r':
+                lex_error(ls, "Cadena sin terminar", TK_CADENA);
+                increment_line(ls);
+                break;
+            case '\\':
+            case '\"':
+            case '\'':
+                c = ls->current;
+                next_char(ls);
+                break;
+            default: {
+                if (!lisdigit(ls->current)) {
+                    lex_error(ls, "Secuencia de escape invalida", TK_CADENA);
+                    next_char(ls);
+                    break;
+                }
+                /* digital escape \ddd */
+                for (i = 0; i < 3; i++) {
+                    c = ls->current;
+                    if (!lisdigit(c))
+                        lex_error(ls, "Secuencia de escape invalida", TK_CADENA);
+                    next_char(ls);
+                }
+                break;
+            }
+            }
+            break;
+        }
+        default:
+            next_char(ls);
+            break;
+        }
+    }
+}
+
+static void read_char(lex_state *ls, int del, semantic *sem)
+{
+    next_char(ls);
+    while (ls->current != del) {
+        switch (ls->current) {
+        case EOS:
+            lex_error(ls, "Caracter sin terminar", TK_EOS);
+            break;
+        case '\n':
+        case '\r':
+            lex_error(ls, "Caracter sin terminar", TK_CARACTER);
+            increment_line(ls);
+            break;
+        case '\\': {
+            lint c;
+            lint i;
+            next_char(ls);
+            switch (ls->current) {
+            case 'a':
+                c = '\a';
+                next_char(ls);
+                break;
+            case 'b':
+                c = '\b';
+                next_char(ls);
+                break;
+            case 'f':
+                c = '\f';
+                next_char(ls);
+                break;
+            case 'n':
+                c = '\n';
+                next_char(ls);
+                break;
+            case 'r':
+                c = '\r';
+                next_char(ls);
+                break;
+            case 't':
+                c = '\t';
+                next_char(ls);
+                break;
+            case 'v':
+                c = '\v';
+                next_char(ls);
+                break;
+            case 'x':
+                next_char(ls);
+                for (i = 0; i < 2; i++) {
+                    c = ls->current;
+                    if (!lisxdigit(c))
+                        lex_error(ls, "Secuencia de escape invalida", TK_CARACTER);
+                    next_char(ls);
+                }
+                break;
+            case '\n':
+            case '\r':
+                lex_error(ls, "Cadena sin terminar", TK_CARACTER);
+                increment_line(ls);
+                break;
+            case '\\':
+            case '\"':
+            case '\'':
+                c = ls->current;
+                next_char(ls);
+                break;
+            default: {
+                if (!lisdigit(ls->current)) {
+                    lex_error(ls, "Secuencia de escape invalida", TK_CARACTER);
+                    next_char(ls);
+                    break;
+                }
+                /* digital escape \ddd */
+                for (i = 0; i < 3; i++) {
+                    c = ls->current;
+                    if (!lisdigit(c))
+                        lex_error(ls, "Secuencia de escape invalida", TK_CARACTER);
+                    next_char(ls);
+                }
+                break;
+            }
+            }
+            break;
+        }
+        default: {
+            next_char(ls);
+            break;
+        }
+        }
+    }
+}
+
 static lint llex(lex_state *ls, semantic *sem)
 {
     for (;;) {
@@ -121,10 +321,16 @@ static lint llex(lex_state *ls, semantic *sem)
         case EOS: {
             return TK_EOS;
         }
-        case '"':{
-             //read_string(ls, ls->current, sem_info);
-             return TK_CADENA;
-         }
+        case '"': {
+            read_string(ls, ls->current, sem);
+            next_char(ls);
+            return TK_CADENA;
+        }
+        case '\'': {
+            read_char(ls, ls->current, sem);
+            next_char(ls);
+            return TK_CARACTER;
+        }
         default: {
             if (lisalpha(ls->current)) {
                 lstring tk = new_string(ls);
@@ -160,8 +366,8 @@ LAT_FUNC void lex_next(lex_state *ls)
 
 LAT_FUNC lint lex_lookahead(lex_state *ls)
 {
-    lint col            = ls->colnumber;
+    lint pos            = ls->pos;
     ls->lookahead.token = llex(ls, &ls->lookahead.sem_info);
-    ls->colnumber       = col;
+    ls->pos       = pos;
     return ls->lookahead.token;
 }

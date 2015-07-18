@@ -24,6 +24,7 @@ typedef char *lstring;
 #define lisalpha(c) (isalpha(c) || c == '_')
 #define lisalnum(c) (isalnum(c))
 #define lisdigit(c) (isdigit(c))
+#define lisxdigit(c) (isxdigit(c))
 
 #define LAT_MAXWORD 32 /* maximum length to string word */
 
