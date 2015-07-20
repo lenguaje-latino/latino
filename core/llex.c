@@ -114,17 +114,19 @@ static void lex_error(lex_state *ls, lstring msg, lint token)
     printf("Error de sintaxis linea %d, columna %d: %s , token %i\n", ls->linenumber, ls->colnumber, msg, token);
 }
 
-static void read_string(lex_state *ls, int del, semantic *sem)
+static lint read_string(lex_state *ls, int del, semantic *sem)
 {
     next_char(ls);
-    while (ls->current != del) {
+    while (ls->current != del && ls->current != EOS) {
         switch (ls->current) {
         case EOS:
             lex_error(ls, "Cadena sin terminar", TK_EOS);
+            return EOS;
             break;
         case '\n':
         case '\r':
             lex_error(ls, "Cadena sin terminar", TK_CADENA);
+            return EOS;
             increment_line(ls);
             break;
         case '\\': {
@@ -208,7 +210,7 @@ static void read_string(lex_state *ls, int del, semantic *sem)
 static void read_char(lex_state *ls, int del, semantic *sem)
 {
     next_char(ls);
-    while (ls->current != del) {
+    while (ls->current != del && ls->current != EOS) {
         switch (ls->current) {
         case EOS:
             lex_error(ls, "Caracter sin terminar", TK_EOS);
@@ -299,6 +301,7 @@ static void read_char(lex_state *ls, int del, semantic *sem)
 
 static lint llex(lex_state *ls, semantic *sem)
 {
+    lint ret;
     for (;;) {
         switch (ls->current) {
         case '\n':
@@ -322,8 +325,9 @@ static lint llex(lex_state *ls, semantic *sem)
             return TK_EOS;
         }
         case '"': {
-            read_string(ls, ls->current, sem);
-            next_char(ls);
+            ret = read_string(ls, ls->current, sem);
+            if(ret != EOS)
+                next_char(ls);
             return TK_CADENA;
         }
         case '\'': {

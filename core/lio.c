@@ -1,6 +1,6 @@
 #include <stdlib.h>
 #include "lio.h"
-#include "mem.h"
+#include "lmem.h"
 
 lstring read_file(lstring path){
     FILE *fp = fopen(path,"r");
