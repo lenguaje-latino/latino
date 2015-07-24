@@ -1,5 +1,4 @@
 #include <stdio.h>
-/* for system function */
 #include <stdlib.h>
 #include "latino.h"
 
@@ -11,7 +10,7 @@ int main(int argc, char *argv[])
     } else {
         path = argv[1];
         printf("escaneando archivo...%s\n", path);
-        lint result = lat_init(path);
+        int result = lat_init(path);
         printf("result=%i\n", result);
     }
     system("pause");

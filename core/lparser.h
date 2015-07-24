@@ -4,5 +4,5 @@
 #include "latino.h"
 #include "lio.h"
 
-void lparser(lstring path);
+int lparser(lstring path);
 #endif /* _LPARSER_H_ */

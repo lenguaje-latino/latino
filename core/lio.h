@@ -10,7 +10,7 @@
 
 typedef struct lbuffer {
     lstring buffer;
-    lint size;
+    long size;
 } lbuffer;
 
 lstring read_file(lstring path);

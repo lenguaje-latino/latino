@@ -5,8 +5,8 @@
   <TabInfoArray Name="TabInfoArray">
     <TabInfo>
       <wxString Value="C:\Users\proman02\Documents\GitHub\latino\src\latino.c" Name="FileName"/>
-      <int Value="84" Name="FirstVisibleLine"/>
-      <int Value="78" Name="CurrentLine"/>
+      <int Value="92" Name="FirstVisibleLine"/>
+      <int Value="89" Name="CurrentLine"/>
       <wxArrayString Name="Bookmarks"/>
       <IntVector Name="CollapsedFolds"/>
     </TabInfo>
@@ -33,22 +33,8 @@
     </TabInfo>
     <TabInfo>
       <wxString Value="C:\Users\proman02\Documents\GitHub\latino\src\structs.h" Name="FileName"/>
-      <int Value="88" Name="FirstVisibleLine"/>
+      <int Value="156" Name="FirstVisibleLine"/>
       <int Value="176" Name="CurrentLine"/>
-      <wxArrayString Name="Bookmarks"/>
-      <IntVector Name="CollapsedFolds"/>
-    </TabInfo>
-    <TabInfo>
-      <wxString Value="C:\Users\proman02\Documents\GitHub\latino\src\ffi.h" Name="FileName"/>
-      <int Value="0" Name="FirstVisibleLine"/>
-      <int Value="1" Name="CurrentLine"/>
-      <wxArrayString Name="Bookmarks"/>
-      <IntVector Name="CollapsedFolds"/>
-    </TabInfo>
-    <TabInfo>
-      <wxString Value="C:\Users\proman02\Documents\GitHub\latino\src\ffi.c" Name="FileName"/>
-      <int Value="0" Name="FirstVisibleLine"/>
-      <int Value="0" Name="CurrentLine"/>
       <wxArrayString Name="Bookmarks"/>
       <IntVector Name="CollapsedFolds"/>
     </TabInfo>
@@ -75,7 +61,7 @@
     </TabInfo>
     <TabInfo>
       <wxString Value="C:\Users\proman02\Documents\GitHub\latino\src\parse.y" Name="FileName"/>
-      <int Value="138" Name="FirstVisibleLine"/>
+      <int Value="174" Name="FirstVisibleLine"/>
       <int Value="195" Name="CurrentLine"/>
       <wxArrayString Name="Bookmarks"/>
       <IntVector Name="CollapsedFolds"/>

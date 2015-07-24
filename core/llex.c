@@ -53,21 +53,22 @@ LAT_FUNC lex_state *lex_init()
 
 static void next_char(lex_state *ls)
 {
+    ls->colnumber++;
+    ls->pos++;
     if (ls->pos < ls->inputfile->size) {
-        ls->current   = ls->inputfile->buffer[ls->pos];
+        ls->current   = buff_get_char(ls, ls->pos);
         printf("(%i, %i) = %c\n", ls->linenumber, (ls->colnumber), ls->current);
     } else {
         ls->current = EOS;
     }
-    ls->colnumber++;
-    ls->pos++;
 }
 
-static lchar lookahead_char(lex_state *ls){
-    lint pos = ls->pos+1;
+static char lookahead_char(lex_state *ls)
+{
+    long pos = ls->pos + 1;
     if (pos < ls->inputfile->size) {
         return ls->inputfile->buffer[pos];
-    }else{
+    } else {
         return EOS;
     }
 }
@@ -76,7 +77,7 @@ static void increment_line(lex_state *ls)
 {
     ++ls->linenumber;
     ls->colnumber = 1;
-    lint old = ls->current;
+    int old = ls->current;
     next_char(ls);
     if (is_new_line(ls) && ls->current != old) {
         next_char(ls);
@@ -85,20 +86,20 @@ static void increment_line(lex_state *ls)
 
 static lstring new_string(lex_state *ls)
 {
-    lchar word[LAT_MAXWORD];
+    char word[LAT_MAXWORD];
     int i   = 0;
     do {
         word[i] = ls->current;
-        i++;
         next_char(ls);
-    } while (lisalnum(ls->current) && i < LAT_MAXWORD);
+        i++;
+    } while (lisalnum(ls->current));
     word[i] = '\0';
-    printf("word=%s\n", word);
     lstring ret = word;
+    printf("new_string=%s\n", word);
     return ret;
 }
 
-static lint is_reserved(lstring tk)
+static int is_reserved(lstring tk)
 {
     unsigned int i;
     for (i = 0; i < NUM_RESERVERD; ++i) {
@@ -109,12 +110,16 @@ static lint is_reserved(lstring tk)
     return 0;
 }
 
-static void lex_error(lex_state *ls, lstring msg, lint token)
-{
-    printf("Error de sintaxis linea %d, columna %d: %s , token %i\n", ls->linenumber, ls->colnumber, msg, token);
+static lstring get_reserved_name(int tk){
+    return keytab[tk].key;
 }
 
-static lint read_string(lex_state *ls, int del, semantic *sem)
+static void lex_error(lex_state *ls, lstring msg, int token)
+{
+    printf("Error de sintaxis linea %d, columna %d: %s. TOKEN (%i)\n", ls->linenumber, ls->colnumber, msg, token);
+}
+
+static int read_string(lex_state *ls, int del, semantic *sem)
 {
     next_char(ls);
     while (ls->current != del && ls->current != EOS) {
@@ -126,12 +131,11 @@ static lint read_string(lex_state *ls, int del, semantic *sem)
         case '\n':
         case '\r':
             lex_error(ls, "Cadena sin terminar", TK_CADENA);
-            return EOS;
             increment_line(ls);
             break;
         case '\\': {
-            lint c;
-            lint i;
+            int c;
+            int i;
             next_char(ls);
             switch (ls->current) {
             case 'a':
@@ -165,8 +169,7 @@ static lint read_string(lex_state *ls, int del, semantic *sem)
             case 'x':
                 next_char(ls);
                 for (i = 0; i < 2; i++) {
-                    c = ls->current;
-                    if (!lisxdigit(c))
+                    if (!lisxdigit(ls->current))
                         lex_error(ls, "Secuencia de escape invalida", TK_CADENA);
                     next_char(ls);
                 }
@@ -190,8 +193,7 @@ static lint read_string(lex_state *ls, int del, semantic *sem)
                 }
                 /* digital escape \ddd */
                 for (i = 0; i < 3; i++) {
-                    c = ls->current;
-                    if (!lisdigit(c))
+                    if (!lisodigit(ls->current))
                         lex_error(ls, "Secuencia de escape invalida", TK_CADENA);
                     next_char(ls);
                 }
@@ -205,15 +207,17 @@ static lint read_string(lex_state *ls, int del, semantic *sem)
             break;
         }
     }
+    return 0;
 }
 
-static void read_char(lex_state *ls, int del, semantic *sem)
+static int read_char(lex_state *ls, int del, semantic *sem)
 {
     next_char(ls);
     while (ls->current != del && ls->current != EOS) {
         switch (ls->current) {
         case EOS:
             lex_error(ls, "Caracter sin terminar", TK_EOS);
+            return EOS;
             break;
         case '\n':
         case '\r':
@@ -221,8 +225,8 @@ static void read_char(lex_state *ls, int del, semantic *sem)
             increment_line(ls);
             break;
         case '\\': {
-            lint c;
-            lint i;
+            int c;
+            int i;
             next_char(ls);
             switch (ls->current) {
             case 'a':
@@ -256,8 +260,7 @@ static void read_char(lex_state *ls, int del, semantic *sem)
             case 'x':
                 next_char(ls);
                 for (i = 0; i < 2; i++) {
-                    c = ls->current;
-                    if (!lisxdigit(c))
+                    if (!lisxdigit(ls->current))
                         lex_error(ls, "Secuencia de escape invalida", TK_CARACTER);
                     next_char(ls);
                 }
@@ -281,8 +284,7 @@ static void read_char(lex_state *ls, int del, semantic *sem)
                 }
                 /* digital escape \ddd */
                 for (i = 0; i < 3; i++) {
-                    c = ls->current;
-                    if (!lisdigit(c))
+                    if (!lisodigit(ls->current))
                         lex_error(ls, "Secuencia de escape invalida", TK_CARACTER);
                     next_char(ls);
                 }
@@ -297,11 +299,42 @@ static void read_char(lex_state *ls, int del, semantic *sem)
         }
         }
     }
+    return 0;
 }
 
-static lint llex(lex_state *ls, semantic *sem)
+static int read_number(lex_state *ls, semantic *sem)
 {
-    lint ret;
+    int ret = TK_ENTERO;
+    int has_point = 0;
+    int c;
+    /* 105 return TK_ENTERO */
+    /* 3.1416 return TK_DECIMAL */
+    /* 3.14.16 return TK_DECIMAL TK_DOT TK_ENTERO */
+    for (;;) {
+        c = lookahead_char(ls);
+        if (lisdigit(c) && has_point == 0) {
+            next_char(ls);
+            continue;
+        }
+        if (c == '.' && has_point == 0) {
+            has_point++;
+            next_char(ls);
+            continue;
+        }
+        if (lisdigit(c) && has_point == 1) {
+            next_char(ls);
+            continue;
+        }
+        break;
+    }
+    if (has_point)
+        ret = TK_DECIMAL;
+    return ret;
+}
+
+static int llex(lex_state *ls, semantic *sem)
+{
+    int ret;
     for (;;) {
         switch (ls->current) {
         case '\n':
@@ -326,31 +359,93 @@ static lint llex(lex_state *ls, semantic *sem)
         }
         case '"': {
             ret = read_string(ls, ls->current, sem);
-            if(ret != EOS)
+            if (ret != EOS)
                 next_char(ls);
             return TK_CADENA;
         }
         case '\'': {
-            read_char(ls, ls->current, sem);
-            next_char(ls);
+            ret = read_char(ls, ls->current, sem);
+            if (ret != EOS)
+                next_char(ls);
             return TK_CARACTER;
+        }
+        case '=': {
+            next_char(ls);
+            if (ls->current != '=') return '=';
+            else {
+                next_char(ls);
+                return TK_IGUALDAD;
+            }
+        }
+        case '!': {
+            next_char(ls);
+            if (ls->current != '=') return '!';
+            else {
+                next_char(ls);
+                return TK_DIFERENTE;
+            }
+        }
+        case '<': {
+            next_char(ls);
+            if (ls->current != '=') return '<';
+            else {
+                next_char(ls);
+                return TK_MENOR_IGUAL;
+            }
+        }
+        case '>': {
+            next_char(ls);
+            if (ls->current != '=') return '>';
+            else {
+                next_char(ls);
+                return TK_MAYOR_IGUAL;
+            }
+        }
+        case '&': {
+            next_char(ls);
+            if (ls->current != '&') return '&';
+            else {
+                next_char(ls);
+                return TK_Y_LOGICO;
+            }
+        }
+        case '|': {
+            next_char(ls);
+            if (ls->current != '|') return '|';
+            else {
+                next_char(ls);
+                return TK_O_LOGICO;
+            }
+        }
+        case '0':
+        case '1':
+        case '2':
+        case '3':
+        case '4':
+        case '5':
+        case '6':
+        case '7':
+        case '8':
+        case '9': {
+            ret = read_number(ls, sem);
+            next_char(ls);
+            return ret;
         }
         default: {
             if (lisalpha(ls->current)) {
                 lstring tk = new_string(ls);
                 /* is reserved word? */
-                lint reserved = is_reserved(tk);
+                int reserved = is_reserved(tk);
                 if (reserved) {
                     return reserved;
                 } else {
                     return TK_IDENT;
                 }
             } else {
-                lint c = ls->current;
+                int c = ls->current;
                 next_char(ls);
                 return c;
             }
-            break;
         }
         }
     }
@@ -368,10 +463,12 @@ LAT_FUNC void lex_next(lex_state *ls)
     }
 }
 
-LAT_FUNC lint lex_lookahead(lex_state *ls)
+LAT_FUNC int lex_lookahead(lex_state *ls)
 {
-    lint pos            = ls->pos;
-    ls->lookahead.token = llex(ls, &ls->lookahead.sem_info);
-    ls->pos       = pos;
-    return ls->lookahead.token;
+    lex_state *ls_tmp = lmalloc(sizeof(lex_state));
+    memcpy(ls_tmp, ls, sizeof(lex_state));
+    ls_tmp->lookahead.token = llex(ls_tmp, &ls_tmp->lookahead.sem_info);
+    lfree(ls_tmp);
+    return ls_tmp->lookahead.token;
 }
+

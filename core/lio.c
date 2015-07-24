@@ -2,8 +2,9 @@
 #include "lio.h"
 #include "lmem.h"
 
-lstring read_file(lstring path){
-    FILE *fp = fopen(path,"r");
+lstring read_file(lstring path)
+{
+    FILE *fp = fopen(path, "r");
     lstring source = NULL;
     if (fp != NULL) {
         /* Go to the end of the file. */
@@ -12,24 +13,24 @@ lstring read_file(lstring path){
             long bufsize = ftell(fp);
             if (bufsize == -1) {
                 /* Error */
-                fputs("Error al leer el archivo: ", stderr);
+                fputs("Error al leer el archivo\n", stderr);
+                return source;
             }
             /* Allocate our buffer to that size. */
-            source = (lstring) lmalloc(sizeof(lchar) * (bufsize + 1));
+            source = (lstring) lmalloc(sizeof(char) * (bufsize + 1));
             /* Go back to the start of the file. */
-            if (fseek(fp, 0L, SEEK_SET) != 0) {
-                /* Error */
-                fputs("Error al leer el archivo: ", stderr);
-            }
+            rewind(fp);
             /* Read the entire file into memory. */
-            size_t newLen = fread(source, sizeof(lchar), bufsize, fp);
-            if (newLen == 0) {
-                fputs("Error al leer el archivo: ", stderr);
+            size_t new_len = fread(source, sizeof(char), bufsize, fp);
+            if (new_len == 0) {
+                fputs("Archivo vacio\n", stderr);
+                return NULL;
             } else {
-                source[++newLen] = '\0'; /* Just to be safe. */
+                source[++new_len] = '\0'; /* Just to be safe. */
             }
         }
         fclose(fp);
     }
     return source;
 }
+

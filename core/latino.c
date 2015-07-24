@@ -4,7 +4,6 @@
 #include "lparser.h"
 
 
-LAT_FUNC lint lat_init(lstring path){
-    lparser(path);
-    return 0;
+LAT_FUNC int lat_init(lstring path){
+    return lparser(path);
 }

@@ -13,8 +13,8 @@ defined(__ELF__)
 
 /*data types*/
 typedef unsigned char char_u;
-typedef int lint;
-typedef double ldecimal;
+typedef long lint;
+typedef long double ldecimal;
 typedef char lchar;
 typedef char *lstring;
 
@@ -22,17 +22,18 @@ typedef char *lstring;
 #define lfalse 0
 
 #define lisalpha(c) (isalpha(c) || c == '_')
-#define lisalnum(c) (isalnum(c))
+#define lisalnum(c) (isalnum(c) || c == '_')
 #define lisdigit(c) (isdigit(c))
 #define lisxdigit(c) (isxdigit(c))
+#define lisodigit(c) ((c >= '0' && c <= '7') ? ltrue : lfalse)
 
-#define LAT_MAXWORD 32 /* maximum length to string word */
+#define LAT_MAXWORD 31 /* maximum length to string word */
 
 typedef struct lat_state {
 
 } lat_state;
 
-LAT_FUNC lint lat_init(lstring path);
+LAT_FUNC int lat_init(lstring path);
 
 #endif /*_LATINO_H_*/
 
