@@ -5,8 +5,8 @@
   <TabInfoArray Name="TabInfoArray">
     <TabInfo>
       <wxString Value="C:\Users\proman02\Documents\GitHub\latino\src\latino.c" Name="FileName"/>
-      <int Value="92" Name="FirstVisibleLine"/>
-      <int Value="89" Name="CurrentLine"/>
+      <int Value="47" Name="FirstVisibleLine"/>
+      <int Value="79" Name="CurrentLine"/>
       <wxArrayString Name="Bookmarks"/>
       <IntVector Name="CollapsedFolds"/>
     </TabInfo>

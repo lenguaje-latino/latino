@@ -110,7 +110,8 @@ static int is_reserved(lstring tk)
     return 0;
 }
 
-static lstring get_reserved_name(int tk){
+static lstring get_reserved_name(int tk)
+{
     return keytab[tk].key;
 }
 
@@ -169,8 +170,11 @@ static int read_string(lex_state *ls, int del, semantic *sem)
             case 'x':
                 next_char(ls);
                 for (i = 0; i < 2; i++) {
-                    if (!lisxdigit(ls->current))
+                    if (!lisxdigit(ls->current)) {
                         lex_error(ls, "Secuencia de escape invalida", TK_CADENA);
+                        next_char(ls);
+                        break;
+                    }
                     next_char(ls);
                 }
                 break;
@@ -193,8 +197,11 @@ static int read_string(lex_state *ls, int del, semantic *sem)
                 }
                 /* digital escape \ddd */
                 for (i = 0; i < 3; i++) {
-                    if (!lisodigit(ls->current))
+                    if (!lisodigit(ls->current)) {
                         lex_error(ls, "Secuencia de escape invalida", TK_CADENA);
+                        next_char(ls);
+                        break;
+                    }
                     next_char(ls);
                 }
                 break;
@@ -260,8 +267,11 @@ static int read_char(lex_state *ls, int del, semantic *sem)
             case 'x':
                 next_char(ls);
                 for (i = 0; i < 2; i++) {
-                    if (!lisxdigit(ls->current))
+                    if (!lisxdigit(ls->current)) {
                         lex_error(ls, "Secuencia de escape invalida", TK_CARACTER);
+                        next_char(ls);
+                        break;
+                    }
                     next_char(ls);
                 }
                 break;
@@ -284,8 +294,11 @@ static int read_char(lex_state *ls, int del, semantic *sem)
                 }
                 /* digital escape \ddd */
                 for (i = 0; i < 3; i++) {
-                    if (!lisodigit(ls->current))
+                    if (!lisodigit(ls->current)) {
                         lex_error(ls, "Secuencia de escape invalida", TK_CARACTER);
+                        next_char(ls);
+                        break;
+                    }
                     next_char(ls);
                 }
                 break;
@@ -455,7 +468,7 @@ LAT_FUNC void lex_next(lex_state *ls)
 {
     ls->lastline = ls->linenumber;
     if (ls->lookahead.token != TK_EOS) {
-        ls->currtoken       = ls->lookahead;
+        ls->currtoken = ls->lookahead;
         ls->lookahead.token = TK_EOS;
     } else {
         ls->currtoken.token = llex(ls, &ls->currtoken.sem_info);
@@ -471,4 +484,6 @@ LAT_FUNC int lex_lookahead(lex_state *ls)
     lfree(ls_tmp);
     return ls_tmp->lookahead.token;
 }
+
+
 

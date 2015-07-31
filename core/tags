@@ -49,7 +49,7 @@ char_u	latino.h	/^typedef unsigned char char_u;$/;"	t
 colnumber	llex.h	/^    int colnumber; \/* column counter *\/$/;"	m	struct:lex_state
 current	llex.h	/^    int current; \/* current character *\/$/;"	m	struct:lex_state
 currtoken	llex.h	/^    token currtoken; \/* current token *\/$/;"	m	struct:lex_state
-get_reserved_name	llex.c	/^static lstring get_reserved_name(int tk){$/;"	f	file:
+get_reserved_name	llex.c	/^static lstring get_reserved_name(int tk)$/;"	f	file:
 increment_line	llex.c	/^static void increment_line(lex_state *ls)$/;"	f	file:
 inputfile	llex.h	/^    lbuffer *inputfile; \/* input stream *\/$/;"	m	struct:lex_state
 is_new_line	llex.c	37;"	d	file:
