@@ -51,16 +51,10 @@ LAT_FUNC lex_state *lex_init()
     return ls;
 }
 
-static void next_char(lex_state *ls)
-{
-    ls->colnumber++;
-    ls->pos++;
-    if (ls->pos < ls->inputfile->size) {
-        ls->current   = buff_get_char(ls, ls->pos);
-        printf("(%i, %i) = %c\n", ls->linenumber, (ls->colnumber), ls->current);
-    } else {
-        ls->current = EOS;
-    }
+LAT_FUNC void lex_destroy(lex_state *ls){
+    lfree(ls->inputfile->buffer);
+    lfree(ls->inputfile);
+    lfree(ls);
 }
 
 static char lookahead_char(lex_state *ls)
@@ -73,29 +67,50 @@ static char lookahead_char(lex_state *ls)
     }
 }
 
+static void next_char(lex_state *ls)
+{
+    int look = lookahead_char(ls);
+    if (ls->pos < ls->inputfile->size && look != EOS) {
+        ls->pos++;
+        ls->colnumber++;
+        ls->current   = buff_get_char(ls, ls->pos);
+        /*printf("(%i, %i) => %c\n", ls->linenumber, (ls->colnumber), ls->current);*/
+    } else {
+        ls->current = EOS;
+    }
+}
+
 static void increment_line(lex_state *ls)
 {
-    ++ls->linenumber;
-    ls->colnumber = 1;
-    int old = ls->current;
-    next_char(ls);
-    if (is_new_line(ls) && ls->current != old) {
+    /*int old = ls->current;
+    next_char(ls);*/
+    if (is_new_line(ls)){
+        ++ls->linenumber;
+        ls->colnumber = 0;
         next_char(ls);
     }
 }
 
-static lstring new_string(lex_state *ls)
+static void lex_error(lex_state *ls, lstring msg, int token)
 {
-    char word[LAT_MAXWORD];
+    printf("Error de sintaxis linea %d, columna %d: %s. TOKEN (%i)\n", ls->linenumber, ls->colnumber, msg, token);
+}
+
+static lstring new_identifier(lex_state *ls)
+{
+    char word[LAT_MAXIDENTIFIER];
     int i   = 0;
     do {
         word[i] = ls->current;
         next_char(ls);
         i++;
+        if(i >= LAT_MAXIDENTIFIER){
+            lex_error(ls, "identificador muy largo", TK_IDENT);
+            break;
+        }
     } while (lisalnum(ls->current));
     word[i] = '\0';
     lstring ret = word;
-    printf("new_string=%s\n", word);
     return ret;
 }
 
@@ -115,12 +130,7 @@ static lstring get_reserved_name(int tk)
     return keytab[tk].key;
 }
 
-static void lex_error(lex_state *ls, lstring msg, int token)
-{
-    printf("Error de sintaxis linea %d, columna %d: %s. TOKEN (%i)\n", ls->linenumber, ls->colnumber, msg, token);
-}
-
-static int read_string(lex_state *ls, int del, semantic *sem)
+static int read_string(lex_state *ls, int del, semantic *sem_info)
 {
     next_char(ls);
     while (ls->current != del && ls->current != EOS) {
@@ -217,7 +227,7 @@ static int read_string(lex_state *ls, int del, semantic *sem)
     return 0;
 }
 
-static int read_char(lex_state *ls, int del, semantic *sem)
+static int read_char(lex_state *ls, int del, semantic *sem_info)
 {
     next_char(ls);
     while (ls->current != del && ls->current != EOS) {
@@ -315,6 +325,7 @@ static int read_char(lex_state *ls, int del, semantic *sem)
     return 0;
 }
 
+/*FIXME: parse for cientific notation*/
 static int read_number(lex_state *ls, semantic *sem)
 {
     int ret = TK_ENTERO;
@@ -345,7 +356,7 @@ static int read_number(lex_state *ls, semantic *sem)
     return ret;
 }
 
-static int llex(lex_state *ls, semantic *sem)
+static int llex(lex_state *ls, semantic *sem_info)
 {
     int ret;
     for (;;) {
@@ -371,13 +382,13 @@ static int llex(lex_state *ls, semantic *sem)
             return TK_EOS;
         }
         case '"': {
-            ret = read_string(ls, ls->current, sem);
+            ret = read_string(ls, ls->current, sem_info);
             if (ret != EOS)
                 next_char(ls);
             return TK_CADENA;
         }
         case '\'': {
-            ret = read_char(ls, ls->current, sem);
+            ret = read_char(ls, ls->current, sem_info);
             if (ret != EOS)
                 next_char(ls);
             return TK_CARACTER;
@@ -440,18 +451,19 @@ static int llex(lex_state *ls, semantic *sem)
         case '7':
         case '8':
         case '9': {
-            ret = read_number(ls, sem);
+            ret = read_number(ls, sem_info);
             next_char(ls);
             return ret;
         }
         default: {
             if (lisalpha(ls->current)) {
-                lstring tk = new_string(ls);
+                lstring tk = new_identifier(ls);
                 /* is reserved word? */
                 int reserved = is_reserved(tk);
                 if (reserved) {
                     return reserved;
                 } else {
+                    sem_info->ts = tk;
                     return TK_IDENT;
                 }
             } else {
@@ -481,9 +493,7 @@ LAT_FUNC int lex_lookahead(lex_state *ls)
     lex_state *ls_tmp = lmalloc(sizeof(lex_state));
     memcpy(ls_tmp, ls, sizeof(lex_state));
     ls_tmp->lookahead.token = llex(ls_tmp, &ls_tmp->lookahead.sem_info);
+    int tk = ls_tmp->lookahead.token;
     lfree(ls_tmp);
-    return ls_tmp->lookahead.token;
+    return tk;
 }
-
-
-

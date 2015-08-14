@@ -13,7 +13,7 @@ CurrentFileName        :=
 CurrentFilePath        :=
 CurrentFileFullPath    :=
 User                   :=proman02
-Date                   :=17/06/2015
+Date                   :=11/08/2015
 CodeLitePath           :="C:\Program Files (x86)\CodeLite"
 LinkerName             :=c:/mingw/bin/g++.exe
 SharedObjectLinkerName :=c:/mingw/bin/g++.exe -shared -fPIC
@@ -62,7 +62,7 @@ AS       := c:/mingw/bin/as.exe
 ## User defined environment variables
 ##
 CodeLiteDir:=C:\Program Files (x86)\CodeLite
-Objects0=$(IntermediateDirectory)/src_eval.c$(ObjectSuffix) $(IntermediateDirectory)/src_ffi.c$(ObjectSuffix) $(IntermediateDirectory)/src_latino.c$(ObjectSuffix) $(IntermediateDirectory)/src_lex.c$(ObjectSuffix) $(IntermediateDirectory)/src_parse.c$(ObjectSuffix) 
+Objects0=$(IntermediateDirectory)/src_eval.c$(ObjectSuffix) $(IntermediateDirectory)/src_latino.c$(ObjectSuffix) $(IntermediateDirectory)/src_lex.c$(ObjectSuffix) $(IntermediateDirectory)/src_parse.c$(ObjectSuffix) 
 
 
 
@@ -100,14 +100,6 @@ $(IntermediateDirectory)/src_eval.c$(DependSuffix): ../src/eval.c
 
 $(IntermediateDirectory)/src_eval.c$(PreprocessSuffix): ../src/eval.c
 	@$(CC) $(CFLAGS) $(IncludePath) $(PreprocessOnlySwitch) $(OutputSwitch) $(IntermediateDirectory)/src_eval.c$(PreprocessSuffix) "../src/eval.c"
-
-$(IntermediateDirectory)/src_ffi.c$(ObjectSuffix): ../src/ffi.c $(IntermediateDirectory)/src_ffi.c$(DependSuffix)
-	$(CC) $(SourceSwitch) "C:/Users/proman02/Documents/GitHub/latino/src/ffi.c" $(CFLAGS) $(ObjectSwitch)$(IntermediateDirectory)/src_ffi.c$(ObjectSuffix) $(IncludePath)
-$(IntermediateDirectory)/src_ffi.c$(DependSuffix): ../src/ffi.c
-	@$(CC) $(CFLAGS) $(IncludePath) -MG -MP -MT$(IntermediateDirectory)/src_ffi.c$(ObjectSuffix) -MF$(IntermediateDirectory)/src_ffi.c$(DependSuffix) -MM "../src/ffi.c"
-
-$(IntermediateDirectory)/src_ffi.c$(PreprocessSuffix): ../src/ffi.c
-	@$(CC) $(CFLAGS) $(IncludePath) $(PreprocessOnlySwitch) $(OutputSwitch) $(IntermediateDirectory)/src_ffi.c$(PreprocessSuffix) "../src/ffi.c"
 
 $(IntermediateDirectory)/src_latino.c$(ObjectSuffix): ../src/latino.c $(IntermediateDirectory)/src_latino.c$(DependSuffix)
 	$(CC) $(SourceSwitch) "C:/Users/proman02/Documents/GitHub/latino/src/latino.c" $(CFLAGS) $(ObjectSwitch)$(IntermediateDirectory)/src_latino.c$(ObjectSuffix) $(IncludePath)

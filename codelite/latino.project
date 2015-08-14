@@ -1,6 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CodeLite_Project Name="latino" InternalType="Console">
   <Plugins>
+    <Plugin Name="qmake">
+      <![CDATA[00010001N0005Debug000000000000]]>
+    </Plugin>
     <Plugin Name="CMakePlugin">
       <![CDATA[[{
   "name": "Debug",
@@ -13,19 +16,14 @@
   "parentProject": ""
  }]]]>
     </Plugin>
-    <Plugin Name="qmake">
-      <![CDATA[00010001N0005Debug000000000000]]>
-    </Plugin>
   </Plugins>
   <Description/>
   <Dependencies/>
   <VirtualDirectory Name="src">
     <File Name="../src/eval.c"/>
-    <File Name="../src/ffi.c"/>
     <File Name="../src/latino.c"/>
     <File Name="../src/lex.c"/>
     <File Name="../src/parse.c"/>
-    <File Name="../src/ffi.h"/>
     <File Name="../src/latino.h"/>
     <File Name="../src/parse.h"/>
     <File Name="../src/structs.h"/>

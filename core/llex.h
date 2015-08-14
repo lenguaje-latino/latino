@@ -42,7 +42,7 @@ enum RESERVED {
     TK_MAYOR_IGUAL,
     TK_Y_LOGICO,
     TK_O_LOGICO,
-    TK_EOS
+    TK_EOS      /*290*/
 };
 
 typedef union {
@@ -67,6 +67,7 @@ typedef struct lex_state {
 } lex_state;
 
 LAT_FUNC lex_state *lex_init();
+LAT_FUNC void lex_destroy(lex_state *ls);
 LAT_FUNC void lex_next(lex_state *ls);
 LAT_FUNC int lex_lookahead(lex_state *ls);
 

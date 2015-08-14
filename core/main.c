@@ -13,6 +13,6 @@ int main(int argc, char *argv[])
         int result = lat_init(path);
         printf("result=%i\n", result);
     }
-    system("pause");
+    /*system("pause");*/
     return 0;
 }

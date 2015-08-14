@@ -10,6 +10,7 @@ defined(__ELF__)
 
 /*isalpha, isnumber, etc...*/
 #include<ctype.h>
+#include<stdbool.h>
 
 /*data types*/
 typedef unsigned char char_u;
@@ -18,17 +19,15 @@ typedef long double ldecimal;
 typedef char lchar;
 typedef char *lstring;
 
-#define ltrue 1
-#define lfalse 0
-
 #define lisalpha(c) (isalpha(c) || c == '_')
 #define lisalnum(c) (isalnum(c) || c == '_')
 #define lisdigit(c) (isdigit(c))
 #define lisxdigit(c) (isxdigit(c))
-#define lisodigit(c) ((c >= '0' && c <= '7') ? ltrue : lfalse)
+#define lisodigit(c) ((c >= '0' && c <= '7') ? true : false)
 
-#define LAT_MAXWORD 31 /* maximum length to string word */
+#define lassert(cond) ((void) (false && (cond)))
 
+#define LAT_MAXIDENTIFIER 31 /* maximum length to string word */
 typedef struct lat_state {
 
 } lat_state;
