@@ -96,7 +96,7 @@ static void lex_error(lex_state *ls, lstring msg, int token)
     printf("Error de sintaxis linea %d, columna %d: %s. TOKEN (%i)\n", ls->linenumber, ls->colnumber, msg, token);
 }
 
-static lstring new_identifier(lex_state *ls)
+static int new_identifier(lex_state *ls, lstring *str)
 {
     char word[LAT_MAXIDENTIFIER];
     int i   = 0;
@@ -106,12 +106,13 @@ static lstring new_identifier(lex_state *ls)
         i++;
         if(i >= LAT_MAXIDENTIFIER){
             lex_error(ls, "identificador muy largo", TK_IDENT);
+            return FAIL;
             break;
         }
     } while (lisalnum(ls->current));
     word[i] = '\0';
-    lstring ret = word;
-    return ret;
+    str = word[0];
+    return OK;
 }
 
 static int is_reserved(lstring tk)
@@ -457,15 +458,21 @@ static int llex(lex_state *ls, semantic *sem_info)
         }
         default: {
             if (lisalpha(ls->current)) {
-                lstring tk = new_identifier(ls);
-                /* is reserved word? */
-                int reserved = is_reserved(tk);
-                if (reserved) {
-                    return reserved;
+                lstring tk = lmalloc(sizeof(lstring));
+                int ok = new_identifier(ls, &tk);
+                if (ok) {
+                    /* is reserved word? */
+                    int reserved = is_reserved(tk);
+                    if (reserved) {
+                        return reserved;
                 } else {
                     sem_info->ts = tk;
                     return TK_IDENT;
                 }
+              }else{
+                //end lexer
+                return TK_EOS;
+              }
             } else {
                 int c = ls->current;
                 next_char(ls);

@@ -72,6 +72,3 @@ LAT_FUNC void lex_next(lex_state *ls);
 LAT_FUNC int lex_lookahead(lex_state *ls);
 
 #endif /*_LLEX_H_*/
-
-
-

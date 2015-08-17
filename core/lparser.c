@@ -6,7 +6,7 @@
 #include "lmem.h"
 #include "lio.h"
 
-int lparser(lstring path)
+int parser_init(lstring path)
 {
     lex_state *ls = lex_init();
     ls->inputfile->buffer = read_file(path);
@@ -34,4 +34,6 @@ int lparser(lstring path)
     return EXIT_SUCCESS;
 }
 
+int lparser(){
 
+}

@@ -33,4 +33,3 @@ lstring read_file(lstring path)
     }
     return source;
 }
-

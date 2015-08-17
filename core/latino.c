@@ -5,5 +5,6 @@
 
 
 LAT_FUNC int lat_init(lstring path){
-    return lparser(path);
+    parser_init(path);
+    return EXIT_SUCCESS;
 }

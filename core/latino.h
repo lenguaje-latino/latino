@@ -8,6 +8,8 @@ defined(__ELF__)
 #define LAT_FUNC    extern
 #endif
 
+#define OK  1
+#define FAIL 0
 /*isalpha, isnumber, etc...*/
 #include<ctype.h>
 #include<stdbool.h>
@@ -35,4 +37,3 @@ typedef struct lat_state {
 LAT_FUNC int lat_init(lstring path);
 
 #endif /*_LATINO_H_*/
-
