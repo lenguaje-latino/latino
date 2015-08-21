@@ -1,10 +1,70 @@
 #include <stdlib.h>
 #include <string.h>
 
+#include "latino.h"
 #include "lparser.h"
 #include "llex.h"
 #include "lmem.h"
 #include "lio.h"
+
+static void stat_list(lex_state *ls);
+
+static void parser_error(lex_state *ls, lstring msg)
+{
+    printf("Error gramatical linea %d, columna %d: %s.\n", ls->linenumber, ls->colnumber, msg);
+}
+
+static void parse_addition(lex_state *ls){
+
+}
+
+static void parse_expresion(lex_state *ls){
+    printf("%s\n", "parse_expresion");
+}
+
+static void if_stat(lex_state *ls){
+    /*if_stat -> SI ( cond ) block {SINO_SI ( cond ) block } [SINO block] FIN */
+    printf("%s\n", "if");
+    lex_next(ls); /*skip SI keyword*/
+    if (ls->currtoken.token == '(')
+    {
+        parse_expresion(ls);
+        stat_list(ls);
+    }else{
+        parser_error(ls, "sentencia SI mal formada se esperaba (");
+    }
+}
+
+static void while_stat(lex_state *ls){
+
+}
+
+static void fun_stat(lex_state *ls){
+
+}
+
+static void statement(lex_state *ls){
+    switch (ls->currtoken.token) {
+        case TK_SI:
+            if_stat(ls);
+            break;
+        case TK_DESDE:
+            while_stat(ls);
+            break;
+        case TK_FUNCION:
+            fun_stat(ls);
+            break;
+        default:
+            lex_next(ls);
+            break;
+    }
+}
+
+static void stat_list(lex_state *ls){
+    while(ls->currtoken.token != TK_EOS){
+        statement(ls);
+    }
+}
 
 int parser_init(lstring path)
 {
@@ -17,23 +77,16 @@ int parser_init(lstring path)
     /*read first char*/
     ls->current = buff_get_char(ls, 0);
     lbuffer *buff = ls->inputfile;
-    printf("buffer is: \n%s\n", buff->buffer);
     printf("buffer size  = %ld\n", buff->size);
-    /*printf("(%i, %i) => %c\n", ls->linenumber, (ls->colnumber), ls->current);*/
-    /*read first token*/
-    lex_next(ls);
-    int tk = ls->currtoken.token;
-    while (tk != TK_EOS) {
-        lex_next(ls);
-        tk = ls->currtoken.token;
-    }
-    /*test lookahead*/
-    /*tk = lex_lookahead(ls);*/
-    /*printf("lookahead token = %i\n", tk);*/
+    printf("buffer is: \n%s\n", buff->buffer);
+    lparser(ls);
     lex_destroy(ls);
-    return EXIT_SUCCESS;
+    return OK;
 }
 
-int lparser(){
-
+int lparser(lex_state *ls){
+    /*read first token*/
+    lex_next(ls);
+    stat_list(ls);
+    return 0;
 }

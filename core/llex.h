@@ -42,6 +42,7 @@ enum RESERVED {
     TK_MAYOR_IGUAL,
     TK_Y_LOGICO,
     TK_O_LOGICO,
+    TK_EOL,     /* end of line */
     TK_EOS      /*290*/
 };
 

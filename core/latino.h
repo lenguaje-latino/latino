@@ -14,6 +14,8 @@ defined(__ELF__)
 #include<ctype.h>
 #include<stdbool.h>
 
+#include "llist.h"
+
 /*data types*/
 typedef unsigned char char_u;
 typedef long lint;
@@ -30,9 +32,33 @@ typedef char *lstring;
 #define lassert(cond) ((void) (false && (cond)))
 
 #define LAT_MAXIDENTIFIER 31 /* maximum length to string word */
-typedef struct lat_state {
 
-} lat_state;
+typedef struct global_state {
+    list vars;
+    list funs;
+} global_state;
+
+/* data types */
+typedef enum {
+    VALUE_NULL,
+    VALUE_BOOL,
+    VALUE_INT,
+    VALUE_CHAR,
+    VALUE_DOUBLE,
+    VALUE_STRING
+} lat_value_type;
+
+/* values for data */
+typedef struct {
+    lat_value_type t;
+    union {
+        int b;
+        int i;
+        double d;
+        char c;
+        lstring *s;
+    } v;
+} lat_value;
 
 LAT_FUNC int lat_init(lstring path);
 

@@ -1,3 +1,6 @@
 c = '\n'
 s = "hola mundo"
-identificador_muy_largo_mas_que_31 = 31
+#identificador_muy_largo_mas_que_31 = 31
+si (verdadero)
+   imprimir("true")
+fin

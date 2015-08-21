@@ -91,12 +91,12 @@ static void increment_line(lex_state *ls)
     }
 }
 
-static void lex_error(lex_state *ls, lstring msg, int token)
+static void lex_error(lex_state *ls, lstring msg)
 {
-    printf("Error de sintaxis linea %d, columna %d: %s. TOKEN (%i)\n", ls->linenumber, ls->colnumber, msg, token);
+    printf("Error de sintaxis linea %d, columna %d: %s.\n", ls->linenumber, ls->colnumber, msg);
 }
 
-static int new_identifier(lex_state *ls, lstring *str)
+static int new_identifier(lex_state *ls, lstring str)
 {
     char word[LAT_MAXIDENTIFIER];
     int i   = 0;
@@ -105,18 +105,20 @@ static int new_identifier(lex_state *ls, lstring *str)
         next_char(ls);
         i++;
         if(i >= LAT_MAXIDENTIFIER){
-            lex_error(ls, "identificador muy largo", TK_IDENT);
+            lex_error(ls, "identificador muy largo");
             return FAIL;
             break;
         }
     } while (lisalnum(ls->current));
     word[i] = '\0';
-    str = word[0];
+    str = strcpy(str, word);
+    /*printf("new_identifier = %s\n", str);*/
     return OK;
 }
 
 static int is_reserved(lstring tk)
 {
+    /*printf("is_reserved = %s\n", tk);*/
     unsigned int i;
     for (i = 0; i < NUM_RESERVERD; ++i) {
         if (strcmp(tk, keytab[i].key) == 0) {
@@ -137,12 +139,12 @@ static int read_string(lex_state *ls, int del, semantic *sem_info)
     while (ls->current != del && ls->current != EOS) {
         switch (ls->current) {
         case EOS:
-            lex_error(ls, "Cadena sin terminar", TK_EOS);
+            lex_error(ls, "Cadena sin terminar");
             return EOS;
             break;
         case '\n':
         case '\r':
-            lex_error(ls, "Cadena sin terminar", TK_CADENA);
+            lex_error(ls, "Cadena sin terminar");
             increment_line(ls);
             break;
         case '\\': {
@@ -182,7 +184,7 @@ static int read_string(lex_state *ls, int del, semantic *sem_info)
                 next_char(ls);
                 for (i = 0; i < 2; i++) {
                     if (!lisxdigit(ls->current)) {
-                        lex_error(ls, "Secuencia de escape invalida", TK_CADENA);
+                        lex_error(ls, "Secuencia de escape invalida");
                         next_char(ls);
                         break;
                     }
@@ -191,7 +193,7 @@ static int read_string(lex_state *ls, int del, semantic *sem_info)
                 break;
             case '\n':
             case '\r':
-                lex_error(ls, "Cadena sin terminar", TK_CADENA);
+                lex_error(ls, "Cadena sin terminar");
                 increment_line(ls);
                 break;
             case '\\':
@@ -202,14 +204,14 @@ static int read_string(lex_state *ls, int del, semantic *sem_info)
                 break;
             default: {
                 if (!lisdigit(ls->current)) {
-                    lex_error(ls, "Secuencia de escape invalida", TK_CADENA);
+                    lex_error(ls, "Secuencia de escape invalida");
                     next_char(ls);
                     break;
                 }
                 /* digital escape \ddd */
                 for (i = 0; i < 3; i++) {
                     if (!lisodigit(ls->current)) {
-                        lex_error(ls, "Secuencia de escape invalida", TK_CADENA);
+                        lex_error(ls, "Secuencia de escape invalida");
                         next_char(ls);
                         break;
                     }
@@ -234,12 +236,12 @@ static int read_char(lex_state *ls, int del, semantic *sem_info)
     while (ls->current != del && ls->current != EOS) {
         switch (ls->current) {
         case EOS:
-            lex_error(ls, "Caracter sin terminar", TK_EOS);
+            lex_error(ls, "Caracter sin terminar");
             return EOS;
             break;
         case '\n':
         case '\r':
-            lex_error(ls, "Caracter sin terminar", TK_CARACTER);
+            lex_error(ls, "Caracter sin terminar");
             increment_line(ls);
             break;
         case '\\': {
@@ -279,7 +281,7 @@ static int read_char(lex_state *ls, int del, semantic *sem_info)
                 next_char(ls);
                 for (i = 0; i < 2; i++) {
                     if (!lisxdigit(ls->current)) {
-                        lex_error(ls, "Secuencia de escape invalida", TK_CARACTER);
+                        lex_error(ls, "Secuencia de escape invalida");
                         next_char(ls);
                         break;
                     }
@@ -288,7 +290,7 @@ static int read_char(lex_state *ls, int del, semantic *sem_info)
                 break;
             case '\n':
             case '\r':
-                lex_error(ls, "Cadena sin terminar", TK_CARACTER);
+                lex_error(ls, "Cadena sin terminar");
                 increment_line(ls);
                 break;
             case '\\':
@@ -299,14 +301,14 @@ static int read_char(lex_state *ls, int del, semantic *sem_info)
                 break;
             default: {
                 if (!lisdigit(ls->current)) {
-                    lex_error(ls, "Secuencia de escape invalida", TK_CARACTER);
+                    lex_error(ls, "Secuencia de escape invalida");
                     next_char(ls);
                     break;
                 }
                 /* digital escape \ddd */
                 for (i = 0; i < 3; i++) {
                     if (!lisodigit(ls->current)) {
-                        lex_error(ls, "Secuencia de escape invalida", TK_CARACTER);
+                        lex_error(ls, "Secuencia de escape invalida");
                         next_char(ls);
                         break;
                     }
@@ -327,7 +329,7 @@ static int read_char(lex_state *ls, int del, semantic *sem_info)
 }
 
 /*FIXME: parse for cientific notation*/
-static int read_number(lex_state *ls, semantic *sem)
+static int read_number(lex_state *ls, semantic *sem_info)
 {
     int ret = TK_ENTERO;
     int has_point = 0;
@@ -459,7 +461,7 @@ static int llex(lex_state *ls, semantic *sem_info)
         default: {
             if (lisalpha(ls->current)) {
                 lstring tk = lmalloc(sizeof(lstring));
-                int ok = new_identifier(ls, &tk);
+                int ok = new_identifier(ls, tk);
                 if (ok) {
                     /* is reserved word? */
                     int reserved = is_reserved(tk);

@@ -1,9 +1,9 @@
 i = 0
 mientras (i < 10)
-    si( i==5 )
-	imprimir("cinco")
+    si i == 5
+        imprimir("cinco")
     sino
-	imprimir(i)
+        imprimir(i)
     fin
     i = i + 1
 fin

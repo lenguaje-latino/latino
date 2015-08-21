@@ -3,7 +3,8 @@
 
 #include "latino.h"
 #include "lio.h"
+#include "llex.h"
 
 int parser_init(lstring path);
-int lparser();
+int lparser(lex_state *ls);
 #endif /* _LPARSER_H_ */

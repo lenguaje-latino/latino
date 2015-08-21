@@ -22,12 +22,18 @@ lmem.o : lmem.c
 lparser.o : lparser.c
 	$(CC) $(CFLAGS) -c lparser.c -o lparser.o
 
+llist.o : llist.c
+	$(CC) $(CFLAGS) -c llist.c -o llist.o
+
+lstack.o : lstack.c
+	$(CC) $(CFLAGS) -c lstack.c -o lstack.o
+
 main.o : main.c
 	$(CC) $(CFLAGS) -c main.c -o main.o
 
-$(TARGET) : latino.o lio.o llex.o lparser.o lmem.o main.o
+$(TARGET) : latino.o lio.o llex.o lparser.o lmem.o llist.o lstack.o main.o
 	mkdir -p "$$(dirname $(TARGET))"
-	$(CC) $(CFLAGS) latino.o lio.o llex.o lparser.o lmem.o main.o -o $(TARGET) $(MATH) $(LIBS)
+	$(CC) $(CFLAGS) latino.o lio.o llex.o lparser.o lmem.o llist.o lstack.o main.o -o $(TARGET) $(MATH) $(LIBS)
 
 clean :
 	rm -f *.o

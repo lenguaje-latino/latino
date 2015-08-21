@@ -1,9 +1,11 @@
 EOS	lio.h	7;"	d
+FAIL	latino.h	12;"	d
 FIRST_RESERVED	llex.h	7;"	d
 LAT_FUNC	latino.h	6;"	d
 LAT_FUNC	latino.h	8;"	d
-LAT_MAXIDENTIFIER	latino.h	30;"	d
+LAT_MAXIDENTIFIER	latino.h	34;"	d
 NUM_RESERVERD	llex.c	39;"	d	file:
+OK	latino.h	11;"	d
 RESERVED	llex.h	/^enum RESERVED {$/;"	g
 TK_CADENA	llex.h	/^    TK_CADENA,$/;"	e	enum:RESERVED
 TK_CARACTER	llex.h	/^    TK_CARACTER,$/;"	e	enum:RESERVED
@@ -18,6 +20,7 @@ TK_DESDE	llex.h	/^    TK_DESDE,$/;"	e	enum:RESERVED
 TK_DIFERENTE	llex.h	/^    TK_DIFERENTE,$/;"	e	enum:RESERVED
 TK_ELEGIR	llex.h	/^    TK_ELEGIR, \/*260*\/$/;"	e	enum:RESERVED
 TK_ENTERO	llex.h	/^    TK_ENTERO, \/*280*\/$/;"	e	enum:RESERVED
+TK_EOL	llex.h	/^    TK_EOL,     \/* end of line *\/$/;"	e	enum:RESERVED
 TK_EOS	llex.h	/^    TK_EOS      \/*290*\/$/;"	e	enum:RESERVED
 TK_ESTA	llex.h	/^    TK_ESTA,$/;"	e	enum:RESERVED
 TK_FALSO	llex.h	/^    TK_FALSO,$/;"	e	enum:RESERVED
@@ -39,17 +42,41 @@ TK_SI	llex.h	/^    TK_SI = FIRST_RESERVED,$/;"	e	enum:RESERVED
 TK_SINO	llex.h	/^    TK_SINO,$/;"	e	enum:RESERVED
 TK_VERDADERO	llex.h	/^    TK_VERDADERO,$/;"	e	enum:RESERVED
 TK_Y_LOGICO	llex.h	/^    TK_Y_LOGICO,$/;"	e	enum:RESERVED
+VALUE_BOOL	latino.h	/^    VALUE_BOOL,$/;"	e	enum:__anon1
+VALUE_CHAR	latino.h	/^    VALUE_CHAR,$/;"	e	enum:__anon1
+VALUE_DOUBLE	latino.h	/^    VALUE_DOUBLE,$/;"	e	enum:__anon1
+VALUE_INT	latino.h	/^    VALUE_INT,$/;"	e	enum:__anon1
+VALUE_NULL	latino.h	/^    VALUE_NULL,$/;"	e	enum:__anon1
+VALUE_STRING	latino.h	/^    VALUE_STRING$/;"	e	enum:__anon1
 _LATINO_H_	latino.h	2;"	d
 _LIO_H_	lio.h	2;"	d
 _LLEX_H_	llex.h	2;"	d
+_LLIST_H_	llist.h	2;"	d
 _LPARSER_H_	lparser.h	2;"	d
+_LSTACK_H_	lstack.h	2;"	d
+_listNode	llist.h	/^typedef struct _listNode {$/;"	s
+b	latino.h	/^        int b;$/;"	m	union:__anon2::__anon3
 buff_get_char	lio.h	9;"	d
 buffer	lio.h	/^    lstring buffer;$/;"	m	struct:lbuffer
+c	latino.h	/^        char c;$/;"	m	union:__anon2::__anon3
 char_u	latino.h	/^typedef unsigned char char_u;$/;"	t
 colnumber	llex.h	/^    int colnumber; \/* column counter *\/$/;"	m	struct:lex_state
 current	llex.h	/^    int current; \/* current character *\/$/;"	m	struct:lex_state
 currtoken	llex.h	/^    token currtoken; \/* current token *\/$/;"	m	struct:lex_state
+d	latino.h	/^        double d;$/;"	m	union:__anon2::__anon3
+data	llist.h	/^    void *data;$/;"	m	struct:_listNode
+elementSize	llist.h	/^    int elementSize;$/;"	m	struct:__anon1
+first	llist.h	/^    listNode *first;$/;"	m	struct:__anon1
+freeFn	llist.h	/^    freeFunction freeFn;$/;"	m	struct:__anon1
+freeFunction	llist.h	/^typedef void (*freeFunction)(void *);$/;"	t
+freelist	latino.c	/^static void freelist (void *data){$/;"	f	file:
+fun_stat	lparser.c	/^static void fun_stat(lex_state *ls){$/;"	f	file:
+funs	latino.h	/^    list funs;$/;"	m	struct:global_state
 get_reserved_name	llex.c	/^static lstring get_reserved_name(int tk)$/;"	f	file:
+global_state	latino.h	/^typedef struct global_state {$/;"	s
+global_state	latino.h	/^} global_state;$/;"	t	typeref:struct:global_state
+i	latino.h	/^        int i;$/;"	m	union:__anon2::__anon3
+if_stat	lparser.c	/^static void if_stat(lex_state *ls){$/;"	f	file:
 increment_line	llex.c	/^static void increment_line(lex_state *ls)$/;"	f	file:
 inputfile	llex.h	/^    lbuffer *inputfile; \/* input stream *\/$/;"	m	struct:lex_state
 is_new_line	llex.c	37;"	d	file:
@@ -57,17 +84,18 @@ is_reserved	llex.c	/^static int is_reserved(lstring tk)$/;"	f	file:
 key	llex.c	/^    lstring key;$/;"	m	struct:keyword	file:
 keytab	llex.c	/^struct keyword keytab[] = {$/;"	v	typeref:struct:keyword
 keyword	llex.c	/^struct keyword {$/;"	s	file:
-lassert	latino.h	28;"	d
+lassert	latino.h	32;"	d
+last	llist.h	/^    listNode *last;$/;"	m	struct:__anon1
 lastline	llex.h	/^    int lastline; \/* line of last token consumed *\/$/;"	m	struct:lex_state
 lat_init	latino.c	/^LAT_FUNC int lat_init(lstring path){$/;"	f
-lat_state	latino.h	/^typedef struct lat_state {$/;"	s
-lat_state	latino.h	/^} lat_state;$/;"	t	typeref:struct:lat_state
+lat_value	latino.h	/^} lat_value;$/;"	t	typeref:struct:__anon2
+lat_value_type	latino.h	/^} lat_value_type;$/;"	t	typeref:enum:__anon1
 lbuffer	lio.h	/^typedef struct lbuffer {$/;"	s
 lbuffer	lio.h	/^} lbuffer;$/;"	t	typeref:struct:lbuffer
 lchar	latino.h	/^typedef char lchar;$/;"	t
 ldecimal	latino.h	/^typedef long double ldecimal;$/;"	t
 lex_destroy	llex.c	/^LAT_FUNC void lex_destroy(lex_state *ls){$/;"	f
-lex_error	llex.c	/^static void lex_error(lex_state *ls, lstring msg, int token)$/;"	f	file:
+lex_error	llex.c	/^static void lex_error(lex_state *ls, lstring msg)$/;"	f	file:
 lex_init	llex.c	/^LAT_FUNC lex_state *lex_init()$/;"	f
 lex_lookahead	llex.c	/^LAT_FUNC int lex_lookahead(lex_state *ls)$/;"	f
 lex_next	llex.c	/^LAT_FUNC void lex_next(lex_state *ls)$/;"	f
@@ -75,30 +103,63 @@ lex_state	llex.h	/^typedef struct lex_state {$/;"	s
 lex_state	llex.h	/^} lex_state;$/;"	t	typeref:struct:lex_state
 linenumber	llex.h	/^    int linenumber; \/* line counter *\/$/;"	m	struct:lex_state
 lint	latino.h	/^typedef long lint;$/;"	t
-lisalnum	latino.h	23;"	d
-lisalpha	latino.h	22;"	d
-lisdigit	latino.h	24;"	d
-lisodigit	latino.h	26;"	d
-lisxdigit	latino.h	25;"	d
+lisalnum	latino.h	27;"	d
+lisalpha	latino.h	26;"	d
+lisdigit	latino.h	28;"	d
+lisodigit	latino.h	30;"	d
+list	llist.h	/^} list;$/;"	t	typeref:struct:__anon1
+list	lstack.h	/^	list *list;$/;"	m	struct:__anon1
+listNode	llist.h	/^} listNode;$/;"	t	typeref:struct:_listNode
+list_append	llist.c	/^void list_append(list *list, void *element)$/;"	f
+list_destroy	llist.c	/^void list_destroy(list *list)$/;"	f
+list_first	llist.c	/^void list_first(list *list, void *element, bool removeFromList)$/;"	f
+list_last	llist.c	/^void list_last(list *list, void *element)$/;"	f
+list_length	llist.c	/^int list_length(list *list)$/;"	f
+list_new	llist.c	/^void list_new(list *list, int elementSize, freeFunction freeFn)$/;"	f
+list_nth	llist.c	/^void list_nth(list *list, int nth, void *element)$/;"	f
+list_push	llist.c	/^void list_push(list *list, void *element)$/;"	f
+list_rest	llist.c	/^void list_rest(list *lst, list *rest)$/;"	f
+lisxdigit	latino.h	29;"	d
 llex	llex.c	/^static int llex(lex_state *ls, semantic *sem_info)$/;"	f	file:
+logicalLength	llist.h	/^    int logicalLength;$/;"	m	struct:__anon1
 lookahead	llex.h	/^    token lookahead; \/* look ahead token *\/$/;"	m	struct:lex_state
 lookahead_char	llex.c	/^static char lookahead_char(lex_state *ls)$/;"	f	file:
-lparser	lparser.c	/^int lparser(lstring path)$/;"	f
+lparser	lparser.c	/^int lparser(lex_state *ls){$/;"	f
 lstring	latino.h	/^typedef char *lstring;$/;"	t
 main	main.c	/^int main(int argc, char *argv[])$/;"	f
-new_identifier	llex.c	/^static lstring new_identifier(lex_state *ls)$/;"	f	file:
+new_identifier	llex.c	/^static int new_identifier(lex_state *ls, lstring str)$/;"	f	file:
+next	llist.h	/^    struct _listNode *next;$/;"	m	struct:_listNode	typeref:struct:_listNode::_listNode
 next_char	llex.c	/^static void next_char(lex_state *ls)$/;"	f	file:
+parse_addition	lparser.c	/^static void parse_addition(lex_state *ls){$/;"	f	file:
+parse_expresion	lparser.c	/^static void parse_expresion(lex_state *ls){$/;"	f	file:
+parser_error	lparser.c	/^static void parser_error(lex_state *ls, lstring msg)$/;"	f	file:
+parser_init	lparser.c	/^int parser_init(lstring path)$/;"	f
 pos	llex.h	/^    int pos; \/* position in buffer *\/$/;"	m	struct:lex_state
 r	llex.h	/^    int r;$/;"	m	union:__anon1
 read_char	llex.c	/^static int read_char(lex_state *ls, int del, semantic *sem_info)$/;"	f	file:
 read_file	lio.c	/^lstring read_file(lstring path)$/;"	f
-read_number	llex.c	/^static int read_number(lex_state *ls, semantic *sem)$/;"	f	file:
+read_number	llex.c	/^static int read_number(lex_state *ls, semantic *sem_info)$/;"	f	file:
 read_string	llex.c	/^static int read_string(lex_state *ls, int del, semantic *sem_info)$/;"	f	file:
+s	latino.h	/^        lstring *s;$/;"	m	union:__anon2::__anon3
 sem_info	llex.h	/^    semantic sem_info;$/;"	m	struct:token
 semantic	llex.h	/^} semantic;$/;"	t	typeref:union:__anon1
 size	lio.h	/^    long size;$/;"	m	struct:lbuffer
+stack	lstack.h	/^} stack;$/;"	t	typeref:struct:__anon1
+stack_destroy	lstack.c	/^void stack_destroy(stack *s)$/;"	f
+stack_new	lstack.c	/^void stack_new(stack *s, int elementSize, freeFunction freeFn)$/;"	f
+stack_peek	lstack.c	/^void stack_peek(stack *s, void *element)$/;"	f
+stack_pop	lstack.c	/^void stack_pop(stack *s, void *element)$/;"	f
+stack_push	lstack.c	/^void stack_push(stack *s, void *element)$/;"	f
+stack_size	lstack.c	/^int stack_size(stack *s)$/;"	f
+stat_list	lparser.c	/^static void stat_list(lex_state *ls){$/;"	f	file:
+statement	lparser.c	/^static void statement(lex_state *ls){$/;"	f	file:
+t	latino.h	/^    lat_value_type t;$/;"	m	struct:__anon2
+test_list	latino.c	/^static void test_list(){$/;"	f	file:
 token	llex.h	/^    int token;$/;"	m	struct:token
 token	llex.h	/^typedef struct token {$/;"	s
 token	llex.h	/^} token;$/;"	t	typeref:struct:token
 ts	llex.h	/^    lstring ts;$/;"	m	union:__anon1
+v	latino.h	/^    } v;$/;"	m	struct:__anon2	typeref:union:__anon2::__anon3
 value	llex.c	/^    enum RESERVED value;$/;"	m	struct:keyword	typeref:enum:keyword::RESERVED	file:
+vars	latino.h	/^    list vars;$/;"	m	struct:global_state
+while_stat	lparser.c	/^static void while_stat(lex_state *ls){$/;"	f	file:
