@@ -14,12 +14,22 @@ static void parser_error(lex_state *ls, lstring msg)
     printf("Error gramatical linea %d, columna %d: %s.\n", ls->linenumber, ls->colnumber, msg);
 }
 
+static void parse_multiplication(lex_state *ls){
+
+}
+
 static void parse_addition(lex_state *ls){
 
 }
 
-static void parse_expresion(lex_state *ls){
-    printf("%s\n", "parse_expresion");
+static void subexpresion(lex_state *ls){
+    printf("%s\n", "parsing sub expresion...");
+
+}
+
+static void expresion(lex_state *ls){
+    printf("%s\n", "parsing expresion...");
+    subexpresion(ls);
 }
 
 static void if_stat(lex_state *ls){
@@ -28,7 +38,7 @@ static void if_stat(lex_state *ls){
     lex_next(ls); /*skip SI keyword*/
     if (ls->currtoken.token == '(')
     {
-        parse_expresion(ls);
+        expresion(ls);
         stat_list(ls);
     }else{
         parser_error(ls, "sentencia SI mal formada se esperaba (");

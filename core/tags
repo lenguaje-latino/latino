@@ -66,6 +66,7 @@ currtoken	llex.h	/^    token currtoken; \/* current token *\/$/;"	m	struct:lex_s
 d	latino.h	/^        double d;$/;"	m	union:__anon2::__anon3
 data	llist.h	/^    void *data;$/;"	m	struct:_listNode
 elementSize	llist.h	/^    int elementSize;$/;"	m	struct:__anon1
+expresion	lparser.c	/^static void expresion(lex_state *ls){$/;"	f	file:
 first	llist.h	/^    listNode *first;$/;"	m	struct:__anon1
 freeFn	llist.h	/^    freeFunction freeFn;$/;"	m	struct:__anon1
 freeFunction	llist.h	/^typedef void (*freeFunction)(void *);$/;"	t
@@ -131,7 +132,7 @@ new_identifier	llex.c	/^static int new_identifier(lex_state *ls, lstring str)$/;
 next	llist.h	/^    struct _listNode *next;$/;"	m	struct:_listNode	typeref:struct:_listNode::_listNode
 next_char	llex.c	/^static void next_char(lex_state *ls)$/;"	f	file:
 parse_addition	lparser.c	/^static void parse_addition(lex_state *ls){$/;"	f	file:
-parse_expresion	lparser.c	/^static void parse_expresion(lex_state *ls){$/;"	f	file:
+parse_multiplication	lparser.c	/^static void parse_multiplication(lex_state *ls){$/;"	f	file:
 parser_error	lparser.c	/^static void parser_error(lex_state *ls, lstring msg)$/;"	f	file:
 parser_init	lparser.c	/^int parser_init(lstring path)$/;"	f
 pos	llex.h	/^    int pos; \/* position in buffer *\/$/;"	m	struct:lex_state
@@ -146,13 +147,14 @@ semantic	llex.h	/^} semantic;$/;"	t	typeref:union:__anon1
 size	lio.h	/^    long size;$/;"	m	struct:lbuffer
 stack	lstack.h	/^} stack;$/;"	t	typeref:struct:__anon1
 stack_destroy	lstack.c	/^void stack_destroy(stack *s)$/;"	f
+stack_length	lstack.c	/^int stack_length(stack *s)$/;"	f
 stack_new	lstack.c	/^void stack_new(stack *s, int elementSize, freeFunction freeFn)$/;"	f
 stack_peek	lstack.c	/^void stack_peek(stack *s, void *element)$/;"	f
 stack_pop	lstack.c	/^void stack_pop(stack *s, void *element)$/;"	f
 stack_push	lstack.c	/^void stack_push(stack *s, void *element)$/;"	f
-stack_size	lstack.c	/^int stack_size(stack *s)$/;"	f
 stat_list	lparser.c	/^static void stat_list(lex_state *ls){$/;"	f	file:
 statement	lparser.c	/^static void statement(lex_state *ls){$/;"	f	file:
+subexpresion	lparser.c	/^static void subexpresion(lex_state *ls){$/;"	f	file:
 t	latino.h	/^    lat_value_type t;$/;"	m	struct:__anon2
 test_list	latino.c	/^static void test_list(){$/;"	f	file:
 token	llex.h	/^    int token;$/;"	m	struct:token

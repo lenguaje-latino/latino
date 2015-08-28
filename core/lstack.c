@@ -23,7 +23,7 @@ void stack_push(stack *s, void *element)
 void stack_pop(stack *s, void *element)
 {
     // don't pop an empty stack!
-    lassert(stack_size(s) > 0);
+    lassert(stack_length(s) > 0);
 
     list_first(s->list, element, true);
 }
@@ -34,7 +34,8 @@ void stack_peek(stack *s, void *element)
     list_first(s->list, element, false);
 }
 
-int stack_size(stack *s)
+int stack_length(stack *s)
 {
     return list_length(s->list);
 }
+

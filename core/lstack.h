@@ -12,5 +12,5 @@ void stack_destroy(stack *s);
 void stack_push(stack *s, void *element);
 void stack_pop(stack *s, void *element);
 void stack_peek(stack *s, void *element);
-int stack_size(stack *s);
+int stack_length(stack *s);
 #endif /*_LSTACK_H_*/

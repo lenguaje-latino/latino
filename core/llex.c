@@ -82,8 +82,6 @@ static void next_char(lex_state *ls)
 
 static void increment_line(lex_state *ls)
 {
-    /*int old = ls->current;
-    next_char(ls);*/
     if (is_new_line(ls)){
         ++ls->linenumber;
         ls->colnumber = 0;
