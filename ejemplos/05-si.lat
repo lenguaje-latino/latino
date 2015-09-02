@@ -37,6 +37,6 @@ imprimir(g)
 si(g)
     imprimir(verdadero)
     imprimir('a')
-sino 
+sino
     imprimir("error")
 fin

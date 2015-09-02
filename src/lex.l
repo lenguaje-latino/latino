@@ -7,7 +7,8 @@
 #include <string.h>
 #include <stdlib.h>
 #include "latino.h"
-#include "structs.h"
+
+int yyleng = 32;
 
 #define YY_INPUT(buf,result,max_size)  {\
     result = get_next_char(buf, max_size); \
@@ -17,7 +18,7 @@
 %}
 
  /* float exponent */
- /* EXP ([Ee][-+]?[0-9]+) */
+EXP ([Ee][-+]?[0-9]+)
 
 %%
 
@@ -48,6 +49,7 @@
 "si"        { return KEYWORD_IF; }
 "fin"       { return KEYWORD_END; }
 "sino"      { return KEYWORD_ELSE; }
+"romper"      { return KEYWORD_BREAK; }
 "mientras"  { return KEYWORD_WHILE; }
 "hacer"     { return KEYWORD_DO; }
 "cuando"    { return KEYWORD_WHEN; }
@@ -63,15 +65,16 @@
 "retorno"     { return KEYWORD_RETURN; }
 
  /*built-in functions */
-"raiz"          { yylval.fn = B_sqrt; return TOKEN_FUNC; }
-"exponente"     { yylval.fn = B_exp; return TOKEN_FUNC; }
-"logaritmo"     { yylval.fn = B_log; return TOKEN_FUNC; }
+ /*"raiz"          { yylval.fn = B_sqrt; return TOKEN_FUNC; }*/
+ /*"exponente"     { yylval.fn = B_exp; return TOKEN_FUNC; }*/
+ /*"logaritmo"     { yylval.fn = B_log; return TOKEN_FUNC; }*/
 "imprimir"      { yylval.fn = B_print; return TOKEN_FUNC; }
 
  /* names */
+
 [_a-zA-Z][_a-zA-Z0-9]* { yylval.s = lookup(yytext, NULL); return TOKEN_IDENTIFIER; }
- /*[0-9]+"."[0-9]*{EXP}? | "."?[0-9]+{EXP}?       { yylval.d = strtod(yytext, NULL); return TOKEN_NUMBER; }*/
-[0-9]+"."+[0-9]*       { yylval.d = strtod(yytext, NULL); return TOKEN_NUMBER; }
+[0-9]+"."+[0-9]*{EXP}?|"."+[0-9]+{EXP}?       { yylval.d = strtod(yytext, NULL); return TOKEN_NUMBER; }
+ /*[0-9]+"."+[0-9]*       { printf("lex_double"); yylval.d = strtod(yytext, NULL); return TOKEN_NUMBER; }*/
 [0-9]+                 { yylval.i = strtol(yytext, NULL, 0); return TOKEN_INT; }
 \"([^\\\"]|\\.)*\"     { yylval.str = newstr(yytext+1, strlen(yytext)-2);return TOKEN_STRING; }
 '([^'\\\n]|\\.)'       { yylval.c = newchar(yytext+1, strlen(yytext)-2); return TOKEN_CHAR; }

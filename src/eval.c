@@ -5,17 +5,15 @@
 #include <math.h>
 #include <stdbool.h>
 #include "latino.h"
-#include "structs.h"
 
-/* symbol table */
-/* hash symbol */
-static unsigned
+/* tabla de simbolos */
+static long
 symhash(char *sym)
 {
-    unsigned int hash = 0;
-    unsigned c;
-    while (c = *sym++) hash = hash * 9 ^ c;
-    return hash;
+    long hash = 0;
+    int len = strlen(sym);
+    while (len--) hash = (hash << 5) - hash + *sym++;
+    return abs(hash);
 }
 
 static char *
@@ -25,12 +23,13 @@ strdup0(const char *s)
     char *p;
     p = (char *)malloc(len + 1);
     if (p) {
-        strncpy(p, s, sizeof(p));
+        strncpy(p, s, len);
     }
+    p[len] = '\0';
     return p;
 }
 
-symbol *
+struct symbol *
 lookup(char *sym, lat_value *v)
 {
     symbol *sp = &symtab[symhash(sym) % NHASH];
@@ -72,7 +71,7 @@ newast(node_type nodetype, ast *l, ast *r)
 }
 
 ast *
-newint(int i)
+newint(long i)
 {
     node *a = malloc(sizeof(node));
     if (!a) {
@@ -125,15 +124,15 @@ newbool(char *b)
     return (ast *)a;
 }
 
-static char *
-strndup0(const char *s, size_t n)
+static unsigned char *
+strndup0(const unsigned char *s, size_t n)
 {
     size_t i;
-    const char *p = s;
-    char *new;
+    const unsigned char *p = s;
+    unsigned char *new;
     for (i = 0; i < n && *p; i++, p++)
         ;
-    new = (char *)malloc(i + 1);
+    new = (unsigned char *)malloc(i + 1);
     if (new) {
         memcpy(new, s, i);
         new[i] = '\0';
@@ -188,7 +187,7 @@ newfunc(int functype, ast *l)
 }
 
 ast *
-newcall(symbol *s, ast *l)
+newcall(struct symbol *s, ast *l)
 {
     ufncall *a = malloc(sizeof(ufncall));
     if (!a) {
@@ -202,7 +201,7 @@ newcall(symbol *s, ast *l)
 }
 
 ast *
-newref(symbol *s)
+newref(struct symbol *s)
 {
     symref *a = malloc(sizeof(symref));
     if (!a) {
@@ -215,7 +214,7 @@ newref(symbol *s)
 }
 
 ast *
-newasgn(symbol *s, ast *v)
+newasgn(struct symbol *s, ast *v)
 {
     symasgn *a = malloc(sizeof(symasgn));
     if (!a) {
@@ -263,6 +262,7 @@ newfor(node_type nodetype, ast *begin, ast *end, ast *stmts, ast *step)
 void
 treefree(ast *a)
 {
+
     switch (a->nodetype) {
     /* two subtrees */
     case NODE_ADD:
@@ -279,7 +279,10 @@ treefree(ast *a)
     case NODE_GE:
     case NODE_LE:
     case NODE_BLOCK:
-        treefree(a->r);
+        if(a->r)
+            treefree(a->r);
+        if(a->l)
+            treefree(a->l);
         break;
     /* one subtree */
     case NODE_NEG:
@@ -288,7 +291,8 @@ treefree(ast *a)
     case NODE_LIST_SYMBOLS:
     case NODE_RETURN:
     case NODE_BUILTIN_FUNCTION:
-        treefree(a->l);
+        if(a->l)
+            treefree(a->l);
         break;
     /* no subtree */
     case NODE_INT:
@@ -298,7 +302,8 @@ treefree(ast *a)
     case NODE_BOOLEAN:
         break;
     case NODE_ASSIGMENT:
-        free(((symasgn *)a)->v);
+        if(((symasgn *)a)->v)
+            treefree(((symasgn *)a)->v);
         free(((symasgn *)a)->s);
         break;
     /* up to three subtrees */
@@ -309,15 +314,20 @@ treefree(ast *a)
     case NODE_CASES:
     case NODE_CASE:
     case NODE_DEFAULT:
-        free(((flow *)a)->cond);
-        if (((flow *)a)->tl) treefree(((flow *)a)->tl);
-        if (((flow *)a)->el) treefree(((flow *)a)->el);
+        if (((flow *)a)->el)
+            treefree(((flow *)a)->el);
+        if (((flow *)a)->tl)
+            treefree(((flow *)a)->tl);
+        if (((flow *)a)->cond)
+            treefree(((flow *)a)->cond);
         break;
     case NODE_FROM:
+        if (((node_for *)a)->stmts)
+            treefree(((node_for *)a)->stmts);
+        if (((node_for *)a)->step)
+            treefree(((node_for *)a)->step);
         free(((node_for *)a)->begin);
         free(((node_for *)a)->end);
-        if (((node_for *)a)->stmts) treefree(((node_for *)a)->stmts);
-        if (((node_for *)a)->step) treefree(((node_for *)a)->step);
         break;
     case NODE_STRING:
         free(((node *)a)->value->v.s);
@@ -330,7 +340,7 @@ treefree(ast *a)
 }
 
 symlist *
-newsymlist(symbol *sym, symlist *next)
+newsymlist(struct symbol *sym, symlist *next)
 {
     symlist *sl = malloc(sizeof(symlist));
     if (!sl) {
@@ -364,11 +374,11 @@ concat(lat_string *s1, lat_string *s2)
 }
 
 static lat_string *
-int2str(int i)
+int2str(long i)
 {
-    char s[50];
+    char s[255];
     lat_string *r = malloc(strlen(s) + 1);
-    snprintf(s, 50, "%i", i);
+    snprintf(s, 255, "%ld", i);
     strcpy(r, s);
     return r;
 }
@@ -376,9 +386,9 @@ int2str(int i)
 static lat_string *
 double2str(double d)
 {
-    char s[50];
+    char s[64];
     lat_string *r = malloc(strlen(s) + 1);
-    snprintf(s, 50, "%g", (float)d);
+    snprintf(s, 64, "%g", (float)d);
     strcpy(r, s);
     return r;
 }
@@ -1466,7 +1476,7 @@ imprimir(lat_value *val)
             printf("%s\n", bool2str(val->v.b));
             break;
         case VALUE_INT:
-            printf("%i\n", val->v.i);
+            printf("%ld\n", val->v.i);
             break;
         case VALUE_CHAR:
             printf("%c\n", val->v.c);
@@ -1477,11 +1487,14 @@ imprimir(lat_value *val)
         case VALUE_STRING:
             printf("%s\n", val->v.s);
             break;
+        case VALUE_NULL:
+            printf("%s\n", "nulo");
+            break;
         }
     }
 }
 
-static double
+double
 callbuiltin(fncall *f)
 {
     double v = 0;
@@ -1506,18 +1519,16 @@ callbuiltin(fncall *f)
 
 /* define a function */
 void
-dodef(symbol *s, symlist *syms, ast *func)
+dodef(struct symbol *s, symlist *syms, ast *func)
 {
-    /*if (s->syms) symlistfree(s->syms);*/
-    /*if (s->func) treefree(s->func);*/
     s->syms = syms;
     s->func = func;
 }
 
-static lat_value *
+lat_value *
 calluser(ufncall *f)
 {
-    symbol *fn = f->s; /* function name */
+    struct symbol *fn = f->s; /* function name */
     symlist *sl; /* dummy arguments */
     ast *args = f->l; /* actual arguments */
     lat_value **oldval;
@@ -1559,7 +1570,7 @@ calluser(ufncall *f)
     /* save old values of dummies, assign new ones */
     sl = fn->syms;
     for (i = 0; i < nargs; i++) {
-        symbol *s = sl->sym;
+        struct symbol *s = sl->sym;
         oldval[i] = s->value;
         s->value = newval[i];
         sl = sl->next;
@@ -1570,10 +1581,11 @@ calluser(ufncall *f)
     /* put the real values of the dummies back */
     sl = fn->syms;
     for (i = 0; i < nargs; i++) {
-        symbol *s = sl->sym;
+        struct symbol *s = sl->sym;
         s->value = oldval[i];
         sl = sl->next;
     }
     free(oldval);
     return v;
 }
+

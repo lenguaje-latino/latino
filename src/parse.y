@@ -1,6 +1,5 @@
 %{
 #include "latino.h"
-#include "structs.h"
 #define YYERROR_VERBOSE 1
 %}
 
@@ -9,7 +8,7 @@
     int fn; /* which function */
     char *b; /* boolean type*/
     char *c; /* char type */
-    int i;  /* int type */
+    long i;  /* int type */
     double d; /* double type */
     struct lat_string *str; /* string type */
     struct ast *a; /* astract syntax tree */
@@ -76,8 +75,9 @@
 %%
 
 program: /* empty */
-    | program stmt {
-        if($2 != NULL) {
+    | program list {
+        if($2) {
+            /* print_ast($2); */
             eval($2);
             treefree($2);
         }
@@ -116,7 +116,6 @@ jump_stmt : KEYWORD_RETURN exp { $$ = newast(NODE_RETURN, $2, NULL);}
 
 cases:
      cases case {
-        /*printf("parse cases\n");*/
         $$ = newflow(NODE_CASES, NULL, $1, $2);
      }
      | case {
@@ -126,24 +125,23 @@ cases:
 
 case:
     KEYWORD_CASE atom_value ':' list {
-        /*printf("parse simple case\n");*/
         $$ = newflow(NODE_CASE, NULL, $2, $4);
     }
     ;
 
 default:
     KEYWORD_DEFAULT ':' list {
-        /*printf("parse default\n");*/
         $$ = newflow(NODE_DEFAULT, NULL, $3, NULL);
     }
     ;
 
 list:   /* empty */ { $$ = NULL; }
     | stmt list {
-        if ($2 == NULL)
+        if ($2 == NULL){
             $$ = newast(NODE_BLOCK, $1, NULL);
-        else
+        } else {
             $$ = newast(NODE_BLOCK, $1, $2);
+        }
     }
     ;
 
@@ -165,6 +163,7 @@ exp: exp OP_GT  exp { $$ = newast(NODE_GT, $1, $3); }
     | '-' exp %prec UMINUS { $$ = newast(NODE_UNARY_MINUS, $2, NULL); }
     | value
     | callfunc
+    | var
     ;
 
 var: TOKEN_IDENTIFIER '=' exp { $$ = newasgn($1, $3); }
@@ -176,7 +175,7 @@ callfunc:
     ;
 
 value:
-      TOKEN_IDENTIFIER { $$ = newref($1); }
+      TOKEN_IDENTIFIER { $$ = newref($<s>1); }
     | KEYWORD_TRUE { $$ = newbool($1); }
     | KEYWORD_FALSE { $$ = newbool($1); }
     | atom_value { $$ = $1; }

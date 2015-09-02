@@ -4,7 +4,7 @@
 #define true 1
 #define false 0
 
-int debug = 1;
+int debug = 0;
 
 static FILE *file;
 static char *buffer;
@@ -12,7 +12,7 @@ static int eof             = 0;
 static int nRow            = 0;
 static int nBuffer         = 0;
 static int lBuffer         = 0;
-static int lMaxBuffer      = 1024;
+static int lMaxBuffer      = 1024*1024;
 static int nTokenStart     = 0;
 static int nTokenLength    = 0;
 static int nTokenNextStart = 0;
@@ -25,8 +25,7 @@ int main(int argc, char *argv[])
     int i;
     char *infile = NULL;
     for (i = 1; i < argc; i++) {
-        if (strcmp(argv[i], "-debug") == 0) {
-            printf("Debugging activado\n");
+        if (strcmp(argv[i], "-d") == 0) {
             debug = 1;
         } else {
             infile = argv[i];
@@ -99,7 +98,7 @@ int get_next_line(void)
     nRow += 1;
     lBuffer = strlen(buffer);
     if(debug){
-        dump_row();    
+        dump_row();
     }
     return 0;
 }
@@ -125,22 +124,6 @@ int get_next_char(char *b, int maxBuffer)
     }
     b[0] = buffer[nBuffer];
     nBuffer += 1;
-    /*if (  debug  )*/
-    /*printf("get_next_char() => '%c'0x%02x at %d\n",*/
-    /*dump_char(b[0]), b[0], nBuffer);*/
     return b[0] == 0 ? 0 : 1;
 }
 
-static
-char *dump_string(char *s)
-{
-    static char buf[101];
-    int i;
-    int n = strlen(s);
-    if (n > 100)
-        n = 100;
-    for (i = 0; i < n; i++)
-        buf[i] = dump_char(s[i]);
-    buf[i] = 0;
-    return buf;
-}

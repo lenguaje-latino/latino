@@ -1,1 +1,0 @@
-../bin/src_eval.c.o ../bin/src_ffi.c.o ../bin/src_latino.c.o ../bin/src_lex.c.o ../bin/src_parse.c.o   

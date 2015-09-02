@@ -4,14 +4,14 @@
 #include "latino.h"
 #include "lio.h"
 
-#define FIRST_RESERVED 257
+#define FIRST_RESERVED 256
 
 enum RESERVED {
     TK_SI = FIRST_RESERVED,
     TK_SINO,
     TK_FIN,
-    TK_ELEGIR, /*260*/
-    TK_CASO,
+    TK_ELEGIR,
+    TK_CASO, /*260*/
     TK_DEFECTO,
     TK_DESDE,
     TK_HASTA,
@@ -20,8 +20,8 @@ enum RESERVED {
     TK_MIENTRAS,
     TK_HACER,
     TK_ROMPER,
-    TK_CONTINUAR, /*270*/
-    TK_FUNCION,
+    TK_CONTINUAR,
+    TK_FUNCION, /*270*/
     TK_RETORNO,
     TK_VERDADERO,
     TK_FALSO,
@@ -31,8 +31,8 @@ enum RESERVED {
     TK_ESTA,
     /* data types */
     TK_CARACTER,
-    TK_ENTERO, /*280*/
-    TK_DECIMAL,
+    TK_ENTERO,
+    TK_DECIMAL, /*280*/
     TK_CADENA,
     TK_IDENT,
     /* compare operators */
@@ -43,7 +43,7 @@ enum RESERVED {
     TK_Y_LOGICO,
     TK_O_LOGICO,
     TK_EOL,     /* end of line */
-    TK_EOS      /*290*/
+    TK_EOS      /*289*/
 };
 
 typedef union {

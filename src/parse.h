@@ -121,12 +121,12 @@ typedef union YYSTYPE
 {
 
 /* Line 1676 of yacc.c  */
-#line 8 "src/parse.y"
+#line 7 "src/parse.y"
 
     int fn; /* which function */
     char *b; /* boolean type*/
     char *c; /* char type */
-    int i;  /* int type */
+    long i;  /* int type */
     double d; /* double type */
     struct lat_string *str; /* string type */
     struct ast *a; /* astract syntax tree */

@@ -1,6 +1,6 @@
 i = 0
 mientras (i < 10)
-    si i == 5
+    si (i == 5)
         imprimir("cinco")
     sino
         imprimir(i)
@@ -8,11 +8,11 @@ mientras (i < 10)
     i = i + 1
 fin
 
-#pendiente
+#pendiente ROMPER
 #mientras (V)
 #    imprimir(i)
-#    #i = i + 1
-#    i++
+#    i = i + 1
+#    #i++
 #    si (i == 5)
 #         romper
 #    fin

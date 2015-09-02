@@ -30,10 +30,10 @@ src/lex.c : src/lex.l
 src/parse.o : src/parse.c
 	$(CC) -g -c src/parse.c -o src/parse.o
 
-src/latino.o : src/latino.c src/latino.h src/structs.h
+src/latino.o : src/latino.c src/latino.h
 	$(CC) -g -c src/latino.c -o src/latino.o
 
-src/eval.o : src/eval.c src/latino.h src/structs.h
+src/eval.o : src/eval.c src/latino.h
 	$(CC) -g -c src/eval.c -o src/eval.o
 
 src/lex.o : src/lex.c

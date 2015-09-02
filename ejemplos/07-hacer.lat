@@ -1,4 +1,4 @@
-#funcion principal(x)
+funcion principal(x)
     i=0
     hacer
         si (i == 5)
@@ -10,6 +10,6 @@
 	imprimir(i)
         i = i + 1
     cuando (i < 10)
-#fin
+fin
 
-#principal(0)
+principal(0)

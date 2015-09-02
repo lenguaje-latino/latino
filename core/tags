@@ -4,28 +4,31 @@ FIRST_RESERVED	llex.h	7;"	d
 LAT_FUNC	latino.h	6;"	d
 LAT_FUNC	latino.h	8;"	d
 LAT_MAXIDENTIFIER	latino.h	34;"	d
+NODE_FOR	last.h	/^    NODE_FOR$/;"	e	enum:node_type
+NODE_IF	last.h	/^    NODE_IF,$/;"	e	enum:node_type
+NODE_VALUE	last.h	/^    NODE_VALUE,$/;"	e	enum:node_type
 NUM_RESERVERD	llex.c	39;"	d	file:
 OK	latino.h	11;"	d
 RESERVED	llex.h	/^enum RESERVED {$/;"	g
 TK_CADENA	llex.h	/^    TK_CADENA,$/;"	e	enum:RESERVED
 TK_CARACTER	llex.h	/^    TK_CARACTER,$/;"	e	enum:RESERVED
-TK_CASO	llex.h	/^    TK_CASO,$/;"	e	enum:RESERVED
+TK_CASO	llex.h	/^    TK_CASO, \/*260*\/$/;"	e	enum:RESERVED
 TK_CLASE	llex.h	/^    TK_CLASE,$/;"	e	enum:RESERVED
 TK_CONSTRUCTOR	llex.h	/^    TK_CONSTRUCTOR,$/;"	e	enum:RESERVED
-TK_CONTINUAR	llex.h	/^    TK_CONTINUAR, \/*270*\/$/;"	e	enum:RESERVED
+TK_CONTINUAR	llex.h	/^    TK_CONTINUAR,$/;"	e	enum:RESERVED
 TK_CUANDO	llex.h	/^    TK_CUANDO,$/;"	e	enum:RESERVED
-TK_DECIMAL	llex.h	/^    TK_DECIMAL,$/;"	e	enum:RESERVED
+TK_DECIMAL	llex.h	/^    TK_DECIMAL, \/*280*\/$/;"	e	enum:RESERVED
 TK_DEFECTO	llex.h	/^    TK_DEFECTO,$/;"	e	enum:RESERVED
 TK_DESDE	llex.h	/^    TK_DESDE,$/;"	e	enum:RESERVED
 TK_DIFERENTE	llex.h	/^    TK_DIFERENTE,$/;"	e	enum:RESERVED
-TK_ELEGIR	llex.h	/^    TK_ELEGIR, \/*260*\/$/;"	e	enum:RESERVED
-TK_ENTERO	llex.h	/^    TK_ENTERO, \/*280*\/$/;"	e	enum:RESERVED
+TK_ELEGIR	llex.h	/^    TK_ELEGIR,$/;"	e	enum:RESERVED
+TK_ENTERO	llex.h	/^    TK_ENTERO,$/;"	e	enum:RESERVED
 TK_EOL	llex.h	/^    TK_EOL,     \/* end of line *\/$/;"	e	enum:RESERVED
-TK_EOS	llex.h	/^    TK_EOS      \/*290*\/$/;"	e	enum:RESERVED
+TK_EOS	llex.h	/^    TK_EOS      \/*289*\/$/;"	e	enum:RESERVED
 TK_ESTA	llex.h	/^    TK_ESTA,$/;"	e	enum:RESERVED
 TK_FALSO	llex.h	/^    TK_FALSO,$/;"	e	enum:RESERVED
 TK_FIN	llex.h	/^    TK_FIN,$/;"	e	enum:RESERVED
-TK_FUNCION	llex.h	/^    TK_FUNCION,$/;"	e	enum:RESERVED
+TK_FUNCION	llex.h	/^    TK_FUNCION, \/*270*\/$/;"	e	enum:RESERVED
 TK_HACER	llex.h	/^    TK_HACER,$/;"	e	enum:RESERVED
 TK_HASTA	llex.h	/^    TK_HASTA,$/;"	e	enum:RESERVED
 TK_IDENT	llex.h	/^    TK_IDENT,$/;"	e	enum:RESERVED
@@ -48,6 +51,7 @@ VALUE_DOUBLE	latino.h	/^    VALUE_DOUBLE,$/;"	e	enum:__anon1
 VALUE_INT	latino.h	/^    VALUE_INT,$/;"	e	enum:__anon1
 VALUE_NULL	latino.h	/^    VALUE_NULL,$/;"	e	enum:__anon1
 VALUE_STRING	latino.h	/^    VALUE_STRING$/;"	e	enum:__anon1
+_LAST_H_	last.h	2;"	d
 _LATINO_H_	latino.h	2;"	d
 _LIO_H_	lio.h	2;"	d
 _LLEX_H_	llex.h	2;"	d
@@ -131,10 +135,16 @@ main	main.c	/^int main(int argc, char *argv[])$/;"	f
 new_identifier	llex.c	/^static int new_identifier(lex_state *ls, lstring str)$/;"	f	file:
 next	llist.h	/^    struct _listNode *next;$/;"	m	struct:_listNode	typeref:struct:_listNode::_listNode
 next_char	llex.c	/^static void next_char(lex_state *ls)$/;"	f	file:
+node	last.h	/^typedef struct node{$/;"	s
+node	last.h	/^}node;$/;"	t	typeref:struct:node
+node_type	last.h	/^enum node_type {$/;"	g
+nt	last.h	/^    enum node_type nt;$/;"	m	struct:node	typeref:enum:node::node_type
 parse_addition	lparser.c	/^static void parse_addition(lex_state *ls){$/;"	f	file:
 parse_multiplication	lparser.c	/^static void parse_multiplication(lex_state *ls){$/;"	f	file:
 parser_error	lparser.c	/^static void parser_error(lex_state *ls, lstring msg)$/;"	f	file:
 parser_init	lparser.c	/^int parser_init(lstring path)$/;"	f
+parser_state	lparser.h	/^typedef struct parser_state{$/;"	s
+parser_state	lparser.h	/^}parser_state;$/;"	t	typeref:struct:parser_state
 pos	llex.h	/^    int pos; \/* position in buffer *\/$/;"	m	struct:lex_state
 r	llex.h	/^    int r;$/;"	m	union:__anon1
 read_char	llex.c	/^static int read_char(lex_state *ls, int del, semantic *sem_info)$/;"	f	file:
