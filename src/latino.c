@@ -126,4 +126,3 @@ int get_next_char(char *b, int maxBuffer)
     nBuffer += 1;
     return b[0] == 0 ? 0 : 1;
 }
-

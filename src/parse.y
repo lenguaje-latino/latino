@@ -101,6 +101,10 @@ stmt:
         $$ = newfor(NODE_FROM, $2, $4, $5, NULL); }
     | KEYWORD_FROM exp KEYWORD_TO exp KEYWORD_STEP '=' value list  KEYWORD_END {
         $$ = newfor(NODE_FROM, $2, $4, $8, $7); }
+    | KEYWORD_FROM var KEYWORD_TO exp list KEYWORD_END {
+        $$ = newfor(NODE_FROM, $2, $4, $5, NULL); }
+    | KEYWORD_FROM var KEYWORD_TO exp KEYWORD_STEP '=' value list  KEYWORD_END {
+        $$ = newfor(NODE_FROM, $2, $4, $8, $7); }
     | KEYWORD_FUNCTION TOKEN_IDENTIFIER '(' symlist ')' list KEYWORD_END {
         dodef($2, $4, $6);
         $$ = NULL;
@@ -111,7 +115,7 @@ stmt:
     ;
 
 jump_stmt : KEYWORD_RETURN exp { $$ = newast(NODE_RETURN, $2, NULL);}
-    | KEYWORD_RETURN callfunc { $$ = newast(NODE_RETURN, $2, NULL);}
+    /*| KEYWORD_RETURN callfunc { $$ = newast(NODE_RETURN, $2, NULL);}*/
     ;
 
 cases:
@@ -137,10 +141,10 @@ default:
 
 list:   /* empty */ { $$ = NULL; }
     | stmt list {
-        if ($2 == NULL){
-            $$ = newast(NODE_BLOCK, $1, NULL);
-        } else {
+        if ($2){
             $$ = newast(NODE_BLOCK, $1, $2);
+        } else {
+            $$ = newast(NODE_BLOCK, $1, NULL);
         }
     }
     ;
@@ -163,7 +167,6 @@ exp: exp OP_GT  exp { $$ = newast(NODE_GT, $1, $3); }
     | '-' exp %prec UMINUS { $$ = newast(NODE_UNARY_MINUS, $2, NULL); }
     | value
     | callfunc
-    | var
     ;
 
 var: TOKEN_IDENTIFIER '=' exp { $$ = newasgn($1, $3); }

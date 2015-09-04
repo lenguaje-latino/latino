@@ -3,9 +3,9 @@ funcion factorial(n)
     x = 1.0
     desde i=2 hasta (n + 1)
         x = x * i
-        imprimir("i:"  + i + ", x:"  + x)
+        #imprimir("i:"  + i + ", x:"  + x)
     fin
     retorno x
 fin
 
-imprimir("factorial de 10 es:" + factorial(10))
+imprimir("el factorial de 10 es: " + factorial(1))

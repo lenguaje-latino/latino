@@ -262,7 +262,6 @@ newfor(node_type nodetype, ast *begin, ast *end, ast *stmts, ast *step)
 void
 treefree(ast *a)
 {
-
     switch (a->nodetype) {
     /* two subtrees */
     case NODE_ADD:
@@ -279,9 +278,10 @@ treefree(ast *a)
     case NODE_GE:
     case NODE_LE:
     case NODE_BLOCK:
-        if(a->r)
+        /*printf("treefree->%s\n", "NODE_BLOCK");*/
+        if (a->r)
             treefree(a->r);
-        if(a->l)
+        if (a->l)
             treefree(a->l);
         break;
     /* one subtree */
@@ -291,7 +291,7 @@ treefree(ast *a)
     case NODE_LIST_SYMBOLS:
     case NODE_RETURN:
     case NODE_BUILTIN_FUNCTION:
-        if(a->l)
+        if (a->l)
             treefree(a->l);
         break;
     /* no subtree */
@@ -302,7 +302,7 @@ treefree(ast *a)
     case NODE_BOOLEAN:
         break;
     case NODE_ASSIGMENT:
-        if(((symasgn *)a)->v)
+        if (((symasgn *)a)->v)
             treefree(((symasgn *)a)->v);
         free(((symasgn *)a)->s);
         break;
@@ -421,6 +421,8 @@ bool2str(int i)
 lat_value *
 eval_node_add(lat_value *left, lat_value *right)
 {
+    /*printf("tipo-left=%i\n", left->t);*/
+    /*printf("tipo-right=%i\n", right->t);*/
     lat_value *result = malloc(sizeof(lat_value));
     switch (left->t) {
     case VALUE_BOOL:
@@ -1231,13 +1233,15 @@ eval_node_le(lat_value *left, lat_value *right)
     return result;
 }
 
+lat_value *func_value;
+lat_value *val;
+lat_value *val1;
 /* evaluar ast */
 lat_value *
 eval(ast *a)
 {
+    /*printf("eval->type:%i\n", a->nodetype);*/
     double v;
-    lat_value *val = malloc(sizeof(lat_value));
-    lat_value *val1 = malloc(sizeof(lat_value));
     if (!a) {
         yyerror("eval es nulo\n");
         return val;
@@ -1252,25 +1256,39 @@ eval(ast *a)
         return ((node *)a)->value;
         break;
     /* name reference */
-    case NODE_SYMBOL:
+    case NODE_SYMBOL: {
         if (((symref *)a)->s->value == NULL) {
             yyerror("variable sin definir");
         } else {
+            /*printf("node_symbol=%i\n", ((symref *)a)->s->value->t);*/
+            /*printf("node_symbol.v=%i\n", ((symref *)a)->s->value->v.i);*/
+            /*printf("node_symbol.v=%i\n", ((symref *)a)->s->func*/
+            //val = eval(((symref *)a)->s->value);
             return ((symref *)a)->s->value;
         }
-        return NULL;
-        break;
+    }
+    break;
     /* assignment */
-    case NODE_ASSIGMENT:
+    case NODE_ASSIGMENT: {
+        /*printf("node_assigment=%s\n", ((symasgn *)a)->s->name);*/
+        val = eval(((symasgn *)a)->v);
+        /*printf("node_assigment.v=%s\n", ((symasgn *)a)->s->value->v.s);*/
+        /*printf("node_assigment.v=%i\n", val->v.i);*/
         ((symasgn *)a)->s->value = eval(((symasgn *)a)->v);
         return ((symasgn *)a)->s->value;
-        break;
+    }
+    break;
     case NODE_UNARY_MINUS:
         val = eval_node_unary_minus(eval(a->l));
+        printf("unary_minus=%i\n", val->v.i);
         return val;
         break;
     /* expressions */
     case NODE_ADD:
+        /*val = eval(a->l);*/
+        /*printf("l=%i\n", val->t);*/
+        /*val1 = eval(a->r);*/
+        /*printf("r=%i\n", val1->t);*/
         val = eval_node_add(eval(a->l), eval(a->r));
         return val;
         break;
@@ -1430,36 +1448,69 @@ eval(ast *a)
         return val;
         break;
     case NODE_BLOCK:
-        if (a->l) {
-            if (a->l->nodetype == NODE_RETURN) {
-                val = eval(a->l);
-                return val;
-                break;
-            }
-            eval(a->l);
+    case NODE_RETURN: {
+        /*printf("NODE_BLOCK inicio%s\n", "");*/
+        if (a->nodetype == NODE_RETURN) {
+            /*printf("inicio NODE_RETURN: %i\n", a->nodetype);
+            if(a->l) printf("a->l->nodetype: %i\n", a->l->nodetype );
+            if(a->r) printf("a->r->nodetype: %i\n\n", a->r->nodetype );*/
+            val = eval(a->l);
+            func_value = val;
+            /*printf("fin NODE_RETURN: %i\n", a->nodetype);*/
+            return val;
+            /*printf("return despues break%s\n", "");*/
+            //break;
         }
-        if (a->r) {
-            val = eval(a->r);
+        if(a->nodetype == NODE_BLOCK){
+            /*printf("inicio NODE_BLOCK: %i\n", a->nodetype);*/
+            if (a->r) {
+                if (a->l) {
+                    /*if(a->l) printf("a->l->nodetype: %i\n", a->l->nodetype );
+                    if(a->r) printf("a->r->nodetype: %i\n\n", a->r->nodetype );*/
+                    eval(a->l);
+                }
+                val = eval(a->r);
+                /*printf("NODE_BLOCK val right:%i\n", val->v.i);*/
+            } else {
+                if (a->l) {
+                    /*if(a->l) printf("a->l->nodetype: %i\n", a->l->nodetype );
+                    if(a->r) printf("a->r->nodetype: %i\n\n", a->r->nodetype );*/
+                    eval(a->l);
+                }
+            }
+            /*printf("fin NODE_BLOCK: %i\n", a->nodetype);*/
         }
         return val;
         break;
+    }
     case NODE_BUILTIN_FUNCTION:
         v = callbuiltin((fncall *)a);
         break;
-    case NODE_USER_FUNCTION:
-        return calluser((ufncall *)a);
+    case NODE_USER_FUNCTION: {
+        /*printf("node_user_fun=%s\n", ((ufncall *)a)->s->name);*/
+        val = calluser((ufncall *)a);
+        return val;
         break;
+    }
     case NODE_LIST_SYMBOLS:
-        val = eval(a->l);
+        if (a->l) {
+            val = eval(a->l);
+            /*printf("node_list=%i\n", val->t);*/
+            /*printf("node_list.v=%i\n", val->v.i);*/
+        }
         //val = eval(a->r);
         return val;
         break;
-    case NODE_RETURN:
+    /*case NODE_RETURN: {
+        printf("NODE_RETURN inicio%s\n", "");
         if (a->l) {
             val = eval(a->l);
+            printf("NODE_RETURN = %i\n", val->v.i);
         }
+        printf("NODE_RETURN fin%s\n", "");
         return val;
         break;
+    }*/
     default:
         printf("nodo incorrecto %i\n", a->nodetype);
         break;
@@ -1521,6 +1572,7 @@ callbuiltin(fncall *f)
 void
 dodef(struct symbol *s, symlist *syms, ast *func)
 {
+    /*printf("dodef=%s\n", s->name);*/
     s->syms = syms;
     s->func = func;
 }
@@ -1528,6 +1580,7 @@ dodef(struct symbol *s, symlist *syms, ast *func)
 lat_value *
 calluser(ufncall *f)
 {
+    /*printf("fn->name=%s\n", f->s->name);*/
     struct symbol *fn = f->s; /* function name */
     symlist *sl; /* dummy arguments */
     ast *args = f->l; /* actual arguments */
@@ -1563,7 +1616,8 @@ calluser(ufncall *f)
             newval[i] = eval(args->l);
             args = args->r;
         } else { /* if it's the end of the list */
-            newval[i] = eval(args);
+            /*newval[i] = eval(args);*/
+            newval[i] = eval(args->l);
             args = NULL;
         }
     }
@@ -1577,7 +1631,14 @@ calluser(ufncall *f)
     }
     free(newval);
     /* evaluate the function */
-    v = eval(fn->func);
+    /*printf("evaluate function=%s\n", fn->name);*/
+    if (fn->func) {
+        eval(fn->func);
+        v = func_value;
+        /*fn->value = v;*/
+        /*printf("fn->name=%s, type=%i, value=%i\n", fn->name, v->t, v->v.i);*/
+        /*printf("fn->name=%s, type=%i, value=%i\n", fn->name, func_value->t, func_value->v.i);*/
+    }
     /* put the real values of the dummies back */
     sl = fn->syms;
     for (i = 0; i < nargs; i++) {
@@ -1588,4 +1649,3 @@ calluser(ufncall *f)
     free(oldval);
     return v;
 }
-

@@ -1,18 +1,22 @@
+imprimir("***desde 0 hasta 10")
 i = 0
 desde i hasta 10
     imprimir(i)
 fin
 
+imprimir("***desde 20 hasta 0")
 i = 20
 desde i hasta 0
     imprimir(i)
 fin
 
+imprimir("***desde 2 hasta 2")
 i = 2
 desde i hasta 2
     imprimir(i)
 fin
 
+imprimir("***desde 0 hasta 20 salto 2")
 i = 0
 desde i hasta 20 salto=2
     imprimir(i)
