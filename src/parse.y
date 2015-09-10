@@ -77,9 +77,18 @@
 program: /* empty */
     | program list {
         if($2) {
-            /* print_ast($2); */
             eval($2);
             treefree($2);
+        }
+    }
+    ;
+
+list:   /* empty */ { $$ = NULL; }
+    | stmt list {
+        if ($2){
+            $$ = newast(NODE_BLOCK, $1, $2);
+        } else {
+            $$ = newast(NODE_BLOCK, $1, NULL);
         }
     }
     ;
@@ -115,7 +124,6 @@ stmt:
     ;
 
 jump_stmt : KEYWORD_RETURN exp { $$ = newast(NODE_RETURN, $2, NULL);}
-    /*| KEYWORD_RETURN callfunc { $$ = newast(NODE_RETURN, $2, NULL);}*/
     ;
 
 cases:
@@ -136,16 +144,6 @@ case:
 default:
     KEYWORD_DEFAULT ':' list {
         $$ = newflow(NODE_DEFAULT, NULL, $3, NULL);
-    }
-    ;
-
-list:   /* empty */ { $$ = NULL; }
-    | stmt list {
-        if ($2){
-            $$ = newast(NODE_BLOCK, $1, $2);
-        } else {
-            $$ = newast(NODE_BLOCK, $1, NULL);
-        }
     }
     ;
 

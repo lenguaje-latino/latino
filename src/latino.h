@@ -183,7 +183,6 @@ ast *newast(node_type nodetype, ast *l, ast *r);
 ast *newfunc(int functype, ast *l);
 ast *newcall(struct symbol *s, ast *l);
 ast *newref(struct symbol *s);
-/*ast *newref(char *s);*/
 ast *newasgn(struct symbol *s, ast *v);
 ast *newnum(double d);
 ast *newint(long i);

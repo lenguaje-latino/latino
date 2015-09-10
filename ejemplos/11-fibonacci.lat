@@ -1,9 +1,9 @@
+#por el momento latino no soporta RECURSION
+
 #mala implementacion (recursiva)
 funcion fibonacci(n)
-    #retorno n
-    #imprimir("n="+n)
     si ( n <= 1 )
-        retorno n
+        retorno 1
     sino
         retorno fibonacci(n-1) + fibonacci(n-2)
     fin
@@ -12,47 +12,38 @@ fin
 #mejor implementacion (iterativa)
 funcion fibo(n)
     si (n == 0)
-        imprimir("retorno 0")
-        retorno n
+        retorno 0
     fin
     si (n == 1)
-        imprimir("retorno 1")
-        retorno n
-        imprimir("esto no se deberia de imprimir")
+        retorno 1
     fin
 
-    imprimir("mayor a 1")
     prevPrev = 0
     prev = 1
     res = 0
-    x = 2
-    mientras( x <= n)
+    i = 2
+    mientras( i <= n)
         res = prev + prevPrev
-        imprimir(res)
         prevPrev = prev
         prev = res
-        x = x + 1
+        i = i + 1
     fin
-
-    imprimir("fin res: "+ res)
-    #retorno res
+    retorno res
 fin
 
-#r = fibonacci(7)
-#imprimir("fibonacci de 7 es: " + r)
-
 #imprimir("version recursiva")
-#imprimir la serie de 45
+##imprimir la serie de 45 (stack overflow)
 #desde i=0 hasta 20
 #    imprimir(i + " : " + fibonacci(i))
 #fin
 
 imprimir("version iterativa")
-imprimir("fibo de 1:" + fibo(1))
-#desde y=0 hasta 20
-#    imprimir(y + " : " + fibo(y))
-#fin
+#imprimir("fibo de 1:" + fibo(1))
+desde y=0 hasta 46
+    imprimir(y + " : " + fibo(y))
+fin
 
+# 0: 0
 # 1: 1
 # 2: 1
 # 3: 2
