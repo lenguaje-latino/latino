@@ -31,8 +31,10 @@ int main(int argc, char *argv[])
             infile = argv[i];
         }
     }
-    if (infile == NULL)
-        printf("Especifique un archivo\n");
+	if (infile == NULL){
+		printf("Especifique un archivo\n");
+		return EXIT_FAILURE;
+	}
     file = fopen(infile, "r");
     if (file == NULL) {
         printf("No se pudo abrir el archivo\n");

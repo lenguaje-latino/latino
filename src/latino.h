@@ -32,7 +32,6 @@ void yyerror(char *s, ...);
 /* interface to the lexer */
 extern int yylineno;    /* from lexer */
 
-
 /* data types */
 typedef enum {
     VALUE_NULL, /*0*/
@@ -103,7 +102,6 @@ typedef enum {
     NODE_CASES,
     NODE_FROM
 } node_type;
-
 
 /* nodes in the abstract syntax tree */
 /* all have common initial nodetype */

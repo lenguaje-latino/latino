@@ -1,5 +1,6 @@
 #ignora directorio bin
 bin/
+build/
 
 #ignora archivo objeto
 *.o

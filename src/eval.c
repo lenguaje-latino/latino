@@ -378,7 +378,7 @@ int2str(long i)
 {
     char s[255];
     lat_string *r = malloc(strlen(s) + 1);
-    snprintf(s, 255, "%ld", i);
+    _snprintf(s, 255, "%ld", i);
     strcpy(r, s);
     return r;
 }
@@ -388,7 +388,7 @@ double2str(double d)
 {
     char s[64];
     lat_string *r = malloc(strlen(s) + 1);
-    snprintf(s, 64, "%g", (float)d);
+    _snprintf(s, 64, "%g", (float)d);
     strcpy(r, s);
     return r;
 }
@@ -398,7 +398,7 @@ char2str(char c)
 {
     char s[2];
     lat_string *r = malloc(2);
-    snprintf(s, 2, "%c", c);
+    _snprintf(s, 2, "%c", c);
     strcpy(r, s);
     return r;
 }
@@ -409,10 +409,10 @@ bool2str(int i)
     char s[10];
     lat_string *r = malloc(11);
     if (i) {
-        snprintf(s, 10, "%s", "verdadero");
+        _snprintf(s, 10, "%s", "verdadero");
         strcpy(r, s);
     } else {
-        snprintf(s, 10, "%s", "falso");
+        _snprintf(s, 10, "%s", "falso");
         strcpy(r, s);
     }
     return r;
