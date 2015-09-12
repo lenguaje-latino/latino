@@ -13,6 +13,16 @@
 #include <float.h>
 #include "parse.h"
 
+
+#if defined(__GNUC__) && ((__GNUC__*100 + __GNUC_MINOR__) >= 302) && \
+defined(__ELF__)
+#define LAT_FUNC    __attribute__((visibility("hidden"))) extern
+#define lnsprintf(s, l, f, i)  snprintf(s, l, f, i)
+#else
+#define LAT_FUNC    extern
+#define lnsprintf(s, l, f, i)  _snprintf(s, l, f, i)
+#endif
+
 /*
  * global variable
  */

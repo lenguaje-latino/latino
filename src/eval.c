@@ -11,7 +11,7 @@
 static long
 symhash(char *sym)
 {
-    long hash = 0;
+    int hash = 0;
     int len = strlen(sym);
     while (len--) hash = (hash << 5) - hash + *sym++;
     return abs(hash);
@@ -378,7 +378,7 @@ int2str(long i)
 {
     char s[255];
     lat_string *r = malloc(strlen(s) + 1);
-    _snprintf(s, 255, "%ld", i);
+    lnsprintf(s, 255, "%ld", i);
     strcpy(r, s);
     return r;
 }
@@ -388,7 +388,7 @@ double2str(double d)
 {
     char s[64];
     lat_string *r = malloc(strlen(s) + 1);
-    _snprintf(s, 64, "%g", (float)d);
+    lnsprintf(s, 64, "%g", (float)d);
     strcpy(r, s);
     return r;
 }
@@ -398,7 +398,7 @@ char2str(char c)
 {
     char s[2];
     lat_string *r = malloc(2);
-    _snprintf(s, 2, "%c", c);
+    lnsprintf(s, 2, "%c", c);
     strcpy(r, s);
     return r;
 }
@@ -409,10 +409,10 @@ bool2str(int i)
     char s[10];
     lat_string *r = malloc(11);
     if (i) {
-        _snprintf(s, 10, "%s", "verdadero");
+        lnsprintf(s, 10, "%s", "verdadero");
         strcpy(r, s);
     } else {
-        _snprintf(s, 10, "%s", "falso");
+        lnsprintf(s, 10, "%s", "falso");
         strcpy(r, s);
     }
     return r;

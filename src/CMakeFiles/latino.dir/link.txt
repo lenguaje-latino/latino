@@ -1,0 +1,1 @@
+/usr/bin/cc   -Wall    CMakeFiles/latino.dir/latino.c.o CMakeFiles/latino.dir/eval.c.o CMakeFiles/latino.dir/parse.c.o CMakeFiles/latino.dir/lex.c.o  -o latino -rdynamic -lm 

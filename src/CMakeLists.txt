@@ -1,3 +1,9 @@
+set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -Wall")
+
+if(UNIX)
+    link_libraries(m)
+endif(UNIX)
+
 FIND_PACKAGE(BISON REQUIRED)
 FIND_PACKAGE(FLEX REQUIRED)
 
