@@ -1,26 +1,21 @@
 #include "latino.h"
 #include "parse.h"
 
-#define true 1
-#define false 0
-
 int debug = 0;
 
 static FILE *file;
 static char *buffer;
-static int eof             = 0;
-static int nRow            = 0;
-static int nBuffer         = 0;
-static int lBuffer         = 0;
-static int lMaxBuffer      = 1024*1024;
-static int nTokenStart     = 0;
-static int nTokenLength    = 0;
+static int eof = 0;
+static int nRow = 0;
+static int nBuffer = 0;
+static int lBuffer = 0;
+static int nTokenStart = 0;
+static int nTokenLength = 0;
 static int nTokenNextStart = 0;
 
 int yyparse();
 
-extern
-int main(int argc, char *argv[])
+extern int main(int argc, char *argv[])
 {
     int i;
     char *infile = NULL;
@@ -40,9 +35,9 @@ int main(int argc, char *argv[])
         printf("No se pudo abrir el archivo\n");
         return EXIT_FAILURE;
     }
-    buffer = malloc(lMaxBuffer);
+    buffer = malloc(BUF_SIZE);
     if (buffer == NULL) {
-        printf("No se pudo asignar %d bytes de memoria\n", lMaxBuffer);
+        printf("No se pudo asignar %d bytes de memoria\n", BUF_SIZE);
         fclose(file);
         return EXIT_FAILURE;
     }
@@ -52,8 +47,7 @@ int main(int argc, char *argv[])
     return EXIT_SUCCESS;
 }
 
-extern
-void print_error(char *errorstring, ...)
+extern void printError(char *errorstring, ...)
 {
     static char errmsg[1024];
     va_list args;
@@ -63,8 +57,7 @@ void print_error(char *errorstring, ...)
     fprintf(stdout, "Error: %s\n", errmsg);
 }
 
-extern
-void dump_row(void)
+extern void dumpRow(void)
 {
     if (nRow == 0) {
         int i;
@@ -82,15 +75,14 @@ void dump_row(void)
     }
 }
 
-static
-int get_next_line(void)
+static int getNextLine(void)
 {
     char *p;
     nBuffer = 0;
     nTokenStart = -1;
     nTokenNextStart = 1;
     eof = false;
-    p = fgets(buffer, lMaxBuffer, file);
+    p = fgets(buffer, BUF_SIZE, file);
     if (p == NULL) {
         if (ferror(file))
             return -1;
@@ -100,27 +92,25 @@ int get_next_line(void)
     nRow += 1;
     lBuffer = strlen(buffer);
     if(debug){
-        dump_row();
+        dumpRow();
     }
     return 0;
 }
 
-static
-char dump_char(char c)
+static char dumpChar(char c)
 {
     if (isprint(c))
         return c;
     return '@';
 }
 
-extern
-int get_next_char(char *b, int maxBuffer)
+extern int getNextChar(char *b, int maxBuffer)
 {
     int frc;
     if (eof)
         return 0;
     while (nBuffer >= lBuffer) {
-        frc = get_next_line();
+        frc = getNextLine();
         if (frc != 0)
             return 0;
     }

@@ -2,16 +2,18 @@
 %option noyywrap
 %option warn
 %option nodefault
+%option nounistd
 
 %{
 #include <string.h>
 #include <stdlib.h>
 #include "latino.h"
+#include "ast.h"
 
 int yyleng = 32;
 
 #define YY_INPUT(buf,result,max_size)  {\
-    result = get_next_char(buf, max_size); \
+    result = getNextChar(buf, max_size); \
     if (  result <= 0  ) \
       result = YY_NULL; \
     }
@@ -76,8 +78,8 @@ EXP ([Ee][-+]?[0-9]+)
 [0-9]+"."+[0-9]*{EXP}?|"."+[0-9]+{EXP}?       { yylval.d = strtod(yytext, NULL); return TOKEN_NUMBER; }
  /*[0-9]+"."+[0-9]*       { printf("lex_double"); yylval.d = strtod(yytext, NULL); return TOKEN_NUMBER; }*/
 [0-9]+                 { yylval.i = strtol(yytext, NULL, 0); return TOKEN_INT; }
-\"([^\\\"]|\\.)*\"     { yylval.str = newstr(yytext+1, strlen(yytext)-2);return TOKEN_STRING; }
-'([^'\\\n]|\\.)'       { yylval.c = newchar(yytext+1, strlen(yytext)-2); return TOKEN_CHAR; }
+\"([^\\\"]|\\.)*\"     { yylval.str = newStr(yytext+1, strlen(yytext)-2);return TOKEN_STRING; }
+'([^'\\\n]|\\.)'       { yylval.c = newChar(yytext+1, strlen(yytext)-2); return TOKEN_CHAR; }
 "#".* /* ignore comments */
 \\\n                   { ; } /* ignore line continuation */
 [ \t\n] /* ignore whitespace  tabs and eol */

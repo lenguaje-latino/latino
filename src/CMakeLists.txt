@@ -48,7 +48,9 @@ FLEX_TARGET(MyScanner ${CMAKE_CURRENT_SOURCE_DIR}/lex.l ${CMAKE_CURRENT_SOURCE_D
 ADD_FLEX_BISON_DEPENDENCY(MyScanner MyParser)
 
 #INCLUDE_DIRECTORIES(${CMAKE_CURRENT_BINARY_DIR})
-ADD_EXECUTABLE(latino latino.c eval.c ${BISON_MyParser_OUTPUTS} ${FLEX_MyScanner_OUTPUTS} )
+
+set(SOURCES utils.h ast.h khash.h latino.h latino.c eval.c ast.c utils.c)
+ADD_EXECUTABLE(latino ${SOURCES} ${BISON_MyParser_OUTPUTS} ${FLEX_MyScanner_OUTPUTS} )
 
 TARGET_LINK_LIBRARIES(latino
     ${BISON_LIBRARIES}

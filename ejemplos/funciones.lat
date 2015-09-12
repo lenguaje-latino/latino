@@ -32,20 +32,7 @@ funcion fun_1(a)
     #retorno 0
 fin
 
-#TODO: error al llamar a funcion sin parametros
-#fun(0)
+fun()
+
 #TODO: no evia error cuando se pasan mas argumentos
-#fun_1(100, 2, 1)
-
-funcion fibo(n)
-    si (n < 2)
-        retorno 1
-    sino
-        retorno fibo(n - 1) + fibo(n - 2)
-    fin
-    retorno 100
-fin
-
-result = fibo(5)
-imprimir(result)
-
+fun_1(100, 2, 1)

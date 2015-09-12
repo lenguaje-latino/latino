@@ -8,4 +8,4 @@ funcion factorial(n)
     retorno x
 fin
 
-imprimir("el factorial de 10 es: " + factorial(1))
+imprimir("el factorial de 5 es: " + factorial(5))

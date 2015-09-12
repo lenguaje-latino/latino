@@ -4,410 +4,48 @@
 #include <stdarg.h>
 #include <string.h>
 #include <math.h>
-#include <stdbool.h>
 #include "latino.h"
+#include "ast.h"
 
-/* tabla de simbolos */
-static long
-symhash(char *sym)
+static latString *concat(latString *s1, latString *s2)
 {
-    int hash = 0;
-    int len = strlen(sym);
-    while (len--) hash = (hash << 5) - hash + *sym++;
-    return abs(hash);
-}
-
-static char *
-strdup0(const char *s)
-{
-    size_t len = strlen(s);
-    char *p;
-    p = (char *)malloc(len + 1);
-    if (p) {
-        strncpy(p, s, len);
-    }
-    p[len] = '\0';
-    return p;
-}
-
-struct symbol *
-lookup(char *sym, lat_value *v)
-{
-    symbol *sp = &symtab[symhash(sym) % NHASH];
-    int scount        = NHASH; /* how many have we looked at */
-    while (--scount >= 0) {
-        if (sp->name && !strcmp(sp->name, sym)) {
-            if (v != NULL) {
-                /* set value to symbol if exists */
-                sp->value = v;
-            }
-            return sp;
-        }
-        if (!sp->name) { /* new entry*/
-            sp->name  = strdup0(sym);
-            sp->value = NULL;
-            sp->func  = NULL;
-            sp->syms  = NULL;
-            return sp;
-        }
-        if (++sp >= symtab + NHASH)
-            sp = symtab; /* try the next entry */
-    }
-    yyerror("desbordamiento de la tabla de simbolos\n");
-    abort();    /* tried them all, table is full */
-}
-
-ast *
-newast(node_type nodetype, ast *l, ast *r)
-{
-    ast *a = malloc(sizeof(ast));
-    if (!a) {
-        yyerror("sin espacio\n");
-        exit(0);
-    }
-    a->nodetype = nodetype;
-    a->l = l;
-    a->r = r;
-    return a;
-}
-
-ast *
-newint(long i)
-{
-    node *a = malloc(sizeof(node));
-    if (!a) {
-        yyerror("sin espacio\n");
-        exit(0);
-    }
-    a->nodetype = NODE_INT;
-    lat_value *val = malloc(sizeof(lat_value));
-    val->t = VALUE_INT;
-    val->v.i = i;
-    a->value = val;
-    return (ast *)a;
-}
-
-ast *
-newnum(double d)
-{
-    node *a = malloc(sizeof(node));
-    if (!a) {
-        yyerror("sin espacio\n");
-        exit(0);
-    }
-    a->nodetype = NODE_DECIMAL;
-    lat_value *val = malloc(sizeof(lat_value));
-    val->t = VALUE_DOUBLE;
-    val->v.d = d;
-    a->value = val;
-    return (ast *)a;
-}
-
-ast *
-newbool(char *b)
-{
-    node *a = malloc(sizeof(node));
-    if (!a) {
-        yyerror("sin espacio\n");
-        exit(0);
-    }
-    a->nodetype = NODE_BOOLEAN;
-    lat_value *val = malloc(sizeof(lat_value));
-    val->t = VALUE_BOOL;
-    char *t = "verdadero";
-    int ret = strncmp(t, b, 5);
-    if (ret == 0) {
-        val->v.b = 1;
-    } else {
-        val->v.b = 0;
-    }
-    a->value = val;
-    return (ast *)a;
-}
-
-static unsigned char *
-strndup0(const unsigned char *s, size_t n)
-{
-    size_t i;
-    const unsigned char *p = s;
-    unsigned char *new;
-    for (i = 0; i < n && *p; i++, p++)
-        ;
-    new = (unsigned char *)malloc(i + 1);
-    if (new) {
-        memcpy(new, s, i);
-        new[i] = '\0';
-    }
-    return new;
-}
-
-ast *
-newchar(lat_string *c, size_t l)
-{
-    node *a = malloc(sizeof(node));
-    if (!a) {
-        yyerror("sin espacio\n");
-        exit(0);
-    }
-    a->nodetype = NODE_CHAR;
-    lat_value *val = malloc(sizeof(lat_value));
-    val->t = VALUE_CHAR;
-    val->v.c = c[0];
-    a->value = val;
-    return (ast *)a;
-}
-
-ast *
-newstr(lat_string *s, size_t l)
-{
-    node *a = malloc(sizeof(node));
-    if (!a) {
-        yyerror("sin espacio\n");
-        exit(0);
-    }
-    a->nodetype = NODE_STRING;
-    lat_value *val = malloc(sizeof(lat_value));
-    val->t = VALUE_STRING;
-    val->v.s = strndup0(s, l);
-    a->value = val;
-    return (ast *)a;
-}
-
-ast *
-newfunc(int functype, ast *l)
-{
-    fncall *a = malloc(sizeof(fncall));
-    if (!a) {
-        yyerror("sin espacio\n");
-        exit(0);
-    }
-    a->nodetype = NODE_BUILTIN_FUNCTION;
-    a->l = l;
-    a->functype = functype;
-    return (ast *)a;
-}
-
-ast *
-newcall(struct symbol *s, ast *l)
-{
-    ufncall *a = malloc(sizeof(ufncall));
-    if (!a) {
-        yyerror("sin espacio\n");
-        exit(0);
-    }
-    a->nodetype = NODE_USER_FUNCTION;
-    a->l = l;
-    a->s = s;
-    return (ast *)a;
-}
-
-ast *
-newref(struct symbol *s)
-{
-    symref *a = malloc(sizeof(symref));
-    if (!a) {
-        yyerror("sin espacio\n");
-        exit(0);
-    }
-    a->nodetype = NODE_SYMBOL;
-    a->s = lookup(s->name, NULL);
-    return (ast *)a;
-}
-
-ast *
-newasgn(struct symbol *s, ast *v)
-{
-    symasgn *a = malloc(sizeof(symasgn));
-    if (!a) {
-        yyerror("sin espacio\n");
-        exit(0);
-    }
-    a->nodetype = NODE_ASSIGMENT;
-    a->s = s;
-    a->v = v;
-    return (ast *)a;
-}
-
-ast *
-newflow(node_type nodetype, ast *cond, ast *tl, ast *el)
-{
-    flow *a = malloc(sizeof(flow));
-    if (!a) {
-        yyerror("sin espacio\n");
-        exit(0);
-    }
-    a->nodetype = nodetype;
-    a->cond = cond;
-    a->tl = tl;
-    a->el = el;
-    return (ast *)a;
-}
-
-ast *
-newfor(node_type nodetype, ast *begin, ast *end, ast *stmts, ast *step)
-{
-    node_for *a = malloc(sizeof(node_for));
-    if (!a) {
-        yyerror("sin espacio\n");
-        exit(0);
-    }
-    a->nodetype = nodetype;
-    a->begin = begin;
-    a->end = end;
-    a->stmts = stmts;
-    a->step = step;
-    return (ast *)a;
-}
-
-/* free a tree of ASTs */
-void
-treefree(ast *a)
-{
-    switch (a->nodetype) {
-    /* two subtrees */
-    case NODE_ADD:
-    case NODE_SUB:
-    case NODE_MULT:
-    case NODE_DIV:
-    case NODE_MOD:
-    case NODE_AND:
-    case NODE_OR:
-    case NODE_EQ:
-    case NODE_NEQ:
-    case NODE_GT:
-    case NODE_LT:
-    case NODE_GE:
-    case NODE_LE:
-    case NODE_BLOCK:
-        if (a->r)
-            treefree(a->r);
-        if (a->l)
-            treefree(a->l);
-        break;
-    /* one subtree */
-    case NODE_NEG:
-    case NODE_UNARY_MINUS:
-    case NODE_USER_FUNCTION:
-    case NODE_LIST_SYMBOLS:
-    case NODE_RETURN:
-    case NODE_BUILTIN_FUNCTION:
-        if (a->l)
-            treefree(a->l);
-        break;
-    /* no subtree */
-    case NODE_INT:
-    case NODE_CHAR:
-    case NODE_DECIMAL:
-    case NODE_SYMBOL:
-    case NODE_BOOLEAN:
-        break;
-    case NODE_ASSIGMENT:
-        if (((symasgn *)a)->v)
-            treefree(((symasgn *)a)->v);
-        free(((symasgn *)a)->s);
-        break;
-    /* up to three subtrees */
-    case NODE_IF:
-    case NODE_DO:
-    case NODE_WHILE:
-    case NODE_SWITCH:
-    case NODE_CASES:
-    case NODE_CASE:
-    case NODE_DEFAULT:
-        if (((flow *)a)->el)
-            treefree(((flow *)a)->el);
-        if (((flow *)a)->tl)
-            treefree(((flow *)a)->tl);
-        if (((flow *)a)->cond)
-            treefree(((flow *)a)->cond);
-        break;
-    case NODE_FROM:
-        if (((node_for *)a)->stmts)
-            treefree(((node_for *)a)->stmts);
-        if (((node_for *)a)->step)
-            treefree(((node_for *)a)->step);
-        free(((node_for *)a)->begin);
-        free(((node_for *)a)->end);
-        break;
-    case NODE_STRING:
-        free(((node *)a)->value->v.s);
-        break;
-    default:
-        printf("error interno: nodo mal liberado %i\n", a->nodetype);
-        break;
-    }
-    free(a); /* always free the node itself */
-}
-
-symlist *
-newsymlist(struct symbol *sym, symlist *next)
-{
-    symlist *sl = malloc(sizeof(symlist));
-    if (!sl) {
-        yyerror("sin espacio\n");
-        exit(0);
-    }
-    sl->sym = sym;
-    sl->next = next;
-    return sl;
-}
-
-/* free a list of symbols */
-void
-symlistfree(symlist *sl)
-{
-    symlist *nsl;
-    while (sl) {
-        nsl = sl->next;
-        free(sl);
-        sl = nsl;
-    }
-}
-
-static lat_string *
-concat(lat_string *s1, lat_string *s2)
-{
-    lat_string *s3 = malloc(strlen(s1) + strlen(s2) + 1);
+    latString *s3 = malloc(strlen(s1) + strlen(s2) + 1);
     strcpy(s3, s1);
     strcat(s3, s2);
     return s3;
 }
 
-static lat_string *
-int2str(long i)
+static latString *int2str(long i)
 {
     char s[255];
-    lat_string *r = malloc(strlen(s) + 1);
+    latString *r = malloc(strlen(s) + 1);
     lnsprintf(s, 255, "%ld", i);
     strcpy(r, s);
     return r;
 }
 
-static lat_string *
-double2str(double d)
+static latString *double2str(double d)
 {
     char s[64];
-    lat_string *r = malloc(strlen(s) + 1);
+    latString *r = malloc(strlen(s) + 1);
     lnsprintf(s, 64, "%g", (float)d);
     strcpy(r, s);
     return r;
 }
 
-static lat_string *
-char2str(char c)
+static latString *char2str(char c)
 {
     char s[2];
-    lat_string *r = malloc(2);
+    latString *r = malloc(2);
     lnsprintf(s, 2, "%c", c);
     strcpy(r, s);
     return r;
 }
 
-static lat_string *
-bool2str(int i)
+static latString *bool2str(int i)
 {
     char s[10];
-    lat_string *r = malloc(11);
+    latString *r = malloc(11);
     if (i) {
         lnsprintf(s, 10, "%s", "verdadero");
         strcpy(r, s);
@@ -418,10 +56,9 @@ bool2str(int i)
     return r;
 }
 
-lat_value *
-eval_node_add(lat_value *left, lat_value *right)
+latValue *evalNodeAdd(latValue *left, latValue *right)
 {
-    lat_value *result = malloc(sizeof(lat_value));
+    latValue *result = malloc(sizeof(latValue));
     switch (left->t) {
     case VALUE_BOOL:
         if (right->t == VALUE_STRING) {
@@ -520,10 +157,9 @@ eval_node_add(lat_value *left, lat_value *right)
     return result;
 }
 
-lat_value *
-eval_node_sub(lat_value *left, lat_value *right)
+latValue *evalNodeSub(latValue *left, latValue *right)
 {
-    lat_value *result = malloc(sizeof(lat_value));
+    latValue *result = malloc(sizeof(latValue));
     switch (left->t) {
     case VALUE_INT:
         if (right->t == VALUE_INT) {
@@ -573,10 +209,9 @@ eval_node_sub(lat_value *left, lat_value *right)
     return result;
 }
 
-lat_value *
-eval_node_mult(lat_value *left, lat_value *right)
+latValue *evalNodeMult(latValue *left, latValue *right)
 {
-    lat_value *result = malloc(sizeof(lat_value));
+    latValue *result = malloc(sizeof(latValue));
     switch (left->t) {
     case VALUE_INT:
         if (right->t == VALUE_INT) {
@@ -609,10 +244,9 @@ eval_node_mult(lat_value *left, lat_value *right)
     return result;
 }
 
-lat_value *
-eval_node_div(lat_value *left, lat_value *right)
+latValue *evalNodeDiv(latValue *left, latValue *right)
 {
-    lat_value *result = malloc(sizeof(lat_value));
+    latValue *result = malloc(sizeof(latValue));
     switch (left->t) {
     case VALUE_INT:
         if (right->t == VALUE_INT) {
@@ -661,10 +295,9 @@ eval_node_div(lat_value *left, lat_value *right)
     return result;
 }
 
-lat_value *
-eval_node_mod(lat_value *left, lat_value *right)
+latValue *evalNodeMod(latValue *left, latValue *right)
 {
-    lat_value *result = malloc(sizeof(lat_value));
+    latValue *result = malloc(sizeof(latValue));
     switch (left->t) {
     case VALUE_INT:
         if (right->t == VALUE_INT) {
@@ -684,10 +317,9 @@ eval_node_mod(lat_value *left, lat_value *right)
     return result;
 }
 
-lat_value *
-eval_node_unary_minus(lat_value *left)
+latValue *evalNodeMinus(latValue *left)
 {
-    lat_value *result = malloc(sizeof(lat_value));
+    latValue *result = malloc(sizeof(latValue));
     if (left->t == VALUE_INT) {
         result->t = VALUE_INT;
         result->v.i = - (left->v.i);
@@ -702,10 +334,9 @@ eval_node_unary_minus(lat_value *left)
     return result;
 }
 
-lat_value *
-eval_node_and(lat_value *left, lat_value *right)
+latValue *evalNodeAnd(latValue *left, latValue *right)
 {
-    lat_value *result = malloc(sizeof(lat_value));
+    latValue *result = malloc(sizeof(latValue));
     if (left->t == VALUE_BOOL && right->t == VALUE_BOOL) {
         result->t = VALUE_BOOL;
         result->v.b = left->v.b && right->v.b;
@@ -715,10 +346,9 @@ eval_node_and(lat_value *left, lat_value *right)
     return result;
 }
 
-lat_value *
-eval_node_or(lat_value *left, lat_value *right)
+latValue *evalNodeOr(latValue *left, latValue *right)
 {
-    lat_value *result = malloc(sizeof(lat_value));
+    latValue *result = malloc(sizeof(latValue));
     if (left->t == VALUE_BOOL && right->t == VALUE_BOOL) {
         result->t = VALUE_BOOL;
         result->v.b = left->v.b || right->v.b;
@@ -728,10 +358,9 @@ eval_node_or(lat_value *left, lat_value *right)
     return result;
 }
 
-lat_value *
-eval_node_neg(lat_value *left)
+latValue *evalNodeNeg(latValue *left)
 {
-    lat_value *result = malloc(sizeof(lat_value));
+    latValue *result = malloc(sizeof(latValue));
     if (left->t == VALUE_BOOL) {
         result->t = VALUE_BOOL;
         result->v.b = !(left->v.b);
@@ -741,10 +370,9 @@ eval_node_neg(lat_value *left)
     return result;
 }
 
-lat_value *
-eval_node_gt(lat_value *left, lat_value *right)
+latValue *evalNodeGt(latValue *left, latValue *right)
 {
-    lat_value *result = malloc(sizeof(lat_value));
+    latValue *result = malloc(sizeof(latValue));
     result->t = VALUE_BOOL;
     switch (left->t) {
     case VALUE_CHAR:
@@ -814,10 +442,9 @@ eval_node_gt(lat_value *left, lat_value *right)
     return result;
 }
 
-lat_value *
-eval_node_lt(lat_value *left, lat_value *right)
+latValue *evalNodeLt(latValue *left, latValue *right)
 {
-    lat_value *result = malloc(sizeof(lat_value));
+    latValue *result = malloc(sizeof(latValue));
     result->t = VALUE_BOOL;
     switch (left->t) {
     case VALUE_CHAR:
@@ -887,10 +514,9 @@ eval_node_lt(lat_value *left, lat_value *right)
     return result;
 }
 
-lat_value *
-eval_node_neq(lat_value *left, lat_value *right)
+latValue *evalNodeNeq(latValue *left, latValue *right)
 {
-    lat_value *result = malloc(sizeof(lat_value));
+    latValue *result = malloc(sizeof(latValue));
     result->t = VALUE_BOOL;
     switch (left->t) {
     case VALUE_BOOL:
@@ -986,10 +612,9 @@ eval_node_neq(lat_value *left, lat_value *right)
     return result;
 }
 
-lat_value *
-eval_node_eq(lat_value *left, lat_value *right)
+latValue *evalNodeEq(latValue *left, latValue *right)
 {
-    lat_value *result = malloc(sizeof(lat_value));
+    latValue *result = malloc(sizeof(latValue));
     result->t = VALUE_BOOL;
     switch (left->t) {
     case VALUE_BOOL:
@@ -1085,10 +710,9 @@ eval_node_eq(lat_value *left, lat_value *right)
     return result;
 }
 
-lat_value *
-eval_node_ge(lat_value *left, lat_value *right)
+latValue *evalNodeGe(latValue *left, latValue *right)
 {
-    lat_value *result = malloc(sizeof(lat_value));
+    latValue *result = malloc(sizeof(latValue));
     result->t = VALUE_BOOL;
     switch (left->t) {
     case VALUE_CHAR:
@@ -1158,10 +782,9 @@ eval_node_ge(lat_value *left, lat_value *right)
     return result;
 }
 
-lat_value *
-eval_node_le(lat_value *left, lat_value *right)
+latValue *evalNodeLe(latValue *left, latValue *right)
 {
-    lat_value *result = malloc(sizeof(lat_value));
+    latValue *result = malloc(sizeof(latValue));
     result->t = VALUE_BOOL;
     switch (left->t) {
     case VALUE_CHAR:
@@ -1231,13 +854,12 @@ eval_node_le(lat_value *left, lat_value *right)
     return result;
 }
 
-lat_value *val;
-lat_value *val1;
+latValue *val;
+latValue *val1;
 jmp_buf eval_fun;
 
 /* evaluar ast */
-lat_value *
-eval(ast *a)
+latValue *eval(ast *a)
 {
     double v;
     if (!a) {
@@ -1264,56 +886,56 @@ eval(ast *a)
     break;
     /* assignment */
     case NODE_ASSIGMENT: {
-        ((symasgn *)a)->s->value = eval(((symasgn *)a)->v);
-        return ((symasgn *)a)->s->value;
+        ((symAsgn *)a)->s->value = eval(((symAsgn *)a)->v);
+        return ((symAsgn *)a)->s->value;
     }
     break;
     case NODE_UNARY_MINUS:
-        return eval_node_unary_minus(eval(a->l));
+        return evalNodeMinus(eval(a->l));
         break;
     /* expressions */
     case NODE_ADD:
-        return eval_node_add(eval(a->l), eval(a->r));
+        return evalNodeAdd(eval(a->l), eval(a->r));
         break;
     case NODE_SUB:
-        return eval_node_sub(eval(a->l), eval(a->r));
+        return evalNodeSub(eval(a->l), eval(a->r));
         break;
     case NODE_MULT:
-        return eval_node_mult(eval(a->l), eval(a->r));
+        return evalNodeMult(eval(a->l), eval(a->r));
         break;
     case NODE_DIV:
-        return eval_node_div(eval(a->l), eval(a->r));
+        return evalNodeDiv(eval(a->l), eval(a->r));
         break;
     case NODE_MOD:
-        return eval_node_mod(eval(a->l), eval(a->r));
+        return evalNodeMod(eval(a->l), eval(a->r));
         break;
     case NODE_AND:
-        return eval_node_and(eval(a->l), eval(a->r));
+        return evalNodeAnd(eval(a->l), eval(a->r));
         break;
     case NODE_OR:
-        return eval_node_or(eval(a->l), eval(a->r));
+        return evalNodeOr(eval(a->l), eval(a->r));
         break;
     case NODE_NEG:
-        return eval_node_neg(eval(a->l));
+        return evalNodeNeg(eval(a->l));
         break;
     /* comparisons */
     case NODE_GT:
-        return eval_node_gt(eval(a->l), eval(a->r));
+        return evalNodeGt(eval(a->l), eval(a->r));
         break;
     case NODE_LT:
-        return eval_node_lt(eval(a->l), eval(a->r));
+        return evalNodeLt(eval(a->l), eval(a->r));
         break;
     case NODE_NEQ:
-        return eval_node_neq(eval(a->l), eval(a->r));
+        return evalNodeNeq(eval(a->l), eval(a->r));
         break;
     case NODE_EQ:
-        return eval_node_eq(eval(a->l), eval(a->r));
+        return evalNodeEq(eval(a->l), eval(a->r));
         break;
     case NODE_GE:
-        return eval_node_ge(eval(a->l), eval(a->r));
+        return evalNodeGe(eval(a->l), eval(a->r));
         break;
     case NODE_LE:
-        return eval_node_le(eval(a->l), eval(a->r));
+        return evalNodeLe(eval(a->l), eval(a->r));
         break;
     /* control flow */
     /* if/else */
@@ -1377,7 +999,7 @@ eval(ast *a)
         /* evaluar valor del caso */
         val1 = eval(((flow *)a)->tl);
         /*si el caso es igual a la condicion */
-        if ((eval_node_eq(val, val1))->v.b) {
+        if ((evalNodeEq(val, val1))->v.b) {
             /* evaluar bloque de codigo */
             eval(((flow *)a)->el);
             val1->v.b = 1;
@@ -1391,30 +1013,30 @@ eval(ast *a)
         break;
     /* list of statements */
     case NODE_FROM:
-        if ((eval(((node_for *)a)->begin))->t == VALUE_INT && (eval(((node_for *)a)->end))->t == VALUE_INT) {
-            int old_begin = (eval(((node_for *)a)->begin))->v.i;
-            int begin = (eval(((node_for *)a)->begin))->v.i;
-            int end   = (eval(((node_for *)a)->end))->v.i;
+        if ((eval(((nodeFor *)a)->begin))->t == VALUE_INT && (eval(((nodeFor *)a)->end))->t == VALUE_INT) {
+            int old_begin = (eval(((nodeFor *)a)->begin))->v.i;
+            int begin = (eval(((nodeFor *)a)->begin))->v.i;
+            int end   = (eval(((nodeFor *)a)->end))->v.i;
             int step = 1;
-            if (((node_for *)a)->step != NULL) {
-                step = (eval(((node_for *)a)->step))->v.i;
+            if (((nodeFor *)a)->step != NULL) {
+                step = (eval(((nodeFor *)a)->step))->v.i;
             }
             if (begin < end) {
                 while (begin < end) {
-                    eval(((node_for *)a)->stmts);
-                    (eval(((node_for *)a)->begin))->v.i += step;
+                    eval(((nodeFor *)a)->stmts);
+                    (eval(((nodeFor *)a)->begin))->v.i += step;
                     begin += step;
                 }
             }
             if (begin > end) {
                 while (begin > end) {
-                    eval(((node_for *)a)->stmts);
-                    (eval(((node_for *)a)->begin))->v.i -= step;
+                    eval(((nodeFor *)a)->stmts);
+                    (eval(((nodeFor *)a)->begin))->v.i -= step;
                     begin -= step;
                 }
             }
             //restore begin value
-            (eval(((node_for *)a)->begin))->v.i = old_begin;
+            (eval(((nodeFor *)a)->begin))->v.i = old_begin;
         }
         return val;
         break;
@@ -1441,10 +1063,10 @@ eval(ast *a)
     }
     break;
     case NODE_BUILTIN_FUNCTION:
-        v = callbuiltin((fncall *)a);
+        v = callBuiltin((fnCall *)a);
         break;
     case NODE_USER_FUNCTION: {
-        val = calluser((ufncall *)a);
+        val = callUser((ufnCall *)a);
         return val;
     }
     break;
@@ -1461,8 +1083,7 @@ eval(ast *a)
     return val;
 }
 
-void
-imprimir(lat_value *val)
+void imprimir(latValue *val)
 {
     if (val != NULL) {
         switch (val->t) {
@@ -1488,45 +1109,13 @@ imprimir(lat_value *val)
     }
 }
 
-double
-callbuiltin(fncall *f)
-{
-    double v = 0;
-    switch (f->functype) {
-    case B_sqrt:
-        return sqrt(v);
-    case B_exp:
-        return exp(v);
-    case B_log:
-        return log(v);
-    case B_print: {
-        lat_value *val;
-        val =  eval(f->l);
-        imprimir(val);
-    }
-    return v;
-    default:
-        yyerror("definicion de funcion desconocida\n");
-    }
-    return v;
-}
-
-/* define a function */
-void
-dodef(struct symbol *s, symlist *syms, ast *func)
-{
-    s->syms = syms;
-    s->func = func;
-}
-
-lat_value *
-calluser(ufncall *f)
+latValue *callUser(ufnCall *f)
 {
     struct symbol *fn = f->s; /* function name */
-    symlist *sl; /* dummy arguments */
+    symList *sl; /* dummy arguments */
     ast *args = f->l; /* actual arguments */
-    lat_value **oldval;
-    lat_value **newval; /* saved arg values */
+    latValue **oldval;
+    latValue **newval; /* saved arg values */
     int nargs = 0;
     int i;
     if (!fn->func) {
@@ -1541,8 +1130,8 @@ calluser(ufncall *f)
         }
     }
     /* prepare to save them */
-    oldval = malloc(nargs * sizeof(lat_value));
-    newval = malloc(nargs * sizeof(lat_value));
+    oldval = malloc(nargs * sizeof(latValue));
+    newval = malloc(nargs * sizeof(latValue));
     if (!oldval || !newval) {
         yyerror("sin espacio en %s", fn->name);
         return val;
@@ -1577,7 +1166,7 @@ calluser(ufncall *f)
     if (fn->func) {
         if (!setjmp(eval_fun)) {
             val = eval(fn->func);
-            printf("***!setjmp->%i\n", val->v.i);
+            /*printf("***!setjmp->%i\n", val->v.i);*/
         } else {
             /* put the real values of the dummies back */
             sl = fn->syms;
