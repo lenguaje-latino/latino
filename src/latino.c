@@ -13,37 +13,64 @@ static int nTokenStart = 0;
 static int nTokenLength = 0;
 static int nTokenNextStart = 0;
 
-int yyparse();
+typedef struct yy_buffer_state * YY_BUFFER_STATE;
+extern int yyparse(void);
+/*int yyparse();*/
+extern YY_BUFFER_STATE yy_scan_string(char * str);
+extern void yy_delete_buffer(YY_BUFFER_STATE buffer);
 
 extern int main(int argc, char *argv[])
 {
-    int i;
+	/*
+	Para debuguear en visual studio:
+	Menu propiedades del proyecto-> Debugging -> Command Arguments. Agregar $(SolutionDir)..\ejemplos\debug.lat
+	*/
+	int parseCadena = 0;
+	int i;
     char *infile = NULL;
+	char *cadena = NULL;
     for (i = 1; i < argc; i++) {
         if (strcmp(argv[i], "-d") == 0) {
             debug = 1;
         } else {
-            infile = argv[i];
+			if (strcmp(argv[i], "-s") == 0){
+				cadena = argv[i + 1];
+				printf("cadena: %s\n", cadena);
+				parseCadena = 1;
+			}
+			else{
+				infile = argv[i];
+			}
         }
     }
-	if (infile == NULL){
-		printf("Especifique un archivo\n");
-		return EXIT_FAILURE;
+	if (parseCadena){
+		YY_BUFFER_STATE buffer = yy_scan_string(cadena);
 	}
-    file = fopen(infile, "r");
-    if (file == NULL) {
-        printf("No se pudo abrir el archivo\n");
-        return EXIT_FAILURE;
-    }
-    buffer = malloc(BUF_SIZE);
-    if (buffer == NULL) {
-        printf("No se pudo asignar %d bytes de memoria\n", BUF_SIZE);
-        fclose(file);
-        return EXIT_FAILURE;
-    }
+	else {
+		if (infile == NULL){
+			printf("Especifique un archivo\n");
+			return EXIT_FAILURE;
+		}
+		file = fopen(infile, "r");
+		if (file == NULL) {
+			printf("No se pudo abrir el archivo\n");
+			return EXIT_FAILURE;
+		}
+		buffer = malloc(BUF_SIZE);
+		if (buffer == NULL) {
+			printf("No se pudo asignar %d bytes de memoria\n", BUF_SIZE);
+			fclose(file);
+			return EXIT_FAILURE;
+		}
+	}
     yyparse();
-    free(buffer);
-    fclose(file);
+	if (parseCadena){
+		yy_delete_buffer(buffer);
+	}
+	else{
+		free(buffer);
+		fclose(file);
+	}
     return EXIT_SUCCESS;
 }
 

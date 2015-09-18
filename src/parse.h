@@ -30,8 +30,8 @@
    This special exception was added by the Free Software Foundation in
    version 2.2 of Bison.  */
 
-#ifndef YY_YY_C_USERS_PRIMI_DOCUMENTS_LATINO_SRC_PARSE_H_INCLUDED
-# define YY_YY_C_USERS_PRIMI_DOCUMENTS_LATINO_SRC_PARSE_H_INCLUDED
+#ifndef YY_YY_PARSE_H_INCLUDED
+# define YY_YY_PARSE_H_INCLUDED
 /* Debug traces.  */
 #ifndef YYDEBUG
 # define YYDEBUG 0
@@ -45,30 +45,30 @@ extern int yydebug;
 # define YYTOKENTYPE
   enum yytokentype
   {
-    KEYWORD_TRUE = 258,
-    KEYWORD_FALSE = 259,
-    TOKEN_INT = 260,
-    TOKEN_CHAR = 261,
-    TOKEN_NUMBER = 262,
-    TOKEN_STRING = 263,
-    TOKEN_IDENTIFIER = 264,
-    TOKEN_FUNC = 265,
-    KEYWORD_IF = 266,
-    KEYWORD_END = 267,
-    KEYWORD_ELSE = 268,
-    KEYWORD_WHILE = 269,
-    KEYWORD_DO = 270,
-    KEYWORD_SWITCH = 271,
-    KEYWORD_CASE = 272,
-    KEYWORD_BREAK = 273,
-    KEYWORD_DEFAULT = 274,
-    KEYWORD_WHEN = 275,
-    KEYWORD_FUNCTION = 276,
-    KEYWORD_FROM = 277,
-    KEYWORD_TO = 278,
-    KEYWORD_STEP = 279,
-    KEYWORD_BOOL = 280,
-    KEYWORD_RETURN = 281,
+    TOKEN_INT = 258,
+    TOKEN_CHAR = 259,
+    TOKEN_NUMBER = 260,
+    TOKEN_STRING = 261,
+    TOKEN_IDENTIFIER = 262,
+    TOKEN_FUNC = 263,
+    KEYWORD_IF = 264,
+    KEYWORD_END = 265,
+    KEYWORD_ELSE = 266,
+    KEYWORD_WHILE = 267,
+    KEYWORD_DO = 268,
+    KEYWORD_SWITCH = 269,
+    KEYWORD_CASE = 270,
+    KEYWORD_BREAK = 271,
+    KEYWORD_DEFAULT = 272,
+    KEYWORD_WHEN = 273,
+    KEYWORD_FUNCTION = 274,
+    KEYWORD_FROM = 275,
+    KEYWORD_TO = 276,
+    KEYWORD_STEP = 277,
+    KEYWORD_BOOL = 278,
+    KEYWORD_RETURN = 279,
+    KEYWORD_TRUE = 280,
+    KEYWORD_FALSE = 281,
     OP_GT = 282,
     OP_LT = 283,
     OP_GE = 284,
@@ -82,25 +82,59 @@ extern int yydebug;
     UNEG = 292
   };
 #endif
+/* Tokens.  */
+#define TOKEN_INT 258
+#define TOKEN_CHAR 259
+#define TOKEN_NUMBER 260
+#define TOKEN_STRING 261
+#define TOKEN_IDENTIFIER 262
+#define TOKEN_FUNC 263
+#define KEYWORD_IF 264
+#define KEYWORD_END 265
+#define KEYWORD_ELSE 266
+#define KEYWORD_WHILE 267
+#define KEYWORD_DO 268
+#define KEYWORD_SWITCH 269
+#define KEYWORD_CASE 270
+#define KEYWORD_BREAK 271
+#define KEYWORD_DEFAULT 272
+#define KEYWORD_WHEN 273
+#define KEYWORD_FUNCTION 274
+#define KEYWORD_FROM 275
+#define KEYWORD_TO 276
+#define KEYWORD_STEP 277
+#define KEYWORD_BOOL 278
+#define KEYWORD_RETURN 279
+#define KEYWORD_TRUE 280
+#define KEYWORD_FALSE 281
+#define OP_GT 282
+#define OP_LT 283
+#define OP_GE 284
+#define OP_LE 285
+#define OP_EQ 286
+#define OP_NEQ 287
+#define OP_AND 288
+#define OP_OR 289
+#define OP_NEG 290
+#define UMINUS 291
+#define UNEG 292
 
 /* Value type.  */
 #if ! defined YYSTYPE && ! defined YYSTYPE_IS_DECLARED
 
 union YYSTYPE
 {
-#line 8 "C:/Users/primi/Documents/latino/src/parse.y" /* yacc.c:1909  */
+#line 9 "parse.y" /* yacc.c:1909  */
 
     int fn; /* which function */
-    char *b; /* boolean type*/
     char *c; /* char type */
     long i;  /* int type */
     double d; /* double type */
-    struct latString *str; /* string type */
+    char *str; /* string type */
     struct ast *a; /* astract syntax tree */
     struct symbol *s;   /* which symbol */
-    struct symList *sl; /* symbol list */
 
-#line 104 "C:/Users/primi/Documents/latino/src/parse.h" /* yacc.c:1909  */
+#line 138 "parse.h" /* yacc.c:1909  */
 };
 
 typedef union YYSTYPE YYSTYPE;
@@ -113,4 +147,4 @@ extern YYSTYPE yylval;
 
 int yyparse (void);
 
-#endif /* !YY_YY_C_USERS_PRIMI_DOCUMENTS_LATINO_SRC_PARSE_H_INCLUDED  */
+#endif /* !YY_YY_PARSE_H_INCLUDED  */

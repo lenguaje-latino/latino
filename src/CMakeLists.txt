@@ -49,7 +49,9 @@ ADD_FLEX_BISON_DEPENDENCY(MyScanner MyParser)
 
 #INCLUDE_DIRECTORIES(${CMAKE_CURRENT_BINARY_DIR})
 
-set(SOURCES utils.h ast.h khash.h latino.h latino.c eval.c ast.c utils.c)
+set(SOURCES utils.h ast.h khash.h latino.h vm.h object.h
+    latino.c eval.c ast.c utils.c string.c vm.c object.c)
+
 ADD_EXECUTABLE(latino ${SOURCES} ${BISON_MyParser_OUTPUTS} ${FLEX_MyScanner_OUTPUTS} )
 
 TARGET_LINK_LIBRARIES(latino

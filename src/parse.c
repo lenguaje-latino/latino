@@ -62,13 +62,14 @@
 
 
 /* Copy the first part of user declarations.  */
-#line 1 "C:/Users/primi/Documents/latino/src/parse.y" /* yacc.c:339  */
+#line 1 "parse.y" /* yacc.c:339  */
 
+ /* bison -y -oparse.c parse.y */
 #include "latino.h"
 #include "ast.h"
 #define YYERROR_VERBOSE 1
 
-#line 72 "C:/Users/primi/Documents/latino/src/parse.c" /* yacc.c:339  */
+#line 73 "parse.c" /* yacc.c:339  */
 
 # ifndef YY_NULLPTR
 #  if defined __cplusplus && 201103L <= __cplusplus
@@ -88,8 +89,8 @@
 
 /* In a future release of Bison, this section will be replaced
    by #include "parse.h".  */
-#ifndef YY_YY_C_USERS_PRIMI_DOCUMENTS_LATINO_SRC_PARSE_H_INCLUDED
-# define YY_YY_C_USERS_PRIMI_DOCUMENTS_LATINO_SRC_PARSE_H_INCLUDED
+#ifndef YY_YY_PARSE_H_INCLUDED
+# define YY_YY_PARSE_H_INCLUDED
 /* Debug traces.  */
 #ifndef YYDEBUG
 # define YYDEBUG 0
@@ -103,30 +104,30 @@ extern int yydebug;
 # define YYTOKENTYPE
   enum yytokentype
   {
-    KEYWORD_TRUE = 258,
-    KEYWORD_FALSE = 259,
-    TOKEN_INT = 260,
-    TOKEN_CHAR = 261,
-    TOKEN_NUMBER = 262,
-    TOKEN_STRING = 263,
-    TOKEN_IDENTIFIER = 264,
-    TOKEN_FUNC = 265,
-    KEYWORD_IF = 266,
-    KEYWORD_END = 267,
-    KEYWORD_ELSE = 268,
-    KEYWORD_WHILE = 269,
-    KEYWORD_DO = 270,
-    KEYWORD_SWITCH = 271,
-    KEYWORD_CASE = 272,
-    KEYWORD_BREAK = 273,
-    KEYWORD_DEFAULT = 274,
-    KEYWORD_WHEN = 275,
-    KEYWORD_FUNCTION = 276,
-    KEYWORD_FROM = 277,
-    KEYWORD_TO = 278,
-    KEYWORD_STEP = 279,
-    KEYWORD_BOOL = 280,
-    KEYWORD_RETURN = 281,
+    TOKEN_INT = 258,
+    TOKEN_CHAR = 259,
+    TOKEN_NUMBER = 260,
+    TOKEN_STRING = 261,
+    TOKEN_IDENTIFIER = 262,
+    TOKEN_FUNC = 263,
+    KEYWORD_IF = 264,
+    KEYWORD_END = 265,
+    KEYWORD_ELSE = 266,
+    KEYWORD_WHILE = 267,
+    KEYWORD_DO = 268,
+    KEYWORD_SWITCH = 269,
+    KEYWORD_CASE = 270,
+    KEYWORD_BREAK = 271,
+    KEYWORD_DEFAULT = 272,
+    KEYWORD_WHEN = 273,
+    KEYWORD_FUNCTION = 274,
+    KEYWORD_FROM = 275,
+    KEYWORD_TO = 276,
+    KEYWORD_STEP = 277,
+    KEYWORD_BOOL = 278,
+    KEYWORD_RETURN = 279,
+    KEYWORD_TRUE = 280,
+    KEYWORD_FALSE = 281,
     OP_GT = 282,
     OP_LT = 283,
     OP_GE = 284,
@@ -140,25 +141,59 @@ extern int yydebug;
     UNEG = 292
   };
 #endif
+/* Tokens.  */
+#define TOKEN_INT 258
+#define TOKEN_CHAR 259
+#define TOKEN_NUMBER 260
+#define TOKEN_STRING 261
+#define TOKEN_IDENTIFIER 262
+#define TOKEN_FUNC 263
+#define KEYWORD_IF 264
+#define KEYWORD_END 265
+#define KEYWORD_ELSE 266
+#define KEYWORD_WHILE 267
+#define KEYWORD_DO 268
+#define KEYWORD_SWITCH 269
+#define KEYWORD_CASE 270
+#define KEYWORD_BREAK 271
+#define KEYWORD_DEFAULT 272
+#define KEYWORD_WHEN 273
+#define KEYWORD_FUNCTION 274
+#define KEYWORD_FROM 275
+#define KEYWORD_TO 276
+#define KEYWORD_STEP 277
+#define KEYWORD_BOOL 278
+#define KEYWORD_RETURN 279
+#define KEYWORD_TRUE 280
+#define KEYWORD_FALSE 281
+#define OP_GT 282
+#define OP_LT 283
+#define OP_GE 284
+#define OP_LE 285
+#define OP_EQ 286
+#define OP_NEQ 287
+#define OP_AND 288
+#define OP_OR 289
+#define OP_NEG 290
+#define UMINUS 291
+#define UNEG 292
 
 /* Value type.  */
 #if ! defined YYSTYPE && ! defined YYSTYPE_IS_DECLARED
 
 union YYSTYPE
 {
-#line 8 "C:/Users/primi/Documents/latino/src/parse.y" /* yacc.c:355  */
+#line 9 "parse.y" /* yacc.c:355  */
 
     int fn; /* which function */
-    char *b; /* boolean type*/
     char *c; /* char type */
     long i;  /* int type */
     double d; /* double type */
-    struct latString *str; /* string type */
+    char *str; /* string type */
     struct ast *a; /* astract syntax tree */
     struct symbol *s;   /* which symbol */
-    struct symList *sl; /* symbol list */
 
-#line 162 "C:/Users/primi/Documents/latino/src/parse.c" /* yacc.c:355  */
+#line 197 "parse.c" /* yacc.c:355  */
 };
 
 typedef union YYSTYPE YYSTYPE;
@@ -171,11 +206,11 @@ extern YYSTYPE yylval;
 
 int yyparse (void);
 
-#endif /* !YY_YY_C_USERS_PRIMI_DOCUMENTS_LATINO_SRC_PARSE_H_INCLUDED  */
+#endif /* !YY_YY_PARSE_H_INCLUDED  */
 
 /* Copy the second part of user declarations.  */
 
-#line 179 "C:/Users/primi/Documents/latino/src/parse.c" /* yacc.c:358  */
+#line 214 "parse.c" /* yacc.c:358  */
 
 #ifdef short
 # undef short
@@ -417,7 +452,7 @@ union yyalloc
 /* YYFINAL -- State number of the termination state.  */
 #define YYFINAL  2
 /* YYLAST -- Last index in YYTABLE.  */
-#define YYLAST   385
+#define YYLAST   403
 
 /* YYNTOKENS -- Number of terminals.  */
 #define YYNTOKENS  48
@@ -476,12 +511,12 @@ static const yytype_uint8 yytranslate[] =
   /* YYRLINE[YYN] -- Source line where rule number YYN was defined.  */
 static const yytype_uint8 yyrline[] =
 {
-       0,    78,    78,    79,    87,    88,    98,   100,   102,   104,
-     106,   108,   110,   112,   114,   116,   118,   122,   123,   124,
-     127,   131,   134,   140,   146,   151,   152,   153,   154,   155,
-     156,   157,   158,   159,   160,   161,   162,   163,   164,   165,
-     166,   167,   168,   171,   175,   176,   180,   181,   182,   183,
-     187,   188,   189,   190,   193,   194,   195,   198,   199,   200
+       0,    77,    77,    78,    86,    87,    97,    99,   101,   103,
+     105,   107,   109,   111,   113,   115,   117,   121,   122,   123,
+     126,   130,   133,   139,   145,   150,   151,   152,   153,   154,
+     155,   156,   157,   158,   159,   160,   161,   162,   163,   164,
+     165,   166,   167,   170,   174,   175,   179,   180,   181,   182,
+     186,   187,   188,   189,   192,   193,   194,   197,   198,   199
 };
 #endif
 
@@ -490,13 +525,13 @@ static const yytype_uint8 yyrline[] =
    First, the terminals, then, starting at YYNTOKENS, nonterminals.  */
 static const char *const yytname[] =
 {
-  "$end", "error", "$undefined", "KEYWORD_TRUE", "KEYWORD_FALSE",
-  "TOKEN_INT", "TOKEN_CHAR", "TOKEN_NUMBER", "TOKEN_STRING",
-  "TOKEN_IDENTIFIER", "TOKEN_FUNC", "KEYWORD_IF", "KEYWORD_END",
-  "KEYWORD_ELSE", "KEYWORD_WHILE", "KEYWORD_DO", "KEYWORD_SWITCH",
-  "KEYWORD_CASE", "KEYWORD_BREAK", "KEYWORD_DEFAULT", "KEYWORD_WHEN",
-  "KEYWORD_FUNCTION", "KEYWORD_FROM", "KEYWORD_TO", "KEYWORD_STEP",
-  "KEYWORD_BOOL", "KEYWORD_RETURN", "OP_GT", "OP_LT", "OP_GE", "OP_LE",
+  "$end", "error", "$undefined", "TOKEN_INT", "TOKEN_CHAR",
+  "TOKEN_NUMBER", "TOKEN_STRING", "TOKEN_IDENTIFIER", "TOKEN_FUNC",
+  "KEYWORD_IF", "KEYWORD_END", "KEYWORD_ELSE", "KEYWORD_WHILE",
+  "KEYWORD_DO", "KEYWORD_SWITCH", "KEYWORD_CASE", "KEYWORD_BREAK",
+  "KEYWORD_DEFAULT", "KEYWORD_WHEN", "KEYWORD_FUNCTION", "KEYWORD_FROM",
+  "KEYWORD_TO", "KEYWORD_STEP", "KEYWORD_BOOL", "KEYWORD_RETURN",
+  "KEYWORD_TRUE", "KEYWORD_FALSE", "OP_GT", "OP_LT", "OP_GE", "OP_LE",
   "OP_EQ", "OP_NEQ", "OP_AND", "OP_OR", "OP_NEG", "'='", "'+'", "'-'",
   "'*'", "'/'", "'%'", "UMINUS", "UNEG", "'('", "')'", "':'", "','",
   "$accept", "program", "list", "stmt", "jump_stmt", "cases", "case",
@@ -532,20 +567,20 @@ static const yytype_uint16 yytoknum[] =
      STATE-NUM.  */
 static const yytype_int16 yypact[] =
 {
-     -40,   216,   -40,   -33,   -39,   -35,   -31,    26,   -12,    24,
-      11,    21,   -40,    26,   -40,   -40,   -40,    21,    21,    21,
-      21,    21,    14,    78,    -6,   -40,   -40,   -40,   -40,   -40,
-     -40,   -33,    21,    21,    21,   238,    16,   -40,   -40,   -40,
-       0,   329,   -40,   329,   217,    -2,     5,   253,   272,     1,
-     -40,     6,    44,   -26,   -26,   291,    21,    21,    21,    21,
-      21,    21,    21,    21,    21,    21,    21,    21,    21,    21,
-      21,    21,   -40,   -40,    26,    26,    21,    41,    22,    18,
-     -40,   148,   344,   344,   344,   344,   344,   344,   329,   329,
-      27,    27,   -26,   -26,   -26,   181,   -40,    10,    58,   310,
-      83,    45,   -40,    44,    26,    39,    64,    43,    65,   -40,
-      26,   -40,   -40,    47,   -40,    51,   -40,    87,   -40,    92,
-      78,   -40,    78,   -40,    96,    26,    26,   -40,   -40,    26,
-      26,   -40,   -40,   -40,    98,    99,   -40,   -40
+     -40,   220,   -40,   -33,   -39,   -35,   -31,   349,   -24,    20,
+      11,    18,   -40,   349,   -40,   -40,   -40,    18,    18,    18,
+      18,    18,    17,    25,    -6,   -40,   -40,   -40,   -40,   -33,
+     -40,   -40,    18,    18,    18,   221,    21,   -40,   -40,   -40,
+       1,   347,   -40,   347,   236,    13,    15,   257,   276,    23,
+     -40,    16,    61,   -26,   -26,   295,    18,    18,    18,    18,
+      18,    18,    18,    18,    18,    18,    18,    18,    18,    18,
+      18,    18,   -40,   -40,   349,   349,    18,    54,    28,    31,
+     -40,   150,   362,   362,   362,   362,   362,   362,   347,   347,
+       0,     0,   -26,   -26,   -26,   185,   -40,    37,    67,   314,
+      60,    42,   -40,    61,   349,    34,    69,    45,    72,   -40,
+     349,   -40,   -40,    38,   -40,    39,   -40,    73,   -40,    76,
+      25,   -40,    25,   -40,    77,   349,   349,   -40,   -40,   349,
+     349,   -40,   -40,   -40,    78,    79,   -40,   -40
 };
 
   /* YYDEFACT[STATE-NUM] -- Default reduction number in state STATE-NUM.
@@ -555,8 +590,8 @@ static const yytype_uint8 yydefact[] =
 {
        2,     0,     1,     0,     0,     0,     0,     4,     0,     0,
        0,     0,     3,     4,    19,    17,    18,     0,    54,    54,
-       0,     0,     0,     0,     0,    47,    48,    50,    52,    51,
-      53,    46,     0,     0,     0,     0,     0,    42,    41,    49,
+       0,     0,     0,     0,     0,    50,    52,    51,    53,    46,
+      47,    48,     0,     0,     0,     0,     0,    42,    41,    49,
       46,    20,     5,    43,    55,     0,     0,     0,     0,     0,
       46,     0,    57,    33,    40,     0,     0,     0,     0,     0,
        0,     0,     0,     0,     0,     0,     0,     0,     0,     0,
@@ -572,8 +607,8 @@ static const yytype_uint8 yydefact[] =
   /* YYPGOTO[NTERM-NUM].  */
 static const yytype_int8 yypgoto[] =
 {
-     -40,   -40,    -3,   -40,   -40,   -40,    12,   -40,    85,   102,
-      -1,   -22,    15,   -17,    13
+     -40,   -40,    -3,   -40,   -40,   -40,   -11,   -40,    85,    81,
+      -1,   -22,    -7,   -17,    -4
 };
 
   /* YYDEFGOTO[NTERM-NUM].  */
@@ -589,107 +624,111 @@ static const yytype_int8 yydefgoto[] =
 static const yytype_int16 yytable[] =
 {
       16,    51,    46,    17,    22,    19,    16,    63,    64,    20,
-      42,    18,    16,    21,    25,    26,    27,    28,    29,    30,
-      31,     4,   109,   110,    25,    26,    27,    28,    29,    30,
-      40,     4,    23,    24,    49,     3,     4,     5,    52,    70,
-       6,     7,     8,    72,    18,    76,    32,     9,    10,    33,
-      73,    77,    11,    78,    96,    34,    32,   114,   100,    33,
-      63,    64,   100,   104,   115,    34,    67,    68,    69,   103,
-     111,    97,    98,    16,    16,   120,   121,   123,   106,   122,
-      16,    25,    26,    27,    28,    29,    30,    50,    27,    28,
-      29,    30,   108,   125,    16,    35,    41,   126,   129,   127,
-     130,   119,    43,    16,   128,    47,    48,   124,   131,    16,
-     136,   137,    36,   116,     0,   113,   118,    53,    54,    55,
+      42,    18,    16,    21,    25,    26,    27,    28,    29,     4,
+      23,    25,    26,    27,    28,    40,     4,    24,    25,    26,
+      27,    28,    50,    63,    64,    49,    30,    31,    52,    67,
+      68,    69,    70,    30,    31,    18,    32,   109,   110,    33,
+      30,    31,   114,    32,    96,    34,    33,   100,    72,   115,
+      73,    77,    34,    25,    26,    27,    28,    76,    78,   100,
+     120,    97,    98,    16,    16,   103,   104,   111,   106,   121,
+      16,   122,   123,   127,   125,   126,   128,   131,   136,   137,
+     116,    36,   108,   113,    16,    35,    41,     0,   129,   118,
+     130,   119,    43,    16,     0,    47,    48,   124,     0,    16,
+       0,     0,     0,     0,     0,     0,     0,    53,    54,    55,
        0,     0,   132,   133,    16,    16,   134,   135,    16,    16,
        0,     0,     0,     0,     0,     0,     0,     0,     0,     0,
        0,    81,    82,    83,    84,    85,    86,    87,    88,    89,
       90,    91,    92,    93,    94,    95,     0,     3,     4,     5,
        0,    99,     6,     7,     8,     0,     0,     0,     0,     9,
-      10,     0,   105,     0,    11,    57,    58,    59,    60,    61,
-      62,    63,    64,     0,     0,    65,    66,    67,    68,    69,
-       3,     4,     5,     0,     0,     6,     7,     8,     0,     0,
-       0,     0,     9,    10,     0,   107,     0,    11,    57,    58,
-      59,    60,    61,    62,    63,    64,     2,     0,    65,    66,
-      67,    68,    69,     0,     0,     3,     4,     5,     0,     0,
-       6,     7,     8,     0,     0,     0,     0,     9,    10,     0,
-       0,     0,    11,     0,    57,    58,    59,    60,    61,    62,
-      63,    64,     0,     0,    65,    66,    67,    68,    69,     0,
-       0,    56,     0,     0,    71,    57,    58,    59,    60,    61,
-      62,    63,    64,     0,     0,    65,    66,    67,    68,    69,
-      57,    58,    59,    60,    61,    62,    63,    64,     0,     0,
-      65,    66,    67,    68,    69,     0,     0,     0,    74,    57,
-      58,    59,    60,    61,    62,    63,    64,     0,     0,    65,
-      66,    67,    68,    69,     0,     0,     0,    75,    57,    58,
-      59,    60,    61,    62,    63,    64,     0,     0,    65,    66,
-      67,    68,    69,     0,     0,     0,    80,    57,    58,    59,
+      10,     0,   105,     0,    11,     0,     0,    57,    58,    59,
       60,    61,    62,    63,    64,     0,     0,    65,    66,    67,
-      68,    69,     0,     0,     0,   112,    57,    58,    59,    60,
-      61,    62,    63,    64,     0,     0,    65,    66,    67,    68,
-      69,    -1,    -1,    -1,    -1,    -1,    -1,    63,    64,     0,
-       0,    65,    66,    67,    68,    69
+      68,    69,     3,     4,     5,     0,     0,     6,     7,     8,
+       0,     0,     0,     0,     9,    10,     0,   107,     0,    11,
+       0,     0,    57,    58,    59,    60,    61,    62,    63,    64,
+       2,     0,    65,    66,    67,    68,    69,     3,     4,     5,
+       0,     0,     6,     7,     8,     0,     0,     0,     0,     9,
+      10,     0,    56,     0,    11,     0,     0,     0,    57,    58,
+      59,    60,    61,    62,    63,    64,     0,     0,    65,    66,
+      67,    68,    69,    57,    58,    59,    60,    61,    62,    63,
+      64,     0,     0,    65,    66,    67,    68,    69,     0,     0,
+       0,     0,     0,    71,    57,    58,    59,    60,    61,    62,
+      63,    64,     0,     0,    65,    66,    67,    68,    69,     0,
+       0,     0,    74,    57,    58,    59,    60,    61,    62,    63,
+      64,     0,     0,    65,    66,    67,    68,    69,     0,     0,
+       0,    75,    57,    58,    59,    60,    61,    62,    63,    64,
+       0,     0,    65,    66,    67,    68,    69,     0,     0,     0,
+      80,    57,    58,    59,    60,    61,    62,    63,    64,     0,
+       0,    65,    66,    67,    68,    69,     3,     4,     5,   112,
+       0,     6,     7,     8,     0,     0,     0,     0,     9,    10,
+       0,     0,     0,    11,    57,    58,    59,    60,    61,    62,
+      63,    64,     0,     0,    65,    66,    67,    68,    69,    -1,
+      -1,    -1,    -1,    -1,    -1,    63,    64,     0,     0,    65,
+      66,    67,    68,    69
 };
 
 static const yytype_int16 yycheck[] =
 {
        1,    23,    19,    36,     7,    44,     7,    33,    34,    44,
       13,    44,    13,    44,     3,     4,     5,     6,     7,     8,
-       9,    10,    12,    13,     3,     4,     5,     6,     7,     8,
-       9,    10,    44,     9,    20,     9,    10,    11,    44,    23,
-      14,    15,    16,    45,    44,    44,    35,    21,    22,    38,
-      45,    45,    26,     9,    71,    44,    35,    12,    17,    38,
-      33,    34,    17,    45,    19,    44,    39,    40,    41,    47,
-      12,    74,    75,    74,    75,    36,    12,    12,    81,    36,
-      81,     3,     4,     5,     6,     7,     8,     9,     5,     6,
-       7,     8,    95,    46,    95,    10,    11,    46,   120,    12,
-     122,   104,    17,   104,    12,    20,    21,   110,    12,   110,
-      12,    12,    10,   101,    -1,   100,   103,    32,    33,    34,
+      44,     3,     4,     5,     6,     7,     8,     7,     3,     4,
+       5,     6,     7,    33,    34,    18,    25,    26,    44,    39,
+      40,    41,    21,    25,    26,    44,    35,    10,    11,    38,
+      25,    26,    10,    35,    71,    44,    38,    15,    45,    17,
+      45,    45,    44,     3,     4,     5,     6,    44,     7,    15,
+      36,    74,    75,    74,    75,    47,    45,    10,    81,    10,
+      81,    36,    10,    10,    46,    46,    10,    10,    10,    10,
+     101,    10,    95,   100,    95,    10,    11,    -1,   120,   103,
+     122,   104,    17,   104,    -1,    20,    21,   110,    -1,   110,
+      -1,    -1,    -1,    -1,    -1,    -1,    -1,    32,    33,    34,
       -1,    -1,   125,   126,   125,   126,   129,   130,   129,   130,
       -1,    -1,    -1,    -1,    -1,    -1,    -1,    -1,    -1,    -1,
       -1,    56,    57,    58,    59,    60,    61,    62,    63,    64,
-      65,    66,    67,    68,    69,    70,    -1,     9,    10,    11,
-      -1,    76,    14,    15,    16,    -1,    -1,    -1,    -1,    21,
-      22,    -1,    24,    -1,    26,    27,    28,    29,    30,    31,
-      32,    33,    34,    -1,    -1,    37,    38,    39,    40,    41,
-       9,    10,    11,    -1,    -1,    14,    15,    16,    -1,    -1,
-      -1,    -1,    21,    22,    -1,    24,    -1,    26,    27,    28,
-      29,    30,    31,    32,    33,    34,     0,    -1,    37,    38,
-      39,    40,    41,    -1,    -1,     9,    10,    11,    -1,    -1,
-      14,    15,    16,    -1,    -1,    -1,    -1,    21,    22,    -1,
-      -1,    -1,    26,    -1,    27,    28,    29,    30,    31,    32,
-      33,    34,    -1,    -1,    37,    38,    39,    40,    41,    -1,
-      -1,    23,    -1,    -1,    47,    27,    28,    29,    30,    31,
-      32,    33,    34,    -1,    -1,    37,    38,    39,    40,    41,
-      27,    28,    29,    30,    31,    32,    33,    34,    -1,    -1,
-      37,    38,    39,    40,    41,    -1,    -1,    -1,    45,    27,
-      28,    29,    30,    31,    32,    33,    34,    -1,    -1,    37,
-      38,    39,    40,    41,    -1,    -1,    -1,    45,    27,    28,
-      29,    30,    31,    32,    33,    34,    -1,    -1,    37,    38,
-      39,    40,    41,    -1,    -1,    -1,    45,    27,    28,    29,
+      65,    66,    67,    68,    69,    70,    -1,     7,     8,     9,
+      -1,    76,    12,    13,    14,    -1,    -1,    -1,    -1,    19,
+      20,    -1,    22,    -1,    24,    -1,    -1,    27,    28,    29,
       30,    31,    32,    33,    34,    -1,    -1,    37,    38,    39,
-      40,    41,    -1,    -1,    -1,    45,    27,    28,    29,    30,
-      31,    32,    33,    34,    -1,    -1,    37,    38,    39,    40,
-      41,    27,    28,    29,    30,    31,    32,    33,    34,    -1,
-      -1,    37,    38,    39,    40,    41
+      40,    41,     7,     8,     9,    -1,    -1,    12,    13,    14,
+      -1,    -1,    -1,    -1,    19,    20,    -1,    22,    -1,    24,
+      -1,    -1,    27,    28,    29,    30,    31,    32,    33,    34,
+       0,    -1,    37,    38,    39,    40,    41,     7,     8,     9,
+      -1,    -1,    12,    13,    14,    -1,    -1,    -1,    -1,    19,
+      20,    -1,    21,    -1,    24,    -1,    -1,    -1,    27,    28,
+      29,    30,    31,    32,    33,    34,    -1,    -1,    37,    38,
+      39,    40,    41,    27,    28,    29,    30,    31,    32,    33,
+      34,    -1,    -1,    37,    38,    39,    40,    41,    -1,    -1,
+      -1,    -1,    -1,    47,    27,    28,    29,    30,    31,    32,
+      33,    34,    -1,    -1,    37,    38,    39,    40,    41,    -1,
+      -1,    -1,    45,    27,    28,    29,    30,    31,    32,    33,
+      34,    -1,    -1,    37,    38,    39,    40,    41,    -1,    -1,
+      -1,    45,    27,    28,    29,    30,    31,    32,    33,    34,
+      -1,    -1,    37,    38,    39,    40,    41,    -1,    -1,    -1,
+      45,    27,    28,    29,    30,    31,    32,    33,    34,    -1,
+      -1,    37,    38,    39,    40,    41,     7,     8,     9,    45,
+      -1,    12,    13,    14,    -1,    -1,    -1,    -1,    19,    20,
+      -1,    -1,    -1,    24,    27,    28,    29,    30,    31,    32,
+      33,    34,    -1,    -1,    37,    38,    39,    40,    41,    27,
+      28,    29,    30,    31,    32,    33,    34,    -1,    -1,    37,
+      38,    39,    40,    41
 };
 
   /* YYSTOS[STATE-NUM] -- The (internal number of the) accessing
      symbol of state STATE-NUM.  */
 static const yytype_uint8 yystos[] =
 {
-       0,    49,     0,     9,    10,    11,    14,    15,    16,    21,
-      22,    26,    50,    51,    52,    57,    58,    36,    44,    44,
-      44,    44,    50,    44,     9,     3,     4,     5,     6,     7,
-       8,     9,    35,    38,    44,    56,    57,    58,    59,    60,
-       9,    56,    50,    56,    56,    61,    61,    56,    56,    20,
-       9,    59,    44,    56,    56,    56,    23,    27,    28,    29,
+       0,    49,     0,     7,     8,     9,    12,    13,    14,    19,
+      20,    24,    50,    51,    52,    57,    58,    36,    44,    44,
+      44,    44,    50,    44,     7,     3,     4,     5,     6,     7,
+      25,    26,    35,    38,    44,    56,    57,    58,    59,    60,
+       7,    56,    50,    56,    56,    61,    61,    56,    56,    18,
+       7,    59,    44,    56,    56,    56,    21,    27,    28,    29,
       30,    31,    32,    33,    34,    37,    38,    39,    40,    41,
-      23,    47,    45,    45,    45,    45,    44,    45,     9,    62,
+      21,    47,    45,    45,    45,    45,    44,    45,     7,    62,
       45,    56,    56,    56,    56,    56,    56,    56,    56,    56,
       56,    56,    56,    56,    56,    56,    61,    50,    50,    56,
-      17,    53,    54,    47,    45,    24,    50,    24,    50,    12,
-      13,    12,    45,    60,    12,    19,    54,    55,    62,    50,
-      36,    12,    36,    12,    50,    46,    46,    12,    12,    59,
-      59,    12,    50,    50,    50,    50,    12,    12
+      15,    53,    54,    47,    45,    22,    50,    22,    50,    10,
+      11,    10,    45,    60,    10,    17,    54,    55,    62,    50,
+      36,    10,    36,    10,    50,    46,    46,    10,    10,    59,
+      59,    10,    50,    50,    50,    50,    10,    10
 };
 
   /* YYR1[YYN] -- Symbol number of symbol that rule YYN derives.  */
@@ -1388,24 +1427,24 @@ yyreduce:
   switch (yyn)
     {
         case 3:
-#line 79 "C:/Users/primi/Documents/latino/src/parse.y" /* yacc.c:1646  */
+#line 78 "parse.y" /* yacc.c:1646  */
     {
         if((yyvsp[0].a)) {
             eval((yyvsp[0].a));
             treeFree((yyvsp[0].a));
         }
     }
-#line 1399 "C:/Users/primi/Documents/latino/src/parse.c" /* yacc.c:1646  */
+#line 1438 "parse.c" /* yacc.c:1646  */
     break;
 
   case 4:
-#line 87 "C:/Users/primi/Documents/latino/src/parse.y" /* yacc.c:1646  */
+#line 86 "parse.y" /* yacc.c:1646  */
     { (yyval.a) = NULL; }
-#line 1405 "C:/Users/primi/Documents/latino/src/parse.c" /* yacc.c:1646  */
+#line 1444 "parse.c" /* yacc.c:1646  */
     break;
 
   case 5:
-#line 88 "C:/Users/primi/Documents/latino/src/parse.y" /* yacc.c:1646  */
+#line 87 "parse.y" /* yacc.c:1646  */
     {
         if ((yyvsp[0].a)){
             (yyval.a) = newAst(NODE_BLOCK, (yyvsp[-1].a), (yyvsp[0].a));
@@ -1413,326 +1452,326 @@ yyreduce:
             (yyval.a) = newAst(NODE_BLOCK, (yyvsp[-1].a), NULL);
         }
     }
-#line 1417 "C:/Users/primi/Documents/latino/src/parse.c" /* yacc.c:1646  */
+#line 1456 "parse.c" /* yacc.c:1646  */
     break;
 
   case 6:
-#line 98 "C:/Users/primi/Documents/latino/src/parse.y" /* yacc.c:1646  */
+#line 97 "parse.y" /* yacc.c:1646  */
     {
         (yyval.a) = newIf(NODE_IF, (yyvsp[-3].a), (yyvsp[-1].a), NULL); }
-#line 1424 "C:/Users/primi/Documents/latino/src/parse.c" /* yacc.c:1646  */
+#line 1463 "parse.c" /* yacc.c:1646  */
     break;
 
   case 7:
-#line 100 "C:/Users/primi/Documents/latino/src/parse.y" /* yacc.c:1646  */
+#line 99 "parse.y" /* yacc.c:1646  */
     {
         (yyval.a) = newIf(NODE_IF, (yyvsp[-5].a), (yyvsp[-3].a), (yyvsp[-1].a)); }
-#line 1431 "C:/Users/primi/Documents/latino/src/parse.c" /* yacc.c:1646  */
+#line 1470 "parse.c" /* yacc.c:1646  */
     break;
 
   case 8:
-#line 102 "C:/Users/primi/Documents/latino/src/parse.y" /* yacc.c:1646  */
+#line 101 "parse.y" /* yacc.c:1646  */
     {
         (yyval.a) = newWhile(NODE_WHILE, (yyvsp[-3].a), (yyvsp[-1].a), NULL); }
-#line 1438 "C:/Users/primi/Documents/latino/src/parse.c" /* yacc.c:1646  */
+#line 1477 "parse.c" /* yacc.c:1646  */
     break;
 
   case 9:
-#line 104 "C:/Users/primi/Documents/latino/src/parse.y" /* yacc.c:1646  */
+#line 103 "parse.y" /* yacc.c:1646  */
     {
         (yyval.a) = newDo(NODE_DO, (yyvsp[-1].a), (yyvsp[-4].a), NULL); }
-#line 1445 "C:/Users/primi/Documents/latino/src/parse.c" /* yacc.c:1646  */
+#line 1484 "parse.c" /* yacc.c:1646  */
     break;
 
   case 10:
-#line 106 "C:/Users/primi/Documents/latino/src/parse.y" /* yacc.c:1646  */
+#line 105 "parse.y" /* yacc.c:1646  */
     {
         (yyval.a) = newSwitch(NODE_SWITCH, (yyvsp[-3].a), (yyvsp[-1].a), NULL); }
-#line 1452 "C:/Users/primi/Documents/latino/src/parse.c" /* yacc.c:1646  */
+#line 1491 "parse.c" /* yacc.c:1646  */
     break;
 
   case 11:
-#line 108 "C:/Users/primi/Documents/latino/src/parse.y" /* yacc.c:1646  */
+#line 107 "parse.y" /* yacc.c:1646  */
     {
         (yyval.a) = newSwitch(NODE_SWITCH, (yyvsp[-4].a), (yyvsp[-2].a), (yyvsp[-1].a)); }
-#line 1459 "C:/Users/primi/Documents/latino/src/parse.c" /* yacc.c:1646  */
+#line 1498 "parse.c" /* yacc.c:1646  */
     break;
 
   case 12:
-#line 110 "C:/Users/primi/Documents/latino/src/parse.y" /* yacc.c:1646  */
+#line 109 "parse.y" /* yacc.c:1646  */
     {
         (yyval.a) = newFor(NODE_FROM, (yyvsp[-4].a), (yyvsp[-2].a), (yyvsp[-1].a), NULL); }
-#line 1466 "C:/Users/primi/Documents/latino/src/parse.c" /* yacc.c:1646  */
+#line 1505 "parse.c" /* yacc.c:1646  */
     break;
 
   case 13:
-#line 112 "C:/Users/primi/Documents/latino/src/parse.y" /* yacc.c:1646  */
+#line 111 "parse.y" /* yacc.c:1646  */
     {
         (yyval.a) = newFor(NODE_FROM, (yyvsp[-7].a), (yyvsp[-5].a), (yyvsp[-1].a), (yyvsp[-2].a)); }
-#line 1473 "C:/Users/primi/Documents/latino/src/parse.c" /* yacc.c:1646  */
+#line 1512 "parse.c" /* yacc.c:1646  */
     break;
 
   case 14:
-#line 114 "C:/Users/primi/Documents/latino/src/parse.y" /* yacc.c:1646  */
+#line 113 "parse.y" /* yacc.c:1646  */
     {
         (yyval.a) = newFor(NODE_FROM, (yyvsp[-4].a), (yyvsp[-2].a), (yyvsp[-1].a), NULL); }
-#line 1480 "C:/Users/primi/Documents/latino/src/parse.c" /* yacc.c:1646  */
+#line 1519 "parse.c" /* yacc.c:1646  */
     break;
 
   case 15:
-#line 116 "C:/Users/primi/Documents/latino/src/parse.y" /* yacc.c:1646  */
+#line 115 "parse.y" /* yacc.c:1646  */
     {
         (yyval.a) = newFor(NODE_FROM, (yyvsp[-7].a), (yyvsp[-5].a), (yyvsp[-1].a), (yyvsp[-2].a)); }
-#line 1487 "C:/Users/primi/Documents/latino/src/parse.c" /* yacc.c:1646  */
+#line 1526 "parse.c" /* yacc.c:1646  */
     break;
 
   case 16:
-#line 118 "C:/Users/primi/Documents/latino/src/parse.y" /* yacc.c:1646  */
+#line 117 "parse.y" /* yacc.c:1646  */
     {
-        doDef((yyvsp[-5].s), (yyvsp[-3].sl), (yyvsp[-1].a));
+        doDef((yyvsp[-5].s), (yyvsp[-3].a), (yyvsp[-1].a));
         (yyval.a) = NULL;
     }
-#line 1496 "C:/Users/primi/Documents/latino/src/parse.c" /* yacc.c:1646  */
+#line 1535 "parse.c" /* yacc.c:1646  */
     break;
 
   case 20:
-#line 127 "C:/Users/primi/Documents/latino/src/parse.y" /* yacc.c:1646  */
+#line 126 "parse.y" /* yacc.c:1646  */
     { (yyval.a) = newAst(NODE_RETURN, (yyvsp[0].a), NULL);}
-#line 1502 "C:/Users/primi/Documents/latino/src/parse.c" /* yacc.c:1646  */
+#line 1541 "parse.c" /* yacc.c:1646  */
     break;
 
   case 21:
-#line 131 "C:/Users/primi/Documents/latino/src/parse.y" /* yacc.c:1646  */
+#line 130 "parse.y" /* yacc.c:1646  */
     {
         (yyval.a) = newCase(NODE_CASES, NULL, (yyvsp[-1].a), (yyvsp[0].a));
      }
-#line 1510 "C:/Users/primi/Documents/latino/src/parse.c" /* yacc.c:1646  */
+#line 1549 "parse.c" /* yacc.c:1646  */
     break;
 
   case 22:
-#line 134 "C:/Users/primi/Documents/latino/src/parse.y" /* yacc.c:1646  */
+#line 133 "parse.y" /* yacc.c:1646  */
     {
             (yyval.a) = (yyvsp[0].a);
         }
-#line 1518 "C:/Users/primi/Documents/latino/src/parse.c" /* yacc.c:1646  */
+#line 1557 "parse.c" /* yacc.c:1646  */
     break;
 
   case 23:
-#line 140 "C:/Users/primi/Documents/latino/src/parse.y" /* yacc.c:1646  */
+#line 139 "parse.y" /* yacc.c:1646  */
     {
         (yyval.a) = newCase(NODE_CASE, NULL, (yyvsp[-2].a), (yyvsp[0].a));
     }
-#line 1526 "C:/Users/primi/Documents/latino/src/parse.c" /* yacc.c:1646  */
+#line 1565 "parse.c" /* yacc.c:1646  */
     break;
 
   case 24:
-#line 146 "C:/Users/primi/Documents/latino/src/parse.y" /* yacc.c:1646  */
+#line 145 "parse.y" /* yacc.c:1646  */
     {
         (yyval.a) = newCase(NODE_DEFAULT, NULL, (yyvsp[0].a), NULL);
     }
-#line 1534 "C:/Users/primi/Documents/latino/src/parse.c" /* yacc.c:1646  */
+#line 1573 "parse.c" /* yacc.c:1646  */
     break;
 
   case 25:
-#line 151 "C:/Users/primi/Documents/latino/src/parse.y" /* yacc.c:1646  */
+#line 150 "parse.y" /* yacc.c:1646  */
     { (yyval.a) = newAst(NODE_GT, (yyvsp[-2].a), (yyvsp[0].a)); }
-#line 1540 "C:/Users/primi/Documents/latino/src/parse.c" /* yacc.c:1646  */
+#line 1579 "parse.c" /* yacc.c:1646  */
     break;
 
   case 26:
-#line 152 "C:/Users/primi/Documents/latino/src/parse.y" /* yacc.c:1646  */
+#line 151 "parse.y" /* yacc.c:1646  */
     { (yyval.a) = newAst(NODE_LT, (yyvsp[-2].a), (yyvsp[0].a)); }
-#line 1546 "C:/Users/primi/Documents/latino/src/parse.c" /* yacc.c:1646  */
+#line 1585 "parse.c" /* yacc.c:1646  */
     break;
 
   case 27:
-#line 153 "C:/Users/primi/Documents/latino/src/parse.y" /* yacc.c:1646  */
+#line 152 "parse.y" /* yacc.c:1646  */
     { (yyval.a) = newAst(NODE_GE, (yyvsp[-2].a), (yyvsp[0].a)); }
-#line 1552 "C:/Users/primi/Documents/latino/src/parse.c" /* yacc.c:1646  */
+#line 1591 "parse.c" /* yacc.c:1646  */
     break;
 
   case 28:
-#line 154 "C:/Users/primi/Documents/latino/src/parse.y" /* yacc.c:1646  */
+#line 153 "parse.y" /* yacc.c:1646  */
     { (yyval.a) = newAst(NODE_LE, (yyvsp[-2].a), (yyvsp[0].a)); }
-#line 1558 "C:/Users/primi/Documents/latino/src/parse.c" /* yacc.c:1646  */
+#line 1597 "parse.c" /* yacc.c:1646  */
     break;
 
   case 29:
-#line 155 "C:/Users/primi/Documents/latino/src/parse.y" /* yacc.c:1646  */
+#line 154 "parse.y" /* yacc.c:1646  */
     { (yyval.a) = newAst(NODE_NEQ, (yyvsp[-2].a), (yyvsp[0].a)); }
-#line 1564 "C:/Users/primi/Documents/latino/src/parse.c" /* yacc.c:1646  */
+#line 1603 "parse.c" /* yacc.c:1646  */
     break;
 
   case 30:
-#line 156 "C:/Users/primi/Documents/latino/src/parse.y" /* yacc.c:1646  */
+#line 155 "parse.y" /* yacc.c:1646  */
     { (yyval.a) = newAst(NODE_EQ, (yyvsp[-2].a), (yyvsp[0].a)); }
-#line 1570 "C:/Users/primi/Documents/latino/src/parse.c" /* yacc.c:1646  */
+#line 1609 "parse.c" /* yacc.c:1646  */
     break;
 
   case 31:
-#line 157 "C:/Users/primi/Documents/latino/src/parse.y" /* yacc.c:1646  */
+#line 156 "parse.y" /* yacc.c:1646  */
     { (yyval.a) = newAst(NODE_AND, (yyvsp[-2].a), (yyvsp[0].a)); }
-#line 1576 "C:/Users/primi/Documents/latino/src/parse.c" /* yacc.c:1646  */
+#line 1615 "parse.c" /* yacc.c:1646  */
     break;
 
   case 32:
-#line 158 "C:/Users/primi/Documents/latino/src/parse.y" /* yacc.c:1646  */
+#line 157 "parse.y" /* yacc.c:1646  */
     { (yyval.a) = newAst(NODE_OR, (yyvsp[-2].a), (yyvsp[0].a)); }
-#line 1582 "C:/Users/primi/Documents/latino/src/parse.c" /* yacc.c:1646  */
+#line 1621 "parse.c" /* yacc.c:1646  */
     break;
 
   case 33:
-#line 159 "C:/Users/primi/Documents/latino/src/parse.y" /* yacc.c:1646  */
+#line 158 "parse.y" /* yacc.c:1646  */
     { (yyval.a) = newAst(NODE_NEG, (yyvsp[0].a), NULL); }
-#line 1588 "C:/Users/primi/Documents/latino/src/parse.c" /* yacc.c:1646  */
+#line 1627 "parse.c" /* yacc.c:1646  */
     break;
 
   case 34:
-#line 160 "C:/Users/primi/Documents/latino/src/parse.y" /* yacc.c:1646  */
+#line 159 "parse.y" /* yacc.c:1646  */
     { (yyval.a) = newAst(NODE_ADD, (yyvsp[-2].a), (yyvsp[0].a)); }
-#line 1594 "C:/Users/primi/Documents/latino/src/parse.c" /* yacc.c:1646  */
+#line 1633 "parse.c" /* yacc.c:1646  */
     break;
 
   case 35:
-#line 161 "C:/Users/primi/Documents/latino/src/parse.y" /* yacc.c:1646  */
+#line 160 "parse.y" /* yacc.c:1646  */
     { (yyval.a) = newAst(NODE_SUB, (yyvsp[-2].a), (yyvsp[0].a)); }
-#line 1600 "C:/Users/primi/Documents/latino/src/parse.c" /* yacc.c:1646  */
+#line 1639 "parse.c" /* yacc.c:1646  */
     break;
 
   case 36:
-#line 162 "C:/Users/primi/Documents/latino/src/parse.y" /* yacc.c:1646  */
+#line 161 "parse.y" /* yacc.c:1646  */
     { (yyval.a) = newAst(NODE_MULT, (yyvsp[-2].a), (yyvsp[0].a)); }
-#line 1606 "C:/Users/primi/Documents/latino/src/parse.c" /* yacc.c:1646  */
+#line 1645 "parse.c" /* yacc.c:1646  */
     break;
 
   case 37:
-#line 163 "C:/Users/primi/Documents/latino/src/parse.y" /* yacc.c:1646  */
+#line 162 "parse.y" /* yacc.c:1646  */
     { (yyval.a) = newAst(NODE_DIV, (yyvsp[-2].a), (yyvsp[0].a)); }
-#line 1612 "C:/Users/primi/Documents/latino/src/parse.c" /* yacc.c:1646  */
+#line 1651 "parse.c" /* yacc.c:1646  */
     break;
 
   case 38:
-#line 164 "C:/Users/primi/Documents/latino/src/parse.y" /* yacc.c:1646  */
+#line 163 "parse.y" /* yacc.c:1646  */
     { (yyval.a) = newAst(NODE_MOD, (yyvsp[-2].a), (yyvsp[0].a)); }
-#line 1618 "C:/Users/primi/Documents/latino/src/parse.c" /* yacc.c:1646  */
+#line 1657 "parse.c" /* yacc.c:1646  */
     break;
 
   case 39:
-#line 165 "C:/Users/primi/Documents/latino/src/parse.y" /* yacc.c:1646  */
+#line 164 "parse.y" /* yacc.c:1646  */
     { (yyval.a) = (yyvsp[-1].a); }
-#line 1624 "C:/Users/primi/Documents/latino/src/parse.c" /* yacc.c:1646  */
+#line 1663 "parse.c" /* yacc.c:1646  */
     break;
 
   case 40:
-#line 166 "C:/Users/primi/Documents/latino/src/parse.y" /* yacc.c:1646  */
+#line 165 "parse.y" /* yacc.c:1646  */
     { (yyval.a) = newAst(NODE_UNARY_MINUS, (yyvsp[0].a), NULL); }
-#line 1630 "C:/Users/primi/Documents/latino/src/parse.c" /* yacc.c:1646  */
+#line 1669 "parse.c" /* yacc.c:1646  */
     break;
 
   case 43:
-#line 171 "C:/Users/primi/Documents/latino/src/parse.y" /* yacc.c:1646  */
+#line 170 "parse.y" /* yacc.c:1646  */
     { (yyval.a) = newAsgn((yyvsp[-2].s), (yyvsp[0].a)); }
-#line 1636 "C:/Users/primi/Documents/latino/src/parse.c" /* yacc.c:1646  */
+#line 1675 "parse.c" /* yacc.c:1646  */
     break;
 
   case 44:
-#line 175 "C:/Users/primi/Documents/latino/src/parse.y" /* yacc.c:1646  */
+#line 174 "parse.y" /* yacc.c:1646  */
     { (yyval.a) = newCall((yyvsp[-3].s), (yyvsp[-1].a)); }
-#line 1642 "C:/Users/primi/Documents/latino/src/parse.c" /* yacc.c:1646  */
+#line 1681 "parse.c" /* yacc.c:1646  */
     break;
 
   case 45:
-#line 176 "C:/Users/primi/Documents/latino/src/parse.y" /* yacc.c:1646  */
+#line 175 "parse.y" /* yacc.c:1646  */
     { (yyval.a) = newFunc((yyvsp[-3].fn), (yyvsp[-1].a)); }
-#line 1648 "C:/Users/primi/Documents/latino/src/parse.c" /* yacc.c:1646  */
+#line 1687 "parse.c" /* yacc.c:1646  */
     break;
 
   case 46:
-#line 180 "C:/Users/primi/Documents/latino/src/parse.y" /* yacc.c:1646  */
+#line 179 "parse.y" /* yacc.c:1646  */
     { (yyval.a) = newRef((yyvsp[0].s)); }
-#line 1654 "C:/Users/primi/Documents/latino/src/parse.c" /* yacc.c:1646  */
+#line 1693 "parse.c" /* yacc.c:1646  */
     break;
 
   case 47:
-#line 181 "C:/Users/primi/Documents/latino/src/parse.y" /* yacc.c:1646  */
-    { (yyval.a) = newBool((yyvsp[0].b)); }
-#line 1660 "C:/Users/primi/Documents/latino/src/parse.c" /* yacc.c:1646  */
+#line 180 "parse.y" /* yacc.c:1646  */
+    { (yyval.a) = newBool(1); }
+#line 1699 "parse.c" /* yacc.c:1646  */
     break;
 
   case 48:
-#line 182 "C:/Users/primi/Documents/latino/src/parse.y" /* yacc.c:1646  */
-    { (yyval.a) = newBool((yyvsp[0].b)); }
-#line 1666 "C:/Users/primi/Documents/latino/src/parse.c" /* yacc.c:1646  */
+#line 181 "parse.y" /* yacc.c:1646  */
+    { (yyval.a) = newBool(0); }
+#line 1705 "parse.c" /* yacc.c:1646  */
     break;
 
   case 49:
-#line 183 "C:/Users/primi/Documents/latino/src/parse.y" /* yacc.c:1646  */
+#line 182 "parse.y" /* yacc.c:1646  */
     { (yyval.a) = (yyvsp[0].a); }
-#line 1672 "C:/Users/primi/Documents/latino/src/parse.c" /* yacc.c:1646  */
+#line 1711 "parse.c" /* yacc.c:1646  */
     break;
 
   case 50:
-#line 187 "C:/Users/primi/Documents/latino/src/parse.y" /* yacc.c:1646  */
+#line 186 "parse.y" /* yacc.c:1646  */
     { (yyval.a) = newInt((yyvsp[0].i)); }
-#line 1678 "C:/Users/primi/Documents/latino/src/parse.c" /* yacc.c:1646  */
+#line 1717 "parse.c" /* yacc.c:1646  */
     break;
 
   case 51:
-#line 188 "C:/Users/primi/Documents/latino/src/parse.y" /* yacc.c:1646  */
+#line 187 "parse.y" /* yacc.c:1646  */
     { (yyval.a) = newNum((yyvsp[0].d)); }
-#line 1684 "C:/Users/primi/Documents/latino/src/parse.c" /* yacc.c:1646  */
+#line 1723 "parse.c" /* yacc.c:1646  */
     break;
 
   case 52:
-#line 189 "C:/Users/primi/Documents/latino/src/parse.y" /* yacc.c:1646  */
+#line 188 "parse.y" /* yacc.c:1646  */
     { (yyval.a) = (yyvsp[0].c); }
-#line 1690 "C:/Users/primi/Documents/latino/src/parse.c" /* yacc.c:1646  */
+#line 1729 "parse.c" /* yacc.c:1646  */
     break;
 
   case 53:
-#line 190 "C:/Users/primi/Documents/latino/src/parse.y" /* yacc.c:1646  */
+#line 189 "parse.y" /* yacc.c:1646  */
     { (yyval.a) = (yyvsp[0].str); }
-#line 1696 "C:/Users/primi/Documents/latino/src/parse.c" /* yacc.c:1646  */
+#line 1735 "parse.c" /* yacc.c:1646  */
     break;
 
   case 54:
-#line 193 "C:/Users/primi/Documents/latino/src/parse.y" /* yacc.c:1646  */
+#line 192 "parse.y" /* yacc.c:1646  */
     { (yyval.a) = NULL; }
-#line 1702 "C:/Users/primi/Documents/latino/src/parse.c" /* yacc.c:1646  */
+#line 1741 "parse.c" /* yacc.c:1646  */
     break;
 
   case 55:
-#line 194 "C:/Users/primi/Documents/latino/src/parse.y" /* yacc.c:1646  */
+#line 193 "parse.y" /* yacc.c:1646  */
     { (yyval.a) = newAst(NODE_LIST_SYMBOLS, (yyvsp[0].a), NULL); }
-#line 1708 "C:/Users/primi/Documents/latino/src/parse.c" /* yacc.c:1646  */
+#line 1747 "parse.c" /* yacc.c:1646  */
     break;
 
   case 56:
-#line 195 "C:/Users/primi/Documents/latino/src/parse.y" /* yacc.c:1646  */
+#line 194 "parse.y" /* yacc.c:1646  */
     { (yyval.a) = newAst(NODE_LIST_SYMBOLS, (yyvsp[-2].a), (yyvsp[0].a)); }
-#line 1714 "C:/Users/primi/Documents/latino/src/parse.c" /* yacc.c:1646  */
+#line 1753 "parse.c" /* yacc.c:1646  */
     break;
 
   case 57:
-#line 198 "C:/Users/primi/Documents/latino/src/parse.y" /* yacc.c:1646  */
-    { (yyval.sl) = NULL; }
-#line 1720 "C:/Users/primi/Documents/latino/src/parse.c" /* yacc.c:1646  */
+#line 197 "parse.y" /* yacc.c:1646  */
+    { (yyval.a) = NULL; }
+#line 1759 "parse.c" /* yacc.c:1646  */
     break;
 
   case 58:
-#line 199 "C:/Users/primi/Documents/latino/src/parse.y" /* yacc.c:1646  */
-    { (yyval.sl) = newSymList((yyvsp[0].s), NULL); }
-#line 1726 "C:/Users/primi/Documents/latino/src/parse.c" /* yacc.c:1646  */
+#line 198 "parse.y" /* yacc.c:1646  */
+    { (yyval.a) = newSymList((yyvsp[0].s), NULL); }
+#line 1765 "parse.c" /* yacc.c:1646  */
     break;
 
   case 59:
-#line 200 "C:/Users/primi/Documents/latino/src/parse.y" /* yacc.c:1646  */
-    { (yyval.sl) = newSymList((yyvsp[-2].s), (yyvsp[0].sl)); }
-#line 1732 "C:/Users/primi/Documents/latino/src/parse.c" /* yacc.c:1646  */
+#line 199 "parse.y" /* yacc.c:1646  */
+    { (yyval.a) = newSymList((yyvsp[-2].s), (yyvsp[0].a)); }
+#line 1771 "parse.c" /* yacc.c:1646  */
     break;
 
 
-#line 1736 "C:/Users/primi/Documents/latino/src/parse.c" /* yacc.c:1646  */
+#line 1775 "parse.c" /* yacc.c:1646  */
       default: break;
     }
   /* User semantic actions sometimes alter yychar, and that requires
@@ -1960,7 +1999,7 @@ yyreturn:
 #endif
   return yyresult;
 }
-#line 203 "C:/Users/primi/Documents/latino/src/parse.y" /* yacc.c:1906  */
+#line 202 "parse.y" /* yacc.c:1906  */
 
 
 extern

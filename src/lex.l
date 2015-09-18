@@ -5,12 +5,11 @@
 %option nounistd
 
 %{
+ /* flex -olex.c -i lex.l */
 #include <string.h>
 #include <stdlib.h>
 #include "latino.h"
 #include "ast.h"
-
-int yyleng = 32;
 
 #define YY_INPUT(buf,result,max_size)  {\
     result = getNextChar(buf, max_size); \
@@ -62,8 +61,9 @@ EXP ([Ee][-+]?[0-9]+)
 "desde"   {  return KEYWORD_FROM; }
 "hasta"   {  return KEYWORD_TO; }
 "salto"   {  return KEYWORD_STEP; }
-"verdadero" { yylval.b = yytext; return KEYWORD_TRUE; }
-"falso"     { yylval.b = yytext; return KEYWORD_FALSE; }
+"verdadero" { return KEYWORD_TRUE; }
+"falso"     { return KEYWORD_FALSE; }
+ /*"nulo"     { return KEYWORD_NULL; }*/
 "retorno"     { return KEYWORD_RETURN; }
 
  /*built-in functions */
@@ -82,7 +82,7 @@ EXP ([Ee][-+]?[0-9]+)
 '([^'\\\n]|\\.)'       { yylval.c = newChar(yytext+1, strlen(yytext)-2); return TOKEN_CHAR; }
 "#".* /* ignore comments */
 \\\n                   { ; } /* ignore line continuation */
-[ \t\n] /* ignore whitespace  tabs and eol */
+[ \t\n]                { ; } /* ignore whitespace  tabs and eol */
  /*.                      { printf("error lexico %s ", yytext); }*/
 .                      { ; }
 

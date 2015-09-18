@@ -380,24 +380,24 @@ static const double khash_ac_HASH_UPPER = 0.77;
  */
 #define kh_int64_hash_equal(a, b) ((a) == (b))
 /*! @function
-  @abstract     const char* hash function
+  @abstract     char* hash function
   @param  s     Pointer to a null terminated string
   @return       The hash value
  */
-static kh_inline khint_t khash_ac_X31_hash_string(const char *s)
+static kh_inline khint_t khash_ac_X31_hash_string(char *s)
 {
 	khint_t h = (khint_t)*s;
 	if (h) for (++s ; *s; ++s) h = (h << 5) - h + (khint_t)*s;
 	return h;
 }
 /*! @function
-  @abstract     Another interface to const char* hash function
-  @param  key   Pointer to a null terminated string [const char*]
+  @abstract     Another interface to char* hash function
+  @param  key   Pointer to a null terminated string [char*]
   @return       The hash value [khint_t]
  */
 #define kh_str_hash_func(key) khash_ac_X31_hash_string(key)
 /*! @function
-  @abstract     Const char* comparison function
+  @abstract     char* comparison function
  */
 #define kh_str_hash_equal(a, b) (strcmp(a, b) == 0)
 
@@ -600,16 +600,16 @@ static kh_inline khint_t khash_ac_Wang_hash(khint_t key)
 #define KHASH_MAP_INIT_INT64(name, khval_t) \
 	KHASH_INIT(name, khint64_t, khval_t, 1, kh_int64_hash_func, kh_int64_hash_equal)
 
-typedef const char *kh_cstr_t;
+typedef char *kh_cstr_t;
 /*! @function
-  @abstract     Instantiate a hash map containing const char* keys
+  @abstract     Instantiate a hash map containing char* keys
   @param  name  Name of the hash table [symbol]
  */
 #define KHASH_SET_INIT_STR(name) \
 	KHASH_INIT(name, kh_cstr_t, char, 0, kh_str_hash_func, kh_str_hash_equal)
 
 /*! @function
-  @abstract     Instantiate a hash map containing const char* keys
+  @abstract     Instantiate a hash map containing char* keys
   @param  name  Name of the hash table [symbol]
   @param  khval_t  Type of values [type]
  */

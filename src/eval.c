@@ -6,55 +6,7 @@
 #include <math.h>
 #include "latino.h"
 #include "ast.h"
-
-static latString *concat(latString *s1, latString *s2)
-{
-    latString *s3 = malloc(strlen(s1) + strlen(s2) + 1);
-    strcpy(s3, s1);
-    strcat(s3, s2);
-    return s3;
-}
-
-static latString *int2str(long i)
-{
-    char s[255];
-    latString *r = malloc(strlen(s) + 1);
-    lnsprintf(s, 255, "%ld", i);
-    strcpy(r, s);
-    return r;
-}
-
-static latString *double2str(double d)
-{
-    char s[64];
-    latString *r = malloc(strlen(s) + 1);
-    lnsprintf(s, 64, "%g", (float)d);
-    strcpy(r, s);
-    return r;
-}
-
-static latString *char2str(char c)
-{
-    char s[2];
-    latString *r = malloc(2);
-    lnsprintf(s, 2, "%c", c);
-    strcpy(r, s);
-    return r;
-}
-
-static latString *bool2str(int i)
-{
-    char s[10];
-    latString *r = malloc(11);
-    if (i) {
-        lnsprintf(s, 10, "%s", "verdadero");
-        strcpy(r, s);
-    } else {
-        lnsprintf(s, 10, "%s", "falso");
-        strcpy(r, s);
-    }
-    return r;
-}
+#include "utils.h"
 
 latValue *evalNodeAdd(latValue *left, latValue *right)
 {
@@ -1181,3 +1133,4 @@ latValue *callUser(ufnCall *f)
     }
     return val;
 }
+

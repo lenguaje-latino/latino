@@ -1,4 +1,5 @@
 %{
+ /* bison -y -oparse.c parse.y */
 #include "latino.h"
 #include "ast.h"
 #define YYERROR_VERBOSE 1
@@ -7,18 +8,15 @@
 %defines
 %union {
     int fn; /* which function */
-    char *b; /* boolean type*/
     char *c; /* char type */
     long i;  /* int type */
     double d; /* double type */
-    struct latString *str; /* string type */
+    char *str; /* string type */
     struct ast *a; /* astract syntax tree */
     struct symbol *s;   /* which symbol */
-    struct symList *sl; /* symbol list */
 }
 
 /* declare tokens */
-%token <b> KEYWORD_TRUE KEYWORD_FALSE
 %token <i> TOKEN_INT
 %token <c> TOKEN_CHAR
 %token <d> TOKEN_NUMBER
@@ -42,6 +40,8 @@
     KEYWORD_STEP
     KEYWORD_BOOL
     KEYWORD_RETURN
+    KEYWORD_TRUE
+    KEYWORD_FALSE
 
 %token
     OP_GT
@@ -56,8 +56,7 @@
 
 
 %nonassoc <fn> OP_EQ OP_GE OP_GT OP_LE OP_LT OP_NEQ OP_NEG
-%type <a> exp stmt list explist var value cases case default atom_value callfunc jump_stmt
-%type <sl> symList
+%type <a> exp stmt list explist var value cases case default atom_value callfunc jump_stmt symList
 
 /*
  * presedencia de operadores
@@ -178,8 +177,8 @@ callfunc:
 
 value:
       TOKEN_IDENTIFIER { $$ = newRef($<s>1); }
-    | KEYWORD_TRUE { $$ = newBool($1); }
-    | KEYWORD_FALSE { $$ = newBool($1); }
+    | KEYWORD_TRUE { $$ = newBool(1); }
+    | KEYWORD_FALSE { $$ = newBool(0); }
     | atom_value { $$ = $1; }
     ;
 

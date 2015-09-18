@@ -15,7 +15,11 @@ typedef enum {
 } latValueType;
 
 /* string */
-typedef char latString;
+typedef struct latString{
+	const char *ptr;
+	size_t len;
+}latString;
+
 
 /* values for data */
 typedef struct {
@@ -25,7 +29,7 @@ typedef struct {
         long i;
         double d;
         char c;
-        latString *s;
+        const char *s;
 		void *f;
     } v;
 } latValue;
@@ -157,7 +161,7 @@ ast *newRef(struct symbol *s);
 ast *newAsgn(struct symbol *s, ast *v);
 ast *newNum(double d);
 ast *newInt(long i);
-ast *newStr(latString *, size_t);
+ast *newStr(const char *, size_t);
 ast *newIf(nodeType nodetype, ast *cond, ast *tl, ast *tr);
 ast *newWhile(nodeType nodetype, ast *cond, ast *tl, ast *tr);
 ast *newDo(nodeType nodetype, ast *cond, ast *tl, ast *tr);
@@ -178,6 +182,5 @@ void treeFree(ast *);
 
 /* evaluate an AST */
 latValue *eval(ast *);
-void printAst(ast *);
 
 #endif /*_AST_H_*/
