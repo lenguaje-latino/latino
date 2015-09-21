@@ -5,11 +5,14 @@
 %option nounistd
 
 %{
- /* flex -olex.c -i lex.l */
+
+/* flex -olex.c -i lex.l */
 #include <string.h>
 #include <stdlib.h>
 #include "latino.h"
 #include "ast.h"
+
+int yyparse(void);
 
 #define YY_INPUT(buf,result,max_size)  {\
     result = getNextChar(buf, max_size); \

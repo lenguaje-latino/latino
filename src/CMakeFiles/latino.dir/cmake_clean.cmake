@@ -4,10 +4,15 @@ FILE(REMOVE_RECURSE
   "lex.c"
   "CMakeFiles/latino.dir/latino.c.o"
   "CMakeFiles/latino.dir/eval.c.o"
+  "CMakeFiles/latino.dir/ast.c.o"
+  "CMakeFiles/latino.dir/utils.c.o"
+  "CMakeFiles/latino.dir/string.c.o"
+  "CMakeFiles/latino.dir/vm.c.o"
+  "CMakeFiles/latino.dir/object.c.o"
   "CMakeFiles/latino.dir/parse.c.o"
   "CMakeFiles/latino.dir/lex.c.o"
-  "latino.pdb"
-  "latino"
+  "../bin/Debug/latino.pdb"
+  "../bin/Debug/latino"
 )
 
 # Per-language clean rules from dependency scanning.

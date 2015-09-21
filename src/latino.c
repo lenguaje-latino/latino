@@ -1,5 +1,7 @@
 #include "latino.h"
 #include "parse.h"
+#include "ast.h"
+#include "parse.h"
 
 int debug = 0;
 
@@ -14,8 +16,9 @@ static int nTokenLength = 0;
 static int nTokenNextStart = 0;
 
 typedef struct yy_buffer_state * YY_BUFFER_STATE;
-extern int yyparse(void);
-/*int yyparse();*/
+
+/*extern int yyparse(void);*/
+
 extern YY_BUFFER_STATE yy_scan_string(char * str);
 extern void yy_delete_buffer(YY_BUFFER_STATE buffer);
 
@@ -39,6 +42,7 @@ extern int main(int argc, char *argv[])
 				parseCadena = 1;
 			}
 			else{
+                /*printf(argv[i]);*/
 				infile = argv[i];
 			}
         }
@@ -63,7 +67,9 @@ extern int main(int argc, char *argv[])
 			return EXIT_FAILURE;
 		}
 	}
-    yyparse();
+
+	yyparse();
+
 	if (parseCadena){
 		yy_delete_buffer(buffer);
 	}

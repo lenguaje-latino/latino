@@ -114,7 +114,7 @@ ast * newChar(char *c, size_t l)
     return (ast *)a;
 }
 
-ast * newStr(char *s, size_t l)
+ast * newStr(const char *s, size_t l)
 {
     node *a = malloc(sizeof(node));
     if (!a) {
@@ -292,7 +292,7 @@ double callBuiltin(fnCall *f)
         val = eval(f->l);
         imprimir(val);
     }
-                  return v;
+    return v;
     default:
         yyerror("definicion de funcion desconocida\n");
     }

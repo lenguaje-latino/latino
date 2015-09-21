@@ -74,7 +74,7 @@ src/preinstall:
 src/CMakeFiles/latino.dir/all:
 	$(MAKE) -f src/CMakeFiles/latino.dir/build.make src/CMakeFiles/latino.dir/depend
 	$(MAKE) -f src/CMakeFiles/latino.dir/build.make src/CMakeFiles/latino.dir/build
-	$(CMAKE_COMMAND) -E cmake_progress_report /home/primi/src/latino/CMakeFiles  1 2 3 4 5 6
+	$(CMAKE_COMMAND) -E cmake_progress_report /home/primi/src/latino/CMakeFiles  1 2 3 4 5 6 7 8 9 10 11
 	@echo "Built target latino"
 .PHONY : src/CMakeFiles/latino.dir/all
 
@@ -84,7 +84,7 @@ all: src/CMakeFiles/latino.dir/all
 
 # Build rule for subdir invocation for target.
 src/CMakeFiles/latino.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/primi/src/latino/CMakeFiles 6
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/primi/src/latino/CMakeFiles 11
 	$(MAKE) -f CMakeFiles/Makefile2 src/CMakeFiles/latino.dir/all
 	$(CMAKE_COMMAND) -E cmake_progress_start /home/primi/src/latino/CMakeFiles 0
 .PHONY : src/CMakeFiles/latino.dir/rule

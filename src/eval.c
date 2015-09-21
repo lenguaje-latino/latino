@@ -1133,4 +1133,3 @@ latValue *callUser(ufnCall *f)
     }
     return val;
 }
-

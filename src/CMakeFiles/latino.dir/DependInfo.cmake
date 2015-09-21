@@ -4,10 +4,15 @@ SET(CMAKE_DEPENDS_LANGUAGES
   )
 # The set of files for implicit dependencies of each language:
 SET(CMAKE_DEPENDS_CHECK_C
+  "/home/primi/src/latino/src/ast.c" "/home/primi/src/latino/src/CMakeFiles/latino.dir/ast.c.o"
   "/home/primi/src/latino/src/eval.c" "/home/primi/src/latino/src/CMakeFiles/latino.dir/eval.c.o"
   "/home/primi/src/latino/src/latino.c" "/home/primi/src/latino/src/CMakeFiles/latino.dir/latino.c.o"
   "/home/primi/src/latino/src/lex.c" "/home/primi/src/latino/src/CMakeFiles/latino.dir/lex.c.o"
+  "/home/primi/src/latino/src/object.c" "/home/primi/src/latino/src/CMakeFiles/latino.dir/object.c.o"
   "/home/primi/src/latino/src/parse.c" "/home/primi/src/latino/src/CMakeFiles/latino.dir/parse.c.o"
+  "/home/primi/src/latino/src/string.c" "/home/primi/src/latino/src/CMakeFiles/latino.dir/string.c.o"
+  "/home/primi/src/latino/src/utils.c" "/home/primi/src/latino/src/CMakeFiles/latino.dir/utils.c.o"
+  "/home/primi/src/latino/src/vm.c" "/home/primi/src/latino/src/CMakeFiles/latino.dir/vm.c.o"
   )
 SET(CMAKE_C_COMPILER_ID "GNU")
 

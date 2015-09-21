@@ -20,7 +20,6 @@ typedef struct latString{
 	size_t len;
 }latString;
 
-
 /* values for data */
 typedef struct {
     latValueType t;
@@ -30,7 +29,7 @@ typedef struct {
         double d;
         char c;
         const char *s;
-		void *f;
+		    void *f;
     } v;
 } latValue;
 

@@ -1,8 +1,12 @@
 %{
- /* bison -y -oparse.c parse.y */
+/* bison -y -oparse.c parse.y */
+
+#define YYERROR_VERBOSE 1
+#define YYDEBUG 1
+
 #include "latino.h"
 #include "ast.h"
-#define YYERROR_VERBOSE 1
+
 %}
 
 %defines
@@ -53,7 +57,6 @@
     OP_AND
     OP_OR
     OP_NEG
-
 
 %nonassoc <fn> OP_EQ OP_GE OP_GT OP_LE OP_LT OP_NEQ OP_NEG
 %type <a> exp stmt list explist var value cases case default atom_value callfunc jump_stmt symList

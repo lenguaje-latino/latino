@@ -6,6 +6,16 @@
 
 #IncludeRegexTransform: 
 
+/home/primi/src/latino/src/ast.c
+ast.h
+/home/primi/src/latino/src/ast.h
+utils.h
+/home/primi/src/latino/src/utils.h
+
+/home/primi/src/latino/src/ast.h
+latino.h
+/home/primi/src/latino/src/latino.h
+
 /home/primi/src/latino/src/eval.c
 stdio.h
 -
@@ -19,14 +29,30 @@ string.h
 -
 math.h
 -
-stdbool.h
--
 latino.h
 /home/primi/src/latino/src/latino.h
+ast.h
+/home/primi/src/latino/src/ast.h
+utils.h
+/home/primi/src/latino/src/utils.h
+
+/home/primi/src/latino/src/khash.h
+khash.h
+/home/primi/src/latino/src/khash.h
+stdlib.h
+-
+string.h
+-
+limits.h
+-
 
 /home/primi/src/latino/src/latino.c
 latino.h
 /home/primi/src/latino/src/latino.h
+parse.h
+/home/primi/src/latino/src/parse.h
+ast.h
+/home/primi/src/latino/src/ast.h
 parse.h
 /home/primi/src/latino/src/parse.h
 
@@ -53,13 +79,13 @@ parse.h
 /home/primi/src/latino/src/lex.c
 stdio.h
 -
-stdlib.h
+string.h
 -
-unistd.h
--
-io.h
+errno.h
 -
 stdlib.h
+-
+inttypes.h
 -
 string.h
 -
@@ -67,12 +93,16 @@ stdlib.h
 -
 latino.h
 /home/primi/src/latino/src/latino.h
-stdlib.h
+ast.h
+/home/primi/src/latino/src/ast.h
+unistd.h
 -
 
 /home/primi/src/latino/src/parse.c
 latino.h
 /home/primi/src/latino/src/latino.h
+ast.h
+/home/primi/src/latino/src/ast.h
 stddef.h
 -
 libintl.h
@@ -89,4 +119,32 @@ stdio.h
 -
 
 /home/primi/src/latino/src/parse.h
+
+/home/primi/src/latino/src/string.c
+khash.h
+/home/primi/src/latino/src/khash.h
+latino.h
+/home/primi/src/latino/src/latino.h
+
+/home/primi/src/latino/src/utils.c
+latino.h
+/home/primi/src/latino/src/latino.h
+ast.h
+/home/primi/src/latino/src/ast.h
+utils.h
+/home/primi/src/latino/src/utils.h
+
+/home/primi/src/latino/src/utils.h
+stddef.h
+-
+stdlib.h
+-
+stddef.h
+-
+stdio.h
+-
+string.h
+-
+errno.h
+-
 

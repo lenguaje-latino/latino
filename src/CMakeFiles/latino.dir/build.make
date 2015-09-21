@@ -107,9 +107,124 @@ src/CMakeFiles/latino.dir/eval.c.o.provides: src/CMakeFiles/latino.dir/eval.c.o.
 
 src/CMakeFiles/latino.dir/eval.c.o.provides.build: src/CMakeFiles/latino.dir/eval.c.o
 
+src/CMakeFiles/latino.dir/ast.c.o: src/CMakeFiles/latino.dir/flags.make
+src/CMakeFiles/latino.dir/ast.c.o: src/ast.c
+	$(CMAKE_COMMAND) -E cmake_progress_report /home/primi/src/latino/CMakeFiles $(CMAKE_PROGRESS_5)
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Building C object src/CMakeFiles/latino.dir/ast.c.o"
+	cd /home/primi/src/latino/src && /usr/bin/cc  $(C_DEFINES) $(C_FLAGS) -o CMakeFiles/latino.dir/ast.c.o   -c /home/primi/src/latino/src/ast.c
+
+src/CMakeFiles/latino.dir/ast.c.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing C source to CMakeFiles/latino.dir/ast.c.i"
+	cd /home/primi/src/latino/src && /usr/bin/cc  $(C_DEFINES) $(C_FLAGS) -E /home/primi/src/latino/src/ast.c > CMakeFiles/latino.dir/ast.c.i
+
+src/CMakeFiles/latino.dir/ast.c.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling C source to assembly CMakeFiles/latino.dir/ast.c.s"
+	cd /home/primi/src/latino/src && /usr/bin/cc  $(C_DEFINES) $(C_FLAGS) -S /home/primi/src/latino/src/ast.c -o CMakeFiles/latino.dir/ast.c.s
+
+src/CMakeFiles/latino.dir/ast.c.o.requires:
+.PHONY : src/CMakeFiles/latino.dir/ast.c.o.requires
+
+src/CMakeFiles/latino.dir/ast.c.o.provides: src/CMakeFiles/latino.dir/ast.c.o.requires
+	$(MAKE) -f src/CMakeFiles/latino.dir/build.make src/CMakeFiles/latino.dir/ast.c.o.provides.build
+.PHONY : src/CMakeFiles/latino.dir/ast.c.o.provides
+
+src/CMakeFiles/latino.dir/ast.c.o.provides.build: src/CMakeFiles/latino.dir/ast.c.o
+
+src/CMakeFiles/latino.dir/utils.c.o: src/CMakeFiles/latino.dir/flags.make
+src/CMakeFiles/latino.dir/utils.c.o: src/utils.c
+	$(CMAKE_COMMAND) -E cmake_progress_report /home/primi/src/latino/CMakeFiles $(CMAKE_PROGRESS_6)
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Building C object src/CMakeFiles/latino.dir/utils.c.o"
+	cd /home/primi/src/latino/src && /usr/bin/cc  $(C_DEFINES) $(C_FLAGS) -o CMakeFiles/latino.dir/utils.c.o   -c /home/primi/src/latino/src/utils.c
+
+src/CMakeFiles/latino.dir/utils.c.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing C source to CMakeFiles/latino.dir/utils.c.i"
+	cd /home/primi/src/latino/src && /usr/bin/cc  $(C_DEFINES) $(C_FLAGS) -E /home/primi/src/latino/src/utils.c > CMakeFiles/latino.dir/utils.c.i
+
+src/CMakeFiles/latino.dir/utils.c.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling C source to assembly CMakeFiles/latino.dir/utils.c.s"
+	cd /home/primi/src/latino/src && /usr/bin/cc  $(C_DEFINES) $(C_FLAGS) -S /home/primi/src/latino/src/utils.c -o CMakeFiles/latino.dir/utils.c.s
+
+src/CMakeFiles/latino.dir/utils.c.o.requires:
+.PHONY : src/CMakeFiles/latino.dir/utils.c.o.requires
+
+src/CMakeFiles/latino.dir/utils.c.o.provides: src/CMakeFiles/latino.dir/utils.c.o.requires
+	$(MAKE) -f src/CMakeFiles/latino.dir/build.make src/CMakeFiles/latino.dir/utils.c.o.provides.build
+.PHONY : src/CMakeFiles/latino.dir/utils.c.o.provides
+
+src/CMakeFiles/latino.dir/utils.c.o.provides.build: src/CMakeFiles/latino.dir/utils.c.o
+
+src/CMakeFiles/latino.dir/string.c.o: src/CMakeFiles/latino.dir/flags.make
+src/CMakeFiles/latino.dir/string.c.o: src/string.c
+	$(CMAKE_COMMAND) -E cmake_progress_report /home/primi/src/latino/CMakeFiles $(CMAKE_PROGRESS_7)
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Building C object src/CMakeFiles/latino.dir/string.c.o"
+	cd /home/primi/src/latino/src && /usr/bin/cc  $(C_DEFINES) $(C_FLAGS) -o CMakeFiles/latino.dir/string.c.o   -c /home/primi/src/latino/src/string.c
+
+src/CMakeFiles/latino.dir/string.c.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing C source to CMakeFiles/latino.dir/string.c.i"
+	cd /home/primi/src/latino/src && /usr/bin/cc  $(C_DEFINES) $(C_FLAGS) -E /home/primi/src/latino/src/string.c > CMakeFiles/latino.dir/string.c.i
+
+src/CMakeFiles/latino.dir/string.c.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling C source to assembly CMakeFiles/latino.dir/string.c.s"
+	cd /home/primi/src/latino/src && /usr/bin/cc  $(C_DEFINES) $(C_FLAGS) -S /home/primi/src/latino/src/string.c -o CMakeFiles/latino.dir/string.c.s
+
+src/CMakeFiles/latino.dir/string.c.o.requires:
+.PHONY : src/CMakeFiles/latino.dir/string.c.o.requires
+
+src/CMakeFiles/latino.dir/string.c.o.provides: src/CMakeFiles/latino.dir/string.c.o.requires
+	$(MAKE) -f src/CMakeFiles/latino.dir/build.make src/CMakeFiles/latino.dir/string.c.o.provides.build
+.PHONY : src/CMakeFiles/latino.dir/string.c.o.provides
+
+src/CMakeFiles/latino.dir/string.c.o.provides.build: src/CMakeFiles/latino.dir/string.c.o
+
+src/CMakeFiles/latino.dir/vm.c.o: src/CMakeFiles/latino.dir/flags.make
+src/CMakeFiles/latino.dir/vm.c.o: src/vm.c
+	$(CMAKE_COMMAND) -E cmake_progress_report /home/primi/src/latino/CMakeFiles $(CMAKE_PROGRESS_8)
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Building C object src/CMakeFiles/latino.dir/vm.c.o"
+	cd /home/primi/src/latino/src && /usr/bin/cc  $(C_DEFINES) $(C_FLAGS) -o CMakeFiles/latino.dir/vm.c.o   -c /home/primi/src/latino/src/vm.c
+
+src/CMakeFiles/latino.dir/vm.c.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing C source to CMakeFiles/latino.dir/vm.c.i"
+	cd /home/primi/src/latino/src && /usr/bin/cc  $(C_DEFINES) $(C_FLAGS) -E /home/primi/src/latino/src/vm.c > CMakeFiles/latino.dir/vm.c.i
+
+src/CMakeFiles/latino.dir/vm.c.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling C source to assembly CMakeFiles/latino.dir/vm.c.s"
+	cd /home/primi/src/latino/src && /usr/bin/cc  $(C_DEFINES) $(C_FLAGS) -S /home/primi/src/latino/src/vm.c -o CMakeFiles/latino.dir/vm.c.s
+
+src/CMakeFiles/latino.dir/vm.c.o.requires:
+.PHONY : src/CMakeFiles/latino.dir/vm.c.o.requires
+
+src/CMakeFiles/latino.dir/vm.c.o.provides: src/CMakeFiles/latino.dir/vm.c.o.requires
+	$(MAKE) -f src/CMakeFiles/latino.dir/build.make src/CMakeFiles/latino.dir/vm.c.o.provides.build
+.PHONY : src/CMakeFiles/latino.dir/vm.c.o.provides
+
+src/CMakeFiles/latino.dir/vm.c.o.provides.build: src/CMakeFiles/latino.dir/vm.c.o
+
+src/CMakeFiles/latino.dir/object.c.o: src/CMakeFiles/latino.dir/flags.make
+src/CMakeFiles/latino.dir/object.c.o: src/object.c
+	$(CMAKE_COMMAND) -E cmake_progress_report /home/primi/src/latino/CMakeFiles $(CMAKE_PROGRESS_9)
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Building C object src/CMakeFiles/latino.dir/object.c.o"
+	cd /home/primi/src/latino/src && /usr/bin/cc  $(C_DEFINES) $(C_FLAGS) -o CMakeFiles/latino.dir/object.c.o   -c /home/primi/src/latino/src/object.c
+
+src/CMakeFiles/latino.dir/object.c.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing C source to CMakeFiles/latino.dir/object.c.i"
+	cd /home/primi/src/latino/src && /usr/bin/cc  $(C_DEFINES) $(C_FLAGS) -E /home/primi/src/latino/src/object.c > CMakeFiles/latino.dir/object.c.i
+
+src/CMakeFiles/latino.dir/object.c.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling C source to assembly CMakeFiles/latino.dir/object.c.s"
+	cd /home/primi/src/latino/src && /usr/bin/cc  $(C_DEFINES) $(C_FLAGS) -S /home/primi/src/latino/src/object.c -o CMakeFiles/latino.dir/object.c.s
+
+src/CMakeFiles/latino.dir/object.c.o.requires:
+.PHONY : src/CMakeFiles/latino.dir/object.c.o.requires
+
+src/CMakeFiles/latino.dir/object.c.o.provides: src/CMakeFiles/latino.dir/object.c.o.requires
+	$(MAKE) -f src/CMakeFiles/latino.dir/build.make src/CMakeFiles/latino.dir/object.c.o.provides.build
+.PHONY : src/CMakeFiles/latino.dir/object.c.o.provides
+
+src/CMakeFiles/latino.dir/object.c.o.provides.build: src/CMakeFiles/latino.dir/object.c.o
+
 src/CMakeFiles/latino.dir/parse.c.o: src/CMakeFiles/latino.dir/flags.make
 src/CMakeFiles/latino.dir/parse.c.o: src/parse.c
-	$(CMAKE_COMMAND) -E cmake_progress_report /home/primi/src/latino/CMakeFiles $(CMAKE_PROGRESS_5)
+	$(CMAKE_COMMAND) -E cmake_progress_report /home/primi/src/latino/CMakeFiles $(CMAKE_PROGRESS_10)
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Building C object src/CMakeFiles/latino.dir/parse.c.o"
 	cd /home/primi/src/latino/src && /usr/bin/cc  $(C_DEFINES) $(C_FLAGS) -o CMakeFiles/latino.dir/parse.c.o   -c /home/primi/src/latino/src/parse.c
 
@@ -133,7 +248,7 @@ src/CMakeFiles/latino.dir/parse.c.o.provides.build: src/CMakeFiles/latino.dir/pa
 src/CMakeFiles/latino.dir/lex.c.o: src/CMakeFiles/latino.dir/flags.make
 src/CMakeFiles/latino.dir/lex.c.o: src/lex.c
 src/CMakeFiles/latino.dir/lex.c.o: src/parse.h
-	$(CMAKE_COMMAND) -E cmake_progress_report /home/primi/src/latino/CMakeFiles $(CMAKE_PROGRESS_6)
+	$(CMAKE_COMMAND) -E cmake_progress_report /home/primi/src/latino/CMakeFiles $(CMAKE_PROGRESS_11)
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Building C object src/CMakeFiles/latino.dir/lex.c.o"
 	cd /home/primi/src/latino/src && /usr/bin/cc  $(C_DEFINES) $(C_FLAGS) -o CMakeFiles/latino.dir/lex.c.o   -c /home/primi/src/latino/src/lex.c
 
@@ -158,27 +273,42 @@ src/CMakeFiles/latino.dir/lex.c.o.provides.build: src/CMakeFiles/latino.dir/lex.
 latino_OBJECTS = \
 "CMakeFiles/latino.dir/latino.c.o" \
 "CMakeFiles/latino.dir/eval.c.o" \
+"CMakeFiles/latino.dir/ast.c.o" \
+"CMakeFiles/latino.dir/utils.c.o" \
+"CMakeFiles/latino.dir/string.c.o" \
+"CMakeFiles/latino.dir/vm.c.o" \
+"CMakeFiles/latino.dir/object.c.o" \
 "CMakeFiles/latino.dir/parse.c.o" \
 "CMakeFiles/latino.dir/lex.c.o"
 
 # External object files for target latino
 latino_EXTERNAL_OBJECTS =
 
-src/latino: src/CMakeFiles/latino.dir/latino.c.o
-src/latino: src/CMakeFiles/latino.dir/eval.c.o
-src/latino: src/CMakeFiles/latino.dir/parse.c.o
-src/latino: src/CMakeFiles/latino.dir/lex.c.o
-src/latino: src/CMakeFiles/latino.dir/build.make
-src/latino: src/CMakeFiles/latino.dir/link.txt
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --red --bold "Linking C executable latino"
+bin/Debug/latino: src/CMakeFiles/latino.dir/latino.c.o
+bin/Debug/latino: src/CMakeFiles/latino.dir/eval.c.o
+bin/Debug/latino: src/CMakeFiles/latino.dir/ast.c.o
+bin/Debug/latino: src/CMakeFiles/latino.dir/utils.c.o
+bin/Debug/latino: src/CMakeFiles/latino.dir/string.c.o
+bin/Debug/latino: src/CMakeFiles/latino.dir/vm.c.o
+bin/Debug/latino: src/CMakeFiles/latino.dir/object.c.o
+bin/Debug/latino: src/CMakeFiles/latino.dir/parse.c.o
+bin/Debug/latino: src/CMakeFiles/latino.dir/lex.c.o
+bin/Debug/latino: src/CMakeFiles/latino.dir/build.make
+bin/Debug/latino: src/CMakeFiles/latino.dir/link.txt
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --red --bold "Linking C executable ../bin/Debug/latino"
 	cd /home/primi/src/latino/src && $(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/latino.dir/link.txt --verbose=$(VERBOSE)
 
 # Rule to build all files generated by this target.
-src/CMakeFiles/latino.dir/build: src/latino
+src/CMakeFiles/latino.dir/build: bin/Debug/latino
 .PHONY : src/CMakeFiles/latino.dir/build
 
 src/CMakeFiles/latino.dir/requires: src/CMakeFiles/latino.dir/latino.c.o.requires
 src/CMakeFiles/latino.dir/requires: src/CMakeFiles/latino.dir/eval.c.o.requires
+src/CMakeFiles/latino.dir/requires: src/CMakeFiles/latino.dir/ast.c.o.requires
+src/CMakeFiles/latino.dir/requires: src/CMakeFiles/latino.dir/utils.c.o.requires
+src/CMakeFiles/latino.dir/requires: src/CMakeFiles/latino.dir/string.c.o.requires
+src/CMakeFiles/latino.dir/requires: src/CMakeFiles/latino.dir/vm.c.o.requires
+src/CMakeFiles/latino.dir/requires: src/CMakeFiles/latino.dir/object.c.o.requires
 src/CMakeFiles/latino.dir/requires: src/CMakeFiles/latino.dir/parse.c.o.requires
 src/CMakeFiles/latino.dir/requires: src/CMakeFiles/latino.dir/lex.c.o.requires
 .PHONY : src/CMakeFiles/latino.dir/requires

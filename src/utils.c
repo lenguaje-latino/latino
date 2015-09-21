@@ -14,7 +14,7 @@ char *strdup0(char *s)
     return p;
 }
 
-char *strndup0(const unsigned char *s, size_t n)
+char *strndup0(const char *s, size_t n)
 {
     size_t i;
     char *p = s;

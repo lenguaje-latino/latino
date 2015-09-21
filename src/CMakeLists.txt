@@ -1,4 +1,4 @@
-set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -Wall")
+set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -Wall -std=c99")
 
 if(UNIX)
     link_libraries(m)
@@ -51,6 +51,8 @@ ADD_FLEX_BISON_DEPENDENCY(MyScanner MyParser)
 
 set(SOURCES utils.h ast.h khash.h latino.h vm.h object.h
     latino.c eval.c ast.c utils.c string.c vm.c object.c)
+
+SET(EXECUTABLE_OUTPUT_PATH ${PROJECT_BINARY_DIR}/bin/Debug)
 
 ADD_EXECUTABLE(latino ${SOURCES} ${BISON_MyParser_OUTPUTS} ${FLEX_MyScanner_OUTPUTS} )
 

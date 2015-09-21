@@ -112,6 +112,30 @@ latino/fast:
 	cd /home/primi/src/latino && $(MAKE) -f src/CMakeFiles/latino.dir/build.make src/CMakeFiles/latino.dir/build
 .PHONY : latino/fast
 
+ast.o: ast.c.o
+.PHONY : ast.o
+
+# target to build an object file
+ast.c.o:
+	cd /home/primi/src/latino && $(MAKE) -f src/CMakeFiles/latino.dir/build.make src/CMakeFiles/latino.dir/ast.c.o
+.PHONY : ast.c.o
+
+ast.i: ast.c.i
+.PHONY : ast.i
+
+# target to preprocess a source file
+ast.c.i:
+	cd /home/primi/src/latino && $(MAKE) -f src/CMakeFiles/latino.dir/build.make src/CMakeFiles/latino.dir/ast.c.i
+.PHONY : ast.c.i
+
+ast.s: ast.c.s
+.PHONY : ast.s
+
+# target to generate assembly for a file
+ast.c.s:
+	cd /home/primi/src/latino && $(MAKE) -f src/CMakeFiles/latino.dir/build.make src/CMakeFiles/latino.dir/ast.c.s
+.PHONY : ast.c.s
+
 eval.o: eval.c.o
 .PHONY : eval.o
 
@@ -184,6 +208,30 @@ lex.c.s:
 	cd /home/primi/src/latino && $(MAKE) -f src/CMakeFiles/latino.dir/build.make src/CMakeFiles/latino.dir/lex.c.s
 .PHONY : lex.c.s
 
+object.o: object.c.o
+.PHONY : object.o
+
+# target to build an object file
+object.c.o:
+	cd /home/primi/src/latino && $(MAKE) -f src/CMakeFiles/latino.dir/build.make src/CMakeFiles/latino.dir/object.c.o
+.PHONY : object.c.o
+
+object.i: object.c.i
+.PHONY : object.i
+
+# target to preprocess a source file
+object.c.i:
+	cd /home/primi/src/latino && $(MAKE) -f src/CMakeFiles/latino.dir/build.make src/CMakeFiles/latino.dir/object.c.i
+.PHONY : object.c.i
+
+object.s: object.c.s
+.PHONY : object.s
+
+# target to generate assembly for a file
+object.c.s:
+	cd /home/primi/src/latino && $(MAKE) -f src/CMakeFiles/latino.dir/build.make src/CMakeFiles/latino.dir/object.c.s
+.PHONY : object.c.s
+
 parse.o: parse.c.o
 .PHONY : parse.o
 
@@ -208,6 +256,78 @@ parse.c.s:
 	cd /home/primi/src/latino && $(MAKE) -f src/CMakeFiles/latino.dir/build.make src/CMakeFiles/latino.dir/parse.c.s
 .PHONY : parse.c.s
 
+string.o: string.c.o
+.PHONY : string.o
+
+# target to build an object file
+string.c.o:
+	cd /home/primi/src/latino && $(MAKE) -f src/CMakeFiles/latino.dir/build.make src/CMakeFiles/latino.dir/string.c.o
+.PHONY : string.c.o
+
+string.i: string.c.i
+.PHONY : string.i
+
+# target to preprocess a source file
+string.c.i:
+	cd /home/primi/src/latino && $(MAKE) -f src/CMakeFiles/latino.dir/build.make src/CMakeFiles/latino.dir/string.c.i
+.PHONY : string.c.i
+
+string.s: string.c.s
+.PHONY : string.s
+
+# target to generate assembly for a file
+string.c.s:
+	cd /home/primi/src/latino && $(MAKE) -f src/CMakeFiles/latino.dir/build.make src/CMakeFiles/latino.dir/string.c.s
+.PHONY : string.c.s
+
+utils.o: utils.c.o
+.PHONY : utils.o
+
+# target to build an object file
+utils.c.o:
+	cd /home/primi/src/latino && $(MAKE) -f src/CMakeFiles/latino.dir/build.make src/CMakeFiles/latino.dir/utils.c.o
+.PHONY : utils.c.o
+
+utils.i: utils.c.i
+.PHONY : utils.i
+
+# target to preprocess a source file
+utils.c.i:
+	cd /home/primi/src/latino && $(MAKE) -f src/CMakeFiles/latino.dir/build.make src/CMakeFiles/latino.dir/utils.c.i
+.PHONY : utils.c.i
+
+utils.s: utils.c.s
+.PHONY : utils.s
+
+# target to generate assembly for a file
+utils.c.s:
+	cd /home/primi/src/latino && $(MAKE) -f src/CMakeFiles/latino.dir/build.make src/CMakeFiles/latino.dir/utils.c.s
+.PHONY : utils.c.s
+
+vm.o: vm.c.o
+.PHONY : vm.o
+
+# target to build an object file
+vm.c.o:
+	cd /home/primi/src/latino && $(MAKE) -f src/CMakeFiles/latino.dir/build.make src/CMakeFiles/latino.dir/vm.c.o
+.PHONY : vm.c.o
+
+vm.i: vm.c.i
+.PHONY : vm.i
+
+# target to preprocess a source file
+vm.c.i:
+	cd /home/primi/src/latino && $(MAKE) -f src/CMakeFiles/latino.dir/build.make src/CMakeFiles/latino.dir/vm.c.i
+.PHONY : vm.c.i
+
+vm.s: vm.c.s
+.PHONY : vm.s
+
+# target to generate assembly for a file
+vm.c.s:
+	cd /home/primi/src/latino && $(MAKE) -f src/CMakeFiles/latino.dir/build.make src/CMakeFiles/latino.dir/vm.c.s
+.PHONY : vm.c.s
+
 # Help Target
 help:
 	@echo "The following are some of the valid targets for this Makefile:"
@@ -217,6 +337,9 @@ help:
 	@echo "... edit_cache"
 	@echo "... latino"
 	@echo "... rebuild_cache"
+	@echo "... ast.o"
+	@echo "... ast.i"
+	@echo "... ast.s"
 	@echo "... eval.o"
 	@echo "... eval.i"
 	@echo "... eval.s"
@@ -226,9 +349,21 @@ help:
 	@echo "... lex.o"
 	@echo "... lex.i"
 	@echo "... lex.s"
+	@echo "... object.o"
+	@echo "... object.i"
+	@echo "... object.s"
 	@echo "... parse.o"
 	@echo "... parse.i"
 	@echo "... parse.s"
+	@echo "... string.o"
+	@echo "... string.i"
+	@echo "... string.s"
+	@echo "... utils.o"
+	@echo "... utils.i"
+	@echo "... utils.s"
+	@echo "... vm.o"
+	@echo "... vm.i"
+	@echo "... vm.s"
 .PHONY : help
 
 

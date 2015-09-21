@@ -30,8 +30,8 @@
    This special exception was added by the Free Software Foundation in
    version 2.2 of Bison.  */
 
-#ifndef YY_YY_HOME_PRIMI_SRC_LATINO_SRC_PARSE_H_INCLUDED
-# define YY_YY_HOME_PRIMI_SRC_LATINO_SRC_PARSE_H_INCLUDED
+#ifndef YY_YY_PARSER_H_INCLUDED
+# define YY_YY_PARSER_H_INCLUDED
 /* Debug traces.  */
 #ifndef YYDEBUG
 # define YYDEBUG 0
@@ -45,68 +45,53 @@ extern int yydebug;
 # define YYTOKENTYPE
   enum yytokentype
   {
-    TOKEN_INT = 258,
-    TOKEN_CHAR = 259,
-    TOKEN_NUMBER = 260,
-    TOKEN_STRING = 261,
-    TOKEN_IDENTIFIER = 262,
-    TOKEN_FUNC = 263,
-    KEYWORD_IF = 264,
-    KEYWORD_END = 265,
-    KEYWORD_ELSE = 266,
-    KEYWORD_WHILE = 267,
-    KEYWORD_DO = 268,
-    KEYWORD_SWITCH = 269,
-    KEYWORD_CASE = 270,
-    KEYWORD_BREAK = 271,
-    KEYWORD_DEFAULT = 272,
-    KEYWORD_WHEN = 273,
-    KEYWORD_FUNCTION = 274,
-    KEYWORD_FROM = 275,
-    KEYWORD_TO = 276,
-    KEYWORD_STEP = 277,
-    KEYWORD_BOOL = 278,
-    KEYWORD_RETURN = 279,
-    KEYWORD_TRUE = 280,
-    KEYWORD_FALSE = 281,
-    OP_GT = 282,
-    OP_LT = 283,
-    OP_GE = 284,
-    OP_LE = 285,
-    OP_EQ = 286,
-    OP_NEQ = 287,
-    OP_AND = 288,
-    OP_OR = 289,
-    OP_NEG = 290,
-    UMINUS = 291,
-    UNEG = 292
+    TIDENTIFIER = 258,
+    TINLINE_IDENTIFIER = 259,
+    TSTRING = 260,
+    TINTEGER = 261,
+    TDOUBLE = 262,
+    TTRUE = 263,
+    TFALSE = 264,
+    TSEMICOLON = 265,
+    TLPAREN = 266,
+    TRPAREN = 267,
+    TLSQUARE = 268,
+    TRSQUARE = 269,
+    TLBRACE = 270,
+    TRBRACE = 271,
+    TAT = 272,
+    TDOLLAR = 273,
+    TCOMMA = 274,
+    TDOT = 275,
+    TTILDE = 276,
+    TIF = 277,
+    TWHILE = 278,
+    TEQUALS = 279,
+    TGLOBAL = 280,
+    TFN = 281,
+    TNS = 282,
+    TRETURN = 283
   };
 #endif
 
 /* Value type.  */
-#if ! defined YYSTYPE && ! defined YYSTYPE_IS_DECLARED
-typedef union YYSTYPE YYSTYPE;
-union YYSTYPE
+
+/* Location type.  */
+#if ! defined YYLTYPE && ! defined YYLTYPE_IS_DECLARED
+typedef struct YYLTYPE YYLTYPE;
+struct YYLTYPE
 {
-#line 13 "/home/primi/src/latino/src/parse.y" /* yacc.c:1909  */
-
-    int fn; /* which function */
-    char *c; /* char type */
-    long i;  /* int type */
-    double d; /* double type */
-    char *str; /* string type */
-    struct ast *a; /* astract syntax tree */
-    struct symbol *s;   /* which symbol */
-
-#line 102 "/home/primi/src/latino/src/parse.h" /* yacc.c:1909  */
+  int first_line;
+  int first_column;
+  int last_line;
+  int last_column;
 };
-# define YYSTYPE_IS_TRIVIAL 1
-# define YYSTYPE_IS_DECLARED 1
+# define YYLTYPE_IS_DECLARED 1
+# define YYLTYPE_IS_TRIVIAL 1
 #endif
 
 
-extern YYSTYPE yylval;
 
-int yyparse (void);
+int yyparse (solid_ast_node **root, void *scanner);
 
-#endif /* !YY_YY_HOME_PRIMI_SRC_LATINO_SRC_PARSE_H_INCLUDED  */
+#endif /* !YY_YY_PARSER_H_INCLUDED  */
