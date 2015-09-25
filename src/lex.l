@@ -1,24 +1,26 @@
-%option yylineno
-%option noyywrap
-%option warn
-%option nodefault
 %option nounistd
+%option outfile="lex.c" header-file="lex.h"
+%option warn nodefault
+%option reentrant noyywrap never-interactive
+%option bison-bridge bison-locations
+%option yylineno
+%option extra-type="struct lex_state *"
 
 %{
+
+/*#define YYDEBUG 1*/
 
 /* flex -olex.c -i lex.l */
 #include <string.h>
 #include <stdlib.h>
 #include "latino.h"
 #include "ast.h"
+#include "parse.h"
 
-int yyparse(void);
+#define YY_USER_ACTION yylloc->first_line = yylloc->last_line = yylineno;
 
-#define YY_INPUT(buf,result,max_size)  {\
-    result = getNextChar(buf, max_size); \
-    if (  result <= 0  ) \
-      result = YY_NULL; \
-    }
+int f(int token, yyscan_t scanner);
+
 %}
 
  /* float exponent */
@@ -53,40 +55,35 @@ EXP ([Ee][-+]?[0-9]+)
 "si"        { return KEYWORD_IF; }
 "fin"       { return KEYWORD_END; }
 "sino"      { return KEYWORD_ELSE; }
-"romper"      { return KEYWORD_BREAK; }
+"romper"    { return KEYWORD_BREAK; }
 "mientras"  { return KEYWORD_WHILE; }
 "hacer"     { return KEYWORD_DO; }
 "cuando"    { return KEYWORD_WHEN; }
 "funcion"   {  return KEYWORD_FUNCTION; }
-"elegir"   {  return KEYWORD_SWITCH; }
-"caso"   {  return KEYWORD_CASE; }
+"elegir"    {  return KEYWORD_SWITCH; }
+"caso"      {  return KEYWORD_CASE; }
 "defecto"   {  return KEYWORD_DEFAULT; }
-"desde"   {  return KEYWORD_FROM; }
-"hasta"   {  return KEYWORD_TO; }
-"salto"   {  return KEYWORD_STEP; }
+"desde"     {  return KEYWORD_FROM; }
+"hasta"     {  return KEYWORD_TO; }
+"salto"     {  return KEYWORD_STEP; }
 "verdadero" { return KEYWORD_TRUE; }
 "falso"     { return KEYWORD_FALSE; }
- /*"nulo"     { return KEYWORD_NULL; }*/
-"retorno"     { return KEYWORD_RETURN; }
+"retorno"   { return KEYWORD_RETURN; }
 
- /*built-in functions */
- /*"raiz"          { yylval.fn = B_sqrt; return TOKEN_FUNC; }*/
- /*"exponente"     { yylval.fn = B_exp; return TOKEN_FUNC; }*/
- /*"logaritmo"     { yylval.fn = B_log; return TOKEN_FUNC; }*/
-"imprimir"      { yylval.fn = B_print; return TOKEN_FUNC; }
+"imprimir"  { return TOKEN_FUNC; }
 
  /* names */
 
-[_a-zA-Z][_a-zA-Z0-9]* { yylval.s = lookup(yytext, NULL); return TOKEN_IDENTIFIER; }
-[0-9]+"."+[0-9]*{EXP}?|"."+[0-9]+{EXP}?       { yylval.d = strtod(yytext, NULL); return TOKEN_NUMBER; }
- /*[0-9]+"."+[0-9]*       { printf("lex_double"); yylval.d = strtod(yytext, NULL); return TOKEN_NUMBER; }*/
-[0-9]+                 { yylval.i = strtol(yytext, NULL, 0); return TOKEN_INT; }
-\"([^\\\"]|\\.)*\"     { yylval.str = newStr(yytext+1, strlen(yytext)-2);return TOKEN_STRING; }
-'([^'\\\n]|\\.)'       { yylval.c = newChar(yytext+1, strlen(yytext)-2); return TOKEN_CHAR; }
+[_a-zA-Z][_a-zA-Z0-9]* { yylval->node = newRef(lookup(yytext, NULL)); return TOKEN_IDENTIFIER; }
+[0-9]+"."+[0-9]*{EXP}?|"."+[0-9]+{EXP}?       { yylval->node = newNum(strtod(yytext, NULL)); return TOKEN_NUMBER; }
+[0-9]+                 { yylval->node = newInt(strtol(yytext, NULL, 0)); return TOKEN_INT; }
+\"([^\\\"]|\\.)*\"     { yylval->node = newStr(yytext+1, strlen(yytext)-2);return TOKEN_STRING; }
+'([^'\\\n]|\\.)'       { yylval->node = newChar(yytext+1, strlen(yytext)-2); return TOKEN_CHAR; }
 "#".* /* ignore comments */
 \\\n                   { ; } /* ignore line continuation */
 [ \t\n]                { ; } /* ignore whitespace  tabs and eol */
- /*.                      { printf("error lexico %s ", yytext); }*/
-.                      { ; }
+ /*<<EOF>>                { static int once = 0; return once++ ? 0 : '\n'; }
+ .                   { printf("error lexico %s ", yytext); }
+ /*.                      { ; }*/
 
 %%

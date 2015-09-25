@@ -1,7 +1,12 @@
+#include <stdio.h>
 #include "latino.h"
 #include "parse.h"
 #include "ast.h"
 #include "parse.h"
+#include "lex.h"
+
+/* parser debugging */
+int yydebug = 0;
 
 int debug = 0;
 
@@ -15,68 +20,90 @@ static int nTokenStart = 0;
 static int nTokenLength = 0;
 static int nTokenNextStart = 0;
 
-typedef struct yy_buffer_state * YY_BUFFER_STATE;
+int yyparse(ast **expression, yyscan_t scanner);
 
-/*extern int yyparse(void);*/
-
+/*typedef struct yy_buffer_state * YY_BUFFER_STATE;
 extern YY_BUFFER_STATE yy_scan_string(char * str);
 extern void yy_delete_buffer(YY_BUFFER_STATE buffer);
+*/
 
-extern int main(int argc, char *argv[])
+ast *parse_expr(char *expr)
+{
+	ast *ret = NULL;
+	yyscan_t scanner;
+	YY_BUFFER_STATE state;
+
+	lex_state scan_state = { .insert = 0 };
+	yylex_init_extra(&scan_state, &scanner);
+	state = yy_scan_string(expr, scanner);
+	yyparse(&ret, scanner);
+	yy_delete_buffer(state, scanner);
+	yylex_destroy(scanner);
+
+	/*printf("exp:\n%s\n", expr);*/
+	return ret;
+}
+
+ast *parse_file(char *infile) {
+	if (infile == NULL){
+		printf("Especifique un archivo\n");
+		return NULL;
+	}
+	file = fopen(infile, "r");
+	if (file == NULL) {
+		printf("No se pudo abrir el archivo\n");
+		return NULL;
+	}
+	buffer = malloc(BUF_SIZE);
+	size_t newSize = fread(buffer, sizeof(char), BUF_SIZE, file);
+	if (buffer == NULL) {
+		printf("No se pudo asignar %d bytes de memoria\n", BUF_SIZE);
+		fclose(file);
+		return NULL;
+	}
+	buffer[newSize] = '\0';
+	fclose(file);
+	return parse_expr(buffer);
+}
+
+int main(int argc, char *argv[])
 {
 	/*
 	Para debuguear en visual studio:
 	Menu propiedades del proyecto-> Debugging -> Command Arguments. Agregar $(SolutionDir)..\ejemplos\debug.lat
 	*/
-	int parseCadena = 0;
+	/*int parseCadena = 0;*/
 	int i;
-    char *infile = NULL;
-	char *cadena = NULL;
+	char *infile = NULL;
+	/*char *cadena = NULL;*/
     for (i = 1; i < argc; i++) {
         if (strcmp(argv[i], "-d") == 0) {
             debug = 1;
         } else {
-			if (strcmp(argv[i], "-s") == 0){
-				cadena = argv[i + 1];
-				printf("cadena: %s\n", cadena);
-				parseCadena = 1;
-			}
-			else{
-                /*printf(argv[i]);*/
-				infile = argv[i];
-			}
+			/*printf(argv[i]);*/
+			infile = argv[i];
         }
     }
-	if (parseCadena){
+
+	/*if (parseCadena){
 		YY_BUFFER_STATE buffer = yy_scan_string(cadena);
-	}
-	else {
-		if (infile == NULL){
-			printf("Especifique un archivo\n");
-			return EXIT_FAILURE;
-		}
-		file = fopen(infile, "r");
-		if (file == NULL) {
-			printf("No se pudo abrir el archivo\n");
-			return EXIT_FAILURE;
-		}
-		buffer = malloc(BUF_SIZE);
-		if (buffer == NULL) {
-			printf("No se pudo asignar %d bytes de memoria\n", BUF_SIZE);
-			fclose(file);
-			return EXIT_FAILURE;
-		}
-	}
+	}*/
 
-	yyparse();
+	/*printf("infile: %s\n", infile);*/
+	/*error en chkstk.asm*/
+	ast *res = parse_file(infile);
+	/*res = parse_expr(buffer);*/
+	latValue *val = NULL;
+	val = eval(res);
+	/*imprimir(val);*/
 
-	if (parseCadena){
+	/*if (parseCadena){
 		yy_delete_buffer(buffer);
 	}
 	else{
 		free(buffer);
 		fclose(file);
-	}
+	}*/
     return EXIT_SUCCESS;
 }
 
@@ -88,66 +115,4 @@ extern void printError(char *errorstring, ...)
     vsprintf(errmsg, errorstring, args);
     va_end(args);
     fprintf(stdout, "Error: %s\n", errmsg);
-}
-
-extern void dumpRow(void)
-{
-    if (nRow == 0) {
-        int i;
-        fprintf(stdout, "       |");
-        for (i = 1; i < 71; i++)
-            if (i % 10 == 0)
-                fprintf(stdout, ":");
-            else if (i % 5 == 0)
-                fprintf(stdout, "+");
-            else
-                fprintf(stdout, ".");
-        fprintf(stdout, "\n");
-    } else {
-        fprintf(stdout, "%6d |%.*s", nRow, lBuffer, buffer);
-    }
-}
-
-static int getNextLine(void)
-{
-    char *p;
-    nBuffer = 0;
-    nTokenStart = -1;
-    nTokenNextStart = 1;
-    eof = false;
-    p = fgets(buffer, BUF_SIZE, file);
-    if (p == NULL) {
-        if (ferror(file))
-            return -1;
-        eof = true;
-        return 1;
-    }
-    nRow += 1;
-    lBuffer = strlen(buffer);
-    if(debug){
-        dumpRow();
-    }
-    return 0;
-}
-
-static char dumpChar(char c)
-{
-    if (isprint(c))
-        return c;
-    return '@';
-}
-
-extern int getNextChar(char *b, int maxBuffer)
-{
-    int frc;
-    if (eof)
-        return 0;
-    while (nBuffer >= lBuffer) {
-        frc = getNextLine();
-        if (frc != 0)
-            return 0;
-    }
-    b[0] = buffer[nBuffer];
-    nBuffer += 1;
-    return b[0] == 0 ? 0 : 1;
 }

@@ -1,32 +1,29 @@
 %{
 /* bison -y -oparse.c parse.y */
-
 #define YYERROR_VERBOSE 1
 #define YYDEBUG 1
 
 #include "latino.h"
 #include "ast.h"
-
+#include <stddef.h>
 %}
 
-%defines
-%union {
-    int fn; /* which function */
-    char *c; /* char type */
-    long i;  /* int type */
-    double d; /* double type */
-    char *str; /* string type */
-    struct ast *a; /* astract syntax tree */
-    struct symbol *s;   /* which symbol */
-}
+%output "parse.c"
+%defines "parse.h"
+
+%locations
+%define api.pure
+%lex-param {void *scanner}
+%parse-param {ast **root}
+%parse-param {void *scanner}
 
 /* declare tokens */
-%token <i> TOKEN_INT
-%token <c> TOKEN_CHAR
-%token <d> TOKEN_NUMBER
-%token <str> TOKEN_STRING
-%token <s> TOKEN_IDENTIFIER
-%token <fn> TOKEN_FUNC
+%token <node> TOKEN_INT
+%token <node> TOKEN_CHAR
+%token <node> TOKEN_NUMBER
+%token <node> TOKEN_STRING
+%token <node> TOKEN_IDENTIFIER
+%token <token> TOKEN_FUNC
 %token
     KEYWORD_IF
     KEYWORD_END
@@ -58,8 +55,8 @@
     OP_OR
     OP_NEG
 
-%nonassoc <fn> OP_EQ OP_GE OP_GT OP_LE OP_LT OP_NEQ OP_NEG
-%type <a> exp stmt list explist var value cases case default atom_value callfunc jump_stmt symList
+%nonassoc <node> OP_EQ OP_GE OP_GT OP_LE OP_LT OP_NEQ OP_NEG
+%type <node> exp stmt list explist var value cases case default atom_value callfunc jump_stmt symList
 
 /*
  * presedencia de operadores
@@ -77,22 +74,18 @@
 
 %%
 
-program: /* empty */
-    | program list {
-        if($2) {
-            eval($2);
-            treeFree($2);
-        }
+program: list {
+        *root = $1;
     }
     ;
 
-list:   /* empty */ { $$ = NULL; }
-    | stmt list {
+list: stmt list {
         if ($2){
             $$ = newAst(NODE_BLOCK, $1, $2);
-        } else {
-            $$ = newAst(NODE_BLOCK, $1, NULL);
         }
+    }
+    | stmt {
+        $$ = newAst(NODE_BLOCK, $1, NULL);
     }
     ;
 
@@ -101,10 +94,10 @@ stmt:
         $$ = newIf(NODE_IF, $3, $5, NULL); }
     | KEYWORD_IF '(' exp ')' list KEYWORD_ELSE list KEYWORD_END {
         $$ = newIf(NODE_IF, $3, $5, $7); }
-    | KEYWORD_WHILE '(' exp ')' list KEYWORD_END {
-        $$ = newWhile(NODE_WHILE, $3, $5, NULL); }
     | KEYWORD_DO list KEYWORD_WHEN '(' exp ')' {
         $$ = newDo(NODE_DO, $5, $2, NULL); }
+    | KEYWORD_WHILE '(' exp ')' list KEYWORD_END {
+        $$ = newWhile(NODE_WHILE, $3, $5, NULL); }
     | KEYWORD_SWITCH '(' value ')' cases KEYWORD_END {
         $$ = newSwitch(NODE_SWITCH, $3, $5, NULL); }
     | KEYWORD_SWITCH '(' value ')' cases default KEYWORD_END {
@@ -179,17 +172,17 @@ callfunc:
     ;
 
 value:
-      TOKEN_IDENTIFIER { $$ = newRef($<s>1); }
+      TOKEN_IDENTIFIER { $$ = $1; }
     | KEYWORD_TRUE { $$ = newBool(1); }
     | KEYWORD_FALSE { $$ = newBool(0); }
     | atom_value { $$ = $1; }
     ;
 
 atom_value:
-      TOKEN_INT { $$ = newInt($1); }
-    | TOKEN_NUMBER { $$ = newNum($1); }
-    | TOKEN_CHAR { $$ = $<c>1; }
-    | TOKEN_STRING { $$ = $<str>1; }
+      TOKEN_INT { $$ = $1; }
+    | TOKEN_NUMBER { $$ = $1; }
+    | TOKEN_CHAR { $$ = $1; }
+    | TOKEN_STRING { $$ = $1; }
     ;
 
 explist: /* empty */ { $$ = NULL; }
@@ -207,5 +200,5 @@ symList: /* empty */ { $$ = NULL; }
 extern
 void yyerror(char *s, ...)
 {
-    printError("linea %i, %s", yylineno, s);
+    printError("%s", s);
 }

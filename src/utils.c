@@ -17,7 +17,7 @@ char *strdup0(char *s)
 char *strndup0(const char *s, size_t n)
 {
     size_t i;
-    char *p = s;
+    const char *p = s;
     char *new;
     for (i = 0; i < n && *p; i++, p++)
         ;

@@ -2,6 +2,10 @@
 #define _UTILS_H_
 
 #include <stddef.h>
+#include <stdlib.h>
+#include <stdio.h>
+#include <string.h>
+#include <errno.h>
 
 char * strdup0(char *s);
 char * strndup0(const char *s, size_t n);
@@ -10,12 +14,6 @@ char *int2str(long i);
 char *double2str(double d);
 char *char2str(char c);
 char *bool2str(int i);
-
-#include <stdlib.h>
-#include <stddef.h>
-#include <stdio.h>
-#include <string.h>
-#include <errno.h>
 
 #ifdef NDEBUG
 

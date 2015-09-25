@@ -54,7 +54,7 @@ latValue *evalNodeAdd(latValue *left, latValue *right)
         }
         if (right->t == VALUE_STRING) {
             result->t   = VALUE_STRING;
-            result->v.s = concat(int2str(left->v.d), right->v.s);
+            result->v.s = concat(double2str(left->v.d), right->v.s);
             return result;
         }
         break;
@@ -124,11 +124,6 @@ latValue *evalNodeSub(latValue *left, latValue *right)
             result->v.d  = left->v.i - right->v.d;
             return result;
         }
-        if (right->t == VALUE_CHAR) {
-            result->t = VALUE_CHAR;
-            result->v.c  = left->v.i - right->v.c;
-            return result;
-        }
         break;
     case VALUE_DOUBLE:
         if (right->t == VALUE_INT) {
@@ -143,11 +138,6 @@ latValue *evalNodeSub(latValue *left, latValue *right)
         }
         break;
     case VALUE_CHAR:
-        if (right->t == VALUE_INT) {
-            result->t = VALUE_CHAR;
-            result->v.c  = left->v.c - right->v.i;
-            return result;
-        }
         if (right->t == VALUE_CHAR) {
             result->t = VALUE_CHAR;
             result->v.c  = left->v.c - right->v.c;
@@ -255,7 +245,7 @@ latValue *evalNodeMod(latValue *left, latValue *right)
         if (right->t == VALUE_INT) {
             result->t = VALUE_INT;
             if (right->v.i == 0) {
-                yyerror("\% division por cero");
+                yyerror("% division por cero");
             } else {
                 result->v.i  = left->v.i % right->v.i;
             }
@@ -265,7 +255,7 @@ latValue *evalNodeMod(latValue *left, latValue *right)
     default:
         break;
     }
-    yyerror("\% tipos incompatibles");
+    yyerror("% tipos incompatibles");
     return result;
 }
 
@@ -462,7 +452,7 @@ latValue *evalNodeLt(latValue *left, latValue *right)
     default:
         break;
     }
-    yyerror("> tipos incompatibles");
+    yyerror("< tipos incompatibles");
     return result;
 }
 
@@ -560,7 +550,7 @@ latValue *evalNodeNeq(latValue *left, latValue *right)
     default:
         break;
     }
-    yyerror("> tipos incompatibles");
+    yyerror("!= tipos incompatibles");
     return result;
 }
 
@@ -658,7 +648,7 @@ latValue *evalNodeEq(latValue *left, latValue *right)
     default:
         break;
     }
-    yyerror("> tipos incompatibles");
+    yyerror("== tipos incompatibles");
     return result;
 }
 
@@ -730,7 +720,7 @@ latValue *evalNodeGe(latValue *left, latValue *right)
     default:
         break;
     }
-    yyerror("> tipos incompatibles");
+    yyerror(">= tipos incompatibles");
     return result;
 }
 
@@ -802,7 +792,7 @@ latValue *evalNodeLe(latValue *left, latValue *right)
     default:
         break;
     }
-    yyerror("> tipos incompatibles");
+    yyerror("<= tipos incompatibles");
     return result;
 }
 
@@ -825,14 +815,14 @@ latValue *eval(ast *a)
     case NODE_DECIMAL:
     case NODE_STRING:
     case NODE_INT:
-        return ((node *)a)->value;
+        return a->value;
         break;
     /* name reference */
     case NODE_SYMBOL: {
-        if (((symref *)a)->s->value == NULL) {
+        if (((symRef *)a)->s->value == NULL) {
             yyerror("variable sin definir");
         } else {
-            return ((symref *)a)->s->value;
+            return ((symRef *)a)->s->value;
         }
     }
     break;
@@ -1000,7 +990,7 @@ latValue *eval(ast *a)
             eval(a->r);
         } else {
             if (a->l) {
-                eval(a->l);
+                val = eval(a->l);
             }
         }
         return val;
@@ -1118,7 +1108,6 @@ latValue *callUser(ufnCall *f)
     if (fn->func) {
         if (!setjmp(eval_fun)) {
             val = eval(fn->func);
-            /*printf("***!setjmp->%i\n", val->v.i);*/
         } else {
             /* put the real values of the dummies back */
             sl = fn->syms;

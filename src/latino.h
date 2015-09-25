@@ -11,7 +11,7 @@
 #include <stdlib.h>
 #include <stdarg.h>
 #include <float.h>
-#include "parse.h"
+#include "ast.h"
 
 #if defined(__GNUC__) && ((__GNUC__*100 + __GNUC_MINOR__) >= 302) && \
 defined(__ELF__)
@@ -38,15 +38,29 @@ extern int debug;
 /*
  * lex & parse
  */
-extern int yylex(void);
-
+/*extern int yylex(void);*/
 extern void dumpRow(void);
 extern int getNextChar(char *b, int maxBuffer);
 extern void beginToken(char*);
 extern void printError(char *s, ...);
 
-void yyerror(char *s, ...);
 /* interface to the lexer */
-extern int yylineno;    /* from lexer */
+typedef struct YYLTYPE
+{
+	int first_line;
+	int first_column;
+	int last_line;
+	int last_column;
+} YYLTYPE;
+#define YYLTYPE_IS_DECLARED 1
+struct ast;
+
+#define YY_NO_UNISTD_H 1
+
+/* from lexer */
+/*extern int yylineno;*/
+void yyerror(char *s, ...);
+/*int yyerror(struct YYLTYPE *yylloc_param, void *scanner, struct ast **root, const char *s);*/
+void report_error(char *string);
 
 #endif /* _LATINO_H_ */

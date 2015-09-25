@@ -1,7 +1,9 @@
-set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -Wall -std=c99")
-
 if(UNIX)
     link_libraries(m)
+    set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -Wall -std=c11 -pedantic-errors")
+else(UNIX)
+    set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -W4")
+    set_property(DIRECTORY APPEND PROPERTY COMPILE_DEFINITIONS _CRT_SECURE_NO_WARNINGS)
 endif(UNIX)
 
 FIND_PACKAGE(BISON REQUIRED)
@@ -49,10 +51,10 @@ ADD_FLEX_BISON_DEPENDENCY(MyScanner MyParser)
 
 #INCLUDE_DIRECTORIES(${CMAKE_CURRENT_BINARY_DIR})
 
-set(SOURCES utils.h ast.h khash.h latino.h vm.h object.h
+set(SOURCES utils.h ast.h khash.h latino.h vm.h object.h lex.h
     latino.c eval.c ast.c utils.c string.c vm.c object.c)
 
-SET(EXECUTABLE_OUTPUT_PATH ${PROJECT_BINARY_DIR}/bin/Debug)
+SET(EXECUTABLE_OUTPUT_PATH ${PROJECT_BINARY_DIR}/bin)
 
 ADD_EXECUTABLE(latino ${SOURCES} ${BISON_MyParser_OUTPUTS} ${FLEX_MyScanner_OUTPUTS} )
 

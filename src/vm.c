@@ -15,10 +15,10 @@ lat_vm *lat_make_vm()
 	memset(ret->ctx_stack, 0, 256);
 	ret->ctx_stack[0] = lat_instance(ret);
 	ret->ctx_stack_pointer = 0;
-	lat_set_ctx(lat_get_current_ctx(ret), lat_str(ret, "!!"), lat_define_c_function(ret, lat_nth_list));
+	/*lat_set_ctx(lat_get_current_ctx(ret), lat_str(ret, "!!"), lat_define_c_function(ret, lat_nth_list));*/
 	lat_set_ctx(lat_get_current_ctx(ret), lat_str(ret, "print"), lat_define_c_function(ret, lat_print));
-	lat_set_ctx(lat_get_current_ctx(ret), lat_str(ret, "clone"), lat_define_c_function(ret, lat_clone));
-	lat_set_ctx(lat_get_current_ctx(ret), lat_str(ret, ":"), lat_define_c_function(ret, lat_cons));
+	/*lat_set_ctx(lat_get_current_ctx(ret), lat_str(ret, "clone"), lat_define_c_function(ret, lat_clone));*/
+	/*lat_set_ctx(lat_get_current_ctx(ret), lat_str(ret, ":"), lat_define_c_function(ret, lat_cons));*/
 	lat_set_ctx(lat_get_current_ctx(ret), lat_str(ret, "+"), lat_define_c_function(ret, lat_add));
 	lat_set_ctx(lat_get_current_ctx(ret), lat_str(ret, "-"), lat_define_c_function(ret, lat_sub));
 	lat_set_ctx(lat_get_current_ctx(ret), lat_str(ret, "*"), lat_define_c_function(ret, lat_mul));

@@ -2,6 +2,7 @@
 #define _AST_H_
 
 #include "latino.h"
+#include "vm.h"
 
 /* data types */
 typedef enum {
@@ -23,18 +24,18 @@ typedef struct latString{
 /* values for data */
 typedef struct {
     latValueType t;
-    union {
+    union val {
         int b;
         long i;
         double d;
         char c;
         const char *s;
-		    void *f;
+		void *f;
     } v;
 } latValue;
 
 typedef enum {
-    B_print,
+    B_print = 0,
     B_exp,
     B_log,
     B_sqrt
@@ -83,9 +84,19 @@ typedef enum {
 /* all have common initial nodetype */
 typedef struct ast {
     nodeType nodetype;
+    latValue *value;
     struct ast *l;
     struct ast *r;
 } ast;
+
+typedef struct lex_state{
+	int insert;
+}lex_state;
+
+typedef union YYSTYPE {
+	int token;
+	ast *node;
+} YYSTYPE;
 
 /* built-in function */
 typedef struct {
@@ -133,17 +144,11 @@ typedef struct {
     struct ast *step;
 } nodeFor ;
 
-/* node values */
-typedef struct {
-    nodeType nodetype;
-    latValue *value;
-} node;
-
 /* symbol reference */
 typedef struct {
     nodeType nodetype;
     struct symbol *s;
-} symref ;
+} symRef ;
 
 /* symbol assignment */
 typedef struct {
@@ -154,10 +159,10 @@ typedef struct {
 
 /* build AST */
 ast *newAst(nodeType nodetype, ast *l, ast *r);
-ast *newFunc(int functype, ast *l);
-ast *newCall(struct symbol *s, ast *l);
+ast *newFunc(ast *functype, ast *l);
+ast *newCall(ast *s, ast *l);
 ast *newRef(struct symbol *s);
-ast *newAsgn(struct symbol *s, ast *v);
+ast *newAsgn(ast *s, ast *v);
 ast *newNum(double d);
 ast *newInt(long i);
 ast *newStr(const char *, size_t);
@@ -174,12 +179,13 @@ void symListFree(symList *sl);
 struct symbol *lookup(char *, latValue *);
 
 /* define a function */
-void doDef(struct symbol *name, symList *syms, ast *stmts);
-
-/* delete and free an AST */
-void treeFree(ast *);
+void doDef(ast *name, symList *syms, ast *stmts);
 
 /* evaluate an AST */
 latValue *eval(ast *);
 
+lat_object *lat_parse_tree(lat_vm *vm, ast *tree);
+int lat_parse_node(ast *node, lat_bytecode *bcode, int i);
+
+void imprimir(latValue *val);
 #endif /*_AST_H_*/

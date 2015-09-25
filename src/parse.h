@@ -1,8 +1,8 @@
-/* A Bison parser, made by GNU Bison 3.0.2.  */
+/* A Bison parser, made by GNU Bison 3.0.4.  */
 
 /* Bison interface for Yacc-like parsers in C
 
-   Copyright (C) 1984, 1989-1990, 2000-2013 Free Software Foundation, Inc.
+   Copyright (C) 1984, 1989-1990, 2000-2015 Free Software Foundation, Inc.
 
    This program is free software: you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -30,8 +30,8 @@
    This special exception was added by the Free Software Foundation in
    version 2.2 of Bison.  */
 
-#ifndef YY_YY_HOME_PRIMI_SRC_LATINO_SRC_PARSE_H_INCLUDED
-# define YY_YY_HOME_PRIMI_SRC_LATINO_SRC_PARSE_H_INCLUDED
+#ifndef YY_YY_PARSE_H_INCLUDED
+# define YY_YY_PARSE_H_INCLUDED
 /* Debug traces.  */
 #ifndef YYDEBUG
 # define YYDEBUG 0
@@ -84,29 +84,21 @@ extern int yydebug;
 #endif
 
 /* Value type.  */
-#if ! defined YYSTYPE && ! defined YYSTYPE_IS_DECLARED
-typedef union YYSTYPE YYSTYPE;
-union YYSTYPE
+
+/* Location type.  */
+#if ! defined YYLTYPE && ! defined YYLTYPE_IS_DECLARED
+typedef struct YYLTYPE YYLTYPE;
+struct YYLTYPE
 {
-#line 13 "/home/primi/src/latino/src/parse.y" /* yacc.c:1909  */
-
-    int fn; /* which function */
-    char *c; /* char type */
-    long i;  /* int type */
-    double d; /* double type */
-    char *str; /* string type */
-    struct ast *a; /* astract syntax tree */
-    struct symbol *s;   /* which symbol */
-
-#line 102 "/home/primi/src/latino/src/parse.h" /* yacc.c:1909  */
+  int first_line;
+  int first_column;
+  int last_line;
+  int last_column;
 };
-# define YYSTYPE_IS_TRIVIAL 1
-# define YYSTYPE_IS_DECLARED 1
+# define YYLTYPE_IS_DECLARED 1
+# define YYLTYPE_IS_TRIVIAL 1
 #endif
 
+int yyparse (ast **root, void *scanner);
 
-extern YYSTYPE yylval;
-
-int yyparse (void);
-
-#endif /* !YY_YY_HOME_PRIMI_SRC_LATINO_SRC_PARSE_H_INCLUDED  */
+#endif /* !YY_YY_PARSE_H_INCLUDED  */
