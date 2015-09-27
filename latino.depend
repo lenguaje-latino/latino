@@ -3,6 +3,8 @@
 	"ast.h"
 	"utils.h"
 
+1442674407 
+
 1442690709 /home/primi/src/latino/src/ast.h
 	"latino.h"
 
@@ -59,6 +61,8 @@
 	<stdlib.h>
 	<string.h>
 	"linenoise.h"
+
+1442674407 .h"
 
 1442674407 /home/primi/src/latino/src/linenoise/linenoise.h
 
@@ -134,6 +138,157 @@
 	"utils.h"
 
 1442674407 source:/home/primi/src/latino/src/vm.c
+	"vm.h"
+	<stdlib.h>
+	<stddef.h>
+	<stdio.h>
+	"utils.h"
+
+1443286019 source:/home/primi/src/latino/src/ast.c
+	"latino.h"
+	"ast.h"
+	"utils.h"
+	"vm.h"
+
+1443368518 /home/primi/src/latino/src/latino.h
+	<stdio.h>
+	<math.h>
+	<ctype.h>
+	<string.h>
+	<memory.h>
+	<stdlib.h>
+	<stdarg.h>
+	<float.h>
+	"ast.h"
+
+1443390479 /home/primi/src/latino/src/ast.h
+	"latino.h"
+	"vm.h"
+
+1443367259 /home/primi/src/latino/src/vm.h
+	"utils.h"
+	"object.h"
+
+1443286019 /home/primi/src/latino/src/utils.h
+	<stddef.h>
+	<stdlib.h>
+	<stdio.h>
+	<string.h>
+	<errno.h>
+
+1443286019 /home/primi/src/latino/src/object.h
+	<stdlib.h>
+	<stdbool.h>
+	"utils.h"
+	"vm.h"
+
+1443286019 source:/home/primi/src/latino/src/eval.c
+	<stdio.h>
+	<stdlib.h>
+	<setjmp.h>
+	<stdarg.h>
+	<string.h>
+	<math.h>
+	"latino.h"
+	"ast.h"
+	"utils.h"
+
+1443368518 source:/home/primi/src/latino/src/latino.c
+	<stdio.h>
+	"latino.h"
+	"parse.h"
+	"ast.h"
+	"parse.h"
+	"lex.h"
+
+1443390692 /home/primi/src/latino/src/parse.h
+
+1443390686 /home/primi/src/latino/src/lex.h
+	<stdio.h>
+	<string.h>
+	<errno.h>
+	<stdlib.h>
+	<inttypes.h>
+	<unistd.h>
+
+1443286019 source:/home/primi/src/latino/src/lex.c
+	<stdio.h>
+	<string.h>
+	<errno.h>
+	<stdlib.h>
+	<inttypes.h>
+	<string.h>
+	<stdlib.h>
+	"latino.h"
+	"ast.h"
+	"parse.h"
+	<unistd.h>
+
+1443286019 source:/home/primi/src/latino/src/linenoise/linenoise.c
+	<windows.h>
+	<fcntl.h>
+	<termios.h>
+	<sys/ioctl.h>
+	<sys/poll.h>
+	<unistd.h>
+	<stdlib.h>
+	<stdarg.h>
+	<stdio.h>
+	<errno.h>
+	<string.h>
+	<stdlib.h>
+	<sys/types.h>
+	"linenoise.h"
+	"utf8.h"
+
+1443286019 /home/primi/src/latino/src/linenoise/linenoise.h
+
+1443286019 /home/primi/src/latino/src/linenoise/utf8.h
+	<ctype.h>
+
+1443286019 source:/home/primi/src/latino/src/linenoise/utf8.c
+	<ctype.h>
+	<stdlib.h>
+	<string.h>
+	<stdio.h>
+	"utf8.h"
+
+1443286019 source:/home/primi/src/latino/src/object.c
+	"object.h"
+	<stdbool.h>
+	<stdlib.h>
+	<stddef.h>
+	<stdio.h>
+	"utils.h"
+
+1443286019 source:/home/primi/src/latino/src/parse.c
+	"latino.h"
+	"ast.h"
+	<stddef.h>
+	<stddef.h>
+	<libintl.h>
+	<alloca.h>
+	<malloc.h>
+	<stdlib.h>
+	<stdlib.h>
+	<stdio.h>
+
+1443286019 source:/home/primi/src/latino/src/string.c
+	"khash.h"
+	"latino.h"
+
+1443286019 /home/primi/src/latino/src/khash.h
+	"khash.h"
+	<stdlib.h>
+	<string.h>
+	<limits.h>
+
+1443286019 source:/home/primi/src/latino/src/utils.c
+	"latino.h"
+	"ast.h"
+	"utils.h"
+
+1443286019 source:/home/primi/src/latino/src/vm.c
 	"vm.h"
 	<stdlib.h>
 	<stddef.h>

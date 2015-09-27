@@ -1,6 +1,6 @@
 if(UNIX)
     link_libraries(m)
-    set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -Wall -std=c11 -pedantic-errors")
+    set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -Wall -std=c99")
 else(UNIX)
     set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -W4")
     set_property(DIRECTORY APPEND PROPERTY COMPILE_DEFINITIONS _CRT_SECURE_NO_WARNINGS)

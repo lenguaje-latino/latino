@@ -16,10 +16,12 @@ typedef enum {
 } latValueType;
 
 /* string */
+/*
 typedef struct latString{
 	const char *ptr;
 	size_t len;
 }latString;
+*/
 
 /* values for data */
 typedef struct {
@@ -29,7 +31,7 @@ typedef struct {
         long i;
         double d;
         char c;
-        const char *s;
+        char *s;
 		void *f;
     } v;
 } latValue;
@@ -166,6 +168,7 @@ ast *newAsgn(ast *s, ast *v);
 ast *newNum(double d);
 ast *newInt(long i);
 ast *newStr(const char *, size_t);
+ast *newChar(char *c, size_t l);
 ast *newIf(nodeType nodetype, ast *cond, ast *tl, ast *tr);
 ast *newWhile(nodeType nodetype, ast *cond, ast *tl, ast *tr);
 ast *newDo(nodeType nodetype, ast *cond, ast *tl, ast *tr);

@@ -12,13 +12,6 @@ int debug = 0;
 
 static FILE *file;
 static char *buffer;
-static int eof = 0;
-static int nRow = 0;
-static int nBuffer = 0;
-static int lBuffer = 0;
-static int nTokenStart = 0;
-static int nTokenLength = 0;
-static int nTokenNextStart = 0;
 
 int yyparse(ast **expression, yyscan_t scanner);
 
@@ -109,7 +102,7 @@ int main(int argc, char *argv[])
 
 extern void printError(char *errorstring, ...)
 {
-    static char errmsg[1024];
+    static char errmsg[MAX_ERROR_LENGTH];
     va_list args;
     va_start(args, errorstring);
     vsprintf(errmsg, errorstring, args);

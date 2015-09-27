@@ -82,8 +82,6 @@ EXP ([Ee][-+]?[0-9]+)
 "#".* /* ignore comments */
 \\\n                   { ; } /* ignore line continuation */
 [ \t\n]                { ; } /* ignore whitespace  tabs and eol */
- /*<<EOF>>                { static int once = 0; return once++ ? 0 : '\n'; }
- .                   { printf("error lexico %s ", yytext); }
- /*.                      { ; }*/
+.                      { ; }
 
 %%

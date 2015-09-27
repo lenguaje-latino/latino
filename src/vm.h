@@ -90,9 +90,7 @@ void lat_gt(lat_vm *vm);
 void lat_gte(lat_vm *vm);
 
 lat_object *lat_not(lat_vm *vm, lat_object *o);
-
 lat_bytecode lat_bc(lat_ins i, int a, int b, void *meta);
-
 void lat_call_func(lat_vm *vm, lat_object *func);
 
 #endif // !_VM_H_

@@ -27,13 +27,16 @@ defined(__ELF__)
 #define false   0
 #define true    1
 
+#ifndef bool
 #define bool int
+#endif // bool
 
 /*
  * global variable
  */
 extern int debug;
 #define BUF_SIZE 1048576
+#define MAX_ERROR_LENGTH 1024
 
 /*
  * lex & parse
