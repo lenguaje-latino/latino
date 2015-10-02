@@ -11,7 +11,10 @@
 #include <stdlib.h>
 #include <stdarg.h>
 #include <float.h>
+
+//#include "node.h"
 #include "ast.h"
+#include "vm.h"
 
 #if defined(__GNUC__) && ((__GNUC__*100 + __GNUC_MINOR__) >= 302) && \
 defined(__ELF__)
@@ -56,7 +59,7 @@ typedef struct YYLTYPE
 	int last_column;
 } YYLTYPE;
 #define YYLTYPE_IS_DECLARED 1
-struct ast;
+/*struct ast;*/
 
 #define YY_NO_UNISTD_H 1
 
@@ -65,5 +68,11 @@ struct ast;
 void yyerror(char *s, ...);
 /*int yyerror(struct YYLTYPE *yylloc_param, void *scanner, struct ast **root, const char *s);*/
 void report_error(char *string);
+
+ast *lat_parse_expr(char *expr);
+ast *lat_parse_file(char *path);
+
+void lat_compile(lat_vm *vm);
+void lat_import(lat_vm *vm);
 
 #endif /* _LATINO_H_ */

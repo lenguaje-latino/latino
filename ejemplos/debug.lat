@@ -1,14 +1,4 @@
-#i = 0
-#repetir
-#    #imprimir(i)
-#    i = i + 1
-#hasta (i < 10)
-
-i = 0
-suma = 0
-desde i hasta 10
-    #imprimir(i)
-    suma = suma + i
+funcion suma(a, b)
+    return (a + b)
 fin
-
-imprimir(suma)
+imprimir(suma(2,3))

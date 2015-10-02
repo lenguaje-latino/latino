@@ -983,16 +983,10 @@ latValue *eval(ast *a)
         return val;
         break;
     case NODE_BLOCK: {
-        if (a->r) {
-            if (a->l) {
-                eval(a->l);
-            }
-            eval(a->r);
-        } else {
-            if (a->l) {
-                val = eval(a->l);
-            }
-        }
+		val = eval(a->l);
+		if (a->r) {
+			val = eval(a->r);
+		}
         return val;
     }
     break;
@@ -1004,7 +998,7 @@ latValue *eval(ast *a)
         return val;
     }
     break;
-    case NODE_BUILTIN_FUNCTION:
+    case NODE_CALL_FUNCTION:
         v = callBuiltin((fnCall *)a);
         break;
     case NODE_USER_FUNCTION: {
@@ -1030,22 +1024,28 @@ void imprimir(latValue *val)
     if (val != NULL) {
         switch (val->t) {
         case VALUE_BOOL:
-            printf("%s\n", bool2str(val->v.b));
+            //printf("%s\n", bool2str(val->v.b));
+            printf("%s", bool2str(val->v.b));
             break;
         case VALUE_INT:
-            printf("%ld\n", val->v.i);
+            //printf("%ld\n", val->v.i);
+            printf("%ld", val->v.i);
             break;
         case VALUE_CHAR:
-            printf("%c\n", val->v.c);
+            //printf("%c\n", val->v.c);
+            printf("%c", val->v.c);
             break;
         case VALUE_DOUBLE:
-            printf("%g\n", val->v.d);
+            //printf("%g\n", val->v.d);
+            printf("%g", val->v.d);
             break;
         case VALUE_STRING:
-            printf("%s\n", val->v.s);
+            //printf("%s\n", val->v.s);
+            printf("%s", val->v.s);
             break;
         case VALUE_NULL:
-            printf("%s\n", "nulo");
+            //printf("%s\n", "nulo");
+            printf("%s", "nulo");
             break;
         }
     }
@@ -1054,7 +1054,7 @@ void imprimir(latValue *val)
 latValue *callUser(ufnCall *f)
 {
     struct symbol *fn = f->s; /* function name */
-    symList *sl; /* dummy arguments */
+    ast *sl; /* dummy arguments */
     ast *args = f->l; /* actual arguments */
     latValue **oldval;
     latValue **newval; /* saved arg values */
@@ -1067,7 +1067,7 @@ latValue *callUser(ufnCall *f)
     /* count the arguments */
     sl = fn->syms;
     if (sl) {
-        for (nargs = 0; sl; sl = sl->next) {
+        for (nargs = 0; sl; sl = sl->r) {
             nargs++;
         }
     }
@@ -1098,10 +1098,10 @@ latValue *callUser(ufnCall *f)
     /* save old values of dummies, assign new ones */
     sl = fn->syms;
     for (i = 0; i < nargs; i++) {
-        struct symbol *s = sl->sym;
+        struct symbol *s = sl->l;
         oldval[i] = s->value;
         s->value = newval[i];
-        sl = sl->next;
+        sl = sl->r;
     }
     free(newval);
     /* evaluate the function */
@@ -1112,9 +1112,9 @@ latValue *callUser(ufnCall *f)
             /* put the real values of the dummies back */
             sl = fn->syms;
             for (i = 0; i < nargs; i++) {
-                struct symbol *s = sl->sym;
+                struct symbol *s = sl->l;
                 s->value = oldval[i];
-                sl = sl->next;
+                sl = sl->r;
             }
             free(oldval);
             return val;

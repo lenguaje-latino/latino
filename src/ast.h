@@ -3,6 +3,7 @@
 
 #include "latino.h"
 #include "vm.h"
+#include "node.h"
 
 /* data types */
 typedef enum {
@@ -64,7 +65,7 @@ typedef enum {
     NODE_DO,
     NODE_SYMBOL,
     NODE_LIST_SYMBOLS,
-    NODE_BUILTIN_FUNCTION,
+    NODE_CALL_FUNCTION,
     NODE_USER_FUNCTION, /*20*/
     NODE_RETURN,
     NODE_INT,
@@ -112,7 +113,7 @@ typedef struct symbol{
     char *name; /* a variable name */
     latValue *value; /* value's variable*/
     struct ast *func; /* stmt for the function */
-    struct symList *syms; /* list of dummy args */
+    struct ast *syms; /* list of dummy args */
 } symbol;
 
 /* simple symTab of fixed size */
@@ -120,10 +121,11 @@ typedef struct symbol{
 struct symbol symTab[NHASH];
 
 /* list of symbols, for an argument list */
-typedef struct symList {
-    struct symbol *sym;
-    struct symList *next;
+/*typedef struct symList {
+    ast *sym;
+    ast *next;
 } symList;
+*/
 
 typedef struct {
     nodeType nodetype;
@@ -163,7 +165,7 @@ typedef struct {
 ast *newAst(nodeType nodetype, ast *l, ast *r);
 ast *newFunc(ast *functype, ast *l);
 ast *newCall(ast *s, ast *l);
-ast *newRef(struct symbol *s);
+ast *newRef(char *s);
 ast *newAsgn(ast *s, ast *v);
 ast *newNum(double d);
 ast *newInt(long i);
@@ -173,22 +175,24 @@ ast *newIf(nodeType nodetype, ast *cond, ast *tl, ast *tr);
 ast *newWhile(nodeType nodetype, ast *cond, ast *tl, ast *tr);
 ast *newDo(nodeType nodetype, ast *cond, ast *tl, ast *tr);
 ast *newFor(nodeType nodetype, ast *begin, ast *end, ast *stmts, ast *step);
+ast *newSymList(ast *sym, ast *next);
 
 double callBuiltin(fnCall *);
 latValue *callUser(ufnCall *);
 
-symList *newSymList(struct symbol *sym, symList *next);
-void symListFree(symList *sl);
+void symListFree(ast *sl);
 struct symbol *lookup(char *, latValue *);
 
 /* define a function */
-void doDef(ast *name, symList *syms, ast *stmts);
+ast *doDef(ast *name, ast *syms, ast *stmts);
 
 /* evaluate an AST */
 latValue *eval(ast *);
 
+void printAst(ast *a);
+void imprimir(latValue *val);
+
+/*VM*/
 lat_object *lat_parse_tree(lat_vm *vm, ast *tree);
 int lat_parse_node(ast *node, lat_bytecode *bcode, int i);
-
-void imprimir(latValue *val);
 #endif /*_AST_H_*/

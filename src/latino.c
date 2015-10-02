@@ -1,9 +1,9 @@
 #include <stdio.h>
 #include "latino.h"
 #include "parse.h"
-#include "ast.h"
-#include "parse.h"
 #include "lex.h"
+#include "ast.h"
+#include "node.h"
 
 /* parser debugging */
 int yydebug = 0;
@@ -20,7 +20,7 @@ extern YY_BUFFER_STATE yy_scan_string(char * str);
 extern void yy_delete_buffer(YY_BUFFER_STATE buffer);
 */
 
-ast *parse_expr(char *expr)
+ast *lat_parse_expr(char *expr)
 {
 	ast *ret = NULL;
 	yyscan_t scanner;
@@ -37,7 +37,7 @@ ast *parse_expr(char *expr)
 	return ret;
 }
 
-ast *parse_file(char *infile) {
+ast *lat_parse_file(char *infile) {
 	if (infile == NULL){
 		printf("Especifique un archivo\n");
 		return NULL;
@@ -56,8 +56,50 @@ ast *parse_file(char *infile) {
 	}
 	buffer[newSize] = '\0';
 	fclose(file);
-	return parse_expr(buffer);
+	return lat_parse_expr(buffer);
 }
+
+/*
+void lat_compile(lat_vm *vm)
+{
+	vm->regs[255] = lat_parse_tree(vm, lat_parse_expr(lat_get_str_value(lat_pop_stack(vm))));
+}
+*/
+
+/*
+void lat_import(lat_vm *vm)
+{
+	char *input = lat_get_str_value(lat_pop_stack(vm));
+	char *dot = strrchr(input, '.');
+	char *extension;
+	if (!dot || dot == input) {
+		extension = "";
+	}
+	extension = dot + 1;
+	if (strcmp(extension, "sol") == 0) {
+		lat_object *func = lat_parse_tree(vm, lat_parse_file(input));
+		lat_call_func(vm, func);
+	}
+	else if (strcmp(extension, "so") == 0) {
+#ifndef WINDOWS
+		char buffer[256];
+		getcwd(buffer, 256);
+		strcat(buffer, "/");
+		strcat(buffer, input);
+		void *handle = NULL; //dlopen(buffer, RTLD_LAZY);
+		void(*init)(lat_vm *);
+		if (handle == NULL) {
+			log_err("Loading external library %s failed with error %s", input, dlerror());
+			exit(1);
+		}
+		dlerror();
+		//*(void **)(&init) = dlsym(handle, "lat_init");
+		init(vm);
+		//dlclose(handle);
+#endif
+	}
+}
+*/
 
 int main(int argc, char *argv[])
 {
@@ -69,26 +111,41 @@ int main(int argc, char *argv[])
 	int i;
 	char *infile = NULL;
 	/*char *cadena = NULL;*/
-    for (i = 1; i < argc; i++) {
-        if (strcmp(argv[i], "-d") == 0) {
-            debug = 1;
-        } else {
+	for (i = 1; i < argc; i++) {
+		if (strcmp(argv[i], "-d") == 0) {
+			debug = 1;
+		}
+		else {
 			/*printf(argv[i]);*/
 			infile = argv[i];
-        }
-    }
+		}
+	}
 
 	/*if (parseCadena){
 		YY_BUFFER_STATE buffer = yy_scan_string(cadena);
-	}*/
+		}*/
 
 	/*printf("infile: %s\n", infile);*/
 	/*error en chkstk.asm*/
-	ast *res = parse_file(infile);
-	/*res = parse_expr(buffer);*/
-	latValue *val = NULL;
-	val = eval(res);
-	/*imprimir(val);*/
+	ast *tree = lat_parse_file(infile);
+	//tree = lat_parse_expr(buffer);
+	//latValue *val = NULL;
+	//val = eval(tree);
+	//imprimir(val);
+	//printAst(tree);
+
+	if (!tree){
+		printError("Error: en el analizador sintactico");
+		return EXIT_FAILURE;
+	}
+
+	lat_vm *vm = lat_make_vm();
+	lat_object *mainFunc = lat_parse_tree(vm, tree);
+	//lat_set_ctx(lat_get_current_ctx(vm), lat_str(vm, "compile"), lat_define_c_function(vm, lat_compile));
+	//lat_set_ctx(lat_get_current_ctx(vm), lat_str(vm, "import"), lat_define_c_function(vm, lat_import));
+	lat_call_func(vm, mainFunc);
+	lat_push_stack(vm, vm->regs[255]);
+	lat_print(vm);
 
 	/*if (parseCadena){
 		yy_delete_buffer(buffer);

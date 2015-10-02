@@ -3,9 +3,11 @@
 #define YYERROR_VERBOSE 1
 #define YYDEBUG 1
 
+#include <stddef.h>
+
 #include "latino.h"
 #include "ast.h"
-#include <stddef.h>
+#include "node.h"
 %}
 
 %output "parse.c"
@@ -111,8 +113,7 @@ stmt:
     | KEYWORD_FROM var KEYWORD_TO exp KEYWORD_STEP '=' value list  KEYWORD_END {
         $$ = newFor(NODE_FROM, $2, $4, $8, $7); }
     | KEYWORD_FUNCTION TOKEN_IDENTIFIER '(' symList ')' list KEYWORD_END {
-        doDef($2, $4, $6);
-        $$ = NULL;
+        $$ = doDef($2, $4, $6);
     }
     | var
     | callfunc
@@ -152,10 +153,10 @@ exp: exp OP_GT  exp { $$ = newAst(NODE_GT, $1, $3); }
     | exp OP_AND exp { $$ = newAst(NODE_AND, $1, $3); }
     | exp OP_OR exp { $$ = newAst(NODE_OR, $1, $3); }
     | OP_NEG exp %prec UNEG { $$ = newAst(NODE_NEG, $2, NULL); }
-    | exp '+' exp { $$ = newAst(NODE_ADD, $1, $3); }
-    | exp '-' exp { $$ = newAst(NODE_SUB, $1, $3); }
-    | exp '*' exp { $$ = newAst(NODE_MULT, $1, $3); }
-    | exp '/' exp { $$ = newAst(NODE_DIV, $1, $3); }
+    | exp '+' exp { $$ = newOp(NODE_ADD, $1, $3); }
+    | exp '-' exp { $$ = newOp(NODE_SUB, $1, $3); }
+    | exp '*' exp { $$ = newOp(NODE_MULT, $1, $3); }
+    | exp '/' exp { $$ = newOp(NODE_DIV, $1, $3); }
     | exp '%' exp { $$ = newAst(NODE_MOD, $1, $3); }
     | '(' exp ')' { $$ = $2; }
     | '-' exp %prec UMINUS { $$ = newAst(NODE_UNARY_MINUS, $2, NULL); }
@@ -163,11 +164,13 @@ exp: exp OP_GT  exp { $$ = newAst(NODE_GT, $1, $3); }
     | callfunc
     ;
 
-var: TOKEN_IDENTIFIER '=' exp { $$ = newAsgn($1, $3); }
+var: TOKEN_IDENTIFIER '=' exp { $$ = newAsgn($3, $1); }
     ;
 
+/*TOKEN_IDENTIFIER '(' explist ')' { $$ = newCall($1, $3); }*/
+
 callfunc:
-     TOKEN_IDENTIFIER '(' explist ')' { $$ = newCall($1, $3); }
+     TOKEN_IDENTIFIER '(' explist ')' { $$ = newAst(NODE_CALL_FUNCTION, $1, $3); }
     | TOKEN_FUNC '(' explist ')' { $$ = newFunc($1, $3); }
     ;
 

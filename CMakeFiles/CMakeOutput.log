@@ -261,3 +261,17 @@ Parsed CXX implicit link information from above output:
   implicit fwks: []
 
 
+The system is: CYGWIN - 2.2.1(0.289/5/3) - i686
+Compiling the C compiler identification source file "CMakeCCompilerId.c" succeeded.
+Compiler: /usr/bin/cc 
+Build flags: 
+Id flags: 
+
+The output was:
+0
+
+
+Compilation of the C compiler identification source "CMakeCCompilerId.c" produced "a.exe"
+
+The C compiler identification is GNU, found in "/cygdrive/c/Users/proman02/Documents/GitHub/latino/CMakeFiles/3.3.1/CompilerIdC/a.exe"
+
