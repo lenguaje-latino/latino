@@ -145,7 +145,7 @@ int main(int argc, char *argv[])
 	//lat_set_ctx(lat_get_current_ctx(vm), lat_str(vm, "import"), lat_define_c_function(vm, lat_import));
 	lat_call_func(vm, mainFunc);
 	lat_push_stack(vm, vm->regs[255]);
-	lat_print(vm);
+	//lat_print(vm);
 
 	/*if (parseCadena){
 		yy_delete_buffer(buffer);

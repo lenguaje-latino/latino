@@ -1,4 +1,5 @@
 funcion suma(a, b)
-    return (a + b)
+  retorno a + b
 fin
-imprimir(suma(2,3))
+
+imprimir(suma(4,3))

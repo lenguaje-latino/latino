@@ -64,19 +64,20 @@ typedef enum {
     NODE_WHILE, /*15*/
     NODE_DO,
     NODE_SYMBOL,
-    NODE_LIST_SYMBOLS,
-    NODE_CALL_FUNCTION,
-    NODE_USER_FUNCTION, /*20*/
+    NODE_PARAM_LIST,
+	NODE_FUNC_ARGS,
+    NODE_CALL_FUNCTION, /*20*/
+    NODE_USER_FUNCTION, 
     NODE_RETURN,
     NODE_INT,
     NODE_DECIMAL,
-    NODE_STRING,
-    NODE_CHAR, /*25*/
+    NODE_STRING, /*25*/
+    NODE_CHAR, 
     NODE_BOOLEAN,
     NODE_AND,
     NODE_OR,
-    NODE_NEG,
-    NODE_SWITCH, /*30*/
+	NODE_NEG, /*30*/
+    NODE_SWITCH,
     NODE_CASE,
     NODE_DEFAULT,
     NODE_CASES,
@@ -102,11 +103,13 @@ typedef union YYSTYPE {
 } YYSTYPE;
 
 /* built-in function */
+/*
 typedef struct {
     nodeType nodetype;
     struct ast *l;
     bifs functype;
 } fnCall ;
+*/
 
 /* symbol table */
 typedef struct symbol{
@@ -127,11 +130,13 @@ struct symbol symTab[NHASH];
 } symList;
 */
 
+/*
 typedef struct {
     nodeType nodetype;
     struct ast *l;
     struct symbol *s;
 } ufnCall ;
+*/
 
 typedef struct {
     nodeType nodetype;
@@ -175,11 +180,12 @@ ast *newIf(nodeType nodetype, ast *cond, ast *tl, ast *tr);
 ast *newWhile(nodeType nodetype, ast *cond, ast *tl, ast *tr);
 ast *newDo(nodeType nodetype, ast *cond, ast *tl, ast *tr);
 ast *newFor(nodeType nodetype, ast *begin, ast *end, ast *stmts, ast *step);
-ast *newSymList(ast *sym, ast *next);
+//ast *newSymList(ast *sym, ast *next);
 
+/*
 double callBuiltin(fnCall *);
 latValue *callUser(ufnCall *);
-
+*/
 void symListFree(ast *sl);
 struct symbol *lookup(char *, latValue *);
 

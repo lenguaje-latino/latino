@@ -171,7 +171,6 @@ var: TOKEN_IDENTIFIER '=' exp { $$ = newAsgn($3, $1); }
 
 callfunc:
      TOKEN_IDENTIFIER '(' explist ')' { $$ = newAst(NODE_CALL_FUNCTION, $1, $3); }
-    | TOKEN_FUNC '(' explist ')' { $$ = newFunc($1, $3); }
     ;
 
 value:
@@ -189,13 +188,13 @@ atom_value:
     ;
 
 explist: /* empty */ { $$ = NULL; }
-    | exp { $$ = newAst(NODE_LIST_SYMBOLS, $1, NULL); }
-    | exp ',' explist { $$ = newAst(NODE_LIST_SYMBOLS, $1, $3); }
+    | exp { $$ = newAst(NODE_FUNC_ARGS, $1, NULL); }
+    | explist ',' exp { $$ = newAst(NODE_FUNC_ARGS, $3, $1); }
     ;
 
 symList: /* empty */ { $$ = NULL; }
-    | TOKEN_IDENTIFIER { $$ = newSymList($1, NULL); }
-    | TOKEN_IDENTIFIER ',' symList { $$ = newSymList($1, $3); }
+    | TOKEN_IDENTIFIER { $$ = newAst(NODE_PARAM_LIST, $1, NULL); }
+    | symList ',' TOKEN_IDENTIFIER { $$ = newAst(NODE_PARAM_LIST, $3, $1); }
     ;
 
 %%

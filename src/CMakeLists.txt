@@ -52,7 +52,7 @@ ADD_FLEX_BISON_DEPENDENCY(MyScanner MyParser)
 #INCLUDE_DIRECTORIES(${CMAKE_CURRENT_BINARY_DIR})
 
 set(SOURCES utils.h ast.h khash.h latino.h vm.h object.h lex.h node.h
-    latino.c eval.c ast.c utils.c string.c vm.c object.c node.c)
+    latino.c ast.c utils.c string.c vm.c object.c node.c)
 
 SET(EXECUTABLE_OUTPUT_PATH ${PROJECT_BINARY_DIR}/bin)
 

@@ -69,7 +69,7 @@ ast *newOp(nodeType nodetype, ast *l, ast *r)
 		break;
 	}
 	a->nodetype = NODE_CALL_FUNCTION;
-	a->r = newAst(NODE_LIST_SYMBOLS, l, r);
+	a->r = newAst(NODE_FUNC_ARGS, l, r);
     return a;
 }
 
@@ -162,6 +162,7 @@ ast *newStr(const char *s, size_t l)
     return a;
 }
 
+/*
 ast *newFunc(ast *functype, ast *l)
 {
     fnCall *a = malloc(sizeof(fnCall));
@@ -171,10 +172,12 @@ ast *newFunc(ast *functype, ast *l)
     }
     a->nodetype = NODE_CALL_FUNCTION;
     a->l = l;
-    a->functype = 0; /*imprimir*/
+    a->functype = 0;
     return (ast *)a;
 }
+*/
 
+/*
 ast *newCall(ast *s, ast *l)
 {
     ufnCall *a = malloc(sizeof(ufnCall));
@@ -187,6 +190,7 @@ ast *newCall(ast *s, ast *l)
     a->s = ((symRef *)s)->s;
     return (ast *)a;
 }
+*/
 
 ast *newRef(char *s)
 {
@@ -301,19 +305,21 @@ ast *newFor(nodeType nodetype, ast *begin, ast *end, ast *stmts, ast *step)
     return (ast *)a;
 }
 
-ast *newSymList(ast *sym, ast *next)
+/*ast *newSymList(ast *sym, ast *next)
 {
     ast *sl = malloc(sizeof(ast));
     if (!sl) {
         yyerror("sin espacio\n");
         exit(0);
     }
-	sl->nodetype = NODE_LIST_SYMBOLS;
+	sl->nodetype = NODE_PARAM_LIST;
     sl->l = sym;
     sl->r = next;
 	return sl;
 }
+*/
 
+/*
 double callBuiltin(fnCall *f)
 {
     double v = 0;
@@ -335,6 +341,7 @@ double callBuiltin(fnCall *f)
     }
     return v;
 }
+*/
 
 /* define una funcion */
 ast *doDef(ast *s, ast *syms, ast *func)
@@ -378,7 +385,7 @@ void treeFree(ast *a)
     case NODE_NEG:
     case NODE_UNARY_MINUS:
     case NODE_USER_FUNCTION:
-    case NODE_LIST_SYMBOLS:
+    case NODE_PARAM_LIST:
     case NODE_RETURN:
     case NODE_CALL_FUNCTION:
         if (a->l)
@@ -444,13 +451,13 @@ void printIndent()
     }
 }
 
+/*
 void printAst(ast *a)
 {
     if (!a) {
         yyerror("eval es nulo\n");
         return;
     }
-    /*print indent*/
     switch (a->nodetype) {
     case NODE_BOOLEAN:
     case NODE_CHAR:
@@ -466,11 +473,8 @@ void printAst(ast *a)
 		}
     }
     break;
-    /* assignment */
     case NODE_ASSIGMENT: {
         symAsgn *sa = ((symAsgn *)a);
-        /*sa->s->value = eval(sa->v);*/
-        //printIndent();
         printf("%s = ", sa->s->name);
         printAst(sa->v);
         printf("%s\n", ";");
@@ -480,7 +484,6 @@ void printAst(ast *a)
         printf("%s", " - ");
         printAst(a->l);
         break;
-    /* expressions */
     case NODE_ADD:
         printAst(a->l);
         printf("%s", " + ");
@@ -520,7 +523,6 @@ void printAst(ast *a)
         printAst(a->l);
         printf("%s", " !");
         break;
-    /* comparisons */
     case NODE_GT:
         printAst(a->l);
         printf("%s", " > ");
@@ -552,7 +554,6 @@ void printAst(ast *a)
         printAst(a->r);
         break;
     case NODE_IF: {
-        //printIndent();
         printf("%s", "if (");
         flow *ni = ((flow *)a);
         printAst(ni->cond);
@@ -560,7 +561,6 @@ void printAst(ast *a)
         if (ni->tl) {
             printf("%s\n", "{");
             indent++;
-            //printIndent();
             printAst(ni->tl);
             indent--;
             printIndent();
@@ -570,7 +570,6 @@ void printAst(ast *a)
             printIndent();
             printf("%s\n", "else {");
             indent++;
-            //printIndent();
             printAst(ni->el);
             indent--;
             printIndent();
@@ -579,14 +578,12 @@ void printAst(ast *a)
     }
     break;
     case NODE_WHILE: {
-        //printIndent();
         printf("%s", "while (");
         flow *nw = ((flow *)a);
         printAst(nw->cond);
         printf("%s\n", ") {");
         if (nw->tl) {
             indent++;
-            //printIndent();
             printAst(nw->tl);
             indent--;
         }
@@ -595,12 +592,10 @@ void printAst(ast *a)
     }
     break;
     case NODE_DO: {
-        //printIndent();
         flow *nd = ((flow *)a);
         printf("%s\n", "do {");
         if (nd->tl) {
             indent++;
-            //printIndent();
             printAst(nd->tl);
             indent--;
         }
@@ -612,7 +607,6 @@ void printAst(ast *a)
     break;
 	case NODE_FROM:
 	{
-		//printIndent();
 		nodeFor *nf = ((nodeFor *)a);
 		latValue *begin = eval(nf->begin);
 		latValue *end = eval(nf->end);
@@ -633,7 +627,6 @@ void printAst(ast *a)
 			}
 			if (nf->stmts){
 				indent++;
-				//printIndent();
 				printAst(nf->stmts);
 				indent--;
 			}
@@ -659,17 +652,14 @@ void printAst(ast *a)
     }
     break;
 	case NODE_CALL_FUNCTION:{
-        //printIndent();
         fnCall *uf = ((fnCall *)a);
         if (uf->l) {
             indent++;
-            //printIndent();
             printAst(uf->l);
             indent--;
         }
 	}break;
     case NODE_USER_FUNCTION: {
-        //printIndent();
         ufnCall *uf = ((ufnCall *)a);
         if (uf->s) {
 			printf("%s", uf->s->name);
@@ -681,7 +671,7 @@ void printAst(ast *a)
         }
     }
     break;
-    case NODE_LIST_SYMBOLS: {
+    case NODE_PARAM_LIST: {
         if (a->l) {
             printAst(a->l);
         }
@@ -696,6 +686,7 @@ void printAst(ast *a)
     break;
     }
 }
+*/
 
 #define dbc(I, A, B, M) bcode[i++] = lat_bc(I, A, B, M)
 #define pn(N) i = lat_parse_node(N, bcode, i)
@@ -789,7 +780,7 @@ int lat_parse_node(ast *node, lat_bytecode *bcode, int i)
 		dbc(OP_END, 0, 0, NULL);
 	}
 	break;
-	case NODE_LIST_SYMBOLS: {
+	case NODE_FUNC_ARGS: {
 		if (node->r != NULL) {
 			pn(node->r);
 			dbc(OP_PUSH, 255, 0, NULL);
@@ -799,6 +790,18 @@ int lat_parse_node(ast *node, lat_bytecode *bcode, int i)
 			dbc(OP_PUSH, 255, 0, NULL);
 		}
 	}break;
+	case NODE_PARAM_LIST:
+	{
+		if (node->l) {
+			dbc(OP_LOCALNS, 1, 0, NULL);
+			dbc(OP_POP, 2, 0, NULL);
+			dbc(OP_SET, 2, 1, node->l->value->v.s);
+		}
+		if (node->r != NULL) {
+			pn(node->r);
+		}
+	}
+	break;
 	case NODE_USER_FUNCTION:
 	{
 		function_bcode = (lat_bytecode *)malloc(

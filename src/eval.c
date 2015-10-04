@@ -1006,7 +1006,7 @@ latValue *eval(ast *a)
         return val;
     }
     break;
-    case NODE_LIST_SYMBOLS:
+    case NODE_PARAM_LIST:
         if (a->l) {
             val = eval(a->l);
         }
@@ -1086,7 +1086,7 @@ latValue *callUser(ufnCall *f)
             free(newval);
             return val;
         }
-        if (args->nodetype == NODE_LIST_SYMBOLS) { /* if this is a list node */
+        if (args->nodetype == NODE_PARAM_LIST) { /* if this is a list node */
             newval[i] = eval(args->l);
             args = args->r;
         } else { /* if it's the end of the list */

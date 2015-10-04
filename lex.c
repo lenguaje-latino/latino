@@ -34,7 +34,7 @@
 #if defined (__STDC_VERSION__) && __STDC_VERSION__ >= 199901L
 
 /* C99 says to define __STDC_LIMIT_MACROS before including stdint.h,
- * if you want the limit (max/min) macros for int types. 
+ * if you want the limit (max/min) macros for int types.
  */
 #ifndef __STDC_LIMIT_MACROS
 #define __STDC_LIMIT_MACROS 1
@@ -51,7 +51,7 @@ typedef uint32_t flex_uint32_t;
 typedef signed char flex_int8_t;
 typedef short int flex_int16_t;
 typedef int flex_int32_t;
-typedef unsigned char flex_uint8_t; 
+typedef unsigned char flex_uint8_t;
 typedef unsigned short int flex_uint16_t;
 typedef unsigned int flex_uint32_t;
 
@@ -182,7 +182,7 @@ typedef size_t yy_size_t;
 
     /* Note: We specifically omit the test for yy_rule_can_match_eol because it requires
      *       access to the local variable yy_act. Since yyless() is a macro, it would break
-     *       existing scanners that call yyless() from OUTSIDE yylex. 
+     *       existing scanners that call yyless() from OUTSIDE yylex.
      *       One obvious solution it to make yy_act a global. I tried that, and saw
      *       a 5% performance hit in a non-yylineno scanner, because yy_act is
      *       normally declared as a register variable-- so it is not worth it.
@@ -201,7 +201,7 @@ typedef size_t yy_size_t;
                     if ( *p == '\n' )\
                         --yylineno;\
             }while(0)
-    
+
 /* Return all but the first "n" matched characters back to the input stream. */
 #define yyless(n) \
 	do \
@@ -258,7 +258,7 @@ struct yy_buffer_state
 
     int yy_bs_lineno; /**< The line count. */
     int yy_bs_column; /**< The column count. */
-    
+
 	/* Whether to try to fill the input buffer when we reach the
 	 * end of it.
 	 */
@@ -538,8 +538,8 @@ static yyconst flex_int16_t yy_chk[218] =
 /* Table of booleans, true if rule could match eol. */
 static yyconst flex_int32_t yy_rule_can_match_eol[47] =
     {   0,
-0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 
-    0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 
+0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+    0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
     1, 0, 0, 1, 1, 0, 0,     };
 
 /* The intent behind this definition is that it'll catch
@@ -549,9 +549,9 @@ static yyconst flex_int32_t yy_rule_can_match_eol[47] =
 #define yymore() yymore_used_but_not_detected
 #define YY_MORE_ADJ 0
 #define YY_RESTORE_YY_MORE_OFFSET
-#line 1 "C:/Users/primi/Documents/latino/src/lex.l"
+#line 1 "src/lex.l"
 #define YY_NO_UNISTD_H 1
-#line 10 "C:/Users/primi/Documents/latino/src/lex.l"
+#line 10 "src/lex.l"
 
 /* flex -olex.c -i lex.l */
 #include <string.h>
@@ -624,9 +624,9 @@ static int yy_init_globals (yyscan_t yyscanner );
     /* This must go here because YYSTYPE and YYLTYPE are included
      * from bison output in section 1.*/
     #    define yylval yyg->yylval_r
-    
+
     #    define yylloc yyg->yylloc_r
-    
+
 int yylex_init (yyscan_t* scanner);
 
 int yylex_init_extra (YY_EXTRA_TYPE user_defined,yyscan_t* scanner);
@@ -669,9 +669,9 @@ YYSTYPE * yyget_lval (yyscan_t yyscanner );
 void yyset_lval (YYSTYPE * yylval_param ,yyscan_t yyscanner );
 
        YYLTYPE *yyget_lloc (yyscan_t yyscanner );
-    
+
         void yyset_lloc (YYLTYPE * yylloc_param ,yyscan_t yyscanner );
-    
+
 /* Macros after this point can all be overridden by user definitions in
  * section 1.
  */
@@ -685,7 +685,7 @@ extern int yywrap (yyscan_t yyscanner );
 #endif
 
     static void yyunput (int c,char *buf_ptr  ,yyscan_t yyscanner);
-    
+
 #ifndef yytext_ptr
 static void yy_flex_strncpy (char *,yyconst char *,int ,yyscan_t yyscanner);
 #endif
@@ -841,7 +841,7 @@ YY_DECL
 		}
 
 	{
-#line 29 "C:/Users/primi/Documents/latino/src/lex.l"
+#line 29 "src/lex.l"
 
 
  /* single character ops */
@@ -892,7 +892,7 @@ yy_find_action:
 			yy_size_t yyl;
 			for ( yyl = 0; yyl < yyleng; ++yyl )
 				if ( yytext[yyl] == '\n' )
-					   
+
     do{ yylineno++;
         yycolumn=0;
     }while(0)
@@ -911,213 +911,213 @@ do_action:	/* This label is used only to access EOF actions. */
 			goto yy_find_action;
 
 case 1:
-#line 33 "C:/Users/primi/Documents/latino/src/lex.l"
+#line 33 "src/lex.l"
 case 2:
-#line 34 "C:/Users/primi/Documents/latino/src/lex.l"
+#line 34 "src/lex.l"
 case 3:
-#line 35 "C:/Users/primi/Documents/latino/src/lex.l"
+#line 35 "src/lex.l"
 case 4:
-#line 36 "C:/Users/primi/Documents/latino/src/lex.l"
+#line 36 "src/lex.l"
 case 5:
-#line 37 "C:/Users/primi/Documents/latino/src/lex.l"
+#line 37 "src/lex.l"
 case 6:
-#line 38 "C:/Users/primi/Documents/latino/src/lex.l"
+#line 38 "src/lex.l"
 case 7:
-#line 39 "C:/Users/primi/Documents/latino/src/lex.l"
+#line 39 "src/lex.l"
 case 8:
-#line 40 "C:/Users/primi/Documents/latino/src/lex.l"
+#line 40 "src/lex.l"
 case 9:
-#line 41 "C:/Users/primi/Documents/latino/src/lex.l"
+#line 41 "src/lex.l"
 case 10:
 YY_RULE_SETUP
-#line 41 "C:/Users/primi/Documents/latino/src/lex.l"
+#line 41 "src/lex.l"
 { return yytext[0]; }
 	YY_BREAK
 /* comparison ops, all are CMP token */
 case 11:
 YY_RULE_SETUP
-#line 44 "C:/Users/primi/Documents/latino/src/lex.l"
+#line 44 "src/lex.l"
 { return OP_GT; }
 	YY_BREAK
 case 12:
 YY_RULE_SETUP
-#line 45 "C:/Users/primi/Documents/latino/src/lex.l"
+#line 45 "src/lex.l"
 { return OP_LT; }
 	YY_BREAK
 case 13:
 YY_RULE_SETUP
-#line 46 "C:/Users/primi/Documents/latino/src/lex.l"
+#line 46 "src/lex.l"
 { return OP_GE; }
 	YY_BREAK
 case 14:
 YY_RULE_SETUP
-#line 47 "C:/Users/primi/Documents/latino/src/lex.l"
+#line 47 "src/lex.l"
 { return OP_LE; }
 	YY_BREAK
 case 15:
 YY_RULE_SETUP
-#line 48 "C:/Users/primi/Documents/latino/src/lex.l"
+#line 48 "src/lex.l"
 { return OP_NEQ; }
 	YY_BREAK
 case 16:
 YY_RULE_SETUP
-#line 49 "C:/Users/primi/Documents/latino/src/lex.l"
+#line 49 "src/lex.l"
 { return OP_EQ; }
 	YY_BREAK
 case 17:
 YY_RULE_SETUP
-#line 50 "C:/Users/primi/Documents/latino/src/lex.l"
+#line 50 "src/lex.l"
 { return OP_AND; }
 	YY_BREAK
 case 18:
 YY_RULE_SETUP
-#line 51 "C:/Users/primi/Documents/latino/src/lex.l"
+#line 51 "src/lex.l"
 { return OP_OR; }
 	YY_BREAK
 case 19:
 YY_RULE_SETUP
-#line 52 "C:/Users/primi/Documents/latino/src/lex.l"
+#line 52 "src/lex.l"
 { return OP_NEG; }
 	YY_BREAK
 /* keywords */
 case 20:
 YY_RULE_SETUP
-#line 55 "C:/Users/primi/Documents/latino/src/lex.l"
+#line 55 "src/lex.l"
 { return KEYWORD_IF; }
 	YY_BREAK
 case 21:
 YY_RULE_SETUP
-#line 56 "C:/Users/primi/Documents/latino/src/lex.l"
+#line 56 "src/lex.l"
 { return KEYWORD_END; }
 	YY_BREAK
 case 22:
 YY_RULE_SETUP
-#line 57 "C:/Users/primi/Documents/latino/src/lex.l"
+#line 57 "src/lex.l"
 { return KEYWORD_ELSE; }
 	YY_BREAK
 case 23:
 YY_RULE_SETUP
-#line 58 "C:/Users/primi/Documents/latino/src/lex.l"
+#line 58 "src/lex.l"
 { return KEYWORD_BREAK; }
 	YY_BREAK
 case 24:
 YY_RULE_SETUP
-#line 59 "C:/Users/primi/Documents/latino/src/lex.l"
+#line 59 "src/lex.l"
 { return KEYWORD_WHILE; }
 	YY_BREAK
 case 25:
 YY_RULE_SETUP
-#line 60 "C:/Users/primi/Documents/latino/src/lex.l"
+#line 60 "src/lex.l"
 { return KEYWORD_DO; }
 	YY_BREAK
 case 26:
 YY_RULE_SETUP
-#line 61 "C:/Users/primi/Documents/latino/src/lex.l"
+#line 61 "src/lex.l"
 { return KEYWORD_WHEN; }
 	YY_BREAK
 case 27:
 YY_RULE_SETUP
-#line 62 "C:/Users/primi/Documents/latino/src/lex.l"
+#line 62 "src/lex.l"
 {  return KEYWORD_FUNCTION; }
 	YY_BREAK
 case 28:
 YY_RULE_SETUP
-#line 63 "C:/Users/primi/Documents/latino/src/lex.l"
+#line 63 "src/lex.l"
 {  return KEYWORD_SWITCH; }
 	YY_BREAK
 case 29:
 YY_RULE_SETUP
-#line 64 "C:/Users/primi/Documents/latino/src/lex.l"
+#line 64 "src/lex.l"
 {  return KEYWORD_CASE; }
 	YY_BREAK
 case 30:
 YY_RULE_SETUP
-#line 65 "C:/Users/primi/Documents/latino/src/lex.l"
+#line 65 "src/lex.l"
 {  return KEYWORD_DEFAULT; }
 	YY_BREAK
 case 31:
 YY_RULE_SETUP
-#line 66 "C:/Users/primi/Documents/latino/src/lex.l"
+#line 66 "src/lex.l"
 {  return KEYWORD_FROM; }
 	YY_BREAK
 case 32:
 YY_RULE_SETUP
-#line 67 "C:/Users/primi/Documents/latino/src/lex.l"
+#line 67 "src/lex.l"
 {  return KEYWORD_TO; }
 	YY_BREAK
 case 33:
 YY_RULE_SETUP
-#line 68 "C:/Users/primi/Documents/latino/src/lex.l"
+#line 68 "src/lex.l"
 {  return KEYWORD_STEP; }
 	YY_BREAK
 case 34:
 YY_RULE_SETUP
-#line 69 "C:/Users/primi/Documents/latino/src/lex.l"
+#line 69 "src/lex.l"
 { return KEYWORD_TRUE; }
 	YY_BREAK
 case 35:
 YY_RULE_SETUP
-#line 70 "C:/Users/primi/Documents/latino/src/lex.l"
+#line 70 "src/lex.l"
 { return KEYWORD_FALSE; }
 	YY_BREAK
 case 36:
 YY_RULE_SETUP
-#line 71 "C:/Users/primi/Documents/latino/src/lex.l"
+#line 71 "src/lex.l"
 { return KEYWORD_RETURN; }
 	YY_BREAK
 /*"imprimir"  { return TOKEN_FUNC; }*/
 /* names */
 case 37:
 YY_RULE_SETUP
-#line 77 "C:/Users/primi/Documents/latino/src/lex.l"
+#line 77 "src/lex.l"
 { yylval->node = newRef(yytext); return TOKEN_IDENTIFIER; }
 	YY_BREAK
 case 38:
 YY_RULE_SETUP
-#line 78 "C:/Users/primi/Documents/latino/src/lex.l"
+#line 78 "src/lex.l"
 { yylval->node = newNum(strtod(yytext, NULL)); return TOKEN_NUMBER; }
 	YY_BREAK
 case 39:
 YY_RULE_SETUP
-#line 79 "C:/Users/primi/Documents/latino/src/lex.l"
+#line 79 "src/lex.l"
 { yylval->node = newInt(strtol(yytext, NULL, 0)); return TOKEN_INT; }
 	YY_BREAK
 case 40:
 /* rule 40 can match eol */
 YY_RULE_SETUP
-#line 80 "C:/Users/primi/Documents/latino/src/lex.l"
+#line 80 "src/lex.l"
 { yylval->node = newStr(yytext+1, strlen(yytext)-2);return TOKEN_STRING; }
 	YY_BREAK
 case 41:
 YY_RULE_SETUP
-#line 81 "C:/Users/primi/Documents/latino/src/lex.l"
+#line 81 "src/lex.l"
 { yylval->node = newChar(yytext+1, strlen(yytext)-2); return TOKEN_CHAR; }
 	YY_BREAK
 case 42:
 YY_RULE_SETUP
-#line 82 "C:/Users/primi/Documents/latino/src/lex.l"
+#line 82 "src/lex.l"
 /* ignore comments */
 	YY_BREAK
 case 43:
 /* rule 43 can match eol */
 YY_RULE_SETUP
-#line 83 "C:/Users/primi/Documents/latino/src/lex.l"
+#line 83 "src/lex.l"
 { ; } /* ignore line continuation */
 	YY_BREAK
 case 44:
 /* rule 44 can match eol */
 YY_RULE_SETUP
-#line 84 "C:/Users/primi/Documents/latino/src/lex.l"
+#line 84 "src/lex.l"
 { ; } /* ignore whitespace  tabs and eol */
 	YY_BREAK
 case 45:
 YY_RULE_SETUP
-#line 85 "C:/Users/primi/Documents/latino/src/lex.l"
+#line 85 "src/lex.l"
 { ; }
 	YY_BREAK
 case 46:
 YY_RULE_SETUP
-#line 87 "C:/Users/primi/Documents/latino/src/lex.l"
+#line 87 "src/lex.l"
 YY_FATAL_ERROR( "flex scanner jammed" );
 	YY_BREAK
 #line 1124 "lex.c"
@@ -1569,7 +1569,7 @@ static int yy_get_next_buffer (yyscan_t yyscanner)
 	yyg->yy_hold_char = *++yyg->yy_c_buf_p;
 
 	if ( c == '\n' )
-		   
+
     do{ yylineno++;
         yycolumn=0;
     }while(0)
@@ -1652,7 +1652,7 @@ static void yy_load_buffer_state  (yyscan_t yyscanner)
     YY_BUFFER_STATE yy_create_buffer  (FILE * file, int  size , yyscan_t yyscanner)
 {
 	YY_BUFFER_STATE b;
-    
+
 	b = (YY_BUFFER_STATE) yyalloc(sizeof( struct yy_buffer_state ) ,yyscanner );
 	if ( ! b )
 		YY_FATAL_ERROR( "out of dynamic memory in yy_create_buffer()" );
@@ -1718,7 +1718,7 @@ static void yy_load_buffer_state  (yyscan_t yyscanner)
     }
 
         b->yy_is_interactive = 0;
-    
+
 	errno = oerrno;
 }
 
@@ -1824,9 +1824,9 @@ static void yyensure_buffer_stack (yyscan_t yyscanner)
 								, yyscanner);
 		if ( ! yyg->yy_buffer_stack )
 			YY_FATAL_ERROR( "out of dynamic memory in yyensure_buffer_stack()" );
-								  
+
 		memset(yyg->yy_buffer_stack, 0, num_to_alloc * sizeof(struct yy_buffer_state*));
-				
+
 		yyg->yy_buffer_stack_max = num_to_alloc;
 		yyg->yy_buffer_stack_top = 0;
 		return;
@@ -1855,12 +1855,12 @@ static void yyensure_buffer_stack (yyscan_t yyscanner)
  * @param base the character buffer
  * @param size the size in bytes of the character buffer
  * @param yyscanner The scanner object.
- * @return the newly allocated buffer state object. 
+ * @return the newly allocated buffer state object.
  */
 YY_BUFFER_STATE yy_scan_buffer  (char * base, yy_size_t  size , yyscan_t yyscanner)
 {
 	YY_BUFFER_STATE b;
-    
+
 	if ( size < 2 ||
 	     base[size-2] != YY_END_OF_BUFFER_CHAR ||
 	     base[size-1] != YY_END_OF_BUFFER_CHAR )
@@ -1896,7 +1896,7 @@ YY_BUFFER_STATE yy_scan_buffer  (char * base, yy_size_t  size , yyscan_t yyscann
  */
 YY_BUFFER_STATE yy_scan_string (yyconst char * yystr , yyscan_t yyscanner)
 {
-    
+
 	return yy_scan_bytes(yystr,strlen(yystr) ,yyscanner);
 }
 
@@ -1913,7 +1913,7 @@ YY_BUFFER_STATE yy_scan_bytes  (yyconst char * yybytes, yy_size_t  _yybytes_len 
 	char *buf;
 	yy_size_t n;
 	yy_size_t i;
-    
+
 	/* Get memory for full buffer, including space for trailing EOB's. */
 	n = _yybytes_len + 2;
 	buf = (char *) yyalloc(n ,yyscanner );
@@ -1981,10 +1981,10 @@ YY_EXTRA_TYPE yyget_extra  (yyscan_t yyscanner)
 int yyget_lineno  (yyscan_t yyscanner)
 {
     struct yyguts_t * yyg = (struct yyguts_t*)yyscanner;
-    
+
         if (! YY_CURRENT_BUFFER)
             return 0;
-    
+
     return yylineno;
 }
 
@@ -1994,10 +1994,10 @@ int yyget_lineno  (yyscan_t yyscanner)
 int yyget_column  (yyscan_t yyscanner)
 {
     struct yyguts_t * yyg = (struct yyguts_t*)yyscanner;
-    
+
         if (! YY_CURRENT_BUFFER)
             return 0;
-    
+
     return yycolumn;
 }
 
@@ -2059,7 +2059,7 @@ void yyset_lineno (int  line_number , yyscan_t yyscanner)
         /* lineno is only valid if an input buffer exists. */
         if (! YY_CURRENT_BUFFER )
            YY_FATAL_ERROR( "yyset_lineno called with no buffer" );
-    
+
     yylineno = line_number;
 }
 
@@ -2074,7 +2074,7 @@ void yyset_column (int  column_no , yyscan_t yyscanner)
         /* column is only valid if an input buffer exists. */
         if (! YY_CURRENT_BUFFER )
            YY_FATAL_ERROR( "yyset_column called with no buffer" );
-    
+
     yycolumn = column_no;
 }
 
@@ -2127,13 +2127,13 @@ YYLTYPE *yyget_lloc  (yyscan_t yyscanner)
     struct yyguts_t * yyg = (struct yyguts_t*)yyscanner;
     return yylloc;
 }
-    
+
 void yyset_lloc (YYLTYPE *  yylloc_param , yyscan_t yyscanner)
 {
     struct yyguts_t * yyg = (struct yyguts_t*)yyscanner;
     yylloc = yylloc_param;
 }
-    
+
 /* User-visible API */
 
 /* yylex_init is special because it creates the scanner itself, so it is
@@ -2181,20 +2181,20 @@ int yylex_init_extra(YY_EXTRA_TYPE yy_user_defined,yyscan_t* ptr_yy_globals )
         errno = EINVAL;
         return 1;
     }
-	
+
     *ptr_yy_globals = (yyscan_t) yyalloc ( sizeof( struct yyguts_t ), &dummy_yyguts );
-	
+
     if (*ptr_yy_globals == NULL){
         errno = ENOMEM;
         return 1;
     }
-    
+
     /* By setting to 0xAA, we expose bugs in
     yy_init_globals. Leave at 0x00 for releases. */
     memset(*ptr_yy_globals,0x00,sizeof(struct yyguts_t));
-    
+
     yyset_extra (yy_user_defined, *ptr_yy_globals);
-    
+
     return yy_init_globals ( *ptr_yy_globals );
 }
 
@@ -2309,7 +2309,4 @@ void yyfree (void * ptr , yyscan_t yyscanner)
 
 #define YYTABLES_NAME "yytables"
 
-#line 87 "C:/Users/primi/Documents/latino/src/lex.l"
-
-
-
+#line 87 "src/lex.l"

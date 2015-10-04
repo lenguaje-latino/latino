@@ -228,8 +228,8 @@ void lat_cons(lat_vm *vm)
 
 void lat_add(lat_vm *vm)
 {
-	lat_object *b = lat_pop_stack(vm);
 	lat_object *a = lat_pop_stack(vm);
+	lat_object *b = lat_pop_stack(vm);
 	if ((a->type != T_INT && a->type != T_DOUBLE) || (b->type != T_INT && b->type != T_DOUBLE)) {
 		log_err("Attempt to apply operator \"+\" on invalid types");
 		exit(1);
@@ -244,8 +244,8 @@ void lat_add(lat_vm *vm)
 
 void lat_sub(lat_vm *vm)
 {
-	lat_object *b = lat_pop_stack(vm);
 	lat_object *a = lat_pop_stack(vm);
+	lat_object *b = lat_pop_stack(vm);
 	if ((a->type != T_INT && a->type != T_DOUBLE) || (b->type != T_INT && b->type != T_DOUBLE)) {
 		log_err("Attempt to apply operator \"-\" on invalid types");
 		exit(1);
@@ -260,8 +260,8 @@ void lat_sub(lat_vm *vm)
 
 void lat_mul(lat_vm *vm)
 {
-	lat_object *b = lat_pop_stack(vm);
 	lat_object *a = lat_pop_stack(vm);
+	lat_object *b = lat_pop_stack(vm);
 	if ((a->type != T_INT && a->type != T_DOUBLE) || (b->type != T_INT && b->type != T_DOUBLE)) {
 		log_err("Attempt to apply operator \"*\" on invalid types");
 		exit(1);
@@ -276,8 +276,8 @@ void lat_mul(lat_vm *vm)
 
 void lat_div(lat_vm *vm)
 {
-	lat_object *b = lat_pop_stack(vm);
 	lat_object *a = lat_pop_stack(vm);
+	lat_object *b = lat_pop_stack(vm);
 	if ((a->type != T_INT && a->type != T_DOUBLE) || (b->type != T_INT && b->type != T_DOUBLE)) {
 		log_err("Attempt to apply operator \"\\\" on invalid types");
 		exit(1);
@@ -292,8 +292,8 @@ void lat_div(lat_vm *vm)
 
 void lat_eq(lat_vm *vm)
 {
-	lat_object *b = lat_pop_stack(vm);
 	lat_object *a = lat_pop_stack(vm);
+	lat_object *b = lat_pop_stack(vm);
 	if (a->type != T_INT || b->type != T_INT) {
 		log_err("Attempt to apply operator \"==\" on invalid types");
 		exit(1);
@@ -303,8 +303,8 @@ void lat_eq(lat_vm *vm)
 
 void lat_lt(lat_vm *vm)
 {
-	lat_object *b = lat_pop_stack(vm);
 	lat_object *a = lat_pop_stack(vm);
+	lat_object *b = lat_pop_stack(vm);
 	if ((a->type != T_INT && a->type != T_DOUBLE) || (b->type != T_INT && b->type != T_DOUBLE)) {
 		log_err("Attempt to apply operator \"<\" on invalid types");
 		exit(1);
@@ -319,8 +319,8 @@ void lat_lt(lat_vm *vm)
 
 void lat_lte(lat_vm *vm)
 {
-	lat_object *b = lat_pop_stack(vm);
 	lat_object *a = lat_pop_stack(vm);
+	lat_object *b = lat_pop_stack(vm);
 	if ((a->type != T_INT && a->type != T_DOUBLE) || (b->type != T_INT && b->type != T_DOUBLE)) {
 		log_err("Attempt to apply operator \"<=\" on invalid types");
 		exit(1);
@@ -335,8 +335,8 @@ void lat_lte(lat_vm *vm)
 
 void lat_gt(lat_vm *vm)
 {
-	lat_object *b = lat_pop_stack(vm);
 	lat_object *a = lat_pop_stack(vm);
+	lat_object *b = lat_pop_stack(vm);
 	if ((a->type != T_INT && a->type != T_DOUBLE) || (b->type != T_INT && b->type != T_DOUBLE)) {
 		log_err("Attempt to apply operator \">\" on invalid types");
 		exit(1);
@@ -351,8 +351,8 @@ void lat_gt(lat_vm *vm)
 
 void lat_gte(lat_vm *vm)
 {
-	lat_object *b = lat_pop_stack(vm);
 	lat_object *a = lat_pop_stack(vm);
+	lat_object *b = lat_pop_stack(vm);
 	if ((a->type != T_INT && a->type != T_DOUBLE) || (b->type != T_INT && b->type != T_DOUBLE)) {
 		log_err("Attempt to apply operator \">=\" on invalid types");
 		exit(1);
@@ -384,6 +384,11 @@ lat_bytecode lat_bc(lat_ins i, int a, int b, void *meta)
 	return ret;
 }
 
+char * getOpIns(enum lat_ins ins)
+{
+	return ins_str[ins];
+}
+
 void lat_call_func(lat_vm *vm, lat_object *func)
 {
 	if (func->type == T_FUNC) {
@@ -393,7 +398,8 @@ void lat_call_func(lat_vm *vm, lat_object *func)
 		lat_bytecode cur;
 		int pos;
 		for (pos = 0, cur = inslist[pos]; cur.ins != OP_END; cur = inslist[++pos]) {
-			//debug("ins: %d, stack height: %d", cur.ins, length_list(vm->stack));
+			//debug("ins: %s , stack height: %d", getOpIns(cur.ins), length_list(vm->stack));
+			//printf("ins: %s , stack height: %d\n", getOpIns(cur.ins), length_list(vm->stack));
 			switch (cur.ins) {
 			case OP_END:
 				return;
