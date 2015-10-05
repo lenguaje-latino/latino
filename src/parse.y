@@ -144,15 +144,15 @@ default:
     }
     ;
 
-exp: exp OP_GT  exp { $$ = newAst(NODE_GT, $1, $3); }
-    | exp OP_LT exp { $$ = newAst(NODE_LT, $1, $3); }
-    | exp OP_GE exp { $$ = newAst(NODE_GE, $1, $3); }
-    | exp OP_LE exp { $$ = newAst(NODE_LE, $1, $3); }
-    | exp OP_NEQ exp { $$ = newAst(NODE_NEQ, $1, $3); }
-    | exp OP_EQ exp { $$ = newAst(NODE_EQ, $1, $3); }
-    | exp OP_AND exp { $$ = newAst(NODE_AND, $1, $3); }
-    | exp OP_OR exp { $$ = newAst(NODE_OR, $1, $3); }
-    | OP_NEG exp %prec UNEG { $$ = newAst(NODE_NEG, $2, NULL); }
+exp: exp OP_GT  exp { $$ = newOp(NODE_GT, $1, $3); }
+    | exp OP_LT exp { $$ = newOp(NODE_LT, $1, $3); }
+    | exp OP_GE exp { $$ = newOp(NODE_GE, $1, $3); }
+    | exp OP_LE exp { $$ = newOp(NODE_LE, $1, $3); }
+    | exp OP_NEQ exp { $$ = newOp(NODE_NEQ, $1, $3); }
+    | exp OP_EQ exp { $$ = newOp(NODE_EQ, $1, $3); }
+    | exp OP_AND exp { $$ = newOp(NODE_AND, $1, $3); }
+    | exp OP_OR exp { $$ = newOp(NODE_OR, $1, $3); }
+    /*| OP_NEG exp %prec UNEG { $$ = newOp(NODE_NEG, $2, NULL); }*/
     | exp '+' exp { $$ = newOp(NODE_ADD, $1, $3); }
     | exp '-' exp { $$ = newOp(NODE_SUB, $1, $3); }
     | exp '*' exp { $$ = newOp(NODE_MULT, $1, $3); }

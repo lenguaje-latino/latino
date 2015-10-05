@@ -65,6 +65,24 @@ ast *newOp(nodeType nodetype, ast *l, ast *r)
 	case NODE_DIV:{
 		a->l = newRef("/");
 	}break;
+	case NODE_GE:{
+		a->l = newRef(">=");
+	}break;
+	case NODE_GT:{
+		a->l = newRef(">");
+	}break;
+	case NODE_LE:{
+		a->l = newRef("<=");
+	}break;
+	case NODE_LT:{
+		a->l = newRef("<");
+	}break;
+	case NODE_NEQ:{
+		a->l = newRef("!=");
+	}break;
+	case NODE_EQ:{
+		a->l = newRef("==");
+	}break;
 	default:
 		break;
 	}
@@ -765,6 +783,50 @@ int lat_parse_node(ast *node, lat_bytecode *bcode, int i)
 	case NODE_BOOLEAN:
 	{
 		dbc(OP_STOREBOOL, 255, node->value->v.b, NULL);
+	}
+	break;
+	case NODE_IF:
+	{
+		flow *f_if = ((flow *)node);
+		pn(f_if->cond);
+		dbc(OP_MOV, 2, 255, NULL);
+		dbc(OP_NOT, 2, 0, NULL);
+		temp[0] = i;
+		dbc(OP_NOP, 0, 0, NULL);
+		pn(f_if->tl);
+		bcode[temp[0]] = lat_bc(OP_JMPIF, i, 2, NULL);
+		if (f_if->el){
+			pn(f_if->el);
+		}
+	}
+	break;
+	case NODE_WHILE:
+	{
+		flow *f_w = ((flow *)node);
+		temp[0] = i;
+		pn(f_w->cond);
+		dbc(OP_MOV, 2, 255, NULL);
+		dbc(OP_NOT, 2, 0, NULL);
+		temp[1] = i;
+		dbc(OP_NOP, 0, 0, NULL);
+		pn(f_w->tl);
+		dbc(OP_JMP, temp[0], 0, NULL);
+		bcode[temp[1]] = lat_bc(OP_JMPIF, i, 2, NULL);
+	}
+	break;
+	case NODE_DO:
+	{
+		flow *f_d = ((flow *)node);
+		pn(f_d->tl);
+		temp[0] = i;
+		pn(f_d->cond);
+		dbc(OP_MOV, 2, 255, NULL);
+		dbc(OP_NOT, 2, 0, NULL);
+		temp[1] = i;
+		dbc(OP_NOP, 0, 0, NULL);
+		pn(f_d->tl);
+		dbc(OP_JMP, temp[0], 0, NULL);
+		bcode[temp[1]] = lat_bc(OP_JMPIF, i, 2, NULL);
 	}
 	break;
 	case NODE_CALL_FUNCTION:

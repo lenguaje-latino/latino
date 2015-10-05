@@ -1,5 +1,5 @@
-funcion suma(a, b)
-  retorno a + b
-fin
-
-imprimir(suma(4,3))
+i = 0
+hacer
+    imprimir(i)
+    i = i + 1
+cuando (i <= 10)

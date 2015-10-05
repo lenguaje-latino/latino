@@ -24,11 +24,12 @@ lat_vm *lat_make_vm()
 	lat_set_ctx(lat_get_current_ctx(ret), lat_str(ret, "-"), lat_define_c_function(ret, lat_sub));
 	lat_set_ctx(lat_get_current_ctx(ret), lat_str(ret, "*"), lat_define_c_function(ret, lat_mul));
 	lat_set_ctx(lat_get_current_ctx(ret), lat_str(ret, "/"), lat_define_c_function(ret, lat_div));
-	/*lat_set_ctx(lat_get_current_ctx(ret), lat_str(ret, "=="), lat_define_c_function(ret, lat_eq));*/
-	/*lat_set_ctx(lat_get_current_ctx(ret), lat_str(ret, "<"), lat_define_c_function(ret, lat_lt));*/
-	/*lat_set_ctx(lat_get_current_ctx(ret), lat_str(ret, "<="), lat_define_c_function(ret, lat_lte));*/
-	/*lat_set_ctx(lat_get_current_ctx(ret), lat_str(ret, ">"), lat_define_c_function(ret, lat_gt));*/
-	/*lat_set_ctx(lat_get_current_ctx(ret), lat_str(ret, ">="), lat_define_c_function(ret, lat_gte));*/
+	lat_set_ctx(lat_get_current_ctx(ret), lat_str(ret, "!="), lat_define_c_function(ret, lat_neq));
+	lat_set_ctx(lat_get_current_ctx(ret), lat_str(ret, "=="), lat_define_c_function(ret, lat_eq));
+	lat_set_ctx(lat_get_current_ctx(ret), lat_str(ret, "<"), lat_define_c_function(ret, lat_lt));
+	lat_set_ctx(lat_get_current_ctx(ret), lat_str(ret, "<="), lat_define_c_function(ret, lat_lte));
+	lat_set_ctx(lat_get_current_ctx(ret), lat_str(ret, ">"), lat_define_c_function(ret, lat_gt));
+	lat_set_ctx(lat_get_current_ctx(ret), lat_str(ret, ">="), lat_define_c_function(ret, lat_gte));
 	/*lat_set_ctx(lat_get_current_ctx(ret), lat_str(ret, "gc"), lat_define_c_function(ret, lat_gc));*/
 	return ret;
 }
@@ -191,6 +192,9 @@ void lat_print(lat_vm *vm)
 	if (in->type == T_INT) {
 		fprintf(stdout, "%d\n", lat_get_int_value(in));
 	}
+	else if (in->type == T_BOOL) {
+		fprintf(stdout, "%i\n", lat_get_bool_value(in));
+	}
 	else if (in->type == T_DOUBLE) {
 		fprintf(stdout, "%lf\n", lat_get_double_value(in));
 	}
@@ -288,6 +292,17 @@ void lat_div(lat_vm *vm)
 	else {
 		vm->regs[255] = lat_int(vm, lat_get_int_value(a) / lat_get_int_value(b));
 	}
+}
+
+void lat_neq(lat_vm *vm)
+{
+	lat_object *a = lat_pop_stack(vm);
+	lat_object *b = lat_pop_stack(vm);
+	if (a->type != T_INT || b->type != T_INT) {
+		log_err("Attempt to apply operator \"!=\" on invalid types");
+		exit(1);
+	}
+	vm->regs[255] = lat_bool(vm, lat_get_int_value(a) != lat_get_int_value(b));
 }
 
 void lat_eq(lat_vm *vm)
@@ -399,7 +414,7 @@ void lat_call_func(lat_vm *vm, lat_object *func)
 		int pos;
 		for (pos = 0, cur = inslist[pos]; cur.ins != OP_END; cur = inslist[++pos]) {
 			//debug("ins: %s , stack height: %d", getOpIns(cur.ins), length_list(vm->stack));
-			//printf("ins: %s , stack height: %d\n", getOpIns(cur.ins), length_list(vm->stack));
+			//printf("ins: %s, stack height: %d\n", getOpIns(cur.ins), length_list(vm->stack));
 			switch (cur.ins) {
 			case OP_END:
 				return;

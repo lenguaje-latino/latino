@@ -95,6 +95,7 @@ void lat_add(lat_vm *vm);
 void lat_sub(lat_vm *vm);
 void lat_mul(lat_vm *vm);
 void lat_div(lat_vm *vm);
+void lat_neq(lat_vm *vm);
 void lat_eq(lat_vm *vm);
 void lat_lt(lat_vm *vm);
 void lat_lte(lat_vm *vm);
