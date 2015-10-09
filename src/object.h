@@ -12,6 +12,7 @@ typedef struct lat_object lat_object;
 typedef enum lat_type {
 	T_NULL, //Throw an error when detected.
 	T_INSTANCE,
+	T_CHAR,
 	T_INT,
 	T_DOUBLE,
 	T_STR,
@@ -24,6 +25,7 @@ typedef enum lat_type {
 
 typedef union lat_object_data {
 	hash_map *instance;
+	char c;
 	int i;
 	double d;
 	char *str;
@@ -46,6 +48,7 @@ lat_object *lat_get_ctx(lat_object *ns, lat_object *name);
 int lat_ctx_has(lat_object *ns, lat_object *name);
 lat_object *lat_make_object(lat_vm *vm);
 lat_object *lat_instance(lat_vm *vm);
+lat_object *lat_char(lat_vm *vm, char val);
 lat_object *lat_int(lat_vm *vm, int val);
 lat_object *lat_double(lat_vm *vm, double val);
 lat_object *lat_str(lat_vm *vm, char *val);

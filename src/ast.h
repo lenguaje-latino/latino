@@ -3,7 +3,6 @@
 
 #include "latino.h"
 #include "vm.h"
-#include "node.h"
 
 /* data types */
 typedef enum {
@@ -12,17 +11,8 @@ typedef enum {
     VALUE_INT,
     VALUE_CHAR,
     VALUE_DOUBLE,
-    VALUE_STRING, /*5*/
-	VALUE_FUN
+    VALUE_STRING /*5*/
 } latValueType;
-
-/* string */
-/*
-typedef struct latString{
-	const char *ptr;
-	size_t len;
-}latString;
-*/
 
 /* values for data */
 typedef struct {
@@ -36,13 +26,6 @@ typedef struct {
 		void *f;
     } v;
 } latValue;
-
-typedef enum {
-    B_print = 0,
-    B_exp,
-    B_log,
-    B_sqrt
-} bifs;
 
 /* node types in the abstract syntax tree */
 typedef enum {
@@ -67,12 +50,12 @@ typedef enum {
     NODE_PARAM_LIST,
 	NODE_FUNC_ARGS,
     NODE_CALL_FUNCTION, /*20*/
-    NODE_USER_FUNCTION, 
+    NODE_USER_FUNCTION,
     NODE_RETURN,
     NODE_INT,
     NODE_DECIMAL,
     NODE_STRING, /*25*/
-    NODE_CHAR, 
+    NODE_CHAR,
     NODE_BOOLEAN,
     NODE_AND,
     NODE_OR,
@@ -102,48 +85,12 @@ typedef union YYSTYPE {
 	ast *node;
 } YYSTYPE;
 
-/* built-in function */
-/*
-typedef struct {
-    nodeType nodetype;
-    struct ast *l;
-    bifs functype;
-} fnCall ;
-*/
-
-/* symbol table */
-typedef struct symbol{
-    char *name; /* a variable name */
-    latValue *value; /* value's variable*/
-    struct ast *func; /* stmt for the function */
-    struct ast *syms; /* list of dummy args */
-} symbol;
-
-/* simple symTab of fixed size */
-#define NHASH 32767
-struct symbol symTab[NHASH];
-
-/* list of symbols, for an argument list */
-/*typedef struct symList {
-    ast *sym;
-    ast *next;
-} symList;
-*/
-
-/*
-typedef struct {
-    nodeType nodetype;
-    struct ast *l;
-    struct symbol *s;
-} ufnCall ;
-*/
-
 typedef struct {
     nodeType nodetype;
     struct ast *cond;   /* condition */
-    struct ast *tl; /* then branch or do list */
-    struct ast *el; /* else branch */
-} flow ;
+    struct ast *entonces; /* then branch or do list */
+    struct ast *sino; /* else branch */
+} nodeIf ;
 
 typedef struct {
     nodeType nodetype;
@@ -153,50 +100,23 @@ typedef struct {
     struct ast *step;
 } nodeFor ;
 
-/* symbol reference */
-typedef struct {
-    nodeType nodetype;
-    struct symbol *s;
-} symRef ;
-
-/* symbol assignment */
-typedef struct {
-    nodeType nodetype;
-    struct symbol *s;
-    struct ast *v;
-} symAsgn;
-
 /* build AST */
 ast *newAst(nodeType nodetype, ast *l, ast *r);
-ast *newFunc(ast *functype, ast *l);
-ast *newCall(ast *s, ast *l);
 ast *newRef(char *s);
 ast *newAsgn(ast *s, ast *v);
-ast *newNum(double d);
 ast *newInt(long i);
-ast *newStr(const char *, size_t);
+ast *newNum(double d);
 ast *newChar(char *c, size_t l);
-ast *newIf(nodeType nodetype, ast *cond, ast *tl, ast *tr);
-ast *newWhile(nodeType nodetype, ast *cond, ast *tl, ast *tr);
-ast *newDo(nodeType nodetype, ast *cond, ast *tl, ast *tr);
-ast *newFor(nodeType nodetype, ast *begin, ast *end, ast *stmts, ast *step);
-//ast *newSymList(ast *sym, ast *next);
+ast *newStr(const char *, size_t);
+ast *newIf(ast *cond, ast *entonces, ast *sino);
+ast *newWhile(ast *cond, ast *stmts);
+ast *newDo(ast *cond, ast *stmts);
+ast *newFor(ast *begin, ast *end, ast *stmts, ast *step);
 
-/*
-double callBuiltin(fnCall *);
-latValue *callUser(ufnCall *);
-*/
 void symListFree(ast *sl);
-struct symbol *lookup(char *, latValue *);
 
 /* define a function */
 ast *doDef(ast *name, ast *syms, ast *stmts);
-
-/* evaluate an AST */
-latValue *eval(ast *);
-
-void printAst(ast *a);
-void imprimir(latValue *val);
 
 /*VM*/
 lat_object *lat_parse_tree(lat_vm *vm, ast *tree);

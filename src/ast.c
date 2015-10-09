@@ -2,47 +2,6 @@
 #include "ast.h"
 #include "utils.h"
 #include "vm.h"
-#include "node.h"
-
-/* tabla de simbolos */
-static long symHash(char *sym)
-{
-    int hash = 0;
-    int len = strlen(sym);
-    while (len--) hash = (hash << 5) - hash + *sym++;
-    return abs(hash);
-}
-
-/*
- * busca un valor en la tabla de simbolos
- * si no existe lo crea
- */
-struct symbol *lookup(char *sym, latValue *v)
-{
-    symbol *sp = &symTab[symHash(sym) % NHASH];
-    int scount = NHASH; /* how many have we looked at */
-    while (--scount >= 0) {
-        if (sp->name && !strcmp(sp->name, sym)) {
-            if (v != NULL) {
-                /* set value to symbol if exists */
-                sp->value = v;
-            }
-            return sp;
-        }
-        if (!sp->name) { /* new entry*/
-			/*printf("lookup(%s)\n", sym);*/
-            sp->name = strdup0(sym);
-            sp->value = NULL;
-            sp->func = NULL;
-            sp->syms = NULL;
-            return sp;
-        }
-        if (++sp >= symTab + NHASH)
-            sp = symTab; /* try the next entry */
-    }
-    yyerror("desbordamiento de la tabla de simbolos\n");
-    abort();    /* tried them all, table is full */
-}
 
 ast *newOp(nodeType nodetype, ast *l, ast *r)
 {
@@ -56,6 +15,7 @@ ast *newOp(nodeType nodetype, ast *l, ast *r)
 	case NODE_ADD:{
 		a->l = newRef("+");
 	}break;
+	case NODE_UNARY_MINUS:
 	case NODE_SUB:{
 		a->l = newRef("-");
 	}break;
@@ -64,6 +24,9 @@ ast *newOp(nodeType nodetype, ast *l, ast *r)
 	}break;
 	case NODE_DIV:{
 		a->l = newRef("/");
+	}break;
+	case NODE_MOD:{
+		a->l = newRef("%");
 	}break;
 	case NODE_GE:{
 		a->l = newRef(">=");
@@ -86,8 +49,14 @@ ast *newOp(nodeType nodetype, ast *l, ast *r)
 	default:
 		break;
 	}
+	if (nodetype == NODE_UNARY_MINUS)
+	{
+		a->r = newAst(NODE_FUNC_ARGS, newInt(0), l);
+	}
+	else{
+		a->r = newAst(NODE_FUNC_ARGS, l, r);
+	}
 	a->nodetype = NODE_CALL_FUNCTION;
-	a->r = newAst(NODE_FUNC_ARGS, l, r);
     return a;
 }
 
@@ -160,7 +129,63 @@ ast *newChar(char *c, size_t l)
     a->nodetype = NODE_CHAR;
     latValue *val = malloc(sizeof(latValue));
     val->t = VALUE_CHAR;
-    val->v.c = c[0];
+	char tmp = ' ';
+	switch (c[0])
+	{
+	case '\\':{
+		switch (c[1])
+		{
+		case '0':{
+			tmp = '\0';
+		}
+		break;
+		case '%':{
+			tmp = '\%';
+		}
+		break;
+		case '\\':{
+			tmp = '\\';
+		}
+		break;
+		case 'a':{
+			tmp = '\a';
+		}
+		break;
+		case 'b':{
+			tmp = '\b';
+		}
+		break;
+		case 'f':{
+			tmp = '\f';
+		}
+		break;
+		case 'n':{
+			tmp = '\n';
+		}
+		break;
+		case 'r':{
+			tmp = '\r';
+		}
+		break;
+		case 't':{
+			tmp = '\t';
+		}
+		break;
+		case 'v':{
+			tmp = '\v';
+		}
+		break;
+		default:
+			tmp = c[0];
+			break;
+		}
+	}
+	break;
+	default:
+		tmp = c[0];
+		break;
+	}
+	val->v.c = tmp;
     a->value = val;
     return a;
 }
@@ -179,36 +204,6 @@ ast *newStr(const char *s, size_t l)
     a->value = val;
     return a;
 }
-
-/*
-ast *newFunc(ast *functype, ast *l)
-{
-    fnCall *a = malloc(sizeof(fnCall));
-    if (!a) {
-        yyerror("sin espacio\n");
-        exit(0);
-    }
-    a->nodetype = NODE_CALL_FUNCTION;
-    a->l = l;
-    a->functype = 0;
-    return (ast *)a;
-}
-*/
-
-/*
-ast *newCall(ast *s, ast *l)
-{
-    ufnCall *a = malloc(sizeof(ufnCall));
-    if (!a) {
-        yyerror("sin espacio\n");
-        exit(0);
-    }
-    a->nodetype = NODE_USER_FUNCTION;
-    a->l = l;
-    a->s = ((symRef *)s)->s;
-    return (ast *)a;
-}
-*/
 
 ast *newRef(char *s)
 {
@@ -238,128 +233,88 @@ ast *newAsgn(ast *v, ast *s)
     return a;
 }
 
-ast *newIf(nodeType nodetype, ast *cond, ast *tl, ast *el)
+ast *newIf(ast *cond, ast *entonces, ast *sino)
 {
-    flow *a = malloc(sizeof(flow));
+    nodeIf *a = malloc(sizeof(nodeIf));
+    if (!a) {
+        yyerror("sin espacio\n");
+        exit(0);
+    }
+    a->nodetype = NODE_IF;
+    a->cond = cond;
+    a->entonces = entonces;
+    a->sino = sino;
+    return (ast *)a;
+}
+
+ast *newSwitch(nodeType nodetype, ast *cond, ast *entonces, ast *sino)
+{
+    nodeIf *a = malloc(sizeof(nodeIf));
     if (!a) {
         yyerror("sin espacio\n");
         exit(0);
     }
     a->nodetype = nodetype;
     a->cond = cond;
-    a->tl = tl;
-    a->el = el;
+    a->entonces = entonces;
+    a->sino = sino;
     return (ast *)a;
 }
 
-ast *newSwitch(nodeType nodetype, ast *cond, ast *tl, ast *el)
+ast *newCase(nodeType nodetype, ast *cond, ast *entonces, ast *sino)
 {
-    flow *a = malloc(sizeof(flow));
+    nodeIf *a = malloc(sizeof(nodeIf));
     if (!a) {
         yyerror("sin espacio\n");
         exit(0);
     }
     a->nodetype = nodetype;
     a->cond = cond;
-    a->tl = tl;
-    a->el = el;
+    a->entonces = entonces;
+    a->sino = sino;
     return (ast *)a;
 }
 
-ast *newCase(nodeType nodetype, ast *cond, ast *tl, ast *el)
+ast *newWhile(ast *cond, ast *stmts)
 {
-    flow *a = malloc(sizeof(flow));
+    ast *a = malloc(sizeof(ast));
     if (!a) {
         yyerror("sin espacio\n");
         exit(0);
     }
-    a->nodetype = nodetype;
-    a->cond = cond;
-    a->tl = tl;
-    a->el = el;
-    return (ast *)a;
+    a->nodetype = NODE_WHILE;
+    a->l = cond;
+    a->r = stmts;
+    return a;
 }
 
-ast *newWhile(nodeType nodetype, ast *cond, ast *tl, ast *el)
+ast *newDo(ast *cond, ast *stmts)
 {
-    flow *a = malloc(sizeof(flow));
+    ast *a = malloc(sizeof(ast));
     if (!a) {
         yyerror("sin espacio\n");
         exit(0);
     }
-    a->nodetype = nodetype;
-    a->cond = cond;
-    a->tl = tl;
-    a->el = el;
-    return (ast *)a;
+    a->nodetype = NODE_WHILE;
+    a->l = cond;
+    a->r = stmts;
+    return a;
 }
 
-ast *newDo(nodeType nodetype, ast *cond, ast *tl, ast *el)
-{
-    flow *a = malloc(sizeof(flow));
-    if (!a) {
-        yyerror("sin espacio\n");
-        exit(0);
-    }
-    a->nodetype = nodetype;
-    a->cond = cond;
-    a->tl = tl;
-    a->el = el;
-    return (ast *)a;
-}
-
-ast *newFor(nodeType nodetype, ast *begin, ast *end, ast *stmts, ast *step)
+ast *newFor(ast *begin, ast *end, ast *stmts, ast *step)
 {
     nodeFor *a = malloc(sizeof(nodeFor));
     if (!a) {
         yyerror("sin espacio\n");
         exit(0);
     }
-    a->nodetype = nodetype;
+    a->nodetype = NODE_FROM;
     a->begin = begin;
     a->end = end;
     a->stmts = stmts;
     a->step = step;
     return (ast *)a;
 }
-
-/*ast *newSymList(ast *sym, ast *next)
-{
-    ast *sl = malloc(sizeof(ast));
-    if (!sl) {
-        yyerror("sin espacio\n");
-        exit(0);
-    }
-	sl->nodetype = NODE_PARAM_LIST;
-    sl->l = sym;
-    sl->r = next;
-	return sl;
-}
-*/
-
-/*
-double callBuiltin(fnCall *f)
-{
-    double v = 0;
-    switch (f->functype) {
-    case B_sqrt:
-        return sqrt(v);
-    case B_exp:
-        return exp(v);
-    case B_log:
-        return log(v);
-    case B_print: {
-        latValue *val;
-        val = eval(f->l);
-        imprimir(val);
-    }
-    return v;
-    default:
-        yyerror("definicion de funcion desconocida\n");
-    }
-    return v;
-}
-*/
 
 /* define una funcion */
 ast *doDef(ast *s, ast *syms, ast *func)
@@ -418,8 +373,8 @@ void treeFree(ast *a)
     case NODE_STRING:
         break;
     case NODE_ASSIGMENT:
-        if (((symAsgn *)a)->v)
-            treeFree(((symAsgn *)a)->v);
+        /*if (((symAsgn *)a)->v)
+            treeFree(((symAsgn *)a)->v);*/
         break;
     /* up to three subtrees */
     case NODE_IF:
@@ -429,12 +384,12 @@ void treeFree(ast *a)
     case NODE_CASES:
     case NODE_CASE:
     case NODE_DEFAULT:
-        if (((flow *)a)->el)
+        /*if (((flow *)a)->el)
             treeFree(((flow *)a)->el);
         if (((flow *)a)->tl)
             treeFree(((flow *)a)->tl);
         if (((flow *)a)->cond)
-            treeFree(((flow *)a)->cond);
+            treeFree(((flow *)a)->cond);*/
         break;
     case NODE_FROM:
         if (((nodeFor *)a)->stmts)
@@ -448,263 +403,8 @@ void treeFree(ast *a)
     }
 }
 
-/* free a list of symbols */
-void symListFree(ast *sl)
-{
-    ast *nsl;
-    while (sl) {
-        nsl = sl->r;
-        free(sl);
-        sl = nsl;
-    }
-}
-
 int tabstop = 2;
 int indent = 0;
-
-void printIndent()
-{
-    for (int i = 0; i < (indent * tabstop); i++) {
-        printf(" ");
-    }
-}
-
-/*
-void printAst(ast *a)
-{
-    if (!a) {
-        yyerror("eval es nulo\n");
-        return;
-    }
-    switch (a->nodetype) {
-    case NODE_BOOLEAN:
-    case NODE_CHAR:
-    case NODE_DECIMAL:
-    case NODE_STRING:
-    case NODE_INT:
-        imprimir(a->value);
-        break;
-    case NODE_SYMBOL: {
-        symRef *r = ((symRef *)a);
-		if (r->s){
-			printf("%s", r->s->name);
-		}
-    }
-    break;
-    case NODE_ASSIGMENT: {
-        symAsgn *sa = ((symAsgn *)a);
-        printf("%s = ", sa->s->name);
-        printAst(sa->v);
-        printf("%s\n", ";");
-    }
-    break;
-    case NODE_UNARY_MINUS:
-        printf("%s", " - ");
-        printAst(a->l);
-        break;
-    case NODE_ADD:
-        printAst(a->l);
-        printf("%s", " + ");
-        printAst(a->r);
-        break;
-    case NODE_SUB:
-        printAst(a->l);
-        printf("%s", " - ");
-        printAst(a->r);
-        break;
-    case NODE_MULT:
-        printAst(a->l);
-        printf("%s", " * ");
-        printAst(a->r);
-        break;
-    case NODE_DIV:
-        printAst(a->l);
-        printf("%s", " / ");
-        printAst(a->r);
-        break;
-    case NODE_MOD:
-        printAst(a->l);
-        printf("%s", " % ");
-        printAst(a->r);
-        break;
-    case NODE_AND:
-        printAst(a->l);
-        printf("%s", " && ");
-        printAst(a->r);
-        break;
-    case NODE_OR:
-        printAst(a->l);
-        printf("%s", " || ");
-        printAst(a->r);
-        break;
-    case NODE_NEG:
-        printAst(a->l);
-        printf("%s", " !");
-        break;
-    case NODE_GT:
-        printAst(a->l);
-        printf("%s", " > ");
-        printAst(a->r);
-        break;
-    case NODE_LT:
-        printAst(a->l);
-        printf("%s", " < ");
-        printAst(a->r);
-        break;
-    case NODE_NEQ:
-        printAst(a->l);
-        printf("%s", " != ");
-        printAst(a->r);
-        break;
-    case NODE_EQ:
-        printAst(a->l);
-        printf("%s", " == ");
-        printAst(a->r);
-        break;
-    case NODE_GE:
-        printAst(a->l);
-        printf("%s", " >= ");
-        printAst(a->r);
-        break;
-    case NODE_LE:
-        printAst(a->l);
-        printf("%s", " <= ");
-        printAst(a->r);
-        break;
-    case NODE_IF: {
-        printf("%s", "if (");
-        flow *ni = ((flow *)a);
-        printAst(ni->cond);
-        printf("%s", ")");
-        if (ni->tl) {
-            printf("%s\n", "{");
-            indent++;
-            printAst(ni->tl);
-            indent--;
-            printIndent();
-            printf("%s\n", "}");
-        }
-        if (ni->el) {
-            printIndent();
-            printf("%s\n", "else {");
-            indent++;
-            printAst(ni->el);
-            indent--;
-            printIndent();
-            printf("%s\n", "}");
-        }
-    }
-    break;
-    case NODE_WHILE: {
-        printf("%s", "while (");
-        flow *nw = ((flow *)a);
-        printAst(nw->cond);
-        printf("%s\n", ") {");
-        if (nw->tl) {
-            indent++;
-            printAst(nw->tl);
-            indent--;
-        }
-        printIndent();
-        printf("%s\n", "}");
-    }
-    break;
-    case NODE_DO: {
-        flow *nd = ((flow *)a);
-        printf("%s\n", "do {");
-        if (nd->tl) {
-            indent++;
-            printAst(nd->tl);
-            indent--;
-        }
-        printIndent();
-        printf("%s", "} while (");
-        printAst(nd->cond);
-        printf("%s\n", ");");
-    }
-    break;
-	case NODE_FROM:
-	{
-		nodeFor *nf = ((nodeFor *)a);
-		latValue *begin = eval(nf->begin);
-		latValue *end = eval(nf->end);
-		if (begin->t == VALUE_INT && end->t == VALUE_INT){
-			printf("for(int i = ");
-			printf("%i; ", begin->v.i);
-			if (begin->v.i < end->v.i){
-				printf("i < ");
-			}else{
-				printf("i > ");
-			}
-			printAst(nf->end);
-			printf("; ");
-			if (begin->v.i < end->v.i){
-				printf("%s\n", "i++) {");
-			}else{
-				printf("%s\n", "i--) {");
-			}
-			if (nf->stmts){
-				indent++;
-				printAst(nf->stmts);
-				indent--;
-			}
-			printIndent();
-			printf("%s\n", "}");
-		}
-	}break;
-    case NODE_BLOCK: {
-		printIndent();
-		if (a->l){
-			printAst(a->l);
-		}
-        if (a->r) {
-            printAst(a->r);
-        }
-    }
-    break;
-    case NODE_RETURN: {
-        if (a->l) {
-            printf("%s", "return ");
-            printAst(a->l);
-        }
-    }
-    break;
-	case NODE_CALL_FUNCTION:{
-        fnCall *uf = ((fnCall *)a);
-        if (uf->l) {
-            indent++;
-            printAst(uf->l);
-            indent--;
-        }
-	}break;
-    case NODE_USER_FUNCTION: {
-        ufnCall *uf = ((ufnCall *)a);
-        if (uf->s) {
-			printf("%s", uf->s->name);
-			printf("%s", "(");
-            if (uf->l) {
-                printAst(uf->l);
-            }
-			printf("%s", ")");
-        }
-    }
-    break;
-    case NODE_PARAM_LIST: {
-        if (a->l) {
-            printAst(a->l);
-        }
-		if (a->r){
-			printAst(a->l);
-		}
-    }
-    break;
-    default: {
-        printf("default: %i\n", a->nodetype);
-    }
-    break;
-    }
-}
-*/
 
 #define dbc(I, A, B, M) bcode[i++] = lat_bc(I, A, B, M)
 #define pn(N) i = lat_parse_node(N, bcode, i)
@@ -765,6 +465,11 @@ int lat_parse_node(ast *node, lat_bytecode *bcode, int i)
 		dbc(OP_SET, 255, 1, node->r->value->v.s);
 	}
 	break;
+	case NODE_CHAR:
+	{
+		dbc(OP_STORECHAR, 255, node->value->v.c, NULL);
+	}
+	break;
 	case NODE_INT:
 	{
 		dbc(OP_STOREINT, 255, node->value->v.i, NULL);
@@ -787,51 +492,55 @@ int lat_parse_node(ast *node, lat_bytecode *bcode, int i)
 	break;
 	case NODE_IF:
 	{
-		flow *f_if = ((flow *)node);
+		nodeIf *f_if = ((nodeIf *)node);
 		pn(f_if->cond);
 		dbc(OP_MOV, 2, 255, NULL);
 		dbc(OP_NOT, 2, 0, NULL);
 		temp[0] = i;
 		dbc(OP_NOP, 0, 0, NULL);
-		pn(f_if->tl);
+		pn(f_if->entonces);
 		bcode[temp[0]] = lat_bc(OP_JMPIF, i, 2, NULL);
-		if (f_if->el){
-			pn(f_if->el);
+		if (f_if->sino){			
+			dbc(OP_MOV, 2, 255, NULL);
+			temp[1] = i;
+			dbc(OP_NOP, 0, 0, NULL);
+			pn(f_if->sino);
+			bcode[temp[1]] = lat_bc(OP_JMPIF, i, 2, NULL);
 		}
 	}
 	break;
 	case NODE_WHILE:
 	{
-		flow *f_w = ((flow *)node);
 		temp[0] = i;
-		pn(f_w->cond);
+		pn(node->l);
 		dbc(OP_MOV, 2, 255, NULL);
 		dbc(OP_NOT, 2, 0, NULL);
 		temp[1] = i;
 		dbc(OP_NOP, 0, 0, NULL);
-		pn(f_w->tl);
+		pn(node->r);
 		dbc(OP_JMP, temp[0], 0, NULL);
 		bcode[temp[1]] = lat_bc(OP_JMPIF, i, 2, NULL);
 	}
 	break;
 	case NODE_DO:
 	{
-		flow *f_d = ((flow *)node);
-		pn(f_d->tl);
+		pn(node->r);
 		temp[0] = i;
-		pn(f_d->cond);
+		pn(node->l);
 		dbc(OP_MOV, 2, 255, NULL);
 		dbc(OP_NOT, 2, 0, NULL);
 		temp[1] = i;
 		dbc(OP_NOP, 0, 0, NULL);
-		pn(f_d->tl);
+		pn(node->r);
 		dbc(OP_JMP, temp[0], 0, NULL);
 		bcode[temp[1]] = lat_bc(OP_JMPIF, i, 2, NULL);
 	}
 	break;
 	case NODE_CALL_FUNCTION:
 	{
-		pn(node->r);
+		if (node->r){
+			pn(node->r);
+		}
 		pn(node->l);
 		dbc(OP_CALL, 255, 0, NULL);
 	}
@@ -843,11 +552,11 @@ int lat_parse_node(ast *node, lat_bytecode *bcode, int i)
 	}
 	break;
 	case NODE_FUNC_ARGS: {
-		if (node->r != NULL) {
+		if (node->r) {
 			pn(node->r);
 			dbc(OP_PUSH, 255, 0, NULL);
 		}
-		if (node->l != NULL) {
+		if (node->l) {
 			pn(node->l);
 			dbc(OP_PUSH, 255, 0, NULL);
 		}
@@ -859,7 +568,7 @@ int lat_parse_node(ast *node, lat_bytecode *bcode, int i)
 			dbc(OP_POP, 2, 0, NULL);
 			dbc(OP_SET, 2, 1, node->l->value->v.s);
 		}
-		if (node->r != NULL) {
+		if (node->r) {
 			pn(node->r);
 		}
 	}
@@ -869,7 +578,7 @@ int lat_parse_node(ast *node, lat_bytecode *bcode, int i)
 		function_bcode = (lat_bytecode *)malloc(
 			sizeof(lat_bytecode) * 1024);
 		fi = 0;
-		if (node->l != NULL) {
+		if (node->l) {
 			fpn(node->l);
 		}
 		fpn(node->r);
@@ -886,7 +595,7 @@ int lat_parse_node(ast *node, lat_bytecode *bcode, int i)
 	break;*/
 	default:
 		printf("nodetype:%i\n", node->nodetype);
-		return;
+		return 0;
 	}
 	return i;
 }

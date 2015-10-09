@@ -1,13 +1,13 @@
 %{
 /* bison -y -oparse.c parse.y */
-#define YYERROR_VERBOSE 1
+/*#define YYERROR_VERBOSE 1*/
 #define YYDEBUG 1
 
 #include <stddef.h>
 
 #include "latino.h"
 #include "ast.h"
-#include "node.h"
+
 %}
 
 %output "parse.c"
@@ -93,13 +93,13 @@ list: stmt list {
 
 stmt:
     KEYWORD_IF '(' exp ')' list KEYWORD_END {
-        $$ = newIf(NODE_IF, $3, $5, NULL); }
+        $$ = newIf($3, $5, NULL); }
     | KEYWORD_IF '(' exp ')' list KEYWORD_ELSE list KEYWORD_END {
-        $$ = newIf(NODE_IF, $3, $5, $7); }
+        $$ = newIf($3, $5, $7); }
     | KEYWORD_DO list KEYWORD_WHEN '(' exp ')' {
-        $$ = newDo(NODE_DO, $5, $2, NULL); }
+        $$ = newDo($5, $2); }
     | KEYWORD_WHILE '(' exp ')' list KEYWORD_END {
-        $$ = newWhile(NODE_WHILE, $3, $5, NULL); }
+        $$ = newWhile($3, $5); }
     | KEYWORD_SWITCH '(' value ')' cases KEYWORD_END {
         $$ = newSwitch(NODE_SWITCH, $3, $5, NULL); }
     | KEYWORD_SWITCH '(' value ')' cases default KEYWORD_END {
@@ -152,22 +152,20 @@ exp: exp OP_GT  exp { $$ = newOp(NODE_GT, $1, $3); }
     | exp OP_EQ exp { $$ = newOp(NODE_EQ, $1, $3); }
     | exp OP_AND exp { $$ = newOp(NODE_AND, $1, $3); }
     | exp OP_OR exp { $$ = newOp(NODE_OR, $1, $3); }
-    /*| OP_NEG exp %prec UNEG { $$ = newOp(NODE_NEG, $2, NULL); }*/
+    | OP_NEG exp %prec UNEG { $$ = newOp(NODE_NEG, $2, NULL); }
     | exp '+' exp { $$ = newOp(NODE_ADD, $1, $3); }
     | exp '-' exp { $$ = newOp(NODE_SUB, $1, $3); }
     | exp '*' exp { $$ = newOp(NODE_MULT, $1, $3); }
     | exp '/' exp { $$ = newOp(NODE_DIV, $1, $3); }
-    | exp '%' exp { $$ = newAst(NODE_MOD, $1, $3); }
+    | exp '%' exp { $$ = newOp(NODE_MOD, $1, $3); }
     | '(' exp ')' { $$ = $2; }
-    | '-' exp %prec UMINUS { $$ = newAst(NODE_UNARY_MINUS, $2, NULL); }
+    | '-' exp %prec UMINUS { $$ = newOp(NODE_UNARY_MINUS, $2, NULL); }
     | value
     | callfunc
     ;
 
 var: TOKEN_IDENTIFIER '=' exp { $$ = newAsgn($3, $1); }
     ;
-
-/*TOKEN_IDENTIFIER '(' explist ')' { $$ = newCall($1, $3); }*/
 
 callfunc:
      TOKEN_IDENTIFIER '(' explist ')' { $$ = newAst(NODE_CALL_FUNCTION, $1, $3); }

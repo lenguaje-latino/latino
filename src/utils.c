@@ -29,55 +29,6 @@ char *strndup0(const char *s, size_t n)
     return new;
 }
 
-char *concat(char *s1, char *s2)
-{
-    char *s3 = malloc(strlen(s1) + strlen(s2) + 1);
-    strcpy(s3, s1);
-    strcat(s3, s2);
-    return s3;
-}
-
-char *int2str(long i)
-{
-    char s[255];
-    char *r = malloc(strlen(s) + 1);
-    lnsprintf(s, 255, "%ld", i);
-    strcpy(r, s);
-    return r;
-}
-
-char *double2str(double d)
-{
-    char s[64];
-    char *r = malloc(strlen(s) + 1);
-    lnsprintf(s, 64, "%g", (float)d);
-    strcpy(r, s);
-    return r;
-}
-
-char *char2str(char c)
-{
-    char s[2];
-    char *r = malloc(2);
-    lnsprintf(s, 2, "%c", c);
-    strcpy(r, s);
-    return r;
-}
-
-char *bool2str(int i)
-{
-    char s[10];
-    char *r = malloc(11);
-    if (i) {
-        lnsprintf(s, 10, "%s", "verdadero");
-        strcpy(r, s);
-    } else {
-        lnsprintf(s, 10, "%s", "falso");
-        strcpy(r, s);
-    }
-    return r;
-}
-
 list_node *make_list_node(void *d)
 {
 	list_node *ret = (list_node *)malloc(sizeof(list_node));

@@ -13,6 +13,7 @@ typedef enum lat_ins {
 	OP_POP,
 	OP_GET,
 	OP_SET,
+	OP_STORECHAR,
 	OP_STOREINT,
 	OP_STOREDOUBLE,
 	OP_STORESTR,
@@ -33,12 +34,12 @@ typedef enum lat_ins {
 } lat_ins;
 
 static char* ins_str[] = {
-	"END", "NOP", "PUSH", "POP", "GET", "SET",
-	"STORE_INT", "STORE_DOUBLE", "STORE_STR",
-	"STORE_BOOL", "STORE_LIST", "PUSH_LIST",
-	"POP_LIST", "MOV", "GLOBAL_NS", "LOCAL_NS",
-	"FN", "NS", "END_NS", "JMP", "JMP_IF", 
-	"CALL", "NOT"
+	"END", "NOP", "PUSH", "POP", "GET", "SET", 
+	"STORE_CHAR", "STORE_INT", "STORE_DOUBLE", 
+	"STORE_STR", "STORE_BOOL", "STORE_LIST", 
+	"PUSH_LIST", "POP_LIST", "MOV", "GLOBAL_NS", 
+	"LOCAL_NS", "FN", "NS", "END_NS", "JMP", 
+	"JMP_IF", "CALL", "NOT"
 };
 
 
@@ -95,6 +96,7 @@ void lat_add(lat_vm *vm);
 void lat_sub(lat_vm *vm);
 void lat_mul(lat_vm *vm);
 void lat_div(lat_vm *vm);
+void lat_mod(lat_vm *vm);
 void lat_neq(lat_vm *vm);
 void lat_eq(lat_vm *vm);
 void lat_lt(lat_vm *vm);

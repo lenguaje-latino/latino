@@ -82,6 +82,42 @@ extern int yydebug;
     UNEG = 292
   };
 #endif
+/* Tokens.  */
+#define TOKEN_INT 258
+#define TOKEN_CHAR 259
+#define TOKEN_NUMBER 260
+#define TOKEN_STRING 261
+#define TOKEN_IDENTIFIER 262
+#define TOKEN_FUNC 263
+#define KEYWORD_IF 264
+#define KEYWORD_END 265
+#define KEYWORD_ELSE 266
+#define KEYWORD_WHILE 267
+#define KEYWORD_DO 268
+#define KEYWORD_SWITCH 269
+#define KEYWORD_CASE 270
+#define KEYWORD_BREAK 271
+#define KEYWORD_DEFAULT 272
+#define KEYWORD_WHEN 273
+#define KEYWORD_FUNCTION 274
+#define KEYWORD_FROM 275
+#define KEYWORD_TO 276
+#define KEYWORD_STEP 277
+#define KEYWORD_BOOL 278
+#define KEYWORD_RETURN 279
+#define KEYWORD_TRUE 280
+#define KEYWORD_FALSE 281
+#define OP_GT 282
+#define OP_LT 283
+#define OP_GE 284
+#define OP_LE 285
+#define OP_EQ 286
+#define OP_NEQ 287
+#define OP_AND 288
+#define OP_OR 289
+#define OP_NEG 290
+#define UMINUS 291
+#define UNEG 292
 
 /* Value type.  */
 

@@ -3,7 +3,6 @@
 #include "parse.h"
 #include "lex.h"
 #include "ast.h"
-#include "node.h"
 
 /* parser debugging */
 int yydebug = 0;
@@ -131,11 +130,9 @@ int main(int argc, char *argv[])
 	//tree = lat_parse_expr(buffer);
 	//latValue *val = NULL;
 	//val = eval(tree);
-	//imprimir(val);
-	//printAst(tree);
 
 	if (!tree){
-		printError("Error: en el analizador sintactico");
+		//printError("Error: en el analizador sintactico");
 		return EXIT_FAILURE;
 	}
 
@@ -164,5 +161,7 @@ extern void printError(char *errorstring, ...)
     va_start(args, errorstring);
     vsprintf(errmsg, errorstring, args);
     va_end(args);
-    fprintf(stdout, "Error: %s\n", errmsg);
+	if (strcmp(errmsg, "") != 0){
+		fprintf(stdout, "Error: %s\n", errmsg);
+	}
 }

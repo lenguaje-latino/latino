@@ -15,7 +15,7 @@ INCLUDE_DIRECTORIES(
     ${BISON_INCLUDE_DIR}
 )
 
-#list(APPEND BISON_TARGET_cmdopt "--verbose")
+list(APPEND BISON_TARGET_cmdopt "--verbose")
 list(APPEND BISON_TARGET_cmdopt "-y")
 
 #IF(BISON_FOUND)
@@ -51,8 +51,8 @@ ADD_FLEX_BISON_DEPENDENCY(MyScanner MyParser)
 
 #INCLUDE_DIRECTORIES(${CMAKE_CURRENT_BINARY_DIR})
 
-set(SOURCES utils.h ast.h khash.h latino.h vm.h object.h lex.h node.h
-    latino.c ast.c utils.c string.c vm.c object.c node.c)
+set(SOURCES utils.h ast.h khash.h latino.h vm.h object.h lex.h
+    latino.c ast.c utils.c string.c vm.c object.c)
 
 SET(EXECUTABLE_OUTPUT_PATH ${PROJECT_BINARY_DIR}/bin)
 

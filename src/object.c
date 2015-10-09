@@ -31,7 +31,7 @@ lat_object *lat_get_ctx(lat_object *ns, lat_object *name)
 		hash_map *h = ns->data.instance;
 		lat_object *ret = get_hash(h, lat_get_str_value(name));
 		if (ret == NULL) {
-			log_err("Variable \"%s\" not in ctx", lat_get_str_value(name));
+			log_err("Variable \"%s\" indefinida", lat_get_str_value(name));
 			exit(1);
 		}
 		return ret;
@@ -71,6 +71,15 @@ lat_object *lat_instance(lat_vm *vm)
 	ret->type = T_INSTANCE;
 	ret->data_size = sizeof(hash_map *);
 	ret->data.instance = make_hash_map();
+	return ret;
+}
+
+lat_object *lat_char(lat_vm *vm, char val)
+{
+	lat_object *ret = lat_make_object(vm);
+	ret->type = T_CHAR;
+	ret->data_size = sizeof(int);
+	ret->data.c = val;
 	return ret;
 }
 
@@ -208,6 +217,7 @@ void lat_delete_object(lat_vm *vm, lat_object *o)
 	case T_LIST:
 		lat_delete_list(vm, o->data.list);
 		break;
+	case T_CHAR:
 	case T_INT:
 	case T_DOUBLE:
 	case T_STR:
@@ -325,6 +335,14 @@ hash_map *lat_clone_hash(lat_vm *vm, hash_map *h)
 	return ret;
 }
 
+int lat_get_char_value(lat_object *o)
+{
+	if (o->type == T_CHAR) {
+		return o->data.c;
+	}
+	log_err("Object not of integral type");
+	exit(1);
+}
 
 int lat_get_int_value(lat_object *o)
 {
@@ -361,8 +379,8 @@ bool lat_get_bool_value(lat_object *o)
 	if (o->type == T_BOOL) {
 		return o->data.b;
 	}
-	else if (o->type == T_INT) {
-		return (bool)o->data.i;
+	if (o->type == T_INT) {
+		return o->data.i;
 	}
 	log_err("Object not of boolean type");
 	exit(1);

@@ -15,15 +15,12 @@ lat_vm *lat_make_vm()
 	memset(ret->ctx_stack, 0, 256);
 	ret->ctx_stack[0] = lat_instance(ret);
 	ret->ctx_stack_pointer = 0;
-	/*lat_set_ctx(lat_get_current_ctx(ret), lat_str(ret, "!!"), lat_define_c_function(ret, lat_nth_list));*/
-	/*lat_set_ctx(lat_get_current_ctx(ret), lat_str(ret, "print"), lat_define_c_function(ret, lat_print));*/
-	/*lat_set_ctx(lat_get_current_ctx(ret), lat_str(ret, "clone"), lat_define_c_function(ret, lat_clone));*/
-	/*lat_set_ctx(lat_get_current_ctx(ret), lat_str(ret, ":"), lat_define_c_function(ret, lat_cons));*/
 	lat_set_ctx(lat_get_current_ctx(ret), lat_str(ret, "imprimir"), lat_define_c_function(ret, lat_print));
 	lat_set_ctx(lat_get_current_ctx(ret), lat_str(ret, "+"), lat_define_c_function(ret, lat_add));
 	lat_set_ctx(lat_get_current_ctx(ret), lat_str(ret, "-"), lat_define_c_function(ret, lat_sub));
 	lat_set_ctx(lat_get_current_ctx(ret), lat_str(ret, "*"), lat_define_c_function(ret, lat_mul));
 	lat_set_ctx(lat_get_current_ctx(ret), lat_str(ret, "/"), lat_define_c_function(ret, lat_div));
+	lat_set_ctx(lat_get_current_ctx(ret), lat_str(ret, "%"), lat_define_c_function(ret, lat_mod));
 	lat_set_ctx(lat_get_current_ctx(ret), lat_str(ret, "!="), lat_define_c_function(ret, lat_neq));
 	lat_set_ctx(lat_get_current_ctx(ret), lat_str(ret, "=="), lat_define_c_function(ret, lat_eq));
 	lat_set_ctx(lat_get_current_ctx(ret), lat_str(ret, "<"), lat_define_c_function(ret, lat_lt));
@@ -189,7 +186,9 @@ void lat_nth_list(lat_vm *vm)
 void lat_print(lat_vm *vm)
 {
 	lat_object *in = lat_pop_stack(vm);
-	if (in->type == T_INT) {
+	if (in->type == T_CHAR) {
+		fprintf(stdout, "%c\n", lat_get_char_value(in));
+	}else if (in->type == T_INT) {
 		fprintf(stdout, "%d\n", lat_get_int_value(in));
 	}
 	else if (in->type == T_BOOL) {
@@ -287,10 +286,42 @@ void lat_div(lat_vm *vm)
 		exit(1);
 	}
 	if (a->type == T_DOUBLE || b->type == T_DOUBLE) {
-		vm->regs[255] = lat_double(vm, lat_get_double_value(a) / lat_get_double_value(b));
+		double tmp = lat_get_double_value(b);
+		if (tmp == 0){
+			log_err("Error: Division por cero");
+			exit(1);
+		}
+		else{
+			vm->regs[255] = lat_double(vm, lat_get_double_value(a) / tmp);
+		}
 	}
 	else {
-		vm->regs[255] = lat_int(vm, lat_get_int_value(a) / lat_get_int_value(b));
+		int tmp = lat_get_int_value(b);
+		if (tmp == 0){
+			log_err("Error: Division por cero");
+			exit(1);
+		}
+		else{
+			vm->regs[255] = lat_int(vm, lat_get_int_value(a) / tmp);
+		}
+	}
+}
+
+void lat_mod(lat_vm *vm)
+{
+	lat_object *a = lat_pop_stack(vm);
+	lat_object *b = lat_pop_stack(vm);
+	if (a->type != T_INT || b->type != T_INT) {
+		log_err("Attempt to apply operator \"%%\" on invalid types");
+		exit(1);
+	}
+	int tmp = lat_get_int_value(b);
+	if (tmp == 0){
+		log_err("Error: Modulo por cero");
+		exit(1);
+	}
+	else{
+		vm->regs[255] = lat_int(vm, lat_get_int_value(a) % tmp);
 	}
 }
 
@@ -298,22 +329,22 @@ void lat_neq(lat_vm *vm)
 {
 	lat_object *a = lat_pop_stack(vm);
 	lat_object *b = lat_pop_stack(vm);
-	if (a->type != T_INT || b->type != T_INT) {
+	if (a->type != T_BOOL || b->type != T_BOOL) {
 		log_err("Attempt to apply operator \"!=\" on invalid types");
 		exit(1);
 	}
-	vm->regs[255] = lat_bool(vm, lat_get_int_value(a) != lat_get_int_value(b));
+	vm->regs[255] = lat_bool(vm, lat_get_bool_value(a) != lat_get_bool_value(b));
 }
 
 void lat_eq(lat_vm *vm)
 {
 	lat_object *a = lat_pop_stack(vm);
 	lat_object *b = lat_pop_stack(vm);
-	if (a->type != T_INT || b->type != T_INT) {
+	if (a->type != T_BOOL || b->type != T_BOOL){
 		log_err("Attempt to apply operator \"==\" on invalid types");
 		exit(1);
 	}
-	vm->regs[255] = lat_bool(vm, lat_get_int_value(a) == lat_get_int_value(b));
+	vm->regs[255] = lat_bool(vm, lat_get_bool_value(a) == lat_get_bool_value(b));
 }
 
 void lat_lt(lat_vm *vm)
@@ -432,6 +463,9 @@ void lat_call_func(lat_vm *vm, lat_object *func)
 				break;
 			case OP_SET:
 				lat_set_ctx(vm->regs[cur.b], lat_str(vm, (char *)cur.meta), vm->regs[cur.a]);
+				break;
+			case OP_STORECHAR:
+				vm->regs[cur.a] = lat_char(vm, cur.b);
 				break;
 			case OP_STOREINT:
 				vm->regs[cur.a] = lat_int(vm, cur.b);

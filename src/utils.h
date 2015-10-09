@@ -9,11 +9,6 @@
 
 char * strdup0(char *s);
 char * strndup0(const char *s, size_t n);
-char *concat(char *s1, char *s2);
-char *int2str(long i);
-char *double2str(double d);
-char *char2str(char c);
-char *bool2str(int i);
 
 #ifdef NDEBUG
 

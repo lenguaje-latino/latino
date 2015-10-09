@@ -2,11 +2,13 @@
 
 #mala implementacion (recursiva)
 funcion fibonacci(n)
-    si ( n <= 1 )
-        retorno 1
-    sino
-        retorno fibonacci(n-1) + fibonacci(n-2)
+    si ( n == 0 )
+        retorno 0
     fin
+    si ( n == 1 )
+        retorno 1
+    fin
+    retorno fibonacci(n-1) + fibonacci(n-2)
 fin
 
 #mejor implementacion (iterativa)
@@ -31,17 +33,18 @@ funcion fibo(n)
     retorno res
 fin
 
-#imprimir("version recursiva")
+imprimir("version recursiva")
+imprimir(fibonacci(10))
 ##imprimir la serie de 45 (stack overflow)
 #desde i=0 hasta 20
 #    imprimir(i + " : " + fibonacci(i))
 #fin
 
 imprimir("version iterativa")
-#imprimir("fibo de 1:" + fibo(1))
-desde y=0 hasta 46
-    imprimir(y + " : " + fibo(y))
-fin
+imprimir(fibo(10))
+#desde y=0 hasta 46
+#    imprimir(y + " : " + fibo(y))
+#fin
 
 # 0: 0
 # 1: 1

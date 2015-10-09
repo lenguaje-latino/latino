@@ -14,7 +14,6 @@
 
 #include "latino.h"
 #include "ast.h"
-#include "node.h"
 #include "parse.h"
 
 #define YY_USER_ACTION yylloc->first_line = yylloc->last_line = yylineno;
@@ -70,10 +69,7 @@ EXP ([Ee][-+]?[0-9]+)
 "falso"     { return KEYWORD_FALSE; }
 "retorno"   { return KEYWORD_RETURN; }
 
- /*"imprimir"  { return TOKEN_FUNC; }*/
-
  /* names */
-
 [_a-zA-Z][_a-zA-Z0-9]* { yylval->node = newRef(yytext); return TOKEN_IDENTIFIER; }
 [0-9]+"."+[0-9]*{EXP}?|"."+[0-9]+{EXP}?       { yylval->node = newNum(strtod(yytext, NULL)); return TOKEN_NUMBER; }
 [0-9]+                 { yylval->node = newInt(strtol(yytext, NULL, 0)); return TOKEN_INT; }

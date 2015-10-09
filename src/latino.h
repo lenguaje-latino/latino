@@ -64,9 +64,7 @@ typedef struct YYLTYPE
 #define YY_NO_UNISTD_H 1
 
 /* from lexer */
-/*extern int yylineno;*/
 void yyerror(char *s, ...);
-/*int yyerror(struct YYLTYPE *yylloc_param, void *scanner, struct ast **root, const char *s);*/
 void report_error(char *string);
 
 ast *lat_parse_expr(char *expr);
