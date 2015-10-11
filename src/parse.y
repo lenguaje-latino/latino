@@ -105,13 +105,13 @@ stmt:
     | KEYWORD_SWITCH '(' value ')' cases default KEYWORD_END {
         $$ = newSwitch(NODE_SWITCH, $3, $5, $6); }
     | KEYWORD_FROM exp KEYWORD_TO exp list KEYWORD_END {
-        $$ = newFor(NODE_FROM, $2, $4, $5, NULL); }
+        $$ = newFor($2, $4, $5, NULL); }
     | KEYWORD_FROM exp KEYWORD_TO exp KEYWORD_STEP '=' value list  KEYWORD_END {
-        $$ = newFor(NODE_FROM, $2, $4, $8, $7); }
+        $$ = newFor($2, $4, $8, $7); }
     | KEYWORD_FROM var KEYWORD_TO exp list KEYWORD_END {
-        $$ = newFor(NODE_FROM, $2, $4, $5, NULL); }
+        $$ = newFor($2, $4, $5, NULL); }
     | KEYWORD_FROM var KEYWORD_TO exp KEYWORD_STEP '=' value list  KEYWORD_END {
-        $$ = newFor(NODE_FROM, $2, $4, $8, $7); }
+        $$ = newFor($2, $4, $8, $7); }
     | KEYWORD_FUNCTION TOKEN_IDENTIFIER '(' symList ')' list KEYWORD_END {
         $$ = doDef($2, $4, $6);
     }

@@ -136,30 +136,6 @@ ast.c.s:
 	cd /home/primi/src/latino && $(MAKE) -f src/CMakeFiles/latino.dir/build.make src/CMakeFiles/latino.dir/ast.c.s
 .PHONY : ast.c.s
 
-eval.o: eval.c.o
-.PHONY : eval.o
-
-# target to build an object file
-eval.c.o:
-	cd /home/primi/src/latino && $(MAKE) -f src/CMakeFiles/latino.dir/build.make src/CMakeFiles/latino.dir/eval.c.o
-.PHONY : eval.c.o
-
-eval.i: eval.c.i
-.PHONY : eval.i
-
-# target to preprocess a source file
-eval.c.i:
-	cd /home/primi/src/latino && $(MAKE) -f src/CMakeFiles/latino.dir/build.make src/CMakeFiles/latino.dir/eval.c.i
-.PHONY : eval.c.i
-
-eval.s: eval.c.s
-.PHONY : eval.s
-
-# target to generate assembly for a file
-eval.c.s:
-	cd /home/primi/src/latino && $(MAKE) -f src/CMakeFiles/latino.dir/build.make src/CMakeFiles/latino.dir/eval.c.s
-.PHONY : eval.c.s
-
 latino.o: latino.c.o
 .PHONY : latino.o
 
@@ -340,9 +316,6 @@ help:
 	@echo "... ast.o"
 	@echo "... ast.i"
 	@echo "... ast.s"
-	@echo "... eval.o"
-	@echo "... eval.i"
-	@echo "... eval.s"
 	@echo "... latino.o"
 	@echo "... latino.i"
 	@echo "... latino.s"

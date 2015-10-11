@@ -38,9 +38,6 @@
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="src/ast.h" />
-		<Unit filename="src/eval.c">
-			<Option compilerVar="CC" />
-		</Unit>
 		<Unit filename="src/khash.h" />
 		<Unit filename="src/latino.c">
 			<Option compilerVar="CC" />

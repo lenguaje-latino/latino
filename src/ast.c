@@ -3,6 +3,11 @@
 #include "utils.h"
 #include "vm.h"
 
+#define dbc(I, A, B, M) bcode[i++] = lat_bc(I, A, B, M)
+#define pn(N) i = lat_parse_node(N, bcode, i)
+#define fdbc(I, A, B, M) function_bcode[fi++] = lat_bc(I, A, B, M)
+#define fpn(N) fi = lat_parse_node(N, function_bcode, fi)
+
 ast *newOp(nodeType nodetype, ast *l, ast *r)
 {
     ast *a = malloc(sizeof(ast));
@@ -330,87 +335,6 @@ ast *doDef(ast *s, ast *syms, ast *func)
 	return a;
 }
 
-/* free a tree of ASTs */
-void treeFree(ast *a)
-{
-    switch (a->nodetype) {
-    /* two subtrees */
-    case NODE_ADD:
-    case NODE_SUB:
-    case NODE_MULT:
-    case NODE_DIV:
-    case NODE_MOD:
-    case NODE_AND:
-    case NODE_OR:
-    case NODE_EQ:
-    case NODE_NEQ:
-    case NODE_GT:
-    case NODE_LT:
-    case NODE_GE:
-    case NODE_LE:
-    case NODE_BLOCK:
-        if (a->r)
-            treeFree(a->r);
-        if (a->l)
-            treeFree(a->l);
-        break;
-    /* one subtree */
-    case NODE_NEG:
-    case NODE_UNARY_MINUS:
-    case NODE_USER_FUNCTION:
-    case NODE_PARAM_LIST:
-    case NODE_RETURN:
-    case NODE_CALL_FUNCTION:
-        if (a->l)
-            treeFree(a->l);
-        break;
-    /* no subtree */
-    case NODE_INT:
-    case NODE_CHAR:
-    case NODE_DECIMAL:
-    case NODE_SYMBOL:
-    case NODE_BOOLEAN:
-    case NODE_STRING:
-        break;
-    case NODE_ASSIGMENT:
-        /*if (((symAsgn *)a)->v)
-            treeFree(((symAsgn *)a)->v);*/
-        break;
-    /* up to three subtrees */
-    case NODE_IF:
-    case NODE_DO:
-    case NODE_WHILE:
-    case NODE_SWITCH:
-    case NODE_CASES:
-    case NODE_CASE:
-    case NODE_DEFAULT:
-        /*if (((flow *)a)->el)
-            treeFree(((flow *)a)->el);
-        if (((flow *)a)->tl)
-            treeFree(((flow *)a)->tl);
-        if (((flow *)a)->cond)
-            treeFree(((flow *)a)->cond);*/
-        break;
-    case NODE_FROM:
-        if (((nodeFor *)a)->stmts)
-            treeFree(((nodeFor *)a)->stmts);
-        if (((nodeFor *)a)->step)
-            treeFree(((nodeFor *)a)->step);
-        break;
-    default:
-        printf("error interno: nodo mal liberado %i\n", a->nodetype);
-        break;
-    }
-}
-
-int tabstop = 2;
-int indent = 0;
-
-#define dbc(I, A, B, M) bcode[i++] = lat_bc(I, A, B, M)
-#define pn(N) i = lat_parse_node(N, bcode, i)
-#define fdbc(I, A, B, M) function_bcode[fi++] = lat_bc(I, A, B, M)
-#define fpn(N) fi = lat_parse_node(N, function_bcode, fi)
-
 lat_object *lat_parse_tree(lat_vm *vm, ast *tree)
 {
     lat_bytecode *bcode = (lat_bytecode *)malloc(
@@ -500,7 +424,7 @@ int lat_parse_node(ast *node, lat_bytecode *bcode, int i)
 		dbc(OP_NOP, 0, 0, NULL);
 		pn(f_if->entonces);
 		bcode[temp[0]] = lat_bc(OP_JMPIF, i, 2, NULL);
-		if (f_if->sino){			
+		if (f_if->sino){
 			dbc(OP_MOV, 2, 255, NULL);
 			temp[1] = i;
 			dbc(OP_NOP, 0, 0, NULL);

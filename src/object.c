@@ -335,7 +335,7 @@ hash_map *lat_clone_hash(lat_vm *vm, hash_map *h)
 	return ret;
 }
 
-int lat_get_char_value(lat_object *o)
+char lat_get_char_value(lat_object *o)
 {
 	if (o->type == T_CHAR) {
 		return o->data.c;

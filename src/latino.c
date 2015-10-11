@@ -1,8 +1,15 @@
 #include <stdio.h>
+
+
 #include "latino.h"
 #include "parse.h"
 #include "lex.h"
 #include "ast.h"
+
+#ifndef WINDOWS
+#include <dlfcn.h>
+#include <unistd.h>
+#endif // WINDOWS
 
 /* parser debugging */
 int yydebug = 0;
@@ -58,14 +65,11 @@ ast *lat_parse_file(char *infile) {
 	return lat_parse_expr(buffer);
 }
 
-/*
 void lat_compile(lat_vm *vm)
 {
 	vm->regs[255] = lat_parse_tree(vm, lat_parse_expr(lat_get_str_value(lat_pop_stack(vm))));
 }
-*/
 
-/*
 void lat_import(lat_vm *vm)
 {
 	char *input = lat_get_str_value(lat_pop_stack(vm));
@@ -85,20 +89,20 @@ void lat_import(lat_vm *vm)
 		getcwd(buffer, 256);
 		strcat(buffer, "/");
 		strcat(buffer, input);
-		void *handle = NULL; //dlopen(buffer, RTLD_LAZY);
+		void *handle = dlopen(buffer, RTLD_LAZY);
 		void(*init)(lat_vm *);
 		if (handle == NULL) {
 			log_err("Loading external library %s failed with error %s", input, dlerror());
 			exit(1);
 		}
 		dlerror();
-		//*(void **)(&init) = dlsym(handle, "lat_init");
+		*(void **)(&init) = dlsym(handle, "lat_init");
 		init(vm);
-		//dlclose(handle);
+		dlclose(handle);
 #endif
 	}
 }
-*/
+
 
 int main(int argc, char *argv[])
 {
@@ -138,8 +142,8 @@ int main(int argc, char *argv[])
 
 	lat_vm *vm = lat_make_vm();
 	lat_object *mainFunc = lat_parse_tree(vm, tree);
-	//lat_set_ctx(lat_get_current_ctx(vm), lat_str(vm, "compile"), lat_define_c_function(vm, lat_compile));
-	//lat_set_ctx(lat_get_current_ctx(vm), lat_str(vm, "import"), lat_define_c_function(vm, lat_import));
+	lat_set_ctx(lat_get_current_ctx(vm), lat_str(vm, "compile"), lat_define_c_function(vm, lat_compile));
+	lat_set_ctx(lat_get_current_ctx(vm), lat_str(vm, "import"), lat_define_c_function(vm, lat_import));
 	lat_call_func(vm, mainFunc);
 	lat_push_stack(vm, vm->regs[255]);
 	//lat_print(vm);

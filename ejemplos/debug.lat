@@ -1,2 +1,2 @@
-c = '\0'
+c = 'a'
 imprimir(c)
