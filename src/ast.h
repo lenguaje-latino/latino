@@ -92,14 +92,6 @@ typedef struct {
     struct ast *sino; /* else branch */
 } nodeIf ;
 
-typedef struct {
-    nodeType nodetype;
-    struct ast *begin;
-    struct ast *end;
-    struct ast *stmts;
-    struct ast *step;
-} nodeFor ;
-
 /* build AST */
 ast *newAst(nodeType nodetype, ast *l, ast *r);
 ast *newRef(char *s);
@@ -111,12 +103,12 @@ ast *newStr(const char *, size_t);
 ast *newIf(ast *cond, ast *entonces, ast *sino);
 ast *newWhile(ast *cond, ast *stmts);
 ast *newDo(ast *cond, ast *stmts);
-ast *newFor(ast *begin, ast *end, ast *stmts, ast *step);
-
-void symListFree(ast *sl);
+ast *newFor(ast *dec, ast *cond, ast *inc, ast *stmts);
 
 /* define a function */
 ast *doDef(ast *name, ast *syms, ast *stmts);
+
+int yyerror(struct YYLTYPE *yylloc_param, void *scanner, struct ast_node **root, const char *s);
 
 /*VM*/
 lat_object *lat_parse_tree(lat_vm *vm, ast *tree);

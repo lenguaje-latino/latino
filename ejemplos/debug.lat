@@ -1,2 +1,18 @@
-c = 'a'
+f = 1
+g = 0
+si(f)
+    a = 1
+    b = 2
+    c = a + b
+sino
+    si (g)
+        a = 3
+        b = 4
+        c = a + b
+    sino
+        a = 5
+        b = 6
+        c = a + b
+    fin
+fin
 imprimir(c)

@@ -288,7 +288,7 @@ void lat_div(lat_vm *vm)
 	if (a->type == T_DOUBLE || b->type == T_DOUBLE) {
 		double tmp = lat_get_double_value(b);
 		if (tmp == 0){
-			log_err("Error: Division por cero");
+			log_err("Division por cero");
 			exit(1);
 		}
 		else{
@@ -298,7 +298,7 @@ void lat_div(lat_vm *vm)
 	else {
 		int tmp = lat_get_int_value(b);
 		if (tmp == 0){
-			log_err("Error: Division por cero");
+			log_err("Division por cero");
 			exit(1);
 		}
 		else{
@@ -317,7 +317,7 @@ void lat_mod(lat_vm *vm)
 	}
 	int tmp = lat_get_int_value(b);
 	if (tmp == 0){
-		log_err("Error: Modulo por cero");
+		log_err("Modulo por cero");
 		exit(1);
 	}
 	else{
@@ -329,22 +329,32 @@ void lat_neq(lat_vm *vm)
 {
 	lat_object *a = lat_pop_stack(vm);
 	lat_object *b = lat_pop_stack(vm);
-	if (a->type != T_BOOL || b->type != T_BOOL) {
-		log_err("Attempt to apply operator \"!=\" on invalid types");
+	if ((a->type != T_INT && a->type != T_DOUBLE) || (b->type != T_INT && b->type != T_DOUBLE)) {
+		log_err("Attempt to apply operator \"==\" on invalid types");
 		exit(1);
 	}
-	vm->regs[255] = lat_bool(vm, lat_get_bool_value(a) != lat_get_bool_value(b));
+	if (a->type == T_DOUBLE || b->type == T_DOUBLE) {
+		vm->regs[255] = lat_bool(vm, lat_get_double_value(a) != lat_get_double_value(b));
+	}
+	else {
+		vm->regs[255] = lat_bool(vm, lat_get_int_value(a) != lat_get_int_value(b));
+	}
 }
 
 void lat_eq(lat_vm *vm)
 {
 	lat_object *a = lat_pop_stack(vm);
 	lat_object *b = lat_pop_stack(vm);
-	if (a->type != T_BOOL || b->type != T_BOOL){
+	if ((a->type != T_INT && a->type != T_DOUBLE) || (b->type != T_INT && b->type != T_DOUBLE)) {
 		log_err("Attempt to apply operator \"==\" on invalid types");
 		exit(1);
 	}
-	vm->regs[255] = lat_bool(vm, lat_get_bool_value(a) == lat_get_bool_value(b));
+	if (a->type == T_DOUBLE || b->type == T_DOUBLE) {
+		vm->regs[255] = lat_bool(vm, lat_get_double_value(a) == lat_get_double_value(b));
+	}
+	else {
+		vm->regs[255] = lat_bool(vm, lat_get_int_value(a) == lat_get_int_value(b));
+	}
 }
 
 void lat_lt(lat_vm *vm)
@@ -444,40 +454,74 @@ void lat_call_func(lat_vm *vm, lat_object *func)
 		lat_bytecode cur;
 		int pos;
 		for (pos = 0, cur = inslist[pos]; cur.ins != OP_END; cur = inslist[++pos]) {
-			//debug("ins: %s , stack height: %d", getOpIns(cur.ins), length_list(vm->stack));
-			//printf("ins: %s, stack height: %d\n", getOpIns(cur.ins), length_list(vm->stack));
+#if DEBUG_VM
+			printf("%6i\t", pos);
+#endif
 			switch (cur.ins) {
 			case OP_END:
+#if DEBUG_VM
+				printf("END");
+#endif
 				return;
 				break;
 			case OP_NOP:
+#if DEBUG_VM
+				printf("NOP");
+#endif
 				break;
 			case OP_PUSH:
 				lat_push_stack(vm, vm->regs[cur.a]);
+#if DEBUG_VM
+				printf("PUSH r%i", cur.a);				
+#endif
 				break;
 			case OP_POP:
 				vm->regs[cur.a] = lat_pop_stack(vm);
+#if DEBUG_VM
+				printf("POP r%i", cur.a);				
+#endif
 				break;
 			case OP_GET:
 				vm->regs[cur.a] = lat_get_ctx(vm->regs[cur.b], vm->regs[cur.a]);
+#if DEBUG_VM
+				printf("GET r%i r%i", cur.a, cur.b);
+#endif
 				break;
 			case OP_SET:
 				lat_set_ctx(vm->regs[cur.b], lat_str(vm, (char *)cur.meta), vm->regs[cur.a]);
+#if DEBUG_VM
+				printf("SET r%i r%i", cur.b, cur.a);
+#endif
 				break;
 			case OP_STORECHAR:
 				vm->regs[cur.a] = lat_char(vm, cur.b);
+#if DEBUG_VM
+				printf("STORECHAR r%i, %c", cur.a, (char *)cur.meta);
+#endif
 				break;
 			case OP_STOREINT:
 				vm->regs[cur.a] = lat_int(vm, cur.b);
+#if DEBUG_VM
+				printf("STOREINT r%i, %i", cur.a, cur.b);
+#endif
 				break;
 			case OP_STOREDOUBLE:
 				vm->regs[cur.a] = lat_double(vm, *((double *)cur.meta));
+#if DEBUG_VM
+				printf("STOREDOUBLE r%i, %d", cur.a, *((double *)cur.meta));
+#endif
 				break;
 			case OP_STORESTR:
 				vm->regs[cur.a] = lat_str(vm, (char *)cur.meta);
+#if DEBUG_VM
+				printf("STORESTR r%i, %s", cur.a, (char *)cur.meta);
+#endif
 				break;
 			case OP_STOREBOOL:
 				vm->regs[cur.a] = lat_bool(vm, cur.b);
+#if DEBUG_VM
+				printf("STOREBOOL r%i, %i", cur.a, (int *)cur.meta);
+#endif
 				break;
 			case OP_STORELIST:
 				vm->regs[cur.a] = lat_list(vm, make_list());
@@ -490,15 +534,24 @@ void lat_call_func(lat_vm *vm, lat_object *func)
 				break;
 			case OP_MOV:
 				vm->regs[cur.a] = vm->regs[cur.b];
+#if DEBUG_VM
+				printf("MOV r%i, r%i", cur.a, cur.b);
+#endif
 				break;
 			case OP_GLOBALNS:
 				vm->regs[cur.a] = vm->ctx_stack[0];
 				break;
 			case OP_LOCALNS:
 				vm->regs[cur.a] = lat_get_current_ctx(vm);
+#if DEBUG_VM
+				printf("LOCALNS r%i", cur.a);
+#endif
 				break;
 			case OP_FN:
 				vm->regs[cur.a] = lat_define_function(vm, (lat_bytecode *)cur.meta);
+#if DEBUG_VM
+				printf("FN %i", (char *)cur.meta);
+#endif
 				break;
 			case OP_NS:
 				vm->regs[cur.a] = lat_clone_object(vm, lat_get_current_ctx(vm));
@@ -507,21 +560,36 @@ void lat_call_func(lat_vm *vm, lat_object *func)
 			case OP_ENDNS:
 				vm->regs[cur.a] = lat_pop_predefined_ctx(vm);
 				break;
-			case OP_JMP:
+			case OP_JMP:				
 				pos = cur.a - 1;
+#if DEBUG_VM
+				printf("JMP %i", pos);
+#endif
 				break;
 			case OP_JMPIF:
+#if DEBUG_VM
+				printf("JMPIF r%i %i", cur.b, (cur.a -1) );
+#endif
 				if (lat_get_bool_value(vm->regs[cur.b])) {
 					pos = cur.a - 1;
 				}
 				break;
 			case OP_CALL:
+#if DEBUG_VM
+				printf("CALL r%i\n>> ", cur.a);
+#endif
 				lat_call_func(vm, vm->regs[cur.a]);
 				break;
 			case OP_NOT:
+#if DEBUG_VM
+				printf("NOT r%i", cur.a);
+#endif
 				vm->regs[cur.a] = lat_not(vm, vm->regs[cur.a]);
 				break;
 			}
+#if DEBUG_VM
+			printf("\n");
+#endif
 		}
 		lat_pop_ctx(vm);
 	}

@@ -1,15 +1,5 @@
-funcion principal(x)
-    i=0
-    hacer
-        si (i == 5)
-            #romper
-            imprimir("cinco")
-	#sino
-	    #imprimir(i)
-        fin
-	imprimir(i)
-        i = i + 1
-    cuando (i < 10)
-fin
-
-principal(0)
+i = 0
+hacer
+    imprimir(i)
+    i = i + 1
+cuando (i < 10)

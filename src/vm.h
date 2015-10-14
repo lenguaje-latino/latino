@@ -6,6 +6,8 @@ typedef	struct lat_vm lat_vm;
 #include "utils.h"
 #include "object.h"
 
+#define DEBUG_VM 0
+
 typedef enum lat_ins {
 	OP_END,
 	OP_NOP,
@@ -42,7 +44,6 @@ static char* ins_str[] = {
 	"JMP_IF", "CALL", "NOT"
 };
 
-
 char * getOpIns(enum lat_ins ins);
 
 typedef struct lat_bytecode {
@@ -64,7 +65,6 @@ struct lat_vm {
 	lat_object *ctx_stack[256];
 	int ctx_stack_pointer;
 };
-
 
 lat_vm *lat_make_vm();
 

@@ -12,7 +12,6 @@
 #include <stdarg.h>
 #include <float.h>
 
-//#include "node.h"
 #include "ast.h"
 #include "vm.h"
 
@@ -20,6 +19,8 @@
 defined(__ELF__)
 #define LAT_FUNC    __attribute__((visibility("hidden"))) extern
 #define lnsprintf(s, l, f, i)  snprintf(s, l, f, i)
+#include <dlfcn.h>
+#include <unistd.h>
 #else
 #define LAT_FUNC    extern
 #define lnsprintf(s, l, f, i)  _snprintf(s, l, f, i)
@@ -44,11 +45,9 @@ extern int debug;
 /*
  * lex & parse
  */
-/*extern int yylex(void);*/
 extern void dumpRow(void);
 extern int getNextChar(char *b, int maxBuffer);
 extern void beginToken(char*);
-extern void printError(char *s, ...);
 
 /* interface to the lexer */
 typedef struct YYLTYPE
@@ -62,10 +61,6 @@ typedef struct YYLTYPE
 /*struct ast;*/
 
 #define YY_NO_UNISTD_H 1
-
-/* from lexer */
-void yyerror(char *s, ...);
-void report_error(char *string);
 
 ast *lat_parse_expr(char *expr);
 ast *lat_parse_file(char *path);

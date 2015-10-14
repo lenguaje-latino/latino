@@ -9,6 +9,7 @@ typedef struct lat_object lat_object;
 #include "utils.h"
 #include "vm.h"
 
+typedef	struct lat_vm lat_vm;
 typedef enum lat_type {
 	T_NULL, //Throw an error when detected.
 	T_INSTANCE,

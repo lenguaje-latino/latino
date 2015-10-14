@@ -1,19 +1,12 @@
 #include <stdio.h>
 
-
 #include "latino.h"
 #include "parse.h"
 #include "lex.h"
 #include "ast.h"
 
-#ifndef WINDOWS
-#include <dlfcn.h>
-#include <unistd.h>
-#endif // WINDOWS
-
 /* parser debugging */
 int yydebug = 0;
-
 int debug = 0;
 
 static FILE *file;
@@ -79,12 +72,12 @@ void lat_import(lat_vm *vm)
 		extension = "";
 	}
 	extension = dot + 1;
-	if (strcmp(extension, "sol") == 0) {
+	if (strcmp(extension, "lat") == 0) {
 		lat_object *func = lat_parse_tree(vm, lat_parse_file(input));
 		lat_call_func(vm, func);
 	}
 	else if (strcmp(extension, "so") == 0) {
-#ifndef WINDOWS
+#ifndef WIN32
 		char buffer[256];
 		getcwd(buffer, 256);
 		strcat(buffer, "/");
@@ -102,7 +95,6 @@ void lat_import(lat_vm *vm)
 #endif
 	}
 }
-
 
 int main(int argc, char *argv[])
 {
@@ -136,7 +128,7 @@ int main(int argc, char *argv[])
 	//val = eval(tree);
 
 	if (!tree){
-		//printError("Error: en el analizador sintactico");
+		//log_err("Error: en el analizador sintactico");
 		return EXIT_FAILURE;
 	}
 
@@ -156,16 +148,4 @@ int main(int argc, char *argv[])
 		fclose(file);
 	}*/
     return EXIT_SUCCESS;
-}
-
-extern void printError(char *errorstring, ...)
-{
-    static char errmsg[MAX_ERROR_LENGTH];
-    va_list args;
-    va_start(args, errorstring);
-    vsprintf(errmsg, errorstring, args);
-    va_end(args);
-	if (strcmp(errmsg, "") != 0){
-		fprintf(stdout, "Error: %s\n", errmsg);
-	}
 }

@@ -37,6 +37,7 @@ EXP ([Ee][-+]?[0-9]+)
 ")" |
 "," |
 ":" |
+";" |
 "="     { return yytext[0]; }
 
  /* comparison ops, all are CMP token */
@@ -63,8 +64,6 @@ EXP ([Ee][-+]?[0-9]+)
 "caso"      {  return KEYWORD_CASE; }
 "defecto"   {  return KEYWORD_DEFAULT; }
 "desde"     {  return KEYWORD_FROM; }
-"hasta"     {  return KEYWORD_TO; }
-"salto"     {  return KEYWORD_STEP; }
 "verdadero" { return KEYWORD_TRUE; }
 "falso"     { return KEYWORD_FALSE; }
 "retorno"   { return KEYWORD_RETURN; }
@@ -76,8 +75,7 @@ EXP ([Ee][-+]?[0-9]+)
 \"([^\\\"]|\\.)*\"     { yylval->node = newStr(yytext+1, strlen(yytext)-2);return TOKEN_STRING; }
 '([^'\\\n]|\\.)'       { yylval->node = newChar(yytext+1, strlen(yytext)-2); return TOKEN_CHAR; }
 "#".* /* ignore comments */
-\\\n                   { ; } /* ignore line continuation */
-[ \t\n]                { ; } /* ignore whitespace  tabs and eol */
-.                      { ; }
+[ \t\v\n\f]                { ; } /* ignore whitespace tabs and eol */
+.                      { ; } /* ignore bad characters */
 
 %%

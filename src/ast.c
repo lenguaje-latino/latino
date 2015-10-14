@@ -8,11 +8,18 @@
 #define fdbc(I, A, B, M) function_bcode[fi++] = lat_bc(I, A, B, M)
 #define fpn(N) fi = lat_parse_node(N, function_bcode, fi)
 
+int yyerror(struct YYLTYPE *yylloc_param, void *scanner, struct ast_node **root, const char *s)
+{
+	log_err("%s at line %d", s, yylloc_param->first_line);
+	exit(1);
+	return 0;
+}
+
 ast *newOp(nodeType nodetype, ast *l, ast *r)
 {
     ast *a = malloc(sizeof(ast));
     if (!a) {
-        yyerror("sin espacio\n");
+        log_err("Memoria agotada\n");
         exit(0);
     }
 	switch (nodetype)
@@ -69,7 +76,7 @@ ast *newAst(nodeType nodetype, ast *l, ast *r)
 {
     ast *a = malloc(sizeof(ast));
     if (!a) {
-        yyerror("sin espacio\n");
+        log_err("Memoria agotada\n");
         exit(0);
     }
     a->nodetype = nodetype;
@@ -82,7 +89,7 @@ ast *newInt(long i)
 {
     ast *a = malloc(sizeof(ast));
     if (!a) {
-        yyerror("sin espacio\n");
+        log_err("Memoria agotada\n");
         exit(0);
     }
     a->nodetype = NODE_INT;
@@ -97,7 +104,7 @@ ast *newNum(double d)
 {
     ast *a = malloc(sizeof(ast));
     if (!a) {
-        yyerror("sin espacio\n");
+        log_err("Memoria agotada\n");
         exit(0);
     }
     a->nodetype = NODE_DECIMAL;
@@ -112,7 +119,7 @@ ast *newBool(int b)
 {
     ast *a = malloc(sizeof(ast));
     if (!a) {
-        yyerror("sin espacio\n");
+        log_err("Memoria agotada\n");
         exit(0);
     }
     a->nodetype = NODE_BOOLEAN;
@@ -128,7 +135,7 @@ ast *newChar(char *c, size_t l)
 {
     ast *a = malloc(sizeof(ast));
     if (!a) {
-        yyerror("sin espacio\n");
+        log_err("Memoria agotada\n");
         exit(0);
     }
     a->nodetype = NODE_CHAR;
@@ -199,7 +206,7 @@ ast *newStr(const char *s, size_t l)
 {
     ast *a = malloc(sizeof(ast));
     if (!a) {
-        yyerror("sin espacio\n");
+        log_err("Memoria agotada\n");
         exit(0);
     }
     a->nodetype = NODE_STRING;
@@ -214,7 +221,7 @@ ast *newRef(char *s)
 {
     ast *a = malloc(sizeof(ast));
     if (!a) {
-        yyerror("sin espacio\n");
+        log_err("Memoria agotada\n");
         exit(0);
     }
     a->nodetype = NODE_SYMBOL;
@@ -229,7 +236,7 @@ ast *newAsgn(ast *v, ast *s)
 {
     ast *a = malloc(sizeof(ast));
     if (!a) {
-        yyerror("sin espacio\n");
+        log_err("Memoria agotada\n");
         exit(0);
     }
     a->nodetype = NODE_ASSIGMENT;
@@ -242,7 +249,7 @@ ast *newIf(ast *cond, ast *entonces, ast *sino)
 {
     nodeIf *a = malloc(sizeof(nodeIf));
     if (!a) {
-        yyerror("sin espacio\n");
+        log_err("Memoria agotada\n");
         exit(0);
     }
     a->nodetype = NODE_IF;
@@ -256,7 +263,7 @@ ast *newSwitch(nodeType nodetype, ast *cond, ast *entonces, ast *sino)
 {
     nodeIf *a = malloc(sizeof(nodeIf));
     if (!a) {
-        yyerror("sin espacio\n");
+        log_err("Memoria agotada\n");
         exit(0);
     }
     a->nodetype = nodetype;
@@ -270,7 +277,7 @@ ast *newCase(nodeType nodetype, ast *cond, ast *entonces, ast *sino)
 {
     nodeIf *a = malloc(sizeof(nodeIf));
     if (!a) {
-        yyerror("sin espacio\n");
+        log_err("Memoria agotada\n");
         exit(0);
     }
     a->nodetype = nodetype;
@@ -284,7 +291,7 @@ ast *newWhile(ast *cond, ast *stmts)
 {
     ast *a = malloc(sizeof(ast));
     if (!a) {
-        yyerror("sin espacio\n");
+        log_err("Memoria agotada\n");
         exit(0);
     }
     a->nodetype = NODE_WHILE;
@@ -297,28 +304,26 @@ ast *newDo(ast *cond, ast *stmts)
 {
     ast *a = malloc(sizeof(ast));
     if (!a) {
-        yyerror("sin espacio\n");
+        log_err("Memoria agotada\n");
         exit(0);
     }
-    a->nodetype = NODE_WHILE;
+    a->nodetype = NODE_DO;
     a->l = cond;
     a->r = stmts;
     return a;
 }
 
-ast *newFor(ast *begin, ast *end, ast *stmts, ast *step)
+ast *newFor(ast *dec, ast *cond, ast *inc, ast *stmts)
 {
-    nodeFor *a = malloc(sizeof(nodeFor));
+    ast *a = malloc(sizeof(ast));
     if (!a) {
-        yyerror("sin espacio\n");
+        log_err("Memoria agotada\n");
         exit(0);
     }
-    a->nodetype = NODE_FROM;
-    a->begin = begin;
-    a->end = end;
-    a->stmts = stmts;
-    a->step = step;
-    return (ast *)a;
+	a->nodetype = NODE_BLOCK;
+	a->l = dec;
+	a->r = newWhile(cond, newAst(NODE_BLOCK, stmts, inc));
+	return a;
 }
 
 /* define una funcion */
@@ -326,7 +331,7 @@ ast *doDef(ast *s, ast *syms, ast *func)
 {
 	ast *a = malloc(sizeof(ast));
     if (!a) {
-        yyerror("sin espacio\n");
+        log_err("Memoria agotada\n");
         exit(0);
     }
 	a->nodetype = NODE_ASSIGMENT;
@@ -416,20 +421,20 @@ int lat_parse_node(ast *node, lat_bytecode *bcode, int i)
 	break;
 	case NODE_IF:
 	{
-		nodeIf *f_if = ((nodeIf *)node);
-		pn(f_if->cond);
+		nodeIf *nIf = ((nodeIf *)node);
+		pn(nIf->cond);
 		dbc(OP_MOV, 2, 255, NULL);
+		dbc(OP_MOV, 3, 255, NULL);
 		dbc(OP_NOT, 2, 0, NULL);
 		temp[0] = i;
 		dbc(OP_NOP, 0, 0, NULL);
-		pn(f_if->entonces);
+		pn(nIf->entonces);
 		bcode[temp[0]] = lat_bc(OP_JMPIF, i, 2, NULL);
-		if (f_if->sino){
-			dbc(OP_MOV, 2, 255, NULL);
-			temp[1] = i;
+		if (nIf->sino){
+			temp[1] = i;			
 			dbc(OP_NOP, 0, 0, NULL);
-			pn(f_if->sino);
-			bcode[temp[1]] = lat_bc(OP_JMPIF, i, 2, NULL);
+			pn(nIf->sino);			
+			bcode[temp[1]] = lat_bc(OP_JMPIF, i, 3, NULL);
 		}
 	}
 	break;
@@ -521,5 +526,6 @@ int lat_parse_node(ast *node, lat_bytecode *bcode, int i)
 		printf("nodetype:%i\n", node->nodetype);
 		return 0;
 	}
+	//printf("i = %i\n", i);
 	return i;
 }
