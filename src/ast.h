@@ -64,7 +64,9 @@ typedef enum {
     NODE_CASE,
     NODE_DEFAULT,
     NODE_CASES,
-    NODE_FROM
+	NODE_FROM, /*35*/
+	NODE_LIST,
+	NODE_LIST_BODY
 } nodeType;
 
 /* nodes in the abstract syntax tree */

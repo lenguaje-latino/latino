@@ -368,10 +368,10 @@ int lat_parse_node(ast *node, lat_bytecode *bcode, int i)
 		/*if (node->l->r){
 			pn(node->l->r);
 			dbc(OP_MOV, 1, 255, NULL);
-		}
-		else{
+			}
+			else{
 			dbc(OP_LOCALNS, 1, 0, NULL);
-		}*/
+			}*/
 		dbc(OP_LOCALNS, 1, 0, NULL);
 		dbc(OP_STORESTR, 2, 0, node->value->v.s);
 		dbc(OP_GET, 2, 1, NULL);
@@ -385,10 +385,10 @@ int lat_parse_node(ast *node, lat_bytecode *bcode, int i)
 		/*if (node->r) {
 			pn(node->r);
 			dbc(OP_MOV, 1, 255, NULL);
-		}
-		else {
+			}
+			else {
 			dbc(OP_LOCALNS, 1, 0, NULL);
-		}*/
+			}*/
 		dbc(OP_LOCALNS, 1, 0, NULL);
 		dbc(OP_POP, 255, 0, NULL);
 		dbc(OP_SET, 255, 1, node->r->value->v.s);
@@ -431,9 +431,9 @@ int lat_parse_node(ast *node, lat_bytecode *bcode, int i)
 		pn(nIf->entonces);
 		bcode[temp[0]] = lat_bc(OP_JMPIF, i, 2, NULL);
 		if (nIf->sino){
-			temp[1] = i;			
+			temp[1] = i;
 			dbc(OP_NOP, 0, 0, NULL);
-			pn(nIf->sino);			
+			pn(nIf->sino);
 			bcode[temp[1]] = lat_bc(OP_JMPIF, i, 3, NULL);
 		}
 	}
@@ -514,7 +514,27 @@ int lat_parse_node(ast *node, lat_bytecode *bcode, int i)
 		dbc(OP_FN, 255, 0, function_bcode);
 		function_bcode = NULL;
 		fi = 0;
-	}break;
+	}
+	break;
+	case NODE_LIST:
+	{
+		dbc(OP_STORELIST, 0, 0, NULL);
+		pn(node->l);
+	}
+	break;
+	case NODE_LIST_BODY:
+	{
+		if (node->l != NULL) {
+			pn(node->l);
+			dbc(OP_PUSHLIST, 0, 255, NULL);
+		}
+		if (node->r != NULL) {
+			pn(node->r);
+		}
+		dbc(OP_MOV, 255, 0, NULL);
+	}
+	break;
+
 	/*case NS:
 	{
 		dbc(OP_NS, 255, 0, NULL);

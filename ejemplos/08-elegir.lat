@@ -56,7 +56,7 @@ fin
 
 #switch con cadenas
 elegir("hola")
-caso 1: 
+caso 1:
      imprimir("1")
 caso "hola":
      imprimir("hola ")

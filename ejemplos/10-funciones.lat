@@ -1,0 +1,14 @@
+funcion avg(a,b)
+    retorno (a+b)/2.0
+fin
+
+funcion max(a,b)
+    si (a > b)
+        retorno a
+    sino
+        retorno b
+    fin
+fin
+
+imprimir(avg(3, 5))
+imprimir(max(3, 5))

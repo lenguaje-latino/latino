@@ -206,6 +206,9 @@ void lat_print(lat_vm *vm)
 	else if (in->type == T_INSTANCE) {
 		fprintf(stdout, "%s\n", "Object");
 	}
+	else if (in->type == T_LIST){
+		fprintf(stdout, "%s\n", "List");
+	}
 	else {
 		fprintf(stdout, "Unknown of type %d\n", in->type);
 	}
