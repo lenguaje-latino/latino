@@ -56,30 +56,31 @@ EXP ([Ee][-+]?[0-9]+)
 "!"     { return OP_NEG; }
 
  /* keywords */
-"si"        { return KEYWORD_IF; }
-"fin"       { return KEYWORD_END; }
-"sino"      { return KEYWORD_ELSE; }
-"romper"    { return KEYWORD_BREAK; }
-"mientras"  { return KEYWORD_WHILE; }
-"hacer"     { return KEYWORD_DO; }
-"cuando"    { return KEYWORD_WHEN; }
-"funcion"   { return KEYWORD_FUNCTION; }
-"elegir"    { return KEYWORD_SWITCH; }
-"caso"      { return KEYWORD_CASE; }
-"defecto"   { return KEYWORD_DEFAULT; }
-"desde"     { return KEYWORD_FROM; }
-"verdadero" { return KEYWORD_TRUE; }
-"falso"     { return KEYWORD_FALSE; }
-"retorno"   { return KEYWORD_RETURN; }
+"si"        { return KIF; }
+"fin"       { return KEND; }
+"sino"      { return KELSE; }
+"romper"    { return KBREAK; }
+"mientras"  { return KWHILE; }
+"hacer"     { return KDO; }
+"cuando"    { return KWHEN; }
+"funcion"   { return KFUNCTION; }
+"elegir"    { return KSWITCH; }
+"caso"      { return KCASE; }
+"defecto"   { return KDEFAULT; }
+"desde"     { return KFROM; }
+"verdadero" { return KTRUE; }
+"falso"     { return KFALSE; }
+"retorno"   { return KRETURN; }
 
  /* names */
-[_a-zA-Z][_a-zA-Z0-9]* { yylval->node = newRef(yytext); return TOKEN_IDENTIFIER; }
-[0-9]+"."+[0-9]*{EXP}?|"."+[0-9]+{EXP}?       { yylval->node = newNum(strtod(yytext, NULL)); return TOKEN_NUMBER; }
-[0-9]+                 { yylval->node = newInt(strtol(yytext, NULL, 0)); return TOKEN_INT; }
-\"([^\\\"]|\\.)*\"     { yylval->node = newStr(yytext+1, strlen(yytext)-2);return TOKEN_STRING; }
-'([^'\\\n]|\\.)'       { yylval->node = newChar(yytext+1, strlen(yytext)-2); return TOKEN_CHAR; }
+[_a-zA-Z][_a-zA-Z0-9]* { yylval->node = newRef(yytext); return TIDENTIFIER; }
+[0-9]+"."+[0-9]*{EXP}?|"."+[0-9]+{EXP}?       { yylval->node = newNum(strtod(yytext, NULL)); return TNUMBER; }
+[0-9]+                 { yylval->node = newInt(strtol(yytext, NULL, 0)); return TINT; }
+\"([^\\\"]|\\.)*\"     { yylval->node = newStr(yytext+1, strlen(yytext)-2);return TSTRING; }
+'([^'\\\n]|\\.)'       { yylval->node = newChar(yytext+1, strlen(yytext)-2); return TCHAR; }
 "#".* /* ignore comments */
-[ \t\v\n\f]            { ; } /* ignore whitespace tabs and eol */
+\n                     { ; } /*ignore end of line */
+[ \t]+                 { ; } /* ignore whitespace tabs */
 .                      { ; } /* ignore bad characters */
 
 %%

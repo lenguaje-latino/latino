@@ -179,38 +179,69 @@ void lat_nth_list(lat_vm *vm)
 			counter++;
 		}
 	}
-	log_err("List index out of bounds");
+	log_err("Lista: indice fuera de rango");
 	exit(1);
+}
+
+void lat_print_list(lat_vm *vm, list_node *l){
+	fprintf(stdout, "%s", "[ ");
+	if (l != NULL && length_list(l) > 0) {
+		list_node *c;
+		for (c = l->next; c != NULL; c = c->next) {
+			if (c->data != NULL) {
+				lat_object *o = ((lat_object *)c->data);
+				if (o->type == T_LIST){
+					lat_print_list(vm, o->data.list);
+					if (c->next->data){
+						fprintf(stdout, "%s", ", ");
+					}
+				}
+				else{
+					lat_push_stack(vm, o);
+					lat_print(vm);
+					if (c->next->data){
+						fprintf(stdout, "%s", ", ");
+					}
+				}
+			}
+		}
+	}
+	fprintf(stdout, "%s", " ]");
 }
 
 void lat_print(lat_vm *vm)
 {
 	lat_object *in = lat_pop_stack(vm);
-	if (in->type == T_CHAR) {
-		fprintf(stdout, "%c\n", lat_get_char_value(in));
+	if (in->type == T_NULL) {
+		//fprintf(stdout, "%s\n", "NULO");
+		fprintf(stdout, "%s", "NULO");
+	}else if (in->type == T_CHAR) {
+		//fprintf(stdout, "%c\n", lat_get_char_value(in));
+		fprintf(stdout, "\'%c\'", lat_get_char_value(in));
 	}else if (in->type == T_INT) {
-		fprintf(stdout, "%d\n", lat_get_int_value(in));
-	}
-	else if (in->type == T_BOOL) {
-		fprintf(stdout, "%i\n", lat_get_bool_value(in));
-	}
-	else if (in->type == T_DOUBLE) {
-		fprintf(stdout, "%lf\n", lat_get_double_value(in));
-	}
-	else if (in->type == T_STR) {
-		fprintf(stdout, "%s\n", lat_get_str_value(in));
-	}
-	else if (in->type == T_FUNC) {
-		fprintf(stdout, "%s\n", "Function");
-	}
-	else if (in->type == T_INSTANCE) {
-		fprintf(stdout, "%s\n", "Object");
-	}
-	else if (in->type == T_LIST){
-		fprintf(stdout, "%s\n", "List");
-	}
-	else {
-		fprintf(stdout, "Unknown of type %d\n", in->type);
+		//fprintf(stdout, "%d\n", lat_get_int_value(in));
+		fprintf(stdout, "%d", lat_get_int_value(in));
+	}else if (in->type == T_BOOL) {
+		//fprintf(stdout, "%i\n", lat_get_bool_value(in));
+		fprintf(stdout, "%i", lat_get_bool_value(in));
+	}else if (in->type == T_DOUBLE) {
+		//fprintf(stdout, "%lf\n", lat_get_double_value(in));
+		fprintf(stdout, "%lf", lat_get_double_value(in));
+	}else if (in->type == T_STR) {
+		//fprintf(stdout, "%s\n", lat_get_str_value(in));
+		fprintf(stdout, "\"%s\"", lat_get_str_value(in));
+	}else if (in->type == T_FUNC) {
+		//fprintf(stdout, "%s\n", "Funcion");
+		fprintf(stdout, "%s", "Funcion");
+	}else if (in->type == T_INSTANCE) {
+		//fprintf(stdout, "%s\n", "Objeto");
+		fprintf(stdout, "%s", "Objeto");
+	}else if (in->type == T_LIST){
+		//fprintf(stdout, "%s\n", "List");
+		lat_print_list(vm, in->data.list);
+		fprintf(stdout, "%s\n", "");
+	}else {
+		fprintf(stdout, "Tipo desconocido %d\n", in->type);
 	}
 	vm->regs[255] = in;
 }
@@ -237,7 +268,7 @@ void lat_add(lat_vm *vm)
 	lat_object *a = lat_pop_stack(vm);
 	lat_object *b = lat_pop_stack(vm);
 	if ((a->type != T_INT && a->type != T_DOUBLE) || (b->type != T_INT && b->type != T_DOUBLE)) {
-		log_err("Attempt to apply operator \"+\" on invalid types");
+		log_err("Intento de aplicar operador \"+\" en tipos invalidos");
 		exit(1);
 	}
 	if (a->type == T_DOUBLE || b->type == T_DOUBLE) {
@@ -443,10 +474,12 @@ lat_bytecode lat_bc(lat_ins i, int a, int b, void *meta)
 	return ret;
 }
 
+/*
+TODO: Remove
 char * getOpIns(enum lat_ins ins)
 {
 	return ins_str[ins];
-}
+}*/
 
 void lat_call_func(lat_vm *vm, lat_object *func)
 {
@@ -499,7 +532,7 @@ void lat_call_func(lat_vm *vm, lat_object *func)
 			case OP_STORECHAR:
 				vm->regs[cur.a] = lat_char(vm, cur.b);
 #if DEBUG_VM
-				printf("STORECHAR r%i, %c", cur.a, (char *)cur.meta);
+				printf("STORECHAR r%i, %c", cur.a, cur.b);
 #endif
 				break;
 			case OP_STOREINT:
@@ -528,12 +561,21 @@ void lat_call_func(lat_vm *vm, lat_object *func)
 				break;
 			case OP_STORELIST:
 				vm->regs[cur.a] = lat_list(vm, make_list());
+#if DEBUG_VM
+				printf("STORELIST r%i, %s", cur.a, "make_list");
+#endif
 				break;
 			case OP_PUSHLIST:
 				lat_push_list(vm->regs[cur.a], vm->regs[cur.b]);
+#if DEBUG_VM
+				printf("PUSHLIST r%i, r%i", cur.a, cur.b);
+#endif
 				break;
 			case OP_POPLIST:
 				vm->regs[cur.a] = lat_pop_list(vm->regs[cur.b]);
+#if DEBUG_VM
+				printf("POPLIST r%i, r%i", cur.a, cur.b);
+#endif
 				break;
 			case OP_MOV:
 				vm->regs[cur.a] = vm->regs[cur.b];
@@ -557,10 +599,16 @@ void lat_call_func(lat_vm *vm, lat_object *func)
 #endif
 				break;
 			case OP_NS:
+#if DEBUG_VM
+				printf("NS r%i", cur.a);
+#endif
 				vm->regs[cur.a] = lat_clone_object(vm, lat_get_current_ctx(vm));
 				lat_push_predefined_ctx(vm, vm->regs[cur.a]);
 				break;
 			case OP_ENDNS:
+#if DEBUG_VM
+				printf("ENDNS r%i", cur.a);
+#endif
 				vm->regs[cur.a] = lat_pop_predefined_ctx(vm);
 				break;
 			case OP_JMP:				

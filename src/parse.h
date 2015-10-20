@@ -45,28 +45,28 @@ extern int yydebug;
 # define YYTOKENTYPE
   enum yytokentype
   {
-    TOKEN_INT = 258,
-    TOKEN_CHAR = 259,
-    TOKEN_NUMBER = 260,
-    TOKEN_STRING = 261,
-    TOKEN_IDENTIFIER = 262,
-    TOKEN_FUNC = 263,
-    KEYWORD_IF = 264,
-    KEYWORD_END = 265,
-    KEYWORD_ELSE = 266,
-    KEYWORD_WHILE = 267,
-    KEYWORD_DO = 268,
-    KEYWORD_SWITCH = 269,
-    KEYWORD_CASE = 270,
-    KEYWORD_BREAK = 271,
-    KEYWORD_DEFAULT = 272,
-    KEYWORD_WHEN = 273,
-    KEYWORD_FUNCTION = 274,
-    KEYWORD_FROM = 275,
-    KEYWORD_BOOL = 276,
-    KEYWORD_RETURN = 277,
-    KEYWORD_TRUE = 278,
-    KEYWORD_FALSE = 279,
+    TINT = 258,
+    TCHAR = 259,
+    TNUMBER = 260,
+    TSTRING = 261,
+    TIDENTIFIER = 262,
+    TFUNC = 263,
+    KIF = 264,
+    KEND = 265,
+    KELSE = 266,
+    KWHILE = 267,
+    KDO = 268,
+    KSWITCH = 269,
+    KCASE = 270,
+    KBREAK = 271,
+    KDEFAULT = 272,
+    KWHEN = 273,
+    KFUNCTION = 274,
+    KFROM = 275,
+    KBOOL = 276,
+    KRETURN = 277,
+    KTRUE = 278,
+    KFALSE = 279,
     OP_GT = 280,
     OP_LT = 281,
     OP_GE = 282,
@@ -80,6 +80,40 @@ extern int yydebug;
     UNEG = 290
   };
 #endif
+/* Tokens.  */
+#define TINT 258
+#define TCHAR 259
+#define TNUMBER 260
+#define TSTRING 261
+#define TIDENTIFIER 262
+#define TFUNC 263
+#define KIF 264
+#define KEND 265
+#define KELSE 266
+#define KWHILE 267
+#define KDO 268
+#define KSWITCH 269
+#define KCASE 270
+#define KBREAK 271
+#define KDEFAULT 272
+#define KWHEN 273
+#define KFUNCTION 274
+#define KFROM 275
+#define KBOOL 276
+#define KRETURN 277
+#define KTRUE 278
+#define KFALSE 279
+#define OP_GT 280
+#define OP_LT 281
+#define OP_GE 282
+#define OP_LE 283
+#define OP_EQ 284
+#define OP_NEQ 285
+#define OP_AND 286
+#define OP_OR 287
+#define OP_NEG 288
+#define UMINUS 289
+#define UNEG 290
 
 /* Value type.  */
 

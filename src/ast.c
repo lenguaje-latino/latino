@@ -349,6 +349,8 @@ lat_object *lat_parse_tree(lat_vm *vm, ast *tree)
     return lat_define_function(vm, bcode);
 }
 
+int nested = -1;
+
 int lat_parse_node(ast *node, lat_bytecode *bcode, int i)
 {
 	int temp[8] = { 0 };
@@ -357,7 +359,9 @@ int lat_parse_node(ast *node, lat_bytecode *bcode, int i)
 	switch (node->nodetype) {
 	case NODE_BLOCK:
 	{
-		pn(node->l);
+		if (node->l){
+			pn(node->l);
+		}
 		if (node->r){
 			pn(node->r);
 		}
@@ -518,20 +522,27 @@ int lat_parse_node(ast *node, lat_bytecode *bcode, int i)
 	break;
 	case NODE_LIST:
 	{
-		dbc(OP_STORELIST, 0, 0, NULL);
-		pn(node->l);
+		//dbc(OP_STORELIST, 0, 0, NULL);
+		nested++;
+		dbc(OP_STORELIST, nested, 0, NULL);
+		if (node->l){
+			pn(node->l);
+		}
+		dbc(OP_MOV, 255, nested, NULL);
+		nested--;
 	}
 	break;
 	case NODE_LIST_BODY:
 	{
-		if (node->l != NULL) {
+		if (node->l) {
 			pn(node->l);
-			dbc(OP_PUSHLIST, 0, 255, NULL);
+			//dbc(OP_PUSHLIST, 0, 255, NULL);
+			dbc(OP_PUSHLIST, nested, 255, NULL);
 		}
-		if (node->r != NULL) {
+		if (node->r) {
 			pn(node->r);
 		}
-		dbc(OP_MOV, 255, 0, NULL);
+		//dbc(OP_MOV, 255, 0, NULL);
 	}
 	break;
 
