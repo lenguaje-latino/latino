@@ -27,7 +27,7 @@ typedef enum lat_type {
 typedef union lat_object_data {
 	hash_map *instance;
 	char c;
-	int i;
+	long i;
 	double d;
 	char *str;
 	bool b;
@@ -50,7 +50,7 @@ int lat_ctx_has(lat_object *ns, lat_object *name);
 lat_object *lat_make_object(lat_vm *vm);
 lat_object *lat_instance(lat_vm *vm);
 lat_object *lat_char(lat_vm *vm, char val);
-lat_object *lat_int(lat_vm *vm, int val);
+lat_object *lat_int(lat_vm *vm, long val);
 lat_object *lat_double(lat_vm *vm, double val);
 lat_object *lat_str(lat_vm *vm, char *val);
 lat_object *lat_bool(lat_vm *vm, bool val);
@@ -65,9 +65,9 @@ void lat_mark_hash(hash_map *l, unsigned char m);
 
 void lat_delete_object(lat_vm *vm, lat_object *o);
 void lat_delete_list(lat_vm *vm, list_node *l);
-void lat_delete_hash(lat_vm *vm, hash_map *l);
+//void lat_delete_hash(lat_vm *vm, hash_map *l);
 
-lat_object *lat_clone_object(lat_vm *vm, lat_object *class);
+lat_object *lat_clone_object(lat_vm *vm, lat_object *obj);
 list_node *lat_clone_list(lat_vm *vm, list_node *l);
 hash_map *lat_clone_hash(lat_vm *vm, hash_map *l);
 

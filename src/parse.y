@@ -56,11 +56,13 @@
     OP_NEG
 
 %nonassoc <node> OP_EQ OP_GE OP_GT OP_LE OP_LT OP_NEQ OP_NEG
-%type <node> expression statement statement_list labeled_statement
+%type <node> expression statement statement_list
 %type <node> iteration_statement jump_statement function_definition
 %type <node> argument_expression_list declaration primary_expression
 %type <node> constant_expression function_call selection_statement
 %type <node> list_expression_items identifier_list
+
+ /*labeled_statement*/
 
 /*
  * precedencia de operadores
@@ -79,16 +81,14 @@
 %%
 
 program: statement_list {
-        if($1){
-            *root = $1;
-        }
+        *root = $1;
     }
     ;
 
 statement_list:
-    statement statement_list {
+    statement_list statement {
         if($2){
-            $$ = newAst(NODE_BLOCK, $1, $2);
+            $$ = newAst(NODE_BLOCK, $2, $1);
         }
     }
     | statement {
@@ -96,9 +96,9 @@ statement_list:
     }
     ;
 
-statement:
-      declaration  { $$ = $1; }
-    | labeled_statement { $$ = $1; }
+statement: /* empty */ { $$ = NULL; }
+    | declaration  { $$ = $1; }
+    /*| labeled_statement { $$ = $1; }*/
     | selection_statement { $$ = $1; }
     | iteration_statement { $$ = $1; }
     | jump_statement { $$ = $1; }
@@ -110,7 +110,7 @@ declaration:
       TIDENTIFIER '=' expression { $$ = newAsgn($3, $1); }
     ;
 
-labeled_statement:
+/*labeled_statement:
     KCASE constant_expression ':' statement_list {
         $$ = newAst(NODE_CASE, $2, $4);
     }
@@ -118,15 +118,17 @@ labeled_statement:
         $$ = newAst(NODE_DEFAULT, NULL, $3);
     }
     ;
+*/
 
 selection_statement:
     KIF '(' expression ')' statement_list KEND {
         $$ = newIf($3, $5, NULL); }
     | KIF '(' expression ')' statement_list KELSE statement_list KEND {
         $$ = newIf($3, $5, $7); }
-    | KSWITCH '(' TIDENTIFIER ')' labeled_statement KEND {
-        $$ = newAst(NODE_SWITCH, $3, $5); }
+    /*| KSWITCH '(' TIDENTIFIER ')' labeled_statement KEND {
+        $$ = newAst(NODE_SWITCH, $3, $5); }*/
     ;
+
 
 iteration_statement:
     KDO statement_list KWHEN '(' expression ')' {

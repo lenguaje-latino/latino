@@ -1,1 +1,6 @@
-imprimir("hola mundo")
+i=0
+#mientras(i<2147483647)
+mientras(i<10)
+    imprimir(i)
+    i=i+1
+fin

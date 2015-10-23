@@ -46,10 +46,16 @@ ast *lat_parse_file(char *infile) {
 		printf("No se pudo abrir el archivo\n");
 		return NULL;
 	}
-	buffer = malloc(BUF_SIZE);
-	size_t newSize = fread(buffer, sizeof(char), BUF_SIZE, file);
+	fseek(file, 0, SEEK_END);
+	int fsize = ftell(file);
+	fseek(file, 0, SEEK_SET);
+	buffer = calloc(fsize, 1);
+	//buffer = malloc(BUF_SIZE);
+	//size_t newSize = fread(buffer, sizeof(char), BUF_SIZE, file);	
+	size_t newSize = fread(buffer, sizeof(char), fsize, file);	
 	if (buffer == NULL) {
-		printf("No se pudo asignar %d bytes de memoria\n", BUF_SIZE);
+		//printf("No se pudo asignar %d bytes de memoria\n", BUF_SIZE);
+		printf("No se pudo asignar %d bytes de memoria\n", fsize);
 		fclose(file);
 		return NULL;
 	}
@@ -133,10 +139,18 @@ int main(int argc, char *argv[])
 	}
 
 	lat_vm *vm = lat_make_vm();
+	//lat_set_ctx(lat_get_current_ctx(vm), lat_str(vm, "compile"), lat_define_c_function(vm, lat_compile));
+	//lat_set_ctx(lat_get_current_ctx(vm), lat_str(vm, "import"), lat_define_c_function(vm, lat_import));
 	lat_object *mainFunc = lat_parse_tree(vm, tree);
-	lat_set_ctx(lat_get_current_ctx(vm), lat_str(vm, "compile"), lat_define_c_function(vm, lat_compile));
-	lat_set_ctx(lat_get_current_ctx(vm), lat_str(vm, "import"), lat_define_c_function(vm, lat_import));
 	lat_call_func(vm, mainFunc);
+	//lat_gc(vm);
+	//printf("\nAll objects is:\n");
+	//lat_print_list(vm, vm->all_objects);
+	/*
+	printf("\nStack is:\n");
+	lat_print_list(vm, vm->stack);
+	*/
+	//lat_gc(vm);
 	lat_push_stack(vm, vm->regs[255]);
 	//lat_print(vm);
 

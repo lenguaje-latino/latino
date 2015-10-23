@@ -6,8 +6,14 @@
 
 #include "utils.h"
 
+/*
+#define lat_writestring(s,l)	fwrite((s), sizeof(char), (l), stdout)
+#define lat_writeline()	(lat_writestring("\n", 1), fflush(stdout))
+*/
+
 lat_vm *lat_make_vm()
 {
+	//FIX
 	lat_vm *ret = (lat_vm *)malloc(sizeof(lat_vm));
 	ret->stack = make_list();
 	ret->all_objects = make_list();
@@ -17,17 +23,17 @@ lat_vm *lat_make_vm()
 	ret->ctx_stack_pointer = 0;
 	lat_set_ctx(lat_get_current_ctx(ret), lat_str(ret, "imprimir"), lat_define_c_function(ret, lat_print));
 	lat_set_ctx(lat_get_current_ctx(ret), lat_str(ret, "+"), lat_define_c_function(ret, lat_add));
-	lat_set_ctx(lat_get_current_ctx(ret), lat_str(ret, "-"), lat_define_c_function(ret, lat_sub));
+	/*lat_set_ctx(lat_get_current_ctx(ret), lat_str(ret, "-"), lat_define_c_function(ret, lat_sub));
 	lat_set_ctx(lat_get_current_ctx(ret), lat_str(ret, "*"), lat_define_c_function(ret, lat_mul));
 	lat_set_ctx(lat_get_current_ctx(ret), lat_str(ret, "/"), lat_define_c_function(ret, lat_div));
 	lat_set_ctx(lat_get_current_ctx(ret), lat_str(ret, "%"), lat_define_c_function(ret, lat_mod));
 	lat_set_ctx(lat_get_current_ctx(ret), lat_str(ret, "!="), lat_define_c_function(ret, lat_neq));
-	lat_set_ctx(lat_get_current_ctx(ret), lat_str(ret, "=="), lat_define_c_function(ret, lat_eq));
+	lat_set_ctx(lat_get_current_ctx(ret), lat_str(ret, "=="), lat_define_c_function(ret, lat_eq));*/
 	lat_set_ctx(lat_get_current_ctx(ret), lat_str(ret, "<"), lat_define_c_function(ret, lat_lt));
-	lat_set_ctx(lat_get_current_ctx(ret), lat_str(ret, "<="), lat_define_c_function(ret, lat_lte));
+	/*lat_set_ctx(lat_get_current_ctx(ret), lat_str(ret, "<="), lat_define_c_function(ret, lat_lte));
 	lat_set_ctx(lat_get_current_ctx(ret), lat_str(ret, ">"), lat_define_c_function(ret, lat_gt));
 	lat_set_ctx(lat_get_current_ctx(ret), lat_str(ret, ">="), lat_define_c_function(ret, lat_gte));
-	/*lat_set_ctx(lat_get_current_ctx(ret), lat_str(ret, "gc"), lat_define_c_function(ret, lat_gc));*/
+	lat_set_ctx(lat_get_current_ctx(ret), lat_str(ret, "gc"), lat_define_c_function(ret, lat_gc));*/
 	return ret;
 }
 
@@ -46,7 +52,7 @@ lat_object *lat_pop_stack(lat_vm *vm)
 	else {
 		n->prev->next = n->next;
 		n->next->prev = n->prev;
-		lat_object *ret = (lat_object *)n->data;
+		lat_object *ret = (lat_object *)n->data;		
 		free(n);
 		return ret;
 	}
@@ -78,7 +84,9 @@ void lat_push_ctx(lat_vm *vm)
 		log_err("Namespace stack overflow");
 		exit(1);
 	}
-	vm->ctx_stack[vm->ctx_stack_pointer + 1] = lat_clone_object(vm, vm->ctx_stack[vm->ctx_stack_pointer]);
+	//vm->ctx_stack[vm->ctx_stack_pointer + 1] = lat_clone_object(vm, vm->ctx_stack[vm->ctx_stack_pointer]);
+	//FIX
+	vm->ctx_stack[vm->ctx_stack_pointer + 1] = vm->ctx_stack[vm->ctx_stack_pointer];
 	vm->ctx_stack_pointer++;
 }
 
@@ -119,6 +127,7 @@ void lat_gc_add_object(lat_vm *vm, lat_object *o)
 	insert_list(vm->all_objects, (void *)o);
 }
 
+/*
 void lat_gc(lat_vm *vm)
 {
 	for (int i = vm->ctx_stack_pointer; i >= 0; i--) {
@@ -145,10 +154,12 @@ void lat_gc(lat_vm *vm)
 	}
 	vm->regs[255] = lat_str(vm, "Trash compactor completing operation");
 }
+*/
 
 lat_object *lat_define_function(lat_vm *vm, lat_bytecode *inslist)
 {
 	lat_object *ret = lat_func(vm);
+	//FIX
 	lat_function *fval = (lat_function *)malloc(sizeof(lat_function));
 	fval->bcode = inslist;
 	ret->data.func = fval;
@@ -190,6 +201,7 @@ void lat_print_list(lat_vm *vm, list_node *l){
 		for (c = l->next; c != NULL; c = c->next) {
 			if (c->data != NULL) {
 				lat_object *o = ((lat_object *)c->data);
+				printf("\ntype %i, obj_ref: %x\n", o->type, o);
 				if (o->type == T_LIST){
 					lat_print_list(vm, o->data.list);
 					if (c->next->data){
@@ -197,10 +209,12 @@ void lat_print_list(lat_vm *vm, list_node *l){
 					}
 				}
 				else{
-					lat_push_stack(vm, o);
-					lat_print(vm);
-					if (c->next->data){
-						fprintf(stdout, "%s", ", ");
+					if (o->type != NULL){
+						lat_push_stack(vm, o);
+						lat_print(vm);
+						if (c->next->data){
+							fprintf(stdout, "%s", ", ");
+						}
 					}
 				}
 			}
@@ -215,35 +229,42 @@ void lat_print(lat_vm *vm)
 	if (in->type == T_NULL) {
 		//fprintf(stdout, "%s\n", "NULO");
 		fprintf(stdout, "%s", "NULO");
+	}else if (in->type == T_INSTANCE) {
+		//fprintf(stdout, "%s\n", "Objeto");
+		fprintf(stdout, "%s", "Objeto");
 	}else if (in->type == T_CHAR) {
 		//fprintf(stdout, "%c\n", lat_get_char_value(in));
-		fprintf(stdout, "\'%c\'", lat_get_char_value(in));
+		fprintf(stdout, "%c", lat_get_char_value(in));
 	}else if (in->type == T_INT) {
 		//fprintf(stdout, "%d\n", lat_get_int_value(in));
 		fprintf(stdout, "%d", lat_get_int_value(in));
-	}else if (in->type == T_BOOL) {
-		//fprintf(stdout, "%i\n", lat_get_bool_value(in));
-		fprintf(stdout, "%i", lat_get_bool_value(in));
 	}else if (in->type == T_DOUBLE) {
 		//fprintf(stdout, "%lf\n", lat_get_double_value(in));
 		fprintf(stdout, "%lf", lat_get_double_value(in));
 	}else if (in->type == T_STR) {
-		//fprintf(stdout, "%s\n", lat_get_str_value(in));
-		fprintf(stdout, "\"%s\"", lat_get_str_value(in));
-	}else if (in->type == T_FUNC) {
-		//fprintf(stdout, "%s\n", "Funcion");
-		fprintf(stdout, "%s", "Funcion");
-	}else if (in->type == T_INSTANCE) {
-		//fprintf(stdout, "%s\n", "Objeto");
-		fprintf(stdout, "%s", "Objeto");
+		//fprintf(stdout, "\"%s\"\n", lat_get_str_value(in));
+		fprintf(stdout, "%s", lat_get_str_value(in));
+	}else if (in->type == T_BOOL) {
+		//fprintf(stdout, "%i\n", lat_get_bool_value(in));
+		fprintf(stdout, "%i", lat_get_bool_value(in));
 	}else if (in->type == T_LIST){
 		//fprintf(stdout, "%s\n", "List");
 		lat_print_list(vm, in->data.list);
 		fprintf(stdout, "%s\n", "");
+	}else if (in->type == T_FUNC) {
+		//fprintf(stdout, "%s\n", "Funcion");
+		fprintf(stdout, "%s", "Funcion");
+	}else if (in->type == T_CFUNC) {
+		//fprintf(stdout, "%s\n", "C_Funcion");
+		fprintf(stdout, "%s", "C_Funcion");
+	}else if (in->type == T_STRUCT) {
+		//fprintf(stdout, "%s\n", "Objeto");
+		fprintf(stdout, "%s", "Struct");
 	}else {
 		fprintf(stdout, "Tipo desconocido %d\n", in->type);
 	}
 	vm->regs[255] = in;
+	//free(in);
 }
 
 void lat_clone(lat_vm *vm)
@@ -272,10 +293,14 @@ void lat_add(lat_vm *vm)
 		exit(1);
 	}
 	if (a->type == T_DOUBLE || b->type == T_DOUBLE) {
-		vm->regs[255] = lat_double(vm, lat_get_double_value(a) + lat_get_double_value(b));
+		//vm->regs[255] = lat_double(vm, lat_get_double_value(a) + lat_get_double_value(b));
+		a->data.d = lat_get_double_value(a) + lat_get_double_value(b);
+		vm->regs[255] = a;		
 	}
 	else {
-		vm->regs[255] = lat_int(vm, lat_get_int_value(a) + lat_get_int_value(b));
+		//vm->regs[255] = lat_int(vm, lat_get_int_value(a) + lat_get_int_value(b));
+		a->data.i = lat_get_int_value(a) + lat_get_int_value(b);
+		vm->regs[255] = a;		
 	}
 }
 
@@ -288,10 +313,14 @@ void lat_sub(lat_vm *vm)
 		exit(1);
 	}
 	if (a->type == T_DOUBLE || b->type == T_DOUBLE) {
-		vm->regs[255] = lat_double(vm, lat_get_double_value(a) - lat_get_double_value(b));
+		//vm->regs[255] = lat_double(vm, lat_get_double_value(a) - lat_get_double_value(b));
+		a->data.d = lat_get_double_value(a) - lat_get_double_value(b);
+		vm->regs[255] = a;		
 	}
 	else {
-		vm->regs[255] = lat_int(vm, lat_get_int_value(a) - lat_get_int_value(b));
+		//vm->regs[255] = lat_int(vm, lat_get_int_value(a) - lat_get_int_value(b));
+		a->data.i = lat_get_int_value(a) - lat_get_int_value(b);
+		vm->regs[255] = a;		
 	}
 }
 
@@ -304,10 +333,14 @@ void lat_mul(lat_vm *vm)
 		exit(1);
 	}
 	if (a->type == T_DOUBLE || b->type == T_DOUBLE) {
-		vm->regs[255] = lat_double(vm, lat_get_double_value(a) * lat_get_double_value(b));
+		//vm->regs[255] = lat_double(vm, lat_get_double_value(a) * lat_get_double_value(b));
+		a->data.d = lat_get_double_value(a) * lat_get_double_value(b);
+		vm->regs[255] = a;		
 	}
 	else {
-		vm->regs[255] = lat_int(vm, lat_get_int_value(a) * lat_get_int_value(b));
+		//vm->regs[255] = lat_int(vm, lat_get_int_value(a) * lat_get_int_value(b));
+		a->data.i = lat_get_int_value(a) * lat_get_int_value(b);
+		vm->regs[255] = a;		
 	}
 }
 
@@ -326,7 +359,9 @@ void lat_div(lat_vm *vm)
 			exit(1);
 		}
 		else{
-			vm->regs[255] = lat_double(vm, lat_get_double_value(a) / tmp);
+			//vm->regs[255] = lat_double(vm, lat_get_double_value(a) / tmp);
+			a->data.d = lat_get_double_value(a) / tmp;
+			vm->regs[255] = a;		
 		}
 	}
 	else {
@@ -336,7 +371,9 @@ void lat_div(lat_vm *vm)
 			exit(1);
 		}
 		else{
-			vm->regs[255] = lat_int(vm, lat_get_int_value(a) / tmp);
+			//vm->regs[255] = lat_int(vm, lat_get_int_value(a) / tmp);
+			a->data.i = lat_get_int_value(a) / tmp;
+			vm->regs[255] = a;		
 		}
 	}
 }
@@ -355,7 +392,9 @@ void lat_mod(lat_vm *vm)
 		exit(1);
 	}
 	else{
-		vm->regs[255] = lat_int(vm, lat_get_int_value(a) % tmp);
+		//vm->regs[255] = lat_int(vm, lat_get_int_value(a) % tmp);
+		a->data.i = lat_get_int_value(a) % tmp;
+		vm->regs[255] = a;		
 	}
 }
 
@@ -462,6 +501,8 @@ lat_object *lat_not(lat_vm *vm, lat_object *o)
 		exit(1);
 	}
 	return lat_bool(vm, !lat_get_bool_value(o));
+	/*o->data.b = !o->data.b;
+	return o;*/
 }
 
 lat_bytecode lat_bc(lat_ins i, int a, int b, void *meta)
@@ -485,7 +526,9 @@ void lat_call_func(lat_vm *vm, lat_object *func)
 {
 	if (func->type == T_FUNC) {
 		lat_push_ctx(vm);
+		//lat_set_ctx(lat_get_current_ctx(vm), lat_str(vm, "$"), func);
 		lat_set_ctx(lat_get_current_ctx(vm), lat_str(vm, "$"), func);
+		//printf("\t>>func %s, %p:\n", &func->data);
 		lat_bytecode *inslist = ((lat_function *)func->data.func)->bcode;
 		lat_bytecode cur;
 		int pos;
@@ -508,23 +551,26 @@ void lat_call_func(lat_vm *vm, lat_object *func)
 			case OP_PUSH:
 				lat_push_stack(vm, vm->regs[cur.a]);
 #if DEBUG_VM
-				printf("PUSH r%i", cur.a);				
+				printf("PUSH r%i", cur.a);
 #endif
 				break;
 			case OP_POP:
 				vm->regs[cur.a] = lat_pop_stack(vm);
+				//lat_gc(vm);
 #if DEBUG_VM
 				printf("POP r%i", cur.a);				
 #endif
 				break;
 			case OP_GET:
+				//vm->regs[cur.a] = lat_get_ctx(vm->regs[cur.b], vm->regs[cur.a]);
 				vm->regs[cur.a] = lat_get_ctx(vm->regs[cur.b], vm->regs[cur.a]);
 #if DEBUG_VM
 				printf("GET r%i r%i", cur.a, cur.b);
 #endif
 				break;
-			case OP_SET:
-				lat_set_ctx(vm->regs[cur.b], lat_str(vm, (char *)cur.meta), vm->regs[cur.a]);
+			case OP_SET:			
+				//lat_set_ctx(vm->regs[cur.b], lat_str(vm, (char *)cur.meta), vm->regs[cur.a]);
+				lat_set_ctx(vm->regs[cur.b], ((lat_object *)cur.meta), vm->regs[cur.a]);
 #if DEBUG_VM
 				printf("SET r%i r%i", cur.b, cur.a);
 #endif
@@ -536,10 +582,13 @@ void lat_call_func(lat_vm *vm, lat_object *func)
 #endif
 				break;
 			case OP_STOREINT:
-				vm->regs[cur.a] = lat_int(vm, cur.b);
+			{
+				//vm->regs[cur.a] = lat_int(vm, cur.b);
+				vm->regs[cur.a] = ((lat_object *)cur.meta);
 #if DEBUG_VM
 				printf("STOREINT r%i, %i", cur.a, cur.b);
 #endif
+			}
 				break;
 			case OP_STOREDOUBLE:
 				vm->regs[cur.a] = lat_double(vm, *((double *)cur.meta));
@@ -548,13 +597,17 @@ void lat_call_func(lat_vm *vm, lat_object *func)
 #endif
 				break;
 			case OP_STORESTR:
-				vm->regs[cur.a] = lat_str(vm, (char *)cur.meta);
+			{				
+				//vm->regs[cur.a] = lat_str(vm, (char *)cur.meta);
+				vm->regs[cur.a] = ((lat_object *)cur.meta);
 #if DEBUG_VM
-				printf("STORESTR r%i, %s", cur.a, (char *)cur.meta);
+				printf("STORESTR r%i, %s", cur.a, ((lat_object *)cur.meta)->data.str);
 #endif
+			}
 				break;
 			case OP_STOREBOOL:
-				vm->regs[cur.a] = lat_bool(vm, cur.b);
+				//vm->regs[cur.a] = lat_bool(vm, cur.b);
+				vm->regs[cur.a] =  ((lat_object *)cur.meta);
 #if DEBUG_VM
 				printf("STOREBOOL r%i, %i", cur.a, (int *)cur.meta);
 #endif
@@ -588,6 +641,7 @@ void lat_call_func(lat_vm *vm, lat_object *func)
 				break;
 			case OP_LOCALNS:
 				vm->regs[cur.a] = lat_get_current_ctx(vm);
+				//lat_gc(vm);
 #if DEBUG_VM
 				printf("LOCALNS r%i", cur.a);
 #endif
@@ -602,7 +656,8 @@ void lat_call_func(lat_vm *vm, lat_object *func)
 #if DEBUG_VM
 				printf("NS r%i", cur.a);
 #endif
-				vm->regs[cur.a] = lat_clone_object(vm, lat_get_current_ctx(vm));
+				//vm->regs[cur.a] = lat_clone_object(vm, lat_get_current_ctx(vm));
+				vm->regs[cur.a] = lat_get_current_ctx(vm);
 				lat_push_predefined_ctx(vm, vm->regs[cur.a]);
 				break;
 			case OP_ENDNS:
@@ -630,12 +685,14 @@ void lat_call_func(lat_vm *vm, lat_object *func)
 				printf("CALL r%i\n>> ", cur.a);
 #endif
 				lat_call_func(vm, vm->regs[cur.a]);
+				//lat_gc(vm);
 				break;
 			case OP_NOT:
 #if DEBUG_VM
 				printf("NOT r%i", cur.a);
 #endif
 				vm->regs[cur.a] = lat_not(vm, vm->regs[cur.a]);
+				//((lat_object *)vm->regs[cur.a])->data.b = !((lat_object *)vm->regs[cur.a])->data.b;
 				break;
 			}
 #if DEBUG_VM
@@ -652,4 +709,6 @@ void lat_call_func(lat_vm *vm, lat_object *func)
 		log_err("Object not a function");
 		exit(1);
 	}
+	/*free memory in garbage collector*/
+	//lat_gc(vm);
 }

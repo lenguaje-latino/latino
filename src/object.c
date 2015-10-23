@@ -15,6 +15,7 @@ void lat_set_ctx(lat_object *ns, lat_object *name, lat_object *o)
 		exit(1);
 	}
 	else {
+		//printf("\nset_ctx=%i\n", name->type);
 		hash_map *h = ns->data.instance;
 		set_hash(h, lat_get_str_value(name), (void *)o);
 	}
@@ -57,11 +58,12 @@ int lat_ctx_has(lat_object *ns, lat_object *name)
 
 lat_object *lat_make_object(lat_vm *vm)
 {
+	//FIX
 	lat_object *ret = (lat_object *)malloc(sizeof(lat_object));
 	ret->type = T_NULL;
 	ret->marked = 0;
 	ret->data_size = 0;
-	lat_gc_add_object(vm, ret);
+	//lat_gc_add_object(vm, ret);
 	return ret;
 }
 
@@ -80,15 +82,17 @@ lat_object *lat_char(lat_vm *vm, char val)
 	ret->type = T_CHAR;
 	ret->data_size = sizeof(int);
 	ret->data.c = val;
+	//lat_gc_add_object(vm, ret);
 	return ret;
 }
 
-lat_object *lat_int(lat_vm *vm, int val)
+lat_object *lat_int(lat_vm *vm, long val)
 {
 	lat_object *ret = lat_make_object(vm);
 	ret->type = T_INT;
-	ret->data_size = sizeof(int);
+	ret->data_size = sizeof(long);
 	ret->data.i = val;
+	lat_gc_add_object(vm, ret);
 	return ret;
 }
 
@@ -107,8 +111,11 @@ lat_object *lat_str(lat_vm *vm, char *val)
 	size_t len = strlen(val) + sizeof(char); //Null byte at the end
 	ret->type = T_STR;
 	ret->data_size = len;
-	ret->data.str = malloc(len);
-	strcpy(ret->data.str, val);
+	//FIX
+	/*ret->data.str = malloc(len);
+	strcpy(ret->data.str, val);*/
+	ret->data.str = val;
+	lat_gc_add_object(vm, ret);	
 	return ret;
 }
 
@@ -116,8 +123,9 @@ lat_object *lat_bool(lat_vm *vm, bool val)
 {
 	lat_object *ret = lat_make_object(vm);
 	ret->type = T_BOOL;
-	ret->data_size = sizeof(int);
+	ret->data_size = sizeof(bool);
 	ret->data.b = val;
+	lat_gc_add_object(vm, ret);	
 	return ret;
 }
 
@@ -220,8 +228,12 @@ void lat_delete_object(lat_vm *vm, lat_object *o)
 	case T_CHAR:
 	case T_INT:
 	case T_DOUBLE:
-	case T_STR:
 	case T_BOOL:
+		break;
+	case T_STR:
+		if (o->data.str != NULL){
+			free(o->data.str);
+		}
 		break;
 	case T_FUNC:
 	case T_CFUNC:
@@ -246,6 +258,7 @@ void lat_delete_list(lat_vm *vm, list_node *l)
 	free(l);
 }
 
+/*
 void lat_delete_hash(lat_vm *vm, hash_map *h)
 {
 	int c = 0;
@@ -256,41 +269,49 @@ void lat_delete_hash(lat_vm *vm, hash_map *h)
 		l = h->buckets[c];
 		if (l != NULL) {
 			for (cur = l->next; cur != NULL; cur = cur->next) {
-				if (cur->data != NULL) {
-					hv = (hash_val *)cur->data;
-					lat_delete_object(vm, (lat_object *)hv->val);
-					free(hv);
+				if (cur != NULL){
+					if (cur->data != NULL) {
+						hv = (hash_val *)cur->data;
+						lat_delete_object(vm, (lat_object *)hv->val);
+						free(hv);
+					}
+					//ERROR WAS HERE
+					//free(cur);
 				}
-				free(cur);
 			}
+			free(l);
 		}
-		free(l);
 	}
 }
+*/
 
-lat_object *lat_clone_object(lat_vm *vm, lat_object *class)
+lat_object *lat_clone_object(lat_vm *vm, lat_object *obj)
 {
 	lat_object *ret;
-	switch (class->type) {
+	switch (obj->type) {
 	case T_INSTANCE:
 		ret = lat_make_object(vm);
 		ret->type = T_INSTANCE;
 		ret->data_size = sizeof(hash_map *);
-		ret->data.instance = lat_clone_hash(vm, class->data.instance);
+		//FIX
+		//ret->data.instance = lat_clone_hash(vm, obj->data.instance);
+		ret->data.instance = obj->data.instance;
 		break;
 	case T_LIST:
-		ret = lat_list(vm, lat_clone_list(vm, class->data.list));
+		//FIX
+		//ret = lat_list(vm, lat_clone_list(vm, obj->data.list));
+		ret = lat_list(vm, obj->data.list);
 		break;
 	case T_FUNC:
 	case T_CFUNC:
-		ret = class;
+		ret = obj;
 		break;
 	default:
 		ret = lat_make_object(vm);
-		ret->type = class->type;
-		ret->marked = class->marked;
-		ret->data_size = class->data_size;
-		ret->data = class->data;
+		ret->type = obj->type;
+		ret->marked = obj->marked;
+		ret->data_size = obj->data_size;
+		ret->data = obj->data;
 		break;
 	}
 	return ret;
@@ -323,6 +344,7 @@ hash_map *lat_clone_hash(lat_vm *vm, hash_map *h)
 				list_node *cur;
 				for (cur = l->next; cur != NULL; cur = cur->next) {
 					if (cur->data != NULL) {
+						//FIX
 						hash_val *hv = (hash_val *)malloc(sizeof(hash_val));
 						strncpy(hv->key, ((hash_val *)cur->data)->key, 256);
 						hv->val = lat_clone_object(vm, (lat_object *)((hash_val *)cur->data)->val);

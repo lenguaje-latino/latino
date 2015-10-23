@@ -33,5 +33,5 @@ void lat_concat(lat_vm *vm){
 }
 
 void lat_init(lat_vm *vm){
-	lat_set_ctx(lat_get_current_ctx(vm), lat_str(vm, "concatenar"), lat_define_c_function(vm, lat_concat));
+	//lat_set_ctx(lat_get_current_ctx(vm), lat_str(vm, "concatenar"), lat_define_c_function(vm, lat_concat));
 }

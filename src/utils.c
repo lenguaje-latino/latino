@@ -1,3 +1,5 @@
+#include <stdio.h>
+
 #include "latino.h"
 #include "ast.h"
 #include "utils.h"
@@ -6,6 +8,7 @@ char *strdup0(char *s)
 {
     size_t len = strlen(s);
     char *p;
+	//FIX
     p = (char *)malloc(len + 1);
     if (p) {
         strncpy(p, s, len);
@@ -14,6 +17,7 @@ char *strdup0(char *s)
     return p;
 }
 
+/*
 char *strndup0(const char *s, size_t n)
 {
     size_t i;
@@ -28,9 +32,47 @@ char *strndup0(const char *s, size_t n)
     }
     return new;
 }
+*/
+
+/*FIXME: For hexadecimal*/
+char * parse_string(const char *s, size_t n){
+	//FIX
+	char *ret = malloc(sizeof(n) + 1);
+	int j = 0;
+	for (size_t i = 0; i < n; i++)
+	{
+		int c;
+		switch (s[i])
+		{
+		case '\\':
+		{
+			switch (s[i+1])
+			{
+			case 'a': c = '\n'; i++; goto save;
+			case 'b': c = '\n'; i++; goto save;
+			case 'f': c = '\n'; i++; goto save;
+			case 'n': c = '\n'; i++; goto save;
+			case 'r': c = '\n'; i++; goto save;
+			case 't': c = '\t'; i++; goto save;
+			case 'v': c = '\n'; i++; goto save;
+			default: break;
+			}
+		}break;
+		default:
+			c = s[i];
+			break;
+		}		
+	save:
+		ret[j] = c;
+		j++;
+	}
+	ret[j] = '\0';
+	return ret;
+}
 
 list_node *make_list_node(void *d)
 {
+	//FIX
 	list_node *ret = (list_node *)malloc(sizeof(list_node));
 	ret->data = d;
 	return ret;
@@ -38,6 +80,7 @@ list_node *make_list_node(void *d)
 
 list_node *make_list()
 {
+	//FIX
 	list_node *start = (list_node *)malloc(sizeof(list_node));
 	list_node *end = (list_node *)malloc(sizeof(list_node));
 	start->prev = NULL;
@@ -68,8 +111,12 @@ void insert_list(list_node *l, void *data)
 	l->next = ins;
 	ins->next->prev = ins;
 	ins->prev = l;
+	/*if (l) {
+		printf("length_list=%i\n", length_list(l));
+	}*/
 }
 
+/*
 void remove_list(list_node *l, void *data)
 {
 	list_node *c;
@@ -80,6 +127,7 @@ void remove_list(list_node *l, void *data)
 		}
 	}
 }
+*/
 
 int length_list(list_node *l)
 {
@@ -95,6 +143,7 @@ int length_list(list_node *l)
 
 hash_map *make_hash_map()
 {
+	//FIX
 	hash_map *ret = (hash_map *)malloc(sizeof(hash_map));
 	int c;
 	for (c = 0; c < 256; c++) {
@@ -130,6 +179,7 @@ void *get_hash(hash_map *m, char *key)
 
 void set_hash(hash_map *m, char *key, void *val)
 {
+	//FIX
 	hash_val *hv = (hash_val *)malloc(sizeof(hash_val));
 	strcpy(hv->key, key);
 	hv->val = val;
@@ -141,9 +191,11 @@ void set_hash(hash_map *m, char *key, void *val)
 		list_node *c;
 		for (c = m->buckets[hk]; c->next != NULL; c = c->next) {
 			if (c->data != NULL) {
-				if (strcmp(((hash_val *)c->data)->key, key) == 0) {
+				if (strcmp(((hash_val *)c->data)->key, key) == 0) {					
 					free(c->data);
 					c->data = (void *)hv;
+					/*FIX: memory leak*/
+					//free(hv);
 					return;
 				}
 			}
@@ -152,6 +204,7 @@ void set_hash(hash_map *m, char *key, void *val)
 	insert_list(m->buckets[hk], (void *)hv);
 }
 
+/*
 hash_map *copy_hash(hash_map *m)
 {
 	hash_map *ret = make_hash_map();
@@ -168,3 +221,4 @@ hash_map *copy_hash(hash_map *m)
 	}
 	return ret;
 }
+*/

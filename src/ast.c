@@ -4,9 +4,9 @@
 #include "vm.h"
 
 #define dbc(I, A, B, M) bcode[i++] = lat_bc(I, A, B, M)
-#define pn(N) i = lat_parse_node(N, bcode, i)
+#define pn(vm, N) i = lat_parse_node(vm, N, bcode, i)
 #define fdbc(I, A, B, M) function_bcode[fi++] = lat_bc(I, A, B, M)
-#define fpn(N) fi = lat_parse_node(N, function_bcode, fi)
+#define fpn(vm, N) fi = lat_parse_node(vm, N, function_bcode, fi)
 
 int yyerror(struct YYLTYPE *yylloc_param, void *scanner, struct ast_node **root, const char *s)
 {
@@ -69,6 +69,7 @@ ast *newOp(nodeType nodetype, ast *l, ast *r)
 		a->r = newAst(NODE_FUNC_ARGS, l, r);
 	}
 	a->nodetype = NODE_CALL_FUNCTION;
+	a->value = NULL;
     return a;
 }
 
@@ -82,6 +83,7 @@ ast *newAst(nodeType nodetype, ast *l, ast *r)
     a->nodetype = nodetype;
     a->l = l;
     a->r = r;
+	a->value = NULL;
     return a;
 }
 
@@ -147,49 +149,14 @@ ast *newChar(char *c, size_t l)
 	case '\\':{
 		switch (c[1])
 		{
-		case '0':{
-			tmp = '\0';
-		}
-		break;
-		case '%':{
-			tmp = '\%';
-		}
-		break;
-		case '\\':{
-			tmp = '\\';
-		}
-		break;
-		case 'a':{
-			tmp = '\a';
-		}
-		break;
-		case 'b':{
-			tmp = '\b';
-		}
-		break;
-		case 'f':{
-			tmp = '\f';
-		}
-		break;
-		case 'n':{
-			tmp = '\n';
-		}
-		break;
-		case 'r':{
-			tmp = '\r';
-		}
-		break;
-		case 't':{
-			tmp = '\t';
-		}
-		break;
-		case 'v':{
-			tmp = '\v';
-		}
-		break;
-		default:
-			tmp = c[0];
-			break;
+		case 'a':{ tmp = '\a'; } break;
+		case 'b':{ tmp = '\b'; } break;
+		case 'f':{ tmp = '\f'; } break;
+		case 'n':{ tmp = '\n'; } break;
+		case 'r':{ tmp = '\r'; } break;
+		case 't':{ tmp = '\t'; } break;
+		case 'v':{ tmp = '\v'; } break;
+		default: tmp = c[0]; break;
 		}
 	}
 	break;
@@ -212,7 +179,8 @@ ast *newStr(const char *s, size_t l)
     a->nodetype = NODE_STRING;
     latValue *val = malloc(sizeof(latValue));
     val->t = VALUE_STRING;
-    val->v.s = strndup0(s, l);
+    //val->v.s = strndup0(s, l);
+    val->v.s = parse_string(s, l);
     a->value = val;
     return a;
 }
@@ -242,6 +210,7 @@ ast *newAsgn(ast *v, ast *s)
     a->nodetype = NODE_ASSIGMENT;
     a->l = v;
     a->r = s;
+	a->value = NULL;
     return a;
 }
 
@@ -297,6 +266,7 @@ ast *newWhile(ast *cond, ast *stmts)
     a->nodetype = NODE_WHILE;
     a->l = cond;
     a->r = stmts;
+	a->value = NULL;
     return a;
 }
 
@@ -310,6 +280,7 @@ ast *newDo(ast *cond, ast *stmts)
     a->nodetype = NODE_DO;
     a->l = cond;
     a->r = stmts;
+	a->value = NULL;
     return a;
 }
 
@@ -323,6 +294,7 @@ ast *newFor(ast *dec, ast *cond, ast *inc, ast *stmts)
 	a->nodetype = NODE_BLOCK;
 	a->l = dec;
 	a->r = newWhile(cond, newAst(NODE_BLOCK, stmts, inc));
+	a->value = NULL;
 	return a;
 }
 
@@ -337,21 +309,43 @@ ast *doDef(ast *s, ast *syms, ast *func)
 	a->nodetype = NODE_ASSIGMENT;
 	a->l = newAst(NODE_USER_FUNCTION, syms, func);
 	a->r = s;
+	a->value = NULL;
 	return a;
+}
+
+void treeFree(ast *a){
+	if (a){
+		switch (a->nodetype)
+		{
+		case NODE_BLOCK:
+		case NODE_LIST_BODY:
+			if (a->r)
+				treeFree(a->r);
+			if (a->l)
+				treeFree(a->l);
+			break;
+		default:
+			if (a->value)
+				free(a->value);
+			free(a);
+			break;
+		}
+	}
 }
 
 lat_object *lat_parse_tree(lat_vm *vm, ast *tree)
 {
-    lat_bytecode *bcode = (lat_bytecode *)malloc(
-                              sizeof(lat_bytecode) * 1024);
-    int i = lat_parse_node(tree, bcode, 0);
+    //lat_bytecode *bcode = (lat_bytecode *)malloc(sizeof(lat_bytecode) * 1024);
+    lat_bytecode *bcode = (lat_bytecode *)malloc(sizeof(lat_bytecode) * 1024);
+    int i = lat_parse_node(vm, tree, bcode, 0);
     dbc(OP_END, 0, 0, NULL);
+	treeFree(tree);
     return lat_define_function(vm, bcode);
 }
 
 int nested = -1;
 
-int lat_parse_node(ast *node, lat_bytecode *bcode, int i)
+int lat_parse_node(lat_vm *vm, ast *node, lat_bytecode *bcode, int i)
 {
 	int temp[8] = { 0 };
 	lat_bytecode *function_bcode = NULL;
@@ -359,12 +353,13 @@ int lat_parse_node(ast *node, lat_bytecode *bcode, int i)
 	switch (node->nodetype) {
 	case NODE_BLOCK:
 	{
-		if (node->l){
-			pn(node->l);
-		}
 		if (node->r){
-			pn(node->r);
+			pn(vm, node->r);
 		}
+		if (node->l){
+			pn(vm, node->l);
+		}
+
 	}
 	break;
 	case NODE_SYMBOL: /*GET*/
@@ -376,15 +371,17 @@ int lat_parse_node(ast *node, lat_bytecode *bcode, int i)
 			else{
 			dbc(OP_LOCALNS, 1, 0, NULL);
 			}*/
+		//FIX
 		dbc(OP_LOCALNS, 1, 0, NULL);
-		dbc(OP_STORESTR, 2, 0, node->value->v.s);
+		lat_object *ret = lat_str(vm, node->value->v.s);
+		dbc(OP_STORESTR, 2, 0, ret);
 		dbc(OP_GET, 2, 1, NULL);
 		dbc(OP_MOV, 255, 2, NULL);
 	}
 	break;
 	case NODE_ASSIGMENT: /*SET*/
 	{
-		pn(node->l);
+		pn(vm, node->l);
 		dbc(OP_PUSH, 255, 0, NULL);
 		/*if (node->r) {
 			pn(node->r);
@@ -395,7 +392,9 @@ int lat_parse_node(ast *node, lat_bytecode *bcode, int i)
 			}*/
 		dbc(OP_LOCALNS, 1, 0, NULL);
 		dbc(OP_POP, 255, 0, NULL);
-		dbc(OP_SET, 255, 1, node->r->value->v.s);
+		lat_object *ret = lat_str(vm, node->r->value->v.s);
+		//dbc(OP_SET, 255, 1, node->r->value->v.s);
+		dbc(OP_SET, 255, 1, ret);
 	}
 	break;
 	case NODE_CHAR:
@@ -405,7 +404,9 @@ int lat_parse_node(ast *node, lat_bytecode *bcode, int i)
 	break;
 	case NODE_INT:
 	{
-		dbc(OP_STOREINT, 255, node->value->v.i, NULL);
+		lat_object *ret = lat_int(vm, node->value->v.i);
+		//dbc(OP_STOREINT, 255, node->value->v.i, NULL);
+		dbc(OP_STOREINT, 255, 0, ret);
 	}
 	break;
 	case NODE_DECIMAL:
@@ -415,56 +416,62 @@ int lat_parse_node(ast *node, lat_bytecode *bcode, int i)
 	break;
 	case NODE_STRING:
 	{
-		dbc(OP_STORESTR, 255, 0, node->value->v.s);
+
+		//dbc(OP_STORESTR, 255, 0, &(node->value->v.s));
+		lat_object *ret = lat_str(vm, node->value->v.s);
+		dbc(OP_STORESTR, 255, 0, ret);
 	}
 	break;
 	case NODE_BOOLEAN:
 	{
-		dbc(OP_STOREBOOL, 255, node->value->v.b, NULL);
+		//dbc(OP_STOREBOOL, 255, node->value->v.b, NULL);
+		lat_object *ret = lat_bool(vm, node->value->v.b);
+		dbc(OP_STOREBOOL, 255, 0, ret);
 	}
 	break;
 	case NODE_IF:
 	{
 		nodeIf *nIf = ((nodeIf *)node);
-		pn(nIf->cond);
+		pn(vm, nIf->cond);
 		dbc(OP_MOV, 2, 255, NULL);
 		dbc(OP_MOV, 3, 255, NULL);
 		dbc(OP_NOT, 2, 0, NULL);
 		temp[0] = i;
 		dbc(OP_NOP, 0, 0, NULL);
-		pn(nIf->entonces);
+		pn(vm, nIf->entonces);
 		bcode[temp[0]] = lat_bc(OP_JMPIF, i, 2, NULL);
 		if (nIf->sino){
 			temp[1] = i;
 			dbc(OP_NOP, 0, 0, NULL);
-			pn(nIf->sino);
+			pn(vm, nIf->sino);
 			bcode[temp[1]] = lat_bc(OP_JMPIF, i, 3, NULL);
 		}
 	}
 	break;
 	case NODE_WHILE:
 	{
+		//printf("NODE_WHILE\n");
 		temp[0] = i;
-		pn(node->l);
+		pn(vm, node->l);
 		dbc(OP_MOV, 2, 255, NULL);
 		dbc(OP_NOT, 2, 0, NULL);
 		temp[1] = i;
 		dbc(OP_NOP, 0, 0, NULL);
-		pn(node->r);
+		pn(vm, node->r);
 		dbc(OP_JMP, temp[0], 0, NULL);
 		bcode[temp[1]] = lat_bc(OP_JMPIF, i, 2, NULL);
 	}
 	break;
 	case NODE_DO:
 	{
-		pn(node->r);
+		pn(vm, node->r);
 		temp[0] = i;
-		pn(node->l);
+		pn(vm, node->l);
 		dbc(OP_MOV, 2, 255, NULL);
 		dbc(OP_NOT, 2, 0, NULL);
 		temp[1] = i;
 		dbc(OP_NOP, 0, 0, NULL);
-		pn(node->r);
+		pn(vm, node->r);
 		dbc(OP_JMP, temp[0], 0, NULL);
 		bcode[temp[1]] = lat_bc(OP_JMPIF, i, 2, NULL);
 	}
@@ -472,25 +479,25 @@ int lat_parse_node(ast *node, lat_bytecode *bcode, int i)
 	case NODE_CALL_FUNCTION:
 	{
 		if (node->r){
-			pn(node->r);
+			pn(vm, node->r);
 		}
-		pn(node->l);
+		pn(vm, node->l);
 		dbc(OP_CALL, 255, 0, NULL);
 	}
 	break;
 	case NODE_RETURN:
 	{
-		pn(node->l);
+		pn(vm, node->l);
 		dbc(OP_END, 0, 0, NULL);
 	}
 	break;
 	case NODE_FUNC_ARGS: {
 		if (node->r) {
-			pn(node->r);
+			pn(vm, node->r);
 			dbc(OP_PUSH, 255, 0, NULL);
 		}
 		if (node->l) {
-			pn(node->l);
+			pn(vm, node->l);
 			dbc(OP_PUSH, 255, 0, NULL);
 		}
 	}break;
@@ -499,22 +506,24 @@ int lat_parse_node(ast *node, lat_bytecode *bcode, int i)
 		if (node->l) {
 			dbc(OP_LOCALNS, 1, 0, NULL);
 			dbc(OP_POP, 2, 0, NULL);
-			dbc(OP_SET, 2, 1, node->l->value->v.s);
+			lat_object *ret = lat_str(vm, node->l->value->v.s);
+			dbc(OP_SET, 2, 1, ret);
 		}
 		if (node->r) {
-			pn(node->r);
+			pn(vm, node->r);
 		}
 	}
 	break;
 	case NODE_USER_FUNCTION:
 	{
-		function_bcode = (lat_bytecode *)malloc(
-			sizeof(lat_bytecode) * 1024);
+		//function_bcode = (lat_bytecode *)malloc(sizeof(lat_bytecode) * 1024);
+		//FIX
+		function_bcode = (lat_bytecode *)malloc(sizeof(lat_bytecode) * 1024);
 		fi = 0;
 		if (node->l) {
-			fpn(node->l);
+			fpn(vm, node->l);
 		}
-		fpn(node->r);
+		fpn(vm, node->r);
 		dbc(OP_FN, 255, 0, function_bcode);
 		function_bcode = NULL;
 		fi = 0;
@@ -526,7 +535,7 @@ int lat_parse_node(ast *node, lat_bytecode *bcode, int i)
 		nested++;
 		dbc(OP_STORELIST, nested, 0, NULL);
 		if (node->l){
-			pn(node->l);
+			pn(vm, node->l);
 		}
 		dbc(OP_MOV, 255, nested, NULL);
 		nested--;
@@ -535,12 +544,12 @@ int lat_parse_node(ast *node, lat_bytecode *bcode, int i)
 	case NODE_LIST_BODY:
 	{
 		if (node->l) {
-			pn(node->l);
+			pn(vm, node->l);
 			//dbc(OP_PUSHLIST, 0, 255, NULL);
 			dbc(OP_PUSHLIST, nested, 255, NULL);
 		}
 		if (node->r) {
-			pn(node->r);
+			pn(vm, node->r);
 		}
 		//dbc(OP_MOV, 255, 0, NULL);
 	}

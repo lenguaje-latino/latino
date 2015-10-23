@@ -22,6 +22,8 @@ defined(__ELF__)
 #include <dlfcn.h>
 #include <unistd.h>
 #else
+/* Visual Leak Detector for Visual C++ */
+//#include <vld.h>
 #define LAT_FUNC    extern
 #define lnsprintf(s, l, f, i)  _snprintf(s, l, f, i)
 #endif
@@ -39,7 +41,7 @@ defined(__ELF__)
  * global variable
  */
 extern int debug;
-#define BUF_SIZE 1048576
+//#define BUF_SIZE 1048576
 #define MAX_ERROR_LENGTH 1024
 
 /*

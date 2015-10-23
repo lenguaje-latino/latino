@@ -8,7 +8,9 @@
 #include <errno.h>
 
 char * strdup0(char *s);
-char * strndup0(const char *s, size_t n);
+//char * strndup0(const char *s, size_t n);
+
+char * parse_string(const char *s, size_t n);
 
 #ifdef NDEBUG
 
@@ -50,7 +52,7 @@ list_node *make_list_node(void *d);
 list_node *make_list();
 int find_list(list_node *l, void *data);
 void insert_list(list_node *l, void *data);
-void remove_list(list_node *l, void *data);
+//void remove_list(list_node *l, void *data);
 int length_list(list_node *l);
 
 typedef struct hash_val {
@@ -66,7 +68,7 @@ hash_map *make_hash_map();
 int hash(char *key);
 void *get_hash(hash_map *m, char *key);
 void set_hash(hash_map *m, char *key, void *val);
-hash_map *copy_hash(hash_map *m);
+//hash_map *copy_hash(hash_map *m);
 
 typedef struct hash_set {
 	list_node *buckets;
