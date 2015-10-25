@@ -8,6 +8,8 @@
 #include "latino.h"
 #include "ast.h"
 
+int yyerror(struct YYLTYPE *yylloc_param, void *scanner, struct ast **root, const char *s);
+
 %}
 
 %output "parse.c"
@@ -96,9 +98,9 @@ statement_list:
     }
     ;
 
+    /*| labeled_statement { $$ = $1; }*/
 statement: /* empty */ { $$ = NULL; }
     | declaration  { $$ = $1; }
-    /*| labeled_statement { $$ = $1; }*/
     | selection_statement { $$ = $1; }
     | iteration_statement { $$ = $1; }
     | jump_statement { $$ = $1; }

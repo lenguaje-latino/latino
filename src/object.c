@@ -5,17 +5,17 @@
 #include <stddef.h>
 #include <stdio.h>
 
+#include "libstring.h"
 #include "utils.h"
 
 void lat_set_ctx(lat_object *ns, lat_object *name, lat_object *o)
 {
 	if (ns->type != T_INSTANCE) {
 		debug("ns->type: %d", ns->type);
-		log_err("Namespace is not an instance");
+		log_err("Namespace no es una instancia");
 		exit(1);
 	}
 	else {
-		//printf("\nset_ctx=%i\n", name->type);
 		hash_map *h = ns->data.instance;
 		set_hash(h, lat_get_str_value(name), (void *)o);
 	}
@@ -43,7 +43,7 @@ int lat_ctx_has(lat_object *ns, lat_object *name)
 {
 	if (ns->type != T_INSTANCE) {
 		debug("ns->type: %d", ns->type);
-		log_err("Namespace is not an instance");
+		log_err("Namespace no es una instancia");
 		exit(1);
 	}
 	else {
@@ -58,12 +58,10 @@ int lat_ctx_has(lat_object *ns, lat_object *name)
 
 lat_object *lat_make_object(lat_vm *vm)
 {
-	//FIX
 	lat_object *ret = (lat_object *)malloc(sizeof(lat_object));
 	ret->type = T_NULL;
 	ret->marked = 0;
 	ret->data_size = 0;
-	//lat_gc_add_object(vm, ret);
 	return ret;
 }
 
@@ -73,6 +71,7 @@ lat_object *lat_instance(lat_vm *vm)
 	ret->type = T_INSTANCE;
 	ret->data_size = sizeof(hash_map *);
 	ret->data.instance = make_hash_map();
+	lat_gc_add_object(vm, ret);
 	return ret;
 }
 
@@ -82,7 +81,7 @@ lat_object *lat_char(lat_vm *vm, char val)
 	ret->type = T_CHAR;
 	ret->data_size = sizeof(int);
 	ret->data.c = val;
-	//lat_gc_add_object(vm, ret);
+	lat_gc_add_object(vm, ret);
 	return ret;
 }
 
@@ -102,20 +101,14 @@ lat_object *lat_double(lat_vm *vm, double val)
 	ret->type = T_DOUBLE;
 	ret->data_size = sizeof(double);
 	ret->data.d = val;
+	lat_gc_add_object(vm, ret);
 	return ret;
 }
 
 lat_object *lat_str(lat_vm *vm, char *val)
 {
-	lat_object *ret = lat_make_object(vm);
-	size_t len = strlen(val) + sizeof(char); //Null byte at the end
-	ret->type = T_STR;
-	ret->data_size = len;
-	//FIX
-	/*ret->data.str = malloc(len);
-	strcpy(ret->data.str, val);*/
-	ret->data.str = val;
-	lat_gc_add_object(vm, ret);	
+    lat_object *ret = lat_str_new(val, strlen(val));
+    lat_gc_add_object(vm, ret);
 	return ret;
 }
 
@@ -125,7 +118,7 @@ lat_object *lat_bool(lat_vm *vm, bool val)
 	ret->type = T_BOOL;
 	ret->data_size = sizeof(bool);
 	ret->data.b = val;
-	lat_gc_add_object(vm, ret);	
+	lat_gc_add_object(vm, ret);
 	return ret;
 }
 
@@ -135,6 +128,7 @@ lat_object *lat_list(lat_vm *vm, list_node *l)
 	ret->type = T_LIST;
 	ret->data_size = sizeof(list_node *);
 	ret->data.list = l;
+	lat_gc_add_object(vm, ret);
 	return ret;
 }
 
@@ -258,7 +252,6 @@ void lat_delete_list(lat_vm *vm, list_node *l)
 	free(l);
 }
 
-/*
 void lat_delete_hash(lat_vm *vm, hash_map *h)
 {
 	int c = 0;
@@ -275,7 +268,6 @@ void lat_delete_hash(lat_vm *vm, hash_map *h)
 						lat_delete_object(vm, (lat_object *)hv->val);
 						free(hv);
 					}
-					//ERROR WAS HERE
 					//free(cur);
 				}
 			}
@@ -283,7 +275,6 @@ void lat_delete_hash(lat_vm *vm, hash_map *h)
 		}
 	}
 }
-*/
 
 lat_object *lat_clone_object(lat_vm *vm, lat_object *obj)
 {
@@ -293,12 +284,10 @@ lat_object *lat_clone_object(lat_vm *vm, lat_object *obj)
 		ret = lat_make_object(vm);
 		ret->type = T_INSTANCE;
 		ret->data_size = sizeof(hash_map *);
-		//FIX
 		//ret->data.instance = lat_clone_hash(vm, obj->data.instance);
 		ret->data.instance = obj->data.instance;
 		break;
 	case T_LIST:
-		//FIX
 		//ret = lat_list(vm, lat_clone_list(vm, obj->data.list));
 		ret = lat_list(vm, obj->data.list);
 		break;
@@ -362,7 +351,7 @@ char lat_get_char_value(lat_object *o)
 	if (o->type == T_CHAR) {
 		return o->data.c;
 	}
-	log_err("Object not of integral type");
+	log_err("Object no es un tipo caracter");
 	exit(1);
 }
 
@@ -371,7 +360,7 @@ int lat_get_int_value(lat_object *o)
 	if (o->type == T_INT) {
 		return o->data.i;
 	}
-	log_err("Object not of integral type");
+	log_err("Object no es un tipo entero");
 	exit(1);
 }
 
@@ -383,7 +372,7 @@ double lat_get_double_value(lat_object *o)
 	else if (o->type == T_INT) {
 		return (double)o->data.i;
 	}
-	log_err("Object not of numeric type");
+	log_err("Object no es un tipo numerico");
 	exit(1);
 }
 
@@ -392,7 +381,7 @@ char *lat_get_str_value(lat_object *o)
 	if (o->type == T_STR) {
 		return o->data.str;
 	}
-	log_err("Object not of string type");
+	log_err("Object no es un tipo cadena");
 	exit(1);
 }
 
@@ -404,7 +393,7 @@ bool lat_get_bool_value(lat_object *o)
 	if (o->type == T_INT) {
 		return o->data.i;
 	}
-	log_err("Object not of boolean type");
+	log_err("Object no es un tipo logico");
 	exit(1);
 }
 
@@ -413,7 +402,7 @@ list_node *lat_get_list_value(lat_object *o)
 	if (o->type == T_LIST) {
 		return o->data.list;
 	}
-	log_err("Object not of list type");
+	log_err("Object no es un tipo lista");
 	exit(1);
 }
 
@@ -422,6 +411,6 @@ void *lat_get_struct_value(lat_object *o)
 	if (o->type == T_STRUCT) {
 		return o->data.list;
 	}
-	log_err("Object not of structure type");
+	log_err("Object no es un tipo estructura");
 	exit(1);
 }

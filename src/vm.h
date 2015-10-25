@@ -39,11 +39,11 @@ typedef enum lat_ins {
 
 TODO:Remove
 static char* ins_str[] = {
-	"END", "NOP", "PUSH", "POP", "GET", "SET", 
-	"STORE_CHAR", "STORE_INT", "STORE_DOUBLE", 
-	"STORE_STR", "STORE_BOOL", "STORE_LIST", 
-	"PUSH_LIST", "POP_LIST", "MOV", "GLOBAL_NS", 
-	"LOCAL_NS", "FN", "NS", "END_NS", "JMP", 
+	"END", "NOP", "PUSH", "POP", "GET", "SET",
+	"STORE_CHAR", "STORE_INT", "STORE_DOUBLE",
+	"STORE_STR", "STORE_BOOL", "STORE_LIST",
+	"PUSH_LIST", "POP_LIST", "MOV", "GLOBAL_NS",
+	"LOCAL_NS", "FN", "NS", "END_NS", "JMP",
 	"JMP_IF", "CALL", "NOT"
 };
 
@@ -67,6 +67,8 @@ struct lat_vm {
 	list_node *all_objects;
 	lat_object *regs[256];
 	lat_object *ctx_stack[256];
+	lat_object *true_object;
+	lat_object *false_object;
 	int ctx_stack_pointer;
 };
 

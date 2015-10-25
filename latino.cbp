@@ -34,6 +34,9 @@
 		<Compiler>
 			<Add option="-Wall" />
 		</Compiler>
+		<Linker>
+			<Add library="libdl" />
+		</Linker>
 		<Unit filename="src/ast.c">
 			<Option compilerVar="CC" />
 		</Unit>
@@ -46,6 +49,10 @@
 		<Unit filename="src/lex.c">
 			<Option compilerVar="CC" />
 		</Unit>
+		<Unit filename="src/libstring.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="src/libstring.h" />
 		<Unit filename="src/linenoise/example.c">
 			<Option compilerVar="CC" />
 			<Option compile="0" />
@@ -67,9 +74,6 @@
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="src/parse.h" />
-		<Unit filename="src/string.c">
-			<Option compilerVar="CC" />
-		</Unit>
 		<Unit filename="src/utils.c">
 			<Option compilerVar="CC" />
 		</Unit>

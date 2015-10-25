@@ -65,7 +65,7 @@ void lat_mark_hash(hash_map *l, unsigned char m);
 
 void lat_delete_object(lat_vm *vm, lat_object *o);
 void lat_delete_list(lat_vm *vm, list_node *l);
-//void lat_delete_hash(lat_vm *vm, hash_map *l);
+void lat_delete_hash(lat_vm *vm, hash_map *l);
 
 lat_object *lat_clone_object(lat_vm *vm, lat_object *obj);
 list_node *lat_clone_list(lat_vm *vm, list_node *l);

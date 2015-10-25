@@ -111,8 +111,6 @@ ast *newFor(ast *dec, ast *cond, ast *inc, ast *stmts);
 ast *doDef(ast *name, ast *syms, ast *stmts);
 void treeFree(ast *a);
 
-int yyerror(struct YYLTYPE *yylloc_param, void *scanner, struct ast_node **root, const char *s);
-
 /*VM*/
 lat_object *lat_parse_tree(lat_vm *vm, ast *tree);
 int lat_parse_node(lat_vm *vm, ast *node, lat_bytecode *bcode, int i);

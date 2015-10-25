@@ -1,4 +1,4 @@
-﻿#Latino
+#Latino
 
 Este proyecto nace de la necesidad de incrementar la educación de nivel básico (primaria y secundaria)
 debido a que los niños tienen la capacidad de entender la lógica a muy temprana edad y es en esta edad

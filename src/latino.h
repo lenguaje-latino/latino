@@ -43,6 +43,7 @@ defined(__ELF__)
 extern int debug;
 //#define BUF_SIZE 1048576
 #define MAX_ERROR_LENGTH 1024
+#define LAT_STR_INTERN_MAX 64
 
 /*
  * lex & parse

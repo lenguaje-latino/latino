@@ -62,7 +62,7 @@
 
 
 /* Copy the first part of user declarations.  */
-#line 1 "parse.y" /* yacc.c:339  */
+#line 1 "/home/primi/src/latino/src/parse.y" /* yacc.c:339  */
 
 /* bison -y -oparse.c parse.y */
 #define YYERROR_VERBOSE 1
@@ -1470,7 +1470,7 @@ yyreduce:
   switch (yyn)
     {
         case 2:
-#line 85 "parse.y" /* yacc.c:1646  */
+#line 85 "/home/primi/src/latino/src/parse.y" /* yacc.c:1646  */
     {
         *root = (yyvsp[0].node);
     }
@@ -1478,7 +1478,7 @@ yyreduce:
     break;
 
   case 3:
-#line 91 "parse.y" /* yacc.c:1646  */
+#line 91 "/home/primi/src/latino/src/parse.y" /* yacc.c:1646  */
     {
         if((yyvsp[0].node)){
             (yyval.node) = newAst(NODE_BLOCK, (yyvsp[0].node), (yyvsp[-1].node));
@@ -1488,7 +1488,7 @@ yyreduce:
     break;
 
   case 4:
-#line 96 "parse.y" /* yacc.c:1646  */
+#line 96 "/home/primi/src/latino/src/parse.y" /* yacc.c:1646  */
     {
         (yyval.node) = newAst(NODE_BLOCK, (yyvsp[0].node), NULL);
     }
@@ -1496,96 +1496,96 @@ yyreduce:
     break;
 
   case 5:
-#line 102 "parse.y" /* yacc.c:1646  */
+#line 102 "/home/primi/src/latino/src/parse.y" /* yacc.c:1646  */
     { (yyval.node) = NULL; }
 #line 1502 "parse.c" /* yacc.c:1646  */
     break;
 
   case 6:
-#line 103 "parse.y" /* yacc.c:1646  */
+#line 103 "/home/primi/src/latino/src/parse.y" /* yacc.c:1646  */
     { (yyval.node) = (yyvsp[0].node); }
 #line 1508 "parse.c" /* yacc.c:1646  */
     break;
 
   case 7:
-#line 104 "parse.y" /* yacc.c:1646  */
+#line 104 "/home/primi/src/latino/src/parse.y" /* yacc.c:1646  */
     { (yyval.node) = (yyvsp[0].node); }
 #line 1514 "parse.c" /* yacc.c:1646  */
     break;
 
   case 8:
-#line 105 "parse.y" /* yacc.c:1646  */
+#line 105 "/home/primi/src/latino/src/parse.y" /* yacc.c:1646  */
     { (yyval.node) = (yyvsp[0].node); }
 #line 1520 "parse.c" /* yacc.c:1646  */
     break;
 
   case 9:
-#line 106 "parse.y" /* yacc.c:1646  */
+#line 106 "/home/primi/src/latino/src/parse.y" /* yacc.c:1646  */
     { (yyval.node) = (yyvsp[0].node); }
 #line 1526 "parse.c" /* yacc.c:1646  */
     break;
 
   case 10:
-#line 107 "parse.y" /* yacc.c:1646  */
+#line 107 "/home/primi/src/latino/src/parse.y" /* yacc.c:1646  */
     { (yyval.node) = (yyvsp[0].node); }
 #line 1532 "parse.c" /* yacc.c:1646  */
     break;
 
   case 11:
-#line 108 "parse.y" /* yacc.c:1646  */
+#line 108 "/home/primi/src/latino/src/parse.y" /* yacc.c:1646  */
     { (yyval.node) = (yyvsp[0].node); }
 #line 1538 "parse.c" /* yacc.c:1646  */
     break;
 
   case 12:
-#line 112 "parse.y" /* yacc.c:1646  */
+#line 112 "/home/primi/src/latino/src/parse.y" /* yacc.c:1646  */
     { (yyval.node) = newAsgn((yyvsp[0].node), (yyvsp[-2].node)); }
 #line 1544 "parse.c" /* yacc.c:1646  */
     break;
 
   case 13:
-#line 126 "parse.y" /* yacc.c:1646  */
+#line 126 "/home/primi/src/latino/src/parse.y" /* yacc.c:1646  */
     {
         (yyval.node) = newIf((yyvsp[-3].node), (yyvsp[-1].node), NULL); }
 #line 1551 "parse.c" /* yacc.c:1646  */
     break;
 
   case 14:
-#line 128 "parse.y" /* yacc.c:1646  */
+#line 128 "/home/primi/src/latino/src/parse.y" /* yacc.c:1646  */
     {
         (yyval.node) = newIf((yyvsp[-5].node), (yyvsp[-3].node), (yyvsp[-1].node)); }
 #line 1558 "parse.c" /* yacc.c:1646  */
     break;
 
   case 15:
-#line 136 "parse.y" /* yacc.c:1646  */
+#line 136 "/home/primi/src/latino/src/parse.y" /* yacc.c:1646  */
     {
         (yyval.node) = newDo((yyvsp[-1].node), (yyvsp[-4].node)); }
 #line 1565 "parse.c" /* yacc.c:1646  */
     break;
 
   case 16:
-#line 138 "parse.y" /* yacc.c:1646  */
+#line 138 "/home/primi/src/latino/src/parse.y" /* yacc.c:1646  */
     {
         (yyval.node) = newWhile((yyvsp[-3].node), (yyvsp[-1].node)); }
 #line 1572 "parse.c" /* yacc.c:1646  */
     break;
 
   case 17:
-#line 140 "parse.y" /* yacc.c:1646  */
+#line 140 "/home/primi/src/latino/src/parse.y" /* yacc.c:1646  */
     {
         (yyval.node) = newFor((yyvsp[-7].node), (yyvsp[-5].node), (yyvsp[-3].node), (yyvsp[-1].node)); }
 #line 1579 "parse.c" /* yacc.c:1646  */
     break;
 
   case 18:
-#line 145 "parse.y" /* yacc.c:1646  */
+#line 145 "/home/primi/src/latino/src/parse.y" /* yacc.c:1646  */
     { (yyval.node) = newAst(NODE_RETURN, (yyvsp[0].node), NULL); }
 #line 1585 "parse.c" /* yacc.c:1646  */
     break;
 
   case 19:
-#line 149 "parse.y" /* yacc.c:1646  */
+#line 149 "/home/primi/src/latino/src/parse.y" /* yacc.c:1646  */
     {
         (yyval.node) = doDef((yyvsp[-5].node), (yyvsp[-3].node), (yyvsp[-1].node));
     }
@@ -1593,223 +1593,223 @@ yyreduce:
     break;
 
   case 20:
-#line 155 "parse.y" /* yacc.c:1646  */
+#line 155 "/home/primi/src/latino/src/parse.y" /* yacc.c:1646  */
     { (yyval.node) = newOp(NODE_GT, (yyvsp[-2].node), (yyvsp[0].node)); }
 #line 1599 "parse.c" /* yacc.c:1646  */
     break;
 
   case 21:
-#line 156 "parse.y" /* yacc.c:1646  */
+#line 156 "/home/primi/src/latino/src/parse.y" /* yacc.c:1646  */
     { (yyval.node) = newOp(NODE_LT, (yyvsp[-2].node), (yyvsp[0].node)); }
 #line 1605 "parse.c" /* yacc.c:1646  */
     break;
 
   case 22:
-#line 157 "parse.y" /* yacc.c:1646  */
+#line 157 "/home/primi/src/latino/src/parse.y" /* yacc.c:1646  */
     { (yyval.node) = newOp(NODE_GE, (yyvsp[-2].node), (yyvsp[0].node)); }
 #line 1611 "parse.c" /* yacc.c:1646  */
     break;
 
   case 23:
-#line 158 "parse.y" /* yacc.c:1646  */
+#line 158 "/home/primi/src/latino/src/parse.y" /* yacc.c:1646  */
     { (yyval.node) = newOp(NODE_LE, (yyvsp[-2].node), (yyvsp[0].node)); }
 #line 1617 "parse.c" /* yacc.c:1646  */
     break;
 
   case 24:
-#line 159 "parse.y" /* yacc.c:1646  */
+#line 159 "/home/primi/src/latino/src/parse.y" /* yacc.c:1646  */
     { (yyval.node) = newOp(NODE_NEQ, (yyvsp[-2].node), (yyvsp[0].node)); }
 #line 1623 "parse.c" /* yacc.c:1646  */
     break;
 
   case 25:
-#line 160 "parse.y" /* yacc.c:1646  */
+#line 160 "/home/primi/src/latino/src/parse.y" /* yacc.c:1646  */
     { (yyval.node) = newOp(NODE_EQ, (yyvsp[-2].node), (yyvsp[0].node)); }
 #line 1629 "parse.c" /* yacc.c:1646  */
     break;
 
   case 26:
-#line 161 "parse.y" /* yacc.c:1646  */
+#line 161 "/home/primi/src/latino/src/parse.y" /* yacc.c:1646  */
     { (yyval.node) = newOp(NODE_AND, (yyvsp[-2].node), (yyvsp[0].node)); }
 #line 1635 "parse.c" /* yacc.c:1646  */
     break;
 
   case 27:
-#line 162 "parse.y" /* yacc.c:1646  */
+#line 162 "/home/primi/src/latino/src/parse.y" /* yacc.c:1646  */
     { (yyval.node) = newOp(NODE_OR, (yyvsp[-2].node), (yyvsp[0].node)); }
 #line 1641 "parse.c" /* yacc.c:1646  */
     break;
 
   case 28:
-#line 163 "parse.y" /* yacc.c:1646  */
+#line 163 "/home/primi/src/latino/src/parse.y" /* yacc.c:1646  */
     { (yyval.node) = newOp(NODE_NEG, (yyvsp[0].node), NULL); }
 #line 1647 "parse.c" /* yacc.c:1646  */
     break;
 
   case 29:
-#line 164 "parse.y" /* yacc.c:1646  */
+#line 164 "/home/primi/src/latino/src/parse.y" /* yacc.c:1646  */
     { (yyval.node) = newOp(NODE_ADD, (yyvsp[-2].node), (yyvsp[0].node)); }
 #line 1653 "parse.c" /* yacc.c:1646  */
     break;
 
   case 30:
-#line 165 "parse.y" /* yacc.c:1646  */
+#line 165 "/home/primi/src/latino/src/parse.y" /* yacc.c:1646  */
     { (yyval.node) = newOp(NODE_SUB, (yyvsp[-2].node), (yyvsp[0].node)); }
 #line 1659 "parse.c" /* yacc.c:1646  */
     break;
 
   case 31:
-#line 166 "parse.y" /* yacc.c:1646  */
+#line 166 "/home/primi/src/latino/src/parse.y" /* yacc.c:1646  */
     { (yyval.node) = newOp(NODE_MULT, (yyvsp[-2].node), (yyvsp[0].node)); }
 #line 1665 "parse.c" /* yacc.c:1646  */
     break;
 
   case 32:
-#line 167 "parse.y" /* yacc.c:1646  */
+#line 167 "/home/primi/src/latino/src/parse.y" /* yacc.c:1646  */
     { (yyval.node) = newOp(NODE_DIV, (yyvsp[-2].node), (yyvsp[0].node)); }
 #line 1671 "parse.c" /* yacc.c:1646  */
     break;
 
   case 33:
-#line 168 "parse.y" /* yacc.c:1646  */
+#line 168 "/home/primi/src/latino/src/parse.y" /* yacc.c:1646  */
     { (yyval.node) = newOp(NODE_MOD, (yyvsp[-2].node), (yyvsp[0].node)); }
 #line 1677 "parse.c" /* yacc.c:1646  */
     break;
 
   case 34:
-#line 169 "parse.y" /* yacc.c:1646  */
+#line 169 "/home/primi/src/latino/src/parse.y" /* yacc.c:1646  */
     { (yyval.node) = (yyvsp[-1].node); }
 #line 1683 "parse.c" /* yacc.c:1646  */
     break;
 
   case 35:
-#line 170 "parse.y" /* yacc.c:1646  */
+#line 170 "/home/primi/src/latino/src/parse.y" /* yacc.c:1646  */
     { (yyval.node) = newOp(NODE_UNARY_MINUS, (yyvsp[0].node), NULL); }
 #line 1689 "parse.c" /* yacc.c:1646  */
     break;
 
   case 36:
-#line 171 "parse.y" /* yacc.c:1646  */
+#line 171 "/home/primi/src/latino/src/parse.y" /* yacc.c:1646  */
     { (yyval.node) = (yyvsp[0].node); }
 #line 1695 "parse.c" /* yacc.c:1646  */
     break;
 
   case 37:
-#line 172 "parse.y" /* yacc.c:1646  */
+#line 172 "/home/primi/src/latino/src/parse.y" /* yacc.c:1646  */
     { (yyval.node) = (yyvsp[0].node); }
 #line 1701 "parse.c" /* yacc.c:1646  */
     break;
 
   case 38:
-#line 176 "parse.y" /* yacc.c:1646  */
+#line 176 "/home/primi/src/latino/src/parse.y" /* yacc.c:1646  */
     { (yyval.node) = newAst(NODE_CALL_FUNCTION, (yyvsp[-3].node), (yyvsp[-1].node)); }
 #line 1707 "parse.c" /* yacc.c:1646  */
     break;
 
   case 39:
-#line 180 "parse.y" /* yacc.c:1646  */
+#line 180 "/home/primi/src/latino/src/parse.y" /* yacc.c:1646  */
     { (yyval.node) = (yyvsp[0].node); }
 #line 1713 "parse.c" /* yacc.c:1646  */
     break;
 
   case 40:
-#line 181 "parse.y" /* yacc.c:1646  */
+#line 181 "/home/primi/src/latino/src/parse.y" /* yacc.c:1646  */
     { (yyval.node) = newBool(1); }
 #line 1719 "parse.c" /* yacc.c:1646  */
     break;
 
   case 41:
-#line 182 "parse.y" /* yacc.c:1646  */
+#line 182 "/home/primi/src/latino/src/parse.y" /* yacc.c:1646  */
     { (yyval.node) = newBool(0); }
 #line 1725 "parse.c" /* yacc.c:1646  */
     break;
 
   case 42:
-#line 183 "parse.y" /* yacc.c:1646  */
+#line 183 "/home/primi/src/latino/src/parse.y" /* yacc.c:1646  */
     { (yyval.node) = (yyvsp[0].node); }
 #line 1731 "parse.c" /* yacc.c:1646  */
     break;
 
   case 43:
-#line 187 "parse.y" /* yacc.c:1646  */
+#line 187 "/home/primi/src/latino/src/parse.y" /* yacc.c:1646  */
     { (yyval.node) = (yyvsp[0].node); }
 #line 1737 "parse.c" /* yacc.c:1646  */
     break;
 
   case 44:
-#line 188 "parse.y" /* yacc.c:1646  */
+#line 188 "/home/primi/src/latino/src/parse.y" /* yacc.c:1646  */
     { (yyval.node) = (yyvsp[0].node); }
 #line 1743 "parse.c" /* yacc.c:1646  */
     break;
 
   case 45:
-#line 189 "parse.y" /* yacc.c:1646  */
+#line 189 "/home/primi/src/latino/src/parse.y" /* yacc.c:1646  */
     { (yyval.node) = (yyvsp[0].node); }
 #line 1749 "parse.c" /* yacc.c:1646  */
     break;
 
   case 46:
-#line 190 "parse.y" /* yacc.c:1646  */
+#line 190 "/home/primi/src/latino/src/parse.y" /* yacc.c:1646  */
     { (yyval.node) = (yyvsp[0].node); }
 #line 1755 "parse.c" /* yacc.c:1646  */
     break;
 
   case 47:
-#line 191 "parse.y" /* yacc.c:1646  */
+#line 191 "/home/primi/src/latino/src/parse.y" /* yacc.c:1646  */
     { (yyval.node) = newAst(NODE_LIST, (yyvsp[-1].node), NULL); }
 #line 1761 "parse.c" /* yacc.c:1646  */
     break;
 
   case 48:
-#line 194 "parse.y" /* yacc.c:1646  */
+#line 194 "/home/primi/src/latino/src/parse.y" /* yacc.c:1646  */
     { (yyval.node) = NULL; }
 #line 1767 "parse.c" /* yacc.c:1646  */
     break;
 
   case 49:
-#line 195 "parse.y" /* yacc.c:1646  */
+#line 195 "/home/primi/src/latino/src/parse.y" /* yacc.c:1646  */
     { (yyval.node) = newAst(NODE_FUNC_ARGS, (yyvsp[0].node), NULL); }
 #line 1773 "parse.c" /* yacc.c:1646  */
     break;
 
   case 50:
-#line 196 "parse.y" /* yacc.c:1646  */
+#line 196 "/home/primi/src/latino/src/parse.y" /* yacc.c:1646  */
     { (yyval.node) = newAst(NODE_FUNC_ARGS, (yyvsp[0].node), (yyvsp[-2].node)); }
 #line 1779 "parse.c" /* yacc.c:1646  */
     break;
 
   case 51:
-#line 199 "parse.y" /* yacc.c:1646  */
+#line 199 "/home/primi/src/latino/src/parse.y" /* yacc.c:1646  */
     { (yyval.node) = NULL; }
 #line 1785 "parse.c" /* yacc.c:1646  */
     break;
 
   case 52:
-#line 200 "parse.y" /* yacc.c:1646  */
+#line 200 "/home/primi/src/latino/src/parse.y" /* yacc.c:1646  */
     { (yyval.node) = newAst(NODE_PARAM_LIST, (yyvsp[0].node), NULL); }
 #line 1791 "parse.c" /* yacc.c:1646  */
     break;
 
   case 53:
-#line 201 "parse.y" /* yacc.c:1646  */
+#line 201 "/home/primi/src/latino/src/parse.y" /* yacc.c:1646  */
     { (yyval.node) = newAst(NODE_PARAM_LIST, (yyvsp[0].node), (yyvsp[-2].node)); }
 #line 1797 "parse.c" /* yacc.c:1646  */
     break;
 
   case 54:
-#line 204 "parse.y" /* yacc.c:1646  */
+#line 204 "/home/primi/src/latino/src/parse.y" /* yacc.c:1646  */
     { (yyval.node) = newAst(NODE_LIST_BODY, NULL, NULL); }
 #line 1803 "parse.c" /* yacc.c:1646  */
     break;
 
   case 55:
-#line 205 "parse.y" /* yacc.c:1646  */
+#line 205 "/home/primi/src/latino/src/parse.y" /* yacc.c:1646  */
     { (yyval.node) = newAst(NODE_LIST_BODY, (yyvsp[0].node), (yyvsp[-2].node)); }
 #line 1809 "parse.c" /* yacc.c:1646  */
     break;
 
   case 56:
-#line 206 "parse.y" /* yacc.c:1646  */
+#line 206 "/home/primi/src/latino/src/parse.y" /* yacc.c:1646  */
     { (yyval.node) = newAst(NODE_LIST_BODY, (yyvsp[0].node), NULL); }
 #line 1815 "parse.c" /* yacc.c:1646  */
     break;
@@ -2050,5 +2050,5 @@ yyreturn:
 #endif
   return yyresult;
 }
-#line 209 "parse.y" /* yacc.c:1906  */
+#line 209 "/home/primi/src/latino/src/parse.y" /* yacc.c:1906  */
 

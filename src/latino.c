@@ -1,5 +1,10 @@
 #include <stdio.h>
 
+#ifndef WIN32
+#include <dlfcn.h>
+#include <unistd.h>
+#endif // WIN32
+
 #include "latino.h"
 #include "parse.h"
 #include "lex.h"
@@ -14,7 +19,8 @@ static char *buffer;
 
 int yyparse(ast **expression, yyscan_t scanner);
 
-/*typedef struct yy_buffer_state * YY_BUFFER_STATE;
+/*
+typedef struct yy_buffer_state * YY_BUFFER_STATE;
 extern YY_BUFFER_STATE yy_scan_string(char * str);
 extern void yy_delete_buffer(YY_BUFFER_STATE buffer);
 */
@@ -51,8 +57,8 @@ ast *lat_parse_file(char *infile) {
 	fseek(file, 0, SEEK_SET);
 	buffer = calloc(fsize, 1);
 	//buffer = malloc(BUF_SIZE);
-	//size_t newSize = fread(buffer, sizeof(char), BUF_SIZE, file);	
-	size_t newSize = fread(buffer, sizeof(char), fsize, file);	
+	//size_t newSize = fread(buffer, sizeof(char), BUF_SIZE, file);
+	size_t newSize = fread(buffer, sizeof(char), fsize, file);
 	if (buffer == NULL) {
 		//printf("No se pudo asignar %d bytes de memoria\n", BUF_SIZE);
 		printf("No se pudo asignar %d bytes de memoria\n", fsize);
@@ -139,8 +145,8 @@ int main(int argc, char *argv[])
 	}
 
 	lat_vm *vm = lat_make_vm();
-	//lat_set_ctx(lat_get_current_ctx(vm), lat_str(vm, "compile"), lat_define_c_function(vm, lat_compile));
-	//lat_set_ctx(lat_get_current_ctx(vm), lat_str(vm, "import"), lat_define_c_function(vm, lat_import));
+	lat_set_ctx(lat_get_current_ctx(vm), lat_str(vm, "compile"), lat_define_c_function(vm, lat_compile));
+	lat_set_ctx(lat_get_current_ctx(vm), lat_str(vm, "import"), lat_define_c_function(vm, lat_import));
 	lat_object *mainFunc = lat_parse_tree(vm, tree);
 	lat_call_func(vm, mainFunc);
 	//lat_gc(vm);

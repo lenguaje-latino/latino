@@ -184,6 +184,30 @@ lex.c.s:
 	cd /home/primi/src/latino && $(MAKE) -f src/CMakeFiles/latino.dir/build.make src/CMakeFiles/latino.dir/lex.c.s
 .PHONY : lex.c.s
 
+libstring.o: libstring.c.o
+.PHONY : libstring.o
+
+# target to build an object file
+libstring.c.o:
+	cd /home/primi/src/latino && $(MAKE) -f src/CMakeFiles/latino.dir/build.make src/CMakeFiles/latino.dir/libstring.c.o
+.PHONY : libstring.c.o
+
+libstring.i: libstring.c.i
+.PHONY : libstring.i
+
+# target to preprocess a source file
+libstring.c.i:
+	cd /home/primi/src/latino && $(MAKE) -f src/CMakeFiles/latino.dir/build.make src/CMakeFiles/latino.dir/libstring.c.i
+.PHONY : libstring.c.i
+
+libstring.s: libstring.c.s
+.PHONY : libstring.s
+
+# target to generate assembly for a file
+libstring.c.s:
+	cd /home/primi/src/latino && $(MAKE) -f src/CMakeFiles/latino.dir/build.make src/CMakeFiles/latino.dir/libstring.c.s
+.PHONY : libstring.c.s
+
 object.o: object.c.o
 .PHONY : object.o
 
@@ -231,30 +255,6 @@ parse.s: parse.c.s
 parse.c.s:
 	cd /home/primi/src/latino && $(MAKE) -f src/CMakeFiles/latino.dir/build.make src/CMakeFiles/latino.dir/parse.c.s
 .PHONY : parse.c.s
-
-string.o: string.c.o
-.PHONY : string.o
-
-# target to build an object file
-string.c.o:
-	cd /home/primi/src/latino && $(MAKE) -f src/CMakeFiles/latino.dir/build.make src/CMakeFiles/latino.dir/string.c.o
-.PHONY : string.c.o
-
-string.i: string.c.i
-.PHONY : string.i
-
-# target to preprocess a source file
-string.c.i:
-	cd /home/primi/src/latino && $(MAKE) -f src/CMakeFiles/latino.dir/build.make src/CMakeFiles/latino.dir/string.c.i
-.PHONY : string.c.i
-
-string.s: string.c.s
-.PHONY : string.s
-
-# target to generate assembly for a file
-string.c.s:
-	cd /home/primi/src/latino && $(MAKE) -f src/CMakeFiles/latino.dir/build.make src/CMakeFiles/latino.dir/string.c.s
-.PHONY : string.c.s
 
 utils.o: utils.c.o
 .PHONY : utils.o
@@ -322,15 +322,15 @@ help:
 	@echo "... lex.o"
 	@echo "... lex.i"
 	@echo "... lex.s"
+	@echo "... libstring.o"
+	@echo "... libstring.i"
+	@echo "... libstring.s"
 	@echo "... object.o"
 	@echo "... object.i"
 	@echo "... object.s"
 	@echo "... parse.o"
 	@echo "... parse.i"
 	@echo "... parse.s"
-	@echo "... string.o"
-	@echo "... string.i"
-	@echo "... string.s"
 	@echo "... utils.o"
 	@echo "... utils.i"
 	@echo "... utils.s"
