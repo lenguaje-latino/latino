@@ -41,9 +41,10 @@ defined(__ELF__)
  * global variable
  */
 extern int debug;
-//#define BUF_SIZE 1048576
 #define MAX_ERROR_LENGTH 1024
+#define MAX_BYTECODE_FUNCTION (1024*10)
 #define LAT_STR_INTERN_MAX 64
+#define MAX_VIRTUAL_MEMORY (1024*10)
 
 /*
  * lex & parse

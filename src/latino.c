@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include <string.h>
 
 #ifndef WIN32
 #include <dlfcn.h>
@@ -37,8 +38,6 @@ ast *lat_parse_expr(char *expr)
 	yyparse(&ret, scanner);
 	yy_delete_buffer(state, scanner);
 	yylex_destroy(scanner);
-
-	/*printf("exp:\n%s\n", expr);*/
 	return ret;
 }
 
@@ -56,11 +55,8 @@ ast *lat_parse_file(char *infile) {
 	int fsize = ftell(file);
 	fseek(file, 0, SEEK_SET);
 	buffer = calloc(fsize, 1);
-	//buffer = malloc(BUF_SIZE);
-	//size_t newSize = fread(buffer, sizeof(char), BUF_SIZE, file);
 	size_t newSize = fread(buffer, sizeof(char), fsize, file);
 	if (buffer == NULL) {
-		//printf("No se pudo asignar %d bytes de memoria\n", BUF_SIZE);
 		printf("No se pudo asignar %d bytes de memoria\n", fsize);
 		fclose(file);
 		return NULL;
@@ -149,17 +145,7 @@ int main(int argc, char *argv[])
 	lat_set_ctx(lat_get_current_ctx(vm), lat_str(vm, "import"), lat_define_c_function(vm, lat_import));
 	lat_object *mainFunc = lat_parse_tree(vm, tree);
 	lat_call_func(vm, mainFunc);
-	//lat_gc(vm);
-	//printf("\nAll objects is:\n");
-	//lat_print_list(vm, vm->all_objects);
-	/*
-	printf("\nStack is:\n");
-	lat_print_list(vm, vm->stack);
-	*/
-	//lat_gc(vm);
 	lat_push_stack(vm, vm->regs[255]);
-	//lat_print(vm);
-
 	/*if (parseCadena){
 		yy_delete_buffer(buffer);
 	}

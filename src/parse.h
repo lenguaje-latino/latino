@@ -1,8 +1,8 @@
-/* A Bison parser, made by GNU Bison 3.0.2.  */
+/* A Bison parser, made by GNU Bison 3.0.4.  */
 
 /* Bison interface for Yacc-like parsers in C
 
-   Copyright (C) 1984, 1989-1990, 2000-2013 Free Software Foundation, Inc.
+   Copyright (C) 1984, 1989-1990, 2000-2015 Free Software Foundation, Inc.
 
    This program is free software: you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -56,30 +56,64 @@ extern int yydebug;
     KELSE = 266,
     KWHILE = 267,
     KDO = 268,
-    KSWITCH = 269,
-    KCASE = 270,
-    KBREAK = 271,
-    KDEFAULT = 272,
-    KWHEN = 273,
-    KFUNCTION = 274,
-    KFROM = 275,
-    KBOOL = 276,
-    KRETURN = 277,
-    KTRUE = 278,
-    KFALSE = 279,
-    OP_GT = 280,
-    OP_LT = 281,
-    OP_GE = 282,
-    OP_LE = 283,
-    OP_EQ = 284,
-    OP_NEQ = 285,
-    OP_AND = 286,
-    OP_OR = 287,
-    OP_NEG = 288,
+    KBREAK = 269,
+    KCONTINUE = 270,
+    KWHEN = 271,
+    KFUNCTION = 272,
+    KFROM = 273,
+    KBOOL = 274,
+    KRETURN = 275,
+    KTRUE = 276,
+    KFALSE = 277,
+    OP_GT = 278,
+    OP_LT = 279,
+    OP_GE = 280,
+    OP_LE = 281,
+    OP_EQ = 282,
+    OP_NEQ = 283,
+    OP_AND = 284,
+    OP_OR = 285,
+    OP_NEG = 286,
+    OP_INCR = 287,
+    OP_DECR = 288,
     UMINUS = 289,
     UNEG = 290
   };
 #endif
+/* Tokens.  */
+#define TINT 258
+#define TCHAR 259
+#define TNUMBER 260
+#define TSTRING 261
+#define TIDENTIFIER 262
+#define TFUNC 263
+#define KIF 264
+#define KEND 265
+#define KELSE 266
+#define KWHILE 267
+#define KDO 268
+#define KBREAK 269
+#define KCONTINUE 270
+#define KWHEN 271
+#define KFUNCTION 272
+#define KFROM 273
+#define KBOOL 274
+#define KRETURN 275
+#define KTRUE 276
+#define KFALSE 277
+#define OP_GT 278
+#define OP_LT 279
+#define OP_GE 280
+#define OP_LE 281
+#define OP_EQ 282
+#define OP_NEQ 283
+#define OP_AND 284
+#define OP_OR 285
+#define OP_NEG 286
+#define OP_INCR 287
+#define OP_DECR 288
+#define UMINUS 289
+#define UNEG 290
 
 /* Value type.  */
 

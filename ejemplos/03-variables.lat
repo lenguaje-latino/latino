@@ -7,14 +7,10 @@ e=10
 imprimir(e)
 d=1.5
 imprimir(d)
-#c='a'
-#imprimir(c)
-s="hola de nuevo"
+c='a'
+imprimir(c)
+s="hola latino"
 imprimir(s)
 #todo: pendiente implementar constantes
 PI=3.1416
 imprimir(PI)
-imprimir("hello world")
-#imprimir('a')
-imprimir(10.0)
-imprimir(verdadero)

@@ -44,7 +44,7 @@ EXP ([Ee][-+]?[0-9]+)
 "}" |
 "="     { return yytext[0]; }
 
- /* comparison ops, all are CMP token */
+ /* comparison operators */
 ">"     { return OP_GT; }
 "<"     { return OP_LT; }
 ">="    { return OP_GE; }
@@ -55,28 +55,33 @@ EXP ([Ee][-+]?[0-9]+)
 "||"    { return OP_OR; }
 "!"     { return OP_NEG; }
 
+"++"	{ return OP_INCR; }
+"--"	{ return OP_DECR; }
+
  /* keywords */
 "si"        { return KIF; }
 "fin"       { return KEND; }
 "sino"      { return KELSE; }
 "romper"    { return KBREAK; }
+"continuar" { return KCONTINUE; }
 "mientras"  { return KWHILE; }
 "hacer"     { return KDO; }
 "cuando"    { return KWHEN; }
 "funcion"   { return KFUNCTION; }
-"elegir"    { return KSWITCH; }
-"caso"      { return KCASE; }
-"defecto"   { return KDEFAULT; }
 "desde"     { return KFROM; }
 "verdadero" { return KTRUE; }
 "falso"     { return KFALSE; }
 "retorno"   { return KRETURN; }
 
+ /*"elegir"    { return KSWITCH; }
+ "caso"      { return KCASE; }
+ "defecto"   { return KDEFAULT; }*/
+
  /* names */
 [_a-zA-Z][_a-zA-Z0-9]* { yylval->node = newRef(yytext); return TIDENTIFIER; }
 [0-9]+"."+[0-9]*{EXP}?|"."+[0-9]+{EXP}?       { yylval->node = newNum(strtod(yytext, NULL)); return TNUMBER; }
 [0-9]+                 { yylval->node = newInt(strtol(yytext, NULL, 0)); return TINT; }
-\"([^\\\"]|\\.)*\"     { yylval->node = newStr(yytext+1, strlen(yytext)-2);return TSTRING; }
+\"([^\\\"]|\\.)*\"     { yytext[strlen(yytext) - 1] = '\0'; yylval->node = newStr(yytext+1);return TSTRING; }
 '([^'\\\n]|\\.)'       { yylval->node = newChar(yytext+1, strlen(yytext)-2); return TCHAR; }
 "#".* /* ignore comments */
 \n                     { ; } /*ignore end of line */

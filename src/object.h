@@ -39,7 +39,7 @@ typedef union lat_object_data {
 
 struct lat_object {
 	lat_type type;
-	char marked;
+	int marked;
 	size_t data_size;
 	lat_object_data data;
 };

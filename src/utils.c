@@ -16,13 +16,12 @@ char *strdup0(char *s)
     return p;
 }
 
-/*FIXME: For hexadecimal*/
 char * parse_string(const char *s, size_t n){
-	char *ret = malloc(sizeof(n) + 1);
+	char *ret = malloc(n + 1);
 	int j = 0;
+	int c = '@';
 	for (size_t i = 0; i < n; i++)
 	{
-		int c;
 		switch (s[i])
 		{
 		case '\\':
@@ -54,7 +53,7 @@ char * parse_string(const char *s, size_t n){
 list_node *make_list_node(void *d)
 {
 	list_node *ret = (list_node *)malloc(sizeof(list_node));
-	ret->data = d;
+	ret->data = d;	
 	return ret;
 }
 

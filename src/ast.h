@@ -66,7 +66,9 @@ typedef enum {
     NODE_CASES,
 	NODE_FROM, /*35*/
 	NODE_LIST,
-	NODE_LIST_BODY
+	NODE_LIST_BODY,
+	NODE_INC,
+	NODE_DEC
 } nodeType;
 
 /* nodes in the abstract syntax tree */
@@ -101,7 +103,7 @@ ast *newAsgn(ast *s, ast *v);
 ast *newInt(long i);
 ast *newNum(double d);
 ast *newChar(char *c, size_t l);
-ast *newStr(const char *, size_t);
+ast *newStr(const char *);
 ast *newIf(ast *cond, ast *entonces, ast *sino);
 ast *newWhile(ast *cond, ast *stmts);
 ast *newDo(ast *cond, ast *stmts);

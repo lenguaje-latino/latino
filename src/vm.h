@@ -33,6 +33,8 @@ typedef enum lat_ins {
 	OP_JMPIF,
 	OP_CALL,
 	OP_NOT,
+	OP_INC,
+	OP_DEC
 } lat_ins;
 
 /*
@@ -65,10 +67,12 @@ typedef struct lat_function {
 struct lat_vm {
 	list_node *stack;
 	list_node *all_objects;
+	list_node *gc_objects;
 	lat_object *regs[256];
 	lat_object *ctx_stack[256];
 	lat_object *true_object;
 	lat_object *false_object;
+	size_t memory_usage;
 	int ctx_stack_pointer;
 };
 

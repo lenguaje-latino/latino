@@ -8,7 +8,6 @@
 #include <errno.h>
 
 char * strdup0(char *s);
-//char * strndup0(const char *s, size_t n);
 
 char * parse_string(const char *s, size_t n);
 

@@ -34,10 +34,8 @@ int yyerror(struct YYLTYPE *yylloc_param, void *scanner, struct ast **root, cons
     KELSE
     KWHILE
     KDO
-    KSWITCH
-    KCASE
     KBREAK
-    KDEFAULT
+    KCONTINUE
     KWHEN
     KFUNCTION
     KFROM
@@ -45,6 +43,11 @@ int yyerror(struct YYLTYPE *yylloc_param, void *scanner, struct ast **root, cons
     KRETURN
     KTRUE
     KFALSE
+    /*
+    KSWITCH
+    KCASE
+    KDEFAULT
+    */
 
 %token
     OP_GT
@@ -56,9 +59,11 @@ int yyerror(struct YYLTYPE *yylloc_param, void *scanner, struct ast **root, cons
     OP_AND
     OP_OR
     OP_NEG
+    OP_INCR
+    OP_DECR
 
 %nonassoc <node> OP_EQ OP_GE OP_GT OP_LE OP_LT OP_NEQ OP_NEG
-%type <node> expression statement statement_list
+%type <node> expression statement statement_list unary_expression
 %type <node> iteration_statement jump_statement function_definition
 %type <node> argument_expression_list declaration primary_expression
 %type <node> constant_expression function_call selection_statement
@@ -110,6 +115,7 @@ statement: /* empty */ { $$ = NULL; }
 
 declaration:
       TIDENTIFIER '=' expression { $$ = newAsgn($3, $1); }
+    | unary_expression { $$ = $1; }
     ;
 
 /*labeled_statement:
@@ -137,7 +143,8 @@ iteration_statement:
         $$ = newDo($5, $2); }
     | KWHILE '(' expression ')' statement_list KEND {
         $$ = newWhile($3, $5); }
-    | KFROM '(' declaration ';' expression ';' declaration ')' statement_list  KEND {
+    | KFROM '(' declaration ';' expression ';' declaration ')'
+        statement_list  KEND {
         $$ = newFor($3, $5, $7, $9); }
     ;
 
@@ -168,8 +175,8 @@ expression:
     | expression '%' expression { $$ = newOp(NODE_MOD, $1, $3); }
     | '(' expression ')' { $$ = $2; }
     | '-' expression %prec UMINUS { $$ = newOp(NODE_UNARY_MINUS, $2, NULL); }
-    | primary_expression { $$ = $1; }
-    | function_call { $$ = $1; }
+    | primary_expression
+    | function_call
     ;
 
 function_call:
@@ -189,6 +196,11 @@ constant_expression:
     | TCHAR { $$ = $1; }
     | TSTRING { $$ = $1; }
     | '[' list_expression_items ']' { $$ = newAst(NODE_LIST, $2, NULL); }
+    ;
+
+unary_expression:
+	  TIDENTIFIER OP_INCR { $$ = newAst(NODE_INC, $1, NULL); }
+	| TIDENTIFIER OP_DECR { $$ = newAst(NODE_DEC, $1, NULL); }
     ;
 
 argument_expression_list: /* empty */ { $$ = NULL; }
