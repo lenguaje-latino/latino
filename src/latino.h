@@ -28,6 +28,8 @@ defined(__ELF__)
 #define lnsprintf(s, l, f, i)  _snprintf(s, l, f, i)
 #endif
 
+#define lassert(cond) ((void) (false && (cond)))
+
 #pragma once
 
 #define false   0

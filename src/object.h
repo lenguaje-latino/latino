@@ -59,7 +59,7 @@ lat_object *lat_func(lat_vm *vm);
 lat_object *lat_cfunc(lat_vm *vm);
 lat_object *lat_struct(lat_vm *vm, void *val);
 
-void lat_mark_object(lat_object *o, unsigned char m);
+void lat_mark_object(lat_object *o, int m);
 void lat_mark_list(list_node *l, unsigned char m);
 void lat_mark_hash(hash_map *l, unsigned char m);
 
