@@ -16,7 +16,7 @@ lat_vm *lat_make_vm()
 
 	ret->true_object = lat_bool(ret, true);
 	ret->false_object = lat_bool(ret, false);
-	
+
 	//memset(ret->regs, 0, 256);
 	memset(ret->regs, 0, 1024);
 	memset(ret->ctx_stack, 0, 256);
@@ -131,7 +131,7 @@ void lat_gc(lat_vm *vm)
 {
 	for (size_t i = 0; i < 256; i++)
 	{
-		if (((lat_object *)vm->regs[i]) != 0x0){ 
+		if (((lat_object *)vm->regs[i]) != 0x0){
 			if (((lat_object *)vm->regs[i])->marked != 3){
 				((lat_object *)vm->regs[i])->marked = 2;
 			}
@@ -142,7 +142,7 @@ void lat_gc(lat_vm *vm)
 	for (c = vm->gc_objects->next; c != NULL; c = c->next) {
 		if (c->data != NULL) {
 			cur = (lat_object *)c->data;
-			if (cur->marked == 0) {				
+			if (cur->marked == 0) {
 				lat_delete_object(vm, cur);
 				list_node *prev = c->prev;
 				c->prev->next = c->next;
@@ -240,14 +240,19 @@ void lat_print(lat_vm *vm)
 	}else if (in->type == T_CHAR) {
 		fprintf(stdout, "%c\n", lat_get_char_value(in));
 	}else if (in->type == T_INT) {
-		fprintf(stdout, "%d\n", lat_get_int_value(in));
+		fprintf(stdout, "%ld\n", lat_get_int_value(in));
 	}else if (in->type == T_DOUBLE) {
 		fprintf(stdout, "%lf\n", lat_get_double_value(in));
 	}else if (in->type == T_STR) {
 		//fprintf(stdout, "%s\n", lat_get_str_value(in));
 		fprintf(stdout, "%s\n", lat_get_str_value(in));
 	}else if (in->type == T_BOOL) {
-		fprintf(stdout, "%i\n", lat_get_bool_value(in));
+		if (lat_get_bool_value(in)){
+			fprintf(stdout, "%s\n", "verdadero");
+		}
+		else{
+			fprintf(stdout, "%s\n", "falso");
+		}		
 	}else if (in->type == T_LIST){
 		lat_print_list(vm, in->data.list);
 		fprintf(stdout, "%s\n", "");
@@ -563,7 +568,7 @@ void lat_call_func(lat_vm *vm, lat_object *func)
 #endif
 				break;
 			case OP_SET:
-				lat_set_ctx(vm->regs[cur.b], lat_clone_object(vm, ((lat_object *)cur.meta)), vm->regs[cur.a]);				
+				lat_set_ctx(vm->regs[cur.b], lat_clone_object(vm, ((lat_object *)cur.meta)), vm->regs[cur.a]);
 #if DEBUG_VM
 				printf("SET r%i r%i", cur.b, cur.a);
 #endif
@@ -645,8 +650,7 @@ void lat_call_func(lat_vm *vm, lat_object *func)
 #if DEBUG_VM
 				printf("NS r%i", cur.a);
 #endif
-				vm->regs[cur.a] = lat_clone_object(vm, lat_get_current_ctx(vm));
-				//vm->regs[cur.a] = vm, lat_get_current_ctx(vm);
+				vm->regs[cur.a] = lat_clone_object(vm, lat_get_current_ctx(vm));				
 				lat_push_predefined_ctx(vm, vm->regs[cur.a]);
 				break;
 			case OP_ENDNS:
@@ -692,7 +696,7 @@ void lat_call_func(lat_vm *vm, lat_object *func)
 				printf("INC r%i", cur.a);
 #endif
 				((lat_object *)vm->regs[cur.a])->data.i--;
-				break;
+				break;						
 			}
 #if DEBUG_VM
 			printf("\n");

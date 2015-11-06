@@ -68,7 +68,7 @@ ast *lat_parse_file(char *infile) {
 
 void lat_compile(lat_vm *vm)
 {
-	vm->regs[255] = lat_parse_tree(vm, lat_parse_expr(lat_get_str_value(lat_pop_stack(vm))));
+	vm->regs[255] = ast_parse_tree(vm, lat_parse_expr(lat_get_str_value(lat_pop_stack(vm))));
 }
 
 void lat_import(lat_vm *vm)
@@ -81,7 +81,7 @@ void lat_import(lat_vm *vm)
 	}
 	extension = dot + 1;
 	if (strcmp(extension, "lat") == 0) {
-		lat_object *func = lat_parse_tree(vm, lat_parse_file(input));
+		lat_object *func = ast_parse_tree(vm, lat_parse_file(input));
 		lat_call_func(vm, func);
 	}
 	else if (strcmp(extension, "so") == 0) {
@@ -92,8 +92,8 @@ void lat_import(lat_vm *vm)
 		strcat(buffer, input);
 		void *handle = dlopen(buffer, RTLD_LAZY);
 		void(*init)(lat_vm *);
-		if (handle == NULL) {
-			log_err("Loading external library %s failed with error %s", input, dlerror());
+                if (handle == NULL) {
+                        log_err("Loading external library %s failed with error %s", input, dlerror());
 			exit(1);
 		}
 		dlerror();
@@ -132,7 +132,7 @@ int main(int argc, char *argv[])
 	/*error en chkstk.asm*/
 	ast *tree = lat_parse_file(infile);
 	//tree = lat_parse_expr(buffer);
-	//latValue *val = NULL;
+	//ast_value *val = NULL;
 	//val = eval(tree);
 
 	if (!tree){
@@ -143,7 +143,7 @@ int main(int argc, char *argv[])
 	lat_vm *vm = lat_make_vm();
 	lat_set_ctx(lat_get_current_ctx(vm), lat_str(vm, "compile"), lat_define_c_function(vm, lat_compile));
 	lat_set_ctx(lat_get_current_ctx(vm), lat_str(vm, "import"), lat_define_c_function(vm, lat_import));
-	lat_object *mainFunc = lat_parse_tree(vm, tree);
+	lat_object *mainFunc = ast_parse_tree(vm, tree);
 	lat_call_func(vm, mainFunc);
 	lat_push_stack(vm, vm->regs[255]);
 	/*if (parseCadena){
