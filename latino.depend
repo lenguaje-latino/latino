@@ -1,5 +1,5 @@
 # depslib dependency file v1.0
-1446251534 source:/home/primi/src/latino/src/ast.c
+1446916988 source:/home/primi/src/latino/src/ast.c
 	"latino.h"
 	"ast.h"
 	"utils.h"
@@ -7,11 +7,11 @@
 
 1443286019 
 
-1446251534 /home/primi/src/latino/src/ast.h
+1446916988 /home/primi/src/latino/src/ast.h
 	"latino.h"
 	"vm.h"
 
-1446255424 /home/primi/src/latino/src/latino.h
+1446916988 /home/primi/src/latino/src/latino.h
 	<stdio.h>
 	<math.h>
 	<ctype.h>
@@ -27,7 +27,7 @@
 
 1446251534 /home/primi/src/latino/src/parse.h
 
-1446251534 /home/primi/src/latino/src/utils.h
+1446920109 /home/primi/src/latino/src/utils.h
 	<stddef.h>
 	<stdlib.h>
 	<stdio.h>
@@ -54,7 +54,7 @@
 	"ast.h"
 	"utils.h"
 
-1446251534 source:/home/primi/src/latino/src/latino.c
+1446916988 source:/home/primi/src/latino/src/latino.c
 	<stdio.h>
 	<string.h>
 	<dlfcn.h>
@@ -64,7 +64,7 @@
 	"lex.h"
 	"ast.h"
 
-1446251534 source:/home/primi/src/latino/src/lex.c
+1446916988 source:/home/primi/src/latino/src/lex.c
 	<stdio.h>
 	<string.h>
 	<errno.h>
@@ -129,11 +129,11 @@
 	"utils.h"
 	"vm.h"
 
-1446251534 /home/primi/src/latino/src/vm.h
+1446916988 /home/primi/src/latino/src/vm.h
 	"utils.h"
 	"object.h"
 
-1446251534 source:/home/primi/src/latino/src/parse.c
+1446916988 source:/home/primi/src/latino/src/parse.c
 	<stddef.h>
 	"latino.h"
 	"ast.h"
@@ -180,7 +180,7 @@
 	<inttypes.h>
 	<unistd.h>
 
-1446251534 source:/home/primi/src/latino/src/libstring.c
+1446916988 source:/home/primi/src/latino/src/libstring.c
 	"khash.h"
 	"latino.h"
 	"object.h"
