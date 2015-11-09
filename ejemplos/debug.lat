@@ -1,5 +1,11 @@
-i = 0
-hacer
+#pendiente ROMPER
+i=0
+mientras (i < 10)
+    si (i == 5)
+         romper
+    fin
     imprimir(i)
     i++
-cuando (i < 1000000)
+fin
+
+#Salida: 1234

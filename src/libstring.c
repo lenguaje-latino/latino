@@ -40,8 +40,6 @@ static lat_object* str_new(const char *p, size_t len){
 	lat_object *str =  malloc(sizeof(lat_object));
 	str->type = T_STR;
 	str->data_size = len;
-	/*str->data.str = malloc(sizeof(len) + 1);
-	strcpy(str->data.str, p);*/
     str->data.str = p;
 	return str;
 }
@@ -69,7 +67,7 @@ static lat_object* str_intern(const char *p, size_t len){
 }
 
 lat_object * lat_str_new(const char* p, size_t len){
-	if(p && (len < LAT_STR_INTERN_MAX)){
+	if(p && (len < MAX_STR_INTERN)){
 		return str_intern(p, len);
 	}
 	return str_new(p, len);

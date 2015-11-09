@@ -4,7 +4,7 @@
 #include "ast.h"
 #include "utils.h"
 
-char *strdup0(char *s)
+char *strdup0(const char *s)
 {
     size_t len = strlen(s);
     char *p;
@@ -16,11 +16,11 @@ char *strdup0(char *s)
     return p;
 }
 
-char * parse_string(const char *s, size_t n){
-	char *ret = malloc(n + 1);
+char * parse_string(const char *s, size_t len){
+	char *ret = malloc(len + 1);
 	int j = 0;
 	int c = '@';
-	for (size_t i = 0; i < n; i++)
+	for (size_t i = 0; i < len; i++)
 	{
 		switch (s[i])
 		{

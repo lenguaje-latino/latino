@@ -95,11 +95,11 @@ program: statement_list {
 statement_list:
     statement_list statement {
         if($2){
-            $$ = newAst(NODE_BLOCK, $2, $1);
+            $$ = ast_new_node(NODE_BLOCK, $2, $1);
         }
     }
     | statement {
-        $$ = newAst(NODE_BLOCK, $1, NULL);
+        $$ = ast_new_node(NODE_BLOCK, $1, NULL);
     }
     ;
 
@@ -114,79 +114,79 @@ statement: /* empty */ { $$ = NULL; }
     ;
 
 declaration:
-      TIDENTIFIER '=' expression { $$ = newAsgn($3, $1); }
+      TIDENTIFIER '=' expression { $$ = ast_new_assignment($3, $1); }
     | unary_expression { $$ = $1; }
     ;
 
 /*labeled_statement:
     KCASE constant_expression ':' statement_list {
-        $$ = newAst(NODE_CASE, $2, $4);
+        $$ = ast_new_node(NODE_CASE, $2, $4);
     }
     | KDEFAULT ':' statement_list {
-        $$ = newAst(NODE_DEFAULT, NULL, $3);
+        $$ = ast_new_node(NODE_DEFAULT, NULL, $3);
     }
     ;
 */
 
 selection_statement:
     KIF '(' expression ')' statement_list KEND {
-        $$ = newIf($3, $5, NULL); }
+        $$ = ast_new_node_if($3, $5, NULL); }
     | KIF '(' expression ')' statement_list KELSE statement_list KEND {
-        $$ = newIf($3, $5, $7); }
+        $$ = ast_new_node_if($3, $5, $7); }
     /*| KSWITCH '(' TIDENTIFIER ')' labeled_statement KEND {
-        $$ = newAst(NODE_SWITCH, $3, $5); }*/
+        $$ = ast_new_node(NODE_SWITCH, $3, $5); }*/
     ;
 
 
 iteration_statement:
     KDO statement_list KWHEN '(' expression ')' {
-        $$ = newDo($5, $2); }
+        $$ = ast_new_node_do($5, $2); }
     | KWHILE '(' expression ')' statement_list KEND {
-        $$ = newWhile($3, $5); }
+        $$ = ast_new_node_while($3, $5); }
     | KFROM '(' declaration ';' expression ';' declaration ')'
         statement_list  KEND {
-        $$ = newFor($3, $5, $7, $9); }
+        $$ = ast_new_node_for($3, $5, $7, $9); }
     ;
 
 jump_statement :
-    KRETURN expression { $$ = newAst(NODE_RETURN, $2, NULL); }
+    KRETURN expression { $$ = ast_new_node(NODE_RETURN, $2, NULL); }
     ;
 
 function_definition:
     KFUNCTION TIDENTIFIER '(' identifier_list ')' statement_list KEND {
-        $$ = doDef($2, $4, $6);
+        $$ = ast_new_node_function($2, $4, $6);
     }
     ;
 
 expression:
-      expression OP_GT  expression { $$ = newOp(NODE_GT, $1, $3); }
-    | expression OP_LT expression { $$ = newOp(NODE_LT, $1, $3); }
-    | expression OP_GE expression { $$ = newOp(NODE_GE, $1, $3); }
-    | expression OP_LE expression { $$ = newOp(NODE_LE, $1, $3); }
-    | expression OP_NEQ expression { $$ = newOp(NODE_NEQ, $1, $3); }
-    | expression OP_EQ expression { $$ = newOp(NODE_EQ, $1, $3); }
-    | expression OP_AND expression { $$ = newOp(NODE_AND, $1, $3); }
-    | expression OP_OR expression { $$ = newOp(NODE_OR, $1, $3); }
-    | OP_NEG expression %prec UNEG { $$ = newOp(NODE_NEG, $2, NULL); }
-    | expression '+' expression { $$ = newOp(NODE_ADD, $1, $3); }
-    | expression '-' expression { $$ = newOp(NODE_SUB, $1, $3); }
-    | expression '*' expression { $$ = newOp(NODE_MULT, $1, $3); }
-    | expression '/' expression { $$ = newOp(NODE_DIV, $1, $3); }
-    | expression '%' expression { $$ = newOp(NODE_MOD, $1, $3); }
+      expression OP_GT  expression { $$ = ast_new_op(NODE_GT, $1, $3); }
+    | expression OP_LT expression { $$ = ast_new_op(NODE_LT, $1, $3); }
+    | expression OP_GE expression { $$ = ast_new_op(NODE_GE, $1, $3); }
+    | expression OP_LE expression { $$ = ast_new_op(NODE_LE, $1, $3); }
+    | expression OP_NEQ expression { $$ = ast_new_op(NODE_NEQ, $1, $3); }
+    | expression OP_EQ expression { $$ = ast_new_op(NODE_EQ, $1, $3); }
+    | expression OP_AND expression { $$ = ast_new_op(NODE_AND, $1, $3); }
+    | expression OP_OR expression { $$ = ast_new_op(NODE_OR, $1, $3); }
+    | OP_NEG expression %prec UNEG { $$ = ast_new_op(NODE_NEG, $2, NULL); }
+    | expression '+' expression { $$ = ast_new_op(NODE_ADD, $1, $3); }
+    | expression '-' expression { $$ = ast_new_op(NODE_SUB, $1, $3); }
+    | expression '*' expression { $$ = ast_new_op(NODE_MULT, $1, $3); }
+    | expression '/' expression { $$ = ast_new_op(NODE_DIV, $1, $3); }
+    | expression '%' expression { $$ = ast_new_op(NODE_MOD, $1, $3); }
     | '(' expression ')' { $$ = $2; }
-    | '-' expression %prec UMINUS { $$ = newOp(NODE_UNARY_MINUS, $2, NULL); }
+    | '-' expression %prec UMINUS { $$ = ast_new_op(NODE_UNARY_MINUS, $2, NULL); }
     | primary_expression
     | function_call
     ;
 
 function_call:
-     TIDENTIFIER '(' argument_expression_list ')' { $$ = newAst(NODE_CALL_FUNCTION, $1, $3); }
+     TIDENTIFIER '(' argument_expression_list ')' { $$ = ast_new_node(NODE_CALL_FUNCTION, $1, $3); }
     ;
 
 primary_expression:
       TIDENTIFIER { $$ = $1; }
-    | KTRUE { $$ = newBool(1); }
-    | KFALSE { $$ = newBool(0); }
+    | KTRUE { $$ = ast_new_bool(1); }
+    | KFALSE { $$ = ast_new_bool(0); }
     | constant_expression  { $$ = $1; }
     ;
 
@@ -195,27 +195,27 @@ constant_expression:
     | TNUMBER { $$ = $1; }
     | TCHAR { $$ = $1; }
     | TSTRING { $$ = $1; }
-    | '[' list_expression_items ']' { $$ = newAst(NODE_LIST, $2, NULL); }
+    | '[' list_expression_items ']' { $$ = ast_new_node(NODE_LIST, $2, NULL); }
     ;
 
 unary_expression:
-	  TIDENTIFIER OP_INCR { $$ = newAst(NODE_INC, $1, NULL); }
-	| TIDENTIFIER OP_DECR { $$ = newAst(NODE_DEC, $1, NULL); }
+	  TIDENTIFIER OP_INCR { $$ = ast_new_node(NODE_INC, $1, NULL); }
+	| TIDENTIFIER OP_DECR { $$ = ast_new_node(NODE_DEC, $1, NULL); }
     ;
 
 argument_expression_list: /* empty */ { $$ = NULL; }
-    | expression { $$ = newAst(NODE_FUNC_ARGS, $1, NULL); }
-    | argument_expression_list ',' expression { $$ = newAst(NODE_FUNC_ARGS, $3, $1); }
+    | expression { $$ = ast_new_node(NODE_FUNC_ARGS, $1, NULL); }
+    | argument_expression_list ',' expression { $$ = ast_new_node(NODE_FUNC_ARGS, $3, $1); }
     ;
 
 identifier_list: /* empty */ { $$ = NULL; }
-    | TIDENTIFIER { $$ = newAst(NODE_PARAM_LIST, $1, NULL); }
-    | identifier_list ',' TIDENTIFIER { $$ = newAst(NODE_PARAM_LIST, $3, $1); }
+    | TIDENTIFIER { $$ = ast_new_node(NODE_PARAM_LIST, $1, NULL); }
+    | identifier_list ',' TIDENTIFIER { $$ = ast_new_node(NODE_PARAM_LIST, $3, $1); }
     ;
 
-list_expression_items: /* empty */ { $$ = newAst(NODE_LIST_BODY, NULL, NULL); }
-    | list_expression_items ',' expression { $$ = newAst(NODE_LIST_BODY, $3, $1); }
-    | expression { $$ = newAst(NODE_LIST_BODY, $1, NULL); }
+list_expression_items: /* empty */ { $$ = ast_new_node(NODE_LIST_BODY, NULL, NULL); }
+    | list_expression_items ',' expression { $$ = ast_new_node(NODE_LIST_BODY, $3, $1); }
+    | expression { $$ = ast_new_node(NODE_LIST_BODY, $1, NULL); }
     ;
 
 %%

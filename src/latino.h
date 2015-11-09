@@ -45,15 +45,8 @@ defined(__ELF__)
 extern int debug;
 #define MAX_ERROR_LENGTH 1024
 #define MAX_BYTECODE_FUNCTION (1024*10)
-#define LAT_STR_INTERN_MAX 64
 #define MAX_VIRTUAL_MEMORY (1024*10)
-
-/*
- * lex & parse
- */
-extern void dumpRow(void);
-extern int getNextChar(char *b, int maxBuffer);
-extern void beginToken(char*);
+#define MAX_STR_INTERN 64
 
 /* interface to the lexer */
 typedef struct YYLTYPE
@@ -63,6 +56,7 @@ typedef struct YYLTYPE
 	int last_line;
 	int last_column;
 } YYLTYPE;
+
 #define YYLTYPE_IS_DECLARED 1
 /*struct ast;*/
 

@@ -4,350 +4,351 @@
 #include "vm.h"
 
 #define dbc(I, A, B, M) bcode[i++] = lat_bc(I, A, B, M)
-#define pn(vm, N) i = lat_parse_node(vm, N, bcode, i)
+#define pn(vm, N) i = ast_parse_node(vm, N, bcode, i)
 #define fdbc(I, A, B, M) function_bcode[fi++] = lat_bc(I, A, B, M)
-#define fpn(vm, N) fi = lat_parse_node(vm, N, function_bcode, fi)
+#define fpn(vm, N) fi = ast_parse_node(vm, N, function_bcode, fi)
 
 int yyerror(struct YYLTYPE *yylloc_param, void *scanner, struct ast **root, const char *s)
 {
-	log_err("%s at line %d", s, yylloc_param->first_line);
-	exit(1);
-	return 0;
+    log_err("%s at line %d", s, yylloc_param->first_line);
+    exit(1);
+    return 0;
 }
 
-ast *newOp(nodeType nodetype, ast *l, ast *r)
+ast *ast_new_op(ast_node_type node_type, ast *l, ast *r)
 {
     ast *a = malloc(sizeof(ast));
     if (!a) {
         log_err("Memoria agotada\n");
         exit(0);
     }
-	switch (nodetype)
-	{
-	case NODE_ADD:{
-		a->l = newRef("+");
-	}break;
-	case NODE_UNARY_MINUS:
-	case NODE_SUB:{
-		a->l = newRef("-");
-	}break;
-	case NODE_MULT:{
-		a->l = newRef("*");
-	}break;
-	case NODE_DIV:{
-		a->l = newRef("/");
-	}break;
-	case NODE_MOD:{
-		a->l = newRef("%");
-	}break;
-	case NODE_GE:{
-		a->l = newRef(">=");
-	}break;
-	case NODE_GT:{
-		a->l = newRef(">");
-	}break;
-	case NODE_LE:{
-		a->l = newRef("<=");
-	}break;
-	case NODE_LT:{
-		a->l = newRef("<");
-	}break;
-	case NODE_NEQ:{
-		a->l = newRef("!=");
-	}break;
-	case NODE_EQ:{
-		a->l = newRef("==");
-	}break;
-	default:
-		break;
-	}
-	if (nodetype == NODE_UNARY_MINUS)
-	{
-		a->r = newAst(NODE_FUNC_ARGS, newInt(0), l);
-	}
-	else{
-		a->r = newAst(NODE_FUNC_ARGS, l, r);
-	}
-	a->nodetype = NODE_CALL_FUNCTION;
-	a->value = NULL;
+    switch (node_type)
+    {
+    case NODE_ADD:{
+        a->l = ast_new_identifier("+");
+    }break;
+    case NODE_UNARY_MINUS:
+    case NODE_SUB:{
+        a->l = ast_new_identifier("-");
+    }break;
+    case NODE_MULT:{
+        a->l = ast_new_identifier("*");
+    }break;
+    case NODE_DIV:{
+        a->l = ast_new_identifier("/");
+    }break;
+    case NODE_MOD:{
+        a->l = ast_new_identifier("%");
+    }break;
+    case NODE_GE:{
+        a->l = ast_new_identifier(">=");
+    }break;
+    case NODE_GT:{
+        a->l = ast_new_identifier(">");
+    }break;
+    case NODE_LE:{
+        a->l = ast_new_identifier("<=");
+    }break;
+    case NODE_LT:{
+        a->l = ast_new_identifier("<");
+    }break;
+    case NODE_NEQ:{
+        a->l = ast_new_identifier("!=");
+    }break;
+    case NODE_EQ:{
+        a->l = ast_new_identifier("==");
+    }break;
+    default:
+        break;
+    }
+    if (node_type == NODE_UNARY_MINUS)
+    {
+        a->r = ast_new_node(NODE_FUNC_ARGS, ast_new_integer(0), l);
+    }
+    else{
+        a->r = ast_new_node(NODE_FUNC_ARGS, l, r);
+    }
+    a->node_type = NODE_CALL_FUNCTION;
+    a->value = NULL;
     return a;
 }
 
-ast *newAst(nodeType nodetype, ast *l, ast *r)
+ast *ast_new_node(ast_node_type node_type, ast *l, ast *r)
 {
     ast *a = malloc(sizeof(ast));
     if (!a) {
         log_err("Memoria agotada\n");
         exit(0);
     }
-    a->nodetype = nodetype;
+    a->node_type = node_type;
     a->l = l;
     a->r = r;
-	a->value = NULL;
+    a->value = NULL;
     return a;
 }
 
-ast *newInt(long i)
+ast *ast_new_integer(long i)
 {
     ast *a = malloc(sizeof(ast));
     if (!a) {
         log_err("Memoria agotada\n");
         exit(0);
     }
-    a->nodetype = NODE_INT;
-    latValue *val = malloc(sizeof(latValue));
+    a->node_type = NODE_INT;
+    ast_value *val = malloc(sizeof(ast_value));
     val->t = VALUE_INT;
     val->v.i = i;
     a->value = val;
     return a;
 }
 
-ast *newNum(double d)
+ast *ast_new_decimal(double d)
 {
     ast *a = malloc(sizeof(ast));
     if (!a) {
         log_err("Memoria agotada\n");
         exit(0);
     }
-    a->nodetype = NODE_DECIMAL;
-    latValue *val = malloc(sizeof(latValue));
+    a->node_type = NODE_DECIMAL;
+    ast_value *val = malloc(sizeof(ast_value));
     val->t = VALUE_DOUBLE;
     val->v.d = d;
     a->value = val;
     return a;
 }
 
-ast *newBool(int b)
+ast *ast_new_bool(int b)
 {
     ast *a = malloc(sizeof(ast));
     if (!a) {
         log_err("Memoria agotada\n");
         exit(0);
     }
-    a->nodetype = NODE_BOOLEAN;
-    latValue *val = malloc(sizeof(latValue));
+    a->node_type = NODE_BOOLEAN;
+    ast_value *val = malloc(sizeof(ast_value));
     val->t = VALUE_BOOL;
     val->v.b = b;
     a->value = val;
     return a;
 }
 
-ast *newChar(char *c, size_t l)
+ast *ast_new_char(char *c, size_t l)
 {
     ast *a = malloc(sizeof(ast));
     if (!a) {
         log_err("Memoria agotada\n");
         exit(0);
     }
-    a->nodetype = NODE_CHAR;
-    latValue *val = malloc(sizeof(latValue));
+    a->node_type = NODE_CHAR;
+    ast_value *val = malloc(sizeof(ast_value));
     val->t = VALUE_CHAR;
-	char tmp = ' ';
-	switch (c[0])
-	{
-	case '\\':{
-		switch (c[1])
-		{
-		case 'a':{ tmp = '\a'; } break;
-		case 'b':{ tmp = '\b'; } break;
-		case 'f':{ tmp = '\f'; } break;
-		case 'n':{ tmp = '\n'; } break;
-		case 'r':{ tmp = '\r'; } break;
-		case 't':{ tmp = '\t'; } break;
-		case 'v':{ tmp = '\v'; } break;
-		default: tmp = c[0]; break;
-		}
-	}
-	break;
-	default:
-		tmp = c[0];
-		break;
-	}
-	val->v.c = tmp;
+    char tmp = ' ';
+    switch (c[0])
+    {
+    case '\\':{
+        switch (c[1])
+        {
+        case 'a':{ tmp = '\a'; } break;
+        case 'b':{ tmp = '\b'; } break;
+        case 'f':{ tmp = '\f'; } break;
+        case 'n':{ tmp = '\n'; } break;
+        case 'r':{ tmp = '\r'; } break;
+        case 't':{ tmp = '\t'; } break;
+        case 'v':{ tmp = '\v'; } break;
+        default: tmp = c[0]; break;
+        }
+    }
+    break;
+    default:
+        tmp = c[0];
+        break;
+    }
+    val->v.c = tmp;
     a->value = val;
     return a;
 }
 
-ast *newStr(const char *s)
+ast *ast_new_string(const char *s)
 {
     ast *a = malloc(sizeof(ast));
     if (!a) {
         log_err("Memoria agotada\n");
         exit(0);
     }
-    a->nodetype = NODE_STRING;
-    latValue *val = malloc(sizeof(latValue));
+    a->node_type = NODE_STRING;
+    ast_value *val = malloc(sizeof(ast_value));
     val->t = VALUE_STRING;
     val->v.s = parse_string(s, strlen(s));
     a->value = val;
     return a;
 }
 
-ast *newRef(char *s)
+ast *ast_new_identifier(char *s)
 {
     ast *a = malloc(sizeof(ast));
     if (!a) {
         log_err("Memoria agotada\n");
         exit(0);
     }
-    a->nodetype = NODE_SYMBOL;
-	latValue *val = malloc(sizeof(latValue));
-	val->t = VALUE_STRING;
-	val->v.s = strdup0(s);
-	a->value = val;
+    a->node_type = NODE_SYMBOL;
+    ast_value *val = malloc(sizeof(ast_value));
+    val->t = VALUE_STRING;
+    val->v.s = strdup0(s);
+    a->value = val;
     return a;
 }
 
-ast *newAsgn(ast *v, ast *s)
+ast *ast_new_assignment(ast *v, ast *s)
 {
     ast *a = malloc(sizeof(ast));
     if (!a) {
         log_err("Memoria agotada\n");
         exit(0);
     }
-    a->nodetype = NODE_ASSIGMENT;
+    a->node_type = NODE_ASSIGMENT;
     a->l = v;
     a->r = s;
-	a->value = NULL;
+    a->value = NULL;
     return a;
 }
 
-ast *newIf(ast *cond, ast *entonces, ast *sino)
+ast *ast_new_node_if(ast *cond, ast *th, ast *el)
 {
-    nodeIf *a = malloc(sizeof(nodeIf));
+    ast_node_if *a = malloc(sizeof(ast_node_if));
     if (!a) {
         log_err("Memoria agotada\n");
         exit(0);
     }
-    a->nodetype = NODE_IF;
+    a->node_type = NODE_IF;
     a->cond = cond;
-    a->entonces = entonces;
-    a->sino = sino;
+    a->th = th;
+    a->el = el;
     return (ast *)a;
 }
 
-ast *newSwitch(nodeType nodetype, ast *cond, ast *entonces, ast *sino)
+/*
+ast *newSwitch(ast_node_type node_type, ast *cond, ast *th, ast *el)
 {
-    nodeIf *a = malloc(sizeof(nodeIf));
+    ast_node_if *a = malloc(sizeof(ast_node_if));
     if (!a) {
         log_err("Memoria agotada\n");
         exit(0);
     }
-    a->nodetype = nodetype;
+    a->node_type = node_type;
     a->cond = cond;
-    a->entonces = entonces;
-    a->sino = sino;
+    a->th = th;
+    a->el = el;
     return (ast *)a;
 }
 
-ast *newCase(nodeType nodetype, ast *cond, ast *entonces, ast *sino)
+ast *newCase(ast_node_type node_type, ast *cond, ast *th, ast *el)
 {
-    nodeIf *a = malloc(sizeof(nodeIf));
+    ast_node_if *a = malloc(sizeof(ast_node_if));
     if (!a) {
         log_err("Memoria agotada\n");
         exit(0);
     }
-    a->nodetype = nodetype;
+    a->node_type = node_type;
     a->cond = cond;
-    a->entonces = entonces;
-    a->sino = sino;
+    a->th = th;
+    a->el = el;
     return (ast *)a;
 }
+*/
 
-ast *newWhile(ast *cond, ast *stmts)
+ast *ast_new_node_while(ast *cond, ast *stmts)
 {
     ast *a = malloc(sizeof(ast));
     if (!a) {
         log_err("Memoria agotada\n");
         exit(0);
     }
-    a->nodetype = NODE_WHILE;
+    a->node_type = NODE_WHILE;
     a->l = cond;
     a->r = stmts;
-	a->value = NULL;
+    a->value = NULL;
     return a;
 }
 
-ast *newDo(ast *cond, ast *stmts)
+ast *ast_new_node_do(ast *cond, ast *stmts)
 {
     ast *a = malloc(sizeof(ast));
     if (!a) {
         log_err("Memoria agotada\n");
         exit(0);
     }
-    a->nodetype = NODE_DO;
+    a->node_type = NODE_DO;
     a->l = cond;
     a->r = stmts;
-	a->value = NULL;
+    a->value = NULL;
     return a;
 }
 
-ast *newFor(ast *dec, ast *cond, ast *inc, ast *stmts)
+ast *ast_new_node_for(ast *dec, ast *cond, ast *inc, ast *stmts)
 {
     ast *a = malloc(sizeof(ast));
     if (!a) {
         log_err("Memoria agotada\n");
         exit(0);
     }
-	a->nodetype = NODE_BLOCK;
-	a->l = newWhile(cond, newAst(NODE_BLOCK, inc, stmts));
-	a->r = dec;
-	a->value = NULL;
-	return a;
+    a->node_type = NODE_BLOCK;
+    a->l = ast_new_node_while(cond, ast_new_node(NODE_BLOCK, inc, stmts));
+    a->r = dec;
+    a->value = NULL;
+    return a;
 }
 
-/* define una funcion */
-ast *doDef(ast *s, ast *syms, ast *func)
+ast *ast_new_node_function(ast *s, ast *syms, ast *func)
 {
-	ast *a = malloc(sizeof(ast));
+    ast *a = malloc(sizeof(ast));
     if (!a) {
         log_err("Memoria agotada\n");
         exit(0);
     }
-	a->nodetype = NODE_ASSIGMENT;
-	a->l = newAst(NODE_USER_FUNCTION, syms, func);
-	a->r = s;
-	a->value = NULL;
-	return a;
+    a->node_type = NODE_ASSIGMENT;
+    a->l = ast_new_node(NODE_USER_FUNCTION, syms, func);
+    a->r = s;
+    a->value = NULL;
+    return a;
 }
 
-void treeFree(ast *a){
-	if (a){
-		switch (a->nodetype)
-		{
-		case NODE_BLOCK:
-		case NODE_LIST_BODY:
-			if (a->r)
-				treeFree(a->r);
-			if (a->l)
-				treeFree(a->l);
-			break;
-		default:
-			if (a->value)
-				free(a->value);
-			free(a);
-			break;
-		}
-	}
+void ast_tree_free(ast *a){
+    if (a){
+        switch (a->node_type)
+        {
+        case NODE_BLOCK:
+        case NODE_LIST_BODY:
+            if (a->r)
+                ast_tree_free(a->r);
+            if (a->l)
+                ast_tree_free(a->l);
+            break;
+        default:
+            if (a->value)
+                free(a->value);
+            free(a);
+            break;
+        }
+    }
 }
 
-lat_object *lat_parse_tree(lat_vm *vm, ast *tree)
+lat_object *ast_parse_tree(lat_vm *vm, ast *tree)
 {
     lat_bytecode *bcode = (lat_bytecode *)malloc(sizeof(lat_bytecode) * MAX_BYTECODE_FUNCTION);
-    int i = lat_parse_node(vm, tree, bcode, 0);
+    int i = ast_parse_node(vm, tree, bcode, 0);
     dbc(OP_END, 0, 0, NULL);
-	treeFree(tree);
+    ast_tree_free(tree);
     return lat_define_function(vm, bcode);
 }
 
 int nested = -1;
 
-int lat_parse_node(lat_vm *vm, ast *node, lat_bytecode *bcode, int i)
+int ast_parse_node(lat_vm *vm, ast *node, lat_bytecode *bcode, int i)
 {
-	int temp[8] = { 0 };
-	lat_bytecode *function_bcode = NULL;
-	int fi = 0;
-	switch (node->nodetype) {
+    int temp[8] = { 0 };
+    lat_bytecode *function_bcode = NULL;
+    int fi = 0;
+	switch (node->node_type) {
 	case NODE_BLOCK:
 	{
 		if (node->r){
@@ -438,19 +439,19 @@ int lat_parse_node(lat_vm *vm, ast *node, lat_bytecode *bcode, int i)
 	break;
 	case NODE_IF:
 	{
-		nodeIf *nIf = ((nodeIf *)node);
+		ast_node_if *nIf = ((ast_node_if *)node);
 		pn(vm, nIf->cond);
 		dbc(OP_MOV, 2, 255, NULL);
 		dbc(OP_MOV, 3, 255, NULL);
 		dbc(OP_NOT, 2, 0, NULL);
 		temp[0] = i;
 		dbc(OP_NOP, 0, 0, NULL);
-		pn(vm, nIf->entonces);
+		pn(vm, nIf->th);
 		bcode[temp[0]] = lat_bc(OP_JMPIF, i, 2, NULL);
-		if (nIf->sino){
+		if (nIf->el){
 			temp[1] = i;
 			dbc(OP_NOP, 0, 0, NULL);
-			pn(vm, nIf->sino);
+			pn(vm, nIf->el);
 			bcode[temp[1]] = lat_bc(OP_JMPIF, i, 3, NULL);
 		}
 	}
@@ -554,18 +555,18 @@ int lat_parse_node(lat_vm *vm, ast *node, lat_bytecode *bcode, int i)
 			pn(vm, node->r);
 		}
 	}
-	break;
-	/*case NS:
-	{
-		dbc(OP_NS, 255, 0, NULL);
-		pn(node->l);
-		dbc(OP_ENDNS, 255, 0, NULL);
-	}
-	break;*/
-	default:
-		printf("nodetype:%i\n", node->nodetype);
-		return 0;
-	}
-	//printf("i = %i\n", i);
-	return i;
+	break;	
+    /*case NS:
+    {
+        dbc(OP_NS, 255, 0, NULL);
+        pn(node->l);
+        dbc(OP_ENDNS, 255, 0, NULL);
+    }
+    break;*/
+    default:
+        printf("ast_node_type:%i\n", node->node_type);
+        return 0;
+    }
+    //printf("i = %i\n", i);
+    return i;
 }

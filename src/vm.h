@@ -37,21 +37,6 @@ typedef enum lat_ins {
 	OP_DEC
 } lat_ins;
 
-/*
-
-TODO:Remove
-static char* ins_str[] = {
-	"END", "NOP", "PUSH", "POP", "GET", "SET",
-	"STORE_CHAR", "STORE_INT", "STORE_DOUBLE",
-	"STORE_STR", "STORE_BOOL", "STORE_LIST",
-	"PUSH_LIST", "POP_LIST", "MOV", "GLOBAL_NS",
-	"LOCAL_NS", "FN", "NS", "END_NS", "JMP",
-	"JMP_IF", "CALL", "NOT"
-};
-
-char * getOpIns(enum lat_ins ins);
-*/
-
 typedef struct lat_bytecode {
 	lat_ins ins;
 	int a;
@@ -119,4 +104,4 @@ lat_object *lat_not(lat_vm *vm, lat_object *o);
 lat_bytecode lat_bc(lat_ins i, int a, int b, void *meta);
 void lat_call_func(lat_vm *vm, lat_object *func);
 
-#endif // !_VM_H_
+#endif //_VM_H_

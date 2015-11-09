@@ -49,6 +49,18 @@
 		<Unit filename="src/lex.c">
 			<Option compilerVar="CC" />
 		</Unit>
+		<Unit filename="src/liblist.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="src/liblist.h" />
+		<Unit filename="src/libmem.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="src/libmem.h" />
+		<Unit filename="src/libstack.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="src/libstack.h" />
 		<Unit filename="src/libstring.c">
 			<Option compilerVar="CC" />
 		</Unit>
