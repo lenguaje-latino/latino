@@ -11,6 +11,5 @@ c='a'
 imprimir(c)
 s="hola latino"
 imprimir(s)
-#todo: pendiente implementar constantes
 PI=3.1416
 imprimir(PI)

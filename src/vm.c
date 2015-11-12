@@ -1,9 +1,8 @@
-#include "vm.h"
-
 #include <stdlib.h>
 #include <stddef.h>
 #include <stdio.h>
 
+#include "vm.h"
 #include "utils.h"
 
 lat_vm *lat_make_vm()
@@ -13,10 +12,8 @@ lat_vm *lat_make_vm()
 	ret->all_objects = make_list();
 	ret->gc_objects = make_list();
 	ret->memory_usage = 0;
-
 	ret->true_object = lat_bool(ret, true);
 	ret->false_object = lat_bool(ret, false);
-
 	//memset(ret->regs, 0, 256);
 	memset(ret->regs, 0, 1024);
 	memset(ret->ctx_stack, 0, 256);
@@ -35,7 +32,6 @@ lat_vm *lat_make_vm()
 	lat_set_ctx(lat_get_current_ctx(ret), lat_str(ret, ">"), lat_define_c_function(ret, lat_gt));
 	lat_set_ctx(lat_get_current_ctx(ret), lat_str(ret, ">="), lat_define_c_function(ret, lat_gte));
 	lat_set_ctx(lat_get_current_ctx(ret), lat_str(ret, "gc"), lat_define_c_function(ret, lat_gc));
-
 	return ret;
 }
 
@@ -49,7 +45,6 @@ lat_object *lat_pop_stack(lat_vm *vm)
 	list_node *n = vm->stack->next;
 	if (n->data == NULL) {
 		log_err("Pila vacia");
-		exit(1);
 	}
 	else {
 		n->prev->next = n->next;
@@ -70,7 +65,6 @@ lat_object *lat_pop_list(lat_object *list)
 	list_node *n = ((list_node *)list)->next;
 	if (n->data == NULL) {
 		log_err("Lista vacia");
-		exit(1);
 	}
 	else {
 		n->prev->next = n->next;
@@ -84,7 +78,6 @@ void lat_push_ctx(lat_vm *vm)
 {
 	if (vm->ctx_stack_pointer >= 255) {
 		log_err("Namespace desborde de la pila");
-		exit(1);
 	}
 	vm->ctx_stack[vm->ctx_stack_pointer + 1] = lat_clone_object(vm, vm->ctx_stack[vm->ctx_stack_pointer]);
 	vm->ctx_stack_pointer++;
@@ -94,7 +87,6 @@ void lat_pop_ctx(lat_vm *vm)
 {
 	if (vm->ctx_stack_pointer == 0) {
 		log_err("Namespace pila vacia");
-		exit(1);
 	}
 	lat_delete_object(vm, vm->ctx_stack[vm->ctx_stack_pointer--]);
 }
@@ -103,7 +95,6 @@ void lat_push_predefined_ctx(lat_vm *vm, lat_object *ctx)
 {
 	if (vm->ctx_stack_pointer >= 255) {
 		log_err("Namespace desborde de la pila");
-		exit(1);
 	}
 	vm->ctx_stack[++vm->ctx_stack_pointer] = ctx;
 }
@@ -112,7 +103,6 @@ lat_object *lat_pop_predefined_ctx(lat_vm *vm)
 {
 	if (vm->ctx_stack_pointer == 0) {
 		log_err("Namespace pila vacia");
-		exit(1);
 	}
 	return vm->ctx_stack[vm->ctx_stack_pointer--];
 }
@@ -196,7 +186,6 @@ void lat_nth_list(lat_vm *vm)
 		}
 	}
 	log_err("Lista: indice fuera de rango");
-	exit(1);
 }
 
 static void lat_print_elem(lat_vm *vm)
@@ -320,7 +309,6 @@ void lat_add(lat_vm *vm)
 	lat_object *b = lat_pop_stack(vm);
 	if ((a->type != T_INT && a->type != T_DOUBLE) || (b->type != T_INT && b->type != T_DOUBLE)) {
 		log_err("Intento de aplicar operador \"+\" en tipos invalidos");
-		exit(1);
 	}
 	if (a->type == T_DOUBLE || b->type == T_DOUBLE) {
 		vm->regs[255] = lat_double(vm, lat_get_double_value(a) + lat_get_double_value(b));
@@ -336,7 +324,6 @@ void lat_sub(lat_vm *vm)
 	lat_object *b = lat_pop_stack(vm);
 	if ((a->type != T_INT && a->type != T_DOUBLE) || (b->type != T_INT && b->type != T_DOUBLE)) {
 		log_err("Intento de aplicar operador \"-\" en tipos invalidos");
-		exit(1);
 	}
 	if (a->type == T_DOUBLE || b->type == T_DOUBLE) {
 		vm->regs[255] = lat_double(vm, lat_get_double_value(a) - lat_get_double_value(b));
@@ -352,7 +339,6 @@ void lat_mul(lat_vm *vm)
 	lat_object *b = lat_pop_stack(vm);
 	if ((a->type != T_INT && a->type != T_DOUBLE) || (b->type != T_INT && b->type != T_DOUBLE)) {
         log_err("Intento de aplicar operador \"*\" en tipos invalidos");
-		exit(1);
 	}
 	if (a->type == T_DOUBLE || b->type == T_DOUBLE) {
 		vm->regs[255] = lat_double(vm, lat_get_double_value(a) * lat_get_double_value(b));
@@ -367,14 +353,12 @@ void lat_div(lat_vm *vm)
 	lat_object *a = lat_pop_stack(vm);
 	lat_object *b = lat_pop_stack(vm);
 	if ((a->type != T_INT && a->type != T_DOUBLE) || (b->type != T_INT && b->type != T_DOUBLE)) {
-          log_err("Intento de aplicar operador \"/\" en tipos invalidos");
-		exit(1);
+	    log_err("Intento de aplicar operador \"/\" en tipos invalidos");
 	}
 	if (a->type == T_DOUBLE || b->type == T_DOUBLE) {
 		double tmp = lat_get_double_value(b);
 		if (tmp == 0){
 			log_err("Division por cero");
-			exit(1);
 		}
 		else{
 			vm->regs[255] = lat_double(vm, (lat_get_double_value(a) / tmp));
@@ -384,7 +368,6 @@ void lat_div(lat_vm *vm)
 		int tmp = lat_get_int_value(b);
 		if (tmp == 0){
 			log_err("Division por cero");
-			exit(1);
 		}
 		else{
 			vm->regs[255] = lat_int(vm, (lat_get_int_value(a) / tmp));
@@ -398,12 +381,10 @@ void lat_mod(lat_vm *vm)
 	lat_object *b = lat_pop_stack(vm);
 	if (a->type != T_INT || b->type != T_INT) {
         log_err("Intento de aplicar operador \"%%\" en tipos invalidos");
-		exit(1);
 	}
 	int tmp = lat_get_int_value(b);
 	if (tmp == 0){
 		log_err("Modulo por cero");
-		exit(1);
 	}
 	else{
 		vm->regs[255] = lat_int(vm, (lat_get_int_value(a) % tmp));
@@ -416,7 +397,6 @@ void lat_neq(lat_vm *vm)
 	lat_object *b = lat_pop_stack(vm);
 	if ((a->type != T_INT && a->type != T_DOUBLE) || (b->type != T_INT && b->type != T_DOUBLE)) {
 		log_err("Intento de aplicar operador \"!=\" en tipos invalidos");
-		exit(1);
 	}
 	if (a->type == T_DOUBLE || b->type == T_DOUBLE) {
 		vm->regs[255] = (vm, lat_get_double_value(a) != lat_get_double_value(b)) ? vm->true_object : vm->false_object;
@@ -432,7 +412,6 @@ void lat_eq(lat_vm *vm)
 	lat_object *b = lat_pop_stack(vm);
 	if ((a->type != T_INT && a->type != T_DOUBLE) || (b->type != T_INT && b->type != T_DOUBLE)) {
 		log_err("Intento de aplicar operador \"==\" en tipos invalidos");
-		exit(1);
 	}
 	if (a->type == T_DOUBLE || b->type == T_DOUBLE) {
 		vm->regs[255] = (vm, lat_get_double_value(a) == lat_get_double_value(b)) ? vm->true_object : vm->false_object;
@@ -448,7 +427,6 @@ void lat_lt(lat_vm *vm)
 	lat_object *b = lat_pop_stack(vm);
 	if ((a->type != T_INT && a->type != T_DOUBLE) || (b->type != T_INT && b->type != T_DOUBLE)) {
 		log_err("Intento de aplicar operador \"<\" en tipos invalidos");
-		exit(1);
 	}
 	if (a->type == T_DOUBLE || b->type == T_DOUBLE) {
 		vm->regs[255] = (vm, lat_get_double_value(a) < lat_get_double_value(b)) ? vm->true_object : vm->false_object;
@@ -464,7 +442,6 @@ void lat_lte(lat_vm *vm)
 	lat_object *b = lat_pop_stack(vm);
 	if ((a->type != T_INT && a->type != T_DOUBLE) || (b->type != T_INT && b->type != T_DOUBLE)) {
 		log_err("Intento de aplicar operador \"<=\" en tipos invalidos");
-		exit(1);
 	}
 	if (a->type == T_DOUBLE || b->type == T_DOUBLE) {
 		vm->regs[255] = (vm, lat_get_double_value(a) <= lat_get_double_value(b)) ? vm->true_object : vm->false_object;
@@ -480,7 +457,6 @@ void lat_gt(lat_vm *vm)
 	lat_object *b = lat_pop_stack(vm);
 	if ((a->type != T_INT && a->type != T_DOUBLE) || (b->type != T_INT && b->type != T_DOUBLE)) {
 		log_err("Intento de aplicar operador \">\" en tipos invalidos");
-		exit(1);
 	}
 	if (a->type == T_DOUBLE || b->type == T_DOUBLE) {
 		vm->regs[255] = (vm, lat_get_double_value(a) > lat_get_double_value(b)) ? vm->true_object : vm->false_object;
@@ -496,7 +472,6 @@ void lat_gte(lat_vm *vm)
 	lat_object *b = lat_pop_stack(vm);
 	if ((a->type != T_INT && a->type != T_DOUBLE) || (b->type != T_INT && b->type != T_DOUBLE)) {
 		log_err("Intento de aplicar operador \">=\" en tipos invalidos");
-		exit(1);
 	}
 	if (a->type == T_DOUBLE || b->type == T_DOUBLE) {
 		vm->regs[255] = (vm, lat_get_double_value(a) >= lat_get_double_value(b)) ? vm->true_object : vm->false_object;
@@ -510,7 +485,6 @@ lat_object *lat_not(lat_vm *vm, lat_object *o)
 {
 	if (o->type != T_BOOL && o->type != T_INT) {
 		log_err("Intento de negar tipo invalido");
-		exit(1);
 	}
 	return lat_get_bool_value(o) ? vm->false_object : vm->true_object;
 }
@@ -710,6 +684,5 @@ void lat_call_func(lat_vm *vm, lat_object *func)
 	else {
 		debug("func->type: %d", func->type);
 		log_err("Object not a function");
-		exit(1);
 	}
 }

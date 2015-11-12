@@ -27,6 +27,7 @@ int yyerror(struct YYLTYPE *yylloc_param, void *scanner, struct ast **root, cons
 %token <node> TNUMBER
 %token <node> TSTRING
 %token <node> TIDENTIFIER
+%token <node> TCONSTANT
 %token <token> TFUNC
 %token
     KIF
@@ -115,6 +116,7 @@ statement: /* empty */ { $$ = NULL; }
 
 declaration:
       TIDENTIFIER '=' expression { $$ = ast_new_assignment($3, $1); }
+    | TCONSTANT '=' constant_expression { $$ = ast_new_assignment($3, $1); }
     | unary_expression { $$ = $1; }
     ;
 
@@ -185,6 +187,7 @@ function_call:
 
 primary_expression:
       TIDENTIFIER { $$ = $1; }
+    | TCONSTANT { $$ = $1; }
     | KTRUE { $$ = ast_new_bool(1); }
     | KFALSE { $$ = ast_new_bool(0); }
     | constant_expression  { $$ = $1; }

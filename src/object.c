@@ -13,7 +13,6 @@ void lat_set_ctx(lat_object *ns, lat_object *name, lat_object *o)
 	if (ns->type != T_INSTANCE) {
 		debug("ns->type: %d", ns->type);
 		log_err("Namespace no es una instancia");
-		exit(1);
 	}
 	else {
 		//printf("set_ctx: %s\n", lat_get_str_value(name));
@@ -27,7 +26,6 @@ lat_object *lat_get_ctx(lat_object *ns, lat_object *name)
 	if (ns->type != T_INSTANCE) {
 		debug("ns->type: %d", ns->type);
 		log_err("Namespace is not an instance");
-		exit(1);
 	}
 	else {
 		//printf("get_ctx: %s\n", lat_get_str_value(name));
@@ -35,7 +33,6 @@ lat_object *lat_get_ctx(lat_object *ns, lat_object *name)
 		lat_object *ret = get_hash(h, lat_get_str_value(name));
 		if (ret == NULL) {
 			log_err("Variable \"%s\" indefinida", lat_get_str_value(name));
-			exit(1);
 		}
 		return ret;
 	}
@@ -46,7 +43,6 @@ int lat_ctx_has(lat_object *ns, lat_object *name)
 	if (ns->type != T_INSTANCE) {
 		debug("ns->type: %d", ns->type);
 		log_err("Namespace no es una instancia");
-		exit(1);
 	}
 	else {
 		hash_map *h = ns->data.instance;
@@ -75,7 +71,6 @@ lat_object *lat_instance(lat_vm *vm)
 	ret->type = T_INSTANCE;
 	ret->data_size = sizeof(hash_map *);
 	ret->data.instance = make_hash_map();
-	/*no collect instance types*/
 	return ret;
 }
 
@@ -85,8 +80,8 @@ lat_object *lat_char(lat_vm *vm, char val)
 	ret->type = T_CHAR;
 	ret->data_size = sizeof(char);
 	ret->data.c = val;
-	vm->memory_usage += ret->data_size;
-	lat_gc_add_object(vm, ret);
+	//vm->memory_usage += ret->data_size;
+	//lat_gc_add_object(vm, ret);
 	return ret;
 }
 
@@ -97,8 +92,8 @@ lat_object *lat_int(lat_vm *vm, long val)
 	ret->data_size = sizeof(long);
 	ret->data.i = val;
 	//lat_mark_object(ret, 2);
-	vm->memory_usage += ret->data_size;
-	lat_gc_add_object(vm, ret);
+	//vm->memory_usage += ret->data_size;
+	//lat_gc_add_object(vm, ret);
 	return ret;
 }
 
@@ -108,8 +103,8 @@ lat_object *lat_double(lat_vm *vm, double val)
 	ret->type = T_DOUBLE;
 	ret->data_size = sizeof(double);
 	ret->data.d = val;
-	vm->memory_usage += ret->data_size;
-	lat_gc_add_object(vm, ret);
+	//vm->memory_usage += ret->data_size;
+	//lat_gc_add_object(vm, ret);
 	return ret;
 }
 
@@ -118,7 +113,7 @@ lat_object *lat_str(lat_vm *vm, char *val)
     lat_object *ret = lat_str_new(val, strlen(val));
 	/*no collect str types*/
 	//vm->memory_usage += ret->data_size;
-	lat_mark_object(ret, 3);
+	//lat_mark_object(ret, 3);
 	return ret;
 }
 
@@ -236,7 +231,7 @@ void lat_delete_object(lat_vm *vm, lat_object *o)
 	case T_INT:
 	case T_DOUBLE:
 	case T_BOOL:
-		vm->memory_usage -= o->data_size;
+		//vm->memory_usage -= o->data_size;
 		break;
 	case T_STR:
 		//if (o->data.str != NULL){
@@ -371,7 +366,6 @@ char lat_get_char_value(lat_object *o)
 		return o->data.c;
 	}
 	log_err("Object no es un tipo caracter");
-	exit(1);
 }
 
 int lat_get_int_value(lat_object *o)
@@ -380,7 +374,6 @@ int lat_get_int_value(lat_object *o)
 		return o->data.i;
 	}
 	log_err("Object no es un tipo entero");
-	exit(1);
 }
 
 double lat_get_double_value(lat_object *o)
@@ -392,7 +385,6 @@ double lat_get_double_value(lat_object *o)
 		return (double)o->data.i;
 	}
 	log_err("Object no es un tipo numerico");
-	exit(1);
 }
 
 char *lat_get_str_value(lat_object *o)
@@ -401,7 +393,6 @@ char *lat_get_str_value(lat_object *o)
 		return o->data.str;
 	}
 	log_err("Object no es un tipo cadena");
-	exit(1);
 }
 
 bool lat_get_bool_value(lat_object *o)
@@ -413,7 +404,6 @@ bool lat_get_bool_value(lat_object *o)
 		return o->data.i;
 	}
 	log_err("Object no es un tipo logico");
-	exit(1);
 }
 
 list_node *lat_get_list_value(lat_object *o)
@@ -422,7 +412,6 @@ list_node *lat_get_list_value(lat_object *o)
 		return o->data.list;
 	}
 	log_err("Object no es un tipo lista");
-	exit(1);
 }
 
 void *lat_get_struct_value(lat_object *o)
@@ -431,5 +420,4 @@ void *lat_get_struct_value(lat_object *o)
 		return o->data.list;
 	}
 	log_err("Object no es un tipo estructura");
-	exit(1);
 }

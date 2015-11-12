@@ -1,6 +1,7 @@
 #include "khash.h"
 #include "latino.h"
 #include "object.h"
+#include "libmem.h"
 
 KHASH_MAP_INIT_INT64(env, lat_object);
 typedef khash_t(env) lat_env;
@@ -17,7 +18,6 @@ sym_hash(struct sym_key key)
 	const char *s = key.ptr;
 	khint_t h;
 	size_t len = key.len;
-
 	h = *s++;
 	while (len--) {
 		h = (h << 5) - h + (khint_t)*s++;
@@ -37,7 +37,7 @@ KHASH_INIT(sym, struct sym_key, lat_object*, 1, sym_hash, sym_eq);
 static khash_t(sym) *sym_table;
 
 static lat_object* str_new(const char *p, size_t len){
-	lat_object *str =  malloc(sizeof(lat_object));
+	lat_object *str =  lmalloc(sizeof(lat_object));
 	str->type = T_STR;
 	str->data_size = len;
     str->data.str = p;
@@ -49,7 +49,6 @@ static lat_object* str_intern(const char *p, size_t len){
 	struct sym_key key;
 	int ret;
 	lat_object *str;
-
 	if(!sym_table){
 		sym_table = kh_init(sym);
 	}
@@ -62,7 +61,6 @@ static lat_object* str_intern(const char *p, size_t len){
 	str = str_new(p, len);
 	kh_key(sym_table, k).ptr = str->data.str;
 	kh_value(sym_table, k) = str;
-
 	return str;
 }
 

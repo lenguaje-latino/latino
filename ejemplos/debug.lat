@@ -1,11 +1,2 @@
-#pendiente ROMPER
-i=0
-mientras (i < 10)
-    si (i == 5)
-         romper
-    fin
-    imprimir(i)
-    i++
-fin
-
-#Salida: 1234
+PI=3.1416
+imprimir(PI)

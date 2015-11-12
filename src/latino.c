@@ -11,7 +11,7 @@
 #include "lex.h"
 #include "ast.h"
 
-/* parser debugging */
+/* 1 para debuguear analizador */
 int yydebug = 0;
 int debug = 0;
 
@@ -68,7 +68,7 @@ ast *lat_parse_file(char *infile) {
 
 void lat_compile(lat_vm *vm)
 {
-	vm->regs[255] = ast_parse_tree(vm, lat_parse_expr(lat_get_str_value(lat_pop_stack(vm))));
+	vm->regs[255] = ast_parse_tree(vm, lat_parse_expr(lat_get_str_value(lat_pop_stack(vm))));	
 }
 
 void lat_import(lat_vm *vm)

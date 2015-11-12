@@ -50,70 +50,37 @@ extern int yydebug;
     TNUMBER = 260,
     TSTRING = 261,
     TIDENTIFIER = 262,
-    TFUNC = 263,
-    KIF = 264,
-    KEND = 265,
-    KELSE = 266,
-    KWHILE = 267,
-    KDO = 268,
-    KBREAK = 269,
-    KCONTINUE = 270,
-    KWHEN = 271,
-    KFUNCTION = 272,
-    KFROM = 273,
-    KBOOL = 274,
-    KRETURN = 275,
-    KTRUE = 276,
-    KFALSE = 277,
-    OP_GT = 278,
-    OP_LT = 279,
-    OP_GE = 280,
-    OP_LE = 281,
-    OP_EQ = 282,
-    OP_NEQ = 283,
-    OP_AND = 284,
-    OP_OR = 285,
-    OP_NEG = 286,
-    OP_INCR = 287,
-    OP_DECR = 288,
-    UMINUS = 289,
-    UNEG = 290
+    TCONSTANT = 263,
+    TFUNC = 264,
+    KIF = 265,
+    KEND = 266,
+    KELSE = 267,
+    KWHILE = 268,
+    KDO = 269,
+    KBREAK = 270,
+    KCONTINUE = 271,
+    KWHEN = 272,
+    KFUNCTION = 273,
+    KFROM = 274,
+    KBOOL = 275,
+    KRETURN = 276,
+    KTRUE = 277,
+    KFALSE = 278,
+    OP_GT = 279,
+    OP_LT = 280,
+    OP_GE = 281,
+    OP_LE = 282,
+    OP_EQ = 283,
+    OP_NEQ = 284,
+    OP_AND = 285,
+    OP_OR = 286,
+    OP_NEG = 287,
+    OP_INCR = 288,
+    OP_DECR = 289,
+    UMINUS = 290,
+    UNEG = 291
   };
 #endif
-/* Tokens.  */
-#define TINT 258
-#define TCHAR 259
-#define TNUMBER 260
-#define TSTRING 261
-#define TIDENTIFIER 262
-#define TFUNC 263
-#define KIF 264
-#define KEND 265
-#define KELSE 266
-#define KWHILE 267
-#define KDO 268
-#define KBREAK 269
-#define KCONTINUE 270
-#define KWHEN 271
-#define KFUNCTION 272
-#define KFROM 273
-#define KBOOL 274
-#define KRETURN 275
-#define KTRUE 276
-#define KFALSE 277
-#define OP_GT 278
-#define OP_LT 279
-#define OP_GE 280
-#define OP_LE 281
-#define OP_EQ 282
-#define OP_NEQ 283
-#define OP_AND 284
-#define OP_OR 285
-#define OP_NEG 286
-#define OP_INCR 287
-#define OP_DECR 288
-#define UMINUS 289
-#define UNEG 290
 
 /* Value type.  */
 

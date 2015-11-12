@@ -4,7 +4,7 @@
 #include "latino.h"
 #include "vm.h"
 
-/* data types */
+/* tipos de dato */
 typedef enum {
     VALUE_NULL,
     VALUE_BOOL,
@@ -14,9 +14,10 @@ typedef enum {
     VALUE_STRING
 } ast_value_type;
 
-/* values for data */
+/* valores de dato */
 typedef struct {
     ast_value_type t;
+	bool cst;	//constant
     union val {
         int b;
         long i;
@@ -27,7 +28,7 @@ typedef struct {
     } v;
 } ast_value;
 
-/* node types in the abstract syntax tree */
+/* tipos de nodos en arbol abstracto de sintaxis (abstract syntax tree) */
 typedef enum {
     NODE_ADD,
     NODE_SUB,
@@ -48,7 +49,7 @@ typedef enum {
     NODE_DO,
     NODE_SYMBOL,
     NODE_PARAM_LIST,
-	  NODE_FUNC_ARGS,
+	NODE_FUNC_ARGS,
     NODE_CALL_FUNCTION,
     NODE_USER_FUNCTION,
     NODE_RETURN,
@@ -59,7 +60,7 @@ typedef enum {
     NODE_BOOLEAN,
     NODE_AND,
     NODE_OR,
-	  NODE_NEG,
+	NODE_NEG,
     NODE_SWITCH,
     NODE_CASE,
     NODE_DEFAULT,
@@ -71,8 +72,8 @@ typedef enum {
 	NODE_DEC
 } ast_node_type;
 
-/* nodes in the abstract syntax tree */
-/* all have common initial ast_node_type */
+/* nodos en arbol abstacto de sintaxis (abstract syntax tree) */
+/* todos los nodos son inicializados con un tipo de nodo*/
 typedef struct ast {
     ast_node_type node_type;
     ast_value *value;
@@ -92,13 +93,14 @@ typedef union YYSTYPE {
 typedef struct {
     ast_node_type node_type;
     struct ast *cond;   /* condition */
-    struct ast *th; /* then branch or do list */
-    struct ast *el; /* else branch */
+    struct ast *th; /* instrucciones si la condicion es verdadera (then) */
+    struct ast *el; /* instrucciones si la condicion es falsa (else) */
 } ast_node_if ;
 
-/* build AST */
+/* metodos para construir AST */
 ast *ast_new_node(ast_node_type node_type, ast *l, ast *r);
 ast *ast_new_identifier(char *s);
+ast *ast_new_constant(char *s);
 ast *ast_new_assignment(ast *s, ast *v);
 ast *ast_new_integer(long i);
 ast *ast_new_decimal(double d);
@@ -109,7 +111,7 @@ ast *ast_new_node_while(ast *cond, ast *stmts);
 ast *ast_new_node_do(ast *cond, ast *stmts);
 ast *ast_new_node_for(ast *dec, ast *cond, ast *inc, ast *stmts);
 
-/* define a function */
+/* define una funcion */
 ast *ast_new_node_function(ast *name, ast *syms, ast *stmts);
 void ast_tree_free(ast *a);
 

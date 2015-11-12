@@ -1,8 +1,6 @@
 #ifndef _LATINO_H_
 #define _LATINO_H_ 1
 
-#define LATINO_HUGE 1
-
 #include <stdio.h>
 #include <math.h>
 #include <ctype.h>
@@ -39,16 +37,14 @@ defined(__ELF__)
 #define bool int
 #endif // bool
 
-/*
- * global variable
- */
 extern int debug;
 #define MAX_ERROR_LENGTH 1024
 #define MAX_BYTECODE_FUNCTION (1024*10)
 #define MAX_VIRTUAL_MEMORY (1024*10)
 #define MAX_STR_INTERN 64
+#define MAX_STACK_SIZE 255
 
-/* interface to the lexer */
+/* interface con flex */
 typedef struct YYLTYPE
 {
 	int first_line;
@@ -58,7 +54,6 @@ typedef struct YYLTYPE
 } YYLTYPE;
 
 #define YYLTYPE_IS_DECLARED 1
-/*struct ast;*/
 
 #define YY_NO_UNISTD_H 1
 

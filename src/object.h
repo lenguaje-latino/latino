@@ -11,7 +11,7 @@ typedef struct lat_object lat_object;
 
 typedef	struct lat_vm lat_vm;
 typedef enum lat_type {
-	T_NULL, //Throw an error when detected.
+	T_NULL, 
 	T_INSTANCE,
 	T_CHAR,
 	T_INT,
@@ -21,7 +21,7 @@ typedef enum lat_type {
 	T_LIST,
 	T_FUNC,
 	T_CFUNC,
-	T_STRUCT, //Arbitrary C struct.
+	T_STRUCT,
 } lat_type;
 
 typedef union lat_object_data {
@@ -41,6 +41,8 @@ struct lat_object {
 	lat_type type;
 	int marked;
 	size_t data_size;
+	bool is_constant;
+	int num_declared;
 	lat_object_data data;
 };
 
