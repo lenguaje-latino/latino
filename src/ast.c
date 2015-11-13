@@ -11,8 +11,7 @@
 
 int yyerror(struct YYLTYPE *yylloc_param, void *scanner, struct ast **root, const char *s)
 {
-    //log_err("%s at line %d", s, yylloc_param->first_line);
-    log_err("%s at line %d", s, yylloc_param->first_line);
+    log_err("%s at line %d", s, (yylloc_param->first_line + 1));
     return 0;
 }
 
@@ -347,7 +346,7 @@ int ast_parse_node(lat_vm *vm, ast *node, lat_bytecode *bcode, int i)
         lat_object *ret = lat_str(vm, node->r->value->v.s);
 		if (ret->num_declared < 0) {
 			ret->num_declared = 0;
-		}	
+		}
 		ret->is_constant = node->r->value->cst;
 		ret->num_declared++;
 		if (ret->is_constant && ret->num_declared > 1){

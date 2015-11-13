@@ -16,18 +16,29 @@
 #include "ast.h"
 #include "parse.h"
 
-#define YY_USER_ACTION yylloc->first_line = yylloc->last_line = yylineno;
+#define YY_USER_ACTION \
+    yylloc->first_line = yylloc->last_line; \
+    yylloc->first_column = yylloc->last_column; \
+    for(int i = 0; yytext[i] != '\0'; i++) { \
+        if(yytext[i] == '\n') { \
+            yylloc->last_line++; \
+            yylloc->last_column = 0; \
+        } \
+        else { \
+            yylloc->last_column++; \
+        } \
+    }
 
 int f(int token, yyscan_t scanner);
 
 %}
 
- /* float exponent */
+ /* exponente de punto flotante */
 EXP ([Ee][-+]?[0-9]+)
 
 %%
 
- /* single character ops */
+ /* operadores de un solo caracter */
 "+" |
 "-" |
 "*" |
@@ -44,7 +55,7 @@ EXP ([Ee][-+]?[0-9]+)
 "}" |
 "="     { return yytext[0]; }
 
- /* comparison operators */
+ /* operadores de comparacion */
 ">"     { return OP_GT; }
 "<"     { return OP_LT; }
 ">="    { return OP_GE; }
@@ -58,7 +69,7 @@ EXP ([Ee][-+]?[0-9]+)
 "++"	{ return OP_INCR; }
 "--"	{ return OP_DECR; }
 
- /* keywords */
+ /* palabras reservadas */
 "si"        { return KIF; }
 "fin"       { return KEND; }
 "sino"      { return KELSE; }
@@ -85,8 +96,8 @@ EXP ([Ee][-+]?[0-9]+)
 \"([^\\\"]|\\.)*\"     { yytext[strlen(yytext) - 1] = '\0'; yylval->node = ast_new_string(yytext+1);return TSTRING; }
 '([^'\\\n]|\\.)'       { yylval->node = ast_new_char(yytext+1, strlen(yytext)-2); return TCHAR; }
 "#".* /* ignore comments */
-\n                     { ; } /*ignore end of line */
-[ \t]+                 { ; } /* ignore whitespace tabs */
-.                      { ; } /* ignore bad characters */
+[\n]                   { yycolumn = 1; }
+[ \t]+                 { ; } /* ignora espacios en blanco y tabuladores */
+.                      { ; } /* ignora caracteres incorrectos */
 
 %%

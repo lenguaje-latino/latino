@@ -2,6 +2,7 @@
 /* bison -y -oparse.c parse.y */
 #define YYERROR_VERBOSE 1
 #define YYDEBUG 1
+#define YYLEX_PARAM &yylval, &yylloc
 
 #include <stddef.h>
 

@@ -7,13 +7,3 @@ mientras (i < 10)
     fin
     i = i + 1
 fin
-
-#pendiente ROMPER
-#mientras (V)
-#    imprimir(i)
-#    i = i + 1
-#    #i++
-#    si (i == 5)
-#         romper
-#    fin
-#fin
