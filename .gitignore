@@ -8,3 +8,4 @@ cmake_install.cmake
 
 #ignora archivo objeto
 *.o
+/nbproject/private/
