@@ -347,7 +347,7 @@ int ast_parse_node(lat_vm *vm, ast *node, lat_bytecode *bcode, int i)
         lat_object *ret = lat_str(vm, node->r->value->v.s);
 		if (ret->num_declared < 0) {
 			ret->num_declared = 0;
-		}	
+		}
 		ret->is_constant = node->r->value->cst;
 		ret->num_declared++;
 		if (ret->is_constant && ret->num_declared > 1){

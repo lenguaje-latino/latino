@@ -9,7 +9,7 @@
 #define FLEX_SCANNER
 #define YY_FLEX_MAJOR_VERSION 2
 #define YY_FLEX_MINOR_VERSION 5
-#define YY_FLEX_SUBMINOR_VERSION 39
+#define YY_FLEX_SUBMINOR_VERSION 35
 #if YY_FLEX_SUBMINOR_VERSION > 0
 #define FLEX_BETA
 #endif
@@ -159,7 +159,15 @@ typedef void* yyscan_t;
 
 /* Size of default input buffer. */
 #ifndef YY_BUF_SIZE
+#ifdef __ia64__
+/* On IA-64, the buffer size is 16k, not 8k.
+ * Moreover, YY_BUF_SIZE is 2*YY_READ_BUF_SIZE in the general case.
+ * Ditto for the __ia64__ case accordingly.
+ */
+#define YY_BUF_SIZE 32768
+#else
 #define YY_BUF_SIZE 16384
+#endif /* __ia64__ */
 #endif
 
 /* The state buf must be large enough to hold one state per character in the main buffer.
@@ -169,11 +177,6 @@ typedef void* yyscan_t;
 #ifndef YY_TYPEDEF_YY_BUFFER_STATE
 #define YY_TYPEDEF_YY_BUFFER_STATE
 typedef struct yy_buffer_state *YY_BUFFER_STATE;
-#endif
-
-#ifndef YY_TYPEDEF_YY_SIZE_T
-#define YY_TYPEDEF_YY_SIZE_T
-typedef size_t yy_size_t;
 #endif
 
 #define EOB_ACT_CONTINUE_SCAN 0
@@ -194,13 +197,6 @@ typedef size_t yy_size_t;
                     if ( yytext[yyl] == '\n' )\
                         --yylineno;\
             }while(0)
-    #define YY_LINENO_REWIND_TO(dst) \
-            do {\
-                const char *p;\
-                for ( p = yy_cp-1; p >= (dst); --p)\
-                    if ( *p == '\n' )\
-                        --yylineno;\
-            }while(0)
     
 /* Return all but the first "n" matched characters back to the input stream. */
 #define yyless(n) \
@@ -217,6 +213,11 @@ typedef size_t yy_size_t;
 	while ( 0 )
 
 #define unput(c) yyunput( c, yyg->yytext_ptr , yyscanner )
+
+#ifndef YY_TYPEDEF_YY_SIZE_T
+#define YY_TYPEDEF_YY_SIZE_T
+typedef size_t yy_size_t;
+#endif
 
 #ifndef YY_STRUCT_YY_BUFFER_STATE
 #define YY_STRUCT_YY_BUFFER_STATE
@@ -235,7 +236,7 @@ struct yy_buffer_state
 	/* Number of characters read into yy_ch_buf, not including EOB
 	 * characters.
 	 */
-	yy_size_t yy_n_chars;
+	int yy_n_chars;
 
 	/* Whether we "own" the buffer - i.e., we know we created it,
 	 * and can realloc() it to grow it, and should free() it to
@@ -314,7 +315,7 @@ static void yy_init_buffer (YY_BUFFER_STATE b,FILE *file ,yyscan_t yyscanner );
 
 YY_BUFFER_STATE yy_scan_buffer (char *base,yy_size_t size ,yyscan_t yyscanner );
 YY_BUFFER_STATE yy_scan_string (yyconst char *yy_str ,yyscan_t yyscanner );
-YY_BUFFER_STATE yy_scan_bytes (yyconst char *bytes,yy_size_t len ,yyscan_t yyscanner );
+YY_BUFFER_STATE yy_scan_bytes (yyconst char *bytes,int len ,yyscan_t yyscanner );
 
 void *yyalloc (yy_size_t ,yyscan_t yyscanner );
 void *yyrealloc (void *,yy_size_t ,yyscan_t yyscanner );
@@ -346,7 +347,7 @@ void yyfree (void * ,yyscan_t yyscanner );
 
 /* Begin user sect3 */
 
-#define yywrap(yyscanner) 1
+#define yywrap(n) 1
 #define YY_SKIP_YYWRAP
 
 typedef unsigned char YY_CHAR;
@@ -549,9 +550,9 @@ static yyconst flex_int32_t yy_rule_can_match_eol[51] =
 #define yymore() yymore_used_but_not_detected
 #define YY_MORE_ADJ 0
 #define YY_RESTORE_YY_MORE_OFFSET
-#line 1 "lex.l"
+#line 1 "/home/primi/src/latino/src/lex.l"
 #define YY_NO_UNISTD_H 1
-#line 10 "lex.l"
+#line 10 "/home/primi/src/latino/src/lex.l"
 
 /* flex -olex.c -i lex.l */
 #include <string.h>
@@ -566,7 +567,7 @@ static yyconst flex_int32_t yy_rule_can_match_eol[51] =
 int f(int token, yyscan_t scanner);
 
 /* float exponent */
-#line 570 "lex.c"
+#line 571 "lex.c"
 
 #define INITIAL 0
 
@@ -593,8 +594,8 @@ struct yyguts_t
     size_t yy_buffer_stack_max; /**< capacity of stack. */
     YY_BUFFER_STATE * yy_buffer_stack; /**< Stack as an array. */
     char yy_hold_char;
-    yy_size_t yy_n_chars;
-    yy_size_t yyleng_r;
+    int yy_n_chars;
+    int yyleng_r;
     char *yy_c_buf_p;
     int yy_init;
     int yy_start;
@@ -651,17 +652,13 @@ FILE *yyget_out (yyscan_t yyscanner );
 
 void yyset_out  (FILE * out_str ,yyscan_t yyscanner );
 
-yy_size_t yyget_leng (yyscan_t yyscanner );
+int yyget_leng (yyscan_t yyscanner );
 
 char *yyget_text (yyscan_t yyscanner );
 
 int yyget_lineno (yyscan_t yyscanner );
 
 void yyset_lineno (int line_number ,yyscan_t yyscanner );
-
-int yyget_column  (yyscan_t yyscanner );
-
-void yyset_column (int column_no ,yyscan_t yyscanner );
 
 YYSTYPE * yyget_lval (yyscan_t yyscanner );
 
@@ -705,7 +702,12 @@ static int input (yyscan_t yyscanner );
 
 /* Amount of stuff to slurp up with each read. */
 #ifndef YY_READ_BUF_SIZE
+#ifdef __ia64__
+/* On IA-64, the buffer size is 16k, not 8k */
+#define YY_READ_BUF_SIZE 16384
+#else
 #define YY_READ_BUF_SIZE 8192
+#endif /* __ia64__ */
 #endif
 
 /* Copy whatever the last rule matched to the standard output. */
@@ -809,6 +811,12 @@ YY_DECL
 	register int yy_act;
     struct yyguts_t * yyg = (struct yyguts_t*)yyscanner;
 
+#line 28 "/home/primi/src/latino/src/lex.l"
+
+
+ /* single character ops */
+#line 819 "lex.c"
+
     yylval = yylval_param;
 
     yylloc = yylloc_param;
@@ -839,13 +847,6 @@ YY_DECL
 		yy_load_buffer_state(yyscanner );
 		}
 
-	{
-#line 28 "lex.l"
-
-
- /* single character ops */
-#line 848 "lex.c"
-
 	while ( 1 )		/* loops until end-of-file is reached */
 		{
 		yy_cp = yyg->yy_c_buf_p;
@@ -862,7 +863,7 @@ YY_DECL
 yy_match:
 		do
 			{
-			register YY_CHAR yy_c = yy_ec[YY_SC_TO_UI(*yy_cp)] ;
+			register YY_CHAR yy_c = yy_ec[YY_SC_TO_UI(*yy_cp)];
 			if ( yy_accept[yy_current_state] )
 				{
 				yyg->yy_last_accepting_state = yy_current_state;
@@ -888,7 +889,7 @@ yy_find_action:
 
 		if ( yy_act != YY_END_OF_BUFFER && yy_rule_can_match_eol[yy_act] )
 			{
-			yy_size_t yyl;
+			int yyl;
 			for ( yyl = 0; yyl < yyleng; ++yyl )
 				if ( yytext[yyl] == '\n' )
 					   
@@ -910,158 +911,158 @@ do_action:	/* This label is used only to access EOF actions. */
 			goto yy_find_action;
 
 case 1:
-#line 32 "lex.l"
+#line 32 "/home/primi/src/latino/src/lex.l"
 case 2:
-#line 33 "lex.l"
+#line 33 "/home/primi/src/latino/src/lex.l"
 case 3:
-#line 34 "lex.l"
+#line 34 "/home/primi/src/latino/src/lex.l"
 case 4:
-#line 35 "lex.l"
+#line 35 "/home/primi/src/latino/src/lex.l"
 case 5:
-#line 36 "lex.l"
+#line 36 "/home/primi/src/latino/src/lex.l"
 case 6:
-#line 37 "lex.l"
+#line 37 "/home/primi/src/latino/src/lex.l"
 case 7:
-#line 38 "lex.l"
+#line 38 "/home/primi/src/latino/src/lex.l"
 case 8:
-#line 39 "lex.l"
+#line 39 "/home/primi/src/latino/src/lex.l"
 case 9:
-#line 40 "lex.l"
+#line 40 "/home/primi/src/latino/src/lex.l"
 case 10:
-#line 41 "lex.l"
+#line 41 "/home/primi/src/latino/src/lex.l"
 case 11:
-#line 42 "lex.l"
+#line 42 "/home/primi/src/latino/src/lex.l"
 case 12:
-#line 43 "lex.l"
+#line 43 "/home/primi/src/latino/src/lex.l"
 case 13:
-#line 44 "lex.l"
+#line 44 "/home/primi/src/latino/src/lex.l"
 case 14:
-#line 45 "lex.l"
+#line 45 "/home/primi/src/latino/src/lex.l"
 case 15:
 YY_RULE_SETUP
-#line 45 "lex.l"
+#line 45 "/home/primi/src/latino/src/lex.l"
 { return yytext[0]; }
 	YY_BREAK
 /* comparison operators */
 case 16:
 YY_RULE_SETUP
-#line 48 "lex.l"
+#line 48 "/home/primi/src/latino/src/lex.l"
 { return OP_GT; }
 	YY_BREAK
 case 17:
 YY_RULE_SETUP
-#line 49 "lex.l"
+#line 49 "/home/primi/src/latino/src/lex.l"
 { return OP_LT; }
 	YY_BREAK
 case 18:
 YY_RULE_SETUP
-#line 50 "lex.l"
+#line 50 "/home/primi/src/latino/src/lex.l"
 { return OP_GE; }
 	YY_BREAK
 case 19:
 YY_RULE_SETUP
-#line 51 "lex.l"
+#line 51 "/home/primi/src/latino/src/lex.l"
 { return OP_LE; }
 	YY_BREAK
 case 20:
 YY_RULE_SETUP
-#line 52 "lex.l"
+#line 52 "/home/primi/src/latino/src/lex.l"
 { return OP_NEQ; }
 	YY_BREAK
 case 21:
 YY_RULE_SETUP
-#line 53 "lex.l"
+#line 53 "/home/primi/src/latino/src/lex.l"
 { return OP_EQ; }
 	YY_BREAK
 case 22:
 YY_RULE_SETUP
-#line 54 "lex.l"
+#line 54 "/home/primi/src/latino/src/lex.l"
 { return OP_AND; }
 	YY_BREAK
 case 23:
 YY_RULE_SETUP
-#line 55 "lex.l"
+#line 55 "/home/primi/src/latino/src/lex.l"
 { return OP_OR; }
 	YY_BREAK
 case 24:
 YY_RULE_SETUP
-#line 56 "lex.l"
+#line 56 "/home/primi/src/latino/src/lex.l"
 { return OP_NEG; }
 	YY_BREAK
 case 25:
 YY_RULE_SETUP
-#line 58 "lex.l"
+#line 58 "/home/primi/src/latino/src/lex.l"
 { return OP_INCR; }
 	YY_BREAK
 case 26:
 YY_RULE_SETUP
-#line 59 "lex.l"
+#line 59 "/home/primi/src/latino/src/lex.l"
 { return OP_DECR; }
 	YY_BREAK
 /* keywords */
 case 27:
 YY_RULE_SETUP
-#line 62 "lex.l"
+#line 62 "/home/primi/src/latino/src/lex.l"
 { return KIF; }
 	YY_BREAK
 case 28:
 YY_RULE_SETUP
-#line 63 "lex.l"
+#line 63 "/home/primi/src/latino/src/lex.l"
 { return KEND; }
 	YY_BREAK
 case 29:
 YY_RULE_SETUP
-#line 64 "lex.l"
+#line 64 "/home/primi/src/latino/src/lex.l"
 { return KELSE; }
 	YY_BREAK
 case 30:
 YY_RULE_SETUP
-#line 65 "lex.l"
+#line 65 "/home/primi/src/latino/src/lex.l"
 { return KBREAK; }
 	YY_BREAK
 case 31:
 YY_RULE_SETUP
-#line 66 "lex.l"
+#line 66 "/home/primi/src/latino/src/lex.l"
 { return KCONTINUE; }
 	YY_BREAK
 case 32:
 YY_RULE_SETUP
-#line 67 "lex.l"
+#line 67 "/home/primi/src/latino/src/lex.l"
 { return KWHILE; }
 	YY_BREAK
 case 33:
 YY_RULE_SETUP
-#line 68 "lex.l"
+#line 68 "/home/primi/src/latino/src/lex.l"
 { return KDO; }
 	YY_BREAK
 case 34:
 YY_RULE_SETUP
-#line 69 "lex.l"
+#line 69 "/home/primi/src/latino/src/lex.l"
 { return KWHEN; }
 	YY_BREAK
 case 35:
 YY_RULE_SETUP
-#line 70 "lex.l"
+#line 70 "/home/primi/src/latino/src/lex.l"
 { return KFUNCTION; }
 	YY_BREAK
 case 36:
 YY_RULE_SETUP
-#line 71 "lex.l"
+#line 71 "/home/primi/src/latino/src/lex.l"
 { return KFROM; }
 	YY_BREAK
 case 37:
 YY_RULE_SETUP
-#line 72 "lex.l"
+#line 72 "/home/primi/src/latino/src/lex.l"
 { return KTRUE; }
 	YY_BREAK
 case 38:
 YY_RULE_SETUP
-#line 73 "lex.l"
+#line 73 "/home/primi/src/latino/src/lex.l"
 { return KFALSE; }
 	YY_BREAK
 case 39:
 YY_RULE_SETUP
-#line 74 "lex.l"
+#line 74 "/home/primi/src/latino/src/lex.l"
 { return KRETURN; }
 	YY_BREAK
 /*"elegir"    { return KSWITCH; }
@@ -1070,62 +1071,62 @@ YY_RULE_SETUP
 /* names */
 case 40:
 YY_RULE_SETUP
-#line 81 "lex.l"
+#line 81 "/home/primi/src/latino/src/lex.l"
 { yylval->node = ast_new_constant(yytext); return TCONSTANT; }
 	YY_BREAK
 case 41:
 YY_RULE_SETUP
-#line 82 "lex.l"
+#line 82 "/home/primi/src/latino/src/lex.l"
 { yylval->node = ast_new_identifier(yytext); return TIDENTIFIER; }
 	YY_BREAK
 case 42:
 YY_RULE_SETUP
-#line 83 "lex.l"
+#line 83 "/home/primi/src/latino/src/lex.l"
 { yylval->node = ast_new_decimal(strtod(yytext, NULL)); return TNUMBER; }
 	YY_BREAK
 case 43:
 YY_RULE_SETUP
-#line 84 "lex.l"
+#line 84 "/home/primi/src/latino/src/lex.l"
 { yylval->node = ast_new_integer(strtol(yytext, NULL, 0)); return TINT; }
 	YY_BREAK
 case 44:
 /* rule 44 can match eol */
 YY_RULE_SETUP
-#line 85 "lex.l"
+#line 85 "/home/primi/src/latino/src/lex.l"
 { yytext[strlen(yytext) - 1] = '\0'; yylval->node = ast_new_string(yytext+1);return TSTRING; }
 	YY_BREAK
 case 45:
 YY_RULE_SETUP
-#line 86 "lex.l"
+#line 86 "/home/primi/src/latino/src/lex.l"
 { yylval->node = ast_new_char(yytext+1, strlen(yytext)-2); return TCHAR; }
 	YY_BREAK
 case 46:
 YY_RULE_SETUP
-#line 87 "lex.l"
+#line 87 "/home/primi/src/latino/src/lex.l"
 /* ignore comments */
 	YY_BREAK
 case 47:
 /* rule 47 can match eol */
 YY_RULE_SETUP
-#line 88 "lex.l"
+#line 88 "/home/primi/src/latino/src/lex.l"
 { ; } /*ignore end of line */
 	YY_BREAK
 case 48:
 YY_RULE_SETUP
-#line 89 "lex.l"
+#line 89 "/home/primi/src/latino/src/lex.l"
 { ; } /* ignore whitespace tabs */
 	YY_BREAK
 case 49:
 YY_RULE_SETUP
-#line 90 "lex.l"
+#line 90 "/home/primi/src/latino/src/lex.l"
 { ; } /* ignore bad characters */
 	YY_BREAK
 case 50:
 YY_RULE_SETUP
-#line 92 "lex.l"
+#line 92 "/home/primi/src/latino/src/lex.l"
 YY_FATAL_ERROR( "flex scanner jammed" );
 	YY_BREAK
-#line 1129 "lex.c"
+#line 1130 "lex.c"
 case YY_STATE_EOF(INITIAL):
 	yyterminate();
 
@@ -1257,7 +1258,6 @@ case YY_STATE_EOF(INITIAL):
 			"fatal flex scanner internal error--no action found" );
 	} /* end of action switch */
 		} /* end of scanning one token */
-	} /* end of user's declarations */
 } /* end of yylex */
 
 /* yy_get_next_buffer - try to read in a new buffer
@@ -1314,21 +1314,21 @@ static int yy_get_next_buffer (yyscan_t yyscanner)
 
 	else
 		{
-			yy_size_t num_to_read =
+			int num_to_read =
 			YY_CURRENT_BUFFER_LVALUE->yy_buf_size - number_to_move - 1;
 
 		while ( num_to_read <= 0 )
 			{ /* Not enough room in the buffer - grow it. */
 
 			/* just a shorter name for the current buffer */
-			YY_BUFFER_STATE b = YY_CURRENT_BUFFER_LVALUE;
+			YY_BUFFER_STATE b = YY_CURRENT_BUFFER;
 
 			int yy_c_buf_p_offset =
 				(int) (yyg->yy_c_buf_p - b->yy_ch_buf);
 
 			if ( b->yy_is_our_buffer )
 				{
-				yy_size_t new_size = b->yy_buf_size * 2;
+				int new_size = b->yy_buf_size * 2;
 
 				if ( new_size <= 0 )
 					b->yy_buf_size += b->yy_buf_size / 8;
@@ -1359,7 +1359,7 @@ static int yy_get_next_buffer (yyscan_t yyscanner)
 
 		/* Read in more data. */
 		YY_INPUT( (&YY_CURRENT_BUFFER_LVALUE->yy_ch_buf[number_to_move]),
-			yyg->yy_n_chars, num_to_read );
+			yyg->yy_n_chars, (size_t) num_to_read );
 
 		YY_CURRENT_BUFFER_LVALUE->yy_n_chars = yyg->yy_n_chars;
 		}
@@ -1456,7 +1456,6 @@ static int yy_get_next_buffer (yyscan_t yyscanner)
 	yy_current_state = yy_nxt[yy_base[yy_current_state] + (unsigned int) yy_c];
 	yy_is_jam = (yy_current_state == 133);
 
-	(void)yyg;
 	return yy_is_jam ? 0 : yy_current_state;
 }
 
@@ -1473,7 +1472,7 @@ static int yy_get_next_buffer (yyscan_t yyscanner)
 	if ( yy_cp < YY_CURRENT_BUFFER_LVALUE->yy_ch_buf + 2 )
 		{ /* need to shift things up to make room */
 		/* +2 for EOB chars. */
-		register yy_size_t number_to_move = yyg->yy_n_chars + 2;
+		register int number_to_move = yyg->yy_n_chars + 2;
 		register char *dest = &YY_CURRENT_BUFFER_LVALUE->yy_ch_buf[
 					YY_CURRENT_BUFFER_LVALUE->yy_buf_size + 2];
 		register char *source =
@@ -1527,7 +1526,7 @@ static int yy_get_next_buffer (yyscan_t yyscanner)
 
 		else
 			{ /* need more input */
-			yy_size_t offset = yyg->yy_c_buf_p - yyg->yytext_ptr;
+			int offset = yyg->yy_c_buf_p - yyg->yytext_ptr;
 			++yyg->yy_c_buf_p;
 
 			switch ( yy_get_next_buffer( yyscanner ) )
@@ -1814,7 +1813,7 @@ void yypop_buffer_state (yyscan_t yyscanner)
  */
 static void yyensure_buffer_stack (yyscan_t yyscanner)
 {
-	yy_size_t num_to_alloc;
+	int num_to_alloc;
     struct yyguts_t * yyg = (struct yyguts_t*)yyscanner;
 
 	if (!yyg->yy_buffer_stack) {
@@ -1912,12 +1911,12 @@ YY_BUFFER_STATE yy_scan_string (yyconst char * yystr , yyscan_t yyscanner)
  * @param yyscanner The scanner object.
  * @return the newly allocated buffer state object.
  */
-YY_BUFFER_STATE yy_scan_bytes  (yyconst char * yybytes, yy_size_t  _yybytes_len , yyscan_t yyscanner)
+YY_BUFFER_STATE yy_scan_bytes  (yyconst char * yybytes, int  _yybytes_len , yyscan_t yyscanner)
 {
 	YY_BUFFER_STATE b;
 	char *buf;
 	yy_size_t n;
-	yy_size_t i;
+	int i;
     
 	/* Get memory for full buffer, including space for trailing EOB's. */
 	n = _yybytes_len + 2;
@@ -2027,7 +2026,7 @@ FILE *yyget_out  (yyscan_t yyscanner)
 /** Get the length of the current token.
  * @param yyscanner The scanner object.
  */
-yy_size_t yyget_leng  (yyscan_t yyscanner)
+int yyget_leng  (yyscan_t yyscanner)
 {
     struct yyguts_t * yyg = (struct yyguts_t*)yyscanner;
     return yyleng;
@@ -2063,7 +2062,7 @@ void yyset_lineno (int  line_number , yyscan_t yyscanner)
 
         /* lineno is only valid if an input buffer exists. */
         if (! YY_CURRENT_BUFFER )
-           YY_FATAL_ERROR( "yyset_lineno called with no buffer" );
+           yy_fatal_error( "yyset_lineno called with no buffer" , yyscanner); 
     
     yylineno = line_number;
 }
@@ -2078,7 +2077,7 @@ void yyset_column (int  column_no , yyscan_t yyscanner)
 
         /* column is only valid if an input buffer exists. */
         if (! YY_CURRENT_BUFFER )
-           YY_FATAL_ERROR( "yyset_column called with no buffer" );
+           yy_fatal_error( "yyset_column called with no buffer" , yyscanner); 
     
     yycolumn = column_no;
 }
@@ -2314,7 +2313,7 @@ void yyfree (void * ptr , yyscan_t yyscanner)
 
 #define YYTABLES_NAME "yytables"
 
-#line 92 "lex.l"
+#line 92 "/home/primi/src/latino/src/lex.l"
 
 
 

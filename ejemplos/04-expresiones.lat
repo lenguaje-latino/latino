@@ -2,13 +2,14 @@ i1 = 10
 d1 = 5.5
 d3 = i1 + d1
 
-#int + double
+#entero + decimal
 imprimir(i1)    #10
 imprimir(d1)    #5.500000
 imprimir(d3)    #15.500000
 
 #error de sintaxis
 #1 + 2 * 3
+
 i = 23 #- (5*2) + 3
 i = 43 + 1 - 2
 
@@ -19,17 +20,17 @@ imprimir(a)     #43
 #y = a / 0
 #imprimir(y)     #Error: Division por cero
 
-#string concatenacion
+#Pendiente: concatenacion de cadenas
 #s1 = "hola"
 #s2 = " mundo"
 #s3 = s1 + s2
 #imprimir(s3)
 
-#string + int
+#Pendiente: cadena + entero
 #r = s1 + i
 #imprimir(r)
 
-#string + double
+#Pendiente: cadena + decimal
 #x = s1 + d1
 #imprimir(x)
 
@@ -37,9 +38,9 @@ imprimir(a)
 x = a * 3
 imprimir(x)
 
-#No soportado aun
-#z = 130 % 3
-#imprimir(z)
+#modulo de un número (es el residuo de la división)
+z = 130 % 3
+imprimir(z)
 
 #imprimir(s1)
 
@@ -51,6 +52,6 @@ imprimir(l1)
 
 #imprimir("1 < 5? " + (1 < 5))
 
+#error operador no soportado para dividir una cadena
 #str = l1 / " hola "
-
 #imprimir(str)

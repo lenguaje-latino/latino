@@ -6,23 +6,23 @@ Las listas pueden contener cualquier tipo de dato: logico, entero, decimal, cara
 tipos definidos por el usuario (clases) y también listas.
 Crear una lista es tan sencillo como indicar entre corchetes y separados por comas
 los valores que queremos incluir en la lista.
-Se usa la palabra reservada [lista]
 
-lista lst = [1, 2, 3, 4, 5]
-lista vacia = []
+#declaracion de listas
+numeros = [1, 2, 3, 4, 5]
+vacia = []
 
 Podemos acceder a cada uno de los elementos de la lista escribiendo el nombre de
 la lista e indicando el índice del elemento entre corchetes.
 Ten en cuenta sin embargo que el índice del primer elemento de la lista es 0:
 
-imprimir(lst[1])
+imprimir(numeros[1])
 salida: 2
 
 También podemos utilizar este operador para modificar un elemento de la lista si lo
 colocamos en la parte izquierda de una asignación:
 
-lst[0] = 99
-imprimir(lst)
+numeros[0] = 99
+imprimir(numeros)
 salida: [99, 2, 3, 4, 5]
 
 Podemos utilizar también números negativos. Si se utiliza un número negativo
@@ -30,7 +30,7 @@ como índice, esto se traduce en que el índice empieza a contar desde el final,
 hacia la izquierda; es decir, con [-1] accederíamos al último
 elemento de la lista, con [-2] al penúltimo, con [-3], al antepenúltimo, y así sucesivamente.
 
-imprimir(lst[-1])
+imprimir(numeros[-1])
 salida: 5
 
 Se puede también hacer un particionado, y que consiste en ampliar este mecanismo
@@ -41,10 +41,10 @@ dos puntos (inicio:fin) se interpretará que queremos una lista que vaya desde l
 Si escribimos tres números (inicio:fin:salto) en lugar de dos, el tercero se utiliza para
 determinar cada cuantas posiciones añadir un elemento a la lista.
 
-imprimir(lst[0:2])
+imprimir(numeros[0:2])
 salida: [99, 2]
 
-imprimir(lst[0:4:2]
+imprimir(numeros[0:4:2]
 salida: [99, 3, 5]
 
 Los números negativos también se pueden utilizar, con el mismo comportamiento que
@@ -54,81 +54,81 @@ Hay que mencionar así mismo que no es necesario indicar el principio y el final
 del particionamiento, sino que, si estos se omiten, se usarán por defecto las posiciones
 de inicio y final de la lista respectivamente:
 
-imprimir(lst[1:])
+imprimir(numeros[1:])
 salida: [2, 3, 4, 5]
 
-imprimir(lst[:2])
+imprimir(numeros[:2])
 salida: [99, 2]
 
-imprimir(lst[:])
+imprimir(numeros[:])
 salida: [99, 2, 3, 4, 5]
 
-imprimir(lst[::2])
+imprimir(numeros[::2])
 salida: [99, 3, 5]
 
 También podemos utilizar este mecánismo para modificar la lista:
 
-lst[0:2] = [0, 1]
-imprimir(lst)
+numeros[0:2] = [0, 1]
+imprimir(numeros)
 salida: [0, 1, 3, 4, 5]
 
 pudiendo incluso modificar el tamaño de la lista si la lista de la parte derecha de la asignación
 tiene un tamaño menor o mayor que el de la selección de la parte izquierda de la asignación:
 
-lst[0:2] = [verdadero]
+numeros[0:2] = [verdadero]
 salida: [verdadero, 3, 4, 5]
 
 Metodos
 ---
 Los metodos para el manejo de las listas son los siguientes:
 
-lista lst = [1, 2, 3, 4, 5]
+numeros = [1, 2, 3, 4, 5]
 
 longitud: devuelve la cantidad de elementos en la lista.
 
-imprimir(lst.longitud)
+imprimir(numeros.longitud)
 salida: 5
 
 agregar: agrega un elemento al final de la lista.
 
-lst.agregar(10)
-imprimir(lista)
+numeros.agregar(10)
+imprimir(numeros)
 salida: [1, 2, 3, 4, 5, 10]
 
 insertar: inserta una elemento en una posición determinada, el primer parametro es la posición.
 
-lst.insertar(0, 8)
-imprimir(lista)
+numeros.insertar(0, 8)
+imprimir(numeros)
 salida: [8, 1, 2, 3, 4, 5, 10]
 
-lst.insertar(2, 7)
-imprimir(lista)
+numeros.insertar(2, 7)
+imprimir(numeros)
 salida: [8, 1, 7, 2, 3, 4, 5, 10]
 
 
-extender: extiende la lista agredando todos los elementos de la lista dada
+extender: agrega todos los elementos de la lista dada
 
 ol = [ "a", "b", "c"]
-lst.extender(ol)
-imprimir(lst)
+numeros.extender(ol)
+imprimir(numeros)
 salida: [8, 1, 7, 2, 3, 4, 5, 10, "a", "b", "c"]
 
 eliminar: elimina una elemento de la lista si este existe
 
-lst.eliminar(3)
-imprimir(lista)
+numeros.eliminar(3)
+imprimir(numeros)
 salida: [8, 1, 7, 2, 3, 4, 5, 10, "a", "b", "c"]
 
 contar: cuenta el número de veces que una elemento se repite en la lista.
 
-imprimir(lista.contar(7))
+imprimir(numeros.contar(7))
 salida: 1
 
 ordenar: ordena los elementos de la lista.
 
-lst.ordenar()
+numeros.ordenar()
 salida: [1, 2, 3, 4, 5, 7, 8, 10, "a", "b", "c"]
 
 Se le puede indicar el orden con la palabra [orden=descendente]
-lst.ordenar(orden=descendente)
+numeros.ordenar(orden=descendente)
 salida: ["c", "b", "a", 10, 8, 7, 5, 4, 3, 2, 1]

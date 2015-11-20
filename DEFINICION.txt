@@ -1,7 +1,7 @@
 #DEFINICIÓN (latino)
 
 Este documento pretende explicar de manera general la definición del nuevo
-lenguaje de programación para latinos.
+lenguaje de programación "Latino"
 
 Comentarios:
 ---
