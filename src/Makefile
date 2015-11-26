@@ -184,30 +184,6 @@ lex.c.s:
 	cd /home/primi/src/latino && $(MAKE) -f src/CMakeFiles/latino.dir/build.make src/CMakeFiles/latino.dir/lex.c.s
 .PHONY : lex.c.s
 
-liblist.o: liblist.c.o
-.PHONY : liblist.o
-
-# target to build an object file
-liblist.c.o:
-	cd /home/primi/src/latino && $(MAKE) -f src/CMakeFiles/latino.dir/build.make src/CMakeFiles/latino.dir/liblist.c.o
-.PHONY : liblist.c.o
-
-liblist.i: liblist.c.i
-.PHONY : liblist.i
-
-# target to preprocess a source file
-liblist.c.i:
-	cd /home/primi/src/latino && $(MAKE) -f src/CMakeFiles/latino.dir/build.make src/CMakeFiles/latino.dir/liblist.c.i
-.PHONY : liblist.c.i
-
-liblist.s: liblist.c.s
-.PHONY : liblist.s
-
-# target to generate assembly for a file
-liblist.c.s:
-	cd /home/primi/src/latino && $(MAKE) -f src/CMakeFiles/latino.dir/build.make src/CMakeFiles/latino.dir/liblist.c.s
-.PHONY : liblist.c.s
-
 libmem.o: libmem.c.o
 .PHONY : libmem.o
 
@@ -231,30 +207,6 @@ libmem.s: libmem.c.s
 libmem.c.s:
 	cd /home/primi/src/latino && $(MAKE) -f src/CMakeFiles/latino.dir/build.make src/CMakeFiles/latino.dir/libmem.c.s
 .PHONY : libmem.c.s
-
-libstack.o: libstack.c.o
-.PHONY : libstack.o
-
-# target to build an object file
-libstack.c.o:
-	cd /home/primi/src/latino && $(MAKE) -f src/CMakeFiles/latino.dir/build.make src/CMakeFiles/latino.dir/libstack.c.o
-.PHONY : libstack.c.o
-
-libstack.i: libstack.c.i
-.PHONY : libstack.i
-
-# target to preprocess a source file
-libstack.c.i:
-	cd /home/primi/src/latino && $(MAKE) -f src/CMakeFiles/latino.dir/build.make src/CMakeFiles/latino.dir/libstack.c.i
-.PHONY : libstack.c.i
-
-libstack.s: libstack.c.s
-.PHONY : libstack.s
-
-# target to generate assembly for a file
-libstack.c.s:
-	cd /home/primi/src/latino && $(MAKE) -f src/CMakeFiles/latino.dir/build.make src/CMakeFiles/latino.dir/libstack.c.s
-.PHONY : libstack.c.s
 
 libstring.o: libstring.c.o
 .PHONY : libstring.o
@@ -394,15 +346,9 @@ help:
 	@echo "... lex.o"
 	@echo "... lex.i"
 	@echo "... lex.s"
-	@echo "... liblist.o"
-	@echo "... liblist.i"
-	@echo "... liblist.s"
 	@echo "... libmem.o"
 	@echo "... libmem.i"
 	@echo "... libmem.s"
-	@echo "... libstack.o"
-	@echo "... libstack.i"
-	@echo "... libstack.s"
 	@echo "... libstring.o"
 	@echo "... libstring.i"
 	@echo "... libstring.s"

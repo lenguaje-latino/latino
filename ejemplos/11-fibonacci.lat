@@ -1,3 +1,13 @@
+################################################
+# Sucesión de Fibonacci
+# En matemáticas, la sucesión de Fibonacci (a veces llamada erróneamente serie de Fibonacci)
+# es la siguiente sucesión infinita de números naturales:
+# 0,1,1,2,3,5,8,13,21,34,55,89,144,233,377,610,987,159 ...
+# La sucesión comienza con los números 0 y 1,2 y a partir de estos,
+# "cada término es la suma de los dos anteriores", es la relación de recurrencia que la define.
+# Para más información visite: https://es.wikipedia.org/wiki/Sucesi%C3%B3n_de_Fibonacci
+################################################
+
 #mala implementacion (recursiva)
 funcion fibonacci(n)
     si ( n == 0 )
@@ -31,16 +41,14 @@ funcion fibo(n)
     retorno res
 fin
 
+#imprimir la serie de 45 provoca desborde de la pila (stack overflow)
 imprimir("version recursiva")
-#imprimir(fibonacci(10))
-##imprimir la serie de 45 (stack overflow)
 desde(i=0; i < 20; i=i+1)
     imprimir(fibonacci(i))
 fin
 
 imprimir("version iterativa")
-#imprimir(fibo(10))
-desde(i=0; i < 20; i=i+1)
+desde(i=0; i < 45; i=i+1)
     imprimir(fibo(i))
 fin
 
