@@ -65,4 +65,12 @@ typedef struct hash_set {
 	list_node *buckets;
 } hash_set;
 
+
+/*funciones auxiliares para manejo de cadenas*/
+char *concat(char *s1, char *s2);
+char *int2str(long i);
+char *double2str(double d);
+char *char2str(char c);
+char *bool2str(int i);
+
 #endif /*_UTILS_H_*/

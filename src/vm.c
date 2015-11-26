@@ -306,32 +306,142 @@ void lat_cons(lat_vm *vm)
 
 void lat_add(lat_vm *vm)
 {
-    lat_object *a = lat_pop_stack(vm);
+	lat_object *a = lat_pop_stack(vm);
     lat_object *b = lat_pop_stack(vm);
-    if ((a->type != T_INT && a->type != T_DOUBLE) || (b->type != T_INT && b->type != T_DOUBLE)) {
-        log_err("Intento de aplicar operador \"+\" en tipos invalidos");
-    }
-    if (a->type == T_DOUBLE || b->type == T_DOUBLE) {
-        vm->regs[255] = lat_double(vm, lat_get_double_value(a) + lat_get_double_value(b));
-    }
-    else {
-        vm->regs[255] = lat_int(vm, lat_get_int_value(a) + lat_get_int_value(b));
-    }
+	switch (a->type)
+	{
+	case T_BOOL:{
+		if (b->type == T_STR){
+			vm->regs[255] = lat_str(vm, concat(bool2str(a->data.b), b->data.str));
+			return;
+		}
+	}break;
+	case T_INT:{
+		if (b->type == T_INT){
+			vm->regs[255] = lat_int(vm, lat_get_int_value(a) + lat_get_int_value(b));
+			return;
+		}
+		if (b->type == T_DOUBLE){
+			vm->regs[255] = lat_double(vm, lat_get_int_value(a) + lat_get_double_value(b));
+			return;
+		}
+		if (b->type == T_CHAR){
+			vm->regs[255] = lat_int(vm, lat_get_int_value(a) + lat_get_char_value(b));
+			return;
+		}
+		if (b->type == T_STR){
+			vm->regs[255] = lat_str(vm, concat(int2str(lat_get_int_value(a)), lat_get_str_value(b)));
+			return;
+		}
+	}break;
+	case T_CHAR:{
+		if (b->type == T_INT){
+			vm->regs[255] = lat_char(vm, (lat_get_char_value(a)) + lat_get_int_value(b));
+			return;
+		}
+		if (b->type == T_CHAR){
+			vm->regs[255] = lat_char(vm, lat_get_char_value(a) + lat_get_char_value(b));
+			return;
+		}
+		if (b->type == T_DOUBLE){
+			vm->regs[255] = lat_double(vm, ((int)lat_get_char_value(a)) + lat_get_double_value(b));
+			return;
+		}
+		if (b->type == T_STR){
+			vm->regs[255] = lat_str(vm, concat(char2str(lat_get_char_value(a)), lat_get_str_value(b)));
+			return;
+		}
+	}break;
+	case T_DOUBLE:{
+		if (b->type == T_INT){
+			vm->regs[255] = lat_double(vm, lat_get_double_value(a) + lat_get_int_value(b));
+			return;
+		}
+		if (b->type == T_CHAR){
+			vm->regs[255] = lat_double(vm, lat_get_double_value(a) + ((int)lat_get_char_value(b)));
+			return;
+		}
+		if (b->type == T_DOUBLE){
+			vm->regs[255] = lat_double(vm, lat_get_double_value(a) + lat_get_double_value(b));
+			return;
+		}
+		if (b->type == T_STR){
+			vm->regs[255] = lat_str(vm, concat(double2str(lat_get_double_value(a)), lat_get_str_value(b)));
+			return;
+		}
+	}break;
+	case T_STR:{
+		if (b->type == T_INT){
+			vm->regs[255] = lat_str(vm, concat(lat_get_str_value(a), int2str(lat_get_int_value(b))));
+			return;
+		}
+		if (b->type == T_DOUBLE){
+			vm->regs[255] = lat_str(vm, concat(lat_get_str_value(a), double2str(lat_get_double_value(b))));
+			return;
+		}
+		if (b->type == T_CHAR){
+			vm->regs[255] = lat_str(vm, concat(lat_get_str_value(a), char2str(lat_get_char_value(b))));
+			return;
+		}
+		if (b->type == T_STR){
+			vm->regs[255] = lat_str(vm, concat(lat_get_str_value(a), lat_get_str_value(b)));
+			return;
+		}
+	}break;
+	}
+    log_err("Intento de aplicar operador \"+\" en tipos invalidos");
 }
 
 void lat_sub(lat_vm *vm)
 {
-    lat_object *a = lat_pop_stack(vm);
+	lat_object *a = lat_pop_stack(vm);
     lat_object *b = lat_pop_stack(vm);
-    if ((a->type != T_INT && a->type != T_DOUBLE) || (b->type != T_INT && b->type != T_DOUBLE)) {
-        log_err("Intento de aplicar operador \"-\" en tipos invalidos");
-    }
-    if (a->type == T_DOUBLE || b->type == T_DOUBLE) {
-        vm->regs[255] = lat_double(vm, lat_get_double_value(a) - lat_get_double_value(b));
-    }
-    else {
-        vm->regs[255] = lat_int(vm, lat_get_int_value(a) - lat_get_int_value(b));
-    }
+	switch (a->type)
+	{
+	case T_INT:{
+		if (b->type == T_INT){
+			vm->regs[255] = lat_int(vm, lat_get_int_value(a) - lat_get_int_value(b));
+			return;
+		}
+		if (b->type == T_DOUBLE){
+			vm->regs[255] = lat_double(vm, lat_get_int_value(a) - lat_get_double_value(b));
+			return;
+		}
+		if (b->type == T_CHAR){
+			vm->regs[255] = lat_int(vm, lat_get_int_value(a) - lat_get_char_value(b));
+			return;
+		}
+	}break;
+	case T_CHAR:{
+		if (b->type == T_INT){
+			vm->regs[255] = lat_char(vm, (lat_get_char_value(a)) - lat_get_int_value(b));
+			return;
+		}
+		if (b->type == T_CHAR){
+			vm->regs[255] = lat_char(vm, lat_get_char_value(a) - lat_get_char_value(b));
+			return;
+		}
+		if (b->type == T_DOUBLE){
+			vm->regs[255] = lat_double(vm, ((int)lat_get_char_value(a)) - lat_get_double_value(b));
+			return;
+		}
+	}break;
+	case T_DOUBLE:{
+		if (b->type == T_INT){
+			vm->regs[255] = lat_double(vm, lat_get_double_value(a) - lat_get_int_value(b));
+			return;
+		}
+		if (b->type == T_CHAR){
+			vm->regs[255] = lat_double(vm, lat_get_double_value(a) - ((int)lat_get_char_value(b)));
+			return;
+		}
+		if (b->type == T_DOUBLE){
+			vm->regs[255] = lat_double(vm, lat_get_double_value(a) - lat_get_double_value(b));
+			return;
+		}
+	}break;
+	}
+    log_err("Intento de aplicar operador \"-\" en tipos invalidos");
 }
 
 void lat_mul(lat_vm *vm)
@@ -356,7 +466,7 @@ void lat_div(lat_vm *vm)
     if ((a->type != T_INT && a->type != T_DOUBLE) || (b->type != T_INT && b->type != T_DOUBLE)) {
         log_err("Intento de aplicar operador \"/\" en tipos invalidos");
     }
-    if (a->type == T_DOUBLE || b->type == T_DOUBLE) {
+    if ((a->type == T_DOUBLE && b->type == T_DOUBLE) || (a->type == T_INT && b->type == T_DOUBLE)) {
         double tmp = lat_get_double_value(b);
         if (tmp == 0){
             log_err("Division por cero");
@@ -366,13 +476,18 @@ void lat_div(lat_vm *vm)
         }
     }
     else {
-        int tmp = lat_get_int_value(b);
-        if (tmp == 0){
-            log_err("Division por cero");
-        }
-        else{
-            vm->regs[255] = lat_int(vm, (lat_get_int_value(a) / tmp));
-        }
+		int tmp = lat_get_int_value(b);
+		if (tmp == 0){
+			log_err("Division por cero");
+		}
+		else{
+			if (a->type == T_DOUBLE){
+				vm->regs[255] = lat_int(vm, ((int)(lat_get_double_value(a) / tmp)));
+			}
+			else{
+				vm->regs[255] = lat_int(vm, ((int)(lat_get_int_value(a) / tmp)));
+			}
+		}
     }
 }
 

@@ -38,8 +38,8 @@ x = a * 3
 imprimir(x)
 
 #No soportado aun
-#z = 130 % 3
-#imprimir(z)
+z = 130 % 3
+imprimir(z)
 
 #imprimir(s1)
 
