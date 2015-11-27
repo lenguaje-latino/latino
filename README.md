@@ -37,10 +37,10 @@ Leer LICENSE.txt
 #####Linux
 ir al directorio latino/ y ejecutar
 
-`
+```
 $cmake .
 $make
-`
+```
 
 #####Windows
 1. Instale cmake desde https://cmake.org/
