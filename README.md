@@ -40,14 +40,15 @@ ir al directorio latino/ y ejecutar
 `$make`
 
 #####Windows
-Instale cmake desde https://cmake.org/
-Inicie cmake
-Elija la ruta que contiene su carpeta latino
-Elija la ruta en donde se generar la solucion de Visual Studio latino/build
-Clic en el botón configurar (Configure)
-Clic en el botón generar (Generate)
-Abrir la solucion en Visual Studio y compilar
+1. Instale cmake desde https://cmake.org/
+2. Inicie cmake
+3. Elija la ruta que contiene su carpeta latino
+4. Elija la ruta en donde se generar la solucion de Visual Studio latino/build
+5. Clic en el botón configurar (Configure)
+6. Clic en el botón generar (Generate)
+7. Abrir la solucion en Visual Studio generada en la ruta latino/build/ y compile
 
 Tambien puede compilar el proyecto con CodeBlocks http://www.codeblocks.org/
+1. Abra el proyecto latino.cbp y compile
 
 Cualquier aportación o sugerencia es bienvenida.
