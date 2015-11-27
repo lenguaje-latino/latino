@@ -27,17 +27,20 @@ http://opensource.org/licenses/MIT
 
 Leer LICENSE.txt
 ### Requiere:
-* bison
-* flex
-* cmake
-* gcc / mingw32 (Windows)
+* bison 3.04
+* flex 2.5.39
+* cmake 3.3.1
+* gcc 4.9.3 (Linux) / Visual Studio Community Edition o CodeBlocks (Windows)
 
 ###COMPILAR
 
 #####Linux
 ir al directorio latino/ y ejecutar
-`$cmake .`
-`$make`
+
+`
+$cmake .
+$make
+`
 
 #####Windows
 1. Instale cmake desde https://cmake.org/
@@ -51,5 +54,4 @@ ir al directorio latino/ y ejecutar
 #####Tambien puede compilar el proyecto con CodeBlocks http://www.codeblocks.org/
 1. Abra el proyecto latino.cbp y compile
 
-Cualquier aportación o sugerencia es bienvenida.
----
+#####Cualquier aportación o sugerencia es bienvenida.
