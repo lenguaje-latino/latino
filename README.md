@@ -29,16 +29,25 @@ Leer LICENSE.txt
 ### Requiere:
 * bison
 * flex
-* gcc / mingw32 (windows)
+* cmake
+* gcc / mingw32 (Windows)
 
 ###COMPILAR
 
 #####Linux
-
-`make`
+ir al directorio latino/ y ejecutar
+`$cmake .`
+`$make`
 
 #####Windows
+Instale cmake desde https://cmake.org/
+Inicie cmake
+Elija la ruta que contiene su carpeta latino
+Elija la ruta en donde se generar la solucion de Visual Studio latino/build
+Clic en el botón configurar (Configure)
+Clic en el botón generar (Generate)
+Abrir la solucion en Visual Studio y compilar
 
-`mingw32-make -f Makefile.mingw`
+Tambien puede compilar el proyecto con CodeBlocks http://www.codeblocks.org/
 
 Cualquier aportación o sugerencia es bienvenida.
