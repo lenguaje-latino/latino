@@ -48,7 +48,8 @@ ir al directorio latino/ y ejecutar
 6. Clic en el botón generar (Generate)
 7. Abrir la solucion en Visual Studio generada en la ruta latino/build/ y compile
 
-Tambien puede compilar el proyecto con CodeBlocks http://www.codeblocks.org/
+#####Tambien puede compilar el proyecto con CodeBlocks http://www.codeblocks.org/
 1. Abra el proyecto latino.cbp y compile
 
 Cualquier aportación o sugerencia es bienvenida.
+---
