@@ -5,6 +5,8 @@
 #include "vm.h"
 #include "utils.h"
 #include "libmem.h"
+#include "libmath.h"
+#include "libstring.h"
 
 lat_vm *lat_make_vm()
 {
@@ -33,6 +35,34 @@ lat_vm *lat_make_vm()
     lat_set_ctx(lat_get_current_ctx(ret), lat_str(ret, ">"), lat_define_c_function(ret, lat_gt));
     lat_set_ctx(lat_get_current_ctx(ret), lat_str(ret, ">="), lat_define_c_function(ret, lat_gte));
     lat_set_ctx(lat_get_current_ctx(ret), lat_str(ret, "gc"), lat_define_c_function(ret, lat_gc));
+
+    /* funciones matematicas */
+    lat_set_ctx(lat_get_current_ctx(ret), lat_str(ret, "acos"), lat_define_c_function(ret, lat_acos));
+    lat_set_ctx(lat_get_current_ctx(ret), lat_str(ret, "asin"), lat_define_c_function(ret, lat_asin));
+    lat_set_ctx(lat_get_current_ctx(ret), lat_str(ret, "atan"), lat_define_c_function(ret, lat_atan));
+    lat_set_ctx(lat_get_current_ctx(ret), lat_str(ret, "atan2"), lat_define_c_function(ret, lat_atan2));
+    lat_set_ctx(lat_get_current_ctx(ret), lat_str(ret, "cos"), lat_define_c_function(ret, lat_cos));
+    lat_set_ctx(lat_get_current_ctx(ret), lat_str(ret, "cosh"), lat_define_c_function(ret, lat_cosh));
+    lat_set_ctx(lat_get_current_ctx(ret), lat_str(ret, "sin"), lat_define_c_function(ret, lat_sin));
+    lat_set_ctx(lat_get_current_ctx(ret), lat_str(ret, "sinh"), lat_define_c_function(ret, lat_sinh));
+    lat_set_ctx(lat_get_current_ctx(ret), lat_str(ret, "tan"), lat_define_c_function(ret, lat_tan));
+    lat_set_ctx(lat_get_current_ctx(ret), lat_str(ret, "tanh"), lat_define_c_function(ret, lat_tanh));
+    lat_set_ctx(lat_get_current_ctx(ret), lat_str(ret, "exp"), lat_define_c_function(ret, lat_exp));
+    //lat_set_ctx(lat_get_current_ctx(ret), lat_str(ret, "frexp"), lat_define_c_function(ret, lat_frexp));
+    lat_set_ctx(lat_get_current_ctx(ret), lat_str(ret, "ldexp"), lat_define_c_function(ret, lat_ldexp));
+    lat_set_ctx(lat_get_current_ctx(ret), lat_str(ret, "log"), lat_define_c_function(ret, lat_log));
+    lat_set_ctx(lat_get_current_ctx(ret), lat_str(ret, "log10"), lat_define_c_function(ret, lat_log10));
+    //lat_set_ctx(lat_get_current_ctx(ret), lat_str(ret, "modf"), lat_define_c_function(ret, lat_modf));
+    lat_set_ctx(lat_get_current_ctx(ret), lat_str(ret, "pow"), lat_define_c_function(ret, lat_pow));
+    lat_set_ctx(lat_get_current_ctx(ret), lat_str(ret, "sqrt"), lat_define_c_function(ret, lat_sqrt));
+    lat_set_ctx(lat_get_current_ctx(ret), lat_str(ret, "ceil"), lat_define_c_function(ret, lat_ceil));
+    lat_set_ctx(lat_get_current_ctx(ret), lat_str(ret, "fabs"), lat_define_c_function(ret, lat_fabs));
+    lat_set_ctx(lat_get_current_ctx(ret), lat_str(ret, "floor"), lat_define_c_function(ret, lat_floor));
+    lat_set_ctx(lat_get_current_ctx(ret), lat_str(ret, "fmod"), lat_define_c_function(ret, lat_fmod));
+
+	/*funciones para cadenas (string)*/
+	lat_set_ctx(lat_get_current_ctx(ret), lat_str(ret, "concatenar"), lat_define_c_function(ret, lat_concat));
+
     return ret;
 }
 
@@ -306,141 +336,141 @@ void lat_cons(lat_vm *vm)
 
 void lat_add(lat_vm *vm)
 {
-	lat_object *a = lat_pop_stack(vm);
+  lat_object *a = lat_pop_stack(vm);
     lat_object *b = lat_pop_stack(vm);
-	switch (a->type)
-	{
-	case T_BOOL:{
-		if (b->type == T_STR){
-			vm->regs[255] = lat_str(vm, concat(bool2str(a->data.b), b->data.str));
-			return;
-		}
-	}break;
-	case T_INT:{
-		if (b->type == T_INT){
-			vm->regs[255] = lat_int(vm, lat_get_int_value(a) + lat_get_int_value(b));
-			return;
-		}
-		if (b->type == T_DOUBLE){
-			vm->regs[255] = lat_double(vm, lat_get_int_value(a) + lat_get_double_value(b));
-			return;
-		}
-		if (b->type == T_CHAR){
-			vm->regs[255] = lat_int(vm, lat_get_int_value(a) + lat_get_char_value(b));
-			return;
-		}
-		if (b->type == T_STR){
-			vm->regs[255] = lat_str(vm, concat(int2str(lat_get_int_value(a)), lat_get_str_value(b)));
-			return;
-		}
-	}break;
-	case T_CHAR:{
-		if (b->type == T_INT){
-			vm->regs[255] = lat_char(vm, (lat_get_char_value(a)) + lat_get_int_value(b));
-			return;
-		}
-		if (b->type == T_CHAR){
-			vm->regs[255] = lat_char(vm, lat_get_char_value(a) + lat_get_char_value(b));
-			return;
-		}
-		if (b->type == T_DOUBLE){
-			vm->regs[255] = lat_double(vm, ((int)lat_get_char_value(a)) + lat_get_double_value(b));
-			return;
-		}
-		if (b->type == T_STR){
-			vm->regs[255] = lat_str(vm, concat(char2str(lat_get_char_value(a)), lat_get_str_value(b)));
-			return;
-		}
-	}break;
-	case T_DOUBLE:{
-		if (b->type == T_INT){
-			vm->regs[255] = lat_double(vm, lat_get_double_value(a) + lat_get_int_value(b));
-			return;
-		}
-		if (b->type == T_CHAR){
-			vm->regs[255] = lat_double(vm, lat_get_double_value(a) + ((int)lat_get_char_value(b)));
-			return;
-		}
-		if (b->type == T_DOUBLE){
-			vm->regs[255] = lat_double(vm, lat_get_double_value(a) + lat_get_double_value(b));
-			return;
-		}
-		if (b->type == T_STR){
-			vm->regs[255] = lat_str(vm, concat(double2str(lat_get_double_value(a)), lat_get_str_value(b)));
-			return;
-		}
-	}break;
-	case T_STR:{
-		if (b->type == T_INT){
-			vm->regs[255] = lat_str(vm, concat(lat_get_str_value(a), int2str(lat_get_int_value(b))));
-			return;
-		}
-		if (b->type == T_DOUBLE){
-			vm->regs[255] = lat_str(vm, concat(lat_get_str_value(a), double2str(lat_get_double_value(b))));
-			return;
-		}
-		if (b->type == T_CHAR){
-			vm->regs[255] = lat_str(vm, concat(lat_get_str_value(a), char2str(lat_get_char_value(b))));
-			return;
-		}
-		if (b->type == T_STR){
-			vm->regs[255] = lat_str(vm, concat(lat_get_str_value(a), lat_get_str_value(b)));
-			return;
-		}
-	}break;
-	}
+  switch (a->type)
+  {
+  case T_BOOL:{
+    if (b->type == T_STR){
+      vm->regs[255] = lat_str(vm, concat(bool2str(a->data.b), b->data.str));
+      return;
+    }
+  }break;
+  case T_INT:{
+    if (b->type == T_INT){
+      vm->regs[255] = lat_int(vm, lat_get_int_value(a) + lat_get_int_value(b));
+      return;
+    }
+    if (b->type == T_DOUBLE){
+      vm->regs[255] = lat_double(vm, lat_get_int_value(a) + lat_get_double_value(b));
+      return;
+    }
+    if (b->type == T_CHAR){
+      vm->regs[255] = lat_int(vm, lat_get_int_value(a) + lat_get_char_value(b));
+      return;
+    }
+    if (b->type == T_STR){
+      vm->regs[255] = lat_str(vm, concat(int2str(lat_get_int_value(a)), lat_get_str_value(b)));
+      return;
+    }
+  }break;
+  case T_CHAR:{
+    if (b->type == T_INT){
+      vm->regs[255] = lat_char(vm, (lat_get_char_value(a)) + lat_get_int_value(b));
+      return;
+    }
+    if (b->type == T_CHAR){
+      vm->regs[255] = lat_char(vm, lat_get_char_value(a) + lat_get_char_value(b));
+      return;
+    }
+    if (b->type == T_DOUBLE){
+      vm->regs[255] = lat_double(vm, ((int)lat_get_char_value(a)) + lat_get_double_value(b));
+      return;
+    }
+    if (b->type == T_STR){
+      vm->regs[255] = lat_str(vm, concat(char2str(lat_get_char_value(a)), lat_get_str_value(b)));
+      return;
+    }
+  }break;
+  case T_DOUBLE:{
+    if (b->type == T_INT){
+      vm->regs[255] = lat_double(vm, lat_get_double_value(a) + lat_get_int_value(b));
+      return;
+    }
+    if (b->type == T_CHAR){
+      vm->regs[255] = lat_double(vm, lat_get_double_value(a) + ((int)lat_get_char_value(b)));
+      return;
+    }
+    if (b->type == T_DOUBLE){
+      vm->regs[255] = lat_double(vm, lat_get_double_value(a) + lat_get_double_value(b));
+      return;
+    }
+    if (b->type == T_STR){
+      vm->regs[255] = lat_str(vm, concat(double2str(lat_get_double_value(a)), lat_get_str_value(b)));
+      return;
+    }
+  }break;
+  case T_STR:{
+    if (b->type == T_INT){
+      vm->regs[255] = lat_str(vm, concat(lat_get_str_value(a), int2str(lat_get_int_value(b))));
+      return;
+    }
+    if (b->type == T_DOUBLE){
+      vm->regs[255] = lat_str(vm, concat(lat_get_str_value(a), double2str(lat_get_double_value(b))));
+      return;
+    }
+    if (b->type == T_CHAR){
+      vm->regs[255] = lat_str(vm, concat(lat_get_str_value(a), char2str(lat_get_char_value(b))));
+      return;
+    }
+    if (b->type == T_STR){
+      vm->regs[255] = lat_str(vm, concat(lat_get_str_value(a), lat_get_str_value(b)));
+      return;
+    }
+  }break;
+  }
     log_err("Intento de aplicar operador \"+\" en tipos invalidos");
 }
 
 void lat_sub(lat_vm *vm)
 {
-	lat_object *a = lat_pop_stack(vm);
+  lat_object *a = lat_pop_stack(vm);
     lat_object *b = lat_pop_stack(vm);
-	switch (a->type)
-	{
-	case T_INT:{
-		if (b->type == T_INT){
-			vm->regs[255] = lat_int(vm, lat_get_int_value(a) - lat_get_int_value(b));
-			return;
-		}
-		if (b->type == T_DOUBLE){
-			vm->regs[255] = lat_double(vm, lat_get_int_value(a) - lat_get_double_value(b));
-			return;
-		}
-		if (b->type == T_CHAR){
-			vm->regs[255] = lat_int(vm, lat_get_int_value(a) - lat_get_char_value(b));
-			return;
-		}
-	}break;
-	case T_CHAR:{
-		if (b->type == T_INT){
-			vm->regs[255] = lat_char(vm, (lat_get_char_value(a)) - lat_get_int_value(b));
-			return;
-		}
-		if (b->type == T_CHAR){
-			vm->regs[255] = lat_char(vm, lat_get_char_value(a) - lat_get_char_value(b));
-			return;
-		}
-		if (b->type == T_DOUBLE){
-			vm->regs[255] = lat_double(vm, ((int)lat_get_char_value(a)) - lat_get_double_value(b));
-			return;
-		}
-	}break;
-	case T_DOUBLE:{
-		if (b->type == T_INT){
-			vm->regs[255] = lat_double(vm, lat_get_double_value(a) - lat_get_int_value(b));
-			return;
-		}
-		if (b->type == T_CHAR){
-			vm->regs[255] = lat_double(vm, lat_get_double_value(a) - ((int)lat_get_char_value(b)));
-			return;
-		}
-		if (b->type == T_DOUBLE){
-			vm->regs[255] = lat_double(vm, lat_get_double_value(a) - lat_get_double_value(b));
-			return;
-		}
-	}break;
-	}
+  switch (a->type)
+  {
+  case T_INT:{
+    if (b->type == T_INT){
+      vm->regs[255] = lat_int(vm, lat_get_int_value(a) - lat_get_int_value(b));
+      return;
+    }
+    if (b->type == T_DOUBLE){
+      vm->regs[255] = lat_double(vm, lat_get_int_value(a) - lat_get_double_value(b));
+      return;
+    }
+    if (b->type == T_CHAR){
+      vm->regs[255] = lat_int(vm, lat_get_int_value(a) - lat_get_char_value(b));
+      return;
+    }
+  }break;
+  case T_CHAR:{
+    if (b->type == T_INT){
+      vm->regs[255] = lat_char(vm, (lat_get_char_value(a)) - lat_get_int_value(b));
+      return;
+    }
+    if (b->type == T_CHAR){
+      vm->regs[255] = lat_char(vm, lat_get_char_value(a) - lat_get_char_value(b));
+      return;
+    }
+    if (b->type == T_DOUBLE){
+      vm->regs[255] = lat_double(vm, ((int)lat_get_char_value(a)) - lat_get_double_value(b));
+      return;
+    }
+  }break;
+  case T_DOUBLE:{
+    if (b->type == T_INT){
+      vm->regs[255] = lat_double(vm, lat_get_double_value(a) - lat_get_int_value(b));
+      return;
+    }
+    if (b->type == T_CHAR){
+      vm->regs[255] = lat_double(vm, lat_get_double_value(a) - ((int)lat_get_char_value(b)));
+      return;
+    }
+    if (b->type == T_DOUBLE){
+      vm->regs[255] = lat_double(vm, lat_get_double_value(a) - lat_get_double_value(b));
+      return;
+    }
+  }break;
+  }
     log_err("Intento de aplicar operador \"-\" en tipos invalidos");
 }
 
@@ -476,18 +506,18 @@ void lat_div(lat_vm *vm)
         }
     }
     else {
-		int tmp = lat_get_int_value(b);
-		if (tmp == 0){
-			log_err("Division por cero");
-		}
-		else{
-			if (a->type == T_DOUBLE){
-				vm->regs[255] = lat_int(vm, ((int)(lat_get_double_value(a) / tmp)));
-			}
-			else{
-				vm->regs[255] = lat_int(vm, ((int)(lat_get_int_value(a) / tmp)));
-			}
-		}
+    int tmp = lat_get_int_value(b);
+    if (tmp == 0){
+      log_err("Division por cero");
+    }
+    else{
+      if (a->type == T_DOUBLE){
+        vm->regs[255] = lat_int(vm, ((int)(lat_get_double_value(a) / tmp)));
+      }
+      else{
+        vm->regs[255] = lat_int(vm, ((int)(lat_get_int_value(a) / tmp)));
+      }
+    }
     }
 }
 
