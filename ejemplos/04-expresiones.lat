@@ -1,56 +1,93 @@
-i1 = 10
-d1 = 5.5
-d3 = i1 + d1
+b = verdadero
+c = 'c'
+i = 1
+d = 10.05
+s = "hola"
+
+imprimir("############## suma ###############")
+# caracter + entero
+imprimir(c + i) #a "c" se le suma 1 da como resultado "d"
+
+#caracter + caracter
+imprimir(c + c)  #a "c" se le suma "c" da como resultado el caracter 99+99 = 198 "ã"
+
+#caracter + cadena
+imprimir(c + s) #da como resultado la cadena "chola"
+
+# entero + caracter
+imprimir(i + c) #a 1 se le suma "c" da como resultado "d"
+
+#entero + entero
+imprimir(i + i)  #a 1 se le suma 1 da como resultado 2
 
 #entero + decimal
-imprimir(i1)    #10
-imprimir(d1)    #5.500000
-imprimir(d3)    #15.500000
+imprimir(i + d) #a 1 se le suma 10.05 da como resultado 11.05
 
-#error de sintaxis
-#1 + 2 * 3
+#entero + cadena
+imprimir(i + s) #a 1 se le concatena s da como resultado "1hola"
 
-i = 23 #- (5*2) + 3
-i = 43 + 1 - 2
+#decimal + entero
+imprimir(d + i) #da como resultado el decimal 11.05
 
-imprimir(i)     #42
-a = i+1
-imprimir(a)     #43
+#decimal + caracter
+imprimir(d + c) #da como resultado el decimal 11.05
 
-#y = a / 0
-#imprimir(y)     #Error: Division por cero
+#decimal + decimal
+imprimir(d + d) #da como resultado el decimal 20.1
 
-#Pendiente: concatenacion de cadenas
-#s1 = "hola"
-#s2 = " mundo"
-#s3 = s1 + s2
-#imprimir(s3)
+#decimal + cadena
+imprimir(d + s) #da como resultado la cadena 10.05hola
 
-#Pendiente: cadena + entero
-#r = s1 + i
-#imprimir(r)
+#cadena + entero
+imprimir(s + i) #da como resultado la cadena hola1
 
-#Pendiente: cadena + decimal
-#x = s1 + d1
-#imprimir(x)
+#cadena + caracter
+imprimir(s + c) #da como resultado la cadena holac
 
-imprimir(a)
-x = a * 3
-imprimir(x)
-#modulo de un número (es el residuo de la división)
-z = 130 % 3
-imprimir(z)
+#cadena + decimal
+imprimir(s + d) #da como resultado la cadena hola10.05
 
-#imprimir(s1)
+#cadena + cadena
+imprimir(s + s) #da como resultado la cadena holahola
 
-i=0
-imprimir(i)
+imprimir("############## resta ###############")
+# caracter - entero
+imprimir(c - i) #a "c" se le resta 1 da como resultado "b"
 
-l1 = (1 == 1)
-imprimir(l1)
+#caracter - caracter
+imprimir(c - c)  #a "c" se le resta "c" da como resultado el caracter 99-99 = 0 ""
 
-#imprimir("1 < 5? " + (1 < 5))
+#decimal - entero
+imprimir(d - i) #da como resultado el decimal 9.05
 
-#error operador no soportado para dividir una cadena
-#str = l1 / " hola "
-#imprimir(str)
+#decimal - caracter
+imprimir(d - c) #da como resultado el decimal -88.95
+
+#decimal - decimal
+imprimir(d - 0.05) #da como resultado el decimal 10.0
+
+imprimir("############## multiplicacion ###############")
+#entero * entero
+imprimir(i * i) #da como resultado el decimal 1
+
+#entero * decimal
+imprimir(i * d) #da como resultado el decimal 10.05
+
+#decimal * entero
+imprimir(d * i) #da como resultado el decimal 10.05
+
+#decimal * decimal
+imprimir(d * 0.5) #da como resultado el decimal 5.025
+
+imprimir("############## division ###############")
+#entero / entero
+imprimir(i / i) #da como resultado el entero 1
+
+#entero / decimal
+imprimir(i / d) #da como resultado el decimal 0.099502
+
+#decimal / entero
+imprimir(d / i) #da como resultado el entero 10
+
+#decimal / decimal
+imprimir(d / 0.5) #da como resultado el decimal 20.1
