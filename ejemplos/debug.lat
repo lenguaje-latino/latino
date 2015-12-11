@@ -1,4 +1,11 @@
-x = 0.5
-imprimir("seno: " + sin(x))
-imprimir("coseno: " + cos(x))
-imprimir("tangente: " + tan(x))
+str = "hola mundo"
+imprimir(contiene(str, "holas"))
+imprimir(contiene(str, "holas"))
+
+str_copia = copiar(str)
+str = "hola latino"
+
+imprimir(str_copia)
+imprimir(str)
+
+imprimir(termina_con(str, "tino"))
