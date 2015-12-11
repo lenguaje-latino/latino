@@ -9,56 +9,56 @@ typedef struct lat_vm lat_vm;
 #define DEBUG_VM 0
 
 typedef enum lat_ins {
-    OP_END,
-    OP_NOP,
-    OP_PUSH,
-    OP_POP,
-    OP_GET,
-    OP_SET,
-    OP_STORECHAR,
-    OP_STOREINT,
-    OP_STOREDOUBLE,
-    OP_STORESTR,
-    OP_STOREBOOL,
-    OP_STORELIST,
-    OP_PUSHLIST,
-    OP_POPLIST,
-    OP_MOV,
-    OP_GLOBALNS,
-    OP_LOCALNS,
-    OP_FN,
-    OP_NS,
-    OP_ENDNS,
-    OP_JMP,
-    OP_JMPIF,
-    OP_CALL,
-    OP_NOT,
-    OP_INC,
-    OP_DEC
+  OP_END,
+  OP_NOP,
+  OP_PUSH,
+  OP_POP,
+  OP_GET,
+  OP_SET,
+  OP_STORECHAR,
+  OP_STOREINT,
+  OP_STOREDOUBLE,
+  OP_STORESTR,
+  OP_STOREBOOL,
+  OP_STORELIST,
+  OP_PUSHLIST,
+  OP_POPLIST,
+  OP_MOV,
+  OP_GLOBALNS,
+  OP_LOCALNS,
+  OP_FN,
+  OP_NS,
+  OP_ENDNS,
+  OP_JMP,
+  OP_JMPIF,
+  OP_CALL,
+  OP_NOT,
+  OP_INC,
+  OP_DEC
 } lat_ins;
 
 typedef struct lat_bytecode {
-    lat_ins ins;
-    int a;
-    int b;
-    void* meta;
+  lat_ins ins;
+  int a;
+  int b;
+  void* meta;
 } lat_bytecode;
 
 typedef struct lat_function {
-    lat_bytecode* bcode;
-    //lat_object *closure;
+  lat_bytecode* bcode;
+  //lat_object *closure;
 } lat_function;
 
 struct lat_vm {
-    list_node* stack;
-    list_node* all_objects;
-    list_node* gc_objects;
-    lat_object* regs[256];
-    lat_object* ctx_stack[256];
-    lat_object* true_object;
-    lat_object* false_object;
-    size_t memory_usage;
-    int ctx_stack_pointer;
+  list_node* stack;
+  list_node* all_objects;
+  list_node* gc_objects;
+  lat_object* regs[256];
+  lat_object* ctx_stack[256];
+  lat_object* true_object;
+  lat_object* false_object;
+  size_t memory_usage;
+  int ctx_stack_pointer;
 };
 
 lat_vm* lat_make_vm();

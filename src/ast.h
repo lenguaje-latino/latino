@@ -1,100 +1,102 @@
 #ifndef _AST_H_
 #define _AST_H_
 
-#include "latino.h"
+#include <stdbool.h>
 #include "vm.h"
 
 /* tipos de dato */
 typedef enum {
-    VALUE_NULL,
-    VALUE_BOOL,
-    VALUE_INT,
-    VALUE_CHAR,
-    VALUE_DOUBLE,
-    VALUE_STRING
+  VALUE_NULL,
+  VALUE_BOOL,
+  VALUE_INT,
+  VALUE_CHAR,
+  VALUE_DOUBLE,
+  VALUE_STRING
 } ast_value_type;
 
 /* valores de dato */
 typedef struct {
-    ast_value_type t;
-    bool cst; //constant
-    union val {
-        int b;
-        long i;
-        double d;
-        char c;
-        char* s;
-        void* f;
-    } v;
+  ast_value_type t;
+  bool cst; //constant
+  int line_num;
+  int column_num;
+  union val {
+    int b;
+    long i;
+    double d;
+    char c;
+    char* s;
+    void* f;
+  } v;
 } ast_value;
 
 /* tipos de nodos en arbol abstracto de sintaxis (abstract syntax tree) */
 typedef enum {
-    NODE_ADD,
-    NODE_SUB,
-    NODE_MULT,
-    NODE_DIV,
-    NODE_MOD,
-    NODE_ASSIGMENT,
-    NODE_UNARY_MINUS,
-    NODE_EQ,
-    NODE_NEQ,
-    NODE_GT,
-    NODE_LT,
-    NODE_GE,
-    NODE_LE,
-    NODE_BLOCK,
-    NODE_IF,
-    NODE_WHILE,
-    NODE_DO,
-    NODE_SYMBOL,
-    NODE_PARAM_LIST,
-    NODE_FUNC_ARGS,
-    NODE_CALL_FUNCTION,
-    NODE_USER_FUNCTION,
-    NODE_RETURN,
-    NODE_INT,
-    NODE_DECIMAL,
-    NODE_STRING,
-    NODE_CHAR,
-    NODE_BOOLEAN,
-    NODE_AND,
-    NODE_OR,
-    NODE_NEG,
-    NODE_SWITCH,
-    NODE_CASE,
-    NODE_DEFAULT,
-    NODE_CASES,
-    NODE_FROM,
-    NODE_LIST,
-    NODE_LIST_BODY,
-    NODE_INC,
-    NODE_DEC
+  NODE_ADD,
+  NODE_SUB,
+  NODE_MULT,
+  NODE_DIV,
+  NODE_MOD,
+  NODE_ASSIGMENT,
+  NODE_UNARY_MINUS,
+  NODE_EQ,
+  NODE_NEQ,
+  NODE_GT,
+  NODE_LT,
+  NODE_GE,
+  NODE_LE,
+  NODE_BLOCK,
+  NODE_IF,
+  NODE_WHILE,
+  NODE_DO,
+  NODE_SYMBOL,
+  NODE_PARAM_LIST,
+  NODE_FUNC_ARGS,
+  NODE_CALL_FUNCTION,
+  NODE_USER_FUNCTION,
+  NODE_RETURN,
+  NODE_INT,
+  NODE_DECIMAL,
+  NODE_STRING,
+  NODE_CHAR,
+  NODE_BOOLEAN,
+  NODE_AND,
+  NODE_OR,
+  NODE_NEG,
+  NODE_SWITCH,
+  NODE_CASE,
+  NODE_DEFAULT,
+  NODE_CASES,
+  NODE_FROM,
+  NODE_LIST,
+  NODE_LIST_BODY,
+  NODE_INC,
+  NODE_DEC
 } ast_node_type;
 
 /* nodos en arbol abstacto de sintaxis (abstract syntax tree) */
 /* todos los nodos son inicializados con un tipo de nodo*/
 typedef struct ast {
-    ast_node_type node_type;
-    ast_value* value;
-    struct ast* l;
-    struct ast* r;
+  ast_node_type node_type;
+  ast_value* value;
+  struct ast* l;
+  struct ast* r;
 } ast;
 
 typedef struct lex_state {
-    int insert;
+  int insert;
 } lex_state;
 
 typedef union YYSTYPE {
-    int token;
-    ast* node;
+  int token;
+  ast* node;
 } YYSTYPE;
 
 typedef struct {
-    ast_node_type node_type;
-    struct ast* cond; /* condition */
-    struct ast* th;   /* instrucciones si la condicion es verdadera (then) */
-    struct ast* el;   /* instrucciones si la condicion es falsa (else) */
+  ast_node_type node_type;
+  struct ast* cond; /* condition */
+  struct ast* th;   /* instrucciones si la condicion es verdadera (then) */
+  struct ast* el;   /* instrucciones si la condicion es falsa (else) */
 } ast_node_if;
 
 /* metodos para construir AST */

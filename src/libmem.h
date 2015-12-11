@@ -3,8 +3,8 @@
 
 #include <stdlib.h>
 
-void *lmalloc(size_t size);
-void *lrealloc(void *ptr, size_t size);
-void lfree(void *ptr);
+void* lmalloc(size_t size);
+void* lrealloc(void* ptr, size_t size);
+void lfree(void* ptr);
 
 #endif /*_LIBMEM_H_*/
