@@ -66,31 +66,29 @@ lat_vm* lat_make_vm()
   lat_set_ctx(lat_get_current_ctx(ret), lat_str(ret, "contiene"), lat_define_c_function(ret, lat_contains));
   lat_set_ctx(lat_get_current_ctx(ret), lat_str(ret, "copiar"), lat_define_c_function(ret, lat_copy));
   lat_set_ctx(lat_get_current_ctx(ret), lat_str(ret, "termina_con"), lat_define_c_function(ret, lat_endsWith));
-  /*lat_set_ctx(lat_get_current_ctx(ret), lat_str(ret, "es_igual"), lat_define_c_function(ret, lat_equals));
-  lat_set_ctx(lat_get_current_ctx(ret), lat_str(ret, "formato"), lat_define_c_function(ret, lat_format));
+  lat_set_ctx(lat_get_current_ctx(ret), lat_str(ret, "es_igual"), lat_define_c_function(ret, lat_equals));
+  //lat_set_ctx(lat_get_current_ctx(ret), lat_str(ret, "formato"), lat_define_c_function(ret, lat_format));
   lat_set_ctx(lat_get_current_ctx(ret), lat_str(ret, "indice"), lat_define_c_function(ret, lat_indexOf));
   lat_set_ctx(lat_get_current_ctx(ret), lat_str(ret, "insertar"), lat_define_c_function(ret, lat_insert));
   lat_set_ctx(lat_get_current_ctx(ret), lat_str(ret, "ultimo_indice"), lat_define_c_function(ret, lat_lastIndexOf));
   lat_set_ctx(lat_get_current_ctx(ret), lat_str(ret, "rellenar_izquierda"), lat_define_c_function(ret, lat_padLeft));
   lat_set_ctx(lat_get_current_ctx(ret), lat_str(ret, "rellenar_derecha"), lat_define_c_function(ret, lat_padRight));
-  lat_set_ctx(lat_get_current_ctx(ret), lat_str(ret, "eliminar"), lat_define_c_function(ret, lat_remove));
+  //lat_set_ctx(lat_get_current_ctx(ret), lat_str(ret, "eliminar"), lat_define_c_function(ret, lat_remove));
   lat_set_ctx(lat_get_current_ctx(ret), lat_str(ret, "es_vacia"), lat_define_c_function(ret, lat_isEmpty));
   lat_set_ctx(lat_get_current_ctx(ret), lat_str(ret, "longitud"), lat_define_c_function(ret, lat_length));
   lat_set_ctx(lat_get_current_ctx(ret), lat_str(ret, "reemplazar"), lat_define_c_function(ret, lat_replace));
-  lat_set_ctx(lat_get_current_ctx(ret), lat_str(ret, "partir"), lat_define_c_function(ret, lat_split));
+  //lat_set_ctx(lat_get_current_ctx(ret), lat_str(ret, "partir"), lat_define_c_function(ret, lat_split));
   lat_set_ctx(lat_get_current_ctx(ret), lat_str(ret, "empieza_con"), lat_define_c_function(ret, lat_startsWith));
   lat_set_ctx(lat_get_current_ctx(ret), lat_str(ret, "subcadena"), lat_define_c_function(ret, lat_substring));
   lat_set_ctx(lat_get_current_ctx(ret), lat_str(ret, "minusculas"), lat_define_c_function(ret, lat_toLower));
   lat_set_ctx(lat_get_current_ctx(ret), lat_str(ret, "mayusculas"), lat_define_c_function(ret, lat_toUpper));
-  lat_set_ctx(lat_get_current_ctx(ret), lat_str(ret, "quitar_espacios"), lat_define_c_function(ret, lat_toUpper));
-  lat_set_ctx(lat_get_current_ctx(ret), lat_str(ret, "cadena"), lat_define_c_function(ret, lat_valueOf));
-  */
-
+  lat_set_ctx(lat_get_current_ctx(ret), lat_str(ret, "quitar_espacios"), lat_define_c_function(ret, lat_trim));
+  //lat_set_ctx(lat_get_current_ctx(ret), lat_str(ret, "cadena"), lat_define_c_function(ret, lat_valueOf));
   return ret;
 }
 
 void lat_push_stack(lat_vm* vm, lat_object* o)
-{
+{  
   insert_list(vm->stack, (void*)o);
 }
 
@@ -740,19 +738,19 @@ void lat_call_func(lat_vm* vm, lat_object* func)
       case OP_STORECHAR:
         vm->regs[cur.a] = ((lat_object*)cur.meta);
 #if DEBUG_VM
-        printf("STORECHAR r%i, %c", cur.a, cur.b);
+        printf("STORECHAR r%i, %c", cur.a, ((lat_object*)cur.meta)->data.c);
 #endif
         break;
       case OP_STOREINT: {
         vm->regs[cur.a] = ((lat_object*)cur.meta);
 #if DEBUG_VM
-        printf("STOREINT r%i, %i", cur.a, cur.b);
+        printf("STOREINT r%i, %i", cur.a, ((lat_object*)cur.meta)->data.i);
 #endif
       } break;
       case OP_STOREDOUBLE:
         vm->regs[cur.a] = ((lat_object*)cur.meta);
 #if DEBUG_VM
-        printf("STOREDOUBLE r%i, %d", cur.a, *((double*)cur.meta));
+        printf("STOREDOUBLE r%i, %d", cur.a, ((lat_object*)cur.meta)->data.d);
 #endif
         break;
       case OP_STORESTR: {

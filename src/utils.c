@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <ctype.h>
 
 #include "latino.h"
 #include "ast.h"
@@ -135,10 +136,10 @@ bool endsWith(char* base, char* str) {
 int indexOf(char* base, char* str) {
   return indexOf_shift(base, str, 0);
 }
+
 int indexOf_shift(char* base, char* str, int startIndex) {
   int result;
   int baselen = strlen(base);
-  // str should not longer than base
   if (strlen(str) > baselen || startIndex > baselen) {
     result = -1;
   }
@@ -159,7 +160,6 @@ int indexOf_shift(char* base, char* str, int startIndex) {
 
 int lastIndexOf(char* base, char* str) {
   int result;
-  // str should not longer than base
   if (strlen(str) > strlen(base)) {
     result = -1;
   }
@@ -171,16 +171,12 @@ int lastIndexOf(char* base, char* str) {
     while (start != end) {
       start = indexOf_shift(base, str, start);
       end = indexOf_shift(base, str, end);
-      // not found from start
       if (start == -1) {
-        end = -1; // then break;
+        end = -1;
       }
       else if (end == -1) {
-        // found from start
-        // but not found from end
-        // move end to middle
         if (endtmp == (start + 1)) {
-          end = start; // then break;
+          end = start;
         }
         else {
           end = endtmp - (endtmp - start) / 2;
@@ -191,9 +187,6 @@ int lastIndexOf(char* base, char* str) {
         }
       }
       else {
-        // found from both start and end
-        // move start to end and
-        // move end to base - strlen(str)
         start = end;
         end = endinit;
       }
@@ -201,6 +194,130 @@ int lastIndexOf(char* base, char* str) {
     result = start;
   }
   return result;
+}
+
+char* insert(char *dest, char* src, int pos){
+  int srclen = strlen(src);
+  int dstlen = strlen(dest);
+  if (pos < 0){
+    pos = dstlen + pos;
+  }
+  if (pos > dstlen){
+    pos = dstlen;
+  }
+  char *m = malloc(srclen + dstlen + 1);
+  memcpy(m, dest, pos);
+  memcpy(m + pos, src, srclen);
+  memcpy(m + pos + srclen, dest + pos, dstlen - pos + 1);
+  return m;
+}
+
+char* padLeft(char* base, int n, char c){
+  int len = (int)strlen(base);  
+  char *tmp = NULL;
+  if (n <= len){
+    tmp = malloc(len + 1);
+    strcpy(tmp, base);
+    return tmp;
+  }
+  tmp = malloc(n + 1);
+  tmp = "";
+  int i = 0;
+  for (i; i < (n - len); i++){
+    tmp = concat(tmp, char2str(c));
+  }
+  tmp = concat(tmp, base);
+  return tmp;
+}
+
+char* padRight(char *base, int n, char c) {
+  int len = (int)strlen(base);
+  char *tmp = NULL;
+  if (len >= n) {
+    tmp = malloc(len + 1);
+    strcpy(tmp, base);
+    return tmp;
+  }
+  tmp = malloc(n + 1);
+  tmp = base;
+  int i;
+  for (i = 0; i < (n - len); i++) {
+    tmp = concat(tmp, char2str(c));
+  }
+  return tmp;
+}
+
+char *replace(char *str, char *orig, char *rep)
+{
+  char buffer[1024];
+  char *p;
+  if (!(p = strstr(str, orig))){
+    return str;
+  }
+  strncpy(buffer, str, p - str);
+  buffer[p - str] = '\0';
+  sprintf(buffer + (p - str), "%s%s", rep, p + strlen(orig));
+  //reemplazar todas las ocurrencias
+  if (strstr(buffer, orig) != NULL){
+    strcpy(buffer, replace(buffer, orig, rep));
+  }   
+  return buffer;
+}
+
+char *substring(const char* str, int beg, int n)
+{
+  char *ret = malloc(n + 1);
+  strncpy(ret, (str + beg), n);
+  *(ret + n) = 0;
+
+  return ret;
+}
+
+char *toLower(const char* str){
+  int len = strlen(str);
+  char *ret = malloc(len + 1);
+  int i = 0;
+  for (i; i < len; i++){
+    ret[i] = tolower(str[i]);
+  }
+  ret[len] = 0;
+  return ret;
+}
+
+char *toUpper(const char* str){
+  int len = strlen(str);
+  char *ret = malloc(len + 1);
+  int i = 0;
+  for (i; i < len; i++){
+    ret[i] = toupper(str[i]);
+  }
+  ret[len] = 0;
+  return ret;
+}
+
+char* trim(const char *str)
+{
+  char *start, *end;
+  for (start = str; *start; start++)
+  {
+    if (!isspace((unsigned char)start[0]))
+      break;
+  }
+  for (end = start + strlen(start); end > start + 1; end--)
+  {
+    if (!isspace((unsigned char)end[-1]))
+      break;
+  }
+  char *ret = malloc((end - start) + 1);
+  *end = 0;
+  if (start > str){
+    memcpy(ret, start, (end - start) + 1);
+  }
+  else{
+    memcpy(ret, str, strlen(str));
+  }
+
+  return ret;
 }
 
 list_node* make_list_node(void* d)

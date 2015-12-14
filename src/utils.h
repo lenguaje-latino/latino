@@ -96,5 +96,11 @@ bool endsWith(char* base, char* str);
 int indexOf(char* base, char* str);
 int indexOf_shift(char* base, char* str, int startIndex);
 int lastIndexOf(char* base, char* str);
-
+char* insert(char *dest, char* src, int pos);
+char* padLeft(char* base, int n, char c);
+char* padRight(char *base, int n, char c);
+char *replace(char *str, char *orig, char *rep);
+char *substring(const char* str, int beg, int n);
+char *toLower(const char* str);
+char *toUpper(const char* str);
 #endif /*_UTILS_H_*/

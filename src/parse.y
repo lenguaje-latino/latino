@@ -209,7 +209,7 @@ unary_expression:
 
 argument_expression_list: /* empty */ { $$ = NULL; }
     | expression { $$ = ast_new_node(NODE_FUNC_ARGS, $1, NULL); }
-    | argument_expression_list ',' expression { $$ = ast_new_node(NODE_FUNC_ARGS, $3, $1); }
+    | expression ',' argument_expression_list { $$ = ast_new_node(NODE_FUNC_ARGS, $1, $3); }
     ;
 
 identifier_list: /* empty */ { $$ = NULL; }
