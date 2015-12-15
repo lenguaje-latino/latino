@@ -173,6 +173,12 @@ void lat_padRight(lat_vm* vm){
   vm->regs[255] = lat_str(vm, padRight(lat_get_str_value(a), lat_get_int_value(b), lat_get_char_value(c)));
 }
 
+void lat_remove(lat_vm* vm){
+  lat_object* b = lat_pop_stack(vm);  
+  lat_object* a = lat_pop_stack(vm);  
+  vm->regs[255] = lat_str(vm, replace(lat_get_str_value(a), lat_get_str_value(b), ""));
+}
+
 void lat_isEmpty(lat_vm* vm){
   lat_object* a = lat_pop_stack(vm);  
   if (strcmp(lat_get_str_value(a), "") == 0){

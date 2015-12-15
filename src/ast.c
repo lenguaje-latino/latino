@@ -160,7 +160,7 @@ ast *ast_new_string(const char *s) {
   return a;
 }
 
-ast *ast_new_constant(char *s) {
+ast *ast_new_constant(char *s, int line_num, int column_num) {
   // printf("new_constant in line %i, :%s\n", yylineno, s);
   ast *a = lmalloc(sizeof(ast));
   a->node_type = NODE_SYMBOL;
@@ -169,6 +169,8 @@ ast *ast_new_constant(char *s) {
   val->v.s = strdup0(s);
   a->value = val;
   a->value->cst = true;
+  a->value->line_num = line_num;
+  a->value->column_num = column_num;
   return a;
 }
 
@@ -271,7 +273,7 @@ void ast_tree_free(ast *a) {
   if (a) {
     switch (a->node_type) {
     case NODE_BLOCK:
-    case NODE_LIST_BODY:
+    case NODE_LIST_SET_ITEM:
       if (a->r)
         ast_tree_free(a->r);
       if (a->l)
@@ -343,8 +345,8 @@ int ast_parse_node(lat_vm *vm, ast *node, lat_bytecode *bcode, int i) {
     }
     ret->is_constant = node->r->value->cst;
     ret->num_declared++;
-    if (ret->is_constant && ret->num_declared > 1) {
-      log_err("Intento de asignar un nuevo valor a una constante");
+    if (ret->is_constant && ret->num_declared > 1) {       
+      log_err("%s %i: %s", "Linea", node->r->value->line_num+1,  "Intento de asignar un nuevo valor a una constante ");
     }
     dbc(OP_LOCALNS, 1, 0, NULL);
     dbc(OP_POP, 255, 0, NULL);
@@ -439,7 +441,8 @@ int ast_parse_node(lat_vm *vm, ast *node, lat_bytecode *bcode, int i) {
     }
     if (node->r) {
       pn(vm, node->r);
-      if (node->r->value){
+      //Soporte para recursion NODE_CALL_FUNCTION
+      if (node->r->value || node->r->node_type == NODE_CALL_FUNCTION) {
         dbc(OP_PUSH, 255, 0, NULL);
       }
     }
@@ -476,7 +479,7 @@ int ast_parse_node(lat_vm *vm, ast *node, lat_bytecode *bcode, int i) {
     dbc(OP_MOV, 255, nested, NULL);
     nested--;
   } break;
-  case NODE_LIST_BODY: {
+  case NODE_LIST_SET_ITEM: {
     if (node->l) {
       pn(vm, node->l);
       dbc(OP_PUSHLIST, nested, 255, NULL);
@@ -485,6 +488,58 @@ int ast_parse_node(lat_vm *vm, ast *node, lat_bytecode *bcode, int i) {
       pn(vm, node->r);
     }
   } break;
+  case NODE_LIST_GET_ITEM:{
+    if (node->l){
+      pn(vm, node->l);
+      dbc(OP_POPLIST, nested, 255, NULL);
+    }
+    if (node->r){
+      pn(vm, node->r);
+      dbc(OP_LISTGETITEM, nested, 255, NULL);
+    }
+  } break;
+  case NODE_DICT: {
+    nested++;
+    dbc(OP_STOREDICT, nested, 0, NULL);
+    if (node->l) {
+      pn(vm, node->l);
+    }
+    dbc(OP_MOV, 255, nested, NULL);
+    nested--;
+  } break;
+  case NODE_DICT_ITEMS: {
+    if (node->l) {
+      pn(vm, node->l);
+      dbc(OP_PUSHDICT, nested, 255, NULL);
+    }
+    if (node->r) {
+      pn(vm, node->r);
+    }
+  } break;
+  case NODE_DICT_ITEM:{
+    pn(vm, node->l);
+    dbc(OP_PUSH, 255, 0, NULL);
+    /*if (node->r) {
+            pn(node->r);
+            dbc(OP_MOV, 1, 255, NULL);
+            }
+            else {
+            dbc(OP_LOCALNS, 1, 0, NULL);
+            }*/
+    // lat_object *ret = lat_clone_object(vm, lat_str(vm, node->r->value->v.s));
+    lat_object *ret = lat_str(vm, node->r->value->v.s);
+    if (ret->num_declared < 0) {
+      ret->num_declared = 0;
+    }
+    ret->is_constant = node->r->value->cst;
+    ret->num_declared++;
+    if (ret->is_constant && ret->num_declared > 1) {
+      log_err("%s %i: %s", "Linea", node->r->value->line_num+1,  "Intento de asignar un nuevo valor a una constante ");
+    }
+    dbc(OP_LOCALNS, 1, 0, NULL);
+    dbc(OP_POP, 255, 0, NULL);
+    dbc(OP_SET, 255, 1, ret);
+  }break;
   /*case NS:
     {
         dbc(OP_NS, 255, 0, NULL);

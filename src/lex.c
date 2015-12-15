@@ -1082,7 +1082,7 @@ YY_RULE_SETUP
 case 40:
 YY_RULE_SETUP
 #line 92 "lex.l"
-{ yylval->node = ast_new_constant(yytext); return TCONSTANT; }
+{ yylval->node = ast_new_constant(yytext, yylloc->first_line, yylloc->first_column); return TCONSTANT; }
 	YY_BREAK
 case 41:
 YY_RULE_SETUP

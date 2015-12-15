@@ -1,15 +1,2 @@
-str = "Hola Latino"
-imprimir(indice(str, "o"))
-imprimir(ultimo_indice(str, "o"))
-imprimir(rellenar_izquierda(str, 30, '-'))
-imprimir(rellenar_derecha(str, 30, '-'))
-imprimir(es_vacia(str))
-imprimir(es_vacia(""))
-imprimir(longitud(str))
-imprimir(reemplazar(str, "a", "x"))
-imprimir(empieza_con(str, "Ho"))
-imprimir(empieza_con(str, "mu"))
-imprimir(subcadena(str, 5, 6))
-imprimir(minusculas(str))
-imprimir(mayusculas(str))
-imprimir(quitar_espacios("  trim ej  "))
+entero = 10
+PI = 3.1415

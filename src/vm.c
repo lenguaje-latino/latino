@@ -67,16 +67,18 @@ lat_vm* lat_make_vm()
   lat_set_ctx(lat_get_current_ctx(ret), lat_str(ret, "copiar"), lat_define_c_function(ret, lat_copy));
   lat_set_ctx(lat_get_current_ctx(ret), lat_str(ret, "termina_con"), lat_define_c_function(ret, lat_endsWith));
   lat_set_ctx(lat_get_current_ctx(ret), lat_str(ret, "es_igual"), lat_define_c_function(ret, lat_equals));
+  //TODO: Pendiente
   //lat_set_ctx(lat_get_current_ctx(ret), lat_str(ret, "formato"), lat_define_c_function(ret, lat_format));
   lat_set_ctx(lat_get_current_ctx(ret), lat_str(ret, "indice"), lat_define_c_function(ret, lat_indexOf));
   lat_set_ctx(lat_get_current_ctx(ret), lat_str(ret, "insertar"), lat_define_c_function(ret, lat_insert));
   lat_set_ctx(lat_get_current_ctx(ret), lat_str(ret, "ultimo_indice"), lat_define_c_function(ret, lat_lastIndexOf));
   lat_set_ctx(lat_get_current_ctx(ret), lat_str(ret, "rellenar_izquierda"), lat_define_c_function(ret, lat_padLeft));
   lat_set_ctx(lat_get_current_ctx(ret), lat_str(ret, "rellenar_derecha"), lat_define_c_function(ret, lat_padRight));
-  //lat_set_ctx(lat_get_current_ctx(ret), lat_str(ret, "eliminar"), lat_define_c_function(ret, lat_remove));
+  lat_set_ctx(lat_get_current_ctx(ret), lat_str(ret, "eliminar"), lat_define_c_function(ret, lat_remove));
   lat_set_ctx(lat_get_current_ctx(ret), lat_str(ret, "es_vacia"), lat_define_c_function(ret, lat_isEmpty));
   lat_set_ctx(lat_get_current_ctx(ret), lat_str(ret, "longitud"), lat_define_c_function(ret, lat_length));
   lat_set_ctx(lat_get_current_ctx(ret), lat_str(ret, "reemplazar"), lat_define_c_function(ret, lat_replace));
+  //TODO: Pendiente, se implementara cuando se implementen Listas
   //lat_set_ctx(lat_get_current_ctx(ret), lat_str(ret, "partir"), lat_define_c_function(ret, lat_split));
   lat_set_ctx(lat_get_current_ctx(ret), lat_str(ret, "empieza_con"), lat_define_c_function(ret, lat_startsWith));
   lat_set_ctx(lat_get_current_ctx(ret), lat_str(ret, "subcadena"), lat_define_c_function(ret, lat_substring));
@@ -778,9 +780,38 @@ void lat_call_func(lat_vm* vm, lat_object* func)
 #endif
         break;
       case OP_POPLIST:
-        vm->regs[cur.a] = lat_pop_list(vm->regs[cur.b]);
+        //TODO: Pendiente
+        //vm->regs[cur.a] = lat_pop_list(vm->regs[cur.b]);
 #if DEBUG_VM
         printf("POPLIST r%i, r%i", cur.a, cur.b);
+#endif
+        break;
+      case OP_LISTGETITEM:
+        //TODO: Pendiente
+        //vm->regs[cur.a] = lat_pop_list(vm->regs[cur.b]);
+#if DEBUG_VM
+        printf("LISTGETITEM r%i, r%i", cur.a, cur.b);
+#endif
+        break;
+      case OP_STOREDICT:
+        //TODO: Pendiente
+        //vm->regs[cur.a] = lat_list(vm, make_dict());
+#if DEBUG_VM
+        printf("STOREDICT r%i, %s", cur.a, "make_dict");
+#endif
+        break;
+      case OP_PUSHDICT:
+        //TODO: Pendiente
+        //lat_push_dict(vm->regs[cur.a], vm->regs[cur.b]);
+#if DEBUG_VM
+        printf("PUSHDICT r%i, r%i", cur.a, cur.b);
+#endif
+        break;
+      case OP_POPDICT:
+        //TODO: Pendiente
+        //vm->regs[cur.a] = lat_pop_dict(vm->regs[cur.b]);
+#if DEBUG_VM
+        printf("POPDICT r%i, r%i", cur.a, cur.b);
 #endif
         break;
       case OP_MOV:
