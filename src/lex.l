@@ -89,7 +89,7 @@ EXP ([Ee][-+]?[0-9]+)
  "defecto"   { return KDEFAULT; }*/
 
  /* names */
-[_A-Z][_A-Z0-9]*       { yylval->node = ast_new_constant(yytext); return TCONSTANT; }
+[_A-Z][_A-Z0-9]*       { yylval->node = ast_new_constant(yytext, yylloc->first_line, yylloc->first_column); return TCONSTANT; }
 [_a-zA-Z][_a-zA-Z0-9]* { yylval->node = ast_new_identifier(yytext); return TIDENTIFIER; }
 [0-9]+"."+[0-9]*{EXP}?|"."+[0-9]+{EXP}?       { yylval->node = ast_new_decimal(strtod(yytext, NULL)); return TNUMBER; }
 [0-9]+                 { yylval->node = ast_new_integer(strtol(yytext, NULL, 0)); return TINT; }

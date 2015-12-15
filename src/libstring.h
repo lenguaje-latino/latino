@@ -18,7 +18,7 @@ void lat_insert(lat_vm* vm);
 void lat_lastIndexOf(lat_vm* vm);
 void lat_padLeft(lat_vm* vm);
 void lat_padRight(lat_vm* vm);
-//void lat_remove(lat_vm* vm);
+void lat_remove(lat_vm* vm);
 void lat_isEmpty(lat_vm* vm);
 void lat_length(lat_vm* vm);
 void lat_replace(lat_vm* vm);

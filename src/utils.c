@@ -214,37 +214,37 @@ char* insert(char *dest, char* src, int pos){
 
 char* padLeft(char* base, int n, char c){
   int len = (int)strlen(base);  
-  char *tmp = NULL;
+  char *ret = NULL;
   if (n <= len){
-    tmp = malloc(len + 1);
-    strcpy(tmp, base);
-    return tmp;
+    ret = malloc(len + 1);
+    strcpy(ret, base);
+    return ret;
   }
-  tmp = malloc(n + 1);
-  tmp = "";
+  ret = malloc(n + 1);
+  ret = "";
   int i = 0;
   for (i; i < (n - len); i++){
-    tmp = concat(tmp, char2str(c));
+    ret = concat(ret, char2str(c));
   }
-  tmp = concat(tmp, base);
-  return tmp;
+  ret = concat(ret, base);
+  return ret;
 }
 
 char* padRight(char *base, int n, char c) {
   int len = (int)strlen(base);
-  char *tmp = NULL;
+  char *ret = NULL;
   if (len >= n) {
-    tmp = malloc(len + 1);
-    strcpy(tmp, base);
-    return tmp;
+    ret = malloc(len + 1);
+    strcpy(ret, base);
+    return ret;
   }
-  tmp = malloc(n + 1);
-  tmp = base;
+  ret = malloc(n + 1);
+  ret = base;
   int i;
   for (i = 0; i < (n - len); i++) {
-    tmp = concat(tmp, char2str(c));
+    ret = concat(ret, char2str(c));
   }
-  return tmp;
+  return ret;
 }
 
 char *replace(char *str, char *orig, char *rep)

@@ -23,6 +23,7 @@ typedef enum lat_ins {
   OP_STORELIST,
   OP_PUSHLIST,
   OP_POPLIST,
+  OP_LISTGETITEM,
   OP_MOV,
   OP_GLOBALNS,
   OP_LOCALNS,
@@ -34,7 +35,10 @@ typedef enum lat_ins {
   OP_CALL,
   OP_NOT,
   OP_INC,
-  OP_DEC
+  OP_DEC,
+  OP_STOREDICT,
+  OP_PUSHDICT,
+  OP_POPDICT
 } lat_ins;
 
 typedef struct lat_bytecode {

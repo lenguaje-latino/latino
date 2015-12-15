@@ -68,8 +68,9 @@ int yyerror(struct YYLTYPE *yylloc_param, void *scanner, struct ast **root, cons
 %type <node> expression statement statement_list unary_expression
 %type <node> iteration_statement jump_statement function_definition
 %type <node> argument_expression_list declaration primary_expression
-%type <node> constant_expression function_call selection_statement
-%type <node> list_expression_items identifier_list
+%type <node> constant_expression function_call selection_statement identifier_list
+%type <node> list_items get_list_item
+%type <node> dict_items get_dict_item dict_item dict_key
 
  /*labeled_statement*/
 
@@ -199,7 +200,10 @@ constant_expression:
     | TNUMBER { $$ = $1; }
     | TCHAR { $$ = $1; }
     | TSTRING { $$ = $1; }
-    | '[' list_expression_items ']' { $$ = ast_new_node(NODE_LIST, $2, NULL); }
+    | '[' list_items ']' { $$ = ast_new_node(NODE_LIST, $2, NULL); }
+    | '{' dict_items '}' { $$ = ast_new_node(NODE_DICT, $2, NULL); }
+    | get_list_item { $$ = $1; }
+    | get_dict_item { $$ = $1; }
     ;
 
 unary_expression:
@@ -217,9 +221,30 @@ identifier_list: /* empty */ { $$ = NULL; }
     | identifier_list ',' TIDENTIFIER { $$ = ast_new_node(NODE_PARAM_LIST, $3, $1); }
     ;
 
-list_expression_items: /* empty */ { $$ = ast_new_node(NODE_LIST_BODY, NULL, NULL); }
-    | list_expression_items ',' expression { $$ = ast_new_node(NODE_LIST_BODY, $3, $1); }
-    | expression { $$ = ast_new_node(NODE_LIST_BODY, $1, NULL); }
+list_items: /* empty */ { $$ = ast_new_node(NODE_LIST_SET_ITEM, NULL, NULL); }
+    | list_items ',' expression { $$ = ast_new_node(NODE_LIST_SET_ITEM, $3, $1); }
+    | expression { $$ = ast_new_node(NODE_LIST_SET_ITEM, $1, NULL); }
     ;
 
+get_list_item:
+     TIDENTIFIER '[' TINT ']' { $$ = ast_new_node(NODE_LIST_GET_ITEM, $1, $3); }
+    ;
+
+dict_items: /* empty */ { $$ = ast_new_node(NODE_DICT_ITEMS, NULL, NULL); }
+    | dict_items ',' dict_item { $$ = ast_new_node(NODE_DICT_ITEMS, $3, $1); }
+    | dict_item { $$ = ast_new_node(NODE_DICT_ITEMS, $1, NULL); }
+    ;
+
+dict_item: /* empty */ { $$ = NULL; }
+    | dict_key ':' primary_expression { $$ = ast_new_node(NODE_DICT_ITEM, $1, $3); }
+    ;
+
+dict_key:
+    TINT { $$ = $1; }
+    | TSTRING { $$ = $1; }
+    ;
+
+get_dict_item:
+     TIDENTIFIER '[' TSTRING ']' { $$ = ast_new_node(NODE_GET_DICT_ITEM, $1, $3); }
+    ;
 %%
