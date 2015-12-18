@@ -1,5 +1,4 @@
 #include <stdbool.h>
-
 #include "latino.h"
 #include "ast.h"
 #include "utils.h"
@@ -13,7 +12,7 @@
 
 int yyerror(struct YYLTYPE *yylloc_param, void *scanner, struct ast **root,
             const char *s) {
-  log_err("%s at line %d", s, (yylloc_param->first_line + 1));
+  log_err("Linea %d: %s", (yylloc_param->first_line + 1), s);
   return 0;
 }
 
@@ -345,8 +344,8 @@ int ast_parse_node(lat_vm *vm, ast *node, lat_bytecode *bcode, int i) {
     }
     ret->is_constant = node->r->value->cst;
     ret->num_declared++;
-    if (ret->is_constant && ret->num_declared > 1) {       
-      log_err("%s %i: %s", "Linea", node->r->value->line_num+1,  "Intento de asignar un nuevo valor a una constante ");
+    if (ret->is_constant && ret->num_declared > 1) {
+      log_err("Linea %d: %s", (node->r->value->line_num + 1),  "Intento de asignar un nuevo valor a una constante ");
     }
     dbc(OP_LOCALNS, 1, 0, NULL);
     dbc(OP_POP, 255, 0, NULL);
@@ -534,7 +533,7 @@ int ast_parse_node(lat_vm *vm, ast *node, lat_bytecode *bcode, int i) {
     ret->is_constant = node->r->value->cst;
     ret->num_declared++;
     if (ret->is_constant && ret->num_declared > 1) {
-      log_err("%s %i: %s", "Linea", node->r->value->line_num+1,  "Intento de asignar un nuevo valor a una constante ");
+      log_err("Linea %d: %s", (node->r->value->line_num + 1),  "Intento de asignar un nuevo valor a una constante ");
     }
     dbc(OP_LOCALNS, 1, 0, NULL);
     dbc(OP_POP, 255, 0, NULL);
