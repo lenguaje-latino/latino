@@ -1,4 +1,4 @@
-La presente licencia es la traduccion del texto en ingles abajo mensionado la puede ver en 
+La presente licencia es la traduccion del texto en ingles abajo mensionado la puede ver en
 https://opensource.org/licenses/MIT
 
 La licencia MIT
@@ -12,8 +12,6 @@ amueblado para hacerlo, con sujeción a las siguientes condiciones:
 
 El aviso de copyright anterior y este aviso de permiso se incluirán en
 todas las copias o partes sustanciales del Software.
-
-
 
 EL SOFTWARE SE PROPORCIONA "TAL CUAL", SIN GARANTÍA DE NINGÚN TIPO, EXPRESA O
 IMPLÍCITAS, INCLUYENDO PERO NO LIMITADO A LAS GARANTÍAS DE COMERCIALIZACIÓN,
@@ -45,4 +43,3 @@ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
 LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
-

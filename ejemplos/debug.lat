@@ -1,2 +1,4 @@
 entero = 10
 PI = 3.1415
+imprimir(entero)
+imprimir(PI)

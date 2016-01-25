@@ -97,7 +97,7 @@ typedef union YYSTYPE {
 
 typedef struct {
   ast_node_type node_type;
-  struct ast *cond; /* condition */
+  struct ast *cond; /* condicion */
   struct ast *th;   /* instrucciones si la condicion es verdadera (then) */
   struct ast *el;   /* instrucciones si la condicion es falsa (else) */
 } ast_node_if;
