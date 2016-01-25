@@ -90,7 +90,7 @@ lat_vm* lat_make_vm()
 }
 
 void lat_push_stack(lat_vm* vm, lat_object* o)
-{  
+{
   insert_list(vm->stack, (void*)o);
 }
 

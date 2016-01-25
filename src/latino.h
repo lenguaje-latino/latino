@@ -28,11 +28,6 @@ defined(__ELF__)
 
 #define lassert(cond) ((void)(false && (cond)))
 
-#pragma once
-
-#define false 0
-#define true 1
-
 extern int debug;
 #define MAX_ERROR_LENGTH 1024
 #define MAX_BYTECODE_FUNCTION (1024 * 10)

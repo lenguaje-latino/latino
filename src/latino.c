@@ -15,10 +15,10 @@
 int yydebug = 0;
 int debug = 0;
 
-static FILE* file;
-static char* buffer;
+static FILE *file;
+static char *buffer;
 
-int yyparse(ast** expression, yyscan_t scanner);
+int yyparse(ast **expression, yyscan_t scanner);
 
 /*
 typedef struct yy_buffer_state * YY_BUFFER_STATE;
@@ -26,13 +26,12 @@ extern YY_BUFFER_STATE yy_scan_string(char * str);
 extern void yy_delete_buffer(YY_BUFFER_STATE buffer);
 */
 
-ast* lat_parse_expr(char* expr)
-{
-  ast* ret = NULL;
+ast *lat_parse_expr(char *expr) {
+  ast *ret = NULL;
   yyscan_t scanner;
   YY_BUFFER_STATE state;
 
-  lex_state scan_state = {.insert = 0 };
+  lex_state scan_state = {.insert = 0};
   yylex_init_extra(&scan_state, &scanner);
   state = yy_scan_string(expr, scanner);
   yyparse(&ret, scanner);
@@ -41,8 +40,7 @@ ast* lat_parse_expr(char* expr)
   return ret;
 }
 
-ast* lat_parse_file(char* infile)
-{
+ast *lat_parse_file(char *infile) {
   if (infile == NULL) {
     printf("Especifique un archivo\n");
     return NULL;
@@ -67,59 +65,57 @@ ast* lat_parse_file(char* infile)
   return lat_parse_expr(buffer);
 }
 
-void lat_compile(lat_vm* vm)
-{
-  vm->regs[255] = ast_parse_tree(vm, lat_parse_expr(lat_get_str_value(lat_pop_stack(vm))));
+void lat_compile(lat_vm *vm) {
+  vm->regs[255] =
+      ast_parse_tree(vm, lat_parse_expr(lat_get_str_value(lat_pop_stack(vm))));
 }
 
-void lat_import(lat_vm* vm)
-{
-  char* input = lat_get_str_value(lat_pop_stack(vm));
-  char* dot = strrchr(input, '.');
-  char* extension;
+void lat_import(lat_vm *vm) {
+  char *input = lat_get_str_value(lat_pop_stack(vm));
+  char *dot = strrchr(input, '.');
+  char *extension;
   if (!dot || dot == input) {
     extension = "";
   }
   extension = dot + 1;
   if (strcmp(extension, "lat") == 0) {
-    lat_object* func = ast_parse_tree(vm, lat_parse_file(input));
+    lat_object *func = ast_parse_tree(vm, lat_parse_file(input));
     lat_call_func(vm, func);
-  }
-  else if (strcmp(extension, "so") == 0) {
+  } else if (strcmp(extension, "so") == 0) {
 #ifndef WIN32
     char buffer[256];
     getcwd(buffer, 256);
     strcat(buffer, "/");
     strcat(buffer, input);
-    void* handle = dlopen(buffer, RTLD_LAZY);
-    void (*init)(lat_vm*);
+    void *handle = dlopen(buffer, RTLD_LAZY);
+    void (*init)(lat_vm *);
     if (handle == NULL) {
-      log_err("Loading external library %s failed with error %s", input, dlerror());
+      log_err("Loading external library %s failed with error %s", input,
+              dlerror());
       exit(1);
     }
     dlerror();
-    *(void**)(&init) = dlsym(handle, "lat_init");
+    *(void **)(&init) = dlsym(handle, "lat_init");
     init(vm);
     dlclose(handle);
 #endif
   }
 }
 
-int main(int argc, char* argv[])
-{
+int main(int argc, char *argv[]) {
   /*
   Para debuguear en visual studio:
-  Menu propiedades del proyecto-> Debugging -> Command Arguments. Agregar $(SolutionDir)..\ejemplos\debug.lat
+  Menu propiedades del proyecto-> Debugging -> Command Arguments. Agregar
+  $(SolutionDir)..\ejemplos\debug.lat
   */
   /*int parseCadena = 0;*/
   int i;
-  char* infile = NULL;
+  char *infile = NULL;
   /*char *cadena = NULL;*/
   for (i = 1; i < argc; i++) {
     if (strcmp(argv[i], "-d") == 0) {
       debug = 1;
-    }
-    else {
+    } else {
       /*printf(argv[i]);*/
       infile = argv[i];
     }
@@ -131,20 +127,22 @@ int main(int argc, char* argv[])
 
   /*printf("infile: %s\n", infile);*/
   /*error en chkstk.asm*/
-  ast* tree = lat_parse_file(infile);
-  //tree = lat_parse_expr(buffer);
-  //ast_value *val = NULL;
-  //val = eval(tree);
+  ast *tree = lat_parse_file(infile);
+  // tree = lat_parse_expr(buffer);
+  // ast_value *val = NULL;
+  // val = eval(tree);
 
   if (!tree) {
-    //log_err("Error: en el analizador sintactico");
+    // log_err("Error: en el analizador sintactico");
     return EXIT_FAILURE;
   }
 
-  lat_vm* vm = lat_make_vm();
-  lat_set_ctx(lat_get_current_ctx(vm), lat_str(vm, "compile"), lat_define_c_function(vm, lat_compile));
-  lat_set_ctx(lat_get_current_ctx(vm), lat_str(vm, "import"), lat_define_c_function(vm, lat_import));
-  lat_object* mainFunc = ast_parse_tree(vm, tree);
+  lat_vm *vm = lat_make_vm();
+  lat_set_ctx(lat_get_current_ctx(vm), lat_str(vm, "compile"),
+              lat_define_c_function(vm, lat_compile));
+  lat_set_ctx(lat_get_current_ctx(vm), lat_str(vm, "import"),
+              lat_define_c_function(vm, lat_import));
+  lat_object *mainFunc = ast_parse_tree(vm, tree);
   lat_call_func(vm, mainFunc);
   lat_push_stack(vm, vm->regs[255]);
   /*if (parseCadena){
