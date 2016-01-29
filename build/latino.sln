@@ -1,0 +1,60 @@
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2013
+VisualStudioVersion = 12.0.31101.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "ALL_BUILD", "ALL_BUILD.vcxproj", "{A7DC3D7D-8FBE-44F6-BD9F-A8D297595004}"
+	ProjectSection(ProjectDependencies) = postProject
+		{4899A925-7952-4EDC-B545-4419FBD659F9} = {4899A925-7952-4EDC-B545-4419FBD659F9}
+		{F3EA0A37-5908-4D3B-A74D-ECCF8D33C41E} = {F3EA0A37-5908-4D3B-A74D-ECCF8D33C41E}
+	EndProjectSection
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "ZERO_CHECK", "ZERO_CHECK.vcxproj", "{4899A925-7952-4EDC-B545-4419FBD659F9}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "latino", "src\latino.vcxproj", "{F3EA0A37-5908-4D3B-A74D-ECCF8D33C41E}"
+	ProjectSection(ProjectDependencies) = postProject
+		{4899A925-7952-4EDC-B545-4419FBD659F9} = {4899A925-7952-4EDC-B545-4419FBD659F9}
+	EndProjectSection
+EndProject
+Project("{54435603-DBB4-11D2-8724-00A0C9A8B90C}") = "latino_setup", "..\latino_setup\latino_setup.vdproj", "{C22CE49C-AFE5-410C-BF4F-852D18C008FF}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Win32 = Debug|Win32
+		MinSizeRel|Win32 = MinSizeRel|Win32
+		Release|Win32 = Release|Win32
+		RelWithDebInfo|Win32 = RelWithDebInfo|Win32
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{A7DC3D7D-8FBE-44F6-BD9F-A8D297595004}.Debug|Win32.ActiveCfg = Debug|Win32
+		{A7DC3D7D-8FBE-44F6-BD9F-A8D297595004}.MinSizeRel|Win32.ActiveCfg = MinSizeRel|Win32
+		{A7DC3D7D-8FBE-44F6-BD9F-A8D297595004}.Release|Win32.ActiveCfg = Release|Win32
+		{A7DC3D7D-8FBE-44F6-BD9F-A8D297595004}.RelWithDebInfo|Win32.ActiveCfg = RelWithDebInfo|Win32
+		{4899A925-7952-4EDC-B545-4419FBD659F9}.Debug|Win32.ActiveCfg = Debug|Win32
+		{4899A925-7952-4EDC-B545-4419FBD659F9}.Debug|Win32.Build.0 = Debug|Win32
+		{4899A925-7952-4EDC-B545-4419FBD659F9}.MinSizeRel|Win32.ActiveCfg = MinSizeRel|Win32
+		{4899A925-7952-4EDC-B545-4419FBD659F9}.MinSizeRel|Win32.Build.0 = MinSizeRel|Win32
+		{4899A925-7952-4EDC-B545-4419FBD659F9}.Release|Win32.ActiveCfg = Release|Win32
+		{4899A925-7952-4EDC-B545-4419FBD659F9}.Release|Win32.Build.0 = Release|Win32
+		{4899A925-7952-4EDC-B545-4419FBD659F9}.RelWithDebInfo|Win32.ActiveCfg = RelWithDebInfo|Win32
+		{4899A925-7952-4EDC-B545-4419FBD659F9}.RelWithDebInfo|Win32.Build.0 = RelWithDebInfo|Win32
+		{F3EA0A37-5908-4D3B-A74D-ECCF8D33C41E}.Debug|Win32.ActiveCfg = Debug|Win32
+		{F3EA0A37-5908-4D3B-A74D-ECCF8D33C41E}.Debug|Win32.Build.0 = Debug|Win32
+		{F3EA0A37-5908-4D3B-A74D-ECCF8D33C41E}.MinSizeRel|Win32.ActiveCfg = MinSizeRel|Win32
+		{F3EA0A37-5908-4D3B-A74D-ECCF8D33C41E}.MinSizeRel|Win32.Build.0 = MinSizeRel|Win32
+		{F3EA0A37-5908-4D3B-A74D-ECCF8D33C41E}.Release|Win32.ActiveCfg = Release|Win32
+		{F3EA0A37-5908-4D3B-A74D-ECCF8D33C41E}.Release|Win32.Build.0 = Release|Win32
+		{F3EA0A37-5908-4D3B-A74D-ECCF8D33C41E}.RelWithDebInfo|Win32.ActiveCfg = RelWithDebInfo|Win32
+		{F3EA0A37-5908-4D3B-A74D-ECCF8D33C41E}.RelWithDebInfo|Win32.Build.0 = RelWithDebInfo|Win32
+		{C22CE49C-AFE5-410C-BF4F-852D18C008FF}.Debug|Win32.ActiveCfg = Debug
+		{C22CE49C-AFE5-410C-BF4F-852D18C008FF}.Debug|Win32.Build.0 = Debug
+		{C22CE49C-AFE5-410C-BF4F-852D18C008FF}.MinSizeRel|Win32.ActiveCfg = Release
+		{C22CE49C-AFE5-410C-BF4F-852D18C008FF}.MinSizeRel|Win32.Build.0 = Release
+		{C22CE49C-AFE5-410C-BF4F-852D18C008FF}.Release|Win32.ActiveCfg = Release
+		{C22CE49C-AFE5-410C-BF4F-852D18C008FF}.Release|Win32.Build.0 = Release
+		{C22CE49C-AFE5-410C-BF4F-852D18C008FF}.RelWithDebInfo|Win32.ActiveCfg = Release
+		{C22CE49C-AFE5-410C-BF4F-852D18C008FF}.RelWithDebInfo|Win32.Build.0 = Release
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

@@ -1,0 +1,124 @@
+﻿Build started 28/01/2016 08:25:49 p.m..
+     1>Project "C:\Users\primi\Documents\latino\build\src\latino.vcxproj" on node 2 (Rebuild target(s)).
+     1>CustomBuild:
+         Building Custom Rule C:/Users/primi/Documents/latino/src/CMakeLists.txt
+         CMake does not need to re-run because C:\Users\primi\Documents\latino\build\src\CMakeFiles\generate.stamp is up-to-date.
+       ClCompile:
+         C:\Program Files\Microsoft Visual Studio 12.0\VC\bin\CL.exe /c /nologo /W4 /WX- /O2 /Ob2 /Oy- /D WIN32 /D _WINDOWS /D NDEBUG /D _CRT_SECURE_NO_WARNINGS /D _DEBUG /D __STDC_CONSTANT_MACROS /D __STDC_FORMAT_MACROS /D __STDC_LIMIT_MACROS /D "CMAKE_INTDIR=\"Release\"" /D _MBCS /Gm- /MD /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"latino.dir\Release\\" /Fd"latino.dir\Release\vc120.pdb" /Gd /TC /analyze- /errorReport:prompt C:\Users\primi\Documents\latino\src\latino.c C:\Users\primi\Documents\latino\src\ast.c C:\Users\primi\Documents\latino\src\utils.c C:\Users\primi\Documents\latino\src\vm.c C:\Users\primi\Documents\latino\src\object.c C:\Users\primi\Documents\latino\src\libstring.c C:\Users\primi\Documents\latino\src\libmem.c C:\Users\primi\Documents\latino\src\lex.c C:\Users\primi\Documents\latino\src\parse.c C:\Users\primi\Documents\latino\src\libmath.c C:\Users\primi\Documents\latino\src\libio.c
+         latino.c
+         ast.c
+     1>C:\Users\primi\Documents\latino\src\ast.c(13): warning C4100: 'root' : unreferenced formal parameter
+     1>C:\Users\primi\Documents\latino\src\ast.c(13): warning C4100: 'scanner' : unreferenced formal parameter
+     1>C:\Users\primi\Documents\latino\src\ast.c(108): warning C4100: 'l' : unreferenced formal parameter
+         utils.c
+     1>C:\Users\primi\Documents\latino\src\utils.c(69): warning C4244: '=' : conversion from 'int' to 'char', possible loss of data
+     1>C:\Users\primi\Documents\latino\src\utils.c(143): warning C4018: '>' : signed/unsigned mismatch
+     1>C:\Users\primi\Documents\latino\src\utils.c(264): warning C4172: returning address of local variable or temporary
+     1>C:\Users\primi\Documents\latino\src\utils.c(281): warning C4244: '=' : conversion from 'int' to 'char', possible loss of data
+     1>C:\Users\primi\Documents\latino\src\utils.c(292): warning C4244: '=' : conversion from 'int' to 'char', possible loss of data
+     1>C:\Users\primi\Documents\latino\src\utils.c(301): warning C4090: '=' : different 'const' qualifiers
+         vm.c
+     1>C:\Users\primi\Documents\latino\src\vm.c(414): warning C4244: 'function' : conversion from 'int' to 'char', possible loss of data
+     1>C:\Users\primi\Documents\latino\src\vm.c(491): warning C4244: 'function' : conversion from 'int' to 'char', possible loss of data
+     1>C:\Users\primi\Documents\latino\src\vm.c(897): warning C4055: 'type cast' : from data pointer 'void *' to function pointer 'void (__cdecl *)(lat_vm *)'
+         object.c
+     1>C:\Users\primi\Documents\latino\src\object.c(57): warning C4100: 'vm' : unreferenced formal parameter
+     1>C:\Users\primi\Documents\latino\src\object.c(101): warning C4100: 'vm' : unreferenced formal parameter
+     1>C:\Users\primi\Documents\latino\src\object.c(154): warning C4244: 'function' : conversion from 'int' to 'unsigned char', possible loss of data
+     1>C:\Users\primi\Documents\latino\src\object.c(157): warning C4244: 'function' : conversion from 'int' to 'unsigned char', possible loss of data
+     1>C:\Users\primi\Documents\latino\src\object.c(196): warning C4100: 'vm' : unreferenced formal parameter
+         libstring.c
+     1>C:\Users\primi\Documents\latino\src\libstring.c(7): warning C4127: conditional expression is constant
+     1>C:\Users\primi\Documents\latino\src\libstring.c(39): warning C4127: conditional expression is constant
+     1>C:\Users\primi\Documents\latino\src\libstring.c(47): warning C4090: '=' : different 'const' qualifiers
+     1>C:\Users\primi\Documents\latino\src\libstring.c(235): warning C4013: 'trim' undefined; assuming extern returning int
+     1>C:\Users\primi\Documents\latino\src\libstring.c(235): warning C4047: 'function' : 'char *' differs in levels of indirection from 'int'
+     1>C:\Users\primi\Documents\latino\src\libstring.c(235): warning C4024: 'lat_str' : different types for formal and actual parameter 2
+         libmem.c
+         lex.c
+     1>lex.c(860): warning C4127: conditional expression is constant
+     1>lex.c(876): warning C4244: 'initializing' : conversion from 'flex_int32_t' to 'YY_CHAR', possible loss of data
+     1>lex.c(886): warning C4244: '=' : conversion from 'flex_int32_t' to 'YY_CHAR', possible loss of data
+     1>lex.c(908): warning C4127: conditional expression is constant
+     1>lex.c(1218): warning C4127: conditional expression is constant
+     1>lex.c(1426): warning C4244: 'initializing' : conversion from 'int' to 'YY_CHAR', possible loss of data
+     1>lex.c(1436): warning C4244: '=' : conversion from 'flex_int32_t' to 'YY_CHAR', possible loss of data
+     1>lex.c(1465): warning C4244: '=' : conversion from 'flex_int32_t' to 'YY_CHAR', possible loss of data
+     1>lex.c(1564): warning C4127: conditional expression is constant
+     1>lex.c(1591): warning C4127: conditional expression is constant
+     1>lex.c(1960): warning C4100: 'yyscanner' : unreferenced formal parameter
+     1>lex.c(2304): warning C4100: 'yyscanner' : unreferenced formal parameter
+     1>lex.c(2309): warning C4100: 'yyscanner' : unreferenced formal parameter
+     1>lex.c(2321): warning C4100: 'yyscanner' : unreferenced formal parameter
+         parse.c
+     1>parse.c(1224): warning C4127: conditional expression is constant
+     1>parse.c(1321): warning C4127: conditional expression is constant
+     1>parse.c(1339): warning C4244: '=' : conversion from 'int' to 'yytype_int16', possible loss of data
+     1>parse.c(1386): warning C4127: conditional expression is constant
+     1>parse.c(1387): warning C4127: conditional expression is constant
+     1>parse.c(1388): warning C4127: conditional expression is constant
+     1>parse.c(1401): warning C4127: conditional expression is constant
+     1>parse.c(1407): warning C4127: conditional expression is constant
+     1>parse.c(1432): warning C4127: conditional expression is constant
+     1>parse.c(1433): warning C4013: 'yylex' undefined; assuming extern returning int
+     1>parse.c(1439): warning C4127: conditional expression is constant
+     1>parse.c(1444): warning C4127: conditional expression is constant
+     1>parse.c(1467): warning C4127: conditional expression is constant
+     1>parse.c(1508): warning C4127: conditional expression is constant
+     1>parse.c(1509): warning C4127: conditional expression is constant
+     1>parse.y(166): warning C4013: 'ast_new_op' undefined; assuming extern returning int
+     1>parse.y(166): warning C4047: '=' : 'ast *' differs in levels of indirection from 'int'
+     1>parse.y(167): warning C4047: '=' : 'ast *' differs in levels of indirection from 'int'
+     1>parse.y(168): warning C4047: '=' : 'ast *' differs in levels of indirection from 'int'
+     1>parse.y(169): warning C4047: '=' : 'ast *' differs in levels of indirection from 'int'
+     1>parse.y(170): warning C4047: '=' : 'ast *' differs in levels of indirection from 'int'
+     1>parse.y(171): warning C4047: '=' : 'ast *' differs in levels of indirection from 'int'
+     1>parse.y(172): warning C4047: '=' : 'ast *' differs in levels of indirection from 'int'
+     1>parse.y(173): warning C4047: '=' : 'ast *' differs in levels of indirection from 'int'
+     1>parse.y(174): warning C4047: '=' : 'ast *' differs in levels of indirection from 'int'
+     1>parse.y(175): warning C4047: '=' : 'ast *' differs in levels of indirection from 'int'
+     1>parse.y(176): warning C4047: '=' : 'ast *' differs in levels of indirection from 'int'
+     1>parse.y(177): warning C4047: '=' : 'ast *' differs in levels of indirection from 'int'
+     1>parse.y(178): warning C4047: '=' : 'ast *' differs in levels of indirection from 'int'
+     1>parse.y(179): warning C4047: '=' : 'ast *' differs in levels of indirection from 'int'
+     1>parse.y(181): warning C4047: '=' : 'ast *' differs in levels of indirection from 'int'
+     1>parse.y(193): warning C4013: 'ast_new_bool' undefined; assuming extern returning int
+     1>parse.y(193): warning C4047: '=' : 'ast *' differs in levels of indirection from 'int'
+     1>parse.y(194): warning C4047: '=' : 'ast *' differs in levels of indirection from 'int'
+     1>parse.c(1962): warning C4127: conditional expression is constant
+     1>parse.c(1966): warning C4127: conditional expression is constant
+     1>parse.c(2068): warning C4127: conditional expression is constant
+     1>parse.c(2076): warning C4127: conditional expression is constant
+     1>parse.c(2110): warning C4127: conditional expression is constant
+     1>parse.c(2120): warning C4127: conditional expression is constant
+     1>parse.c(2124): warning C4127: conditional expression is constant
+     1>parse.c(2166): warning C4127: conditional expression is constant
+         libmath.c
+         libio.c
+     1>C:\Users\primi\Documents\latino\src\libio.c(14): warning C4100: 'vm' : unreferenced formal parameter
+     1>C:\Users\primi\Documents\latino\src\libio.c(17): warning C4100: 'vm' : unreferenced formal parameter
+     1>C:\Users\primi\Documents\latino\src\libio.c(20): warning C4100: 'vm' : unreferenced formal parameter
+         Generating Code...
+     1>c:\users\primi\documents\latino\build\src\parse.c(2071): warning C4702: unreachable code
+     1>c:\users\primi\documents\latino\build\src\parse.c(2076): warning C4702: unreachable code
+     1>c:\users\primi\documents\latino\build\src\parse.c(2077): warning C4702: unreachable code
+     1>c:\users\primi\documents\latino\src\utils.c(254): warning C4706: assignment within conditional expression
+     1>c:\users\primi\documents\latino\src\ast.c(16): warning C4702: unreachable code
+       Link:
+         C:\Program Files\Microsoft Visual Studio 12.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"C:\Users\primi\Documents\latino\build\bin\Release\latino.exe" /INCREMENTAL:NO /NOLOGO kernel32.lib user32.lib gdi32.lib winspool.lib shell32.lib ole32.lib oleaut32.lib uuid.lib comdlg32.lib advapi32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /PDB:"C:/Users/primi/Documents/latino/build/bin/Release/latino.pdb" /SUBSYSTEM:CONSOLE /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"C:/Users/primi/Documents/latino/build/bin/Release/latino.lib" /MACHINE:X86 /SAFESEH  /machine:X86 latino.dir\Release\latino.obj
+         latino.dir\Release\ast.obj
+         latino.dir\Release\utils.obj
+         latino.dir\Release\vm.obj
+         latino.dir\Release\object.obj
+         latino.dir\Release\libstring.obj
+         latino.dir\Release\libmem.obj
+         latino.dir\Release\lex.obj
+         latino.dir\Release\parse.obj
+         latino.dir\Release\libmath.obj
+         latino.dir\Release\libio.obj
+         latino.vcxproj -> C:\Users\primi\Documents\latino\build\bin\Release\latino.exe
+     1>Done Building Project "C:\Users\primi\Documents\latino\build\src\latino.vcxproj" (Rebuild target(s)).
+
+Build succeeded.
+
+Time Elapsed 00:00:03.66
