@@ -1,10 +1,12 @@
 #include <stdio.h>
 #include <string.h>
 
+/*
 #ifndef WIN32
 #include <dlfcn.h>
 #include <unistd.h>
 #endif // WIN32
+*/
 
 #include "latino.h"
 #include "parse.h"
@@ -82,7 +84,7 @@ void lat_import(lat_vm *vm) {
     lat_object *func = ast_parse_tree(vm, lat_parse_file(input));
     lat_call_func(vm, func);
   } else if (strcmp(extension, "so") == 0) {
-#ifndef WIN32
+/*#ifndef WIN32
     char buffer[256];
     getcwd(buffer, 256);
     strcat(buffer, "/");
@@ -99,6 +101,7 @@ void lat_import(lat_vm *vm) {
     init(vm);
     dlclose(handle);
 #endif
+*/
   }
 }
 

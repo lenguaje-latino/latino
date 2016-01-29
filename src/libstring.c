@@ -180,7 +180,7 @@ void lat_remove(lat_vm* vm){
 }
 
 void lat_isEmpty(lat_vm* vm){
-  lat_object* a = lat_pop_stack(vm);  
+  lat_object* a = lat_pop_stack(vm);
   if (strcmp(lat_get_str_value(a), "") == 0){
     vm->regs[255] = vm->true_object;
   }

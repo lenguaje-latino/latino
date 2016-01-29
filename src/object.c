@@ -339,7 +339,7 @@ char lat_get_char_value(lat_object* o)
   log_err("Object no es un tipo caracter");
 }
 
-int lat_get_int_value(lat_object* o)
+long lat_get_int_value(lat_object* o)
 {
   if (o->type == T_INT) {
     return o->data.i;
