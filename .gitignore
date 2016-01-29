@@ -1,7 +1,4 @@
 #ignora directorio bin
-bin/
-obj/
-build/
 CMakeFiles/
 CMakeCache.txt
 cmake_install.cmake

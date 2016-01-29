@@ -1,0 +1,11 @@
+﻿Build started 28/01/2016 08:25:49 p.m..
+     1>Project "C:\Users\primi\Documents\latino\build\ZERO_CHECK.vcxproj" on node 2 (Rebuild target(s)).
+     1>CustomBuild:
+         Checking Build System
+         CMake does not need to re-run because C:/Users/primi/Documents/latino/build/CMakeFiles/generate.stamp is up-to-date.
+         CMake does not need to re-run because C:/Users/primi/Documents/latino/build/src/CMakeFiles/generate.stamp is up-to-date.
+     1>Done Building Project "C:\Users\primi\Documents\latino\build\ZERO_CHECK.vcxproj" (Rebuild target(s)).
+
+Build succeeded.
+
+Time Elapsed 00:00:00.26
