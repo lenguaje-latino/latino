@@ -9,6 +9,7 @@ nbproject/
 *.exe
 latino.*
 ALL_BUILD.*
+ZERO_CHECK.*
 CMakeCache.txt
 cmake_install.cmake
 Makefile
