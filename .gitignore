@@ -1,8 +1,14 @@
-#ignora directorio bin
+#ignora directorios
+bin/
 CMakeFiles/
-CMakeCache.txt
-cmake_install.cmake
+build/
+nbproject/
 
 #ignora archivo objeto
 *.o
-/nbproject/private/
+*.exe
+latino.*
+ALL_BUILD.*
+CMakeCache.txt
+cmake_install.cmake
+Makefile
