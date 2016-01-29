@@ -7,6 +7,7 @@
 #include "libmem.h"
 #include "libmath.h"
 #include "libstring.h"
+#include "libio.h"
 
 lat_vm* lat_make_vm()
 {
@@ -86,6 +87,9 @@ lat_vm* lat_make_vm()
   lat_set_ctx(lat_get_current_ctx(ret), lat_str(ret, "mayusculas"), lat_define_c_function(ret, lat_toUpper));
   lat_set_ctx(lat_get_current_ctx(ret), lat_str(ret, "quitar_espacios"), lat_define_c_function(ret, lat_trim));
   //lat_set_ctx(lat_get_current_ctx(ret), lat_str(ret, "cadena"), lat_define_c_function(ret, lat_valueOf));
+
+  //entrada / salida
+  lat_set_ctx(lat_get_current_ctx(ret), lat_str(ret, "leer"), lat_define_c_function(ret, lat_read));
   return ret;
 }
 
