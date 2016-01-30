@@ -74,7 +74,7 @@ list_node* lat_clone_list(lat_vm* vm, list_node* l);
 hash_map* lat_clone_hash(lat_vm* vm, hash_map* l);
 
 char lat_get_char_value(lat_object* o);
-int lat_get_int_value(lat_object* o);
+long lat_get_int_value(lat_object* o);
 double lat_get_double_value(lat_object* o);
 char* lat_get_str_value(lat_object* o);
 bool lat_get_bool_value(lat_object* o);
