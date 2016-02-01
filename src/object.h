@@ -41,7 +41,7 @@ struct lat_object {
   lat_type type;
   int marked;
   size_t data_size;
-  bool is_constant;
+  bool es_constante;
   int num_declared;
   lat_object_data data;
 };

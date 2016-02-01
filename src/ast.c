@@ -6,9 +6,9 @@
 #include "libmem.h"
 
 #define dbc(I, A, B, M) bcode[i++] = lat_bc(I, A, B, M)
-#define pn(vm, N) i = ast_parse_node(vm, N, bcode, i)
+#define pn(vm, N) i = nodo_analizar(vm, N, bcode, i)
 #define fdbc(I, A, B, M) function_bcode[fi++] = lat_bc(I, A, B, M)
-#define fpn(vm, N) fi = ast_parse_node(vm, N, function_bcode, fi)
+#define fpn(vm, N) fi = nodo_analizar(vm, N, function_bcode, fi)
 
 int yyerror(struct YYLTYPE *yylloc_param, void *scanner, struct ast **root,
             const char *s) {
@@ -16,58 +16,58 @@ int yyerror(struct YYLTYPE *yylloc_param, void *scanner, struct ast **root,
   return 0;
 }
 
-ast *ast_new_op(ast_node_type node_type, ast *l, ast *r) {
-  ast *a = lmalloc(sizeof(ast));
+ast *ast_new_op(nodo_tipo node_type, ast *l, ast *r) {
+  ast *a = (ast*)lmalloc(sizeof(ast));
   switch (node_type) {
   case NODE_ADD: {
-    a->l = ast_new_identifier("+");
+    a->l = nodo_nuevo_identificador("+");
   } break;
   case NODE_UNARY_MINUS:
   case NODE_SUB: {
-    a->l = ast_new_identifier("-");
+    a->l = nodo_nuevo_identificador("-");
   } break;
   case NODE_MULT: {
-    a->l = ast_new_identifier("*");
+    a->l = nodo_nuevo_identificador("*");
   } break;
   case NODE_DIV: {
-    a->l = ast_new_identifier("/");
+    a->l = nodo_nuevo_identificador("/");
   } break;
   case NODE_MOD: {
-    a->l = ast_new_identifier("%");
+    a->l = nodo_nuevo_identificador("%");
   } break;
   case NODE_GE: {
-    a->l = ast_new_identifier(">=");
+    a->l = nodo_nuevo_identificador(">=");
   } break;
   case NODE_GT: {
-    a->l = ast_new_identifier(">");
+    a->l = nodo_nuevo_identificador(">");
   } break;
   case NODE_LE: {
-    a->l = ast_new_identifier("<=");
+    a->l = nodo_nuevo_identificador("<=");
   } break;
   case NODE_LT: {
-    a->l = ast_new_identifier("<");
+    a->l = nodo_nuevo_identificador("<");
   } break;
   case NODE_NEQ: {
-    a->l = ast_new_identifier("!=");
+    a->l = nodo_nuevo_identificador("!=");
   } break;
   case NODE_EQ: {
-    a->l = ast_new_identifier("==");
+    a->l = nodo_nuevo_identificador("==");
   } break;
   default:
     break;
   }
   if (node_type == NODE_UNARY_MINUS) {
-    a->r = ast_new_node(NODE_FUNC_ARGS, ast_new_integer(0), l);
+    a->r = nodo_nuevo(NODE_FUNC_ARGS, nodo_nuevo_entero(0), l);
   } else {
-    a->r = ast_new_node(NODE_FUNC_ARGS, l, r);
+    a->r = nodo_nuevo(NODE_FUNC_ARGS, l, r);
   }
   a->node_type = NODE_CALL_FUNCTION;
   a->value = NULL;
   return a;
 }
 
-ast *ast_new_node(ast_node_type node_type, ast *l, ast *r) {
-  ast *a = lmalloc(sizeof(ast));
+ast *nodo_nuevo(nodo_tipo node_type, ast *l, ast *r) {
+  ast *a = (ast*)lmalloc(sizeof(ast));
   a->node_type = node_type;
   a->l = l;
   a->r = r;
@@ -75,41 +75,41 @@ ast *ast_new_node(ast_node_type node_type, ast *l, ast *r) {
   return a;
 }
 
-ast *ast_new_integer(long i) {
-  ast *a = lmalloc(sizeof(ast));
+ast *nodo_nuevo_entero(long i) {
+  ast *a = (ast*)lmalloc(sizeof(ast));
   a->node_type = NODE_INT;
-  ast_value *val = lmalloc(sizeof(ast_value));
-  val->t = VALUE_INT;
+  nodo_valor *val = (nodo_valor*)lmalloc(sizeof(nodo_valor));
+  val->t = VALOR_ENTERO;
   val->v.i = i;
   a->value = val;
   return a;
 }
 
-ast *ast_new_decimal(double d) {
-  ast *a = lmalloc(sizeof(ast));
+ast *nodo_nuevo_decimal(double d) {
+  ast *a = (ast*)lmalloc(sizeof(ast));
   a->node_type = NODE_DECIMAL;
-  ast_value *val = lmalloc(sizeof(ast_value));
-  val->t = VALUE_DOUBLE;
+  nodo_valor *val = (nodo_valor*)lmalloc(sizeof(nodo_valor));
+  val->t = VALOR_DECIMAL;
   val->v.d = d;
   a->value = val;
   return a;
 }
 
-ast *ast_new_bool(int b) {
-  ast *a = lmalloc(sizeof(ast));
+ast *nodo_nuevo_logico(int b) {
+  ast *a = (ast*)lmalloc(sizeof(ast));
   a->node_type = NODE_BOOLEAN;
-  ast_value *val = lmalloc(sizeof(ast_value));
-  val->t = VALUE_BOOL;
+  nodo_valor *val = (nodo_valor*)lmalloc(sizeof(nodo_valor));
+  val->t = VALOR_LOGICO;
   val->v.b = b;
   a->value = val;
   return a;
 }
 
-ast *ast_new_char(char *c, size_t l) {
-  ast *a = lmalloc(sizeof(ast));
+ast *nodo_nuevo_caracter(char *c, size_t l) {
+  ast *a = (ast*)lmalloc(sizeof(ast));
   a->node_type = NODE_CHAR;
-  ast_value *val = lmalloc(sizeof(ast_value));
-  val->t = VALUE_CHAR;
+  nodo_valor *val = (nodo_valor*)lmalloc(sizeof(nodo_valor));
+  val->t = VALOR_CARACTER;
   char tmp = ' ';
   switch (c[0]) {
   case '\\': {
@@ -149,43 +149,43 @@ ast *ast_new_char(char *c, size_t l) {
   return a;
 }
 
-ast *ast_new_string(const char *s) {
-  ast *a = lmalloc(sizeof(ast));
+ast *nodo_nuevo_cadena(const char *s) {
+  ast *a = (ast*)lmalloc(sizeof(ast));
   a->node_type = NODE_STRING;
-  ast_value *val = lmalloc(sizeof(ast_value));
-  val->t = VALUE_STRING;
+  nodo_valor *val = (nodo_valor*)lmalloc(sizeof(nodo_valor));
+  val->t = VALOR_CADENA;
   val->v.s = parse_string(s, strlen(s));
   a->value = val;
   return a;
 }
 
-ast *ast_new_constant(char *s, int line_num, int column_num) {
+ast *nodo_nuevo_constante(char *s, int num_linea, int num_columna) {
   // printf("new_constant in line %i, :%s\n", yylineno, s);
-  ast *a = lmalloc(sizeof(ast));
+  ast *a = (ast*)lmalloc(sizeof(ast));
   a->node_type = NODE_SYMBOL;
-  ast_value *val = lmalloc(sizeof(ast_value));
-  val->t = VALUE_STRING;
+  nodo_valor *val = (nodo_valor*)lmalloc(sizeof(nodo_valor));
+  val->t = VALOR_CADENA;
   val->v.s = strdup0(s);
   a->value = val;
-  a->value->cst = true;
-  a->value->line_num = line_num;
-  a->value->column_num = column_num;
+  a->value->es_constante = true;
+  a->value->num_linea = num_linea;
+  a->value->num_columna = num_columna;
   return a;
 }
 
-ast *ast_new_identifier(char *s) {
-  ast *a = lmalloc(sizeof(ast));
+ast *nodo_nuevo_identificador(char *s) {
+  ast *a = (ast*)lmalloc(sizeof(ast));
   a->node_type = NODE_SYMBOL;
-  ast_value *val = lmalloc(sizeof(ast_value));
-  val->t = VALUE_STRING;
+  nodo_valor *val = (nodo_valor*)lmalloc(sizeof(nodo_valor));
+  val->t = VALOR_CADENA;
   val->v.s = strdup0(s);
   a->value = val;
-  a->value->cst = false;
+  a->value->es_constante = false;
   return a;
 }
 
-ast *ast_new_assignment(ast *v, ast *s) {
-  ast *a = lmalloc(sizeof(ast));
+ast *nodo_nuevo_asignacion(ast *v, ast *s) {
+  ast *a = (ast*)lmalloc(sizeof(ast));
   a->node_type = NODE_ASSIGMENT;
   a->l = v;
   a->r = s;
@@ -193,8 +193,8 @@ ast *ast_new_assignment(ast *v, ast *s) {
   return a;
 }
 
-ast *ast_new_node_if(ast *cond, ast *th, ast *el) {
-  ast_node_if *a = lmalloc(sizeof(ast_node_if));
+ast *nodo_nuevo_si(ast *cond, ast *th, ast *el) {
+  nodo_si *a = (nodo_si*)lmalloc(sizeof(nodo_si));
   a->node_type = NODE_IF;
   a->cond = cond;
   a->th = th;
@@ -203,9 +203,9 @@ ast *ast_new_node_if(ast *cond, ast *th, ast *el) {
 }
 
 /*
-ast *newSwitch(ast_node_type node_type, ast *cond, ast *th, ast *el)
+ast *newSwitch(nodo_tipo node_type, ast *cond, ast *th, ast *el)
 {
-    ast_node_if *a = malloc(sizeof(ast_node_if));
+    nodo_si *a = malloc(sizeof(nodo_si));
     if (!a) {
         log_err("Memoria agotada\n");
         exit(0);
@@ -217,9 +217,9 @@ ast *newSwitch(ast_node_type node_type, ast *cond, ast *th, ast *el)
     return (ast *)a;
 }
 
-ast *newCase(ast_node_type node_type, ast *cond, ast *th, ast *el)
+ast *newCase(nodo_tipo node_type, ast *cond, ast *th, ast *el)
 {
-    ast_node_if *a = malloc(sizeof(ast_node_if));
+    nodo_si *a = malloc(sizeof(nodo_si));
     if (!a) {
         log_err("Memoria agotada\n");
         exit(0);
@@ -232,8 +232,8 @@ ast *newCase(ast_node_type node_type, ast *cond, ast *th, ast *el)
 }
 */
 
-ast *ast_new_node_while(ast *cond, ast *stmts) {
-  ast *a = lmalloc(sizeof(ast));
+ast *nodo_nuevo_mientras(ast *cond, ast *stmts) {
+  ast *a = (ast*)lmalloc(sizeof(ast));
   a->node_type = NODE_WHILE;
   a->l = cond;
   a->r = stmts;
@@ -241,8 +241,8 @@ ast *ast_new_node_while(ast *cond, ast *stmts) {
   return a;
 }
 
-ast *ast_new_node_do(ast *cond, ast *stmts) {
-  ast *a = lmalloc(sizeof(ast));
+ast *nodo_nuevo_hacer(ast *cond, ast *stmts) {
+  ast *a = (ast*)lmalloc(sizeof(ast));
   a->node_type = NODE_DO;
   a->l = cond;
   a->r = stmts;
@@ -250,33 +250,33 @@ ast *ast_new_node_do(ast *cond, ast *stmts) {
   return a;
 }
 
-ast *ast_new_node_for(ast *dec, ast *cond, ast *inc, ast *stmts) {
-  ast *a = lmalloc(sizeof(ast));
+ast *nodo_nuevo_desde(ast *dec, ast *cond, ast *inc, ast *stmts) {
+  ast *a = (ast*)lmalloc(sizeof(ast));
   a->node_type = NODE_BLOCK;
-  a->l = ast_new_node_while(cond, ast_new_node(NODE_BLOCK, inc, stmts));
+  a->l = nodo_nuevo_mientras(cond, nodo_nuevo(NODE_BLOCK, inc, stmts));
   a->r = dec;
   a->value = NULL;
   return a;
 }
 
-ast *ast_new_node_function(ast *s, ast *syms, ast *func) {
-  ast *a = lmalloc(sizeof(ast));
+ast *nodo_nuevo_function(ast *s, ast *syms, ast *func) {
+  ast *a = (ast*)lmalloc(sizeof(ast));
   a->node_type = NODE_ASSIGMENT;
-  a->l = ast_new_node(NODE_USER_FUNCTION, syms, func);
+  a->l = nodo_nuevo(NODE_USER_FUNCTION, syms, func);
   a->r = s;
   a->value = NULL;
   return a;
 }
 
-void ast_tree_free(ast *a) {
+void nodo_liberar(ast *a) {
   if (a) {
     switch (a->node_type) {
     case NODE_BLOCK:
     case NODE_LIST_SET_ITEM:
       if (a->r)
-        ast_tree_free(a->r);
+        nodo_liberar(a->r);
       if (a->l)
-        ast_tree_free(a->l);
+        nodo_liberar(a->l);
       break;
     default:
       if (a->value)
@@ -287,18 +287,18 @@ void ast_tree_free(ast *a) {
   }
 }
 
-lat_object *ast_parse_tree(lat_vm *vm, ast *tree) {
+lat_object *nodo_analizar_arbol(lat_vm *vm, ast *tree) {
   lat_bytecode *bcode =
       (lat_bytecode *)lmalloc(sizeof(lat_bytecode) * MAX_BYTECODE_FUNCTION);
-  int i = ast_parse_node(vm, tree, bcode, 0);
+  int i = nodo_analizar(vm, tree, bcode, 0);
   dbc(OP_END, 0, 0, NULL);
-  ast_tree_free(tree);
+  nodo_liberar(tree);
   return lat_define_function(vm, bcode);
 }
 
 int nested = -1;
 
-int ast_parse_node(lat_vm *vm, ast *node, lat_bytecode *bcode, int i) {
+int nodo_analizar(lat_vm *vm, ast *node, lat_bytecode *bcode, int i) {
   int temp[8] = {0};
   lat_bytecode *function_bcode = NULL;
   int fi = 0;
@@ -342,10 +342,10 @@ int ast_parse_node(lat_vm *vm, ast *node, lat_bytecode *bcode, int i) {
     if (ret->num_declared < 0) {
       ret->num_declared = 0;
     }
-    ret->is_constant = node->r->value->cst;
+    ret->es_constante = node->r->value->es_constante;
     ret->num_declared++;
-    if (ret->is_constant && ret->num_declared > 1) {
-      log_err("Linea %d: %s", (node->r->value->line_num + 1),  "Intento de asignar un nuevo valor a una constante ");
+    if (ret->es_constante && ret->num_declared > 1) {
+      log_err("Linea %d: %s", (node->r->value->num_linea + 1),  "Intento de asignar un nuevo valor a una constante ");
     }
     dbc(OP_LOCALNS, 1, 0, NULL);
     dbc(OP_POP, 255, 0, NULL);
@@ -383,7 +383,7 @@ int ast_parse_node(lat_vm *vm, ast *node, lat_bytecode *bcode, int i) {
     dbc(OP_STOREBOOL, 255, 0, ret);
   } break;
   case NODE_IF: {
-    ast_node_if *nIf = ((ast_node_if *)node);
+    nodo_si *nIf = ((nodo_si *)node);
     pn(vm, nIf->cond);
     dbc(OP_MOV, 2, 255, NULL);
     dbc(OP_MOV, 3, 255, NULL);
@@ -530,10 +530,10 @@ int ast_parse_node(lat_vm *vm, ast *node, lat_bytecode *bcode, int i) {
     if (ret->num_declared < 0) {
       ret->num_declared = 0;
     }
-    ret->is_constant = node->r->value->cst;
+    ret->es_constante = node->r->value->es_constante;
     ret->num_declared++;
-    if (ret->is_constant && ret->num_declared > 1) {
-      log_err("Linea %d: %s", (node->r->value->line_num + 1),  "Intento de asignar un nuevo valor a una constante ");
+    if (ret->es_constante && ret->num_declared > 1) {
+      log_err("Linea %d: %s", (node->r->value->num_linea + 1),  "Intento de asignar un nuevo valor a una constante ");
     }
     dbc(OP_LOCALNS, 1, 0, NULL);
     dbc(OP_POP, 255, 0, NULL);
@@ -547,7 +547,7 @@ int ast_parse_node(lat_vm *vm, ast *node, lat_bytecode *bcode, int i) {
     }
     break;*/
   default:
-    printf("ast_node_type:%i\n", node->node_type);
+    printf("nodo_tipo:%i\n", node->node_type);
     return 0;
   }
   // printf("i = %i\n", i);

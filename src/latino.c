@@ -68,8 +68,7 @@ ast *lat_parse_file(char *infile) {
 }
 
 void lat_compile(lat_vm *vm) {
-  vm->regs[255] =
-      ast_parse_tree(vm, lat_parse_expr(lat_get_str_value(lat_pop_stack(vm))));
+  vm->regs[255] = nodo_analizar_arbol(vm, lat_parse_expr(lat_get_str_value(lat_pop_stack(vm))));
 }
 
 void lat_import(lat_vm *vm) {
@@ -81,7 +80,7 @@ void lat_import(lat_vm *vm) {
   }
   extension = dot + 1;
   if (strcmp(extension, "lat") == 0) {
-    lat_object *func = ast_parse_tree(vm, lat_parse_file(input));
+    lat_object *func = nodo_analizar_arbol(vm, lat_parse_file(input));
     lat_call_func(vm, func);
   } else if (strcmp(extension, "so") == 0) {
 /*#ifndef WIN32
@@ -145,7 +144,7 @@ int main(int argc, char *argv[]) {
               lat_define_c_function(vm, lat_compile));
   lat_set_ctx(lat_get_current_ctx(vm), lat_str(vm, "import"),
               lat_define_c_function(vm, lat_import));
-  lat_object *mainFunc = ast_parse_tree(vm, tree);
+  lat_object *mainFunc = nodo_analizar_arbol(vm, tree);
   lat_call_func(vm, mainFunc);
   lat_push_stack(vm, vm->regs[255]);
   /*if (parseCadena){
