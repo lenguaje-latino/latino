@@ -89,12 +89,12 @@ EXP ([Ee][-+]?[0-9]+)
  "defecto"   { return KDEFAULT; }*/
 
  /* names */
-[_A-Z][_A-Z0-9]*       { yylval->node = ast_new_constant(yytext, yylloc->first_line, yylloc->first_column); return TCONSTANT; }
-[_a-zA-Z][_a-zA-Z0-9]* { yylval->node = ast_new_identifier(yytext); return TIDENTIFIER; }
-[0-9]+"."+[0-9]*{EXP}?|"."+[0-9]+{EXP}?       { yylval->node = ast_new_decimal(strtod(yytext, NULL)); return TNUMBER; }
-[0-9]+                 { yylval->node = ast_new_integer(strtol(yytext, NULL, 0)); return TINT; }
-\"([^\\\"]|\\.)*\"     { yytext[strlen(yytext) - 1] = '\0'; yylval->node = ast_new_string(yytext+1);return TSTRING; }
-'([^'\\\n]|\\.)'       { yylval->node = ast_new_char(yytext+1, strlen(yytext)-2); return TCHAR; }
+[_A-Z][_A-Z0-9]*       { yylval->node = nodo_nuevo_constante(yytext, yylloc->first_line, yylloc->first_column); return TCONSTANT; }
+[_a-zA-Z][_a-zA-Z0-9]* { yylval->node = nodo_nuevo_identificador(yytext); return TIDENTIFIER; }
+[0-9]+"."+[0-9]*{EXP}?|"."+[0-9]+{EXP}?       { yylval->node = nodo_nuevo_decimal(strtod(yytext, NULL)); return TNUMBER; }
+[0-9]+                 { yylval->node = nodo_nuevo_entero(strtol(yytext, NULL, 0)); return TINT; }
+\"([^\\\"]|\\.)*\"     { yytext[strlen(yytext) - 1] = '\0'; yylval->node = nodo_nuevo_cadena(yytext+1);return TSTRING; }
+'([^'\\\n]|\\.)'       { yylval->node = nodo_nuevo_caracter(yytext+1, strlen(yytext)-2); return TCHAR; }
 "#".* /* ignore comments */
 [\n]                   { yycolumn = 1; }
 [ \t]+                 { ; } /* ignora espacios en blanco y tabuladores */

@@ -213,7 +213,7 @@ char* insert(char *dest, char* src, int pos){
 }
 
 char* padLeft(char* base, int n, char c){
-  int len = (int)strlen(base);  
+  int len = (int)strlen(base);
   char *ret = NULL;
   if (n <= len){
     ret = malloc(len + 1);
@@ -260,7 +260,7 @@ char *replace(char *str, char *orig, char *rep)
   //reemplazar todas las ocurrencias
   if (strstr(buffer, orig) != NULL){
     strcpy(buffer, replace(buffer, orig, rep));
-  }   
+  }
   return buffer;
 }
 

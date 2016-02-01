@@ -6,20 +6,20 @@
 
 /* tipos de dato */
 typedef enum {
-  VALUE_NULL,
-  VALUE_BOOL,
-  VALUE_INT,
-  VALUE_CHAR,
-  VALUE_DOUBLE,
-  VALUE_STRING
-} ast_value_type;
+  VALOR_NULO,
+  VALOR_LOGICO,
+  VALOR_ENTERO,
+  VALOR_CARACTER,
+  VALOR_DECIMAL,
+  VALOR_CADENA
+} nodo_tipo_valor;
 
 /* valores de dato */
 typedef struct {
-  ast_value_type t;
-  bool cst; // constant
-  int line_num;
-  int column_num;
+  nodo_tipo_valor t;
+  bool es_constante; // constante
+  int num_linea;
+  int num_columna;
   union val {
     int b;
     long i;
@@ -28,7 +28,7 @@ typedef struct {
     char *s;
     void *f;
   } v;
-} ast_value;
+} nodo_valor;
 
 /* tipos de nodos en arbol abstracto de sintaxis (abstract syntax tree) */
 typedef enum {
@@ -77,13 +77,13 @@ typedef enum {
   NODE_DICT_ITEMS,
   NODE_DICT_ITEM,
   NODE_GET_DICT_ITEM
-} ast_node_type;
+} nodo_tipo;
 
 /* nodos en arbol abstacto de sintaxis (abstract syntax tree) */
 /* todos los nodos son inicializados con un tipo de nodo*/
 typedef struct ast {
-  ast_node_type node_type;
-  ast_value *value;
+  nodo_tipo node_type;
+  nodo_valor *value;
   struct ast *l;
   struct ast *r;
 } ast;
@@ -96,32 +96,32 @@ typedef union YYSTYPE {
 } YYSTYPE;
 
 typedef struct {
-  ast_node_type node_type;
+  nodo_tipo node_type;
   struct ast *cond; /* condicion */
   struct ast *th;   /* instrucciones si la condicion es verdadera (then) */
   struct ast *el;   /* instrucciones si la condicion es falsa (else) */
-} ast_node_if;
+} nodo_si;
 
 /* metodos para construir AST */
-ast *ast_new_node(ast_node_type node_type, ast *l, ast *r);
-ast *ast_new_identifier(char *s);
-ast *ast_new_constant(char *s, int line_num, int column_num);
-ast *ast_new_assignment(ast *s, ast *v);
-ast *ast_new_integer(long i);
-ast *ast_new_decimal(double d);
-ast *ast_new_char(char *c, size_t l);
-ast *ast_new_string(const char *);
-ast *ast_new_node_if(ast *cond, ast *th, ast *el);
-ast *ast_new_node_while(ast *cond, ast *stmts);
-ast *ast_new_node_do(ast *cond, ast *stmts);
-ast *ast_new_node_for(ast *dec, ast *cond, ast *inc, ast *stmts);
+ast *nodo_nuevo(nodo_tipo node_type, ast *l, ast *r);
+ast *nodo_nuevo_identificador(char *s);
+ast *nodo_nuevo_constante(char *s, int num_linea, int num_columna);
+ast *nodo_nuevo_asignacion(ast *s, ast *v);
+ast *nodo_nuevo_entero(long i);
+ast *nodo_nuevo_decimal(double d);
+ast *nodo_nuevo_caracter(char *c, size_t l);
+ast *nodo_nuevo_cadena(const char *);
+ast *nodo_nuevo_si(ast *cond, ast *th, ast *el);
+ast *nodo_nuevo_mientras(ast *cond, ast *stmts);
+ast *nodo_nuevo_hacer(ast *cond, ast *stmts);
+ast *nodo_nuevo_desde(ast *dec, ast *cond, ast *inc, ast *stmts);
 
 /* define una funcion */
-ast *ast_new_node_function(ast *name, ast *syms, ast *stmts);
-void ast_tree_free(ast *a);
+ast *nodo_nuevo_function(ast *name, ast *syms, ast *stmts);
+void nodo_liberar(ast *a);
 
 /*VM*/
-lat_object *ast_parse_tree(lat_vm *vm, ast *tree);
-int ast_parse_node(lat_vm *vm, ast *node, lat_bytecode *bcode, int i);
+lat_object *nodo_analizar_arbol(lat_vm *vm, ast *tree);
+int nodo_analizar(lat_vm *vm, ast *node, lat_bytecode *bcode, int i);
 
 #endif /*_AST_H_*/
