@@ -9,7 +9,6 @@ typedef struct lat_object lat_object;
 #include "utils.h"
 #include "vm.h"
 
-typedef struct lat_vm lat_vm;
 typedef enum lat_type {
   T_NULL,
   T_INSTANCE,
@@ -46,7 +45,7 @@ struct lat_object {
   lat_object_data data;
 };
 
-void lat_set_ctx(lat_object* ns, lat_object* name, lat_object* o);
+void asignar_contexto(lat_object* ns, lat_object* name, lat_object* o);
 lat_object* lat_get_ctx(lat_object* ns, lat_object* name);
 int lat_ctx_has(lat_object* ns, lat_object* name);
 lat_object* lat_make_object(lat_vm* vm);
@@ -54,7 +53,7 @@ lat_object* lat_instance(lat_vm* vm);
 lat_object* lat_char(lat_vm* vm, char val);
 lat_object* lat_int(lat_vm* vm, long val);
 lat_object* lat_double(lat_vm* vm, double val);
-lat_object* lat_str(lat_vm* vm, char* val);
+lat_object* lat_str(lat_vm* vm, const char* val);
 lat_object* lat_bool(lat_vm* vm, bool val);
 lat_object* lat_list(lat_vm* vm, list_node* l);
 lat_object* lat_func(lat_vm* vm);

@@ -41,10 +41,10 @@ static khash_t(sym) * sym_table;
 
 static lat_object* str_new(const char* p, size_t len)
 {
-  lat_object* str = lmalloc(sizeof(lat_object));
+  lat_object* str = (lat_object*)lmalloc(sizeof(lat_object));
   str->type = T_STR;
   str->data_size = len;
-  str->data.str = p;
+  str->data.str = (char*)p;
   return str;
 }
 

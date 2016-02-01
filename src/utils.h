@@ -103,4 +103,5 @@ char *replace(char *str, char *orig, char *rep);
 char *substring(const char* str, int beg, int n);
 char *toLower(const char* str);
 char *toUpper(const char* str);
+char *trim(const char* str);
 #endif /*_UTILS_H_*/

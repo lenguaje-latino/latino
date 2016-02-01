@@ -22,7 +22,7 @@ char* strdup0(const char* s)
 
 char* parse_string(const char* s, size_t len)
 {
-  char* ret = lmalloc(len + 1);
+  char* ret = (char*)lmalloc(len + 1);
   int j = 0;
   int c = '@';
   for (size_t i = 0; i < len; i++) {
@@ -75,7 +75,7 @@ char* parse_string(const char* s, size_t len)
 
 char* concat(char* s1, char* s2)
 {
-  char* s3 = malloc(strlen(s1) + strlen(s2) + 1);
+  char* s3 = (char*)malloc(strlen(s1) + strlen(s2) + 1);
   strcpy(s3, s1);
   strcat(s3, s2);
   return s3;
@@ -84,7 +84,7 @@ char* concat(char* s1, char* s2)
 char* int2str(long i)
 {
   char s[255];
-  char* r = malloc(strlen(s) + 1);
+  char* r = (char*)malloc(strlen(s) + 1);
   lnsprintf(s, 255, "%ld", i);
   strcpy(r, s);
   return r;
@@ -93,7 +93,7 @@ char* int2str(long i)
 char* double2str(double d)
 {
   char s[64];
-  char* r = malloc(strlen(s) + 1);
+  char* r = (char*)malloc(strlen(s) + 1);
   lnsprintf(s, 64, "%g", (float)d);
   strcpy(r, s);
   return r;
@@ -102,7 +102,7 @@ char* double2str(double d)
 char* char2str(char c)
 {
   char s[2];
-  char* r = malloc(2);
+  char* r = (char*)malloc(2);
   lnsprintf(s, 2, "%c", c);
   strcpy(r, s);
   return r;
@@ -111,7 +111,7 @@ char* char2str(char c)
 char* bool2str(int i)
 {
   char s[10];
-  char* r = malloc(11);
+  char* r = (char*)malloc(11);
   if (i) {
     lnsprintf(s, 10, "%s", "verdadero");
     strcpy(r, s);
@@ -140,7 +140,7 @@ int indexOf(char* base, char* str) {
 int indexOf_shift(char* base, char* str, int startIndex) {
   int result;
   int baselen = strlen(base);
-  if (strlen(str) > baselen || startIndex > baselen) {
+  if ((int)strlen(str) > baselen || startIndex > baselen) {
     result = -1;
   }
   else {
@@ -205,7 +205,7 @@ char* insert(char *dest, char* src, int pos){
   if (pos > dstlen){
     pos = dstlen;
   }
-  char *m = malloc(srclen + dstlen + 1);
+  char *m = (char*)malloc(srclen + dstlen + 1);
   memcpy(m, dest, pos);
   memcpy(m + pos, src, srclen);
   memcpy(m + pos + srclen, dest + pos, dstlen - pos + 1);
@@ -216,14 +216,14 @@ char* padLeft(char* base, int n, char c){
   int len = (int)strlen(base);
   char *ret = NULL;
   if (n <= len){
-    ret = malloc(len + 1);
+    ret = (char*)malloc(len + 1);
     strcpy(ret, base);
     return ret;
   }
-  ret = malloc(n + 1);
-  ret = "";
-  int i = 0;
-  for (i; i < (n - len); i++){
+  ret = (char*)malloc(n + 1);
+  ret = (char*)"";
+  //int i = 0;
+  for (int i = 0; i < (n - len); i++){
     ret = concat(ret, char2str(c));
   }
   ret = concat(ret, base);
@@ -234,11 +234,11 @@ char* padRight(char *base, int n, char c) {
   int len = (int)strlen(base);
   char *ret = NULL;
   if (len >= n) {
-    ret = malloc(len + 1);
+    ret = (char*)malloc(len + 1);
     strcpy(ret, base);
     return ret;
   }
-  ret = malloc(n + 1);
+  ret = (char*)malloc(n + 1);
   ret = base;
   int i;
   for (i = 0; i < (n - len); i++) {
@@ -266,7 +266,7 @@ char *replace(char *str, char *orig, char *rep)
 
 char *substring(const char* str, int beg, int n)
 {
-  char *ret = malloc(n + 1);
+  char *ret = (char*)malloc(n + 1);
   strncpy(ret, (str + beg), n);
   *(ret + n) = 0;
 
@@ -275,9 +275,8 @@ char *substring(const char* str, int beg, int n)
 
 char *toLower(const char* str){
   int len = strlen(str);
-  char *ret = malloc(len + 1);
-  int i = 0;
-  for (i; i < len; i++){
+  char *ret = (char*)malloc(len + 1);
+  for (int i = 0; i < len; i++){
     ret[i] = tolower(str[i]);
   }
   ret[len] = 0;
@@ -286,9 +285,8 @@ char *toLower(const char* str){
 
 char *toUpper(const char* str){
   int len = strlen(str);
-  char *ret = malloc(len + 1);
-  int i = 0;
-  for (i; i < len; i++){
+  char *ret = (char*)malloc(len + 1);
+  for (int i = 0; i < len; i++){
     ret[i] = toupper(str[i]);
   }
   ret[len] = 0;
@@ -297,8 +295,9 @@ char *toUpper(const char* str){
 
 char* trim(const char *str)
 {
-  char *start, *end;
-  for (start = str; *start; start++)
+  char *start;
+  char *end;
+  for (start = (char*)str; *start; start++)
   {
     if (!isspace((unsigned char)start[0]))
       break;
@@ -308,7 +307,7 @@ char* trim(const char *str)
     if (!isspace((unsigned char)end[-1]))
       break;
   }
-  char *ret = malloc((end - start) + 1);
+  char *ret = (char*)malloc((end - start) + 1);
   *end = 0;
   if (start > str){
     memcpy(ret, start, (end - start) + 1);
@@ -316,7 +315,6 @@ char* trim(const char *str)
   else{
     memcpy(ret, str, strlen(str));
   }
-
   return ret;
 }
 

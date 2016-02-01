@@ -79,13 +79,13 @@ void lat_pop_ctx(lat_vm* vm);
 void lat_push_predefined_ctx(lat_vm* vm, lat_object* ctx);
 lat_object* lat_pop_predefined_ctx(lat_vm* vm);
 
-lat_object* lat_get_current_ctx(lat_vm* vm);
+lat_object* obtener_contexto(lat_vm* vm);
 
 void lat_gc_add_object(lat_vm* vm, lat_object* o);
 void lat_gc(lat_vm* vm);
 
 lat_object* lat_define_function(lat_vm* vm, lat_bytecode* inslist);
-lat_object* lat_define_c_function(lat_vm* vm, void (*function)(lat_vm* vm));
+lat_object* definir_funcion_c(lat_vm* vm, void (*function)(lat_vm* vm));
 
 void lat_nth_list(lat_vm* vm);
 void lat_print_list(lat_vm* vm, list_node* l);

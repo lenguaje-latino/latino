@@ -55,7 +55,7 @@ ast *lat_parse_file(char *infile) {
   fseek(file, 0, SEEK_END);
   int fsize = ftell(file);
   fseek(file, 0, SEEK_SET);
-  buffer = calloc(fsize, 1);
+  buffer = (char*)calloc(fsize, 1);
   size_t newSize = fread(buffer, sizeof(char), fsize, file);
   if (buffer == NULL) {
     printf("No se pudo asignar %d bytes de memoria\n", fsize);
@@ -76,7 +76,7 @@ void lat_import(lat_vm *vm) {
   char *dot = strrchr(input, '.');
   char *extension;
   if (!dot || dot == input) {
-    extension = "";
+    extension = (char*)"";
   }
   extension = dot + 1;
   if (strcmp(extension, "lat") == 0) {
@@ -140,10 +140,10 @@ int main(int argc, char *argv[]) {
   }
 
   lat_vm *vm = lat_make_vm();
-  lat_set_ctx(lat_get_current_ctx(vm), lat_str(vm, "compile"),
-              lat_define_c_function(vm, lat_compile));
-  lat_set_ctx(lat_get_current_ctx(vm), lat_str(vm, "import"),
-              lat_define_c_function(vm, lat_import));
+  asignar_contexto(obtener_contexto(vm), lat_str(vm, "compile"),
+              definir_funcion_c(vm, lat_compile));
+  asignar_contexto(obtener_contexto(vm), lat_str(vm, "import"),
+              definir_funcion_c(vm, lat_import));
   lat_object *mainFunc = nodo_analizar_arbol(vm, tree);
   lat_call_func(vm, mainFunc);
   lat_push_stack(vm, vm->regs[255]);

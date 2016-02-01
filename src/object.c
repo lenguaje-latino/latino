@@ -10,7 +10,7 @@
 #include "libstring.h"
 #include "libmem.h"
 
-void lat_set_ctx(lat_object* ns, lat_object* name, lat_object* o)
+void asignar_contexto(lat_object* ns, lat_object* name, lat_object* o)
 {
   if (ns->type != T_INSTANCE) {
     debug("ns->type: %d", ns->type);
@@ -30,7 +30,7 @@ lat_object* lat_get_ctx(lat_object* ns, lat_object* name)
   }
   else {
     hash_map* h = ns->data.instance;
-    lat_object* ret = get_hash(h, lat_get_str_value(name));
+    lat_object* ret = (lat_object*)get_hash(h, lat_get_str_value(name));
     if (ret == NULL) {
       log_err("Variable \"%s\" indefinida", lat_get_str_value(name));
     }
@@ -46,7 +46,7 @@ int lat_ctx_has(lat_object* ns, lat_object* name)
   }
   else {
     hash_map* h = ns->data.instance;
-    lat_object* ret = get_hash(h, lat_get_str_value(name));
+    lat_object* ret = (lat_object*)get_hash(h, lat_get_str_value(name));
     if (ret == NULL) {
       return 0;
     }
@@ -98,7 +98,7 @@ lat_object* lat_double(lat_vm* vm, double val)
   return ret;
 }
 
-lat_object* lat_str(lat_vm* vm, char* val)
+lat_object* lat_str(lat_vm* vm, const char* val)
 {
   lat_object* ret = lat_str_new(val, strlen(val));
   return ret;
