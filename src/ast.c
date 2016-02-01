@@ -7,8 +7,8 @@
 
 #define dbc(I, A, B, M) bcode[i++] = lat_bc(I, A, B, M)
 #define pn(vm, N) i = nodo_analizar(vm, N, bcode, i)
-#define fdbc(I, A, B, M) function_bcode[fi++] = lat_bc(I, A, B, M)
-#define fpn(vm, N) fi = nodo_analizar(vm, N, function_bcode, fi)
+#define fdbc(I, A, B, M) funcion_bcode[fi++] = lat_bc(I, A, B, M)
+#define fpn(vm, N) fi = nodo_analizar(vm, N, funcion_bcode, fi)
 
 int yyerror(struct YYLTYPE *yylloc_param, void *scanner, struct ast **root,
             const char *s) {
@@ -16,52 +16,52 @@ int yyerror(struct YYLTYPE *yylloc_param, void *scanner, struct ast **root,
   return 0;
 }
 
-ast *ast_new_op(nodo_tipo node_type, ast *l, ast *r) {
+ast *nodo_nuevo_operador(nodo_tipo node_type, ast *l, ast *r) {
   ast *a = (ast*)lmalloc(sizeof(ast));
   switch (node_type) {
-  case NODE_ADD: {
+  case NODO_SUMA: {
     a->l = nodo_nuevo_identificador("+");
   } break;
-  case NODE_UNARY_MINUS:
-  case NODE_SUB: {
+  case NODO_MENOS_UNARIO:
+  case NODO_RESTA: {
     a->l = nodo_nuevo_identificador("-");
   } break;
-  case NODE_MULT: {
+  case NODO_MULTIPLICACION: {
     a->l = nodo_nuevo_identificador("*");
   } break;
-  case NODE_DIV: {
+  case NODO_DIVISION: {
     a->l = nodo_nuevo_identificador("/");
   } break;
-  case NODE_MOD: {
+  case NODO_MODULO: {
     a->l = nodo_nuevo_identificador("%");
   } break;
-  case NODE_GE: {
+  case NODO_MAYOR_IGUAL: {
     a->l = nodo_nuevo_identificador(">=");
   } break;
-  case NODE_GT: {
+  case NODO_MAYOR_QUE: {
     a->l = nodo_nuevo_identificador(">");
   } break;
-  case NODE_LE: {
+  case NODO_MENOR_IGUAL: {
     a->l = nodo_nuevo_identificador("<=");
   } break;
-  case NODE_LT: {
+  case NODO_MENOR_QUE: {
     a->l = nodo_nuevo_identificador("<");
   } break;
-  case NODE_NEQ: {
+  case NODO_DESIGUALDAD: {
     a->l = nodo_nuevo_identificador("!=");
   } break;
-  case NODE_EQ: {
+  case NODO_IGUALDAD: {
     a->l = nodo_nuevo_identificador("==");
   } break;
   default:
     break;
   }
-  if (node_type == NODE_UNARY_MINUS) {
-    a->r = nodo_nuevo(NODE_FUNC_ARGS, nodo_nuevo_entero(0), l);
+  if (node_type == NODO_MENOS_UNARIO) {
+    a->r = nodo_nuevo(NODO_FUNCION_ARGUMENTOS, nodo_nuevo_entero(0), l);
   } else {
-    a->r = nodo_nuevo(NODE_FUNC_ARGS, l, r);
+    a->r = nodo_nuevo(NODO_FUNCION_ARGUMENTOS, l, r);
   }
-  a->node_type = NODE_CALL_FUNCTION;
+  a->node_type = NODO_FUNCION_LLAMADA;
   a->value = NULL;
   return a;
 }
@@ -77,7 +77,7 @@ ast *nodo_nuevo(nodo_tipo node_type, ast *l, ast *r) {
 
 ast *nodo_nuevo_entero(long i) {
   ast *a = (ast*)lmalloc(sizeof(ast));
-  a->node_type = NODE_INT;
+  a->node_type = NODO_ENTERO;
   nodo_valor *val = (nodo_valor*)lmalloc(sizeof(nodo_valor));
   val->t = VALOR_ENTERO;
   val->v.i = i;
@@ -87,7 +87,7 @@ ast *nodo_nuevo_entero(long i) {
 
 ast *nodo_nuevo_decimal(double d) {
   ast *a = (ast*)lmalloc(sizeof(ast));
-  a->node_type = NODE_DECIMAL;
+  a->node_type = NODO_DECIMAL;
   nodo_valor *val = (nodo_valor*)lmalloc(sizeof(nodo_valor));
   val->t = VALOR_DECIMAL;
   val->v.d = d;
@@ -97,7 +97,7 @@ ast *nodo_nuevo_decimal(double d) {
 
 ast *nodo_nuevo_logico(int b) {
   ast *a = (ast*)lmalloc(sizeof(ast));
-  a->node_type = NODE_BOOLEAN;
+  a->node_type = NODO_LOGICO;
   nodo_valor *val = (nodo_valor*)lmalloc(sizeof(nodo_valor));
   val->t = VALOR_LOGICO;
   val->v.b = b;
@@ -107,7 +107,7 @@ ast *nodo_nuevo_logico(int b) {
 
 ast *nodo_nuevo_caracter(char *c, size_t l) {
   ast *a = (ast*)lmalloc(sizeof(ast));
-  a->node_type = NODE_CHAR;
+  a->node_type = NODO_CARACTER;
   nodo_valor *val = (nodo_valor*)lmalloc(sizeof(nodo_valor));
   val->t = VALOR_CARACTER;
   char tmp = ' ';
@@ -151,7 +151,7 @@ ast *nodo_nuevo_caracter(char *c, size_t l) {
 
 ast *nodo_nuevo_cadena(const char *s) {
   ast *a = (ast*)lmalloc(sizeof(ast));
-  a->node_type = NODE_STRING;
+  a->node_type = NODO_CADENA;
   nodo_valor *val = (nodo_valor*)lmalloc(sizeof(nodo_valor));
   val->t = VALOR_CADENA;
   val->v.s = parse_string(s, strlen(s));
@@ -160,9 +160,8 @@ ast *nodo_nuevo_cadena(const char *s) {
 }
 
 ast *nodo_nuevo_constante(char *s, int num_linea, int num_columna) {
-  // printf("new_constant in line %i, :%s\n", yylineno, s);
   ast *a = (ast*)lmalloc(sizeof(ast));
-  a->node_type = NODE_SYMBOL;
+  a->node_type = NODO_IDENTIFICADOR;
   nodo_valor *val = (nodo_valor*)lmalloc(sizeof(nodo_valor));
   val->t = VALOR_CADENA;
   val->v.s = strdup0(s);
@@ -173,9 +172,9 @@ ast *nodo_nuevo_constante(char *s, int num_linea, int num_columna) {
   return a;
 }
 
-ast *nodo_nuevo_identificador(char *s) {
+ast *nodo_nuevo_identificador(const char *s) {
   ast *a = (ast*)lmalloc(sizeof(ast));
-  a->node_type = NODE_SYMBOL;
+  a->node_type = NODO_IDENTIFICADOR;
   nodo_valor *val = (nodo_valor*)lmalloc(sizeof(nodo_valor));
   val->t = VALOR_CADENA;
   val->v.s = strdup0(s);
@@ -186,7 +185,7 @@ ast *nodo_nuevo_identificador(char *s) {
 
 ast *nodo_nuevo_asignacion(ast *v, ast *s) {
   ast *a = (ast*)lmalloc(sizeof(ast));
-  a->node_type = NODE_ASSIGMENT;
+  a->node_type = NODO_ASIGNACION;
   a->l = v;
   a->r = s;
   a->value = NULL;
@@ -195,46 +194,16 @@ ast *nodo_nuevo_asignacion(ast *v, ast *s) {
 
 ast *nodo_nuevo_si(ast *cond, ast *th, ast *el) {
   nodo_si *a = (nodo_si*)lmalloc(sizeof(nodo_si));
-  a->node_type = NODE_IF;
+  a->node_type = NODO_SI;
   a->cond = cond;
   a->th = th;
   a->el = el;
   return (ast *)a;
 }
 
-/*
-ast *newSwitch(nodo_tipo node_type, ast *cond, ast *th, ast *el)
-{
-    nodo_si *a = malloc(sizeof(nodo_si));
-    if (!a) {
-        log_err("Memoria agotada\n");
-        exit(0);
-    }
-    a->node_type = node_type;
-    a->cond = cond;
-    a->th = th;
-    a->el = el;
-    return (ast *)a;
-}
-
-ast *newCase(nodo_tipo node_type, ast *cond, ast *th, ast *el)
-{
-    nodo_si *a = malloc(sizeof(nodo_si));
-    if (!a) {
-        log_err("Memoria agotada\n");
-        exit(0);
-    }
-    a->node_type = node_type;
-    a->cond = cond;
-    a->th = th;
-    a->el = el;
-    return (ast *)a;
-}
-*/
-
 ast *nodo_nuevo_mientras(ast *cond, ast *stmts) {
   ast *a = (ast*)lmalloc(sizeof(ast));
-  a->node_type = NODE_WHILE;
+  a->node_type = NODO_MIENTRAS;
   a->l = cond;
   a->r = stmts;
   a->value = NULL;
@@ -243,7 +212,7 @@ ast *nodo_nuevo_mientras(ast *cond, ast *stmts) {
 
 ast *nodo_nuevo_hacer(ast *cond, ast *stmts) {
   ast *a = (ast*)lmalloc(sizeof(ast));
-  a->node_type = NODE_DO;
+  a->node_type = NODO_HACER;
   a->l = cond;
   a->r = stmts;
   a->value = NULL;
@@ -252,8 +221,8 @@ ast *nodo_nuevo_hacer(ast *cond, ast *stmts) {
 
 ast *nodo_nuevo_desde(ast *dec, ast *cond, ast *inc, ast *stmts) {
   ast *a = (ast*)lmalloc(sizeof(ast));
-  a->node_type = NODE_BLOCK;
-  a->l = nodo_nuevo_mientras(cond, nodo_nuevo(NODE_BLOCK, inc, stmts));
+  a->node_type = NODO_BLOQUE;
+  a->l = nodo_nuevo_mientras(cond, nodo_nuevo(NODO_BLOQUE, inc, stmts));
   a->r = dec;
   a->value = NULL;
   return a;
@@ -261,8 +230,8 @@ ast *nodo_nuevo_desde(ast *dec, ast *cond, ast *inc, ast *stmts) {
 
 ast *nodo_nuevo_function(ast *s, ast *syms, ast *func) {
   ast *a = (ast*)lmalloc(sizeof(ast));
-  a->node_type = NODE_ASSIGMENT;
-  a->l = nodo_nuevo(NODE_USER_FUNCTION, syms, func);
+  a->node_type = NODO_ASIGNACION;
+  a->l = nodo_nuevo(NODO_FUNCION_USUARIO, syms, func);
   a->r = s;
   a->value = NULL;
   return a;
@@ -271,8 +240,8 @@ ast *nodo_nuevo_function(ast *s, ast *syms, ast *func) {
 void nodo_liberar(ast *a) {
   if (a) {
     switch (a->node_type) {
-    case NODE_BLOCK:
-    case NODE_LIST_SET_ITEM:
+    case NODO_BLOQUE:
+    case NODO_LISTA_ASIGNAR_ELEMENTO:
       if (a->r)
         nodo_liberar(a->r);
       if (a->l)
@@ -300,10 +269,10 @@ int nested = -1;
 
 int nodo_analizar(lat_vm *vm, ast *node, lat_bytecode *bcode, int i) {
   int temp[8] = {0};
-  lat_bytecode *function_bcode = NULL;
+  lat_bytecode *funcion_bcode = NULL;
   int fi = 0;
   switch (node->node_type) {
-  case NODE_BLOCK: {
+  case NODO_BLOQUE: {
     if (node->r) {
       pn(vm, node->r);
     }
@@ -311,7 +280,7 @@ int nodo_analizar(lat_vm *vm, ast *node, lat_bytecode *bcode, int i) {
       pn(vm, node->l);
     }
   } break;
-  case NODE_SYMBOL: /*GET*/
+  case NODO_IDENTIFICADOR: /*GET*/
   {
     /*if (node->l->r){
             pn(node->l->r);
@@ -326,7 +295,7 @@ int nodo_analizar(lat_vm *vm, ast *node, lat_bytecode *bcode, int i) {
     dbc(OP_GET, 2, 1, NULL);
     dbc(OP_MOV, 255, 2, NULL);
   } break;
-  case NODE_ASSIGMENT: /*SET*/
+  case NODO_ASIGNACION: /*SET*/
   {
     pn(vm, node->l);
     dbc(OP_PUSH, 255, 0, NULL);
@@ -351,38 +320,38 @@ int nodo_analizar(lat_vm *vm, ast *node, lat_bytecode *bcode, int i) {
     dbc(OP_POP, 255, 0, NULL);
     dbc(OP_SET, 255, 1, ret);
   } break;
-  case NODE_INC: {
+  case NODO_INCREMENTO: {
     pn(vm, node->l);
     dbc(OP_INC, 255, 0, NULL);
   } break;
-  case NODE_DEC: {
+  case NODO_DECREMENTO: {
     pn(vm, node->l);
     dbc(OP_DEC, 255, 0, NULL);
   } break;
-  case NODE_CHAR: {
+  case NODO_CARACTER: {
     lat_object *ret = lat_char(vm, node->value->v.c);
     // lat_mark_object(ret, 3);
     dbc(OP_STORECHAR, 255, 0, ret);
   } break;
-  case NODE_INT: {
+  case NODO_ENTERO: {
     lat_object *ret = lat_int(vm, node->value->v.i);
     // lat_mark_object(ret, 3);
     dbc(OP_STOREINT, 255, 0, ret);
   } break;
-  case NODE_DECIMAL: {
+  case NODO_DECIMAL: {
     lat_object *ret = lat_double(vm, node->value->v.d);
     // lat_mark_object(ret, 3);
     dbc(OP_STOREDOUBLE, 255, 0, ret);
   } break;
-  case NODE_STRING: {
+  case NODO_CADENA: {
     lat_object *ret = lat_str(vm, node->value->v.s);
     dbc(OP_STORESTR, 255, 0, ret);
   } break;
-  case NODE_BOOLEAN: {
+  case NODO_LOGICO: {
     lat_object *ret = node->value->v.b ? vm->true_object : vm->false_object;
     dbc(OP_STOREBOOL, 255, 0, ret);
   } break;
-  case NODE_IF: {
+  case NODO_SI: {
     nodo_si *nIf = ((nodo_si *)node);
     pn(vm, nIf->cond);
     dbc(OP_MOV, 2, 255, NULL);
@@ -399,7 +368,7 @@ int nodo_analizar(lat_vm *vm, ast *node, lat_bytecode *bcode, int i) {
       bcode[temp[1]] = lat_bc(OP_JMPIF, i, 3, NULL);
     }
   } break;
-  case NODE_WHILE: {
+  case NODO_MIENTRAS: {
     temp[0] = i;
     pn(vm, node->l);
     dbc(OP_MOV, 2, 255, NULL);
@@ -410,7 +379,7 @@ int nodo_analizar(lat_vm *vm, ast *node, lat_bytecode *bcode, int i) {
     dbc(OP_JMP, temp[0], 0, NULL);
     bcode[temp[1]] = lat_bc(OP_JMPIF, i, 2, NULL);
   } break;
-  case NODE_DO: {
+  case NODO_HACER: {
     pn(vm, node->r);
     temp[0] = i;
     pn(vm, node->l);
@@ -422,31 +391,31 @@ int nodo_analizar(lat_vm *vm, ast *node, lat_bytecode *bcode, int i) {
     dbc(OP_JMP, temp[0], 0, NULL);
     bcode[temp[1]] = lat_bc(OP_JMPIF, i, 2, NULL);
   } break;
-  case NODE_CALL_FUNCTION: {
+  case NODO_FUNCION_LLAMADA: {
     if (node->r) {
       pn(vm, node->r);
     }
     pn(vm, node->l);
     dbc(OP_CALL, 255, 0, NULL);
   } break;
-  case NODE_RETURN: {
+  case NODO_RETORNO: {
     pn(vm, node->l);
     dbc(OP_END, 0, 0, NULL);
   } break;
-  case NODE_FUNC_ARGS: {
+  case NODO_FUNCION_ARGUMENTOS: {
     if (node->l) {
       pn(vm, node->l);
       dbc(OP_PUSH, 255, 0, NULL);
     }
     if (node->r) {
       pn(vm, node->r);
-      //Soporte para recursion NODE_CALL_FUNCTION
-      if (node->r->value || node->r->node_type == NODE_CALL_FUNCTION) {
+      //Soporte para recursion NODO_FUNCION_LLAMADA
+      if (node->r->value || node->r->node_type == NODO_FUNCION_LLAMADA) {
         dbc(OP_PUSH, 255, 0, NULL);
       }
     }
   } break;
-  case NODE_PARAM_LIST: {
+  case NODO_LISTA_PARAMETROS: {
     if (node->l) {
       dbc(OP_LOCALNS, 1, 0, NULL);
       dbc(OP_POP, 2, 0, NULL);
@@ -457,19 +426,19 @@ int nodo_analizar(lat_vm *vm, ast *node, lat_bytecode *bcode, int i) {
       pn(vm, node->r);
     }
   } break;
-  case NODE_USER_FUNCTION: {
-    function_bcode =
+  case NODO_FUNCION_USUARIO: {
+    funcion_bcode =
         (lat_bytecode *)lmalloc(sizeof(lat_bytecode) * MAX_BYTECODE_FUNCTION);
     fi = 0;
     if (node->l) {
       fpn(vm, node->l);
     }
     fpn(vm, node->r);
-    dbc(OP_FN, 255, 0, function_bcode);
-    function_bcode = NULL;
+    dbc(OP_FN, 255, 0, funcion_bcode);
+    funcion_bcode = NULL;
     fi = 0;
   } break;
-  case NODE_LIST: {
+  case NODO_LISTA: {
     nested++;
     dbc(OP_STORELIST, nested, 0, NULL);
     if (node->l) {
@@ -478,7 +447,7 @@ int nodo_analizar(lat_vm *vm, ast *node, lat_bytecode *bcode, int i) {
     dbc(OP_MOV, 255, nested, NULL);
     nested--;
   } break;
-  case NODE_LIST_SET_ITEM: {
+  case NODO_LISTA_ASIGNAR_ELEMENTO: {
     if (node->l) {
       pn(vm, node->l);
       dbc(OP_PUSHLIST, nested, 255, NULL);
@@ -487,7 +456,7 @@ int nodo_analizar(lat_vm *vm, ast *node, lat_bytecode *bcode, int i) {
       pn(vm, node->r);
     }
   } break;
-  case NODE_LIST_GET_ITEM:{
+  case NODO_LISTA_OBTENER_ELEMENTO:{
     if (node->l){
       pn(vm, node->l);
       dbc(OP_POPLIST, nested, 255, NULL);
@@ -497,7 +466,7 @@ int nodo_analizar(lat_vm *vm, ast *node, lat_bytecode *bcode, int i) {
       dbc(OP_LISTGETITEM, nested, 255, NULL);
     }
   } break;
-  case NODE_DICT: {
+  case NODO_DICCIONARIO: {
     nested++;
     dbc(OP_STOREDICT, nested, 0, NULL);
     if (node->l) {
@@ -506,7 +475,7 @@ int nodo_analizar(lat_vm *vm, ast *node, lat_bytecode *bcode, int i) {
     dbc(OP_MOV, 255, nested, NULL);
     nested--;
   } break;
-  case NODE_DICT_ITEMS: {
+  case NODO_DICCIONARIO_ELEMENTOS: {
     if (node->l) {
       pn(vm, node->l);
       dbc(OP_PUSHDICT, nested, 255, NULL);
@@ -515,7 +484,7 @@ int nodo_analizar(lat_vm *vm, ast *node, lat_bytecode *bcode, int i) {
       pn(vm, node->r);
     }
   } break;
-  case NODE_DICT_ITEM:{
+  case NODO_DICCIONARIO_ELEMENTO:{
     pn(vm, node->l);
     dbc(OP_PUSH, 255, 0, NULL);
     /*if (node->r) {

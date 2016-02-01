@@ -7,7 +7,6 @@ nbproject/
 #ignora archivo objeto
 *.o
 *.exe
-latino.*
 ALL_BUILD.*
 ZERO_CHECK.*
 CMakeCache.txt
