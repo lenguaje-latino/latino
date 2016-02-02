@@ -1,12 +1,29 @@
+/*
+The MIT License (MIT)
+
+Copyright (c) 2015 - Latino
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in
+all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+THE SOFTWARE.
+*/
+
 #include <stdio.h>
 #include <string.h>
-
-/*
-#ifndef WIN32
-#include <dlfcn.h>
-#include <unistd.h>
-#endif // WIN32
-*/
 
 #include "latino.h"
 #include "parse.h"
@@ -21,12 +38,6 @@ static FILE *file;
 static char *buffer;
 
 int yyparse(ast **expression, yyscan_t scanner);
-
-/*
-typedef struct yy_buffer_state * YY_BUFFER_STATE;
-extern YY_BUFFER_STATE yy_scan_string(char * str);
-extern void yy_delete_buffer(YY_BUFFER_STATE buffer);
-*/
 
 ast *lat_parse_expr(char *expr) {
   ast *ret = NULL;
@@ -80,27 +91,13 @@ void lat_import(lat_vm *vm) {
   }
   extension = dot + 1;
   if (strcmp(extension, "lat") == 0) {
-    lat_object *func = nodo_analizar_arbol(vm, lat_parse_file(input));
-    lat_call_func(vm, func);
-  } else if (strcmp(extension, "so") == 0) {
-/*#ifndef WIN32
-    char buffer[256];
-    getcwd(buffer, 256);
-    strcat(buffer, "/");
-    strcat(buffer, input);
-    void *handle = dlopen(buffer, RTLD_LAZY);
-    void (*init)(lat_vm *);
-    if (handle == NULL) {
-      log_err("Loading external library %s failed with error %s", input,
-              dlerror());
-      exit(1);
+    ast *tree = lat_parse_file(input);
+    if (!tree) {
+      printf("%s\n", "el archivo esta vacio o tiene errores");
     }
-    dlerror();
-    *(void **)(&init) = dlsym(handle, "lat_init");
-    init(vm);
-    dlclose(handle);
-#endif
-*/
+    lat_object *func = nodo_analizar_arbol(vm, tree);
+    lat_call_func(vm, func);
+    //lat_push_stack(vm, vm->regs[255]);
   }
 }
 
@@ -110,49 +107,28 @@ int main(int argc, char *argv[]) {
   Menu propiedades del proyecto-> Debugging -> Command Arguments. Agregar
   $(SolutionDir)..\ejemplos\debug.lat
   */
-  /*int parseCadena = 0;*/
   int i;
   char *infile = NULL;
-  /*char *cadena = NULL;*/
   for (i = 1; i < argc; i++) {
     if (strcmp(argv[i], "-d") == 0) {
       debug = 1;
     } else {
-      /*printf(argv[i]);*/
       infile = argv[i];
     }
   }
 
-  /*if (parseCadena){
-    YY_BUFFER_STATE buffer = yy_scan_string(cadena);
-    }*/
-
-  /*printf("infile: %s\n", infile);*/
-  /*error en chkstk.asm*/
   ast *tree = lat_parse_file(infile);
-  // tree = lat_parse_expr(buffer);
-  // ast_value *val = NULL;
-  // val = eval(tree);
-
   if (!tree) {
-    // log_err("Error: en el analizador sintactico");
     return EXIT_FAILURE;
   }
-
   lat_vm *vm = lat_make_vm();
-  asignar_contexto(obtener_contexto(vm), lat_str(vm, "compile"),
+  asignar_contexto(obtener_contexto(vm), lat_str(vm, "compilar"),
               definir_funcion_c(vm, lat_compile));
-  asignar_contexto(obtener_contexto(vm), lat_str(vm, "import"),
+  asignar_contexto(obtener_contexto(vm), lat_str(vm, "importar"),
               definir_funcion_c(vm, lat_import));
+
   lat_object *mainFunc = nodo_analizar_arbol(vm, tree);
   lat_call_func(vm, mainFunc);
   lat_push_stack(vm, vm->regs[255]);
-  /*if (parseCadena){
-    yy_delete_buffer(buffer);
-  }
-  else{
-    free(buffer);
-    fclose(file);
-  }*/
   return EXIT_SUCCESS;
 }

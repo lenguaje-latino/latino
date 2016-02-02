@@ -1,5 +1,5 @@
 funcion avg(a,b)
-    retorno (a+b)/2.0
+    retorno (a+b)/2
 fin
 
 funcion max(a,b)
@@ -10,5 +10,14 @@ funcion max(a,b)
     fin
 fin
 
+funcion min(a,b)
+    si (a < b)
+        retorno a
+    sino
+        retorno b
+    fin
+fin
+
 imprimir(avg(3, 5))
 imprimir(max(3, 5))
+imprimir(min(3, 5))

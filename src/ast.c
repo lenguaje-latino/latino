@@ -1,3 +1,26 @@
+/*
+The MIT License (MIT)
+
+Copyright (c) 2015 - Latino
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in
+all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+THE SOFTWARE.
+*/
 #include <stdbool.h>
 #include "latino.h"
 #include "ast.h"
@@ -63,6 +86,7 @@ ast *nodo_nuevo_operador(nodo_tipo nt, ast *l, ast *r) {
     a->r = nodo_nuevo(NODO_FUNCION_ARGUMENTOS, l, r);
   }
   a->tipo = NODO_FUNCION_LLAMADA;
+  a->valor = NULL;
   return a;
 }
 
@@ -257,12 +281,11 @@ void nodo_liberar(ast *a) {
 }
 
 lat_object *nodo_analizar_arbol(lat_vm *vm, ast *tree) {
-  lat_bytecode *bcode =
-      (lat_bytecode *)lmalloc(sizeof(lat_bytecode) * MAX_BYTECODE_FUNCTION);
+  lat_bytecode *bcode = (lat_bytecode *)lmalloc(sizeof(lat_bytecode) * MAX_BYTECODE_FUNCTION);
   int i = nodo_analizar(vm, tree, bcode, 0);
   dbc(OP_END, 0, 0, NULL);
   nodo_liberar(tree);
-  return lat_define_function(vm, bcode);
+  return definir_funcion(vm, bcode);
 }
 
 int nested = -1;
@@ -410,7 +433,7 @@ int nodo_analizar(lat_vm *vm, ast *node, lat_bytecode *bcode, int i) {
     if (node->r) {
       pn(vm, node->r);
       //Soporte para recursion NODO_FUNCION_LLAMADA
-      if (node->r->tipo || node->r->tipo == NODO_FUNCION_LLAMADA) {
+      if (node->r->valor || node->r->tipo == NODO_FUNCION_LLAMADA) {
         dbc(OP_PUSH, 255, 0, NULL);
       }
     }
@@ -487,14 +510,6 @@ int nodo_analizar(lat_vm *vm, ast *node, lat_bytecode *bcode, int i) {
   case NODO_DICCIONARIO_ELEMENTO:{
     pn(vm, node->l);
     dbc(OP_PUSH, 255, 0, NULL);
-    /*if (node->r) {
-            pn(node->r);
-            dbc(OP_MOV, 1, 255, NULL);
-            }
-            else {
-            dbc(OP_LOCALNS, 1, 0, NULL);
-            }*/
-    // lat_object *ret = lat_clone_object(vm, lat_str(vm, node->r->tipo->v.s));
     lat_object *ret = lat_str(vm, node->r->valor->v.s);
     if (ret->num_declared < 0) {
       ret->num_declared = 0;

@@ -1,0 +1,3 @@
+funcion suma(a, b)
+  retorno a+b
+fin
