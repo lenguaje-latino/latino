@@ -3,12 +3,15 @@ bin/
 CMakeFiles/
 build/
 nbproject/
+latino.dir/
 
 #ignora archivo objeto
 *.o
+*.gch
 *.exe
-ALL_BUILD.*
-ZERO_CHECK.*
+*.sln
+*.suo
+*.vcproj
 CMakeCache.txt
 cmake_install.cmake
 Makefile

@@ -1674,7 +1674,7 @@ yyreduce:
   case 21:
 #line 160 "parse.y" /* yacc.c:1646  */
     {
-        (yyval.node) = nodo_nuevo_function((yyvsp[-5].node), (yyvsp[-3].node), (yyvsp[-1].node));
+        (yyval.node) = nodo_nuevo_funcion((yyvsp[-5].node), (yyvsp[-3].node), (yyvsp[-1].node));
     }
 #line 1680 "parse.c" /* yacc.c:1646  */
     break;
