@@ -158,7 +158,7 @@ jump_statement :
 
 function_definition:
     KFUNCTION TIDENTIFIER '(' identifier_list ')' statement_list KEND {
-        $$ = nodo_nuevo_function($2, $4, $6);
+        $$ = nodo_nuevo_funcion($2, $4, $6);
     }
     ;
 

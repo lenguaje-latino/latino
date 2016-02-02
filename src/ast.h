@@ -82,8 +82,8 @@ typedef enum {
 /* nodos en arbol abstacto de sintaxis (abstract syntax tree) */
 /* todos los nodos son inicializados con un tipo de nodo*/
 typedef struct ast {
-  nodo_tipo node_type;
-  nodo_valor *value;
+  nodo_tipo tipo;
+  nodo_valor *valor;
   struct ast *l;
   struct ast *r;
 } ast;
@@ -96,14 +96,14 @@ typedef union YYSTYPE {
 } YYSTYPE;
 
 typedef struct {
-  nodo_tipo node_type;
+  nodo_tipo tipo;
   struct ast *cond; /* condicion */
   struct ast *th;   /* instrucciones si la condicion es verdadera (then) */
   struct ast *el;   /* instrucciones si la condicion es falsa (else) */
 } nodo_si;
 
-/* metodos para construir AST */
-ast *nodo_nuevo(nodo_tipo node_type, ast *l, ast *r);
+/* metodos para construir arbolo AST */
+ast *nodo_nuevo(nodo_tipo tipo, ast *l, ast *r);
 ast *nodo_nuevo_identificador(const char *s);
 ast *nodo_nuevo_constante(char *s, int num_linea, int num_columna);
 ast *nodo_nuevo_asignacion(ast *s, ast *v);
@@ -117,7 +117,7 @@ ast *nodo_nuevo_hacer(ast *cond, ast *stmts);
 ast *nodo_nuevo_desde(ast *dec, ast *cond, ast *inc, ast *stmts);
 
 /* define una funcion */
-ast *nodo_nuevo_function(ast *name, ast *syms, ast *stmts);
+ast *nodo_nuevo_funcion(ast *name, ast *syms, ast *stmts);
 void nodo_liberar(ast *a);
 
 /*VM*/
