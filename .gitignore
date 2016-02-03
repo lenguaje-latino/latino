@@ -20,3 +20,4 @@ CMakeCache.txt
 cmake_install.cmake
 *.project
 *.workspace
+*.mk
