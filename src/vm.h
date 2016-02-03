@@ -90,6 +90,9 @@ struct lat_vm {
 
 lat_vm* lat_make_vm();
 
+void lat_compile(lat_vm* vm);
+void lat_import(lat_vm* vm);
+
 void lat_push_stack(lat_vm* vm, lat_object* o);
 lat_object* lat_pop_stack(lat_vm* vm);
 

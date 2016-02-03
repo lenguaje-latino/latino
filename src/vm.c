@@ -59,6 +59,8 @@ lat_vm* lat_make_vm()
   asignar_contexto(obtener_contexto(ret), lat_str(ret, ">"), definir_funcion_c(ret, lat_gt));
   asignar_contexto(obtener_contexto(ret), lat_str(ret, ">="), definir_funcion_c(ret, lat_gte));
   asignar_contexto(obtener_contexto(ret), lat_str(ret, "gc"), definir_funcion_c(ret, lat_gc));
+  asignar_contexto(obtener_contexto(ret), lat_str(ret, "compilar"), definir_funcion_c(ret, lat_compile));
+  asignar_contexto(obtener_contexto(ret), lat_str(ret, "importar"), definir_funcion_c(ret, lat_import));
 
   /* funciones matematicas */
   asignar_contexto(obtener_contexto(ret), lat_str(ret, "arco_coseno"), definir_funcion_c(ret, lat_acos));
@@ -388,6 +390,29 @@ void lat_print_list(lat_vm* vm, list_node* l)
     }
   }
   fprintf(stdout, "%s", " ]");
+}
+
+void lat_compile(lat_vm *vm) {
+  vm->regs[255] = nodo_analizar_arbol(vm, lat_parse_expr(lat_get_str_value(lat_pop_stack(vm))));
+}
+
+void lat_import(lat_vm *vm) {
+  char *input = lat_get_str_value(lat_pop_stack(vm));
+  char *dot = strrchr(input, '.');
+  char *extension;
+  if (!dot || dot == input) {
+    extension = (char*)"";
+  }
+  extension = dot + 1;
+  if (strcmp(extension, "lat") == 0) {
+    ast *tree = lat_parse_file(input);
+    if (!tree) {
+      printf("%s\n", "el archivo esta vacio o tiene errores");
+    }
+    lat_object *func = nodo_analizar_arbol(vm, tree);
+    lat_call_func(vm, func);
+    lat_push_stack(vm, vm->regs[255]);
+  }
 }
 
 void lat_clone(lat_vm* vm)

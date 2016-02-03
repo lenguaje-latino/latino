@@ -78,29 +78,6 @@ ast *lat_parse_file(char *infile) {
   return lat_parse_expr(buffer);
 }
 
-void lat_compile(lat_vm *vm) {
-  vm->regs[255] = nodo_analizar_arbol(vm, lat_parse_expr(lat_get_str_value(lat_pop_stack(vm))));
-}
-
-void lat_import(lat_vm *vm) {
-  char *input = lat_get_str_value(lat_pop_stack(vm));
-  char *dot = strrchr(input, '.');
-  char *extension;
-  if (!dot || dot == input) {
-    extension = (char*)"";
-  }
-  extension = dot + 1;
-  if (strcmp(extension, "lat") == 0) {
-    ast *tree = lat_parse_file(input);
-    if (!tree) {
-      printf("%s\n", "el archivo esta vacio o tiene errores");
-    }
-    lat_object *func = nodo_analizar_arbol(vm, tree);
-    lat_call_func(vm, func);
-    //lat_push_stack(vm, vm->regs[255]);
-  }
-}
-
 int main(int argc, char *argv[]) {
   /*
   Para debuguear en visual studio:
@@ -122,11 +99,6 @@ int main(int argc, char *argv[]) {
     return EXIT_FAILURE;
   }
   lat_vm *vm = lat_make_vm();
-  asignar_contexto(obtener_contexto(vm), lat_str(vm, "compilar"),
-              definir_funcion_c(vm, lat_compile));
-  asignar_contexto(obtener_contexto(vm), lat_str(vm, "importar"),
-              definir_funcion_c(vm, lat_import));
-
   lat_object *mainFunc = nodo_analizar_arbol(vm, tree);
   lat_call_func(vm, mainFunc);
   lat_push_stack(vm, vm->regs[255]);

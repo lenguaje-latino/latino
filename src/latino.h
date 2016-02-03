@@ -74,7 +74,4 @@ typedef struct YYLTYPE {
 ast* lat_parse_expr(char* expr);
 ast* lat_parse_file(char* path);
 
-void lat_compile(lat_vm* vm);
-void lat_import(lat_vm* vm);
-
 #endif /* _LATINO_H_ */

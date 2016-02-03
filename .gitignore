@@ -4,6 +4,10 @@ CMakeFiles/
 build/
 nbproject/
 latino.dir/
+.clang/
+.codelite/
+Debug/
+latino.dir/
 
 #ignora archivo objeto
 *.o
@@ -14,3 +18,5 @@ latino.dir/
 *.vcproj
 CMakeCache.txt
 cmake_install.cmake
+*.project
+*.workspace
