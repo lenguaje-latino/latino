@@ -40,7 +40,7 @@ void asignar_contexto(lat_object* ns, lat_object* name, lat_object* o)
     debug("ns->type: %d", ns->type);
     log_err("Namespace no es una instancia");
   }
-  else {
+  else {    
     hash_map* h = ns->data.instance;
     set_hash(h, lat_get_str_value(name), (void*)o);
   }
