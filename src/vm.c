@@ -59,8 +59,8 @@ lat_vm* lat_make_vm()
   asignar_contexto(obtener_contexto(ret), lat_str(ret, ">"), definir_funcion_c(ret, lat_gt));
   asignar_contexto(obtener_contexto(ret), lat_str(ret, ">="), definir_funcion_c(ret, lat_gte));
   asignar_contexto(obtener_contexto(ret), lat_str(ret, "gc"), definir_funcion_c(ret, lat_gc));
-  asignar_contexto(obtener_contexto(ret), lat_str(ret, "compilar"), definir_funcion_c(ret, lat_compile));
-  asignar_contexto(obtener_contexto(ret), lat_str(ret, "importar"), definir_funcion_c(ret, lat_import));
+  asignar_contexto(obtener_contexto(ret), lat_str(ret, "ejecutar"), definir_funcion_c(ret, lat_execute));
+  asignar_contexto(obtener_contexto(ret), lat_str(ret, "ejecutar_archivo"), definir_funcion_c(ret, lat_execute_file));
 
   /* funciones matematicas */
   asignar_contexto(obtener_contexto(ret), lat_str(ret, "arco_coseno"), definir_funcion_c(ret, lat_acos));
@@ -115,6 +115,7 @@ lat_vm* lat_make_vm()
   //entrada / salida
   asignar_contexto(obtener_contexto(ret), lat_str(ret, "leer"), definir_funcion_c(ret, lat_read));
   asignar_contexto(obtener_contexto(ret), lat_str(ret, "escribir"), definir_funcion_c(ret, lat_print));
+
   return ret;
 }
 
@@ -392,11 +393,13 @@ void lat_print_list(lat_vm* vm, list_node* l)
   fprintf(stdout, "%s", " ]");
 }
 
-void lat_compile(lat_vm *vm) {
-  vm->regs[255] = nodo_analizar_arbol(vm, lat_parse_expr(lat_get_str_value(lat_pop_stack(vm))));
+void lat_execute(lat_vm *vm) {
+  lat_object *func = nodo_analizar_arbol(vm, lat_parse_expr(lat_get_str_value(lat_pop_stack(vm))));
+  lat_call_func(vm, func);
+  lat_push_stack(vm, vm->regs[255]);
 }
 
-void lat_import(lat_vm *vm) {
+void lat_execute_file(lat_vm *vm) {
   char *input = lat_get_str_value(lat_pop_stack(vm));
   char *dot = strrchr(input, '.');
   char *extension;
@@ -407,7 +410,7 @@ void lat_import(lat_vm *vm) {
   if (strcmp(extension, "lat") == 0) {
     ast *tree = lat_parse_file(input);
     if (!tree) {
-      printf("%s\n", "el archivo esta vacio o tiene errores");
+      log_err("error al leer el archivo: %s", input);
     }
     lat_object *func = nodo_analizar_arbol(vm, tree);
     lat_call_func(vm, func);
@@ -802,13 +805,13 @@ void lat_call_func(lat_vm* vm, lat_object* func)
       case OP_STOREINT: {
         vm->regs[cur.a] = ((lat_object*)cur.meta);
 #if DEBUG_VM
-        printf("STOREINT r%i, %i", cur.a, ((lat_object*)cur.meta)->data.i);
+        printf("STOREINT r%i, %ld", cur.a, ((lat_object*)cur.meta)->data.i);
 #endif
       } break;
       case OP_STOREDOUBLE:
         vm->regs[cur.a] = ((lat_object*)cur.meta);
 #if DEBUG_VM
-        printf("STOREDOUBLE r%i, %d", cur.a, ((lat_object*)cur.meta)->data.d);
+        printf("STOREDOUBLE r%i, %lf", cur.a, ((lat_object*)cur.meta)->data.d);
 #endif
         break;
       case OP_STORESTR: {
@@ -820,7 +823,7 @@ void lat_call_func(lat_vm* vm, lat_object* func)
       case OP_STOREBOOL:
         vm->regs[cur.a] = ((lat_object*)cur.meta);
 #if DEBUG_VM
-        printf("STOREBOOL r%i, %i", cur.a, (int*)cur.meta);
+        printf("STOREBOOL r%i, %i", cur.a, ((lat_object*)cur.meta)->data.b);
 #endif
         break;
       case OP_STORELIST:
@@ -888,7 +891,7 @@ void lat_call_func(lat_vm* vm, lat_object* func)
       case OP_FN:
         vm->regs[cur.a] = definir_funcion(vm, (lat_bytecode*)cur.meta);
 #if DEBUG_VM
-        printf("FN %i", (char*)cur.meta);
+        printf("FN %i", cur.a);
 #endif
         break;
       case OP_NS:
