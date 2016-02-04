@@ -99,7 +99,7 @@ int main(int argc, char *argv[]) {
     return EXIT_FAILURE;
   }
   lat_vm *vm = lat_crear_maquina_virtual();
-  lat_object *mainFunc = nodo_analizar_arbol(vm, tree);  
+  lat_object *mainFunc = nodo_analizar_arbol(vm, tree);
   lat_llamar_funcion(vm, mainFunc);
   lat_apilar(vm, vm->regs[255]);
   return EXIT_SUCCESS;
