@@ -36,12 +36,12 @@ THE SOFTWARE.
 //se define para analizador sintactico (bison)
 int yyerror(struct YYLTYPE *yylloc_param, void *scanner, struct ast **root,
             const char *s) {
-  log_err("Linea %d: %s", (yylloc_param->first_line + 1), s);
+  lat_registrar_error("Linea %d: %s", (yylloc_param->first_line + 1), s);
   return 0;
 }
 
 ast *nodo_nuevo_operador(nodo_tipo nt, ast *l, ast *r) {
-  ast *a = (ast*)lmalloc(sizeof(ast));
+  ast *a = (ast*)lat_asignar_memoria(sizeof(ast));
   switch (nt) {
   case NODO_SUMA: {
     a->l = nodo_nuevo_identificador("+");
@@ -91,7 +91,7 @@ ast *nodo_nuevo_operador(nodo_tipo nt, ast *l, ast *r) {
 }
 
 ast *nodo_nuevo(nodo_tipo nt, ast *l, ast *r) {
-  ast *a = (ast*)lmalloc(sizeof(ast));
+  ast *a = (ast*)lat_asignar_memoria(sizeof(ast));
   a->tipo = nt;
   a->l = l;
   a->r = r;
@@ -100,9 +100,9 @@ ast *nodo_nuevo(nodo_tipo nt, ast *l, ast *r) {
 }
 
 ast *nodo_nuevo_entero(long i) {
-  ast *a = (ast*)lmalloc(sizeof(ast));
+  ast *a = (ast*)lat_asignar_memoria(sizeof(ast));
   a->tipo = NODO_ENTERO;
-  nodo_valor *val = (nodo_valor*)lmalloc(sizeof(nodo_valor));
+  nodo_valor *val = (nodo_valor*)lat_asignar_memoria(sizeof(nodo_valor));
   val->t = VALOR_ENTERO;
   val->v.i = i;
   a->valor = val;
@@ -110,9 +110,9 @@ ast *nodo_nuevo_entero(long i) {
 }
 
 ast *nodo_nuevo_decimal(double d) {
-  ast *a = (ast*)lmalloc(sizeof(ast));
+  ast *a = (ast*)lat_asignar_memoria(sizeof(ast));
   a->tipo = NODO_DECIMAL;
-  nodo_valor *val = (nodo_valor*)lmalloc(sizeof(nodo_valor));
+  nodo_valor *val = (nodo_valor*)lat_asignar_memoria(sizeof(nodo_valor));
   val->t = VALOR_DECIMAL;
   val->v.d = d;
   a->valor = val;
@@ -120,9 +120,9 @@ ast *nodo_nuevo_decimal(double d) {
 }
 
 ast *nodo_nuevo_logico(int b) {
-  ast *a = (ast*)lmalloc(sizeof(ast));
+  ast *a = (ast*)lat_asignar_memoria(sizeof(ast));
   a->tipo = NODO_LOGICO;
-  nodo_valor *val = (nodo_valor*)lmalloc(sizeof(nodo_valor));
+  nodo_valor *val = (nodo_valor*)lat_asignar_memoria(sizeof(nodo_valor));
   val->t = VALOR_LOGICO;
   val->v.b = b;
   a->valor = val;
@@ -130,9 +130,9 @@ ast *nodo_nuevo_logico(int b) {
 }
 
 ast *nodo_nuevo_caracter(char *c, size_t l) {
-  ast *a = (ast*)lmalloc(sizeof(ast));
+  ast *a = (ast*)lat_asignar_memoria(sizeof(ast));
   a->tipo = NODO_CARACTER;
-  nodo_valor *val = (nodo_valor*)lmalloc(sizeof(nodo_valor));
+  nodo_valor *val = (nodo_valor*)lat_asignar_memoria(sizeof(nodo_valor));
   val->t = VALOR_CARACTER;
   char tmp = ' ';
   switch (c[0]) {
@@ -174,9 +174,9 @@ ast *nodo_nuevo_caracter(char *c, size_t l) {
 }
 
 ast *nodo_nuevo_cadena(const char *s) {
-  ast *a = (ast*)lmalloc(sizeof(ast));
+  ast *a = (ast*)lat_asignar_memoria(sizeof(ast));
   a->tipo = NODO_CADENA;
-  nodo_valor *val = (nodo_valor*)lmalloc(sizeof(nodo_valor));
+  nodo_valor *val = (nodo_valor*)lat_asignar_memoria(sizeof(nodo_valor));
   val->t = VALOR_CADENA;
   val->v.s = parse_string(s, strlen(s));
   a->valor = val;
@@ -184,9 +184,9 @@ ast *nodo_nuevo_cadena(const char *s) {
 }
 
 ast *nodo_nuevo_constante(char *s, int num_linea, int num_columna) {
-  ast *a = (ast*)lmalloc(sizeof(ast));
+  ast *a = (ast*)lat_asignar_memoria(sizeof(ast));
   a->tipo = NODO_IDENTIFICADOR;
-  nodo_valor *val = (nodo_valor*)lmalloc(sizeof(nodo_valor));
+  nodo_valor *val = (nodo_valor*)lat_asignar_memoria(sizeof(nodo_valor));
   val->t = VALOR_CADENA;
   val->v.s = strdup0(s);
   a->valor = val;
@@ -197,9 +197,9 @@ ast *nodo_nuevo_constante(char *s, int num_linea, int num_columna) {
 }
 
 ast *nodo_nuevo_identificador(const char *s) {
-  ast *a = (ast*)lmalloc(sizeof(ast));
+  ast *a = (ast*)lat_asignar_memoria(sizeof(ast));
   a->tipo = NODO_IDENTIFICADOR;
-  nodo_valor *val = (nodo_valor*)lmalloc(sizeof(nodo_valor));
+  nodo_valor *val = (nodo_valor*)lat_asignar_memoria(sizeof(nodo_valor));
   val->t = VALOR_CADENA;
   val->v.s = strdup0(s);
   a->valor = val;
@@ -208,7 +208,7 @@ ast *nodo_nuevo_identificador(const char *s) {
 }
 
 ast *nodo_nuevo_asignacion(ast *v, ast *s) {
-  ast *a = (ast*)lmalloc(sizeof(ast));
+  ast *a = (ast*)lat_asignar_memoria(sizeof(ast));
   a->tipo = NODO_ASIGNACION;
   a->l = v;
   a->r = s;
@@ -217,7 +217,7 @@ ast *nodo_nuevo_asignacion(ast *v, ast *s) {
 }
 
 ast *nodo_nuevo_si(ast *cond, ast *th, ast *el) {
-  nodo_si *a = (nodo_si*)lmalloc(sizeof(nodo_si));
+  nodo_si *a = (nodo_si*)lat_asignar_memoria(sizeof(nodo_si));
   a->tipo = NODO_SI;
   a->cond = cond;
   a->th = th;
@@ -226,7 +226,7 @@ ast *nodo_nuevo_si(ast *cond, ast *th, ast *el) {
 }
 
 ast *nodo_nuevo_mientras(ast *cond, ast *stmts) {
-  ast *a = (ast*)lmalloc(sizeof(ast));
+  ast *a = (ast*)lat_asignar_memoria(sizeof(ast));
   a->tipo = NODO_MIENTRAS;
   a->l = cond;
   a->r = stmts;
@@ -235,7 +235,7 @@ ast *nodo_nuevo_mientras(ast *cond, ast *stmts) {
 }
 
 ast *nodo_nuevo_hacer(ast *cond, ast *stmts) {
-  ast *a = (ast*)lmalloc(sizeof(ast));
+  ast *a = (ast*)lat_asignar_memoria(sizeof(ast));
   a->tipo = NODO_HACER;
   a->l = cond;
   a->r = stmts;
@@ -244,7 +244,7 @@ ast *nodo_nuevo_hacer(ast *cond, ast *stmts) {
 }
 
 ast *nodo_nuevo_desde(ast *dec, ast *cond, ast *inc, ast *stmts) {
-  ast *a = (ast*)lmalloc(sizeof(ast));
+  ast *a = (ast*)lat_asignar_memoria(sizeof(ast));
   a->tipo = NODO_BLOQUE;
   a->l = nodo_nuevo_mientras(cond, nodo_nuevo(NODO_BLOQUE, inc, stmts));
   a->r = dec;
@@ -253,7 +253,7 @@ ast *nodo_nuevo_desde(ast *dec, ast *cond, ast *inc, ast *stmts) {
 }
 
 ast *nodo_nuevo_funcion(ast *s, ast *syms, ast *func) {
-  ast *a = (ast*)lmalloc(sizeof(ast));
+  ast *a = (ast*)lat_asignar_memoria(sizeof(ast));
   a->tipo = NODO_ASIGNACION;
   a->l = nodo_nuevo(NODO_FUNCION_USUARIO, syms, func);
   a->r = s;
@@ -273,19 +273,19 @@ void nodo_liberar(ast *a) {
       break;
     default:
       if (a->tipo)
-        lfree(a->valor);
-      lfree(a);
+        lat_liberar_memoria(a->valor);
+      lat_liberar_memoria(a);
       break;
     }
   }
 }
 
 lat_object *nodo_analizar_arbol(lat_vm *vm, ast *tree) {
-  lat_bytecode *bcode = (lat_bytecode *)lmalloc(sizeof(lat_bytecode) * MAX_BYTECODE_FUNCTION);
+  lat_bytecode *bcode = (lat_bytecode *)lat_asignar_memoria(sizeof(lat_bytecode) * MAX_BYTECODE_FUNCTION);
   int i = nodo_analizar(vm, tree, bcode, 0);
   dbc(OP_END, 0, 0, NULL);
   nodo_liberar(tree);
-  return definir_funcion(vm, bcode);
+  return lat_definir_funcion(vm, bcode);
 }
 
 int nested = -1;
@@ -313,7 +313,7 @@ int nodo_analizar(lat_vm *vm, ast *node, lat_bytecode *bcode, int i) {
             dbc(OP_LOCALNS, 1, 0, NULL);
             }*/
     dbc(OP_LOCALNS, 1, 0, NULL);
-    lat_object *ret = lat_str(vm, node->valor->v.s);
+    lat_object *ret = lat_cadena_nueva(vm, node->valor->v.s);
     dbc(OP_STORESTR, 2, 0, ret);
     dbc(OP_GET, 2, 1, NULL);
     dbc(OP_MOV, 255, 2, NULL);
@@ -329,15 +329,15 @@ int nodo_analizar(lat_vm *vm, ast *node, lat_bytecode *bcode, int i) {
             else {
             dbc(OP_LOCALNS, 1, 0, NULL);
             }*/
-    // lat_object *ret = lat_clone_object(vm, lat_str(vm, node->r->tipo->v.s));
-    lat_object *ret = lat_str(vm, node->r->valor->v.s);
+    // lat_object *ret = lat_clonar_objeto(vm, lat_cadena_nueva(vm, node->r->tipo->v.s));
+    lat_object *ret = lat_cadena_nueva(vm, node->r->valor->v.s);
     if (ret->num_declared < 0) {
       ret->num_declared = 0;
     }
     ret->es_constante = node->r->valor->es_constante;
     ret->num_declared++;
     if (ret->es_constante && ret->num_declared > 1) {
-      log_err("Linea %d: %s", (node->r->valor->num_linea + 1),  "Intento de asignar un nuevo valor a una constante ");
+      lat_registrar_error("Linea %d: %s", (node->r->valor->num_linea + 1),  "Intento de asignar un nuevo valor a una constante ");
     }
     dbc(OP_LOCALNS, 1, 0, NULL);
     dbc(OP_POP, 255, 0, NULL);
@@ -352,22 +352,22 @@ int nodo_analizar(lat_vm *vm, ast *node, lat_bytecode *bcode, int i) {
     dbc(OP_DEC, 255, 0, NULL);
   } break;
   case NODO_CARACTER: {
-    lat_object *ret = lat_char(vm, node->valor->v.c);
-    // lat_mark_object(ret, 3);
+    lat_object *ret = lat_caracter_nuevo(vm, node->valor->v.c);
+    // lat_marcar_objeto(ret, 3);
     dbc(OP_STORECHAR, 255, 0, ret);
   } break;
   case NODO_ENTERO: {
-    lat_object *ret = lat_int(vm, node->valor->v.i);
-    // lat_mark_object(ret, 3);
+    lat_object *ret = lat_entero_nuevo(vm, node->valor->v.i);
+    // lat_marcar_objeto(ret, 3);
     dbc(OP_STOREINT, 255, 0, ret);
   } break;
   case NODO_DECIMAL: {
-    lat_object *ret = lat_double(vm, node->valor->v.d);
-    // lat_mark_object(ret, 3);
+    lat_object *ret = lat_decimal_nuevo(vm, node->valor->v.d);
+    // lat_marcar_objeto(ret, 3);
     dbc(OP_STOREDOUBLE, 255, 0, ret);
   } break;
   case NODO_CADENA: {
-    lat_object *ret = lat_str(vm, node->valor->v.s);
+    lat_object *ret = lat_cadena_nueva(vm, node->valor->v.s);
     dbc(OP_STORESTR, 255, 0, ret);
   } break;
   case NODO_LOGICO: {
@@ -442,7 +442,7 @@ int nodo_analizar(lat_vm *vm, ast *node, lat_bytecode *bcode, int i) {
     if (node->l) {
       dbc(OP_LOCALNS, 1, 0, NULL);
       dbc(OP_POP, 2, 0, NULL);
-      lat_object *ret = lat_clone_object(vm, lat_str(vm, node->l->valor->v.s));
+      lat_object *ret = lat_clonar_objeto(vm, lat_cadena_nueva(vm, node->l->valor->v.s));
       dbc(OP_SET, 2, 1, ret);
     }
     if (node->r) {
@@ -451,7 +451,7 @@ int nodo_analizar(lat_vm *vm, ast *node, lat_bytecode *bcode, int i) {
   } break;
   case NODO_FUNCION_USUARIO: {
     funcion_bcode =
-        (lat_bytecode *)lmalloc(sizeof(lat_bytecode) * MAX_BYTECODE_FUNCTION);
+        (lat_bytecode *)lat_asignar_memoria(sizeof(lat_bytecode) * MAX_BYTECODE_FUNCTION);
     fi = 0;
     if (node->l) {
       fpn(vm, node->l);
@@ -510,14 +510,14 @@ int nodo_analizar(lat_vm *vm, ast *node, lat_bytecode *bcode, int i) {
   case NODO_DICCIONARIO_ELEMENTO:{
     pn(vm, node->l);
     dbc(OP_PUSH, 255, 0, NULL);
-    lat_object *ret = lat_str(vm, node->r->valor->v.s);
+    lat_object *ret = lat_cadena_nueva(vm, node->r->valor->v.s);
     if (ret->num_declared < 0) {
       ret->num_declared = 0;
     }
     ret->es_constante = node->r->valor->es_constante;
     ret->num_declared++;
     if (ret->es_constante && ret->num_declared > 1) {
-      log_err("Linea %d: %s", (node->r->valor->num_linea + 1),  "Intento de asignar un nuevo valor a una constante ");
+      lat_registrar_error("Linea %d: %s", (node->r->valor->num_linea + 1),  "Intento de asignar un nuevo valor a una constante ");
     }
     dbc(OP_LOCALNS, 1, 0, NULL);
     dbc(OP_POP, 255, 0, NULL);

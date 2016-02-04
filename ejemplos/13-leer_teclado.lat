@@ -1,0 +1,3 @@
+escribir("Cómo te llamas?")
+nombre = leer()
+escribir("hola " + nombre)

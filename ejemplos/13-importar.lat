@@ -1,2 +1,0 @@
-importar("13-1-modulo.lat")
-imprimir(suma(5, 6))

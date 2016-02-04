@@ -36,7 +36,7 @@ char* strdup0(const char* s)
 {
   size_t len = strlen(s);
   char* p;
-  p = (char*)lmalloc(len + 1);
+  p = (char*)lat_asignar_memoria(len + 1);
   if (p) {
     strncpy(p, s, len);
   }
@@ -46,7 +46,7 @@ char* strdup0(const char* s)
 
 char* parse_string(const char* s, size_t len)
 {
-  char* ret = (char*)lmalloc(len + 1);
+  char* ret = (char*)lat_asignar_memoria(len + 1);
   int j = 0;
   int c = '@';
   for (size_t i = 0; i < len; i++) {
@@ -342,17 +342,17 @@ char* trim(const char *str)
   return ret;
 }
 
-list_node* make_list_node(void* d)
+list_node* lat_crear_lista_node(void* d)
 {
-  list_node* ret = (list_node*)lmalloc(sizeof(list_node));
+  list_node* ret = (list_node*)lat_asignar_memoria(sizeof(list_node));
   ret->data = d;
   return ret;
 }
 
-list_node* make_list()
+list_node* lat_crear_lista()
 {
-  list_node* start = (list_node*)lmalloc(sizeof(list_node));
-  list_node* end = (list_node*)lmalloc(sizeof(list_node));
+  list_node* start = (list_node*)lat_asignar_memoria(sizeof(list_node));
+  list_node* end = (list_node*)lat_asignar_memoria(sizeof(list_node));
   start->prev = NULL;
   start->next = end;
   start->data = NULL;
@@ -375,7 +375,7 @@ int find_list(list_node* l, void* data)
 
 void insert_list(list_node* l, void* data)
 {
-  list_node* ins = (list_node*)lmalloc(sizeof(list_node));
+  list_node* ins = (list_node*)lat_asignar_memoria(sizeof(list_node));
   ins->data = data;
   ins->next = l->next;
   l->next = ins;
@@ -408,7 +408,7 @@ int length_list(list_node* l)
 
 hash_map* make_hash_map()
 {
-  hash_map* ret = (hash_map*)lmalloc(sizeof(hash_map));
+  hash_map* ret = (hash_map*)lat_asignar_memoria(sizeof(hash_map));
   int c;
   for (c = 0; c < 256; c++) {
     ret->buckets[c] = NULL;
@@ -444,12 +444,12 @@ void* get_hash(hash_map* m, char* key)
 
 void set_hash(hash_map *m, char *key, void *val)
 {
-    hash_val *hv = (hash_val *)lmalloc(sizeof(hash_val));
+    hash_val *hv = (hash_val *)lat_asignar_memoria(sizeof(hash_val));
     strncpy(hv->key, key, (strlen(key)+1));
     hv->val = val;
     int hk = hash(key);
     if (m->buckets[hk] == NULL) {
-        m->buckets[hk] = make_list();
+        m->buckets[hk] = lat_crear_lista();
     }
     else {
         list_node *c;

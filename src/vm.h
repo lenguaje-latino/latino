@@ -88,50 +88,49 @@ struct lat_vm {
   int ctx_stack_pointer;
 };
 
-lat_vm* lat_make_vm();
+lat_vm* lat_crear_maquina_virtual();
+void lat_ejecutar(lat_vm* vm);
+void lat_ejecutar_archivo(lat_vm* vm);
+void lat_apilar(lat_vm* vm, lat_object* o);
+lat_object* lat_desapilar(lat_vm* vm);
+void lat_apilar_lista(lat_object* list, lat_object* o);
+lat_object* lat_desapilar_lista(lat_object* list);
+void lat_apilar_contexto(lat_vm* vm);
+void lat_desapilar_contexto(lat_vm* vm);
+void lat_apilar_contexto_predefinido(lat_vm* vm, lat_object* ctx);
+lat_object* lat_desapilar_contexto_predefinido(lat_vm* vm);
+lat_object* lat_obtener_contexto(lat_vm* vm);
+void lat_basurero_agregar(lat_vm* vm, lat_object* o);
+void lat_basurero(lat_vm* vm);
+lat_object* lat_definir_funcion(lat_vm* vm, lat_bytecode* inslist);
+lat_object* lat_definir_cfuncion(lat_vm* vm, void (*function)(lat_vm* vm));
 
-void lat_execute(lat_vm* vm);
-void lat_execute_file(lat_vm* vm);
-
-void lat_push_stack(lat_vm* vm, lat_object* o);
-lat_object* lat_pop_stack(lat_vm* vm);
-
-void lat_push_list(lat_object* list, lat_object* o);
-lat_object* lat_pop_list(lat_object* list);
-
-void lat_push_ctx(lat_vm* vm);
-void lat_pop_ctx(lat_vm* vm);
-
-void lat_push_predefined_ctx(lat_vm* vm, lat_object* ctx);
-lat_object* lat_pop_predefined_ctx(lat_vm* vm);
-
-lat_object* obtener_contexto(lat_vm* vm);
-
-void lat_gc_add_object(lat_vm* vm, lat_object* o);
-void lat_gc(lat_vm* vm);
-
-lat_object* definir_funcion(lat_vm* vm, lat_bytecode* inslist);
-lat_object* definir_funcion_c(lat_vm* vm, void (*function)(lat_vm* vm));
-
-void lat_nth_list(lat_vm* vm);
-void lat_print_list(lat_vm* vm, list_node* l);
-void lat_print(lat_vm* vm);
-void lat_clone(lat_vm* vm);
+void lat_numero_lista(lat_vm* vm);
+void lat_imprimir_lista(lat_vm* vm, list_node* l);
+void lat_imprimir(lat_vm* vm);
+void lat_clonar(lat_vm* vm);
 void lat_cons(lat_vm* vm);
-void lat_add(lat_vm* vm);
-void lat_sub(lat_vm* vm);
-void lat_mul(lat_vm* vm);
-void lat_div(lat_vm* vm);
-void lat_mod(lat_vm* vm);
-void lat_neq(lat_vm* vm);
-void lat_eq(lat_vm* vm);
-void lat_lt(lat_vm* vm);
-void lat_lte(lat_vm* vm);
-void lat_gt(lat_vm* vm);
-void lat_gte(lat_vm* vm);
+void lat_sumar(lat_vm* vm);
+void lat_restar(lat_vm* vm);
+void lat_multiplicar(lat_vm* vm);
+void lat_dividir(lat_vm* vm);
+void lat_modulo(lat_vm* vm);
+void lat_diferente(lat_vm* vm);
+void lat_igualdad(lat_vm* vm);
+void lat_menor_que(lat_vm* vm);
+void lat_menor_igual(lat_vm* vm);
+void lat_mayor_que(lat_vm* vm);
+void lat_mayor_igual(lat_vm* vm);
 
-lat_object* lat_not(lat_vm* vm, lat_object* o);
+/*conversion de tipos de dato*/
+void lat_logico(lat_vm* vm);
+void lat_entero(lat_vm* vm);
+void lat_caracter(lat_vm* vm);
+void lat_decimal(lat_vm* vm);
+void lat_cadena(lat_vm* vm);
+
+lat_object* lat_no(lat_vm* vm, lat_object* o);
 lat_bytecode lat_bc(lat_ins i, int a, int b, void* meta);
-void lat_call_func(lat_vm* vm, lat_object* func);
+void lat_llamar_funcion(lat_vm* vm, lat_object* func);
 
 #endif //_VM_H_
