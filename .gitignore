@@ -21,3 +21,4 @@ cmake_install.cmake
 *.project
 *.workspace
 *.mk
+<scratch>

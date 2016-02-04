@@ -99,7 +99,7 @@ int main(int argc, char *argv[]) {
     return EXIT_FAILURE;
   }
   lat_vm *vm = lat_make_vm();
-  lat_object *mainFunc = nodo_analizar_arbol(vm, tree);  
+  lat_object *mainFunc = nodo_analizar_arbol(vm, tree);
   lat_call_func(vm, mainFunc);
   lat_push_stack(vm, vm->regs[255]);
   return EXIT_SUCCESS;
