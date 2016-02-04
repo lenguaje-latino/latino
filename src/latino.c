@@ -39,7 +39,7 @@ static char *buffer;
 
 int yyparse(ast **expression, yyscan_t scanner);
 
-ast *lat_parse_expr(char *expr) {
+ast *lat_analizar_expresion(char *expr) {
   ast *ret = NULL;
   yyscan_t scanner;
   YY_BUFFER_STATE state;
@@ -53,7 +53,7 @@ ast *lat_parse_expr(char *expr) {
   return ret;
 }
 
-ast *lat_parse_file(char *infile) {
+ast *lat_analizar_archivo(char *infile) {
   if (infile == NULL) {
     printf("Especifique un archivo\n");
     return NULL;
@@ -75,7 +75,7 @@ ast *lat_parse_file(char *infile) {
   }
   buffer[newSize] = '\0';
   fclose(file);
-  return lat_parse_expr(buffer);
+  return lat_analizar_expresion(buffer);
 }
 
 int main(int argc, char *argv[]) {
@@ -94,13 +94,13 @@ int main(int argc, char *argv[]) {
     }
   }
 
-  ast *tree = lat_parse_file(infile);
+  ast *tree = lat_analizar_archivo(infile);
   if (!tree) {
     return EXIT_FAILURE;
   }
-  lat_vm *vm = lat_make_vm();
+  lat_vm *vm = lat_crear_maquina_virtual();
   lat_object *mainFunc = nodo_analizar_arbol(vm, tree);  
-  lat_call_func(vm, mainFunc);
-  lat_push_stack(vm, vm->regs[255]);
+  lat_llamar_funcion(vm, mainFunc);
+  lat_apilar(vm, vm->regs[255]);
   return EXIT_SUCCESS;
 }

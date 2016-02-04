@@ -49,7 +49,7 @@ char* parse_string(const char* s, size_t n);
 #endif
 
 #define clean_errno() (errno == 0 ? "None" : strerror(errno))
-#define log_err(M, ...)                               \
+#define lat_registrar_error(M, ...)                               \
   {                                                   \
     fprintf(stderr, "Error: " M "\n", ##__VA_ARGS__); \
     exit(1);                                          \
@@ -58,13 +58,13 @@ char* parse_string(const char* s, size_t n);
 #define log_info(M, ...) fprintf(stderr, "[INFO] (%s:%d) " M "\n", __FILE__, __LINE__, ##__VA_ARGS__)
 #define check(A, M, ...)       \
   if (!(A)) {                  \
-    log_err(M, ##__VA_ARGS__); \
+    lat_registrar_error(M, ##__VA_ARGS__); \
     errno = 0;                 \
     goto error;                \
   }
 #define sentinel(M, ...)       \
   {                            \
-    log_err(M, ##__VA_ARGS__); \
+    lat_registrar_error(M, ##__VA_ARGS__); \
     errno = 0;                 \
     goto error;                \
   }
@@ -82,8 +82,8 @@ typedef struct list_node {
   void* data;
 } list_node;
 
-list_node* make_list_node(void* d);
-list_node* make_list();
+list_node* lat_crear_lista_node(void* d);
+list_node* lat_crear_lista();
 int find_list(list_node* l, void* data);
 void insert_list(list_node* l, void* data);
 void remove_list(list_node* l, void* data);

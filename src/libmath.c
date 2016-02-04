@@ -26,127 +26,127 @@ THE SOFTWARE.
 #include "libmath.h"
 #include "vm.h"
 
-void lat_acos(lat_vm *vm) {
-  lat_object *a = lat_pop_stack(vm);
-  vm->regs[255] = lat_double(vm, acos(lat_get_double_value(a)));
+void lat_arco_coseno(lat_vm *vm) {
+  lat_object *a = lat_desapilar(vm);
+  vm->regs[255] = lat_decimal_nuevo(vm, acos(lat_obtener_decimal(a)));
 }
 
-void lat_asin(lat_vm *vm) {
-  lat_object *a = lat_pop_stack(vm);
-  vm->regs[255] = lat_double(vm, asin(lat_get_double_value(a)));
+void lat_arco_seno(lat_vm *vm) {
+  lat_object *a = lat_desapilar(vm);
+  vm->regs[255] = lat_decimal_nuevo(vm, asin(lat_obtener_decimal(a)));
 }
 
-void lat_atan(lat_vm *vm) {
-  lat_object *a = lat_pop_stack(vm);
-  vm->regs[255] = lat_double(vm, atan(lat_get_double_value(a)));
+void lat_arco_tangente(lat_vm *vm) {
+  lat_object *a = lat_desapilar(vm);
+  vm->regs[255] = lat_decimal_nuevo(vm, atan(lat_obtener_decimal(a)));
 }
 
-void lat_atan2(lat_vm *vm) {
-  lat_object *a = lat_pop_stack(vm);
-  lat_object *b = lat_pop_stack(vm);
+void lat_arco_tangente_radianes(lat_vm *vm) {
+  lat_object *a = lat_desapilar(vm);
+  lat_object *b = lat_desapilar(vm);
   vm->regs[255] =
-      lat_double(vm, atan2(lat_get_double_value(a), lat_get_double_value(b)));
+      lat_decimal_nuevo(vm, atan2(lat_obtener_decimal(a), lat_obtener_decimal(b)));
 }
 
-void lat_cos(lat_vm *vm) {
-  lat_object *a = lat_pop_stack(vm);
-  vm->regs[255] = lat_double(vm, cos(lat_get_double_value(a)));
+void lat_coseno(lat_vm *vm) {
+  lat_object *a = lat_desapilar(vm);
+  vm->regs[255] = lat_decimal_nuevo(vm, cos(lat_obtener_decimal(a)));
 }
 
-void lat_cosh(lat_vm *vm) {
-  lat_object *a = lat_pop_stack(vm);
-  vm->regs[255] = lat_double(vm, cosh(lat_get_double_value(a)));
+void lat_cosenoh(lat_vm *vm) {
+  lat_object *a = lat_desapilar(vm);
+  vm->regs[255] = lat_decimal_nuevo(vm, cosh(lat_obtener_decimal(a)));
 }
 
-void lat_sin(lat_vm *vm) {
-  lat_object *a = lat_pop_stack(vm);
-  vm->regs[255] = lat_double(vm, sin(lat_get_double_value(a)));
+void lat_seno(lat_vm *vm) {
+  lat_object *a = lat_desapilar(vm);
+  vm->regs[255] = lat_decimal_nuevo(vm, sin(lat_obtener_decimal(a)));
 }
 
-void lat_sinh(lat_vm *vm) {
-  lat_object *a = lat_pop_stack(vm);
-  vm->regs[255] = lat_double(vm, sinh(lat_get_double_value(a)));
+void lat_seno_hiperbolico(lat_vm *vm) {
+  lat_object *a = lat_desapilar(vm);
+  vm->regs[255] = lat_decimal_nuevo(vm, sinh(lat_obtener_decimal(a)));
 }
 
-void lat_tan(lat_vm *vm) {
-  lat_object *a = lat_pop_stack(vm);
-  vm->regs[255] = lat_double(vm, tan(lat_get_double_value(a)));
+void lat_tangente(lat_vm *vm) {
+  lat_object *a = lat_desapilar(vm);
+  vm->regs[255] = lat_decimal_nuevo(vm, tan(lat_obtener_decimal(a)));
 }
 
-void lat_tanh(lat_vm *vm) {
-  lat_object *a = lat_pop_stack(vm);
-  vm->regs[255] = lat_double(vm, tanh(lat_get_double_value(a)));
+void lat_tangente_hiperbolica(lat_vm *vm) {
+  lat_object *a = lat_desapilar(vm);
+  vm->regs[255] = lat_decimal_nuevo(vm, tanh(lat_obtener_decimal(a)));
 }
 
-void lat_exp(lat_vm *vm) {
-  lat_object *a = lat_pop_stack(vm);
-  vm->regs[255] = lat_double(vm, exp(lat_get_double_value(a)));
+void lat_exponente(lat_vm *vm) {
+  lat_object *a = lat_desapilar(vm);
+  vm->regs[255] = lat_decimal_nuevo(vm, exp(lat_obtener_decimal(a)));
 }
 
 /*
 void lat_frexp(lat_vm *vm){
-  lat_object *a = lat_pop_stack(vm);
-  vm->regs[255] = lat_double(vm, frexp(lat_get_double_value(a)));
+  lat_object *a = lat_desapilar(vm);
+  vm->regs[255] = lat_decimal_nuevo(vm, frexp(lat_obtener_decimal(a)));
 }
 */
 
 /*
 void lat_ldexp(lat_vm* vm)
 {
-  lat_object* a = lat_pop_stack(vm);
-  lat_object* b = lat_pop_stack(vm);
-  vm->regs[255] = lat_double(vm, ldexp(lat_get_double_value(a),
-lat_get_int_value(b)));
+  lat_object* a = lat_desapilar(vm);
+  lat_object* b = lat_desapilar(vm);
+  vm->regs[255] = lat_decimal_nuevo(vm, ldexp(lat_obtener_decimal(a),
+lat_obtener_entero(b)));
 }
 */
 
-void lat_log(lat_vm *vm) {
-  lat_object *a = lat_pop_stack(vm);
-  vm->regs[255] = lat_double(vm, log(lat_get_double_value(a)));
+void lat_logaritmo_natural(lat_vm *vm) {
+  lat_object *a = lat_desapilar(vm);
+  vm->regs[255] = lat_decimal_nuevo(vm, log(lat_obtener_decimal(a)));
 }
 
-void lat_log10(lat_vm *vm) {
-  lat_object *a = lat_pop_stack(vm);
-  vm->regs[255] = lat_double(vm, log10(lat_get_double_value(a)));
+void lat_logaritmo_base10(lat_vm *vm) {
+  lat_object *a = lat_desapilar(vm);
+  vm->regs[255] = lat_decimal_nuevo(vm, log10(lat_obtener_decimal(a)));
 }
 
 /*
 void lat_modf(lat_vm *vm){
-  lat_object *a = lat_pop_stack(vm);
-  vm->regs[255] = lat_double(vm, modf(lat_get_double_value(a)));
+  lat_object *a = lat_desapilar(vm);
+  vm->regs[255] = lat_decimal_nuevo(vm, modf(lat_obtener_decimal(a)));
 }
 */
 
-void lat_pow(lat_vm *vm) {
-  lat_object *a = lat_pop_stack(vm);
-  lat_object *b = lat_pop_stack(vm);
+void lat_potencia(lat_vm *vm) {
+  lat_object *a = lat_desapilar(vm);
+  lat_object *b = lat_desapilar(vm);
   vm->regs[255] =
-      lat_double(vm, pow(lat_get_double_value(a), lat_get_double_value(b)));
+      lat_decimal_nuevo(vm, pow(lat_obtener_decimal(a), lat_obtener_decimal(b)));
 }
 
-void lat_sqrt(lat_vm *vm) {
-  lat_object *a = lat_pop_stack(vm);
-  vm->regs[255] = lat_double(vm, sqrt(lat_get_double_value(a)));
+void lat_raiz_cuadrada(lat_vm *vm) {
+  lat_object *a = lat_desapilar(vm);
+  vm->regs[255] = lat_decimal_nuevo(vm, sqrt(lat_obtener_decimal(a)));
 }
 
-void lat_ceil(lat_vm *vm) {
-  lat_object *a = lat_pop_stack(vm);
-  vm->regs[255] = lat_double(vm, ceil(lat_get_double_value(a)));
+void lat_redondear_arriba(lat_vm *vm) {
+  lat_object *a = lat_desapilar(vm);
+  vm->regs[255] = lat_decimal_nuevo(vm, ceil(lat_obtener_decimal(a)));
 }
 
-void lat_fabs(lat_vm *vm) {
-  lat_object *a = lat_pop_stack(vm);
-  vm->regs[255] = lat_double(vm, fabs(lat_get_double_value(a)));
+void lat_valor_absoluto(lat_vm *vm) {
+  lat_object *a = lat_desapilar(vm);
+  vm->regs[255] = lat_decimal_nuevo(vm, fabs(lat_obtener_decimal(a)));
 }
 
-void lat_floor(lat_vm *vm) {
-  lat_object *a = lat_pop_stack(vm);
-  vm->regs[255] = lat_double(vm, floor(lat_get_double_value(a)));
+void lat_redondeo_abajo(lat_vm *vm) {
+  lat_object *a = lat_desapilar(vm);
+  vm->regs[255] = lat_decimal_nuevo(vm, floor(lat_obtener_decimal(a)));
 }
 
-void lat_fmod(lat_vm *vm) {
-  lat_object *a = lat_pop_stack(vm);
-  lat_object *b = lat_pop_stack(vm);
+void lat_modulo_decimal(lat_vm *vm) {
+  lat_object *a = lat_desapilar(vm);
+  lat_object *b = lat_desapilar(vm);
   vm->regs[255] =
-      lat_double(vm, fmod(lat_get_double_value(a), lat_get_double_value(b)));
+      lat_decimal_nuevo(vm, fmod(lat_obtener_decimal(a), lat_obtener_decimal(b)));
 }

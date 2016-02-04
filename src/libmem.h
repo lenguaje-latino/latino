@@ -27,8 +27,8 @@ THE SOFTWARE.
 
 #include <stdlib.h>
 
-void* lmalloc(size_t size);
-void* lrealloc(void* ptr, size_t size);
-void lfree(void* ptr);
+void* lat_asignar_memoria(size_t size);
+void* lat_reasignar_memoria(void* ptr, size_t size);
+void lat_liberar_memoria(void* ptr);
 
 #endif /*_LIBMEM_H_*/

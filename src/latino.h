@@ -50,7 +50,7 @@ defined(__ELF__)
 #define lnsprintf(s, l, f, i) _snprintf(s, l, f, i)
 #endif
 
-#define lassert(cond) ((void)(false && (cond)))
+#define lat_afirmar(cond) ((void)(false && (cond)))
 
 extern int debug;
 #define MAX_ERROR_LENGTH 1024
@@ -71,7 +71,7 @@ typedef struct YYLTYPE {
 
 #define YY_NO_UNISTD_H 1
 
-ast* lat_parse_expr(char* expr);
-ast* lat_parse_file(char* path);
+ast* lat_analizar_expresion(char* expr);
+ast* lat_analizar_archivo(char* path);
 
 #endif /* _LATINO_H_ */

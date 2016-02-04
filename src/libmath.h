@@ -28,27 +28,24 @@ THE SOFTWARE.
 #include <math.h>
 #include "vm.h"
 
-void lat_acos(lat_vm* vm);
-void lat_asin(lat_vm* vm);
-void lat_atan(lat_vm* vm);
-void lat_atan2(lat_vm* vm);
-void lat_cos(lat_vm* vm);
-void lat_cosh(lat_vm* vm);
-void lat_sin(lat_vm* vm);
-void lat_sinh(lat_vm* vm);
-void lat_tan(lat_vm* vm);
-void lat_tanh(lat_vm* vm);
-void lat_exp(lat_vm* vm);
-//void lat_frexp(lat_vm *vm);
-//void lat_ldexp(lat_vm* vm);
-void lat_log(lat_vm* vm);
-void lat_log10(lat_vm* vm);
-//void lat_modf(lat_vm *vm);
-void lat_pow(lat_vm* vm);
-void lat_sqrt(lat_vm* vm);
-void lat_ceil(lat_vm* vm);
-void lat_fabs(lat_vm* vm);
-void lat_floor(lat_vm* vm);
-void lat_fmod(lat_vm* vm);
+void lat_arco_coseno(lat_vm* vm);
+void lat_arco_seno(lat_vm* vm);
+void lat_arco_tangente(lat_vm* vm);
+void lat_arco_tangente_radianes(lat_vm* vm);
+void lat_coseno(lat_vm* vm);
+void lat_cosenoh(lat_vm* vm);
+void lat_seno(lat_vm* vm);
+void lat_seno_hiperbolico(lat_vm* vm);
+void lat_tangente(lat_vm* vm);
+void lat_tangente_hiperbolica(lat_vm* vm);
+void lat_exponente(lat_vm* vm);
+void lat_logaritmo_natural(lat_vm* vm);
+void lat_logaritmo_base10(lat_vm* vm);
+void lat_potencia(lat_vm* vm);
+void lat_raiz_cuadrada(lat_vm* vm);
+void lat_redondear_arriba(lat_vm* vm);
+void lat_valor_absoluto(lat_vm* vm);
+void lat_redondeo_abajo(lat_vm* vm);
+void lat_modulo_decimal(lat_vm* vm);
 
 #endif /* ifndef _LIBMATH_H_ */

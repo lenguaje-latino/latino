@@ -69,39 +69,38 @@ struct lat_object {
   lat_object_data data;
 };
 
-void asignar_contexto(lat_object* ns, lat_object* name, lat_object* o);
-lat_object* lat_get_ctx(lat_object* ns, lat_object* name);
-int lat_ctx_has(lat_object* ns, lat_object* name);
-lat_object* lat_make_object(lat_vm* vm);
-lat_object* lat_instance(lat_vm* vm);
-lat_object* lat_char(lat_vm* vm, char val);
-lat_object* lat_int(lat_vm* vm, long val);
-lat_object* lat_double(lat_vm* vm, double val);
-lat_object* lat_str(lat_vm* vm, const char* val);
-lat_object* lat_bool(lat_vm* vm, bool val);
-lat_object* lat_list(lat_vm* vm, list_node* l);
-lat_object* lat_func(lat_vm* vm);
-lat_object* lat_cfunc(lat_vm* vm);
-lat_object* lat_struct(lat_vm* vm, void* val);
+void lat_asignar_contexto_objeto(lat_object* ns, lat_object* name, lat_object* o);
+lat_object* lat_lat_obtener_contexto_objeto(lat_object* ns, lat_object* name);
+int lat_contexto_contiene(lat_object* ns, lat_object* name);
+lat_object* lat_crear_objeto(lat_vm* vm);
+lat_object* lat_instancia(lat_vm* vm);
+lat_object* lat_caracter_nuevo(lat_vm* vm, char val);
+lat_object* lat_entero_nuevo(lat_vm* vm, long val);
+lat_object* lat_decimal_nuevo(lat_vm* vm, double val);
+lat_object* lat_cadena_nueva(lat_vm* vm, const char* val);
+lat_object* lat_logico_nuevo(lat_vm* vm, bool val);
+lat_object* lat_lista_nueva(lat_vm* vm, list_node* l);
+lat_object* lat_funcion_nueva(lat_vm* vm);
+lat_object* lat_cfuncion_nueva(lat_vm* vm);
 
-void lat_mark_object(lat_object* o, int m);
-void lat_mark_list(list_node* l, unsigned char m);
-void lat_mark_hash(hash_map* l, unsigned char m);
+void lat_marcar_objeto(lat_object* o, int m);
+void lat_marcar_lista(list_node* l, unsigned char m);
+void lat_marcar_hash(hash_map* l, unsigned char m);
 
-void lat_delete_object(lat_vm* vm, lat_object* o);
-void lat_delete_list(lat_vm* vm, list_node* l);
-void lat_delete_hash(lat_vm* vm, hash_map* l);
+void lat_eliminar_objeto(lat_vm* vm, lat_object* o);
+void lat_eliminar_lista(lat_vm* vm, list_node* l);
+void lat_eliminar_hash(lat_vm* vm, hash_map* l);
 
-lat_object* lat_clone_object(lat_vm* vm, lat_object* obj);
-list_node* lat_clone_list(lat_vm* vm, list_node* l);
-hash_map* lat_clone_hash(lat_vm* vm, hash_map* l);
+lat_object* lat_clonar_objeto(lat_vm* vm, lat_object* obj);
+list_node* lat_clonar_lista(lat_vm* vm, list_node* l);
+hash_map* lat_clonar_hash(lat_vm* vm, hash_map* l);
 
-char lat_get_char_value(lat_object* o);
-long lat_get_int_value(lat_object* o);
-double lat_get_double_value(lat_object* o);
-char* lat_get_str_value(lat_object* o);
-bool lat_get_bool_value(lat_object* o);
-list_node* lat_get_list_value(lat_object* o);
-void* lat_get_struct_value(lat_object* o);
+char lat_obtener_caracter(lat_object* o);
+long lat_obtener_entero(lat_object* o);
+double lat_obtener_decimal(lat_object* o);
+char* lat_obtener_cadena(lat_object* o);
+bool lat_obtener_logico(lat_object* o);
+list_node* lat_obtener_lista(lat_object* o);
+void* lat_obtener_estructura(lat_object* o);
 
 #endif // !_OBJECT_H_
