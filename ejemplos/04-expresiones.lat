@@ -30,7 +30,7 @@ imprimir(i + s) #a 1 se le concatena s da como resultado "1hola"
 imprimir(d + i) #da como resultado el decimal 11.05
 
 #decimal + caracter
-imprimir(d + c) #da como resultado el decimal 11.05
+imprimir(d + c) #da como resultado el decimal 109.05
 
 #decimal + decimal
 imprimir(d + d) #da como resultado el decimal 20.1
@@ -64,7 +64,7 @@ imprimir(d - i) #da como resultado el decimal 9.05
 imprimir(d - c) #da como resultado el decimal -88.95
 
 #decimal - decimal
-imprimir(d - 0.05) #da como resultado el decimal 10.0
+imprimir(d - 0.05) #da como resultado el decimal 10
 
 imprimir("############## multiplicacion ###############")
 #entero * entero
@@ -84,7 +84,7 @@ imprimir("############## division ###############")
 imprimir(i / i) #da como resultado el entero 1
 
 #entero / decimal
-imprimir(i / d) #da como resultado el decimal 0.099502
+imprimir(i / d) #da como resultado el decimal 0.099502487562189
 
 #decimal / entero
 imprimir(d / i) #da como resultado el entero 10

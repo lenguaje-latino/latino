@@ -463,7 +463,7 @@ void lat_sumar(lat_vm* vm)
       return;
     }
     if (b->type == T_CHAR) {
-      vm->regs[255] = lat_entero_nuevo(vm, lat_obtener_entero(a) + lat_obtener_caracter(b));
+      vm->regs[255] = lat_caracter_nuevo(vm, (int)(lat_obtener_entero(a) + lat_obtener_caracter(b)));
       return;
     }
     if (b->type == T_STR) {
@@ -473,7 +473,7 @@ void lat_sumar(lat_vm* vm)
   } break;
   case T_CHAR: {
     if (b->type == T_INT) {
-      vm->regs[255] = lat_caracter_nuevo(vm, (lat_obtener_caracter(a)) + lat_obtener_entero(b));
+      vm->regs[255] = lat_caracter_nuevo(vm, (int)(lat_obtener_caracter(a) + lat_obtener_entero(b)));
       return;
     }
     if (b->type == T_CHAR) {
