@@ -123,6 +123,9 @@ lat_vm* lat_crear_maquina_virtual()
   lat_asignar_contexto_objeto(lat_obtener_contexto(ret), lat_cadena_nueva(ret, "decimal"), lat_definir_cfuncion(ret, lat_decimal));
   lat_asignar_contexto_objeto(lat_obtener_contexto(ret), lat_cadena_nueva(ret, "cadena"), lat_definir_cfuncion(ret, lat_cadena));
 
+  /*ejemplo de implementacion de una funcion en C */
+  lat_asignar_contexto_objeto(lat_obtener_contexto(ret), lat_cadena_nueva(ret, "maximo"), lat_definir_cfuncion(ret, lat_maximo));
+
   return ret;
 }
 
@@ -1101,6 +1104,7 @@ void lat_decimal(lat_vm* vm){
     break;
   }
 }
+
 void lat_cadena(lat_vm* vm){
   lat_object* a = lat_desapilar(vm);
   switch (a->type) {
@@ -1120,5 +1124,15 @@ void lat_cadena(lat_vm* vm){
     default:
     lat_registrar_error("conversion incompatible");
     break;
+  }
+}
+
+void lat_maximo(lat_vm* vm){
+  lat_object* b = lat_desapilar(vm);
+  lat_object* a = lat_desapilar(vm);
+  if(lat_obtener_entero(b) > lat_obtener_entero(a)){
+    vm->regs[255] = b;
+  }else{
+    vm->regs[255] = a;
   }
 }
