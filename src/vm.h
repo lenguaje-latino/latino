@@ -129,6 +129,8 @@ void lat_caracter(lat_vm* vm);
 void lat_decimal(lat_vm* vm);
 void lat_cadena(lat_vm* vm);
 
+void lat_maximo(lat_vm* vm);
+
 lat_object* lat_no(lat_vm* vm, lat_object* o);
 lat_bytecode lat_bc(lat_ins i, int a, int b, void* meta);
 void lat_llamar_funcion(lat_vm* vm, lat_object* func);

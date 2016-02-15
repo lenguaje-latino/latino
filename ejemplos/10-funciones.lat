@@ -1,4 +1,4 @@
-funcion avg(a,b)
+funcion promedio(a,b)
     retorno (a+b)/2
 fin
 
@@ -18,6 +18,6 @@ funcion min(a,b)
     fin
 fin
 
-imprimir(avg(3, 5))
-imprimir(max(3, 5))
-imprimir(min(3, 5))
+imprimir(promedio(3, 5)) #4
+imprimir(max(3, 5)) #5
+imprimir(min(3, 5)) #3

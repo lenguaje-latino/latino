@@ -1,4 +1,2 @@
-lista  = [1, 2, 3]
-#agregar(lista, 5)
-lista[0] = "nuevo valor"
-escribir(['a', 'b', 'c'])
+max = maximo(13, 27)
+escribir(max)
