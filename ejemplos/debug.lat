@@ -1,3 +1,4 @@
-imprimir("cual es tu nombre?")
-nombre = leer()
-imprimir("hola " + mayusculas(nombre))
+lista  = [1, 2, 3]
+#agregar(lista, 5)
+lista[0] = "nuevo valor"
+escribir(['a', 'b', 'c'])
