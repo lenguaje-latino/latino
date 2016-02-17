@@ -1,2 +1,6 @@
-max = maximo(13, 27)
-escribir(max)
+sexo = "M"
+si(sexo == "M")
+  escribir("masculino")
+sino
+  escribir("femenino")
+fin
