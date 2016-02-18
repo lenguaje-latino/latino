@@ -144,7 +144,7 @@ ast *nodo_nuevo_funcion(ast *name, ast *syms, ast *stmts);
 void nodo_liberar(ast *a);
 
 /*VM*/
-lat_object *nodo_analizar_arbol(lat_vm *vm, ast *tree);
+lat_objeto *nodo_analizar_arbol(lat_vm *vm, ast *tree);
 int nodo_analizar(lat_vm *vm, ast *node, lat_bytecode *bcode, int i);
 
 #endif /*_AST_H_*/

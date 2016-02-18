@@ -27,7 +27,7 @@ THE SOFTWARE.
 
 #include "latino.h"
 
-lat_object* lat_cadena_hash(const char* p, size_t len);
+lat_objeto* lat_cadena_hash(const char* p, size_t len);
 
 /*libreria cadena*/
 void lat_comparar(lat_vm* vm);

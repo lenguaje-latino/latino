@@ -33,7 +33,7 @@ THE SOFTWARE.
 #define fdbc(I, A, B, M) funcion_bcode[fi++] = lat_bc(I, A, B, M)
 #define fpn(vm, N) fi = nodo_analizar(vm, N, funcion_bcode, fi)
 
-//se define para analizador sintactico (bison)
+//se define para analisis sintactico (bison)
 int yyerror(struct YYLTYPE *yylloc_param, void *scanner, struct ast **root,
             const char *s) {
   lat_registrar_error("Linea %d: %s", (yylloc_param->first_line + 1), s);
@@ -280,7 +280,7 @@ void nodo_liberar(ast *a) {
   }
 }
 
-lat_object *nodo_analizar_arbol(lat_vm *vm, ast *tree) {
+lat_objeto *nodo_analizar_arbol(lat_vm *vm, ast *tree) {
   lat_bytecode *bcode = (lat_bytecode *)lat_asignar_memoria(sizeof(lat_bytecode) * MAX_BYTECODE_FUNCTION);
   int i = nodo_analizar(vm, tree, bcode, 0);
   dbc(OP_END, 0, 0, NULL);
@@ -313,7 +313,7 @@ int nodo_analizar(lat_vm *vm, ast *node, lat_bytecode *bcode, int i) {
             dbc(OP_LOCALNS, 1, 0, NULL);
             }*/
     dbc(OP_LOCALNS, 1, 0, NULL);
-    lat_object *ret = lat_cadena_nueva(vm, node->valor->v.s);
+    lat_objeto *ret = lat_cadena_nueva(vm, node->valor->v.s);
     dbc(OP_STORESTR, 2, 0, ret);
     dbc(OP_GET, 2, 1, NULL);
     dbc(OP_MOV, 255, 2, NULL);
@@ -329,8 +329,8 @@ int nodo_analizar(lat_vm *vm, ast *node, lat_bytecode *bcode, int i) {
             else {
             dbc(OP_LOCALNS, 1, 0, NULL);
             }*/
-    // lat_object *ret = lat_clonar_objeto(vm, lat_cadena_nueva(vm, node->r->tipo->v.s));
-    lat_object *ret = lat_cadena_nueva(vm, node->r->valor->v.s);
+    // lat_objeto *ret = lat_clonar_objeto(vm, lat_cadena_nueva(vm, node->r->tipo->v.s));
+    lat_objeto *ret = lat_cadena_nueva(vm, node->r->valor->v.s);
     if (ret->num_declared < 0) {
       ret->num_declared = 0;
     }
@@ -352,26 +352,26 @@ int nodo_analizar(lat_vm *vm, ast *node, lat_bytecode *bcode, int i) {
     dbc(OP_DEC, 255, 0, NULL);
   } break;
   case NODO_CARACTER: {
-    lat_object *ret = lat_caracter_nuevo(vm, node->valor->v.c);
+    lat_objeto *ret = lat_caracter_nuevo(vm, node->valor->v.c);
     // lat_marcar_objeto(ret, 3);
     dbc(OP_STORECHAR, 255, 0, ret);
   } break;
   case NODO_ENTERO: {
-    lat_object *ret = lat_entero_nuevo(vm, node->valor->v.i);
+    lat_objeto *ret = lat_entero_nuevo(vm, node->valor->v.i);
     // lat_marcar_objeto(ret, 3);
     dbc(OP_STOREINT, 255, 0, ret);
   } break;
   case NODO_DECIMAL: {
-    lat_object *ret = lat_decimal_nuevo(vm, node->valor->v.d);
+    lat_objeto *ret = lat_decimal_nuevo(vm, node->valor->v.d);
     // lat_marcar_objeto(ret, 3);
     dbc(OP_STOREDOUBLE, 255, 0, ret);
   } break;
   case NODO_CADENA: {
-    lat_object *ret = lat_cadena_nueva(vm, node->valor->v.s);
+    lat_objeto *ret = lat_cadena_nueva(vm, node->valor->v.s);
     dbc(OP_STORESTR, 255, 0, ret);
   } break;
   case NODO_LOGICO: {
-    lat_object *ret = node->valor->v.b ? vm->true_object : vm->false_object;
+    lat_objeto *ret = node->valor->v.b ? vm->true_object : vm->false_object;
     dbc(OP_STOREBOOL, 255, 0, ret);
   } break;
   case NODO_SI: {
@@ -442,7 +442,7 @@ int nodo_analizar(lat_vm *vm, ast *node, lat_bytecode *bcode, int i) {
     if (node->l) {
       dbc(OP_LOCALNS, 1, 0, NULL);
       dbc(OP_POP, 2, 0, NULL);
-      lat_object *ret = lat_clonar_objeto(vm, lat_cadena_nueva(vm, node->l->valor->v.s));
+      lat_objeto *ret = lat_clonar_objeto(vm, lat_cadena_nueva(vm, node->l->valor->v.s));
       dbc(OP_SET, 2, 1, ret);
     }
     if (node->r) {
@@ -510,7 +510,7 @@ int nodo_analizar(lat_vm *vm, ast *node, lat_bytecode *bcode, int i) {
   case NODO_DICCIONARIO_ELEMENTO:{
     pn(vm, node->l);
     dbc(OP_PUSH, 255, 0, NULL);
-    lat_object *ret = lat_cadena_nueva(vm, node->r->valor->v.s);
+    lat_objeto *ret = lat_cadena_nueva(vm, node->r->valor->v.s);
     if (ret->num_declared < 0) {
       ret->num_declared = 0;
     }
