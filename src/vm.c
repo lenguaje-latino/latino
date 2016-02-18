@@ -125,6 +125,9 @@ lat_vm* lat_crear_maquina_virtual()
 
   /*ejemplo de implementacion de una funcion en C */
   lat_asignar_contexto_objeto(lat_obtener_contexto(ret), lat_cadena_nueva(ret, "maximo"), lat_definir_cfuncion(ret, lat_maximo));
+  
+  /*Creacion dela funcion minimo*/
+  lat_asignar_contexto_objeto(lat_obtener_contexto(ret), lat_cadena_nueva(ret, "minimo"), lat_definir_cfuncion(ret, lat_minimo));
 
   return ret;
 }
@@ -1148,4 +1151,15 @@ void lat_maximo(lat_vm* vm){
   }else{
     vm->regs[255] = a;
   }
+}
+
+void lat_minimo(lat_vm* vm){
+    lat_object* b = lat_desapilar(vm);
+    lat_object* a = lat_desapilar(vm);
+    
+    if(lat_obtener_entero(b) < lat_obtener_entero(a)) {
+        vm->regs[255] = b;
+    }else{
+        vm->regs[255] = a;
+    }
 }
