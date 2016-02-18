@@ -126,6 +126,9 @@ lat_vm* lat_crear_maquina_virtual()
   /*ejemplo de implementacion de una funcion en C */
   lat_asignar_contexto_objeto(lat_obtener_contexto(ret), lat_cadena_nueva(ret, "maximo"), lat_definir_cfuncion(ret, lat_maximo));
 
+  /*Creacion dela funcion minimo*/
+  lat_asignar_contexto_objeto(lat_obtener_contexto(ret), lat_cadena_nueva(ret, "minimo"), lat_definir_cfuncion(ret, lat_minimo));
+
   return ret;
 }
 
@@ -667,17 +670,30 @@ void lat_diferente(lat_vm* vm)
 
 void lat_igualdad(lat_vm* vm)
 {
-  lat_objeto* b = lat_desapilar(vm);
-  lat_objeto* a = lat_desapilar(vm);
-  if ((a->type != T_INT && a->type != T_DOUBLE) || (b->type != T_INT && b->type != T_DOUBLE)) {
-    lat_registrar_error("Intento de aplicar operador \"==\" en tipos invalidos");
+  lat_object* b = lat_desapilar(vm);
+  lat_object* a = lat_desapilar(vm);
+
+  if (a->type == T_INT || b->type == T_INT) {
+    vm->regs[255] = (lat_obtener_entero(a) == lat_obtener_entero(b)) ? vm->true_object : vm->false_object;
+    return;
   }
   if (a->type == T_DOUBLE || b->type == T_DOUBLE) {
     vm->regs[255] = (lat_obtener_decimal(a) == lat_obtener_decimal(b)) ? vm->true_object : vm->false_object;
+    return;
   }
-  else {
-    vm->regs[255] = (lat_obtener_entero(a) == lat_obtener_entero(b)) ? vm->true_object : vm->false_object;
+  if (a->type == T_STR && b->type == T_STR) {
+    vm->regs[255] = strcmp(lat_obtener_cadena(a), lat_obtener_cadena(b)) == 0 ? vm->true_object : vm->false_object;
+    return;
   }
+  if (a->type == T_BOOL && b->type == T_BOOL) {
+    vm->regs[255] = lat_obtener_logico(a) == lat_obtener_logico(b) ? vm->true_object : vm->false_object;
+    return;
+  }
+  if (a->type == T_CHAR && b->type == T_CHAR) {
+    vm->regs[255] = lat_obtener_caracter(a) == lat_obtener_caracter(b) ? vm->true_object : vm->false_object;
+    return;
+  }
+  lat_registrar_error("Intento de aplicar operador \"<\" en tipos invalidos");
 }
 
 void lat_menor_que(lat_vm* vm)
@@ -1135,4 +1151,15 @@ void lat_maximo(lat_vm* vm){
   }else{
     vm->regs[255] = a;
   }
+}
+
+void lat_minimo(lat_vm* vm){
+    lat_object* b = lat_desapilar(vm);
+    lat_object* a = lat_desapilar(vm);
+
+    if(lat_obtener_entero(b) < lat_obtener_entero(a)) {
+        vm->regs[255] = b;
+    }else{
+        vm->regs[255] = a;
+    }
 }
