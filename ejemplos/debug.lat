@@ -1,2 +1,4 @@
-max = maximo(13, 27)
-escribir(max)
+sexo="hombre"
+si(comparar(sexo, "hombre") == 0)
+  escribir("verdad")
+fin

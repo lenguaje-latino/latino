@@ -119,6 +119,7 @@ statement: /* empty */ { $$ = NULL; }
 declaration:
       TIDENTIFIER '=' expression { $$ = nodo_nuevo_asignacion($3, $1); }
     | TCONSTANT '=' constant_expression { $$ = nodo_nuevo_asignacion($3, $1); }
+    | get_list_item '=' expression { $$ = nodo_nuevo_asignacion($3, $1); }
     | unary_expression { $$ = $1; }
     ;
 

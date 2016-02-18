@@ -73,17 +73,17 @@ typedef struct lat_bytecode {
 
 typedef struct lat_function {
   lat_bytecode* bcode;
-  //lat_object *closure;
+  //lat_objeto *closure;
 } lat_function;
 
 struct lat_vm {
   list_node* stack;
   list_node* all_objects;
   list_node* gc_objects;
-  lat_object* regs[256];
-  lat_object* ctx_stack[256];
-  lat_object* true_object;
-  lat_object* false_object;
+  lat_objeto* regs[256];
+  lat_objeto* ctx_stack[256];
+  lat_objeto* true_object;
+  lat_objeto* false_object;
   size_t memory_usage;
   int ctx_stack_pointer;
 };
@@ -91,19 +91,19 @@ struct lat_vm {
 lat_vm* lat_crear_maquina_virtual();
 void lat_ejecutar(lat_vm* vm);
 void lat_ejecutar_archivo(lat_vm* vm);
-void lat_apilar(lat_vm* vm, lat_object* o);
-lat_object* lat_desapilar(lat_vm* vm);
-void lat_apilar_lista(lat_object* list, lat_object* o);
-lat_object* lat_desapilar_lista(lat_object* list);
+void lat_apilar(lat_vm* vm, lat_objeto* o);
+lat_objeto* lat_desapilar(lat_vm* vm);
+void lat_apilar_lista(lat_objeto* list, lat_objeto* o);
+lat_objeto* lat_desapilar_lista(lat_objeto* list);
 void lat_apilar_contexto(lat_vm* vm);
 void lat_desapilar_contexto(lat_vm* vm);
-void lat_apilar_contexto_predefinido(lat_vm* vm, lat_object* ctx);
-lat_object* lat_desapilar_contexto_predefinido(lat_vm* vm);
-lat_object* lat_obtener_contexto(lat_vm* vm);
-void lat_basurero_agregar(lat_vm* vm, lat_object* o);
+void lat_apilar_contexto_predefinido(lat_vm* vm, lat_objeto* ctx);
+lat_objeto* lat_desapilar_contexto_predefinido(lat_vm* vm);
+lat_objeto* lat_obtener_contexto(lat_vm* vm);
+void lat_basurero_agregar(lat_vm* vm, lat_objeto* o);
 void lat_basurero(lat_vm* vm);
-lat_object* lat_definir_funcion(lat_vm* vm, lat_bytecode* inslist);
-lat_object* lat_definir_cfuncion(lat_vm* vm, void (*function)(lat_vm* vm));
+lat_objeto* lat_definir_funcion(lat_vm* vm, lat_bytecode* inslist);
+lat_objeto* lat_definir_cfuncion(lat_vm* vm, void (*function)(lat_vm* vm));
 
 void lat_numero_lista(lat_vm* vm);
 void lat_imprimir_lista(lat_vm* vm, list_node* l);
@@ -131,8 +131,8 @@ void lat_cadena(lat_vm* vm);
 
 void lat_maximo(lat_vm* vm);
 
-lat_object* lat_no(lat_vm* vm, lat_object* o);
+lat_objeto* lat_no(lat_vm* vm, lat_objeto* o);
 lat_bytecode lat_bc(lat_ins i, int a, int b, void* meta);
-void lat_llamar_funcion(lat_vm* vm, lat_object* func);
+void lat_llamar_funcion(lat_vm* vm, lat_objeto* func);
 
 #endif //_VM_H_
