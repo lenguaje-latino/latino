@@ -74,7 +74,7 @@ lat_objeto* lat_lat_obtener_contexto_objeto(lat_objeto* ns, lat_objeto* name);
 int lat_contexto_contiene(lat_objeto* ns, lat_objeto* name);
 lat_objeto* lat_crear_objeto(lat_vm* vm);
 lat_objeto* lat_instancia(lat_vm* vm);
-lat_objeto* lat_caracter_nuevo(lat_vm* vm, char val);
+lat_objeto* lat_literal_nuevo(lat_vm* vm, char* val);
 lat_objeto* lat_entero_nuevo(lat_vm* vm, long val);
 lat_objeto* lat_decimal_nuevo(lat_vm* vm, double val);
 lat_objeto* lat_cadena_nueva(lat_vm* vm, const char* val);

@@ -46,7 +46,7 @@ extern int yydebug;
   enum yytokentype
   {
     TINT = 258,
-    TCHAR = 259,
+    TLIT = 259,
     TNUMBER = 260,
     TSTRING = 261,
     TIDENTIFIER = 262,
@@ -83,7 +83,7 @@ extern int yydebug;
 #endif
 /* Tokens.  */
 #define TINT 258
-#define TCHAR 259
+#define TLIT 259
 #define TNUMBER 260
 #define TSTRING 261
 #define TIDENTIFIER 262

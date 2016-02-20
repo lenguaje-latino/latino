@@ -113,7 +113,7 @@ extern int yydebug;
   enum yytokentype
   {
     TINT = 258,
-    TCHAR = 259,
+    TLIT = 259,
     TNUMBER = 260,
     TSTRING = 261,
     TIDENTIFIER = 262,
@@ -150,7 +150,7 @@ extern int yydebug;
 #endif
 /* Tokens.  */
 #define TINT 258
-#define TCHAR 259
+#define TLIT 259
 #define TNUMBER 260
 #define TSTRING 261
 #define TIDENTIFIER 262
@@ -527,7 +527,7 @@ static const yytype_uint8 yyrline[] =
    First, the terminals, then, starting at YYNTOKENS, nonterminals.  */
 static const char *const yytname[] =
 {
-  "$end", "error", "$undefined", "TINT", "TCHAR", "TNUMBER", "TSTRING",
+  "$end", "error", "$undefined", "TINT", "TLIT", "TNUMBER", "TSTRING",
   "TIDENTIFIER", "TCONSTANT", "TFUNC", "KIF", "KEND", "KELSE", "KWHILE",
   "KDO", "KBREAK", "KCONTINUE", "KWHEN", "KFUNCTION", "KFROM", "KBOOL",
   "KRETURN", "KTRUE", "KFALSE", "OP_GT", "OP_LT", "OP_GE", "OP_LE",
@@ -2224,4 +2224,3 @@ yyreturn:
   return yyresult;
 }
 #line 251 "parse.y" /* yacc.c:1906  */
-

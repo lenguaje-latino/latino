@@ -32,7 +32,7 @@ typedef enum {
   VALOR_NULO,
   VALOR_LOGICO,
   VALOR_ENTERO,
-  VALOR_CARACTER,
+  VALOR_LITERAL,
   VALOR_DECIMAL,
   VALOR_CADENA
 } nodo_tipo_valor;
@@ -47,7 +47,7 @@ typedef struct {
     int b;
     long i;
     double d;
-    char c;
+    char *c;
     char *s;
     void *f;
   } v;
@@ -81,7 +81,7 @@ typedef enum {
   NODO_ENTERO,
   NODO_DECIMAL,
   NODO_CADENA,
-  NODO_CARACTER,
+  NODO_LITERAL,
   NODO_LOGICO,
   NODO_Y,
   NODO_O,
@@ -132,7 +132,7 @@ ast *nodo_nuevo_constante(char *s, int num_linea, int num_columna);
 ast *nodo_nuevo_asignacion(ast *s, ast *v);
 ast *nodo_nuevo_entero(long i);
 ast *nodo_nuevo_decimal(double d);
-ast *nodo_nuevo_caracter(char *c, size_t l);
+ast *nodo_nuevo_literal(char *c);
 ast *nodo_nuevo_cadena(const char *);
 ast *nodo_nuevo_si(ast *cond, ast *th, ast *el);
 ast *nodo_nuevo_mientras(ast *cond, ast *stmts);

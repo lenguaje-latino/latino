@@ -24,7 +24,7 @@ int yyerror(struct YYLTYPE *yylloc_param, void *scanner, struct ast **root, cons
 
 /* declare tokens */
 %token <node> TINT
-%token <node> TCHAR
+%token <node> TLIT
 %token <node> TNUMBER
 %token <node> TSTRING
 %token <node> TIDENTIFIER
@@ -199,7 +199,7 @@ primary_expression:
 constant_expression:
       TINT { $$ = $1; }
     | TNUMBER { $$ = $1; }
-    | TCHAR { $$ = $1; }
+    | TLIT { $$ = $1; }
     | TSTRING { $$ = $1; }
     | '[' list_items ']' { $$ = nodo_nuevo(NODO_LISTA, $2, NULL); }
     | '{' dict_items '}' { $$ = nodo_nuevo(NODO_DICCIONARIO, $2, NULL); }
