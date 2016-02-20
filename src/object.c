@@ -94,12 +94,9 @@ lat_objeto* lat_instancia(lat_vm* vm)
   return ret;
 }
 
-lat_objeto* lat_caracter_nuevo(lat_vm* vm, char val)
+lat_objeto* lat_literal_nuevo(lat_vm* vm, char* p)
 {
-  lat_objeto* ret = lat_crear_objeto(vm);
-  ret->type = T_CHAR;
-  ret->data_size = sizeof(char);
-  ret->data.c = val;
+  lat_objeto* ret = lat_cadena_hash(p, strlen(p));
   return ret;
 }
 

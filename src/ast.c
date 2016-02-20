@@ -134,47 +134,14 @@ ast *nodo_nuevo_logico(int b) {
   return a;
 }
 
-ast *nodo_nuevo_caracter(char *c, size_t l) {
+ast *nodo_nuevo_literal(char *c) {
   ast *a = (ast*)lat_asignar_memoria(sizeof(ast));
-  a->tipo = NODO_CARACTER;
+  a->tipo = NODO_LITERAL;
   nodo_valor *val = (nodo_valor*)lat_asignar_memoria(sizeof(nodo_valor));
-  val->t = VALOR_CARACTER;
-  char tmp = ' ';
-  switch (c[0]) {
-  case '\\': {
-    switch (c[1]) {
-    case 'a': {
-      tmp = '\a';
-    } break;
-    case 'b': {
-      tmp = '\b';
-    } break;
-    case 'f': {
-      tmp = '\f';
-    } break;
-    case 'n': {
-      tmp = '\n';
-    } break;
-    case 'r': {
-      tmp = '\r';
-    } break;
-    case 't': {
-      tmp = '\t';
-    } break;
-    case 'v': {
-      tmp = '\v';
-    } break;
-    default:
-      tmp = c[0];
-      break;
-    }
-  } break;
-  default:
-    tmp = c[0];
-    break;
-  }
-  val->v.c = tmp;
+  val->t = VALOR_LITERAL;
   a->valor = val;
+  //TODO: Pendiente de manipular literal
+  a->valor->v.c = parse_string(c, strlen(c));
   return a;
 }
 
@@ -356,8 +323,8 @@ int nodo_analizar(lat_vm *vm, ast *node, lat_bytecode *bcode, int i) {
     pn(vm, node->l);
     dbc(OP_DEC, 255, 0, NULL);
   } break;
-  case NODO_CARACTER: {
-    lat_objeto *ret = lat_caracter_nuevo(vm, node->valor->v.c);
+  case NODO_LITERAL: {
+    lat_objeto *ret = lat_literal_nuevo(vm, node->valor->v.c);
     // lat_marcar_objeto(ret, 3);
     dbc(OP_STORECHAR, 255, 0, ret);
   } break;

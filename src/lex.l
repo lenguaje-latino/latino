@@ -53,6 +53,7 @@ EXP ([Ee][-+]?[0-9]+)
 "]" |
 "{" |
 "}" |
+"." |
 "="     { return yytext[0]; }
 
  /* operadores de comparacion */
@@ -63,8 +64,11 @@ EXP ([Ee][-+]?[0-9]+)
 "!="    { return OP_NEQ; }
 "=="    { return OP_EQ; }
 "&&"    { return OP_AND; }
+"y"    { return OP_OR; }
 "||"    { return OP_OR; }
+"o"    { return OP_OR; }
 "!"     { return OP_NEG; }
+"no"     { return OP_NEG; }
 
 "++"	{ return OP_INCR; }
 "--"	{ return OP_DECR; }
@@ -94,7 +98,7 @@ EXP ([Ee][-+]?[0-9]+)
 [0-9]+"."+[0-9]*{EXP}?|"."+[0-9]+{EXP}?       { yylval->node = nodo_nuevo_decimal(strtod(yytext, NULL)); return TNUMBER; }
 [0-9]+                 { yylval->node = nodo_nuevo_entero(strtol(yytext, NULL, 0)); return TINT; }
 \"([^\\\"]|\\.)*\"     { yytext[strlen(yytext) - 1] = '\0'; yylval->node = nodo_nuevo_cadena(yytext+1);return TSTRING; }
-'([^'\\\n]|\\.)'       { yylval->node = nodo_nuevo_caracter(yytext+1, strlen(yytext)-2); return TCHAR; }
+'([^\\\']|\\.)*'       { yytext[strlen(yytext) - 1] = '\0'; yylval->node = nodo_nuevo_literal(yytext+1); return TLIT; }
 "#".* /* ignore comments */
 [\n]                   { yycolumn = 1; }
 [ \t]+                 { ; } /* ignora espacios en blanco y tabuladores */

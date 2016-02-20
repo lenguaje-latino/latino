@@ -1,5 +1,2 @@
-si(no(falso))
-escribir("es falso")
-sino
-escribir("es verdadero")
-fin
+lit = 'esta es \n una "literal"'
+escribir(lit)

@@ -91,6 +91,7 @@ lat_vm* lat_crear_maquina_virtual()
   /*funciones para cadenas (string)*/
   lat_asignar_contexto_objeto(lat_obtener_contexto(ret), lat_cadena_nueva(ret, "comparar"), lat_definir_cfuncion(ret, lat_comparar));
   lat_asignar_contexto_objeto(lat_obtener_contexto(ret), lat_cadena_nueva(ret, "concatenar"), lat_definir_cfuncion(ret, lat_concatenar));
+  lat_asignar_contexto_objeto(lat_obtener_contexto(ret), lat_cadena_nueva(ret, "."), lat_definir_cfuncion(ret, lat_concatenar));
   lat_asignar_contexto_objeto(lat_obtener_contexto(ret), lat_cadena_nueva(ret, "contiene"), lat_definir_cfuncion(ret, lat_contiene));
   lat_asignar_contexto_objeto(lat_obtener_contexto(ret), lat_cadena_nueva(ret, "copiar"), lat_definir_cfuncion(ret, lat_copiar));
   lat_asignar_contexto_objeto(lat_obtener_contexto(ret), lat_cadena_nueva(ret, "termina_con"), lat_definir_cfuncion(ret, lat_termina_con));
@@ -471,7 +472,7 @@ void lat_sumar(lat_vm* vm)
       return;
     }
     if (b->type == T_CHAR) {
-      vm->regs[255] = lat_caracter_nuevo(vm, (int)(lat_obtener_entero(a) + lat_obtener_caracter(b)));
+      vm->regs[255] = lat_literal_nuevo(vm, (int)(lat_obtener_entero(a) + lat_obtener_caracter(b)));
       return;
     }
     if (b->type == T_STR) {
@@ -481,11 +482,11 @@ void lat_sumar(lat_vm* vm)
   } break;
   case T_CHAR: {
     if (b->type == T_INT) {
-      vm->regs[255] = lat_caracter_nuevo(vm, (int)(lat_obtener_caracter(a) + lat_obtener_entero(b)));
+      vm->regs[255] = lat_literal_nuevo(vm, (int)(lat_obtener_caracter(a) + lat_obtener_entero(b)));
       return;
     }
     if (b->type == T_CHAR) {
-      vm->regs[255] = lat_caracter_nuevo(vm, lat_obtener_caracter(a) + lat_obtener_caracter(b));
+      vm->regs[255] = lat_literal_nuevo(vm, lat_obtener_caracter(a) + lat_obtener_caracter(b));
       return;
     }
     if (b->type == T_DOUBLE) {
@@ -560,11 +561,11 @@ void lat_restar(lat_vm* vm)
   } break;
   case T_CHAR: {
     if (b->type == T_INT) {
-      vm->regs[255] = lat_caracter_nuevo(vm, (lat_obtener_caracter(a)) - lat_obtener_entero(b));
+      vm->regs[255] = lat_literal_nuevo(vm, (lat_obtener_caracter(a)) - lat_obtener_entero(b));
       return;
     }
     if (b->type == T_CHAR) {
-      vm->regs[255] = lat_caracter_nuevo(vm, lat_obtener_caracter(a) - lat_obtener_caracter(b));
+      vm->regs[255] = lat_literal_nuevo(vm, lat_obtener_caracter(a) - lat_obtener_caracter(b));
       return;
     }
     if (b->type == T_DOUBLE) {
@@ -1064,23 +1065,23 @@ void lat_caracter(lat_vm* vm){
   switch (a->type) {
     case T_BOOL:
     if(a->data.b == false){
-      vm->regs[255] = lat_caracter_nuevo(vm, '0');
+      vm->regs[255] = lat_literal_nuevo(vm, '0');
     }else{
-      vm->regs[255] = lat_caracter_nuevo(vm, '1');
+      vm->regs[255] = lat_literal_nuevo(vm, '1');
     }
     break;
     case T_INT:
-      vm->regs[255] = lat_caracter_nuevo(vm, (char)a->data.i);
+      vm->regs[255] = lat_literal_nuevo(vm, (char)a->data.i);
     break;
     case T_DOUBLE:
-      vm->regs[255] = lat_caracter_nuevo(vm, (char)a->data.i);
+      vm->regs[255] = lat_literal_nuevo(vm, (char)a->data.i);
     break;
     case T_STR:{
       char *ptr;
       long ret;
       ret =strtol(a->data.str, &ptr, 10);
       if(strcmp(ptr, "") == 0){
-        vm->regs[255] = lat_caracter_nuevo(vm, (char)ret);
+        vm->regs[255] = lat_literal_nuevo(vm, (char)ret);
       }else{
         lat_registrar_error("conversion incompatible");
       }
