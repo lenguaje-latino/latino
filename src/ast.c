@@ -77,12 +77,17 @@ ast *nodo_nuevo_operador(nodo_tipo nt, ast *l, ast *r) {
   case NODO_IGUALDAD: {
     a->l = nodo_nuevo_identificador("==");
   } break;
+  case NODO_NEGACION: {
+    a->l = nodo_nuevo_identificador("!");
+  } break;
   default:
     break;
   }
   if (nt == NODO_MENOS_UNARIO) {
     a->r = nodo_nuevo(NODO_FUNCION_ARGUMENTOS, nodo_nuevo_entero(0), l);
-  } else {
+  } else if (nt == NODO_NEGACION) {
+    a->r = nodo_nuevo(NODO_FUNCION_ARGUMENTOS, NULL, l);
+  }else {
     a->r = nodo_nuevo(NODO_FUNCION_ARGUMENTOS, l, r);
   }
   a->tipo = NODO_FUNCION_LLAMADA;

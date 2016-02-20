@@ -45,7 +45,7 @@ CMAKE_EDIT_COMMAND = /usr/bin/cmake-gui
 CMAKE_SOURCE_DIR = /home/primi/src/latino
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /home/primi/src/latino
+CMAKE_BINARY_DIR = /home/primi/src/latino/codeblocks
 
 #=============================================================================
 # Targets provided globally by CMake.
@@ -72,14 +72,14 @@ rebuild_cache/fast: rebuild_cache
 
 # The main all target
 all: cmake_check_build_system
-	cd /home/primi/src/latino && $(CMAKE_COMMAND) -E cmake_progress_start /home/primi/src/latino/CMakeFiles /home/primi/src/latino/src/CMakeFiles/progress.marks
-	cd /home/primi/src/latino && $(MAKE) -f CMakeFiles/Makefile2 src/all
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/primi/src/latino/CMakeFiles 0
+	cd /home/primi/src/latino/codeblocks && $(CMAKE_COMMAND) -E cmake_progress_start /home/primi/src/latino/codeblocks/CMakeFiles /home/primi/src/latino/codeblocks/src/CMakeFiles/progress.marks
+	cd /home/primi/src/latino/codeblocks && $(MAKE) -f CMakeFiles/Makefile2 src/all
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/primi/src/latino/codeblocks/CMakeFiles 0
 .PHONY : all
 
 # The main clean target
 clean:
-	cd /home/primi/src/latino && $(MAKE) -f CMakeFiles/Makefile2 src/clean
+	cd /home/primi/src/latino/codeblocks && $(MAKE) -f CMakeFiles/Makefile2 src/clean
 .PHONY : clean
 
 # The main clean target
@@ -88,22 +88,22 @@ clean/fast: clean
 
 # Prepare targets for installation.
 preinstall: all
-	cd /home/primi/src/latino && $(MAKE) -f CMakeFiles/Makefile2 src/preinstall
+	cd /home/primi/src/latino/codeblocks && $(MAKE) -f CMakeFiles/Makefile2 src/preinstall
 .PHONY : preinstall
 
 # Prepare targets for installation.
 preinstall/fast:
-	cd /home/primi/src/latino && $(MAKE) -f CMakeFiles/Makefile2 src/preinstall
+	cd /home/primi/src/latino/codeblocks && $(MAKE) -f CMakeFiles/Makefile2 src/preinstall
 .PHONY : preinstall/fast
 
 # clear depends
 depend:
-	cd /home/primi/src/latino && $(CMAKE_COMMAND) -H$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR) --check-build-system CMakeFiles/Makefile.cmake 1
+	cd /home/primi/src/latino/codeblocks && $(CMAKE_COMMAND) -H$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR) --check-build-system CMakeFiles/Makefile.cmake 1
 .PHONY : depend
 
 # Convenience name for target.
 src/CMakeFiles/latino.dir/rule:
-	cd /home/primi/src/latino && $(MAKE) -f CMakeFiles/Makefile2 src/CMakeFiles/latino.dir/rule
+	cd /home/primi/src/latino/codeblocks && $(MAKE) -f CMakeFiles/Makefile2 src/CMakeFiles/latino.dir/rule
 .PHONY : src/CMakeFiles/latino.dir/rule
 
 # Convenience name for target.
@@ -112,7 +112,7 @@ latino: src/CMakeFiles/latino.dir/rule
 
 # fast build rule for target.
 latino/fast:
-	cd /home/primi/src/latino && $(MAKE) -f src/CMakeFiles/latino.dir/build.make src/CMakeFiles/latino.dir/build
+	cd /home/primi/src/latino/codeblocks && $(MAKE) -f src/CMakeFiles/latino.dir/build.make src/CMakeFiles/latino.dir/build
 .PHONY : latino/fast
 
 ast.o: ast.c.o
@@ -120,7 +120,7 @@ ast.o: ast.c.o
 
 # target to build an object file
 ast.c.o:
-	cd /home/primi/src/latino && $(MAKE) -f src/CMakeFiles/latino.dir/build.make src/CMakeFiles/latino.dir/ast.c.o
+	cd /home/primi/src/latino/codeblocks && $(MAKE) -f src/CMakeFiles/latino.dir/build.make src/CMakeFiles/latino.dir/ast.c.o
 .PHONY : ast.c.o
 
 ast.i: ast.c.i
@@ -128,7 +128,7 @@ ast.i: ast.c.i
 
 # target to preprocess a source file
 ast.c.i:
-	cd /home/primi/src/latino && $(MAKE) -f src/CMakeFiles/latino.dir/build.make src/CMakeFiles/latino.dir/ast.c.i
+	cd /home/primi/src/latino/codeblocks && $(MAKE) -f src/CMakeFiles/latino.dir/build.make src/CMakeFiles/latino.dir/ast.c.i
 .PHONY : ast.c.i
 
 ast.s: ast.c.s
@@ -136,7 +136,7 @@ ast.s: ast.c.s
 
 # target to generate assembly for a file
 ast.c.s:
-	cd /home/primi/src/latino && $(MAKE) -f src/CMakeFiles/latino.dir/build.make src/CMakeFiles/latino.dir/ast.c.s
+	cd /home/primi/src/latino/codeblocks && $(MAKE) -f src/CMakeFiles/latino.dir/build.make src/CMakeFiles/latino.dir/ast.c.s
 .PHONY : ast.c.s
 
 latino.o: latino.c.o
@@ -144,7 +144,7 @@ latino.o: latino.c.o
 
 # target to build an object file
 latino.c.o:
-	cd /home/primi/src/latino && $(MAKE) -f src/CMakeFiles/latino.dir/build.make src/CMakeFiles/latino.dir/latino.c.o
+	cd /home/primi/src/latino/codeblocks && $(MAKE) -f src/CMakeFiles/latino.dir/build.make src/CMakeFiles/latino.dir/latino.c.o
 .PHONY : latino.c.o
 
 latino.i: latino.c.i
@@ -152,7 +152,7 @@ latino.i: latino.c.i
 
 # target to preprocess a source file
 latino.c.i:
-	cd /home/primi/src/latino && $(MAKE) -f src/CMakeFiles/latino.dir/build.make src/CMakeFiles/latino.dir/latino.c.i
+	cd /home/primi/src/latino/codeblocks && $(MAKE) -f src/CMakeFiles/latino.dir/build.make src/CMakeFiles/latino.dir/latino.c.i
 .PHONY : latino.c.i
 
 latino.s: latino.c.s
@@ -160,7 +160,7 @@ latino.s: latino.c.s
 
 # target to generate assembly for a file
 latino.c.s:
-	cd /home/primi/src/latino && $(MAKE) -f src/CMakeFiles/latino.dir/build.make src/CMakeFiles/latino.dir/latino.c.s
+	cd /home/primi/src/latino/codeblocks && $(MAKE) -f src/CMakeFiles/latino.dir/build.make src/CMakeFiles/latino.dir/latino.c.s
 .PHONY : latino.c.s
 
 lex.o: lex.c.o
@@ -168,7 +168,7 @@ lex.o: lex.c.o
 
 # target to build an object file
 lex.c.o:
-	cd /home/primi/src/latino && $(MAKE) -f src/CMakeFiles/latino.dir/build.make src/CMakeFiles/latino.dir/lex.c.o
+	cd /home/primi/src/latino/codeblocks && $(MAKE) -f src/CMakeFiles/latino.dir/build.make src/CMakeFiles/latino.dir/lex.c.o
 .PHONY : lex.c.o
 
 lex.i: lex.c.i
@@ -176,7 +176,7 @@ lex.i: lex.c.i
 
 # target to preprocess a source file
 lex.c.i:
-	cd /home/primi/src/latino && $(MAKE) -f src/CMakeFiles/latino.dir/build.make src/CMakeFiles/latino.dir/lex.c.i
+	cd /home/primi/src/latino/codeblocks && $(MAKE) -f src/CMakeFiles/latino.dir/build.make src/CMakeFiles/latino.dir/lex.c.i
 .PHONY : lex.c.i
 
 lex.s: lex.c.s
@@ -184,7 +184,7 @@ lex.s: lex.c.s
 
 # target to generate assembly for a file
 lex.c.s:
-	cd /home/primi/src/latino && $(MAKE) -f src/CMakeFiles/latino.dir/build.make src/CMakeFiles/latino.dir/lex.c.s
+	cd /home/primi/src/latino/codeblocks && $(MAKE) -f src/CMakeFiles/latino.dir/build.make src/CMakeFiles/latino.dir/lex.c.s
 .PHONY : lex.c.s
 
 libio.o: libio.c.o
@@ -192,7 +192,7 @@ libio.o: libio.c.o
 
 # target to build an object file
 libio.c.o:
-	cd /home/primi/src/latino && $(MAKE) -f src/CMakeFiles/latino.dir/build.make src/CMakeFiles/latino.dir/libio.c.o
+	cd /home/primi/src/latino/codeblocks && $(MAKE) -f src/CMakeFiles/latino.dir/build.make src/CMakeFiles/latino.dir/libio.c.o
 .PHONY : libio.c.o
 
 libio.i: libio.c.i
@@ -200,7 +200,7 @@ libio.i: libio.c.i
 
 # target to preprocess a source file
 libio.c.i:
-	cd /home/primi/src/latino && $(MAKE) -f src/CMakeFiles/latino.dir/build.make src/CMakeFiles/latino.dir/libio.c.i
+	cd /home/primi/src/latino/codeblocks && $(MAKE) -f src/CMakeFiles/latino.dir/build.make src/CMakeFiles/latino.dir/libio.c.i
 .PHONY : libio.c.i
 
 libio.s: libio.c.s
@@ -208,7 +208,7 @@ libio.s: libio.c.s
 
 # target to generate assembly for a file
 libio.c.s:
-	cd /home/primi/src/latino && $(MAKE) -f src/CMakeFiles/latino.dir/build.make src/CMakeFiles/latino.dir/libio.c.s
+	cd /home/primi/src/latino/codeblocks && $(MAKE) -f src/CMakeFiles/latino.dir/build.make src/CMakeFiles/latino.dir/libio.c.s
 .PHONY : libio.c.s
 
 libmath.o: libmath.c.o
@@ -216,7 +216,7 @@ libmath.o: libmath.c.o
 
 # target to build an object file
 libmath.c.o:
-	cd /home/primi/src/latino && $(MAKE) -f src/CMakeFiles/latino.dir/build.make src/CMakeFiles/latino.dir/libmath.c.o
+	cd /home/primi/src/latino/codeblocks && $(MAKE) -f src/CMakeFiles/latino.dir/build.make src/CMakeFiles/latino.dir/libmath.c.o
 .PHONY : libmath.c.o
 
 libmath.i: libmath.c.i
@@ -224,7 +224,7 @@ libmath.i: libmath.c.i
 
 # target to preprocess a source file
 libmath.c.i:
-	cd /home/primi/src/latino && $(MAKE) -f src/CMakeFiles/latino.dir/build.make src/CMakeFiles/latino.dir/libmath.c.i
+	cd /home/primi/src/latino/codeblocks && $(MAKE) -f src/CMakeFiles/latino.dir/build.make src/CMakeFiles/latino.dir/libmath.c.i
 .PHONY : libmath.c.i
 
 libmath.s: libmath.c.s
@@ -232,7 +232,7 @@ libmath.s: libmath.c.s
 
 # target to generate assembly for a file
 libmath.c.s:
-	cd /home/primi/src/latino && $(MAKE) -f src/CMakeFiles/latino.dir/build.make src/CMakeFiles/latino.dir/libmath.c.s
+	cd /home/primi/src/latino/codeblocks && $(MAKE) -f src/CMakeFiles/latino.dir/build.make src/CMakeFiles/latino.dir/libmath.c.s
 .PHONY : libmath.c.s
 
 libmem.o: libmem.c.o
@@ -240,7 +240,7 @@ libmem.o: libmem.c.o
 
 # target to build an object file
 libmem.c.o:
-	cd /home/primi/src/latino && $(MAKE) -f src/CMakeFiles/latino.dir/build.make src/CMakeFiles/latino.dir/libmem.c.o
+	cd /home/primi/src/latino/codeblocks && $(MAKE) -f src/CMakeFiles/latino.dir/build.make src/CMakeFiles/latino.dir/libmem.c.o
 .PHONY : libmem.c.o
 
 libmem.i: libmem.c.i
@@ -248,7 +248,7 @@ libmem.i: libmem.c.i
 
 # target to preprocess a source file
 libmem.c.i:
-	cd /home/primi/src/latino && $(MAKE) -f src/CMakeFiles/latino.dir/build.make src/CMakeFiles/latino.dir/libmem.c.i
+	cd /home/primi/src/latino/codeblocks && $(MAKE) -f src/CMakeFiles/latino.dir/build.make src/CMakeFiles/latino.dir/libmem.c.i
 .PHONY : libmem.c.i
 
 libmem.s: libmem.c.s
@@ -256,7 +256,7 @@ libmem.s: libmem.c.s
 
 # target to generate assembly for a file
 libmem.c.s:
-	cd /home/primi/src/latino && $(MAKE) -f src/CMakeFiles/latino.dir/build.make src/CMakeFiles/latino.dir/libmem.c.s
+	cd /home/primi/src/latino/codeblocks && $(MAKE) -f src/CMakeFiles/latino.dir/build.make src/CMakeFiles/latino.dir/libmem.c.s
 .PHONY : libmem.c.s
 
 libstring.o: libstring.c.o
@@ -264,7 +264,7 @@ libstring.o: libstring.c.o
 
 # target to build an object file
 libstring.c.o:
-	cd /home/primi/src/latino && $(MAKE) -f src/CMakeFiles/latino.dir/build.make src/CMakeFiles/latino.dir/libstring.c.o
+	cd /home/primi/src/latino/codeblocks && $(MAKE) -f src/CMakeFiles/latino.dir/build.make src/CMakeFiles/latino.dir/libstring.c.o
 .PHONY : libstring.c.o
 
 libstring.i: libstring.c.i
@@ -272,7 +272,7 @@ libstring.i: libstring.c.i
 
 # target to preprocess a source file
 libstring.c.i:
-	cd /home/primi/src/latino && $(MAKE) -f src/CMakeFiles/latino.dir/build.make src/CMakeFiles/latino.dir/libstring.c.i
+	cd /home/primi/src/latino/codeblocks && $(MAKE) -f src/CMakeFiles/latino.dir/build.make src/CMakeFiles/latino.dir/libstring.c.i
 .PHONY : libstring.c.i
 
 libstring.s: libstring.c.s
@@ -280,7 +280,7 @@ libstring.s: libstring.c.s
 
 # target to generate assembly for a file
 libstring.c.s:
-	cd /home/primi/src/latino && $(MAKE) -f src/CMakeFiles/latino.dir/build.make src/CMakeFiles/latino.dir/libstring.c.s
+	cd /home/primi/src/latino/codeblocks && $(MAKE) -f src/CMakeFiles/latino.dir/build.make src/CMakeFiles/latino.dir/libstring.c.s
 .PHONY : libstring.c.s
 
 object.o: object.c.o
@@ -288,7 +288,7 @@ object.o: object.c.o
 
 # target to build an object file
 object.c.o:
-	cd /home/primi/src/latino && $(MAKE) -f src/CMakeFiles/latino.dir/build.make src/CMakeFiles/latino.dir/object.c.o
+	cd /home/primi/src/latino/codeblocks && $(MAKE) -f src/CMakeFiles/latino.dir/build.make src/CMakeFiles/latino.dir/object.c.o
 .PHONY : object.c.o
 
 object.i: object.c.i
@@ -296,7 +296,7 @@ object.i: object.c.i
 
 # target to preprocess a source file
 object.c.i:
-	cd /home/primi/src/latino && $(MAKE) -f src/CMakeFiles/latino.dir/build.make src/CMakeFiles/latino.dir/object.c.i
+	cd /home/primi/src/latino/codeblocks && $(MAKE) -f src/CMakeFiles/latino.dir/build.make src/CMakeFiles/latino.dir/object.c.i
 .PHONY : object.c.i
 
 object.s: object.c.s
@@ -304,7 +304,7 @@ object.s: object.c.s
 
 # target to generate assembly for a file
 object.c.s:
-	cd /home/primi/src/latino && $(MAKE) -f src/CMakeFiles/latino.dir/build.make src/CMakeFiles/latino.dir/object.c.s
+	cd /home/primi/src/latino/codeblocks && $(MAKE) -f src/CMakeFiles/latino.dir/build.make src/CMakeFiles/latino.dir/object.c.s
 .PHONY : object.c.s
 
 parse.o: parse.c.o
@@ -312,7 +312,7 @@ parse.o: parse.c.o
 
 # target to build an object file
 parse.c.o:
-	cd /home/primi/src/latino && $(MAKE) -f src/CMakeFiles/latino.dir/build.make src/CMakeFiles/latino.dir/parse.c.o
+	cd /home/primi/src/latino/codeblocks && $(MAKE) -f src/CMakeFiles/latino.dir/build.make src/CMakeFiles/latino.dir/parse.c.o
 .PHONY : parse.c.o
 
 parse.i: parse.c.i
@@ -320,7 +320,7 @@ parse.i: parse.c.i
 
 # target to preprocess a source file
 parse.c.i:
-	cd /home/primi/src/latino && $(MAKE) -f src/CMakeFiles/latino.dir/build.make src/CMakeFiles/latino.dir/parse.c.i
+	cd /home/primi/src/latino/codeblocks && $(MAKE) -f src/CMakeFiles/latino.dir/build.make src/CMakeFiles/latino.dir/parse.c.i
 .PHONY : parse.c.i
 
 parse.s: parse.c.s
@@ -328,7 +328,7 @@ parse.s: parse.c.s
 
 # target to generate assembly for a file
 parse.c.s:
-	cd /home/primi/src/latino && $(MAKE) -f src/CMakeFiles/latino.dir/build.make src/CMakeFiles/latino.dir/parse.c.s
+	cd /home/primi/src/latino/codeblocks && $(MAKE) -f src/CMakeFiles/latino.dir/build.make src/CMakeFiles/latino.dir/parse.c.s
 .PHONY : parse.c.s
 
 utils.o: utils.c.o
@@ -336,7 +336,7 @@ utils.o: utils.c.o
 
 # target to build an object file
 utils.c.o:
-	cd /home/primi/src/latino && $(MAKE) -f src/CMakeFiles/latino.dir/build.make src/CMakeFiles/latino.dir/utils.c.o
+	cd /home/primi/src/latino/codeblocks && $(MAKE) -f src/CMakeFiles/latino.dir/build.make src/CMakeFiles/latino.dir/utils.c.o
 .PHONY : utils.c.o
 
 utils.i: utils.c.i
@@ -344,7 +344,7 @@ utils.i: utils.c.i
 
 # target to preprocess a source file
 utils.c.i:
-	cd /home/primi/src/latino && $(MAKE) -f src/CMakeFiles/latino.dir/build.make src/CMakeFiles/latino.dir/utils.c.i
+	cd /home/primi/src/latino/codeblocks && $(MAKE) -f src/CMakeFiles/latino.dir/build.make src/CMakeFiles/latino.dir/utils.c.i
 .PHONY : utils.c.i
 
 utils.s: utils.c.s
@@ -352,7 +352,7 @@ utils.s: utils.c.s
 
 # target to generate assembly for a file
 utils.c.s:
-	cd /home/primi/src/latino && $(MAKE) -f src/CMakeFiles/latino.dir/build.make src/CMakeFiles/latino.dir/utils.c.s
+	cd /home/primi/src/latino/codeblocks && $(MAKE) -f src/CMakeFiles/latino.dir/build.make src/CMakeFiles/latino.dir/utils.c.s
 .PHONY : utils.c.s
 
 vm.o: vm.c.o
@@ -360,7 +360,7 @@ vm.o: vm.c.o
 
 # target to build an object file
 vm.c.o:
-	cd /home/primi/src/latino && $(MAKE) -f src/CMakeFiles/latino.dir/build.make src/CMakeFiles/latino.dir/vm.c.o
+	cd /home/primi/src/latino/codeblocks && $(MAKE) -f src/CMakeFiles/latino.dir/build.make src/CMakeFiles/latino.dir/vm.c.o
 .PHONY : vm.c.o
 
 vm.i: vm.c.i
@@ -368,7 +368,7 @@ vm.i: vm.c.i
 
 # target to preprocess a source file
 vm.c.i:
-	cd /home/primi/src/latino && $(MAKE) -f src/CMakeFiles/latino.dir/build.make src/CMakeFiles/latino.dir/vm.c.i
+	cd /home/primi/src/latino/codeblocks && $(MAKE) -f src/CMakeFiles/latino.dir/build.make src/CMakeFiles/latino.dir/vm.c.i
 .PHONY : vm.c.i
 
 vm.s: vm.c.s
@@ -376,7 +376,7 @@ vm.s: vm.c.s
 
 # target to generate assembly for a file
 vm.c.s:
-	cd /home/primi/src/latino && $(MAKE) -f src/CMakeFiles/latino.dir/build.make src/CMakeFiles/latino.dir/vm.c.s
+	cd /home/primi/src/latino/codeblocks && $(MAKE) -f src/CMakeFiles/latino.dir/build.make src/CMakeFiles/latino.dir/vm.c.s
 .PHONY : vm.c.s
 
 # Help Target
@@ -432,6 +432,6 @@ help:
 # No rule that depends on this can have commands that come from listfiles
 # because they might be regenerated.
 cmake_check_build_system:
-	cd /home/primi/src/latino && $(CMAKE_COMMAND) -H$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR) --check-build-system CMakeFiles/Makefile.cmake 0
+	cd /home/primi/src/latino/codeblocks && $(CMAKE_COMMAND) -H$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR) --check-build-system CMakeFiles/Makefile.cmake 0
 .PHONY : cmake_check_build_system
 

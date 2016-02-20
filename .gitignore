@@ -1,24 +1,11 @@
 #ignora directorios
 bin/
 CMakeFiles/
-build/
-nbproject/
-latino.dir/
-.clang/
-.codelite/
-Debug/
-latino.dir/
 
 #ignora archivo objeto
 *.o
 *.gch
 *.exe
-*.sln
-*.suo
-*.vcproj
 CMakeCache.txt
 cmake_install.cmake
-*.project
-*.workspace
-*.mk
 <scratch>
