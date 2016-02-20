@@ -36,7 +36,7 @@ typedef struct lat_objeto lat_objeto;
 typedef enum lat_type {
   T_NULO,
   T_INSTANCE,
-  T_CHAR,
+  T_LIT,
   T_INT,
   T_DOUBLE,
   T_STR,
@@ -74,7 +74,7 @@ lat_objeto* lat_lat_obtener_contexto_objeto(lat_objeto* ns, lat_objeto* name);
 int lat_contexto_contiene(lat_objeto* ns, lat_objeto* name);
 lat_objeto* lat_crear_objeto(lat_vm* vm);
 lat_objeto* lat_instancia(lat_vm* vm);
-lat_objeto* lat_literal_nuevo(lat_vm* vm, char* val);
+lat_objeto* lat_literal_nuevo(lat_vm* vm, const char* val);
 lat_objeto* lat_entero_nuevo(lat_vm* vm, long val);
 lat_objeto* lat_decimal_nuevo(lat_vm* vm, double val);
 lat_objeto* lat_cadena_nueva(lat_vm* vm, const char* val);
@@ -95,7 +95,7 @@ lat_objeto* lat_clonar_objeto(lat_vm* vm, lat_objeto* obj);
 list_node* lat_clonar_lista(lat_vm* vm, list_node* l);
 hash_map* lat_clonar_hash(lat_vm* vm, hash_map* l);
 
-char lat_obtener_caracter(lat_objeto* o);
+char lat_obtener_literal(lat_objeto* o);
 long lat_obtener_entero(lat_objeto* o);
 double lat_obtener_decimal(lat_objeto* o);
 char* lat_obtener_cadena(lat_objeto* o);

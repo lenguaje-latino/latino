@@ -94,7 +94,7 @@ lat_objeto* lat_instancia(lat_vm* vm)
   return ret;
 }
 
-lat_objeto* lat_literal_nuevo(lat_vm* vm, char* p)
+lat_objeto* lat_literal_nuevo(lat_vm* vm, const char* p)
 {
   lat_objeto* ret = lat_cadena_hash(p, strlen(p));
   return ret;
@@ -225,7 +225,7 @@ void lat_eliminar_objeto(lat_vm* vm, lat_objeto* o)
   case T_LIST:
     //lat_eliminar_lista(vm, o->data.list);
     break;
-  case T_CHAR:
+  case T_LIT:
   case T_INT:
   case T_DOUBLE:
   case T_BOOL:
@@ -351,9 +351,9 @@ hash_map* lat_clonar_hash(lat_vm* vm, hash_map* h)
   return ret;
 }
 
-char lat_obtener_caracter(lat_objeto* o)
+char lat_obtener_literal(lat_objeto* o)
 {
-  if (o->type == T_CHAR) {
+  if (o->type == T_LIT) {
     return o->data.c;
   }
   lat_registrar_error("Object no es un tipo caracter");

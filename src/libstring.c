@@ -187,14 +187,14 @@ void lat_rellenar_izquierda(lat_vm* vm){
   lat_objeto* c = lat_desapilar(vm);
   lat_objeto* b = lat_desapilar(vm);
   lat_objeto* a = lat_desapilar(vm);
-  vm->regs[255] = lat_cadena_nueva(vm, padLeft(lat_obtener_cadena(a), lat_obtener_entero(b), lat_obtener_caracter(c)));
+  vm->regs[255] = lat_cadena_nueva(vm, padLeft(lat_obtener_cadena(a), lat_obtener_entero(b), lat_obtener_literal(c)));
 }
 
 void lat_rellenar_derecha(lat_vm* vm){
   lat_objeto* c = lat_desapilar(vm);
   lat_objeto* b = lat_desapilar(vm);
   lat_objeto* a = lat_desapilar(vm);
-  vm->regs[255] = lat_cadena_nueva(vm, padRight(lat_obtener_cadena(a), lat_obtener_entero(b), lat_obtener_caracter(c)));
+  vm->regs[255] = lat_cadena_nueva(vm, padRight(lat_obtener_cadena(a), lat_obtener_entero(b), lat_obtener_literal(c)));
 }
 
 void lat_eliminar(lat_vm* vm){

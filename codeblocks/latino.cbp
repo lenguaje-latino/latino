@@ -71,7 +71,7 @@
 					<Clean command='/usr/bin/make -f &quot;/home/primi/src/latino/codeblocks/src/Makefile&quot;  VERBOSE=1 clean' />
 					<DistClean command='/usr/bin/make -f &quot;/home/primi/src/latino/codeblocks/src/Makefile&quot;  VERBOSE=1 clean' />
 					<AskRebuildNeeded command="$make -q -f $makefile $target" />
-					<SilentBuild command='/usr/bin/make -f &quot;/home/primi/src/latino/codeblocks/src/Makefile&quot;  VERBOSE=1 latino &gt; $(CMD_NULL)' />
+					<SilentBuild command="$make -f $makefile $target &gt; $(CMD_NULL)" />
 				</MakeCommands>
 			</Target>
 			<Target title="latino/fast">
