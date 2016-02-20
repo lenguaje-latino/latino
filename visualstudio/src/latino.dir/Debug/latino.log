@@ -1,0 +1,33 @@
+﻿  Building Custom Rule C:/Users/ciber/Documents/latino/src/CMakeLists.txt
+  CMake does not need to re-run because C:\Users\ciber\Documents\latino\visualstudio\src\CMakeFiles\generate.stamp is up-to-date.
+  latino.c
+  ast.c
+  utils.c
+  vm.c
+  object.c
+  libstring.c
+  libmem.c
+  lex.c
+  parse.c
+parse.y(167): warning C4047: '=': 'ast *' differs in levels of indirection from 'int'
+parse.y(168): warning C4047: '=': 'ast *' differs in levels of indirection from 'int'
+parse.y(169): warning C4047: '=': 'ast *' differs in levels of indirection from 'int'
+parse.y(170): warning C4047: '=': 'ast *' differs in levels of indirection from 'int'
+parse.y(171): warning C4047: '=': 'ast *' differs in levels of indirection from 'int'
+parse.y(172): warning C4047: '=': 'ast *' differs in levels of indirection from 'int'
+parse.y(173): warning C4047: '=': 'ast *' differs in levels of indirection from 'int'
+parse.y(174): warning C4047: '=': 'ast *' differs in levels of indirection from 'int'
+parse.y(175): warning C4047: '=': 'ast *' differs in levels of indirection from 'int'
+parse.y(176): warning C4047: '=': 'ast *' differs in levels of indirection from 'int'
+parse.y(177): warning C4047: '=': 'ast *' differs in levels of indirection from 'int'
+parse.y(178): warning C4047: '=': 'ast *' differs in levels of indirection from 'int'
+parse.y(179): warning C4047: '=': 'ast *' differs in levels of indirection from 'int'
+parse.y(180): warning C4047: '=': 'ast *' differs in levels of indirection from 'int'
+parse.y(182): warning C4047: '=': 'ast *' differs in levels of indirection from 'int'
+parse.y(194): warning C4047: '=': 'ast *' differs in levels of indirection from 'int'
+parse.y(195): warning C4047: '=': 'ast *' differs in levels of indirection from 'int'
+  libmath.c
+  libio.c
+  Generating Code...
+c:\users\ciber\documents\latino\src\utils.c(288): warning C4172: returning address of local variable or temporary: buffer
+  latino.vcxproj -> C:\Users\ciber\Documents\latino\visualstudio\bin\Debug\latino.exe
