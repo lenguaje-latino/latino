@@ -1,12 +1,5 @@
-<<<<<<< HEAD
-sexo="hombre"
-si(comparar(sexo, "hombre") == 0)
-  escribir("verdad")
-=======
-sexo = "M"
-si(sexo == "M")
-  escribir("masculino")
+si(no(falso))
+escribir("es falso")
 sino
-  escribir("femenino")
->>>>>>> b14c8a544d646b9cabfdca769bf34c5cc5d5030f
+escribir("es verdadero")
 fin

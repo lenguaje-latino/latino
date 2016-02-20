@@ -58,6 +58,8 @@ lat_vm* lat_crear_maquina_virtual()
   lat_asignar_contexto_objeto(lat_obtener_contexto(ret), lat_cadena_nueva(ret, "<="), lat_definir_cfuncion(ret, lat_menor_igual));
   lat_asignar_contexto_objeto(lat_obtener_contexto(ret), lat_cadena_nueva(ret, ">"), lat_definir_cfuncion(ret, lat_mayor_que));
   lat_asignar_contexto_objeto(lat_obtener_contexto(ret), lat_cadena_nueva(ret, ">="), lat_definir_cfuncion(ret, lat_mayor_igual));
+  lat_asignar_contexto_objeto(lat_obtener_contexto(ret), lat_cadena_nueva(ret, "!"), lat_definir_cfuncion(ret, lat_negacion));
+  lat_asignar_contexto_objeto(lat_obtener_contexto(ret), lat_cadena_nueva(ret, "no"), lat_definir_cfuncion(ret, lat_negacion));
   lat_asignar_contexto_objeto(lat_obtener_contexto(ret), lat_cadena_nueva(ret, "gc"), lat_definir_cfuncion(ret, lat_basurero));
   lat_asignar_contexto_objeto(lat_obtener_contexto(ret), lat_cadena_nueva(ret, "ejecutar"), lat_definir_cfuncion(ret, lat_ejecutar));
   lat_asignar_contexto_objeto(lat_obtener_contexto(ret), lat_cadena_nueva(ret, "ejecutar_archivo"), lat_definir_cfuncion(ret, lat_ejecutar_archivo));
@@ -670,8 +672,8 @@ void lat_diferente(lat_vm* vm)
 
 void lat_igualdad(lat_vm* vm)
 {
-  lat_object* b = lat_desapilar(vm);
-  lat_object* a = lat_desapilar(vm);
+  lat_objeto* b = lat_desapilar(vm);
+  lat_objeto* a = lat_desapilar(vm);
 
   if (a->type == T_INT || b->type == T_INT) {
     vm->regs[255] = (lat_obtener_entero(a) == lat_obtener_entero(b)) ? vm->true_object : vm->false_object;
@@ -756,12 +758,13 @@ void lat_mayor_igual(lat_vm* vm)
   }
 }
 
-lat_objeto* lat_no(lat_vm* vm, lat_objeto* o)
+void lat_negacion(lat_vm* vm)
 {
+  lat_objeto* o = lat_desapilar(vm);
   if (o->type != T_BOOL && o->type != T_INT) {
     lat_registrar_error("Intento de negar tipo invalido");
   }
-  return lat_obtener_logico(o) ? vm->false_object : vm->true_object;
+  vm->regs[255] =  lat_obtener_logico(o) == true ? vm->false_object : vm->true_object;
 }
 
 lat_bytecode lat_bc(lat_ins i, int a, int b, void* meta)
@@ -957,7 +960,7 @@ void lat_llamar_funcion(lat_vm* vm, lat_objeto* func)
 #if DEBUG_VM
         printf("NOT r%i", cur.a);
 #endif
-        vm->regs[cur.a] = lat_no(vm, vm->regs[cur.a]);
+        vm->regs[cur.a] = lat_obtener_logico(vm->regs[cur.a]) == true ? vm->false_object : vm->true_object;
         break;
       case OP_INC:
 #if DEBUG_VM
@@ -1154,8 +1157,8 @@ void lat_maximo(lat_vm* vm){
 }
 
 void lat_minimo(lat_vm* vm){
-    lat_object* b = lat_desapilar(vm);
-    lat_object* a = lat_desapilar(vm);
+    lat_objeto* b = lat_desapilar(vm);
+    lat_objeto* a = lat_desapilar(vm);
 
     if(lat_obtener_entero(b) < lat_obtener_entero(a)) {
         vm->regs[255] = b;
