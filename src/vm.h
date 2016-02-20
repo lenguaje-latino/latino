@@ -121,12 +121,14 @@ void lat_menor_que(lat_vm* vm);
 void lat_menor_igual(lat_vm* vm);
 void lat_mayor_que(lat_vm* vm);
 void lat_mayor_igual(lat_vm* vm);
+void lat_y(lat_vm* vm);
+void lat_o(lat_vm* vm);
 void lat_negacion(lat_vm* vm);
 
 /*conversion de tipos de dato*/
 void lat_logico(lat_vm* vm);
 void lat_entero(lat_vm* vm);
-void lat_caracter(lat_vm* vm);
+void lat_literal(lat_vm* vm);
 void lat_decimal(lat_vm* vm);
 void lat_cadena(lat_vm* vm);
 

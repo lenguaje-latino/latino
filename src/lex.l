@@ -64,7 +64,7 @@ EXP ([Ee][-+]?[0-9]+)
 "!="    { return OP_NEQ; }
 "=="    { return OP_EQ; }
 "&&"    { return OP_AND; }
-"y"    { return OP_OR; }
+"y"    { return OP_AND; }
 "||"    { return OP_OR; }
 "o"    { return OP_OR; }
 "!"     { return OP_NEG; }

@@ -1,2 +1,1 @@
-lit = 'esta es \n una "literal"'
-escribir(lit)
+escribir('hola latino')

@@ -80,6 +80,12 @@ ast *nodo_nuevo_operador(nodo_tipo nt, ast *l, ast *r) {
   case NODO_NEGACION: {
     a->l = nodo_nuevo_identificador("!");
   } break;
+  case NODO_Y: {
+    a->l = nodo_nuevo_identificador("&&");
+  } break;
+  case NODO_O: {
+    a->l = nodo_nuevo_identificador("||");
+  } break;
   default:
     break;
   }
