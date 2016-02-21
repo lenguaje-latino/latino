@@ -13,5 +13,6 @@ s="hola latino"
 escribir(s)
 #una constante se define con MAYUSCULAS
 PI=3.1416
-escribir(PI)
-PI=3.14 #error al intentar cambiar el valor
+
+#escribir(PI)
+#PI=3.14 #error al intentar cambiar el valor

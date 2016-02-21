@@ -53,7 +53,6 @@ EXP ([Ee][-+]?[0-9]+)
 "]" |
 "{" |
 "}" |
-"." |
 "="     { return yytext[0]; }
 
  /* operadores de comparacion */
@@ -64,11 +63,12 @@ EXP ([Ee][-+]?[0-9]+)
 "!="    { return OP_NEQ; }
 "=="    { return OP_EQ; }
 "&&"    { return OP_AND; }
-"y"    { return OP_AND; }
+"y"     { return OP_AND; }
 "||"    { return OP_OR; }
-"o"    { return OP_OR; }
+"o"     { return OP_OR; }
 "!"     { return OP_NEG; }
-"no"     { return OP_NEG; }
+"no"    { return OP_NEG; }
+"."     { return OP_CONCAT; }
 
 "++"	{ return OP_INCR; }
 "--"	{ return OP_DECR; }

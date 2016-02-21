@@ -77,8 +77,9 @@ extern int yydebug;
     OP_NEG = 287,
     OP_INCR = 288,
     OP_DECR = 289,
-    UMINUS = 290,
-    UNEG = 291
+    OP_CONCAT = 290,
+    UMINUS = 291,
+    UNEG = 292
   };
 #endif
 /* Tokens.  */
@@ -114,8 +115,9 @@ extern int yydebug;
 #define OP_NEG 287
 #define OP_INCR 288
 #define OP_DECR 289
-#define UMINUS 290
-#define UNEG 291
+#define OP_CONCAT 290
+#define UMINUS 291
+#define UNEG 292
 
 /* Value type.  */
 
