@@ -70,11 +70,9 @@ ast *lat_analizar_archivo(char *infile) {
   size_t newSize = fread(buffer, sizeof(char), fsize, file);
   if (buffer == NULL) {
     printf("No se pudo asignar %d bytes de memoria\n", fsize);
-    fclose(file);
     return NULL;
   }
   buffer[newSize] = '\0';
-  fclose(file);
   return lat_analizar_expresion(buffer);
 }
 
@@ -102,5 +100,9 @@ int main(int argc, char *argv[]) {
   lat_objeto *mainFunc = nodo_analizar_arbol(vm, tree);
   lat_llamar_funcion(vm, mainFunc);
   lat_apilar(vm, vm->regs[255]);
+  if(file != NULL)
+  {
+    fclose(file);
+  }
   return EXIT_SUCCESS;
 }

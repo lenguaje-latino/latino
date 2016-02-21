@@ -112,7 +112,41 @@ void lat_concatenar(lat_vm* vm)
 {
   lat_objeto* b = lat_desapilar(vm);
   lat_objeto* a = lat_desapilar(vm);
-  vm->regs[255] = lat_cadena_nueva(vm, concat(lat_obtener_cadena(a), lat_obtener_cadena(b)));
+  lat_objeto* x = NULL;
+  lat_objeto* y = NULL;
+  switch (a->type) {
+    case T_BOOL:
+      x = lat_cadena_nueva(vm, bool2str(a->data.b));
+    break;
+    case T_INT:
+      x = lat_cadena_nueva(vm, int2str(a->data.i));
+    break;
+    case T_DOUBLE:
+      x = lat_cadena_nueva(vm, double2str(a->data.d));
+    break;
+    default:
+      x = lat_cadena_nueva(vm, a->data.str);
+    break;
+  }
+
+  switch (b->type) {
+    case T_BOOL:
+      y = lat_cadena_nueva(vm, bool2str(b->data.b));
+    break;
+    case T_INT:
+      y = lat_cadena_nueva(vm, int2str(b->data.i));
+    break;
+    case T_DOUBLE:
+      y = lat_cadena_nueva(vm, double2str(b->data.d));
+    break;
+    default:
+      x = lat_cadena_nueva(vm, a->data.str);
+    break;
+  }
+
+  vm->regs[255] = lat_cadena_nueva(vm, concat(lat_obtener_cadena(x), lat_obtener_cadena(y)));
+  lat_liberar_memoria(x);
+  lat_liberar_memoria(y);
 }
 
 void lat_contiene(lat_vm* vm)

@@ -1,6 +1,6 @@
 #ejemplos de funciones matematicas
 escribir("ingresa un numero decimal")
 x = decimal(leer())
-escribir("seno de x: " + seno(x))
-escribir("coseno de x: " + coseno(x))
-escribir("tangente de x: " + tangente(x))
+escribir("seno de x: " . seno(x))
+escribir("coseno de x: " . coseno(x))
+escribir("tangente de x: " . tangente(x))

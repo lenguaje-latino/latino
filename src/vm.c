@@ -1035,12 +1035,8 @@ void lat_cadena(lat_vm* vm){
     case T_DOUBLE:
       vm->regs[255] = lat_cadena_nueva(vm, double2str(a->data.d));
     break;
-    case T_STR:{
-      vm->regs[255] = a;
-    }
-    break;
     default:
-    lat_registrar_error("conversion incompatible");
+    vm->regs[255] = a;
     break;
   }
 }

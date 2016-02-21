@@ -172,6 +172,7 @@ expression:
     | expression OP_EQ expression { $$ = nodo_nuevo_operador(NODO_IGUALDAD, $1, $3); }
     | expression OP_AND expression { $$ = nodo_nuevo_operador(NODO_Y, $1, $3); }
     | expression OP_OR expression { $$ = nodo_nuevo_operador(NODO_O, $1, $3); }
+    | expression OP_CONCAT expression { $$ = nodo_nuevo_operador(NODO_CONCATENAR, $1, $3); }
     | OP_NEG expression %prec UNEG { $$ = nodo_nuevo_operador(NODO_NEGACION, $2, NULL); }
     | expression '+' expression { $$ = nodo_nuevo_operador(NODO_SUMA, $1, $3); }
     | expression '-' expression { $$ = nodo_nuevo_operador(NODO_RESTA, $1, $3); }

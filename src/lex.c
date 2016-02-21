@@ -382,14 +382,14 @@ struct yy_trans_info
 	};
 static yyconst flex_int16_t yy_accept[138] =
     {   0,
-        0,    0,   55,   53,   52,   51,   27,   53,   50,    5,
-       53,   53,    6,    7,    3,    1,    8,    2,   15,    4,
-       47,    9,   10,   18,   16,   17,   44,   11,   12,   45,
-       45,   45,   45,   45,   45,   45,   26,   45,   45,   45,
-       24,   13,   53,   14,   52,   21,    0,   48,    0,   50,
-       23,    0,   49,    0,   29,   30,    0,   46,   46,   47,
-       20,   22,   19,   44,   45,   45,   45,   45,   45,   45,
-       45,   45,   45,   28,   45,   45,   31,   45,   25,    0,
+        0,    0,   55,   53,   52,   51,   26,   53,   50,    5,
+       53,   53,    6,    7,    3,    1,    8,    2,   28,    4,
+       47,    9,   10,   17,   15,   16,   44,   11,   12,   45,
+       45,   45,   45,   45,   45,   45,   25,   45,   45,   45,
+       23,   13,   53,   14,   52,   20,    0,   48,    0,   50,
+       22,    0,   49,    0,   29,   30,    0,   46,   46,   47,
+       19,   21,   18,   44,   45,   45,   45,   45,   45,   45,
+       45,   45,   45,   27,   45,   45,   31,   45,   24,    0,
        46,    0,   45,   45,   45,   45,   32,   45,   45,   45,
        45,   45,   45,   45,    0,   46,    0,   46,   45,   45,
 
@@ -952,42 +952,45 @@ case 13:
 case 14:
 #line 56 "lex.l"
 case 15:
-#line 57 "lex.l"
-case 16:
 YY_RULE_SETUP
-#line 57 "lex.l"
+#line 56 "lex.l"
 { return yytext[0]; }
 	YY_BREAK
 /* operadores de comparacion */
+case 16:
+YY_RULE_SETUP
+#line 59 "lex.l"
+{ return OP_GT; }
+	YY_BREAK
 case 17:
 YY_RULE_SETUP
 #line 60 "lex.l"
-{ return OP_GT; }
+{ return OP_LT; }
 	YY_BREAK
 case 18:
 YY_RULE_SETUP
 #line 61 "lex.l"
-{ return OP_LT; }
+{ return OP_GE; }
 	YY_BREAK
 case 19:
 YY_RULE_SETUP
 #line 62 "lex.l"
-{ return OP_GE; }
+{ return OP_LE; }
 	YY_BREAK
 case 20:
 YY_RULE_SETUP
 #line 63 "lex.l"
-{ return OP_LE; }
+{ return OP_NEQ; }
 	YY_BREAK
 case 21:
 YY_RULE_SETUP
 #line 64 "lex.l"
-{ return OP_NEQ; }
+{ return OP_EQ; }
 	YY_BREAK
 case 22:
 YY_RULE_SETUP
 #line 65 "lex.l"
-{ return OP_EQ; }
+{ return OP_AND; }
 	YY_BREAK
 case 23:
 YY_RULE_SETUP
@@ -1007,7 +1010,7 @@ YY_RULE_SETUP
 case 26:
 YY_RULE_SETUP
 #line 69 "lex.l"
-{ return OP_OR; }
+{ return OP_NEG; }
 	YY_BREAK
 case 27:
 YY_RULE_SETUP
@@ -1017,7 +1020,7 @@ YY_RULE_SETUP
 case 28:
 YY_RULE_SETUP
 #line 71 "lex.l"
-{ return OP_NEG; }
+{ return OP_CONCAT; }
 	YY_BREAK
 case 29:
 YY_RULE_SETUP
@@ -1157,7 +1160,7 @@ YY_RULE_SETUP
 #line 107 "lex.l"
 YY_FATAL_ERROR( "flex scanner jammed" );
 	YY_BREAK
-#line 1161 "lex.c"
+#line 1164 "lex.c"
 case YY_STATE_EOF(INITIAL):
 	yyterminate();
 
