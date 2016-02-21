@@ -76,6 +76,10 @@ ast *lat_analizar_archivo(char *infile) {
   return lat_analizar_expresion(buffer);
 }
 
+void lat_version(){
+    printf("%s\n", LAT_DERECHOS);
+}
+
 int main(int argc, char *argv[]) {
   /*
   Para debuguear en visual studio:
@@ -87,7 +91,10 @@ int main(int argc, char *argv[]) {
   for (i = 1; i < argc; i++) {
     if (strcmp(argv[i], "-d") == 0) {
       debug = 1;
-    } else {
+    } else if (strcmp(argv[i], "--version") == 0) {
+      lat_version();
+      return EXIT_SUCCESS;
+    } else{
       infile = argv[i];
     }
   }

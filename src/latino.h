@@ -50,6 +50,11 @@ defined(__ELF__)
 #define lnsprintf(s, l, f, i) _snprintf(s, l, f, i)
 #endif
 
+#define LAT_VERSION_MAYOR "0"
+#define LAT_VERSION_MENOR "4"
+#define LAT_VERSION "Latino " LAT_VERSION_MAYOR "." LAT_VERSION_MENOR
+#define LAT_DERECHOS LAT_VERSION "\nTodos los derechos reservados (C) 2015-2016. Mexico"
+
 #define lat_afirmar(cond) ((void)(false && (cond)))
 
 extern int debug;
