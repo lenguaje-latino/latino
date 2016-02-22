@@ -122,6 +122,8 @@ lat_vm* lat_crear_maquina_virtual()
   //entrada / salida
   lat_asignar_contexto_objeto(lat_obtener_contexto(ret), lat_cadena_nueva(ret, "leer"), lat_definir_cfuncion(ret, lat_leer));
   lat_asignar_contexto_objeto(lat_obtener_contexto(ret), lat_cadena_nueva(ret, "escribir"), lat_definir_cfuncion(ret, lat_imprimir));
+  lat_asignar_contexto_objeto(lat_obtener_contexto(ret), lat_cadena_nueva(ret, "leer_archivo"), lat_definir_cfuncion(ret, lat_leer_archivo));
+  lat_asignar_contexto_objeto(lat_obtener_contexto(ret), lat_cadena_nueva(ret, "escribir_archivo"), lat_definir_cfuncion(ret, lat_escribir_archivo));
 
   /*conversion de tipos de dato*/
   lat_asignar_contexto_objeto(lat_obtener_contexto(ret), lat_cadena_nueva(ret, "logico"), lat_definir_cfuncion(ret, lat_logico));
@@ -300,7 +302,7 @@ static void lat_imprimir_elem(lat_vm* vm)
     fprintf(stdout, "%s", "Objeto");
   }
   else if (in->type == T_LIT) {
-    fprintf(stdout, "%c", lat_obtener_literal(in));
+    fprintf(stdout, "%s", lat_obtener_literal(in));
   }
   else if (in->type == T_INT) {
     fprintf(stdout, "%ld", lat_obtener_entero(in));
@@ -342,17 +344,15 @@ void lat_imprimir(lat_vm* vm)
     fprintf(stdout, "%s\n", "Objeto");
   }
   else if (in->type == T_LIT) {
-    fprintf(stdout, "%c\n", lat_obtener_literal(in));
+    fprintf(stdout, "%s\n", lat_obtener_literal(in));
   }
   else if (in->type == T_INT) {
     fprintf(stdout, "%ld\n", lat_obtener_entero(in));
   }
   else if (in->type == T_DOUBLE) {
-    //fprintf(stdout, "%lf\n", lat_obtener_decimal(in));
     fprintf(stdout, "%.14g\n", lat_obtener_decimal(in));
   }
   else if (in->type == T_STR) {
-    //fprintf(stdout, "%s\n", lat_obtener_cadena(in));
     fprintf(stdout, "%s\n", lat_obtener_cadena(in));
   }
   else if (in->type == T_BOOL) {
@@ -424,8 +424,9 @@ void lat_ejecutar_archivo(lat_vm *vm) {
   char *extension;
   if (!dot || dot == input) {
     extension = (char*)"";
+  }else{
+    extension = dot + 1;
   }
-  extension = dot + 1;
   if (strcmp(extension, "lat") == 0) {
     ast *tree = lat_analizar_archivo(input);
     if (!tree) {

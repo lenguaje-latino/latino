@@ -49,7 +49,7 @@ typedef enum lat_type {
 
 typedef union lat_objeto_data {
   hash_map* instance;
-  char c;
+  char* c;
   long i;
   double d;
   char* str;
@@ -95,7 +95,7 @@ lat_objeto* lat_clonar_objeto(lat_vm* vm, lat_objeto* obj);
 list_node* lat_clonar_lista(lat_vm* vm, list_node* l);
 hash_map* lat_clonar_hash(lat_vm* vm, hash_map* l);
 
-char lat_obtener_literal(lat_objeto* o);
+char* lat_obtener_literal(lat_objeto* o);
 long lat_obtener_entero(lat_objeto* o);
 double lat_obtener_decimal(lat_objeto* o);
 char* lat_obtener_cadena(lat_objeto* o);

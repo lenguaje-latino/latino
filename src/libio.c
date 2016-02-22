@@ -35,12 +35,42 @@ void lat_leer(lat_vm *vm){
     str[i] = '\0';
   vm->regs[255] = lat_cadena_nueva(vm, parse_string(str, strlen(str)));
 }
-void lat_escribir(lat_vm *vm){
-
-}
 void lat_leer_archivo(lat_vm *vm){
+  lat_objeto* o = lat_desapilar(vm);
 
+  if(o->type == T_STR || o->type == T_LIT){
+    FILE *fp;
+    char *buf;
+    fp = fopen(lat_obtener_cadena(o), "r");
+    if (fp == NULL) {
+      lat_registrar_error("No se pudo abrir el archivo\n");
+    }
+    fseek(fp, 0, SEEK_END);
+    int fsize = ftell(fp);
+    fseek(fp, 0, SEEK_SET);
+    buf = (char*)calloc(fsize, 1);
+    size_t newSize = fread(buf, sizeof(char), fsize, fp);
+    if (buf == NULL) {
+      printf("No se pudo asignar %d bytes de memoria\n", fsize);
+    }
+    buf[newSize] = '\0';
+    vm->regs[255] = lat_cadena_nueva(vm, buf);
+  }else{
+    lat_registrar_error("No se pudo abrir el archivo\n");
+  }
 }
-void lat_escribir_archivo(lat_vm *vm){
 
+void lat_escribir_archivo(lat_vm *vm){
+  lat_objeto* s = lat_desapilar(vm);
+  lat_objeto* o = lat_desapilar(vm);
+  if(o->type == T_STR || o->type == T_LIT){
+    FILE* fp;
+    fp = fopen(lat_obtener_cadena(o), "w");
+    const char* cad = lat_obtener_cadena(s);
+    size_t lon = strlen(cad);
+    fwrite(cad, 1 , lon , fp);
+    fclose(fp);
+  }else{
+    lat_registrar_error("No se pudo escribir en el archivo\n");
+  }
 }

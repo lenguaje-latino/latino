@@ -29,7 +29,6 @@ THE SOFTWARE.
 #include "vm.h"
 
 void lat_leer(lat_vm *vm);
-void lat_escribir(lat_vm *vm);
 void lat_leer_archivo(lat_vm *vm);
 void lat_escribir_archivo(lat_vm *vm);
 
