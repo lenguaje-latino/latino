@@ -21,10 +21,10 @@ fin
 
 #mejor implementacion (iterativa)
 funcion fibo(n)
-    si (n == 0)
+    si(n == 0)
         retorno 0
     fin
-    si (n == 1)
+    si(n == 1)
         retorno 1
     fin
 
@@ -42,13 +42,13 @@ funcion fibo(n)
 fin
 
 #imprimir la serie de 45 provoca desborde de la pila (stack overflow)
-imprimir("version recursiva")
-desde(i=0; i < 10; i++)
+imprimir ("version recursiva")
+desde (i=0; i < 10; i++)
     imprimir(fibonacci(i))
 fin
 
 imprimir("version iterativa")
-desde(i=0; i <= 45; i++)
+desde (i=0; i <= 45; i++)
     imprimir(fibo(i))
 fin
 
