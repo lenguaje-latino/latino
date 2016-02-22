@@ -1,4 +1,6 @@
-escribir('hola "latino".
--se implementaron literales
--lectura desde teclado
--lectura y escritura de archivos')
+#ejemplos de funciones matematicas
+escribir("ingresa un numero decimal")
+x = decimal(leer())
+escribir("seno de x: " . seno(x))
+escribir("coseno de x: " . coseno(x))
+escribir("tangente de x: " . tangente(x))

@@ -1,0 +1,15 @@
+{
+ "libs": ["browser", "ecma5", "ecma6"],
+ "plugins": {
+  "commonjs": {
+  },
+  "modules": {
+  },
+  "node_resolve": {
+  },
+  "node": {
+  },
+  "complete_strings": {
+  }
+ }
+}

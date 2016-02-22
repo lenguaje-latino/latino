@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="utf-8"?>
+<CodeLite_Project Name="latino" InternalType="">
+  <Plugins>
+    <Plugin Name="CMakePlugin">
+      <![CDATA[[{
+  "name": "NoConfig",
+  "enabled": false,
+  "buildDirectory": "build",
+  "sourceDirectory": "$(ProjectPath)",
+  "generator": "",
+  "buildType": "",
+  "arguments": [],
+  "parentProject": ""
+ }]]]>
+    </Plugin>
+    <Plugin Name="qmake">
+      <![CDATA[00010001N0008NoConfig000000000000]]>
+    </Plugin>
+  </Plugins>
+  <VirtualDirectory Name="src">
+    <File Name="../src/ast.c"/>
+    <File Name="../src/latino.c"/>
+    <File Name="../src/lex.c"/>
+    <File Name="../src/libio.c"/>
+    <File Name="../src/libmath.c"/>
+    <File Name="../src/libmem.c"/>
+    <File Name="../src/libstring.c"/>
+    <File Name="../src/object.c"/>
+    <File Name="../src/parse.c"/>
+    <File Name="../src/utils.c"/>
+    <File Name="../src/vm.c"/>
+  </VirtualDirectory>
+  <VirtualDirectory Name="include">
+    <File Name="../src/ast.h"/>
+    <File Name="../src/khash.h"/>
+    <File Name="../src/latino.h"/>
+    <File Name="../src/lex.h"/>
+    <File Name="../src/libio.h"/>
+    <File Name="../src/libmath.h"/>
+    <File Name="../src/libmem.h"/>
+    <File Name="../src/libstring.h"/>
+    <File Name="../src/object.h"/>
+    <File Name="../src/parse.h"/>
+    <File Name="../src/utils.h"/>
+    <File Name="../src/vm.h"/>
+  </VirtualDirectory>
+  <Settings Type="Executable">
+    <GlobalSettings>
+      <Compiler Options="" C_Options="" Assembler="">
+        <IncludePath Value="."/>
+      </Compiler>
+      <Linker Options="">
+        <LibraryPath Value="."/>
+      </Linker>
+      <ResourceCompiler Options=""/>
+    </GlobalSettings>
+    <Configuration Name="NoConfig" CompilerType="gnu g++" DebuggerType="GNU gdb debugger" Type="Executable" BuildCmpWithGlobalSettings="append" BuildLnkWithGlobalSettings="append" BuildResWithGlobalSettings="append">
+      <Compiler Options="-g" C_Options="-g" Assembler="" Required="yes" PreCompiledHeader="" PCHInCommandLine="no" PCHFlags="" PCHFlagsPolicy="0">
+        <IncludePath Value="."/>
+      </Compiler>
+      <Linker Options="" Required="yes"/>
+      <ResourceCompiler Options="" Required="no"/>
+      <General OutputFile="$(IntermediateDirectory)/$(ProjectName)" IntermediateDirectory="./" Command="./$(ProjectName)" CommandArguments="..\..\ejemplos\debug.lat" UseSeparateDebugArgs="no" DebugArguments="..\..\ejemplos\debug.lat" WorkingDirectory="$(IntermediateDirectory)" PauseExecWhenProcTerminates="yes" IsGUIProgram="no" IsEnabled="yes"/>
+      <Environment EnvVarSetName="&lt;Use Defaults&gt;" DbgSetName="&lt;Use Defaults&gt;">
+        <![CDATA[]]>
+      </Environment>
+      <Debugger IsRemote="no" RemoteHostName="" RemoteHostPort="" DebuggerPath="" IsExtended="no">
+        <DebuggerSearchPaths/>
+        <PostConnectCommands/>
+        <StartupCommands/>
+      </Debugger>
+      <PreBuild/>
+      <PostBuild/>
+      <CustomBuild Enabled="yes">
+        <RebuildCommand>C:/gcc/bin/gmake.exe -j 2 clean &amp;&amp; C:/gcc/bin/gmake.exe -j 2</RebuildCommand>
+        <CleanCommand>C:/gcc/bin/gmake.exe -j 2 clean</CleanCommand>
+        <BuildCommand>C:/gcc/bin/gmake.exe -j 2</BuildCommand>
+        <PreprocessFileCommand/>
+        <SingleFileCommand>C:/gcc/bin/gmake.exe -f$(ProjectPath)/Makefile $(CurrentFileName).cpp.o</SingleFileCommand>
+        <MakefileGenerationCommand/>
+        <ThirdPartyToolName/>
+        <WorkingDirectory>$(WorkspacePath)</WorkingDirectory>
+      </CustomBuild>
+      <AdditionalRules>
+        <CustomPostBuild/>
+        <CustomPreBuild/>
+      </AdditionalRules>
+      <Completion EnableCpp11="no" EnableCpp14="no">
+        <ClangCmpFlagsC/>
+        <ClangCmpFlags/>
+        <ClangPP/>
+        <SearchPaths/>
+      </Completion>
+    </Configuration>
+  </Settings>
+</CodeLite_Project>
