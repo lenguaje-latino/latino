@@ -1,1 +1,4 @@
-escribir('hola latino')
+escribir('hola "latino".
+-se implementaron literales
+-lectura desde teclado
+-lectura y escritura de archivos')

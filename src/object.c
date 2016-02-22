@@ -351,9 +351,9 @@ hash_map* lat_clonar_hash(lat_vm* vm, hash_map* h)
   return ret;
 }
 
-char lat_obtener_literal(lat_objeto* o)
+char* lat_obtener_literal(lat_objeto* o)
 {
-  if (o->type == T_LIT) {
+  if (o->type == T_LIT || o->type == T_STR) {
     return o->data.c;
   }
   lat_registrar_error("Object no es un tipo caracter");

@@ -236,7 +236,7 @@ char* insert(char *dest, char* src, int pos){
   return m;
 }
 
-char* padLeft(char* base, int n, char c){
+char* padLeft(char* base, int n, char* c){
   int len = (int)strlen(base);
   char *ret = NULL;
   if (n <= len){
@@ -248,13 +248,13 @@ char* padLeft(char* base, int n, char c){
   ret = (char*)"";
   //int i = 0;
   for (int i = 0; i < (n - len); i++){
-    ret = concat(ret, char2str(c));
+    ret = concat(ret, c);
   }
   ret = concat(ret, base);
   return ret;
 }
 
-char* padRight(char *base, int n, char c) {
+char* padRight(char *base, int n, char* c) {
   int len = (int)strlen(base);
   char *ret = NULL;
   if (len >= n) {
@@ -266,7 +266,7 @@ char* padRight(char *base, int n, char c) {
   ret = base;
   int i;
   for (i = 0; i < (n - len); i++) {
-    ret = concat(ret, char2str(c));
+    ret = concat(ret, c);
   }
   return ret;
 }

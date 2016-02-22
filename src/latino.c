@@ -58,6 +58,19 @@ ast *lat_analizar_archivo(char *infile) {
     printf("Especifique un archivo\n");
     return NULL;
   }
+  char *dot = strrchr(infile, '.');
+  char *extension;
+  if (!dot || dot == infile) {
+    extension = (char*)"";
+  }else{
+    extension = dot + 1;
+  }
+  if (strcmp(extension, "lat") != 0) {
+    //TODO: Pendiente corregir ortografia
+    printf("El archivo no contiene la extension .lat\n");
+    return NULL;
+  }
+
   file = fopen(infile, "r");
   if (file == NULL) {
     printf("No se pudo abrir el archivo\n");
