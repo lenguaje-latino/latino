@@ -1,87 +1,87 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
 <Project ToolsVersion="14.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <ClCompile Include="C:\Users\ciber\Documents\latino\src\latino.c">
+    <ClCompile Include="C:\src\latino\src\latino.c">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\ciber\Documents\latino\src\ast.c">
+    <ClCompile Include="C:\src\latino\src\ast.c">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\ciber\Documents\latino\src\utils.c">
+    <ClCompile Include="C:\src\latino\src\utils.c">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\ciber\Documents\latino\src\vm.c">
+    <ClCompile Include="C:\src\latino\src\vm.c">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\ciber\Documents\latino\src\object.c">
+    <ClCompile Include="C:\src\latino\src\object.c">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\ciber\Documents\latino\src\libstring.c">
+    <ClCompile Include="C:\src\latino\src\libstring.c">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\ciber\Documents\latino\src\libmem.c">
+    <ClCompile Include="C:\src\latino\src\libmem.c">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\ciber\Documents\latino\src\lex.c">
+    <ClCompile Include="C:\src\latino\src\lex.c">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\ciber\Documents\latino\src\parse.c">
+    <ClCompile Include="C:\src\latino\src\parse.c">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\ciber\Documents\latino\src\libmath.c">
+    <ClCompile Include="C:\src\latino\src\libmath.c">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\ciber\Documents\latino\src\libio.c">
+    <ClCompile Include="C:\src\latino\src\libio.c">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="C:\Users\ciber\Documents\latino\src\khash.h">
+    <ClInclude Include="C:\src\latino\src\khash.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\ciber\Documents\latino\src\latino.h">
+    <ClInclude Include="C:\src\latino\src\latino.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\ciber\Documents\latino\src\ast.h">
+    <ClInclude Include="C:\src\latino\src\ast.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\ciber\Documents\latino\src\utils.h">
+    <ClInclude Include="C:\src\latino\src\utils.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\ciber\Documents\latino\src\vm.h">
+    <ClInclude Include="C:\src\latino\src\vm.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\ciber\Documents\latino\src\object.h">
+    <ClInclude Include="C:\src\latino\src\object.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\ciber\Documents\latino\src\libstring.h">
+    <ClInclude Include="C:\src\latino\src\libstring.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\ciber\Documents\latino\src\libmem.h">
+    <ClInclude Include="C:\src\latino\src\libmem.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\ciber\Documents\latino\src\lex.h">
+    <ClInclude Include="C:\src\latino\src\lex.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\ciber\Documents\latino\src\parse.h">
+    <ClInclude Include="C:\src\latino\src\parse.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\ciber\Documents\latino\src\libmath.h">
+    <ClInclude Include="C:\src\latino\src\libmath.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\ciber\Documents\latino\src\libio.h">
+    <ClInclude Include="C:\src\latino\src\libio.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <CustomBuild Include="C:\Users\ciber\Documents\latino\src\CMakeLists.txt" />
+    <CustomBuild Include="C:\src\latino\src\CMakeLists.txt" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Source Files">
-      <UniqueIdentifier>{1F49F1AF-0E01-3BAB-92D2-DDA2F7A4996A}</UniqueIdentifier>
+      <UniqueIdentifier>{2EFB864E-0339-3996-A724-CF6E178E01CD}</UniqueIdentifier>
     </Filter>
     <Filter Include="Header Files">
-      <UniqueIdentifier>{45F18FD2-4DBC-3B32-B767-AB6894F73E56}</UniqueIdentifier>
+      <UniqueIdentifier>{CF1A9E5C-67D9-3BA2-8D59-A9FB3347BEBC}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>
