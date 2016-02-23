@@ -68,6 +68,7 @@ EXP ([Ee][-+]?[0-9]+)
 "o"     { return OP_OR; }
 "!"     { return OP_NEG; }
 "no"    { return OP_NEG; }
+".="    { return OP_CONCAT_IGUAL; }
 "."     { return OP_CONCAT; }
 
 "++"	{ return OP_INCR; }

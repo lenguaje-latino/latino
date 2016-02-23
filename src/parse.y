@@ -64,6 +64,7 @@ int yyerror(struct YYLTYPE *yylloc_param, void *scanner, struct ast **root, cons
     OP_INCR
     OP_DECR
     OP_CONCAT
+    OP_CONCAT_IGUAL
 
 %nonassoc <node> OP_EQ OP_GE OP_GT OP_LE OP_LT OP_NEQ OP_NEG
 %type <node> expression statement statement_list unary_expression
@@ -83,7 +84,7 @@ int yyerror(struct YYLTYPE *yylloc_param, void *scanner, struct ast **root, cons
  *
  */
 %right '='
-%left '+' '-' OP_CONCAT
+%left '+' '-' OP_CONCAT OP_CONCAT_IGUAL
 %left '*' '/' '%'
 %left UMINUS UNEG
 
@@ -119,6 +120,7 @@ statement: /* empty */ { $$ = NULL; }
 
 declaration:
       TIDENTIFIER '=' expression { $$ = nodo_nuevo_asignacion($3, $1); }
+    | TIDENTIFIER OP_CONCAT_IGUAL expression { $$ = nodo_nuevo_asignacion((nodo_nuevo_operador(NODO_CONCATENAR, $1, $3)), $1); }
     | TCONSTANT '=' constant_expression { $$ = nodo_nuevo_asignacion($3, $1); }
     | get_list_item '=' expression { $$ = nodo_nuevo_asignacion($3, $1); }
     | unary_expression { $$ = $1; }
