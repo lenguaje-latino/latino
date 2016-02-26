@@ -131,6 +131,7 @@ ast *nodo_nuevo(nodo_tipo tipo, ast *l, ast *r);
 ast *nodo_nuevo_identificador(const char *s);
 ast *nodo_nuevo_constante(char *s, int num_linea, int num_columna);
 ast *nodo_nuevo_asignacion(ast *s, ast *v);
+ast *nodo_nuevo_asignacion_lista(ast *s, ast *v, ast *pos);
 ast *nodo_nuevo_entero(long i);
 ast *nodo_nuevo_decimal(double d);
 ast *nodo_nuevo_literal(char *c);

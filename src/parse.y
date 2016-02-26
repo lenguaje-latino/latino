@@ -71,8 +71,10 @@ int yyerror(struct YYLTYPE *yylloc_param, void *scanner, struct ast **root, cons
 %type <node> iteration_statement jump_statement function_definition
 %type <node> argument_expression_list declaration primary_expression
 %type <node> constant_expression function_call selection_statement identifier_list
-%type <node> list_items get_list_item
-%type <node> dict_items get_dict_item dict_item dict_key
+%type <node> list_items
+%type <node> dict_items dict_item dict_key
+
+/* get_dict_item */
 
  /*labeled_statement*/
 
@@ -120,9 +122,10 @@ statement: /* empty */ { $$ = NULL; }
 
 declaration:
       TIDENTIFIER '=' expression { $$ = nodo_nuevo_asignacion($3, $1); }
+    | TIDENTIFIER '=' '[' list_items ']' { $$ = nodo_nuevo_asignacion(nodo_nuevo(NODO_LISTA, $4, NULL), $1); }
     | TIDENTIFIER OP_CONCAT_IGUAL expression { $$ = nodo_nuevo_asignacion((nodo_nuevo_operador(NODO_CONCATENAR, $1, $3)), $1); }
+    | TIDENTIFIER '[' TINT ']' '=' expression { $$ = nodo_nuevo_asignacion_lista($6, $1, $3); }
     | TCONSTANT '=' constant_expression { $$ = nodo_nuevo_asignacion($3, $1); }
-    | get_list_item '=' expression { $$ = nodo_nuevo_asignacion($3, $1); }
     | unary_expression { $$ = $1; }
     ;
 
@@ -205,10 +208,8 @@ constant_expression:
     | TNUMBER { $$ = $1; }
     | TLIT { $$ = $1; }
     | TSTRING { $$ = $1; }
-    | '[' list_items ']' { $$ = nodo_nuevo(NODO_LISTA, $2, NULL); }
     | '{' dict_items '}' { $$ = nodo_nuevo(NODO_DICCIONARIO, $2, NULL); }
-    | get_list_item { $$ = $1; }
-    | get_dict_item { $$ = $1; }
+    /* | get_dict_item { $$ = $1; }*/
     ;
 
 unary_expression:
@@ -226,13 +227,9 @@ identifier_list: /* empty */ { $$ = NULL; }
     | identifier_list ',' TIDENTIFIER { $$ = nodo_nuevo(NODO_LISTA_PARAMETROS, $3, $1); }
     ;
 
-list_items: /* empty */ { $$ = nodo_nuevo(NODO_LISTA_ASIGNAR_ELEMENTO, NULL, NULL); }
+list_items: /* empty */ { $$ = NULL; }
     | list_items ',' expression { $$ = nodo_nuevo(NODO_LISTA_ASIGNAR_ELEMENTO, $3, $1); }
     | expression { $$ = nodo_nuevo(NODO_LISTA_ASIGNAR_ELEMENTO, $1, NULL); }
-    ;
-
-get_list_item:
-     TIDENTIFIER '[' TINT ']' { $$ = nodo_nuevo(NODO_LISTA_OBTENER_ELEMENTO, $1, $3); }
     ;
 
 dict_items: /* empty */ { $$ = nodo_nuevo(NODO_DICCIONARIO_ELEMENTOS, NULL, NULL); }
@@ -249,7 +246,9 @@ dict_key:
     | TSTRING { $$ = $1; }
     ;
 
+/*
 get_dict_item:
      TIDENTIFIER '[' TSTRING ']' { $$ = nodo_nuevo(NODO_DICCIONARIO_OBTENER_ELEMENTO, $1, $3); }
     ;
+    */
 %%

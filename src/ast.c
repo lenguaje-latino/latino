@@ -197,6 +197,16 @@ ast *nodo_nuevo_asignacion(ast *v, ast *s) {
   return a;
 }
 
+ast *nodo_nuevo_asignacion_lista(ast *v, ast *s, ast *pos) {
+  printf("%s\n", "nodo_nuevo_asignacion_lista");
+  ast *a = (ast*)lat_asignar_memoria(sizeof(ast));
+  a->tipo = NODO_ASIGNACION;
+  a->l = v;
+  a->r = s;
+  a->valor = NULL;
+  return a;
+}
+
 ast *nodo_nuevo_si(ast *cond, ast *th, ast *el) {
   nodo_si *a = (nodo_si*)lat_asignar_memoria(sizeof(nodo_si));
   a->tipo = NODO_SI;

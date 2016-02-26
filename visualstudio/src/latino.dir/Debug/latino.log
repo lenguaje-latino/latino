@@ -9,13 +9,10 @@
   libmem.c
   lex.c
   parse.c
-parse.c(1449): warning C4013: 'yylex' undefined; assuming extern returning int
-parse.y(123): warning C4013: 'nodo_nuevo_operador' undefined; assuming extern returning int
-parse.y(123): warning C4047: 'function': 'ast *' differs in levels of indirection from 'int'
-parse.y(123): warning C4024: 'nodo_nuevo_asignacion': different types for formal and actual parameter 1
-parse.y(170): warning C4047: '=': 'ast *' differs in levels of indirection from 'int'
-parse.y(171): warning C4047: '=': 'ast *' differs in levels of indirection from 'int'
-parse.y(172): warning C4047: '=': 'ast *' differs in levels of indirection from 'int'
+parse.c(1441): warning C4013: 'yylex' undefined; assuming extern returning int
+parse.y(126): warning C4013: 'nodo_nuevo_operador' undefined; assuming extern returning int
+parse.y(126): warning C4047: 'function': 'ast *' differs in levels of indirection from 'int'
+parse.y(126): warning C4024: 'nodo_nuevo_asignacion': different types for formal and actual parameter 1
 parse.y(173): warning C4047: '=': 'ast *' differs in levels of indirection from 'int'
 parse.y(174): warning C4047: '=': 'ast *' differs in levels of indirection from 'int'
 parse.y(175): warning C4047: '=': 'ast *' differs in levels of indirection from 'int'
@@ -28,10 +25,13 @@ parse.y(181): warning C4047: '=': 'ast *' differs in levels of indirection from 
 parse.y(182): warning C4047: '=': 'ast *' differs in levels of indirection from 'int'
 parse.y(183): warning C4047: '=': 'ast *' differs in levels of indirection from 'int'
 parse.y(184): warning C4047: '=': 'ast *' differs in levels of indirection from 'int'
+parse.y(185): warning C4047: '=': 'ast *' differs in levels of indirection from 'int'
 parse.y(186): warning C4047: '=': 'ast *' differs in levels of indirection from 'int'
-parse.y(198): warning C4013: 'nodo_nuevo_logico' undefined; assuming extern returning int
-parse.y(198): warning C4047: '=': 'ast *' differs in levels of indirection from 'int'
-parse.y(199): warning C4047: '=': 'ast *' differs in levels of indirection from 'int'
+parse.y(187): warning C4047: '=': 'ast *' differs in levels of indirection from 'int'
+parse.y(189): warning C4047: '=': 'ast *' differs in levels of indirection from 'int'
+parse.y(201): warning C4013: 'nodo_nuevo_logico' undefined; assuming extern returning int
+parse.y(201): warning C4047: '=': 'ast *' differs in levels of indirection from 'int'
+parse.y(202): warning C4047: '=': 'ast *' differs in levels of indirection from 'int'
   libmath.c
   libio.c
   Generating Code...
