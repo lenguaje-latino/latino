@@ -126,6 +126,13 @@ typedef struct {
   struct ast *el;   /* instrucciones si la condicion es falsa (else) */
 } nodo_si;
 
+typedef struct {
+  nodo_tipo tipo;
+  struct ast *exp;  /* expresion */
+  struct ast *id;   /* identificador */
+  struct ast *pos;  /* posicion de la lista */
+} nodo_lista_elem;
+
 /* metodos para construir arbolo AST */
 ast *nodo_nuevo(nodo_tipo tipo, ast *l, ast *r);
 ast *nodo_nuevo_identificador(const char *s);

@@ -1,9 +1,74 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
 <CodeBlocks_layout_file>
 	<ActiveTarget name="latino" />
-	<File name="..\src\latino.c" open="1" top="1" tabpos="1" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+	<File name="../src/vm.c" open="1" top="0" tabpos="3" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
 		<Cursor>
-			<Cursor1 position="1692" topLine="36" />
+			<Cursor1 position="2075" topLine="49" />
+		</Cursor>
+	</File>
+	<File name="../src/libio.c" open="1" top="0" tabpos="1" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="1552" topLine="19" />
+		</Cursor>
+	</File>
+	<File name="../src/libio.h" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="1211" topLine="17" />
+		</Cursor>
+	</File>
+	<File name="../src/utils.h" open="1" top="0" tabpos="8" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="4094" topLine="105" />
+		</Cursor>
+	</File>
+	<File name="../src/latino.h" open="1" top="0" tabpos="9" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="1739" topLine="57" />
+		</Cursor>
+	</File>
+	<File name="../src/ast.c" open="1" top="1" tabpos="10" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="12752" topLine="438" />
+		</Cursor>
+	</File>
+	<File name="../src/utils.c" open="1" top="0" tabpos="7" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="8147" topLine="371" />
+		</Cursor>
+	</File>
+	<File name="../src/libstring.h" open="1" top="0" tabpos="6" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="1991" topLine="32" />
+		</Cursor>
+	</File>
+	<File name="../src/latino.c" open="1" top="0" tabpos="2" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="1490" topLine="20" />
+		</Cursor>
+	</File>
+	<File name="../src/ast.h" open="1" top="0" tabpos="11" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="386" topLine="81" />
+		</Cursor>
+	</File>
+	<File name="../src/vm.h" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="1519" topLine="36" />
+		</Cursor>
+	</File>
+	<File name="../src/object.c" open="1" top="0" tabpos="4" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="1609" topLine="45" />
+		</Cursor>
+	</File>
+	<File name="../src/object.h" open="0" top="0" tabpos="4" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="3038" topLine="75" />
+		</Cursor>
+	</File>
+	<File name="../src/libstring.c" open="1" top="0" tabpos="5" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="7366" topLine="263" />
 		</Cursor>
 	</File>
 </CodeBlocks_layout_file>

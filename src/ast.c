@@ -197,14 +197,13 @@ ast *nodo_nuevo_asignacion(ast *v, ast *s) {
   return a;
 }
 
-ast *nodo_nuevo_asignacion_lista(ast *v, ast *s, ast *pos) {
-  printf("%s\n", "nodo_nuevo_asignacion_lista");
-  ast *a = (ast*)lat_asignar_memoria(sizeof(ast));
-  a->tipo = NODO_ASIGNACION;
-  a->l = v;
-  a->r = s;
-  a->valor = NULL;
-  return a;
+ast *nodo_nuevo_asignacion_lista(ast *exp, ast *id, ast *pos) {
+  nodo_lista_elem *a = (nodo_lista_elem*)lat_asignar_memoria(sizeof(nodo_lista_elem));
+  a->tipo = NODO_LISTA_ASIGNAR_ELEMENTO;
+  a->exp = exp;
+  a->id = id;
+  a->pos = pos;
+  return (ast *)a;
 }
 
 ast *nodo_nuevo_si(ast *cond, ast *th, ast *el) {
@@ -296,13 +295,6 @@ int nodo_analizar(lat_vm *vm, ast *node, lat_bytecode *bcode, int i) {
   } break;
   case NODO_IDENTIFICADOR: /*GET*/
   {
-    /*if (node->l->r){
-            pn(node->l->r);
-            dbc(OP_MOV, 1, 255, NULL);
-            }
-            else{
-            dbc(OP_LOCALNS, 1, 0, NULL);
-            }*/
     dbc(OP_LOCALNS, 1, 0, NULL);
     lat_objeto *ret = lat_cadena_nueva(vm, node->valor->v.s);
     dbc(OP_STORESTR, 2, 0, ret);
@@ -313,14 +305,6 @@ int nodo_analizar(lat_vm *vm, ast *node, lat_bytecode *bcode, int i) {
   {
     pn(vm, node->l);
     dbc(OP_PUSH, 255, 0, NULL);
-    /*if (node->r) {
-            pn(node->r);
-            dbc(OP_MOV, 1, 255, NULL);
-            }
-            else {
-            dbc(OP_LOCALNS, 1, 0, NULL);
-            }*/
-    // lat_objeto *ret = lat_clonar_objeto(vm, lat_cadena_nueva(vm, node->r->tipo->v.s));
     lat_objeto *ret = lat_cadena_nueva(vm, node->r->valor->v.s);
     if (ret->num_declared < 0) {
       ret->num_declared = 0;
@@ -344,17 +328,14 @@ int nodo_analizar(lat_vm *vm, ast *node, lat_bytecode *bcode, int i) {
   } break;
   case NODO_LITERAL: {
     lat_objeto *ret = lat_literal_nuevo(vm, node->valor->v.c);
-    // lat_marcar_objeto(ret, 3);
     dbc(OP_STORECHAR, 255, 0, ret);
   } break;
   case NODO_ENTERO: {
     lat_objeto *ret = lat_entero_nuevo(vm, node->valor->v.i);
-    // lat_marcar_objeto(ret, 3);
     dbc(OP_STOREINT, 255, 0, ret);
   } break;
   case NODO_DECIMAL: {
     lat_objeto *ret = lat_decimal_nuevo(vm, node->valor->v.d);
-    // lat_marcar_objeto(ret, 3);
     dbc(OP_STOREDOUBLE, 255, 0, ret);
   } break;
   case NODO_CADENA: {
@@ -462,13 +443,14 @@ int nodo_analizar(lat_vm *vm, ast *node, lat_bytecode *bcode, int i) {
     nested--;
   } break;
   case NODO_LISTA_ASIGNAR_ELEMENTO: {
-    if (node->l) {
+    nodo_lista_elem *nElem = ((nodo_lista_elem *)node);
+    /*if (node->l) {
       pn(vm, node->l);
       dbc(OP_PUSHLIST, nested, 255, NULL);
     }
     if (node->r) {
       pn(vm, node->r);
-    }
+    }*/
   } break;
   case NODO_LISTA_OBTENER_ELEMENTO:{
     if (node->l){

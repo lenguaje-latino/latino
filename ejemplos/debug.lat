@@ -1,3 +1,4 @@
 vacia = [1, 2, 3, 'a']
 escribir(vacia)
-vacia[0] = 'a'
+vacia[0] = 20
+escribir(vacia)
