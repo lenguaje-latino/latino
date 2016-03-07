@@ -66,7 +66,7 @@ int yyerror(struct YYLTYPE *yylloc_param, void *scanner, struct ast **root, cons
     OP_CONCAT
     OP_CONCAT_IGUAL
 
-%nonassoc <node> OP_EQ OP_GE OP_GT OP_LE OP_LT OP_NEQ OP_NEG
+ /*%nonassoc <node> OP_EQ OP_GE OP_GT OP_LE OP_LT OP_NEQ OP_NEG*/
 %type <node> expression statement statement_list unary_expression
 %type <node> iteration_statement jump_statement function_definition
 %type <node> argument_expression_list declaration primary_expression
@@ -88,7 +88,10 @@ int yyerror(struct YYLTYPE *yylloc_param, void *scanner, struct ast **root, cons
 %right '='
 %left '+' '-' OP_CONCAT OP_CONCAT_IGUAL
 %left '*' '/' '%'
+%left OP_NEG
+%left OP_EQ OP_GE OP_GT OP_LE OP_LT OP_NEQ
 %left UMINUS UNEG
+
 
 %start program
 

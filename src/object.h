@@ -42,6 +42,7 @@ typedef enum lat_type {
   T_STR,
   T_BOOL,
   T_LIST,
+  T_DICT,
   T_FUNC,
   T_CFUNC,
   T_STRUCT,

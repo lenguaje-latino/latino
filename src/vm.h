@@ -126,6 +126,7 @@ void lat_o(lat_vm* vm);
 void lat_negacion(lat_vm* vm);
 
 /*conversion de tipos de dato*/
+void lat_tipo(lat_vm* vm);
 void lat_logico(lat_vm* vm);
 void lat_entero(lat_vm* vm);
 void lat_literal(lat_vm* vm);
