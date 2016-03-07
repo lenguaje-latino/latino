@@ -59,11 +59,11 @@ lat_vm* lat_crear_maquina_virtual()
   lat_asignar_contexto_objeto(lat_obtener_contexto(ret), lat_cadena_nueva(ret, ">"), lat_definir_cfuncion(ret, lat_mayor_que));
   lat_asignar_contexto_objeto(lat_obtener_contexto(ret), lat_cadena_nueva(ret, ">="), lat_definir_cfuncion(ret, lat_mayor_igual));
   lat_asignar_contexto_objeto(lat_obtener_contexto(ret), lat_cadena_nueva(ret, "&&"), lat_definir_cfuncion(ret, lat_y));
-  lat_asignar_contexto_objeto(lat_obtener_contexto(ret), lat_cadena_nueva(ret, "y"), lat_definir_cfuncion(ret, lat_y));
+  //lat_asignar_contexto_objeto(lat_obtener_contexto(ret), lat_cadena_nueva(ret, "y"), lat_definir_cfuncion(ret, lat_y));
   lat_asignar_contexto_objeto(lat_obtener_contexto(ret), lat_cadena_nueva(ret, "||"), lat_definir_cfuncion(ret, lat_o));
-  lat_asignar_contexto_objeto(lat_obtener_contexto(ret), lat_cadena_nueva(ret, "o"), lat_definir_cfuncion(ret, lat_o));
+  //lat_asignar_contexto_objeto(lat_obtener_contexto(ret), lat_cadena_nueva(ret, "o"), lat_definir_cfuncion(ret, lat_o));
   lat_asignar_contexto_objeto(lat_obtener_contexto(ret), lat_cadena_nueva(ret, "!"), lat_definir_cfuncion(ret, lat_negacion));
-  lat_asignar_contexto_objeto(lat_obtener_contexto(ret), lat_cadena_nueva(ret, "no"), lat_definir_cfuncion(ret, lat_negacion));
+  //lat_asignar_contexto_objeto(lat_obtener_contexto(ret), lat_cadena_nueva(ret, "no"), lat_definir_cfuncion(ret, lat_negacion));
   lat_asignar_contexto_objeto(lat_obtener_contexto(ret), lat_cadena_nueva(ret, "gc"), lat_definir_cfuncion(ret, lat_basurero));
   lat_asignar_contexto_objeto(lat_obtener_contexto(ret), lat_cadena_nueva(ret, "ejecutar"), lat_definir_cfuncion(ret, lat_ejecutar));
   lat_asignar_contexto_objeto(lat_obtener_contexto(ret), lat_cadena_nueva(ret, "ejecutar_archivo"), lat_definir_cfuncion(ret, lat_ejecutar_archivo));
@@ -126,6 +126,7 @@ lat_vm* lat_crear_maquina_virtual()
   lat_asignar_contexto_objeto(lat_obtener_contexto(ret), lat_cadena_nueva(ret, "escribir_archivo"), lat_definir_cfuncion(ret, lat_escribir_archivo));
 
   /*conversion de tipos de dato*/
+  lat_asignar_contexto_objeto(lat_obtener_contexto(ret), lat_cadena_nueva(ret, "tipo"), lat_definir_cfuncion(ret, lat_tipo));
   lat_asignar_contexto_objeto(lat_obtener_contexto(ret), lat_cadena_nueva(ret, "logico"), lat_definir_cfuncion(ret, lat_logico));
   lat_asignar_contexto_objeto(lat_obtener_contexto(ret), lat_cadena_nueva(ret, "entero"), lat_definir_cfuncion(ret, lat_entero));
   lat_asignar_contexto_objeto(lat_obtener_contexto(ret), lat_cadena_nueva(ret, "decimal"), lat_definir_cfuncion(ret, lat_decimal));
@@ -552,22 +553,37 @@ void lat_diferente(lat_vm* vm)
 {
   lat_objeto* b = lat_desapilar(vm);
   lat_objeto* a = lat_desapilar(vm);
-  if ((a->type != T_INT && a->type != T_DOUBLE) || (b->type != T_INT && b->type != T_DOUBLE)) {
-    lat_registrar_error("Intento de aplicar operador \"!=\" en tipos invalidos");
+  if (a->type == T_BOOL && b->type == T_BOOL) {
+    vm->regs[255] = lat_obtener_logico(a) != lat_obtener_logico(b) ? vm->true_object : vm->false_object;
+    return;
+  }
+  if (a->type == T_INT || b->type == T_INT) {
+    vm->regs[255] = (lat_obtener_entero(a) != lat_obtener_entero(b)) ? vm->true_object : vm->false_object;
+    return;
   }
   if (a->type == T_DOUBLE || b->type == T_DOUBLE) {
     vm->regs[255] = (lat_obtener_decimal(a) != lat_obtener_decimal(b)) ? vm->true_object : vm->false_object;
+    return;
   }
-  else {
-    vm->regs[255] = (lat_obtener_entero(a) != lat_obtener_entero(b)) ? vm->true_object : vm->false_object;
+  if (a->type == T_STR && b->type == T_STR) {
+    vm->regs[255] = strcmp(lat_obtener_cadena(a), lat_obtener_cadena(b)) != 0 ? vm->true_object : vm->false_object;
+    return;
   }
+  if (a->type == T_LIT && b->type == T_LIT) {
+    vm->regs[255] = strcmp(lat_obtener_literal(a), lat_obtener_literal(b)) != 0 ? vm->true_object : vm->false_object;
+    return;
+  }
+  lat_registrar_error("Intento de aplicar operador \"!=\" en tipos invalidos");
 }
 
 void lat_igualdad(lat_vm* vm)
 {
   lat_objeto* b = lat_desapilar(vm);
   lat_objeto* a = lat_desapilar(vm);
-
+  if (a->type == T_BOOL && b->type == T_BOOL) {
+    vm->regs[255] = lat_obtener_logico(a) == lat_obtener_logico(b) ? vm->true_object : vm->false_object;
+    return;
+  }
   if (a->type == T_INT || b->type == T_INT) {
     vm->regs[255] = (lat_obtener_entero(a) == lat_obtener_entero(b)) ? vm->true_object : vm->false_object;
     return;
@@ -580,75 +596,103 @@ void lat_igualdad(lat_vm* vm)
     vm->regs[255] = strcmp(lat_obtener_cadena(a), lat_obtener_cadena(b)) == 0 ? vm->true_object : vm->false_object;
     return;
   }
-  if (a->type == T_BOOL && b->type == T_BOOL) {
-    vm->regs[255] = lat_obtener_logico(a) == lat_obtener_logico(b) ? vm->true_object : vm->false_object;
-    return;
-  }
   if (a->type == T_LIT && b->type == T_LIT) {
-    vm->regs[255] = lat_obtener_literal(a) == lat_obtener_literal(b) ? vm->true_object : vm->false_object;
+    vm->regs[255] = strcmp(lat_obtener_literal(a), lat_obtener_literal(b)) == 0 ? vm->true_object : vm->false_object;
     return;
   }
-  lat_registrar_error("Intento de aplicar operador \"<\" en tipos invalidos");
+  lat_registrar_error("Intento de aplicar operador \"==\" en tipos invalidos");
 }
 
 void lat_menor_que(lat_vm* vm)
 {
   lat_objeto* b = lat_desapilar(vm);
   lat_objeto* a = lat_desapilar(vm);
-  if ((a->type != T_INT && a->type != T_DOUBLE) || (b->type != T_INT && b->type != T_DOUBLE)) {
-    lat_registrar_error("Intento de aplicar operador \"<\" en tipos invalidos");
+  if (a->type == T_INT || b->type == T_INT) {
+    vm->regs[255] = (lat_obtener_entero(a) < lat_obtener_entero(b)) ? vm->true_object : vm->false_object;
+    return;
   }
   if (a->type == T_DOUBLE || b->type == T_DOUBLE) {
     vm->regs[255] = (lat_obtener_decimal(a) < lat_obtener_decimal(b)) ? vm->true_object : vm->false_object;
+    return;
   }
-  else {
-    vm->regs[255] = (lat_obtener_entero(a) < lat_obtener_entero(b)) ? vm->true_object : vm->false_object;
+  if (a->type == T_STR && b->type == T_STR) {
+    vm->regs[255] = strcmp(lat_obtener_cadena(a), lat_obtener_cadena(b)) < 0 ? vm->true_object : vm->false_object;
+    return;
   }
+  if (a->type == T_LIT && b->type == T_LIT) {
+    vm->regs[255] = strcmp(lat_obtener_literal(a), lat_obtener_literal(b)) < 0 ? vm->true_object : vm->false_object;
+    return;
+  }
+  lat_registrar_error("Intento de aplicar operador \"<\" en tipos invalidos");
 }
 
 void lat_menor_igual(lat_vm* vm)
 {
   lat_objeto* b = lat_desapilar(vm);
   lat_objeto* a = lat_desapilar(vm);
-  if ((a->type != T_INT && a->type != T_DOUBLE) || (b->type != T_INT && b->type != T_DOUBLE)) {
-    lat_registrar_error("Intento de aplicar operador \"<=\" en tipos invalidos");
+  if (a->type == T_INT || b->type == T_INT) {
+    vm->regs[255] = (lat_obtener_entero(a) <= lat_obtener_entero(b)) ? vm->true_object : vm->false_object;
+    return;
   }
   if (a->type == T_DOUBLE || b->type == T_DOUBLE) {
     vm->regs[255] = (lat_obtener_decimal(a) <= lat_obtener_decimal(b)) ? vm->true_object : vm->false_object;
+    return;
   }
-  else {
-    vm->regs[255] = (lat_obtener_entero(a) <= lat_obtener_entero(b)) ? vm->true_object : vm->false_object;
+  if (a->type == T_STR && b->type == T_STR) {
+    vm->regs[255] = strcmp(lat_obtener_cadena(a), lat_obtener_cadena(b)) <= 0 ? vm->true_object : vm->false_object;
+    return;
   }
+  if (a->type == T_LIT && b->type == T_LIT) {
+    vm->regs[255] = strcmp(lat_obtener_literal(a), lat_obtener_literal(b)) <= 0 ? vm->true_object : vm->false_object;
+    return;
+  }
+  lat_registrar_error("Intento de aplicar operador \"<=\" en tipos invalidos");
 }
 
 void lat_mayor_que(lat_vm* vm)
 {
   lat_objeto* b = lat_desapilar(vm);
   lat_objeto* a = lat_desapilar(vm);
-  if ((a->type != T_INT && a->type != T_DOUBLE) || (b->type != T_INT && b->type != T_DOUBLE)) {
-    lat_registrar_error("Intento de aplicar operador \">\" en tipos invalidos");
+  if (a->type == T_INT || b->type == T_INT) {
+    vm->regs[255] = (lat_obtener_entero(a) > lat_obtener_entero(b)) ? vm->true_object : vm->false_object;
+    return;
   }
   if (a->type == T_DOUBLE || b->type == T_DOUBLE) {
     vm->regs[255] = (lat_obtener_decimal(a) > lat_obtener_decimal(b)) ? vm->true_object : vm->false_object;
+    return;
   }
-  else {
-    vm->regs[255] = (lat_obtener_entero(a) > lat_obtener_entero(b)) ? vm->true_object : vm->false_object;
+  if (a->type == T_STR && b->type == T_STR) {
+    vm->regs[255] = strcmp(lat_obtener_cadena(a), lat_obtener_cadena(b)) > 0 ? vm->true_object : vm->false_object;
+    return;
   }
+  if (a->type == T_LIT && b->type == T_LIT) {
+    vm->regs[255] = strcmp(lat_obtener_literal(a), lat_obtener_literal(b)) > 0 ? vm->true_object : vm->false_object;
+    return;
+  }
+  lat_registrar_error("Intento de aplicar operador \">\" en tipos invalidos");
 }
 
 void lat_mayor_igual(lat_vm* vm)
 {
   lat_objeto* b = lat_desapilar(vm);
   lat_objeto* a = lat_desapilar(vm);
-  if ((a->type != T_INT && a->type != T_DOUBLE) || (b->type != T_INT && b->type != T_DOUBLE)) {
-    lat_registrar_error("Intento de aplicar operador \">=\" en tipos invalidos");
+  if (a->type == T_INT || b->type == T_INT) {
+    vm->regs[255] = (lat_obtener_entero(a) >= lat_obtener_entero(b)) ? vm->true_object : vm->false_object;
+    return;
   }
   if (a->type == T_DOUBLE || b->type == T_DOUBLE) {
     vm->regs[255] = (lat_obtener_decimal(a) >= lat_obtener_decimal(b)) ? vm->true_object : vm->false_object;
+    return;
   }
-  else {
-    vm->regs[255] = (lat_obtener_entero(a) >= lat_obtener_entero(b)) ? vm->true_object : vm->false_object;
+  if (a->type == T_STR && b->type == T_STR) {
+    vm->regs[255] = strcmp(lat_obtener_cadena(a), lat_obtener_cadena(b)) >= 0 ? vm->true_object : vm->false_object;
+    return;
   }
+  if (a->type == T_LIT && b->type == T_LIT) {
+    vm->regs[255] = strcmp(lat_obtener_literal(a), lat_obtener_literal(b)) >= 0 ? vm->true_object : vm->false_object;
+    return;
+  }
+  lat_registrar_error("Intento de aplicar operador \">=\" en tipos invalidos");
 }
 
 void lat_y(lat_vm* vm)
@@ -915,7 +959,7 @@ void lat_logico(lat_vm* vm){
     }
     break;
     case T_LIT:
-    if((int)a->data.c == 0){
+    if(strcmp(a->data.c, "") == 0){
       vm->regs[255] = vm->false_object;
     }else{
       vm->regs[255] = vm->true_object;
@@ -950,8 +994,16 @@ void lat_entero(lat_vm* vm){
       vm->regs[255] = lat_entero_nuevo(vm, 1);
     }
     break;
-    case T_LIT:
-      vm->regs[255] = lat_entero_nuevo(vm, (int)a->data.c);
+    case T_LIT:{
+        char *ptr;
+        long ret;
+        ret =strtol(a->data.c, &ptr, 10);
+        if(strcmp(ptr, "") == 0){
+          vm->regs[255] = lat_entero_nuevo(vm, ret);
+        }else{
+          lat_registrar_error("conversion incompatible");
+        }
+    }
     break;
     case T_DOUBLE:
       vm->regs[255] = lat_entero_nuevo(vm, (int)a->data.d);
@@ -1061,4 +1113,34 @@ void lat_minimo(lat_vm* vm){
     }else{
         vm->regs[255] = a;
     }
+}
+
+void lat_tipo(lat_vm* vm){
+  lat_objeto* a = lat_desapilar(vm);
+  switch (a->type) {
+    case T_BOOL:
+      vm->regs[255] = lat_cadena_nueva(vm, "logico");
+      break;
+    case T_INT:
+      vm->regs[255] = lat_cadena_nueva(vm, "entero");
+      break;
+    case T_DOUBLE:
+      vm->regs[255] = lat_cadena_nueva(vm, "decimal");
+      break;
+    case T_STR:
+      vm->regs[255] = lat_cadena_nueva(vm, "cadena");
+      break;
+    case T_LIT:
+        vm->regs[255] = lat_cadena_nueva(vm, "cadena");
+        break;
+    case T_LIST:
+      vm->regs[255] = lat_cadena_nueva(vm, "lista");
+      break;
+    case T_DICT:
+      vm->regs[255] = lat_cadena_nueva(vm, "diccionario");
+      break;
+    default:
+      vm->regs[255] = lat_cadena_nueva(vm, "nulo");
+      break;
+  }
 }

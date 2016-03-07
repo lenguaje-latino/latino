@@ -50,7 +50,7 @@
 				<Option object_output="./" />
 				<Option type="1" />
 				<Option compiler="gcc" />
-				<Option parameters="../../ejemplos/debug.lat" />
+				<Option parameters="../../ejemplos/20-operadores_comparacion.lat" />
 				<Compiler>
 					<Add option="-D_DEBUG" />
 					<Add option="-D__STDC_CONSTANT_MACROS" />
