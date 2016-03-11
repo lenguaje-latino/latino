@@ -8,8 +8,10 @@
 
 #include "latino.h"
 #include "ast.h"
+#include "lex.h"
 
 int yyerror(struct YYLTYPE *yylloc_param, void *scanner, struct ast **root, const char *s);
+int yylex (YYSTYPE * yylval_param,YYLTYPE * yylloc_param ,yyscan_t yyscanner);
 
 %}
 
@@ -255,3 +257,10 @@ get_dict_item:
     ;
     */
 %%
+
+//se define para analisis sintactico (bison)
+int yyerror(struct YYLTYPE *yylloc_param, void *scanner, struct ast **root,
+            const char *s) {
+  lat_registrar_error("Linea %d: %s", (yylloc_param->first_line + 1), s);
+  return 0;
+}

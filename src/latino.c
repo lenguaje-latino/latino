@@ -61,7 +61,7 @@ ast *lat_analizar_archivo(char *infile) {
   char *dot = strrchr(infile, '.');
   char *extension;
   if (!dot || dot == infile) {
-    extension = (char*)"";
+    extension = "";
   }else{
     extension = dot + 1;
   }
@@ -79,7 +79,7 @@ ast *lat_analizar_archivo(char *infile) {
   fseek(file, 0, SEEK_END);
   int fsize = ftell(file);
   fseek(file, 0, SEEK_SET);
-  buffer = (char*)calloc(fsize, 1);
+  buffer = calloc(fsize, 1);
   size_t newSize = fread(buffer, sizeof(char), fsize, file);
   if (buffer == NULL) {
     printf("No se pudo asignar %d bytes de memoria\n", fsize);

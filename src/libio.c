@@ -48,7 +48,7 @@ void lat_leer_archivo(lat_vm *vm){
     fseek(fp, 0, SEEK_END);
     int fsize = ftell(fp);
     fseek(fp, 0, SEEK_SET);
-    buf = (char*)calloc(fsize, 1);
+    buf = calloc(fsize, 1);
     size_t newSize = fread(buf, sizeof(char), fsize, fp);
     if (buf == NULL) {
       printf("No se pudo asignar %d bytes de memoria\n", fsize);

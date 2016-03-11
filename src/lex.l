@@ -16,6 +16,8 @@
 #include "ast.h"
 #include "parse.h"
 
+#define YYBISON 1
+
 #define YY_USER_ACTION \
     yylloc->first_line = yylloc->last_line; \
     yylloc->first_column = yylloc->last_column; \
@@ -30,6 +32,11 @@
     }
 
 int f(int token, yyscan_t scanner);
+
+#if YYBISON
+union YYSTYPE;
+extern int yylex (YYSTYPE * yylval_param,YYLTYPE * yylloc_param ,yyscan_t yyscanner);
+#endif
 
 %}
 

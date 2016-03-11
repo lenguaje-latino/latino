@@ -424,7 +424,7 @@ void lat_ejecutar_archivo(lat_vm *vm) {
   char *dot = strrchr(input, '.');
   char *extension;
   if (!dot || dot == input) {
-    extension = (char*)"";
+    extension = "";
   }else{
     extension = dot + 1;
   }

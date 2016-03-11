@@ -19,3 +19,8 @@ si (t==1 && a==2)
 sino
 	escribir("Talvez para la proxima")
 fin
+
+
+formateado = rellenar_izquierda("35", 10, "0")
+escribir(formateado)
+escribir(reemplazar(formateado, "0", "-"))

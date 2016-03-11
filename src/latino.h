@@ -58,10 +58,11 @@ defined(__ELF__)
 #define lat_afirmar(cond) ((void)(false && (cond)))
 
 extern int debug;
-#define MAX_ERROR_LENGTH 1024
+
 #define MAX_BYTECODE_FUNCTION (1024 * 10)
 #define MAX_VIRTUAL_MEMORY (1024 * 10)
 #define MAX_STR_INTERN 64
+#define MAX_STR_LENGTH (1024*2)
 #define MAX_STACK_SIZE 255
 
 /* interface con flex */
