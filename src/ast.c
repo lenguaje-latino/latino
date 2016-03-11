@@ -33,13 +33,6 @@ THE SOFTWARE.
 #define fdbc(I, A, B, M) funcion_bcode[fi++] = lat_bc(I, A, B, M)
 #define fpn(vm, N) fi = nodo_analizar(vm, N, funcion_bcode, fi)
 
-//se define para analisis sintactico (bison)
-int yyerror(struct YYLTYPE *yylloc_param, void *scanner, struct ast **root,
-            const char *s) {
-  lat_registrar_error("Linea %d: %s", (yylloc_param->first_line + 1), s);
-  return 0;
-}
-
 ast *nodo_nuevo_operador(nodo_tipo nt, ast *l, ast *r) {
   ast *a = (ast*)lat_asignar_memoria(sizeof(ast));
   switch (nt) {

@@ -68,7 +68,7 @@ static lat_objeto* str_new(const char* p, size_t len)
   lat_objeto* str = (lat_objeto*)lat_asignar_memoria(sizeof(lat_objeto));
   str->type = T_STR;
   str->data_size = len;
-  str->data.str = (char*)p;
+  str->data.str = (char *)p;
   return str;
 }
 
@@ -234,7 +234,7 @@ void lat_rellenar_derecha(lat_vm* vm){
 void lat_eliminar(lat_vm* vm){
   lat_objeto* b = lat_desapilar(vm);
   lat_objeto* a = lat_desapilar(vm);
-  vm->regs[255] = lat_cadena_nueva(vm, replace(lat_obtener_cadena(a), lat_obtener_cadena(b), (char*)""));
+  vm->regs[255] = lat_cadena_nueva(vm, replace(lat_obtener_cadena(a), lat_obtener_cadena(b), ""));
 }
 
 void lat_esta_vacia(lat_vm* vm){

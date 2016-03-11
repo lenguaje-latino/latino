@@ -27,9 +27,9 @@ THE SOFTWARE.
 #include <stdbool.h>
 #include "vm.h"
 
-/* tipos de dato */
+/// tipos de dato
 typedef enum {
-  VALOR_NULO,
+  VALOR_NULO, /** < valor nulo */
   VALOR_LOGICO,
   VALOR_ENTERO,
   VALOR_LITERAL,
@@ -37,7 +37,7 @@ typedef enum {
   VALOR_CADENA
 } nodo_tipo_valor;
 
-/* valores de dato */
+/** valores de dato */
 typedef struct {
   nodo_tipo_valor t;
   bool es_constante; //para validar si es constante
@@ -53,7 +53,7 @@ typedef struct {
   } v;
 } nodo_valor;
 
-/* tipos de nodos en arbol abstracto de sintaxis (abstract syntax tree) */
+/** tipos de nodos en arbol abstracto de sintaxis (abstract syntax tree) */
 typedef enum {
   NODO_SUMA,
   NODO_RESTA,
@@ -103,8 +103,8 @@ typedef enum {
   NODO_DICCIONARIO_OBTENER_ELEMENTO
 } nodo_tipo;
 
-/* nodos en arbol abstacto de sintaxis (abstract syntax tree) */
-/* todos los nodos son inicializados con un tipo de nodo*/
+/// nodos en arbol abstacto de sintaxis (abstract syntax tree)
+/** todos los nodos son inicializados con un tipo de nodo */
 typedef struct ast {
   nodo_tipo tipo;
   nodo_valor *valor;
@@ -119,11 +119,13 @@ typedef union YYSTYPE {
   ast *node;
 } YYSTYPE;
 
+/// nodo para representar un ast si (if)
+/** */
 typedef struct {
   nodo_tipo tipo;
-  struct ast *cond; /* condicion */
-  struct ast *th;   /* instrucciones si la condicion es verdadera (then) */
-  struct ast *el;   /* instrucciones si la condicion es falsa (else) */
+  struct ast *cond; /** < condicion */
+  struct ast *th;   /** < instrucciones si la condicion es verdadera (then) */
+  struct ast *el;   /** < instrucciones si la condicion es falsa (else) */
 } nodo_si;
 
 typedef struct {
@@ -137,8 +139,10 @@ typedef struct {
 ast *nodo_nuevo(nodo_tipo tipo, ast *l, ast *r);
 ast *nodo_nuevo_identificador(const char *s);
 ast *nodo_nuevo_constante(char *s, int num_linea, int num_columna);
+ast *nodo_nuevo_operador(nodo_tipo nt, ast *l, ast *r);
 ast *nodo_nuevo_asignacion(ast *s, ast *v);
 ast *nodo_nuevo_asignacion_lista(ast *s, ast *v, ast *pos);
+ast *nodo_nuevo_logico(int b);
 ast *nodo_nuevo_entero(long i);
 ast *nodo_nuevo_decimal(double d);
 ast *nodo_nuevo_literal(char *c);
