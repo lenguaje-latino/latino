@@ -41,7 +41,7 @@ void lat_arco_tangente(lat_vm *vm) {
   vm->regs[255] = lat_decimal_nuevo(vm, atan(lat_obtener_decimal(a)));
 }
 
-void lat_arco_tangente_radianes(lat_vm *vm) {
+void lat_arco_tangente2(lat_vm *vm) {
   lat_objeto *a = lat_desapilar(vm);
   lat_objeto *b = lat_desapilar(vm);
   vm->regs[255] =
@@ -53,7 +53,7 @@ void lat_coseno(lat_vm *vm) {
   vm->regs[255] = lat_decimal_nuevo(vm, cos(lat_obtener_decimal(a)));
 }
 
-void lat_cosenoh(lat_vm *vm) {
+void lat_coseno_hiperbolico(lat_vm *vm) {
   lat_objeto *a = lat_desapilar(vm);
   vm->regs[255] = lat_decimal_nuevo(vm, cosh(lat_obtener_decimal(a)));
 }

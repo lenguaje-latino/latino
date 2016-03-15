@@ -271,7 +271,7 @@ void lat_empieza_con(lat_vm* vm)
   }
 }
 
-void lat_restarcadena(lat_vm* vm){
+void lat_subcadena(lat_vm* vm){
   lat_objeto* c = lat_desapilar(vm);
   lat_objeto* b = lat_desapilar(vm);
   lat_objeto* a = lat_desapilar(vm);

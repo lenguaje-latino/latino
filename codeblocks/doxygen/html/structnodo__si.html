@@ -111,7 +111,7 @@ $(document).ready(function(){initNavTree('structnodo__si.html','');});
 </div><!--header-->
 <div class="contents">
 
-<p>nodo para representar un ast si (if)  
+<p>nodo para representar un ast SI (if).  
  <a href="structnodo__si.html#details">More...</a></p>
 
 <p><code>#include &lt;<a class="el" href="ast_8h_source.html">ast.h</a>&gt;</code></p>
@@ -119,10 +119,9 @@ $(document).ready(function(){initNavTree('structnodo__si.html','');});
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-attribs"></a>
 Public Attributes</h2></td></tr>
 <tr class="memitem:a36248ecb994fe5dfa0f82d4f1fad824f"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a36248ecb994fe5dfa0f82d4f1fad824f"></a>
-nodo_tipo&#160;</td><td class="memItemRight" valign="bottom"><b>tipo</b></td></tr>
+<a class="el" href="ast_8h.html#ae4fa669767fd0d22c5cd84814721c297">nodo_tipo</a>&#160;</td><td class="memItemRight" valign="bottom"><b>tipo</b></td></tr>
 <tr class="separator:a36248ecb994fe5dfa0f82d4f1fad824f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aa8f24f453718180de8a65ea6cbcb1575"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aa8f24f453718180de8a65ea6cbcb1575"></a>
-struct <a class="el" href="structast.html">ast</a> *&#160;</td><td class="memItemRight" valign="bottom"><b>cond</b></td></tr>
+<tr class="memitem:aa8f24f453718180de8a65ea6cbcb1575"><td class="memItemLeft" align="right" valign="top">struct <a class="el" href="structast.html">ast</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structnodo__si.html#aa8f24f453718180de8a65ea6cbcb1575">cond</a></td></tr>
 <tr class="separator:aa8f24f453718180de8a65ea6cbcb1575"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a412b3395ece1ec440ed567fbf8ca3418"><td class="memItemLeft" align="right" valign="top">struct <a class="el" href="structast.html">ast</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structnodo__si.html#a412b3395ece1ec440ed567fbf8ca3418">th</a></td></tr>
 <tr class="separator:a412b3395ece1ec440ed567fbf8ca3418"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -130,8 +129,22 @@ struct <a class="el" href="structast.html">ast</a> *&#160;</td><td class="memIte
 <tr class="separator:aaab0cf9e99815461ddce4465d05a987e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>nodo para representar un ast si (if) </p>
+<div class="textblock"><p>nodo para representar un ast SI (if). </p>
+<p>si (condicion) [sentencias] sino [sentencias] fin </p>
 </div><h2 class="groupheader">Member Data Documentation</h2>
+<a class="anchor" id="aa8f24f453718180de8a65ea6cbcb1575"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">struct <a class="el" href="structast.html">ast</a>* nodo_si::cond</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Condicion </p>
+
+</div>
+</div>
 <a class="anchor" id="aaab0cf9e99815461ddce4465d05a987e"></a>
 <div class="memitem">
 <div class="memproto">
@@ -141,7 +154,7 @@ struct <a class="el" href="structast.html">ast</a> *&#160;</td><td class="memIte
         </tr>
       </table>
 </div><div class="memdoc">
-<p>&lt; instrucciones si la condicion es verdadera (then) </p>
+<p>Instrucciones que se ejecutan si la condicion es falsa </p>
 
 </div>
 </div>
@@ -154,7 +167,7 @@ struct <a class="el" href="structast.html">ast</a> *&#160;</td><td class="memIte
         </tr>
       </table>
 </div><div class="memdoc">
-<p>&lt; condicion </p>
+<p>Instrucciones que se ejecutan si la condicion es verdadera </p>
 
 </div>
 </div>
@@ -167,7 +180,7 @@ struct <a class="el" href="structast.html">ast</a> *&#160;</td><td class="memIte
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="structnodo__si.html">nodo_si</a></li>
-    <li class="footer">Generated on Fri Mar 11 2016 15:35:17 for latino by
+    <li class="footer">Generated on Tue Mar 15 2016 10:35:20 for latino by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.11 </li>
   </ul>
