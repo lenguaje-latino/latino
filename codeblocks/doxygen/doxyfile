@@ -10,7 +10,7 @@
 #---------------------------------------------------------------------------
 DOXYFILE_ENCODING      = UTF-8
 PROJECT_NAME           = latino
-PROJECT_NUMBER         = 
+PROJECT_NUMBER         =
 PROJECT_BRIEF          =
 PROJECT_LOGO           =
 OUTPUT_DIRECTORY       =
@@ -118,7 +118,7 @@ INPUT                  = \
 	"..\..\src\ast.c" \
 	"..\..\src\ast.h" \
 	"..\..\src\khash.h" \
-	"..\..\src\latino.c" 
+	"..\..\src\latino.c"
 INPUT_ENCODING         = UTF-8
 FILE_PATTERNS          =
 RECURSIVE              = NO

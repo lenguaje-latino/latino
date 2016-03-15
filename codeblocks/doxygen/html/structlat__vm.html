@@ -110,37 +110,153 @@ $(document).ready(function(){initNavTree('structlat__vm.html','');});
 <div class="title">lat_vm Struct Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
+
+<p>Define la maquina virtual (MV)  
+ <a href="structlat__vm.html#details">More...</a></p>
+
+<p><code>#include &lt;<a class="el" href="vm_8h_source.html">vm.h</a>&gt;</code></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-attribs"></a>
 Public Attributes</h2></td></tr>
-<tr class="memitem:aca11ed624014d997a4778800448dcf02"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aca11ed624014d997a4778800448dcf02"></a>
-<a class="el" href="structlist__node.html">list_node</a> *&#160;</td><td class="memItemRight" valign="bottom"><b>stack</b></td></tr>
+<tr class="memitem:aca11ed624014d997a4778800448dcf02"><td class="memItemLeft" align="right" valign="top"><a class="el" href="structlist__node.html">list_node</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structlat__vm.html#aca11ed624014d997a4778800448dcf02">stack</a></td></tr>
 <tr class="separator:aca11ed624014d997a4778800448dcf02"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a56ff0959fdaba7d4c0d6df8abe0822fa"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a56ff0959fdaba7d4c0d6df8abe0822fa"></a>
-<a class="el" href="structlist__node.html">list_node</a> *&#160;</td><td class="memItemRight" valign="bottom"><b>all_objects</b></td></tr>
+<tr class="memitem:a56ff0959fdaba7d4c0d6df8abe0822fa"><td class="memItemLeft" align="right" valign="top"><a class="el" href="structlist__node.html">list_node</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structlat__vm.html#a56ff0959fdaba7d4c0d6df8abe0822fa">all_objects</a></td></tr>
 <tr class="separator:a56ff0959fdaba7d4c0d6df8abe0822fa"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a6250c458baec86555bebb0b052be6010"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a6250c458baec86555bebb0b052be6010"></a>
-<a class="el" href="structlist__node.html">list_node</a> *&#160;</td><td class="memItemRight" valign="bottom"><b>gc_objects</b></td></tr>
+<tr class="memitem:a6250c458baec86555bebb0b052be6010"><td class="memItemLeft" align="right" valign="top"><a class="el" href="structlist__node.html">list_node</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structlat__vm.html#a6250c458baec86555bebb0b052be6010">gc_objects</a></td></tr>
 <tr class="separator:a6250c458baec86555bebb0b052be6010"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:afbed6baf7fdcb2dea2a43060c4d0c8ee"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="afbed6baf7fdcb2dea2a43060c4d0c8ee"></a>
-<a class="el" href="structlat__objeto.html">lat_objeto</a> *&#160;</td><td class="memItemRight" valign="bottom"><b>regs</b> [256]</td></tr>
+<tr class="memitem:afbed6baf7fdcb2dea2a43060c4d0c8ee"><td class="memItemLeft" align="right" valign="top"><a class="el" href="structlat__objeto.html">lat_objeto</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structlat__vm.html#afbed6baf7fdcb2dea2a43060c4d0c8ee">regs</a> [256]</td></tr>
 <tr class="separator:afbed6baf7fdcb2dea2a43060c4d0c8ee"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a803103b31635e14ac45295f06c7c05bc"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a803103b31635e14ac45295f06c7c05bc"></a>
-<a class="el" href="structlat__objeto.html">lat_objeto</a> *&#160;</td><td class="memItemRight" valign="bottom"><b>ctx_stack</b> [256]</td></tr>
+<tr class="memitem:a803103b31635e14ac45295f06c7c05bc"><td class="memItemLeft" align="right" valign="top"><a class="el" href="structlat__objeto.html">lat_objeto</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structlat__vm.html#a803103b31635e14ac45295f06c7c05bc">ctx_stack</a> [256]</td></tr>
 <tr class="separator:a803103b31635e14ac45295f06c7c05bc"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a588218711129c766ec82ae7c3daa4ae6"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a588218711129c766ec82ae7c3daa4ae6"></a>
-<a class="el" href="structlat__objeto.html">lat_objeto</a> *&#160;</td><td class="memItemRight" valign="bottom"><b>true_object</b></td></tr>
+<tr class="memitem:a588218711129c766ec82ae7c3daa4ae6"><td class="memItemLeft" align="right" valign="top"><a class="el" href="structlat__objeto.html">lat_objeto</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structlat__vm.html#a588218711129c766ec82ae7c3daa4ae6">true_object</a></td></tr>
 <tr class="separator:a588218711129c766ec82ae7c3daa4ae6"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a5ff97ed32459c8448e079186a767ea1a"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a5ff97ed32459c8448e079186a767ea1a"></a>
-<a class="el" href="structlat__objeto.html">lat_objeto</a> *&#160;</td><td class="memItemRight" valign="bottom"><b>false_object</b></td></tr>
+<tr class="memitem:a5ff97ed32459c8448e079186a767ea1a"><td class="memItemLeft" align="right" valign="top"><a class="el" href="structlat__objeto.html">lat_objeto</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structlat__vm.html#a5ff97ed32459c8448e079186a767ea1a">false_object</a></td></tr>
 <tr class="separator:a5ff97ed32459c8448e079186a767ea1a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ad53e58bc3845d449458e6e6abfaa4307"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ad53e58bc3845d449458e6e6abfaa4307"></a>
-size_t&#160;</td><td class="memItemRight" valign="bottom"><b>memory_usage</b></td></tr>
+<tr class="memitem:ad53e58bc3845d449458e6e6abfaa4307"><td class="memItemLeft" align="right" valign="top">size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structlat__vm.html#ad53e58bc3845d449458e6e6abfaa4307">memory_usage</a></td></tr>
 <tr class="separator:ad53e58bc3845d449458e6e6abfaa4307"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ae4136d859be297b9d901d342dd0ed76c"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ae4136d859be297b9d901d342dd0ed76c"></a>
-int&#160;</td><td class="memItemRight" valign="bottom"><b>ctx_stack_pointer</b></td></tr>
+<tr class="memitem:ae4136d859be297b9d901d342dd0ed76c"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structlat__vm.html#ae4136d859be297b9d901d342dd0ed76c">ctx_stack_pointer</a></td></tr>
 <tr class="separator:ae4136d859be297b9d901d342dd0ed76c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
+<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
+<div class="textblock"><p>Define la maquina virtual (MV) </p>
+</div><h2 class="groupheader">Member Data Documentation</h2>
+<a class="anchor" id="a56ff0959fdaba7d4c0d6df8abe0822fa"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="structlist__node.html">list_node</a>* lat_vm::all_objects</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>objetos creados dinamicamente en la MV </p>
+
+</div>
+</div>
+<a class="anchor" id="a803103b31635e14ac45295f06c7c05bc"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="structlat__objeto.html">lat_objeto</a>* lat_vm::ctx_stack[256]</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Tabla hash para el contexto actual </p>
+
+</div>
+</div>
+<a class="anchor" id="ae4136d859be297b9d901d342dd0ed76c"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int lat_vm::ctx_stack_pointer</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Apuntador de la pila </p>
+
+</div>
+</div>
+<a class="anchor" id="a5ff97ed32459c8448e079186a767ea1a"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="structlat__objeto.html">lat_objeto</a>* lat_vm::false_object</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Valor logico falso </p>
+
+</div>
+</div>
+<a class="anchor" id="a6250c458baec86555bebb0b052be6010"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="structlist__node.html">list_node</a>* lat_vm::gc_objects</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>objetos listos para liberar por el colector de basura </p>
+
+</div>
+</div>
+<a class="anchor" id="ad53e58bc3845d449458e6e6abfaa4307"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">size_t lat_vm::memory_usage</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Tamanio de memoria creado dinamicamente </p>
+
+</div>
+</div>
+<a class="anchor" id="afbed6baf7fdcb2dea2a43060c4d0c8ee"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="structlat__objeto.html">lat_objeto</a>* lat_vm::regs[256]</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Registros de la MV </p>
+
+</div>
+</div>
+<a class="anchor" id="aca11ed624014d997a4778800448dcf02"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="structlist__node.html">list_node</a>* lat_vm::stack</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>pila de la maquina virtual </p>
+
+</div>
+</div>
+<a class="anchor" id="a588218711129c766ec82ae7c3daa4ae6"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="structlat__objeto.html">lat_objeto</a>* lat_vm::true_object</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Valor logico verdadero </p>
+
+</div>
+</div>
 <hr/>The documentation for this struct was generated from the following file:<ul>
 <li><a class="el" href="vm_8h_source.html">vm.h</a></li>
 </ul>
@@ -150,7 +266,7 @@ int&#160;</td><td class="memItemRight" valign="bottom"><b>ctx_stack_pointer</b><
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="structlat__vm.html">lat_vm</a></li>
-    <li class="footer">Generated on Fri Mar 11 2016 15:35:12 for latino by
+    <li class="footer">Generated on Tue Mar 15 2016 10:35:20 for latino by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.11 </li>
   </ul>

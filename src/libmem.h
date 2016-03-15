@@ -27,8 +27,32 @@ THE SOFTWARE.
 
 #include <stdlib.h>
 
+/** \file libmem.h
+*
+* Contiene las funciones para el manejo de memoria dinamica
+*
+*/
+
+/** Asigna memoria dinamicamente (malloc)
+  *
+  * \param size: Tamanio de memoria solicitado
+  *
+  */
 void* lat_asignar_memoria(size_t size);
+
+/** Reasigna memoria dinamicamente (realloc)
+  *
+  * \param ptr: Apuntador a la memoria actual
+  * \param size: Tamanio nuevo de memoria solicitado
+  *
+  */
 void* lat_reasignar_memoria(void* ptr, size_t size);
+
+/** Libera la memoria (free)
+  *
+  * \param ptr: Apuntador a la memoria a liberar
+  *
+  */
 void lat_liberar_memoria(void* ptr);
 
 #endif /*_LIBMEM_H_*/
