@@ -1,2 +1,5 @@
-l = [1, 2, 3, 4, 5]
-escribir(l)
+escribir("Dame un numero (a):")
+num1 = decimal(leer())
+escribir("Dame otro numero (b):")
+num2 = entero(leer())
+escribir("El resultado es de a / b es: " . num1 / num2)
