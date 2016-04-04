@@ -225,6 +225,9 @@ void lat_eliminar_objeto(lat_vm* vm, lat_objeto* o)
   case T_LIST:
     //lat_eliminar_lista(vm, o->data.list);
     break;
+  case T_DICT:
+    //lat_eliminar_lista(vm, o->data.list);
+    break;
   case T_LIT:
   case T_INT:
   case T_DOUBLE:

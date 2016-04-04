@@ -524,10 +524,10 @@ void lat_dividir(lat_vm* vm)
     }
     else {
       if (a->type == T_DOUBLE) {
-        vm->regs[255] = lat_entero_nuevo(vm, ((int)(lat_obtener_decimal(a) / tmp)));
+        vm->regs[255] = lat_decimal_nuevo(vm, (lat_obtener_decimal(a) / tmp));
       }
       else {
-        vm->regs[255] = lat_entero_nuevo(vm, ((int)(lat_obtener_entero(a) / tmp)));
+        vm->regs[255] = lat_decimal_nuevo(vm, (lat_obtener_entero(a) / tmp));
       }
     }
   }
@@ -743,26 +743,26 @@ void lat_llamar_funcion(lat_vm* vm, lat_objeto* func)
     lat_bytecode cur;
     int pos;
     for (pos = 0, cur = inslist[pos]; cur.ins != OP_END; cur = inslist[++pos]) {
-#if DEBUG_VM
+/*#if DEBUG_VM
       printf("%6i\t", pos);
-#endif
+#endif*/
       switch (cur.ins) {
       case OP_END:
-#if DEBUG_VM
+/*#if DEBUG_VM
         printf("END");
-#endif
+#endif*/
         return;
         break;
       case OP_NOP:
-#if DEBUG_VM
+/*#if DEBUG_VM
         printf("NOP");
-#endif
+#endif*/
         break;
       case OP_PUSH:
         lat_apilar(vm, vm->regs[cur.a]);
-#if DEBUG_VM
+/*#if DEBUG_VM
         printf("PUSH r%i", cur.a);
-#endif
+#endif*/
         break;
       case OP_POP:
         vm->regs[cur.a] = lat_desapilar(vm);
