@@ -524,10 +524,10 @@ void lat_dividir(lat_vm* vm)
     }
     else {
       if (a->type == T_DOUBLE) {
-        vm->regs[255] = lat_entero_nuevo(vm, ((int)(lat_obtener_decimal(a) / tmp)));
+        vm->regs[255] = lat_decimal_nuevo(vm, (lat_obtener_decimal(a) / tmp));
       }
       else {
-        vm->regs[255] = lat_entero_nuevo(vm, ((int)(lat_obtener_entero(a) / tmp)));
+        vm->regs[255] = lat_decimal_nuevo(vm, (lat_obtener_entero(a) / tmp));
       }
     }
   }
