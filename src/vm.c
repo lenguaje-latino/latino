@@ -743,26 +743,26 @@ void lat_llamar_funcion(lat_vm* vm, lat_objeto* func)
     lat_bytecode cur;
     int pos;
     for (pos = 0, cur = inslist[pos]; cur.ins != OP_END; cur = inslist[++pos]) {
-/*#if DEBUG_VM
+#if DEBUG_VM
       printf("%6i\t", pos);
-#endif*/
+#endif
       switch (cur.ins) {
       case OP_END:
-/*#if DEBUG_VM
+#if DEBUG_VM
         printf("END");
-#endif*/
+#endif
         return;
         break;
       case OP_NOP:
-/*#if DEBUG_VM
+#if DEBUG_VM
         printf("NOP");
-#endif*/
+#endif
         break;
       case OP_PUSH:
         lat_apilar(vm, vm->regs[cur.a]);
-/*#if DEBUG_VM
+#if DEBUG_VM
         printf("PUSH r%i", cur.a);
-#endif*/
+#endif
         break;
       case OP_POP:
         vm->regs[cur.a] = lat_desapilar(vm);
@@ -837,6 +837,14 @@ void lat_llamar_funcion(lat_vm* vm, lat_objeto* func)
 #if DEBUG_VM
         printf("LISTGETITEM r%i, r%i", cur.a, cur.b);
 #endif
+        break;
+      case OP_LISTSETITEM:{
+         lat_objeto *l = vm->regs[cur.a];
+         modify_list_element(l->data.list, vm->regs[cur.b], (int) cur.meta);
+#if DEBUG_VM
+        printf("LISTSETITEM r%i, r%i", cur.a, cur.b);
+#endif
+        }
         break;
       case OP_STOREDICT:
         //TODO: Pendiente

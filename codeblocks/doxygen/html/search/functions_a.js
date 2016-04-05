@@ -5,7 +5,7 @@ var searchData=
   ['nodo_5fliberar',['nodo_liberar',['../ast_8h.html#a6c3aaaa7b32216b8a68f50c08daf04c2',1,'ast.c']]],
   ['nodo_5fnuevo',['nodo_nuevo',['../ast_8h.html#ae41b36a179e66ca672c24e42580e90d8',1,'ast.c']]],
   ['nodo_5fnuevo_5fasignacion',['nodo_nuevo_asignacion',['../ast_8h.html#af8423d8a844abb6ac0cdd46d1820af2b',1,'ast.c']]],
-  ['nodo_5fnuevo_5fasignacion_5flista',['nodo_nuevo_asignacion_lista',['../ast_8h.html#a6c32fe8c08f8a124eaca63bc37cf7120',1,'ast.c']]],
+  ['nodo_5fnuevo_5fasignacion_5flista',['nodo_nuevo_asignacion_lista_elem',['../ast_8h.html#a6c32fe8c08f8a124eaca63bc37cf7120',1,'ast.c']]],
   ['nodo_5fnuevo_5fcadena',['nodo_nuevo_cadena',['../ast_8h.html#a1a8bf6cc2e374760b22bc917266ab6ac',1,'ast.c']]],
   ['nodo_5fnuevo_5fconstante',['nodo_nuevo_constante',['../ast_8h.html#ab3fac911f9be668068c78e5a82c18a96',1,'ast.c']]],
   ['nodo_5fnuevo_5fdecimal',['nodo_nuevo_decimal',['../ast_8h.html#a8d71529610db13a67918162dd67bfaaf',1,'ast.c']]],

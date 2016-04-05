@@ -56,6 +56,7 @@ typedef enum lat_ins {
   OP_PUSHLIST,    /**< Inserta la lista en la pila */
   OP_POPLIST,    /**< Extrae la lista de la pila */
   OP_LISTGETITEM,    /**< Obtiene un valor de la lista */
+  OP_LISTSETITEM,    /**< Asigna un valor de la lista */
   OP_MOV,    /**< Mueve valores a los registros de la MV */
   OP_GLOBALNS,    /**< Almacena variables globales */
   OP_LOCALNS,    /**< Almacena variables locales */
