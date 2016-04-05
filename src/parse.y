@@ -129,6 +129,7 @@ declaration:
       TIDENTIFIER '=' expression { $$ = nodo_nuevo_asignacion($3, $1); }
     | TIDENTIFIER '=' '[' list_items ']' { $$ = nodo_nuevo_asignacion(nodo_nuevo(NODO_LISTA, $4, NULL), $1); }
     | TIDENTIFIER '[' TINT ']' '=' expression { $$ = nodo_nuevo_asignacion_lista_elem($6, $1, $3); }
+    | TIDENTIFIER '[' TIDENTIFIER ']' '=' expression { $$ = nodo_nuevo_asignacion_lista_elem($6, $1, $3); }
     | TIDENTIFIER OP_CONCAT_IGUAL expression { $$ = nodo_nuevo_asignacion((nodo_nuevo_operador(NODO_CONCATENAR, $1, $3)), $1); }
     | TCONSTANT '=' constant_expression { $$ = nodo_nuevo_asignacion($3, $1); }
     | unary_expression { $$ = $1; }

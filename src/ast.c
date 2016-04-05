@@ -448,11 +448,13 @@ int nodo_analizar(lat_vm *vm, ast *node, lat_bytecode *bcode, int i) {
     nodo_lista_elem *elem = ((nodo_lista_elem *)node);
     if (elem->exp) {
       pn(vm, elem->exp);
-      dbc(OP_MOV, 2, 255, NULL);
+      dbc(OP_MOV, 3, 255, NULL);
     }
     if(elem->id) {
+        pn(vm, elem->pos);
+        dbc(OP_MOV, 4, 255, NULL);
         pn(vm, elem->id);
-        dbc(OP_LISTSETITEM, 255, 2, elem->pos->valor->v.i);
+        dbc(OP_LISTSETITEM, 255, 3, (void*)4);
     }
   } break;
   case NODO_LISTA_OBTENER_ELEMENTO:{

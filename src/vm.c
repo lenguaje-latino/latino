@@ -734,6 +734,18 @@ lat_bytecode lat_bc(lat_ins i, int a, int b, void* meta)
   return ret;
 }
 
+static void modify_list_element(list_node* l, void* data, int pos){
+  list_node* c;
+  int i = -1;
+  for (c = l; c->next != NULL; c = c->next) {
+    if(i == pos) {
+        c->data = data;
+        return;
+    }
+    i++;
+  }
+}
+
 void lat_llamar_funcion(lat_vm* vm, lat_objeto* func)
 {
   if (func->type == T_FUNC) {
@@ -840,7 +852,11 @@ void lat_llamar_funcion(lat_vm* vm, lat_objeto* func)
         break;
       case OP_LISTSETITEM:{
          lat_objeto *l = vm->regs[cur.a];
-         modify_list_element(l->data.list, vm->regs[cur.b], (int) cur.meta);
+         lat_objeto *pos = vm->regs[(int)cur.meta];
+         if(pos->type != T_INT){
+            lat_registrar_error("%s", "la posicion de la lista no es un entero");
+         }
+         modify_list_element(l->data.list, (lat_objeto*)vm->regs[cur.b], pos->data.i);
 #if DEBUG_VM
         printf("LISTSETITEM r%i, r%i", cur.a, cur.b);
 #endif

@@ -6,16 +6,16 @@
 		<Option makefile_is_custom="1" />
 		<Option default_target="latino" />
 		<Option compiler="gcc" />
-		<Option virtualFolders="CMake Files/;CMake Files/src/;" />
+		<Option virtualFolders="CMake Files\;CMake Files\src\;" />
 		<Build>
 			<Target title="all">
 				<Option type="4" />
 				<Option compiler="gcc" />
 				<MakeCommands>
-					<Build command='/usr/bin/make -f &quot;/home/primi/src/latino/codeblocks/Makefile&quot;  VERBOSE=1 all' />
-					<CompileFile command='/usr/bin/make -f &quot;/home/primi/src/latino/codeblocks/Makefile&quot;  VERBOSE=1 &quot;$file&quot;' />
-					<Clean command='/usr/bin/make -f &quot;/home/primi/src/latino/codeblocks/Makefile&quot;  VERBOSE=1 clean' />
-					<DistClean command='/usr/bin/make -f &quot;/home/primi/src/latino/codeblocks/Makefile&quot;  VERBOSE=1 clean' />
+					<Build command='C:/gcc/bin/gmake.exe -f &quot;C:/src/latino/codeblocks/Makefile&quot;  VERBOSE=1 all' />
+					<CompileFile command='C:/gcc/bin/gmake.exe -f &quot;C:/src/latino/codeblocks/Makefile&quot;  VERBOSE=1 &quot;$file&quot;' />
+					<Clean command='C:/gcc/bin/gmake.exe -f &quot;C:/src/latino/codeblocks/Makefile&quot;  VERBOSE=1 clean' />
+					<DistClean command='C:/gcc/bin/gmake.exe -f &quot;C:/src/latino/codeblocks/Makefile&quot;  VERBOSE=1 clean' />
 					<AskRebuildNeeded command="$make -q -f $makefile $target" />
 					<SilentBuild command="$make -f $makefile $target &gt; $(CMD_NULL)" />
 				</MakeCommands>
@@ -24,10 +24,10 @@
 				<Option type="4" />
 				<Option compiler="gcc" />
 				<MakeCommands>
-					<Build command='/usr/bin/make -f &quot;/home/primi/src/latino/codeblocks/Makefile&quot;  VERBOSE=1 edit_cache' />
-					<CompileFile command='/usr/bin/make -f &quot;/home/primi/src/latino/codeblocks/Makefile&quot;  VERBOSE=1 &quot;$file&quot;' />
-					<Clean command='/usr/bin/make -f &quot;/home/primi/src/latino/codeblocks/Makefile&quot;  VERBOSE=1 clean' />
-					<DistClean command='/usr/bin/make -f &quot;/home/primi/src/latino/codeblocks/Makefile&quot;  VERBOSE=1 clean' />
+					<Build command='C:/gcc/bin/gmake.exe -f &quot;C:/src/latino/codeblocks/Makefile&quot;  VERBOSE=1 edit_cache' />
+					<CompileFile command='C:/gcc/bin/gmake.exe -f &quot;C:/src/latino/codeblocks/Makefile&quot;  VERBOSE=1 &quot;$file&quot;' />
+					<Clean command='C:/gcc/bin/gmake.exe -f &quot;C:/src/latino/codeblocks/Makefile&quot;  VERBOSE=1 clean' />
+					<DistClean command='C:/gcc/bin/gmake.exe -f &quot;C:/src/latino/codeblocks/Makefile&quot;  VERBOSE=1 clean' />
 					<AskRebuildNeeded command="$make -q -f $makefile $target" />
 					<SilentBuild command="$make -f $makefile $target &gt; $(CMD_NULL)" />
 				</MakeCommands>
@@ -36,69 +36,67 @@
 				<Option type="4" />
 				<Option compiler="gcc" />
 				<MakeCommands>
-					<Build command='/usr/bin/make -f &quot;/home/primi/src/latino/codeblocks/Makefile&quot;  VERBOSE=1 rebuild_cache' />
-					<CompileFile command='/usr/bin/make -f &quot;/home/primi/src/latino/codeblocks/Makefile&quot;  VERBOSE=1 &quot;$file&quot;' />
-					<Clean command='/usr/bin/make -f &quot;/home/primi/src/latino/codeblocks/Makefile&quot;  VERBOSE=1 clean' />
-					<DistClean command='/usr/bin/make -f &quot;/home/primi/src/latino/codeblocks/Makefile&quot;  VERBOSE=1 clean' />
+					<Build command='C:/gcc/bin/gmake.exe -f &quot;C:/src/latino/codeblocks/Makefile&quot;  VERBOSE=1 rebuild_cache' />
+					<CompileFile command='C:/gcc/bin/gmake.exe -f &quot;C:/src/latino/codeblocks/Makefile&quot;  VERBOSE=1 &quot;$file&quot;' />
+					<Clean command='C:/gcc/bin/gmake.exe -f &quot;C:/src/latino/codeblocks/Makefile&quot;  VERBOSE=1 clean' />
+					<DistClean command='C:/gcc/bin/gmake.exe -f &quot;C:/src/latino/codeblocks/Makefile&quot;  VERBOSE=1 clean' />
 					<AskRebuildNeeded command="$make -q -f $makefile $target" />
 					<SilentBuild command="$make -f $makefile $target &gt; $(CMD_NULL)" />
 				</MakeCommands>
 			</Target>
 			<Target title="latino">
-				<Option output="/home/primi/src/latino/codeblocks/bin/latino" prefix_auto="0" extension_auto="0" />
-				<Option working_dir="/home/primi/src/latino/codeblocks/bin" />
+				<Option output="C:/src/latino/codeblocks/bin/latino.exe" prefix_auto="0" extension_auto="0" />
+				<Option working_dir="C:/src/latino/codeblocks/bin" />
 				<Option object_output="./" />
 				<Option type="1" />
 				<Option compiler="gcc" />
 				<Option parameters="../../ejemplos/debug.lat" />
 				<Compiler>
+					<Add option="-D_CRT_SECURE_NO_WARNINGS" />
 					<Add option="-D_DEBUG" />
 					<Add option="-D__STDC_CONSTANT_MACROS" />
 					<Add option="-D__STDC_FORMAT_MACROS" />
 					<Add option="-D__STDC_LIMIT_MACROS" />
-					<Add directory="/usr/include" />
-					<Add directory="/usr/include/c++/4.8" />
-					<Add directory="/usr/include/c++/4.8/backward" />
-					<Add directory="/usr/include/x86_64-linux-gnu" />
-					<Add directory="/usr/include/x86_64-linux-gnu/c++/4.8" />
-					<Add directory="/usr/lib/gcc/x86_64-linux-gnu/4.8/include" />
-					<Add directory="/usr/lib/gcc/x86_64-linux-gnu/4.8/include-fixed" />
-					<Add directory="/usr/local/include" />
+					<Add directory="c:/gcc/bin/../lib/gcc/i686-w64-mingw32/4.9.4/../../../../i686-w64-mingw32/include" />
+					<Add directory="c:/gcc/bin/../lib/gcc/i686-w64-mingw32/4.9.4/../../../../include/c++/4.9.4" />
+					<Add directory="c:/gcc/bin/../lib/gcc/i686-w64-mingw32/4.9.4/../../../../include/c++/4.9.4/backward" />
+					<Add directory="c:/gcc/bin/../lib/gcc/i686-w64-mingw32/4.9.4/../../../../include/c++/4.9.4/i686-w64-mingw32" />
+					<Add directory="c:/gcc/bin/../lib/gcc/i686-w64-mingw32/4.9.4/include" />
+					<Add directory="c:/gcc/bin/../lib/gcc/i686-w64-mingw32/4.9.4/include-fixed" />
 				</Compiler>
 				<MakeCommands>
-					<Build command='/usr/bin/make -f &quot;/home/primi/src/latino/codeblocks/src/Makefile&quot;  VERBOSE=1 latino' />
-					<CompileFile command='/usr/bin/make -f &quot;/home/primi/src/latino/codeblocks/src/Makefile&quot;  VERBOSE=1 &quot;$file&quot;' />
-					<Clean command='/usr/bin/make -f &quot;/home/primi/src/latino/codeblocks/src/Makefile&quot;  VERBOSE=1 clean' />
-					<DistClean command='/usr/bin/make -f &quot;/home/primi/src/latino/codeblocks/src/Makefile&quot;  VERBOSE=1 clean' />
+					<Build command='C:/gcc/bin/gmake.exe -f &quot;C:/src/latino/codeblocks/src/Makefile&quot;  VERBOSE=1 latino' />
+					<CompileFile command='C:/gcc/bin/gmake.exe -f &quot;C:/src/latino/codeblocks/src/Makefile&quot;  VERBOSE=1 &quot;$file&quot;' />
+					<Clean command='C:/gcc/bin/gmake.exe -f &quot;C:/src/latino/codeblocks/src/Makefile&quot;  VERBOSE=1 clean' />
+					<DistClean command='C:/gcc/bin/gmake.exe -f &quot;C:/src/latino/codeblocks/src/Makefile&quot;  VERBOSE=1 clean' />
 					<AskRebuildNeeded command="$make -q -f $makefile $target" />
 					<SilentBuild command="$make -f $makefile $target &gt; $(CMD_NULL)" />
 				</MakeCommands>
 			</Target>
 			<Target title="latino/fast">
-				<Option output="/home/primi/src/latino/codeblocks/bin/latino" prefix_auto="0" extension_auto="0" />
-				<Option working_dir="/home/primi/src/latino/codeblocks/bin" />
+				<Option output="C:/src/latino/codeblocks/bin/latino.exe" prefix_auto="0" extension_auto="0" />
+				<Option working_dir="C:/src/latino/codeblocks/bin" />
 				<Option object_output="./" />
 				<Option type="1" />
 				<Option compiler="gcc" />
 				<Compiler>
+					<Add option="-D_CRT_SECURE_NO_WARNINGS" />
 					<Add option="-D_DEBUG" />
 					<Add option="-D__STDC_CONSTANT_MACROS" />
 					<Add option="-D__STDC_FORMAT_MACROS" />
 					<Add option="-D__STDC_LIMIT_MACROS" />
-					<Add directory="/usr/include" />
-					<Add directory="/usr/include/c++/4.8" />
-					<Add directory="/usr/include/c++/4.8/backward" />
-					<Add directory="/usr/include/x86_64-linux-gnu" />
-					<Add directory="/usr/include/x86_64-linux-gnu/c++/4.8" />
-					<Add directory="/usr/lib/gcc/x86_64-linux-gnu/4.8/include" />
-					<Add directory="/usr/lib/gcc/x86_64-linux-gnu/4.8/include-fixed" />
-					<Add directory="/usr/local/include" />
+					<Add directory="c:/gcc/bin/../lib/gcc/i686-w64-mingw32/4.9.4/../../../../i686-w64-mingw32/include" />
+					<Add directory="c:/gcc/bin/../lib/gcc/i686-w64-mingw32/4.9.4/../../../../include/c++/4.9.4" />
+					<Add directory="c:/gcc/bin/../lib/gcc/i686-w64-mingw32/4.9.4/../../../../include/c++/4.9.4/backward" />
+					<Add directory="c:/gcc/bin/../lib/gcc/i686-w64-mingw32/4.9.4/../../../../include/c++/4.9.4/i686-w64-mingw32" />
+					<Add directory="c:/gcc/bin/../lib/gcc/i686-w64-mingw32/4.9.4/include" />
+					<Add directory="c:/gcc/bin/../lib/gcc/i686-w64-mingw32/4.9.4/include-fixed" />
 				</Compiler>
 				<MakeCommands>
-					<Build command='/usr/bin/make -f &quot;/home/primi/src/latino/codeblocks/src/Makefile&quot;  VERBOSE=1 latino/fast' />
-					<CompileFile command='/usr/bin/make -f &quot;/home/primi/src/latino/codeblocks/src/Makefile&quot;  VERBOSE=1 &quot;$file&quot;' />
-					<Clean command='/usr/bin/make -f &quot;/home/primi/src/latino/codeblocks/src/Makefile&quot;  VERBOSE=1 clean' />
-					<DistClean command='/usr/bin/make -f &quot;/home/primi/src/latino/codeblocks/src/Makefile&quot;  VERBOSE=1 clean' />
+					<Build command='C:/gcc/bin/gmake.exe -f &quot;C:/src/latino/codeblocks/src/Makefile&quot;  VERBOSE=1 latino/fast' />
+					<CompileFile command='C:/gcc/bin/gmake.exe -f &quot;C:/src/latino/codeblocks/src/Makefile&quot;  VERBOSE=1 &quot;$file&quot;' />
+					<Clean command='C:/gcc/bin/gmake.exe -f &quot;C:/src/latino/codeblocks/src/Makefile&quot;  VERBOSE=1 clean' />
+					<DistClean command='C:/gcc/bin/gmake.exe -f &quot;C:/src/latino/codeblocks/src/Makefile&quot;  VERBOSE=1 clean' />
 					<AskRebuildNeeded command="$make -q -f $makefile $target" />
 					<SilentBuild command="$make -f $makefile $target &gt; $(CMD_NULL)" />
 				</MakeCommands>
@@ -112,51 +110,87 @@
 		</Unit>
 		<Unit filename="../src/ast.c">
 			<Option compilerVar="CC" />
+			<Option target="latino" />
 		</Unit>
-		<Unit filename="../src/ast.h" />
-		<Unit filename="../src/khash.h" />
+		<Unit filename="../src/ast.h">
+			<Option target="latino" />
+		</Unit>
+		<Unit filename="../src/khash.h">
+			<Option target="latino" />
+		</Unit>
 		<Unit filename="../src/latino.c">
 			<Option compilerVar="CC" />
+			<Option target="latino" />
 		</Unit>
-		<Unit filename="../src/latino.h" />
+		<Unit filename="../src/latino.h">
+			<Option target="latino" />
+		</Unit>
 		<Unit filename="../src/lex.c">
 			<Option compilerVar="CC" />
+			<Option target="latino" />
 		</Unit>
-		<Unit filename="../src/lex.h" />
+		<Unit filename="../src/lex.h">
+			<Option target="latino" />
+		</Unit>
 		<Unit filename="../src/libio.c">
 			<Option compilerVar="CC" />
+			<Option target="latino" />
 		</Unit>
-		<Unit filename="../src/libio.h" />
+		<Unit filename="../src/libio.h">
+			<Option target="latino" />
+		</Unit>
 		<Unit filename="../src/libmath.c">
 			<Option compilerVar="CC" />
+			<Option target="latino" />
 		</Unit>
-		<Unit filename="../src/libmath.h" />
+		<Unit filename="../src/libmath.h">
+			<Option target="latino" />
+		</Unit>
 		<Unit filename="../src/libmem.c">
 			<Option compilerVar="CC" />
+			<Option target="latino" />
 		</Unit>
-		<Unit filename="../src/libmem.h" />
+		<Unit filename="../src/libmem.h">
+			<Option target="latino" />
+		</Unit>
 		<Unit filename="../src/libstring.c">
 			<Option compilerVar="CC" />
+			<Option target="latino" />
 		</Unit>
-		<Unit filename="../src/libstring.h" />
+		<Unit filename="../src/libstring.h">
+			<Option target="latino" />
+		</Unit>
 		<Unit filename="../src/object.c">
 			<Option compilerVar="CC" />
+			<Option target="latino" />
 		</Unit>
-		<Unit filename="../src/object.h" />
+		<Unit filename="../src/object.h">
+			<Option target="latino" />
+		</Unit>
 		<Unit filename="../src/parse.c">
 			<Option compilerVar="CC" />
+			<Option target="latino" />
 		</Unit>
-		<Unit filename="../src/parse.h" />
+		<Unit filename="../src/parse.h">
+			<Option target="latino" />
+		</Unit>
 		<Unit filename="../src/utils.c">
 			<Option compilerVar="CC" />
+			<Option target="latino" />
 		</Unit>
-		<Unit filename="../src/utils.h" />
+		<Unit filename="../src/utils.h">
+			<Option target="latino" />
+		</Unit>
 		<Unit filename="../src/vm.c">
 			<Option compilerVar="CC" />
+			<Option target="latino" />
 		</Unit>
-		<Unit filename="../src/vm.h" />
+		<Unit filename="../src/vm.h">
+			<Option target="latino" />
+		</Unit>
 		<Extensions>
 			<code_completion />
+			<envvars />
 			<debugger />
 		</Extensions>
 	</Project>

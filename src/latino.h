@@ -64,7 +64,7 @@ defined(__ELF__)
 /** Version de Latino */
 #define LAT_VERSION "Latino " LAT_VERSION_MAYOR "." LAT_VERSION_MENOR
 /** Derechos de Latino */
-#define LAT_DERECHOS LAT_VERSION "\nTodos los derechos reservados (C) 2015-2016. Mexico"
+#define LAT_DERECHOS LAT_VERSION "\nTodos los derechos reservados (C) 2015-2016. Latinoamerica"
 
 /** Afirmar (asset), sirve para testear una condicion */
 #define lat_afirmar(cond) ((void)(false && (cond)))

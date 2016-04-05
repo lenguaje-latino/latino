@@ -406,18 +406,6 @@ int length_list(list_node* l)
   return a;
 }
 
-void modify_list_element(list_node* l, void* data, int pos){
-  list_node* c;
-  int i = 0;
-  for (c = l; c->next != NULL; c = c->next) {
-    if(i == pos) {
-        c->data = data;
-        return;
-    }
-    i++;
-  }
-}
-
 hash_map* make_hash_map()
 {
   hash_map* ret = (hash_map*)lat_asignar_memoria(sizeof(hash_map));
