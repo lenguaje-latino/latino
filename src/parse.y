@@ -128,8 +128,8 @@ statement: /* empty */ { $$ = NULL; }
 declaration:
       TIDENTIFIER '=' expression { $$ = nodo_nuevo_asignacion($3, $1); }
     | TIDENTIFIER '=' '[' list_items ']' { $$ = nodo_nuevo_asignacion(nodo_nuevo(NODO_LISTA, $4, NULL), $1); }
+    | TIDENTIFIER '[' TINT ']' '=' expression { $$ = nodo_nuevo_asignacion_lista_elem($6, $1, $3); }
     | TIDENTIFIER OP_CONCAT_IGUAL expression { $$ = nodo_nuevo_asignacion((nodo_nuevo_operador(NODO_CONCATENAR, $1, $3)), $1); }
-    | TIDENTIFIER '[' TINT ']' '=' expression { $$ = nodo_nuevo_asignacion_lista($6, $1, $3); }
     | TCONSTANT '=' constant_expression { $$ = nodo_nuevo_asignacion($3, $1); }
     | unary_expression { $$ = $1; }
     ;
@@ -233,8 +233,8 @@ identifier_list: /* empty */ { $$ = NULL; }
     ;
 
 list_items: /* empty */ { $$ = NULL; }
-    | list_items ',' expression { $$ = nodo_nuevo(NODO_LISTA_ASIGNAR_ELEMENTO, $3, $1); }
-    | expression { $$ = nodo_nuevo(NODO_LISTA_ASIGNAR_ELEMENTO, $1, NULL); }
+    | list_items ',' expression { $$ = nodo_nuevo(NODO_LISTA_AGREGAR_ELEMENTO, $3, $1); }
+    | expression { $$ = nodo_nuevo(NODO_LISTA_AGREGAR_ELEMENTO, $1, NULL); }
     ;
 
 dict_items: /* empty */ { $$ = nodo_nuevo(NODO_DICCIONARIO_ELEMENTOS, NULL, NULL); }

@@ -190,7 +190,7 @@ ast *nodo_nuevo_asignacion(ast *v, ast *s) {
   return a;
 }
 
-ast *nodo_nuevo_asignacion_lista(ast *exp, ast *id, ast *pos) {
+ast *nodo_nuevo_asignacion_lista_elem(ast *exp, ast *id, ast *pos) {
   nodo_lista_elem *a = (nodo_lista_elem*)lat_asignar_memoria(sizeof(nodo_lista_elem));
   a->tipo = NODO_LISTA_ASIGNAR_ELEMENTO;
   a->exp = exp;
@@ -248,7 +248,7 @@ void nodo_liberar(ast *a) {
   if (a) {
     switch (a->tipo) {
     case NODO_BLOQUE:
-    case NODO_LISTA_ASIGNAR_ELEMENTO:
+    case NODO_LISTA_AGREGAR_ELEMENTO:
       if (a->r)
         nodo_liberar(a->r);
       if (a->l)
@@ -435,15 +435,25 @@ int nodo_analizar(lat_vm *vm, ast *node, lat_bytecode *bcode, int i) {
     dbc(OP_MOV, 255, nested, NULL);
     nested--;
   } break;
-  case NODO_LISTA_ASIGNAR_ELEMENTO: {
-    nodo_lista_elem *nElem = ((nodo_lista_elem *)node);
-    /*if (node->l) {
+  case NODO_LISTA_AGREGAR_ELEMENTO: {
+    if (node->l) {
       pn(vm, node->l);
       dbc(OP_PUSHLIST, nested, 255, NULL);
     }
     if (node->r) {
       pn(vm, node->r);
-    }*/
+    }
+  } break;
+  case NODO_LISTA_ASIGNAR_ELEMENTO: {
+    nodo_lista_elem *elem = ((nodo_lista_elem *)node);
+    if (elem->exp) {
+      pn(vm, elem->exp);
+      dbc(OP_MOV, 2, 255, NULL);
+    }
+    if(elem->id) {
+        pn(vm, elem->id);
+        dbc(OP_LISTSETITEM, 255, 2, elem->pos->valor->v.i);
+    }
   } break;
   case NODO_LISTA_OBTENER_ELEMENTO:{
     if (node->l){
