@@ -5,14 +5,17 @@
 #define YYENABLE_NLS 1
 #define YYLEX_PARAM &yylval, &yylloc
 
-#include <libintl.h> /* INFRINGES ON USER NAME SPACE */
-#define YY_(Msgid) dgettext ("bison-runtime", Msgid)
-
 #include <stddef.h>
 
 #include "latino.h"
 #include "ast.h"
 #include "lex.h"
+
+#if defined(__GNUC__) && ((__GNUC__ * 100 + __GNUC_MINOR__) >= 302) && \
+defined(__ELF__)
+#include <libintl.h> /* INFRINGES ON USER NAME SPACE */
+#define YY_(Msgid) dgettext ("bison-runtime", Msgid)
+#endif
 
 int yyerror(struct YYLTYPE *yylloc_param, void *scanner, struct ast **root, const char *s);
 int yylex (YYSTYPE * yylval_param,YYLTYPE * yylloc_param ,yyscan_t yyscanner);
