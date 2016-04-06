@@ -1,5 +1,5 @@
 l = [1, 2, 3]
-a = l[0]
-#i = "a"
-l[i] = 10
+#Pendiente implementar
+#a = l[0]
+l[1] = 10
 escribir(l)

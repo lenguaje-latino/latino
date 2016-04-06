@@ -24,6 +24,7 @@ THE SOFTWARE.
 
 #include <stdio.h>
 #include <string.h>
+#include <locale.h>
 
 #include "latino.h"
 #include "parse.h"
@@ -40,6 +41,7 @@ static char *buffer;
 int yyparse(ast **expression, yyscan_t scanner);
 
 ast *lat_analizar_expresion(char *expr) {
+  setlocale (LC_MESSAGES, "");
   ast *ret = NULL;
   yyscan_t scanner;
   YY_BUFFER_STATE state;
@@ -99,6 +101,7 @@ int main(int argc, char *argv[]) {
   Menu propiedades del proyecto-> Debugging -> Command Arguments. Agregar
   $(SolutionDir)..\ejemplos\debug.lat
   */
+
   int i;
   char *infile = NULL;
   for (i = 1; i < argc; i++) {

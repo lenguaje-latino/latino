@@ -2,7 +2,11 @@
 /* bison -y -oparse.c parse.y */
 #define YYERROR_VERBOSE 1
 #define YYDEBUG 1
+#define YYENABLE_NLS 1
 #define YYLEX_PARAM &yylval, &yylloc
+
+#include <libintl.h> /* INFRINGES ON USER NAME SPACE */
+#define YY_(Msgid) dgettext ("bison-runtime", Msgid)
 
 #include <stddef.h>
 

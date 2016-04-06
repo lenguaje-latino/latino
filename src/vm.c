@@ -797,7 +797,7 @@ void lat_llamar_funcion(lat_vm* vm, lat_objeto* func)
       case OP_STORECHAR:
         vm->regs[cur.a] = ((lat_objeto*)cur.meta);
 #if DEBUG_VM
-        printf("STORECHAR r%i, %c", cur.a, ((lat_objeto*)cur.meta)->data.c);
+        printf("STORECHAR r%i, %i", cur.a, ((lat_objeto*)cur.meta)->data.c);
 #endif
         break;
       case OP_STOREINT: {
