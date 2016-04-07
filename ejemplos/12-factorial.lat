@@ -21,4 +21,4 @@ funcion factorial(n)
 fin
 
 imprimir("el factorial de 5 es: ")
-imprimir(factorial([5]))
+imprimir(factorial(5))
