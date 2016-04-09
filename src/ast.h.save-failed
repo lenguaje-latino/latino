@@ -95,7 +95,7 @@ typedef enum {
   NODO_DECREMENTO,
   NODO_CONCATENAR,
   NODO_LISTA,
-  NODO_LISTA_ASIGNAR_ELEMENTO,
+  NODO_LISTA_AGREGAR_ELEMENTO,
   NODO_LISTA_OBTENER_ELEMENTO,
   NODO_DICCIONARIO,
   NODO_DICCIONARIO_ELEMENTOS,
@@ -141,7 +141,7 @@ ast *nodo_nuevo_identificador(const char *s);
 ast *nodo_nuevo_constante(char *s, int num_linea, int num_columna);
 ast *nodo_nuevo_operador(nodo_tipo nt, ast *l, ast *r);
 ast *nodo_nuevo_asignacion(ast *s, ast *v);
-ast *nodo_nuevo_asignacion_lista(ast *s, ast *v, ast *pos);
+ast *nodo_nuevo_asignacion_lista_elem(ast *s, ast *v, ast *pos);
 ast *nodo_nuevo_logico(int b);
 ast *nodo_nuevo_entero(long i);
 ast *nodo_nuevo_decimal(double d);
