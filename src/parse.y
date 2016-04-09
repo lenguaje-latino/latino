@@ -79,7 +79,7 @@ int yylex (YYSTYPE * yylval_param,YYLTYPE * yylloc_param ,yyscan_t yyscanner);
 %type <node> iteration_statement jump_statement function_definition
 %type <node> argument_expression_list declaration primary_expression
 %type <node> constant_expression function_call selection_statement identifier_list
-%type <node> list_items
+%type <node> list_items get_list_item
 %type <node> dict_items dict_item dict_key
 
 /* get_dict_item */
@@ -202,6 +202,7 @@ expression:
     | '-' expression %prec UMINUS { $$ = nodo_nuevo_operador(NODO_MENOS_UNARIO, $2, NULL); }
     | primary_expression
     | function_call
+    | get_list_item
     ;
 
 function_call:
@@ -244,6 +245,10 @@ list_items: /* empty */ { $$ = NULL; }
     | list_items ',' expression { $$ = nodo_nuevo(NODO_LISTA_AGREGAR_ELEMENTO, $3, $1); }
     | expression { $$ = nodo_nuevo(NODO_LISTA_AGREGAR_ELEMENTO, $1, NULL); }
     ;
+
+get_list_item:
+      TIDENTIFIER '[' TINT ']' { $$ = nodo_nuevo(NODO_LISTA_OBTENER_ELEMENTO, $3, $1); }
+    | TIDENTIFIER '[' TIDENTIFIER ']' { $$ = nodo_nuevo(NODO_LISTA_OBTENER_ELEMENTO, $3, $1); }
 
 dict_items: /* empty */ { $$ = nodo_nuevo(NODO_DICCIONARIO_ELEMENTOS, NULL, NULL); }
     | dict_items ',' dict_item { $$ = nodo_nuevo(NODO_DICCIONARIO_ELEMENTOS, $3, $1); }

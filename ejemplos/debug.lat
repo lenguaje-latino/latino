@@ -1,5 +1,7 @@
 l = [1, 2, 3]
 #Pendiente implementar
-a = l[0]
-#l[1] = 10
+l[1] = 'hola'
+i = 2
+a = l[i]
+escribir(a)
 escribir(l)

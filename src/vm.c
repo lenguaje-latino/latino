@@ -734,9 +734,13 @@ lat_bytecode lat_bc(lat_ins i, int a, int b, void* meta)
   return ret;
 }
 
-static void modify_list_element(list_node* l, void* data, int pos){
+static void list_modify_element(list_node* l, void* data, int pos){
   list_node* c;
   int i = -1;
+  int tam = length_list(l);
+  if(pos > tam){
+    pos = tam - 1;
+  }
   for (c = l; c->next != NULL; c = c->next) {
     if(i == pos) {
         c->data = data;
@@ -744,6 +748,23 @@ static void modify_list_element(list_node* l, void* data, int pos){
     }
     i++;
   }
+}
+
+static lat_objeto* list_get_element(list_node* l, int pos){
+  list_node* c;
+  int i = -1;
+  int tam = length_list(l);
+  //si el indice esta fuera de rango, traemos el ultimo
+  if(pos > tam){
+    pos = tam - 1;
+  }
+  for (c = l; c->next != NULL; c = c->next) {
+    if(i == pos) {
+        return (lat_objeto *)c->data;
+    }
+    i++;
+  }
+  lat_registrar_error("Indice fuera de rango");
 }
 
 void lat_llamar_funcion(lat_vm* vm, lat_objeto* func)
@@ -843,20 +864,23 @@ void lat_llamar_funcion(lat_vm* vm, lat_objeto* func)
         printf("POPLIST r%i, r%i", cur.a, cur.b);
 #endif
         break;
-      case OP_LISTGETITEM:
-        //TODO: Pendiente
-        //vm->regs[cur.a] = lat_desapilar_lista(vm->regs[cur.b]);
+      case OP_LISTGETITEM:{
+        lat_objeto *l = vm->regs[cur.a];
+        lat_objeto *pos = vm->regs[cur.b];
+        vm->regs[cur.a] = list_get_element(l->data.list, pos->data.i);
+
 #if DEBUG_VM
         printf("LISTGETITEM r%i, r%i", cur.a, cur.b);
 #endif
-        break;
+      }
+      break;
       case OP_LISTSETITEM:{
-         lat_objeto *l = vm->regs[cur.a];
-         lat_objeto *pos = vm->regs[(int)cur.meta];
-         if(pos->type != T_INT){
-            lat_registrar_error("%s", "la posicion de la lista no es un entero");
-         }
-         modify_list_element(l->data.list, (lat_objeto*)vm->regs[cur.b], pos->data.i);
+        lat_objeto *l = vm->regs[cur.a];
+        lat_objeto *pos = vm->regs[(int)cur.meta];
+        if(pos->type != T_INT){
+          lat_registrar_error("%s", "la posicion de la lista no es un entero");
+        }
+        list_modify_element(l->data.list, (lat_objeto*)vm->regs[cur.b], pos->data.i);
 #if DEBUG_VM
         printf("LISTSETITEM r%i, r%i", cur.a, cur.b);
 #endif

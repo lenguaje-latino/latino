@@ -8,161 +8,140 @@
       <Option virtualFolders="CMake Files\;CMake Files\src\;" />
       <Build>
       <Target title="all">
-         <Option working_dir="C:/src/latino/codeblocks" />
+         <Option working_dir="/home/primi/src/latino/codeblocks" />
          <Option type="4" />
          <MakeCommands>
-            <Build command="C:/gcc/bin/gmake.exe -f &quot;C:/src/latino/codeblocks/Makefile&quot;  VERBOSE=1 all" />
-            <CompileFile command="C:/gcc/bin/gmake.exe -f &quot;C:/src/latino/codeblocks/Makefile&quot;  VERBOSE=1 &quot;$file&quot;" />
-            <Clean command="C:/gcc/bin/gmake.exe -f &quot;C:/src/latino/codeblocks/Makefile&quot;  VERBOSE=1 clean" />
-            <DistClean command="C:/gcc/bin/gmake.exe -f &quot;C:/src/latino/codeblocks/Makefile&quot;  VERBOSE=1 clean" />
+            <Build command="/usr/bin/make -f &quot;/home/primi/src/latino/codeblocks/Makefile&quot;  VERBOSE=1 all" />
+            <CompileFile command="/usr/bin/make -f &quot;/home/primi/src/latino/codeblocks/Makefile&quot;  VERBOSE=1 &quot;$file&quot;" />
+            <Clean command="/usr/bin/make -f &quot;/home/primi/src/latino/codeblocks/Makefile&quot;  VERBOSE=1 clean" />
+            <DistClean command="/usr/bin/make -f &quot;/home/primi/src/latino/codeblocks/Makefile&quot;  VERBOSE=1 clean" />
          </MakeCommands>
       </Target>
       <Target title="edit_cache">
-         <Option working_dir="C:/src/latino/codeblocks" />
+         <Option working_dir="/home/primi/src/latino/codeblocks" />
          <Option type="4" />
          <MakeCommands>
-            <Build command="C:/gcc/bin/gmake.exe -f &quot;C:/src/latino/codeblocks/Makefile&quot;  VERBOSE=1 edit_cache" />
-            <CompileFile command="C:/gcc/bin/gmake.exe -f &quot;C:/src/latino/codeblocks/Makefile&quot;  VERBOSE=1 &quot;$file&quot;" />
-            <Clean command="C:/gcc/bin/gmake.exe -f &quot;C:/src/latino/codeblocks/Makefile&quot;  VERBOSE=1 clean" />
-            <DistClean command="C:/gcc/bin/gmake.exe -f &quot;C:/src/latino/codeblocks/Makefile&quot;  VERBOSE=1 clean" />
+            <Build command="/usr/bin/make -f &quot;/home/primi/src/latino/codeblocks/Makefile&quot;  VERBOSE=1 edit_cache" />
+            <CompileFile command="/usr/bin/make -f &quot;/home/primi/src/latino/codeblocks/Makefile&quot;  VERBOSE=1 &quot;$file&quot;" />
+            <Clean command="/usr/bin/make -f &quot;/home/primi/src/latino/codeblocks/Makefile&quot;  VERBOSE=1 clean" />
+            <DistClean command="/usr/bin/make -f &quot;/home/primi/src/latino/codeblocks/Makefile&quot;  VERBOSE=1 clean" />
          </MakeCommands>
       </Target>
       <Target title="rebuild_cache">
-         <Option working_dir="C:/src/latino/codeblocks" />
+         <Option working_dir="/home/primi/src/latino/codeblocks" />
          <Option type="4" />
          <MakeCommands>
-            <Build command="C:/gcc/bin/gmake.exe -f &quot;C:/src/latino/codeblocks/Makefile&quot;  VERBOSE=1 rebuild_cache" />
-            <CompileFile command="C:/gcc/bin/gmake.exe -f &quot;C:/src/latino/codeblocks/Makefile&quot;  VERBOSE=1 &quot;$file&quot;" />
-            <Clean command="C:/gcc/bin/gmake.exe -f &quot;C:/src/latino/codeblocks/Makefile&quot;  VERBOSE=1 clean" />
-            <DistClean command="C:/gcc/bin/gmake.exe -f &quot;C:/src/latino/codeblocks/Makefile&quot;  VERBOSE=1 clean" />
+            <Build command="/usr/bin/make -f &quot;/home/primi/src/latino/codeblocks/Makefile&quot;  VERBOSE=1 rebuild_cache" />
+            <CompileFile command="/usr/bin/make -f &quot;/home/primi/src/latino/codeblocks/Makefile&quot;  VERBOSE=1 &quot;$file&quot;" />
+            <Clean command="/usr/bin/make -f &quot;/home/primi/src/latino/codeblocks/Makefile&quot;  VERBOSE=1 clean" />
+            <DistClean command="/usr/bin/make -f &quot;/home/primi/src/latino/codeblocks/Makefile&quot;  VERBOSE=1 clean" />
          </MakeCommands>
       </Target>
       <Target title="latino">
-         <Option output="C:/src/latino/codeblocks/bin/latino.exe" prefix_auto="0" extension_auto="0" />
-         <Option working_dir="C:/src/latino/codeblocks/bin" />
+         <Option output="/home/primi/src/latino/codeblocks/bin/latino" prefix_auto="0" extension_auto="0" />
+         <Option working_dir="/home/primi/src/latino/codeblocks/bin" />
          <Option object_output="./" />
          <Option type="1" />
          <Option compiler="gcc" />
          <Compiler>
-            <Add option="-D_CRT_SECURE_NO_WARNINGS" />
             <Add option="-D_DEBUG" />
             <Add option="-D__STDC_CONSTANT_MACROS" />
             <Add option="-D__STDC_FORMAT_MACROS" />
             <Add option="-D__STDC_LIMIT_MACROS" />
-            <Add directory="c:\gcc\bin\../lib/gcc/i686-w64-mingw32/4.9.4/../../../../i686-w64-mingw32/include" />
-            <Add directory="c:\gcc\bin\../lib/gcc/i686-w64-mingw32/4.9.4/../../../../include/c++/4.9.4" />
-            <Add directory="c:\gcc\bin\../lib/gcc/i686-w64-mingw32/4.9.4/../../../../include/c++/4.9.4/backward" />
-            <Add directory="c:\gcc\bin\../lib/gcc/i686-w64-mingw32/4.9.4/../../../../include/c++/4.9.4/i686-w64-mingw32" />
-            <Add directory="c:\gcc\bin\../lib/gcc/i686-w64-mingw32/4.9.4/include" />
-            <Add directory="c:\gcc\bin\../lib/gcc/i686-w64-mingw32/4.9.4/include-fixed" />
+            <Add directory="/usr/include" />
+            <Add directory="/usr/include/c++/4.8" />
+            <Add directory="/usr/include/c++/4.8/backward" />
+            <Add directory="/usr/include/x86_64-linux-gnu" />
+            <Add directory="/usr/include/x86_64-linux-gnu/c++/4.8" />
+            <Add directory="/usr/lib/gcc/x86_64-linux-gnu/4.8/include" />
+            <Add directory="/usr/lib/gcc/x86_64-linux-gnu/4.8/include-fixed" />
+            <Add directory="/usr/local/include" />
          </Compiler>
          <MakeCommands>
-            <Build command="C:/gcc/bin/gmake.exe -f &quot;C:/src/latino/codeblocks/src/Makefile&quot;  VERBOSE=1 latino" />
-            <CompileFile command="C:/gcc/bin/gmake.exe -f &quot;C:/src/latino/codeblocks/src/Makefile&quot;  VERBOSE=1 &quot;$file&quot;" />
-            <Clean command="C:/gcc/bin/gmake.exe -f &quot;C:/src/latino/codeblocks/src/Makefile&quot;  VERBOSE=1 clean" />
-            <DistClean command="C:/gcc/bin/gmake.exe -f &quot;C:/src/latino/codeblocks/src/Makefile&quot;  VERBOSE=1 clean" />
+            <Build command="/usr/bin/make -f &quot;/home/primi/src/latino/codeblocks/src/Makefile&quot;  VERBOSE=1 latino" />
+            <CompileFile command="/usr/bin/make -f &quot;/home/primi/src/latino/codeblocks/src/Makefile&quot;  VERBOSE=1 &quot;$file&quot;" />
+            <Clean command="/usr/bin/make -f &quot;/home/primi/src/latino/codeblocks/src/Makefile&quot;  VERBOSE=1 clean" />
+            <DistClean command="/usr/bin/make -f &quot;/home/primi/src/latino/codeblocks/src/Makefile&quot;  VERBOSE=1 clean" />
          </MakeCommands>
       </Target>
       <Target title="latino/fast">
-         <Option output="C:/src/latino/codeblocks/bin/latino.exe" prefix_auto="0" extension_auto="0" />
-         <Option working_dir="C:/src/latino/codeblocks/bin" />
+         <Option output="/home/primi/src/latino/codeblocks/bin/latino" prefix_auto="0" extension_auto="0" />
+         <Option working_dir="/home/primi/src/latino/codeblocks/bin" />
          <Option object_output="./" />
          <Option type="1" />
          <Option compiler="gcc" />
          <Compiler>
-            <Add option="-D_CRT_SECURE_NO_WARNINGS" />
             <Add option="-D_DEBUG" />
             <Add option="-D__STDC_CONSTANT_MACROS" />
             <Add option="-D__STDC_FORMAT_MACROS" />
             <Add option="-D__STDC_LIMIT_MACROS" />
-            <Add directory="c:\gcc\bin\../lib/gcc/i686-w64-mingw32/4.9.4/../../../../i686-w64-mingw32/include" />
-            <Add directory="c:\gcc\bin\../lib/gcc/i686-w64-mingw32/4.9.4/../../../../include/c++/4.9.4" />
-            <Add directory="c:\gcc\bin\../lib/gcc/i686-w64-mingw32/4.9.4/../../../../include/c++/4.9.4/backward" />
-            <Add directory="c:\gcc\bin\../lib/gcc/i686-w64-mingw32/4.9.4/../../../../include/c++/4.9.4/i686-w64-mingw32" />
-            <Add directory="c:\gcc\bin\../lib/gcc/i686-w64-mingw32/4.9.4/include" />
-            <Add directory="c:\gcc\bin\../lib/gcc/i686-w64-mingw32/4.9.4/include-fixed" />
+            <Add directory="/usr/include" />
+            <Add directory="/usr/include/c++/4.8" />
+            <Add directory="/usr/include/c++/4.8/backward" />
+            <Add directory="/usr/include/x86_64-linux-gnu" />
+            <Add directory="/usr/include/x86_64-linux-gnu/c++/4.8" />
+            <Add directory="/usr/lib/gcc/x86_64-linux-gnu/4.8/include" />
+            <Add directory="/usr/lib/gcc/x86_64-linux-gnu/4.8/include-fixed" />
+            <Add directory="/usr/local/include" />
          </Compiler>
          <MakeCommands>
-            <Build command="C:/gcc/bin/gmake.exe -f &quot;C:/src/latino/codeblocks/src/Makefile&quot;  VERBOSE=1 latino/fast" />
-            <CompileFile command="C:/gcc/bin/gmake.exe -f &quot;C:/src/latino/codeblocks/src/Makefile&quot;  VERBOSE=1 &quot;$file&quot;" />
-            <Clean command="C:/gcc/bin/gmake.exe -f &quot;C:/src/latino/codeblocks/src/Makefile&quot;  VERBOSE=1 clean" />
-            <DistClean command="C:/gcc/bin/gmake.exe -f &quot;C:/src/latino/codeblocks/src/Makefile&quot;  VERBOSE=1 clean" />
+            <Build command="/usr/bin/make -f &quot;/home/primi/src/latino/codeblocks/src/Makefile&quot;  VERBOSE=1 latino/fast" />
+            <CompileFile command="/usr/bin/make -f &quot;/home/primi/src/latino/codeblocks/src/Makefile&quot;  VERBOSE=1 &quot;$file&quot;" />
+            <Clean command="/usr/bin/make -f &quot;/home/primi/src/latino/codeblocks/src/Makefile&quot;  VERBOSE=1 clean" />
+            <DistClean command="/usr/bin/make -f &quot;/home/primi/src/latino/codeblocks/src/Makefile&quot;  VERBOSE=1 clean" />
          </MakeCommands>
       </Target>
       </Build>
-      <Unit filename="C:/src/latino/src/ast.c">
-         <Option target="latino"/>
+      <Unit filename="/home/primi/src/latino/src/ast.c">
       </Unit>
-      <Unit filename="C:/src/latino/src/ast.h">
-         <Option target="latino"/>
+      <Unit filename="/home/primi/src/latino/src/latino.c">
       </Unit>
-      <Unit filename="C:/src/latino/src/khash.h">
-         <Option target="latino"/>
+      <Unit filename="/home/primi/src/latino/src/lex.c">
       </Unit>
-      <Unit filename="C:/src/latino/src/latino.c">
-         <Option target="latino"/>
+      <Unit filename="/home/primi/src/latino/src/libio.c">
       </Unit>
-      <Unit filename="C:/src/latino/src/latino.h">
-         <Option target="latino"/>
+      <Unit filename="/home/primi/src/latino/src/libmath.c">
       </Unit>
-      <Unit filename="C:/src/latino/src/lex.c">
-         <Option target="latino"/>
+      <Unit filename="/home/primi/src/latino/src/libmem.c">
       </Unit>
-      <Unit filename="C:/src/latino/src/lex.h">
-         <Option target="latino"/>
+      <Unit filename="/home/primi/src/latino/src/libstring.c">
       </Unit>
-      <Unit filename="C:/src/latino/src/libio.c">
-         <Option target="latino"/>
+      <Unit filename="/home/primi/src/latino/src/object.c">
       </Unit>
-      <Unit filename="C:/src/latino/src/libio.h">
-         <Option target="latino"/>
+      <Unit filename="/home/primi/src/latino/src/parse.c">
       </Unit>
-      <Unit filename="C:/src/latino/src/libmath.c">
-         <Option target="latino"/>
+      <Unit filename="/home/primi/src/latino/src/utils.c">
       </Unit>
-      <Unit filename="C:/src/latino/src/libmath.h">
-         <Option target="latino"/>
+      <Unit filename="/home/primi/src/latino/src/vm.c">
       </Unit>
-      <Unit filename="C:/src/latino/src/libmem.c">
-         <Option target="latino"/>
+      <Unit filename="/home/primi/src/latino/src/ast.h">
       </Unit>
-      <Unit filename="C:/src/latino/src/libmem.h">
-         <Option target="latino"/>
+      <Unit filename="/home/primi/src/latino/src/khash.h">
       </Unit>
-      <Unit filename="C:/src/latino/src/libstring.c">
-         <Option target="latino"/>
+      <Unit filename="/home/primi/src/latino/src/latino.h">
       </Unit>
-      <Unit filename="C:/src/latino/src/libstring.h">
-         <Option target="latino"/>
+      <Unit filename="/home/primi/src/latino/src/lex.h">
       </Unit>
-      <Unit filename="C:/src/latino/src/object.c">
-         <Option target="latino"/>
+      <Unit filename="/home/primi/src/latino/src/libio.h">
       </Unit>
-      <Unit filename="C:/src/latino/src/object.h">
-         <Option target="latino"/>
+      <Unit filename="/home/primi/src/latino/src/libmath.h">
       </Unit>
-      <Unit filename="C:/src/latino/src/parse.c">
-         <Option target="latino"/>
+      <Unit filename="/home/primi/src/latino/src/libmem.h">
       </Unit>
-      <Unit filename="C:/src/latino/src/parse.h">
-         <Option target="latino"/>
+      <Unit filename="/home/primi/src/latino/src/libstring.h">
       </Unit>
-      <Unit filename="C:/src/latino/src/utils.c">
-         <Option target="latino"/>
+      <Unit filename="/home/primi/src/latino/src/object.h">
       </Unit>
-      <Unit filename="C:/src/latino/src/utils.h">
-         <Option target="latino"/>
+      <Unit filename="/home/primi/src/latino/src/parse.h">
       </Unit>
-      <Unit filename="C:/src/latino/src/vm.c">
-         <Option target="latino"/>
+      <Unit filename="/home/primi/src/latino/src/utils.h">
       </Unit>
-      <Unit filename="C:/src/latino/src/vm.h">
-         <Option target="latino"/>
+      <Unit filename="/home/primi/src/latino/src/vm.h">
       </Unit>
-      <Unit filename="C:/src/latino/CMakeLists.txt">
+      <Unit filename="/home/primi/src/latino/CMakeLists.txt">
           <Option virtualFolder="CMake Files\" />
       </Unit>
-      <Unit filename="C:/src/latino/src/CMakeLists.txt">
+      <Unit filename="/home/primi/src/latino/src/CMakeLists.txt">
           <Option virtualFolder="CMake Files\src\" />
       </Unit>
    </Project>
