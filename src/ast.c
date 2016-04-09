@@ -460,11 +460,11 @@ int nodo_analizar(lat_vm *vm, ast *node, lat_bytecode *bcode, int i) {
   case NODO_LISTA_OBTENER_ELEMENTO:{
     if (node->l){
       pn(vm, node->l);
-      dbc(OP_POPLIST, nested, 255, NULL);
+      dbc(OP_MOV, 3, 255, NULL);
     }
     if (node->r){
       pn(vm, node->r);
-      dbc(OP_LISTGETITEM, nested, 255, NULL);
+      dbc(OP_LISTGETITEM, 255, 3, NULL);
     }
   } break;
   case NODO_DICCIONARIO: {
