@@ -1,5 +1,7 @@
-escribir("Dame un numero (a):")
-num1 = leer()
-escribir("Dame otro numero (b):")
-num2 = leer()
-escribir("El resultado es de a / b es: " . num1 / num2)
+l = [1, 2, 3]
+#Pendiente implementar
+l[1] = 'hola'
+i = 2
+a = l[i]
+escribir(a)
+escribir(l)

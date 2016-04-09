@@ -272,7 +272,7 @@ char* padRight(char *base, int n, char* c) {
 }
 
 char *replace(char *str, char *orig, char *rep)
-{  
+{
   char *buffer = lat_asignar_memoria(MAX_STR_LENGTH);
   char *p;
   if (!(p = strstr(str, orig))){
