@@ -51,6 +51,7 @@ defined(__ELF__)
 #include <dlfcn.h>
 #include <unistd.h>
 #else
+#define WINDOWS
 /* Visual Leak Detector for Visual C++ */
 //#include <vld.h>
 #define LAT_FUNC extern

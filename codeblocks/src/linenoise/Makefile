@@ -72,14 +72,14 @@ rebuild_cache/fast: rebuild_cache
 
 # The main all target
 all: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/primi/src/latino/codeblocks/CMakeFiles /home/primi/src/latino/codeblocks/CMakeFiles/progress.marks
-	$(MAKE) -f CMakeFiles/Makefile2 all
+	cd /home/primi/src/latino/codeblocks && $(CMAKE_COMMAND) -E cmake_progress_start /home/primi/src/latino/codeblocks/CMakeFiles /home/primi/src/latino/codeblocks/src/linenoise/CMakeFiles/progress.marks
+	cd /home/primi/src/latino/codeblocks && $(MAKE) -f CMakeFiles/Makefile2 src/linenoise/all
 	$(CMAKE_COMMAND) -E cmake_progress_start /home/primi/src/latino/codeblocks/CMakeFiles 0
 .PHONY : all
 
 # The main clean target
 clean:
-	$(MAKE) -f CMakeFiles/Makefile2 clean
+	cd /home/primi/src/latino/codeblocks && $(MAKE) -f CMakeFiles/Makefile2 src/linenoise/clean
 .PHONY : clean
 
 # The main clean target
@@ -88,44 +88,56 @@ clean/fast: clean
 
 # Prepare targets for installation.
 preinstall: all
-	$(MAKE) -f CMakeFiles/Makefile2 preinstall
+	cd /home/primi/src/latino/codeblocks && $(MAKE) -f CMakeFiles/Makefile2 src/linenoise/preinstall
 .PHONY : preinstall
 
 # Prepare targets for installation.
 preinstall/fast:
-	$(MAKE) -f CMakeFiles/Makefile2 preinstall
+	cd /home/primi/src/latino/codeblocks && $(MAKE) -f CMakeFiles/Makefile2 src/linenoise/preinstall
 .PHONY : preinstall/fast
 
 # clear depends
 depend:
-	$(CMAKE_COMMAND) -H$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR) --check-build-system CMakeFiles/Makefile.cmake 1
+	cd /home/primi/src/latino/codeblocks && $(CMAKE_COMMAND) -H$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR) --check-build-system CMakeFiles/Makefile.cmake 1
 .PHONY : depend
 
-#=============================================================================
-# Target rules for targets named latino
+# Convenience name for target.
+src/linenoise/CMakeFiles/linenoise.dir/rule:
+	cd /home/primi/src/latino/codeblocks && $(MAKE) -f CMakeFiles/Makefile2 src/linenoise/CMakeFiles/linenoise.dir/rule
+.PHONY : src/linenoise/CMakeFiles/linenoise.dir/rule
 
-# Build rule for target.
-latino: cmake_check_build_system
-	$(MAKE) -f CMakeFiles/Makefile2 latino
-.PHONY : latino
-
-# fast build rule for target.
-latino/fast:
-	$(MAKE) -f src/CMakeFiles/latino.dir/build.make src/CMakeFiles/latino.dir/build
-.PHONY : latino/fast
-
-#=============================================================================
-# Target rules for targets named linenoise
-
-# Build rule for target.
-linenoise: cmake_check_build_system
-	$(MAKE) -f CMakeFiles/Makefile2 linenoise
+# Convenience name for target.
+linenoise: src/linenoise/CMakeFiles/linenoise.dir/rule
 .PHONY : linenoise
 
 # fast build rule for target.
 linenoise/fast:
-	$(MAKE) -f src/linenoise/CMakeFiles/linenoise.dir/build.make src/linenoise/CMakeFiles/linenoise.dir/build
+	cd /home/primi/src/latino/codeblocks && $(MAKE) -f src/linenoise/CMakeFiles/linenoise.dir/build.make src/linenoise/CMakeFiles/linenoise.dir/build
 .PHONY : linenoise/fast
+
+linenoise.o: linenoise.c.o
+.PHONY : linenoise.o
+
+# target to build an object file
+linenoise.c.o:
+	cd /home/primi/src/latino/codeblocks && $(MAKE) -f src/linenoise/CMakeFiles/linenoise.dir/build.make src/linenoise/CMakeFiles/linenoise.dir/linenoise.c.o
+.PHONY : linenoise.c.o
+
+linenoise.i: linenoise.c.i
+.PHONY : linenoise.i
+
+# target to preprocess a source file
+linenoise.c.i:
+	cd /home/primi/src/latino/codeblocks && $(MAKE) -f src/linenoise/CMakeFiles/linenoise.dir/build.make src/linenoise/CMakeFiles/linenoise.dir/linenoise.c.i
+.PHONY : linenoise.c.i
+
+linenoise.s: linenoise.c.s
+.PHONY : linenoise.s
+
+# target to generate assembly for a file
+linenoise.c.s:
+	cd /home/primi/src/latino/codeblocks && $(MAKE) -f src/linenoise/CMakeFiles/linenoise.dir/build.make src/linenoise/CMakeFiles/linenoise.dir/linenoise.c.s
+.PHONY : linenoise.c.s
 
 # Help Target
 help:
@@ -134,9 +146,11 @@ help:
 	@echo "... clean"
 	@echo "... depend"
 	@echo "... edit_cache"
-	@echo "... rebuild_cache"
-	@echo "... latino"
 	@echo "... linenoise"
+	@echo "... rebuild_cache"
+	@echo "... linenoise.o"
+	@echo "... linenoise.i"
+	@echo "... linenoise.s"
 .PHONY : help
 
 
@@ -148,6 +162,6 @@ help:
 # No rule that depends on this can have commands that come from listfiles
 # because they might be regenerated.
 cmake_check_build_system:
-	$(CMAKE_COMMAND) -H$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR) --check-build-system CMakeFiles/Makefile.cmake 0
+	cd /home/primi/src/latino/codeblocks && $(CMAKE_COMMAND) -H$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR) --check-build-system CMakeFiles/Makefile.cmake 0
 .PHONY : cmake_check_build_system
 
