@@ -24,16 +24,20 @@ THE SOFTWARE.
 
 #include <stdio.h>
 #include <string.h>
-//#include <locale.h>
 
 #include "latino.h"
 #include "parse.h"
 #include "lex.h"
 #include "ast.h"
 
+#ifndef WINDOWS
+#include <locale.h>
+#include "linenoise/linenoise.h"
+#endif
+
 /* 1 para debuguear analizador */
 int yydebug = 0;
-int debug = 0;
+int debug = 1;
 
 static FILE *file;
 static char *buffer;
@@ -41,7 +45,9 @@ static char *buffer;
 int yyparse(ast **expression, yyscan_t scanner);
 
 ast *lat_analizar_expresion(char *expr) {
-  //setlocale (LC_MESSAGES, "");
+#ifndef WINDOWS
+setlocale (LC_MESSAGES, "");
+#endif // WINDOWS
   ast *ret = NULL;
   yyscan_t scanner;
   YY_BUFFER_STATE state;
@@ -68,7 +74,6 @@ ast *lat_analizar_archivo(char *infile) {
     extension = dot + 1;
   }
   if (strcmp(extension, "lat") != 0) {
-    //TODO: Pendiente corregir ortografia
     printf("El archivo no contiene la extension .lat\n");
     return NULL;
   }
@@ -95,6 +100,25 @@ void lat_version(){
     printf("%s\n", LAT_DERECHOS);
 }
 
+#ifndef WINDOWS
+void latino_repl(lat_vm *vm)
+{
+  linenoiseSetMultiLine(1);
+	char *input;
+	char *buffer;
+	while ((input = linenoise("latino> ")) != NULL) {
+		if (input[0] != '\0') {
+			buffer = calloc(strlen(input) + 1, sizeof(char));
+			strcpy(buffer, input);
+			buffer[strlen(input)] = '\n';
+			//linenoiseHistoryAdd(input);
+			lat_objeto *curexpr = nodo_analizar_arbol(vm, lat_analizar_expresion(buffer));
+			lat_llamar_funcion(vm, curexpr);
+		}
+	}
+}
+#endif
+
 int main(int argc, char *argv[]) {
   /*
   Para debuguear en visual studio:
@@ -115,17 +139,26 @@ int main(int argc, char *argv[]) {
     }
   }
 
-  ast *tree = lat_analizar_archivo(infile);
-  if (!tree) {
-    return EXIT_FAILURE;
+  if(argc > 1) {
+    ast *tree = lat_analizar_archivo(infile);
+    if (!tree) {
+      return EXIT_FAILURE;
+    }
+    lat_vm *vm = lat_crear_maquina_virtual();
+    lat_objeto *mainFunc = nodo_analizar_arbol(vm, tree);
+    lat_llamar_funcion(vm, mainFunc);
+    lat_apilar(vm, vm->regs[255]);
+    if(file != NULL)
+    {
+      fclose(file);
+    }
   }
-  lat_vm *vm = lat_crear_maquina_virtual();
-  lat_objeto *mainFunc = nodo_analizar_arbol(vm, tree);
-  lat_llamar_funcion(vm, mainFunc);
-  lat_apilar(vm, vm->regs[255]);
-  if(file != NULL)
-  {
-    fclose(file);
+
+#ifndef WINDOWS
+  else{
+  	lat_vm *vm = lat_crear_maquina_virtual();
+    latino_repl(vm);
   }
+#endif // WINDOWS
   return EXIT_SUCCESS;
 }

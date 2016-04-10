@@ -283,6 +283,30 @@ libstring.c.s:
 	cd /home/primi/src/latino/codeblocks && $(MAKE) -f src/CMakeFiles/latino.dir/build.make src/CMakeFiles/latino.dir/libstring.c.s
 .PHONY : libstring.c.s
 
+linenoise/linenoise.o: linenoise/linenoise.c.o
+.PHONY : linenoise/linenoise.o
+
+# target to build an object file
+linenoise/linenoise.c.o:
+	cd /home/primi/src/latino/codeblocks && $(MAKE) -f src/CMakeFiles/latino.dir/build.make src/CMakeFiles/latino.dir/linenoise/linenoise.c.o
+.PHONY : linenoise/linenoise.c.o
+
+linenoise/linenoise.i: linenoise/linenoise.c.i
+.PHONY : linenoise/linenoise.i
+
+# target to preprocess a source file
+linenoise/linenoise.c.i:
+	cd /home/primi/src/latino/codeblocks && $(MAKE) -f src/CMakeFiles/latino.dir/build.make src/CMakeFiles/latino.dir/linenoise/linenoise.c.i
+.PHONY : linenoise/linenoise.c.i
+
+linenoise/linenoise.s: linenoise/linenoise.c.s
+.PHONY : linenoise/linenoise.s
+
+# target to generate assembly for a file
+linenoise/linenoise.c.s:
+	cd /home/primi/src/latino/codeblocks && $(MAKE) -f src/CMakeFiles/latino.dir/build.make src/CMakeFiles/latino.dir/linenoise/linenoise.c.s
+.PHONY : linenoise/linenoise.c.s
+
 object.o: object.c.o
 .PHONY : object.o
 
@@ -409,6 +433,9 @@ help:
 	@echo "... libstring.o"
 	@echo "... libstring.i"
 	@echo "... libstring.s"
+	@echo "... linenoise/linenoise.o"
+	@echo "... linenoise/linenoise.i"
+	@echo "... linenoise/linenoise.s"
 	@echo "... object.o"
 	@echo "... object.i"
 	@echo "... object.s"
