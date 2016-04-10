@@ -11,8 +11,7 @@
 #include "ast.h"
 #include "lex.h"
 
-#if defined(__GNUC__) && ((__GNUC__ * 100 + __GNUC_MINOR__) >= 302) && \
-defined(__ELF__)
+#ifndef WINDOWS
 #include <libintl.h> /* INFRINGES ON USER NAME SPACE */
 #define YY_(Msgid) dgettext ("bison-runtime", Msgid)
 #endif
