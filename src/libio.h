@@ -36,7 +36,7 @@ THE SOFTWARE.
 
 /** Lee de la entrada estandar (teclado)
   *
-  * \param vm: Maquina virtual de latino
+  * \param vm: Máquina virtual de latino
   *
   */
 void lat_leer(lat_vm *vm);
@@ -50,7 +50,7 @@ void lat_leer_archivo(lat_vm *vm);
 
 /** Escribir en un archivo
   *
-  * \param vm: Maquina virtual de latino
+  * \param vm: Máquina virtual de latino
   *
   */
 void lat_escribir_archivo(lat_vm *vm);

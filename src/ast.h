@@ -303,7 +303,7 @@ void nodo_liberar(ast *a);
 
 /** Analiza el arbol abstracto de sintaxis
   *
-  * \param vm: Referencia a un objeto tipo maquina virtual
+  * \param vm: Referencia a un objeto tipo máquina virtual
   * \param tree: Arbol abstracto de sintaxis
   * \return lat_object: objeto generico
   *
@@ -312,7 +312,7 @@ lat_objeto *nodo_analizar_arbol(lat_vm *vm, ast *tree);
 
 /** Analiza un nodo del arbol abstracto de sintaxis
   *
-  * \param vm: Referencia a un objeto tipo maquina virtual
+  * \param vm: Referencia a un objeto tipo máquina virtual
   * \param node: Nodo AST
   * \param bcode: Referencia a un objeto tipo bytecode
   * \param i: numero de instruccion actual
