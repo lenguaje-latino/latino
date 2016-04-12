@@ -23,21 +23,19 @@ THE SOFTWARE.
 */
 
 #include <stdio.h>
+#include <stdlib.h>
 #include <string.h>
+#include <locale.h>
 
+#include "linenoise/linenoise.h"
 #include "latino.h"
 #include "parse.h"
 #include "lex.h"
 #include "ast.h"
 
-#ifndef WINDOWS
-#include <locale.h>
-#include "linenoise/linenoise.h"
-#endif
 
 /* 1 para debuguear analizador */
 int yydebug = 0;
-int debug = 1;
 
 static FILE *file;
 static char *buffer;
@@ -45,13 +43,10 @@ static char *buffer;
 int yyparse(ast **expression, yyscan_t scanner);
 
 ast *lat_analizar_expresion(char *expr) {
-#ifndef WINDOWS
-setlocale (LC_MESSAGES, "");
-#endif // WINDOWS
+  setlocale (LC_ALL, "");
   ast *ret = NULL;
   yyscan_t scanner;
   YY_BUFFER_STATE state;
-
   lex_state scan_state = {.insert = 0};
   yylex_init_extra(&scan_state, &scanner);
   state = yy_scan_string(expr, scanner);
@@ -97,13 +92,29 @@ ast *lat_analizar_archivo(char *infile) {
 }
 
 void lat_version(){
-    printf("%s\n", LAT_DERECHOS);
+    printf("%s\n", LAT_DERECHOS);    
 }
 
-#ifndef WINDOWS
-void latino_repl(lat_vm *vm)
+void lat_ayuda(){
+    lat_version();
+    printf("%s\n", "Uso de latino: latino [opcion] archivo");
+    printf("%s\n", "Opciones:");
+    printf("%s\n", "-h           : Muestra la ayuda de Latino");
+    printf("%s\n", "-i           : Inicia el interprete de Latino (Modo interactivo)");
+    printf("%s\n", "-v           : Muestra la version de Latino");
+    printf("%s\n", "archivo      : Nombre del archivo con extension .lat");
+    printf("%s\n", "Ctrl-C       : Para salir");    
+    printf("%s\n", "Variables de entorno Latino:");    
+    printf("%s%s\n", "LATINO_PATH  : ", getenv("LATINO_PATH"));
+    printf("%s%s\n", "LATINO_HOME  : ", getenv("LATINO_HOME"));
+    printf("%s%s\n", "LATINO_LIB   : ", getenv("LATINO_LIB"));
+    printf("%s%s\n", "LC_LANG      : ", getenv("LC_LANG"));
+    printf("%s%s\n", "HOME         : ", getenv("HOME"));
+    printf("%s%s\n", "PATH         : ", getenv("PATH"));    
+}
+
+static void lat_repl(lat_vm *vm)
 {
-  linenoiseSetMultiLine(1);
 	char *input;
 	char *buffer;
 	while ((input = linenoise("latino> ")) != NULL) {
@@ -111,13 +122,11 @@ void latino_repl(lat_vm *vm)
 			buffer = calloc(strlen(input) + 1, sizeof(char));
 			strcpy(buffer, input);
 			buffer[strlen(input)] = '\n';
-			//linenoiseHistoryAdd(input);
 			lat_objeto *curexpr = nodo_analizar_arbol(vm, lat_analizar_expresion(buffer));
 			lat_llamar_funcion(vm, curexpr);
 		}
 	}
 }
-#endif
 
 int main(int argc, char *argv[]) {
   /*
@@ -128,23 +137,27 @@ int main(int argc, char *argv[]) {
 
   int i;
   char *infile = NULL;
+  lat_vm *vm = lat_crear_maquina_virtual();
   for (i = 1; i < argc; i++) {
-    if (strcmp(argv[i], "-d") == 0) {
-      debug = 1;
-    } else if (strcmp(argv[i], "--version") == 0) {
+    if (strcmp(argv[i], "-v") == 0) {
       lat_version();
+      return EXIT_SUCCESS;
+    } else if (strcmp(argv[i], "-h") == 0) {
+      lat_ayuda();      
+      return EXIT_SUCCESS;
+    } else if (strcmp(argv[i], "-i") == 0) {
+      lat_version();
+      lat_repl(vm);      
       return EXIT_SUCCESS;
     } else{
       infile = argv[i];
     }
-  }
-
+  }  
   if(argc > 1) {
     ast *tree = lat_analizar_archivo(infile);
     if (!tree) {
       return EXIT_FAILURE;
     }
-    lat_vm *vm = lat_crear_maquina_virtual();
     lat_objeto *mainFunc = nodo_analizar_arbol(vm, tree);
     lat_llamar_funcion(vm, mainFunc);
     lat_apilar(vm, vm->regs[255]);
@@ -153,12 +166,10 @@ int main(int argc, char *argv[]) {
       fclose(file);
     }
   }
-
-#ifndef WINDOWS
-  else{
-  	lat_vm *vm = lat_crear_maquina_virtual();
-    latino_repl(vm);
+  else{  	
+    lat_ayuda();
+    lat_repl(vm);
   }
-#endif // WINDOWS
+
   return EXIT_SUCCESS;
 }
