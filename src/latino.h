@@ -84,6 +84,9 @@ extern int debug;
 /** Tamanio maximo de la pila de la maquina virtual */
 #define MAX_STACK_SIZE 255
 
+/** Tamanio maximo de la entrada por teclado */
+#define MAX_INPUT_SIZE 512
+
 /** Interface con flex */
 typedef struct YYLTYPE {
   int first_line;
