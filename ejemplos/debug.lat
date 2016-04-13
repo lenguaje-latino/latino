@@ -1,7 +1,8 @@
-list1 = ['physics', 'chemistry', 1997, 2000]
-list2 = [1, 2, 3, 4, 5, 6, 7 ]
-
-escribir(list1)
-escribir(list2)
-escribir("list1[0]: " . list1[0])
-escribir("list2[1:5]: " . list2[5])
+a = 5
+b = 10
+si (a > 10)
+  c = a
+sino
+  c = b
+fin
+escribir("el mayor es: " . c)
