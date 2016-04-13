@@ -56,6 +56,7 @@ typedef enum lat_ins {
   OP_PUSHLIST,    /**< Inserta la lista en la pila */
   OP_POPLIST,    /**< Extrae la lista de la pila */
   OP_LISTGETITEM,    /**< Obtiene un valor de la lista */
+  OP_LISTSETITEM,    /**< Asigna un valor de la lista */
   OP_MOV,    /**< Mueve valores a los registros de la MV */
   OP_GLOBALNS,    /**< Almacena variables globales */
   OP_LOCALNS,    /**< Almacena variables locales */
@@ -371,6 +372,24 @@ void lat_maximo(lat_vm* vm);
   *\param vm: Apuntador a la MV
   */
 void lat_minimo(lat_vm* vm);
+
+/**\brief Determina si una cadena es entero
+  *
+  *\param vm: Apuntador a la MV
+  */
+void lat_es_entero(lat_vm* vm);
+
+/**\brief Determina si una cadena es decimal
+  *
+  *\param vm: Apuntador a la MV
+  */
+void lat_es_decimal(lat_vm* vm);
+
+/**\brief Formatea un decimal con el numero de caracteres decimales que se especifique
+  *
+  *\param vm: Apuntador a la MV
+  */
+void lat_formato_numero(lat_vm* vm);
 
 /**\brief Crea un objeto bytecode
   *

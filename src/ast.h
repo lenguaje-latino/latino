@@ -102,7 +102,8 @@ typedef enum {
   NODO_DECREMENTO,   /**< Nodo decremento */
   NODO_CONCATENAR,   /**< Nodo concatenar */
   NODO_LISTA,   /**< Nodo lista nueva */
-  NODO_LISTA_ASIGNAR_ELEMENTO,   /**< Nodo asignar elemento a una lista */
+  NODO_LISTA_ASIGNAR_ELEMENTO,   /**< Nodo asignar un nuevo valor a un elemento de la lista */
+  NODO_LISTA_AGREGAR_ELEMENTO,   /**< Nodo agregar elemento a una lista */
   NODO_LISTA_OBTENER_ELEMENTO,   /**< Nodo obtener un elemento de una lista */
   NODO_DICCIONARIO,   /**< Nodo diccionario nuevo */
   NODO_DICCIONARIO_ELEMENTOS,   /**< Nodo elementos de un diccionario */
@@ -202,7 +203,7 @@ ast *nodo_nuevo_asignacion(ast *s, ast *v);
   * \return ast: Un nodo AST
   *
   */
-ast *nodo_nuevo_asignacion_lista(ast *s, ast *v, ast *pos);
+ast *nodo_nuevo_asignacion_lista_elem(ast *s, ast *v, ast *pos);
 
 /** Nuevo nodo tipo Logico (verdadero/falso)
   *

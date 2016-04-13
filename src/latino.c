@@ -23,16 +23,19 @@ THE SOFTWARE.
 */
 
 #include <stdio.h>
+#include <stdlib.h>
 #include <string.h>
+#include <locale.h>
 
+#include "linenoise/linenoise.h"
 #include "latino.h"
 #include "parse.h"
 #include "lex.h"
 #include "ast.h"
 
+
 /* 1 para debuguear analizador */
 int yydebug = 0;
-int debug = 0;
 
 static FILE *file;
 static char *buffer;
@@ -40,10 +43,10 @@ static char *buffer;
 int yyparse(ast **expression, yyscan_t scanner);
 
 ast *lat_analizar_expresion(char *expr) {
+  setlocale (LC_ALL, "");
   ast *ret = NULL;
   yyscan_t scanner;
   YY_BUFFER_STATE state;
-
   lex_state scan_state = {.insert = 0};
   yylex_init_extra(&scan_state, &scanner);
   state = yy_scan_string(expr, scanner);
@@ -66,7 +69,6 @@ ast *lat_analizar_archivo(char *infile) {
     extension = dot + 1;
   }
   if (strcmp(extension, "lat") != 0) {
-    //TODO: Pendiente corregir ortografia
     printf("El archivo no contiene la extension .lat\n");
     return NULL;
   }
@@ -93,36 +95,78 @@ void lat_version(){
     printf("%s\n", LAT_DERECHOS);
 }
 
+void lat_ayuda(){
+    lat_version();
+    printf("%s\n", "Uso de latino: latino [opcion] archivo");
+    printf("%s\n", "Opciones:");
+    printf("%s\n", "-a           : Muestra la Ayuda de Latino");
+    printf("%s\n", "-i           : Inicia el Interprete de Latino (Modo interactivo)");
+    printf("%s\n", "-v           : Muestra la version de Latino");
+    printf("%s\n", "archivo      : Nombre del archivo con extension .lat");
+    printf("%s\n", "Ctrl-C       : Para salir");
+    printf("%s\n", "Variables de entorno:");
+    printf("%s%s\n", "LATINO_HOME  : ", getenv("LATINO_HOME"));    
+    printf("%s%s\n", "HOME         : ", getenv("HOME"));    
+    printf("%s%s\n", "LC_LANG      : ", getenv("LC_LANG"));
+}
+
+static void lat_repl(lat_vm *vm)
+{
+	char *input;
+	char *buffer;
+	while ((input = linenoise("latino> ")) != NULL) {
+		if (input[0] != '\0') {
+			buffer = calloc(strlen(input) + 1, sizeof(char));
+			strcpy(buffer, input);
+			buffer[strlen(input)] = '\n';
+			lat_objeto *curexpr = nodo_analizar_arbol(vm, lat_analizar_expresion(buffer));
+			lat_llamar_funcion(vm, curexpr);
+		}
+	}
+}
+
 int main(int argc, char *argv[]) {
   /*
   Para debuguear en visual studio:
   Menu propiedades del proyecto-> Debugging -> Command Arguments. Agregar
   $(SolutionDir)..\ejemplos\debug.lat
   */
+
   int i;
   char *infile = NULL;
+  lat_vm *vm = lat_crear_maquina_virtual();
   for (i = 1; i < argc; i++) {
-    if (strcmp(argv[i], "-d") == 0) {
-      debug = 1;
-    } else if (strcmp(argv[i], "--version") == 0) {
+    if (strcmp(argv[i], "-v") == 0) {
       lat_version();
+      return EXIT_SUCCESS;
+    } else if (strcmp(argv[i], "-a") == 0) {
+      lat_ayuda();
+      return EXIT_SUCCESS;
+    } else if (strcmp(argv[i], "-i") == 0) {
+      lat_version();
+      lat_repl(vm);
       return EXIT_SUCCESS;
     } else{
       infile = argv[i];
     }
   }
+  if(argc > 1 && infile != NULL) {
+    ast *tree = lat_analizar_archivo(infile);
+    if (!tree) {
+      return EXIT_FAILURE;
+    }
+    lat_objeto *mainFunc = nodo_analizar_arbol(vm, tree);
+    lat_llamar_funcion(vm, mainFunc);
+    lat_apilar(vm, vm->regs[255]);
+    if(file != NULL)
+    {
+      fclose(file);
+    }
+  }
+  else{
+    lat_version();
+    lat_repl(vm);    
+  }
 
-  ast *tree = lat_analizar_archivo(infile);
-  if (!tree) {
-    return EXIT_FAILURE;
-  }
-  lat_vm *vm = lat_crear_maquina_virtual();
-  lat_objeto *mainFunc = nodo_analizar_arbol(vm, tree);
-  lat_llamar_funcion(vm, mainFunc);
-  lat_apilar(vm, vm->regs[255]);
-  if(file != NULL)
-  {
-    fclose(file);
-  }
   return EXIT_SUCCESS;
 }
