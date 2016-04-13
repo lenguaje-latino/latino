@@ -103,7 +103,7 @@ void lat_ayuda(){
     printf("%s\n", "-i           : Inicia el interprete de Latino (Modo interactivo)");
     printf("%s\n", "-v           : Muestra la version de Latino");
     printf("%s\n", "archivo      : Nombre del archivo con extension .lat");
-    printf("%s\n", "Ctrl-C       : Para salir");
+    printf("%s\n", "Ctrl-C       : Para cerrar");
     printf("%s\n", "Variables de entorno:");
     printf("%s%s\n", "LATINO_HOME  : ", getenv("LATINO_HOME"));
     printf("%s%s\n", "LC_LANG      : ", getenv("LC_LANG"));
