@@ -108,7 +108,7 @@ void lat_ayuda(){
     printf("%s%s\n", "LATINO_HOME  : ", getenv("LATINO_HOME"));
     printf("%s%s\n", "LC_LANG      : ", getenv("LC_LANG"));
     printf("%s%s\n", "HOME         : ", getenv("HOME"));
-    printf("%s%s\n", "PATH         : ", getenv("PATH"));
+   // printf("%s%s\n", "PATH         : ", getenv("PATH"));
 }
 
 static void lat_repl(lat_vm *vm)
