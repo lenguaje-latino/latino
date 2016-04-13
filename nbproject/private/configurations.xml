@@ -17,6 +17,8 @@
         </df>
         <df name="CMakeTmp">
         </df>
+        <df name="Progress">
+        </df>
         <in>feature_tests.c</in>
         <in>feature_tests.cxx</in>
       </df>
@@ -28,6 +30,8 @@
           </df>
         </df>
         <df name="src">
+          <df name="linenoise">
+          </df>
         </df>
       </df>
       <df name="codelite">
@@ -40,23 +44,35 @@
       </df>
       <df name="ejemplos">
       </df>
+      <df name="logo">
+      </df>
       <df name="mingw">
         <df name="src">
         </df>
       </df>
       <df name="NotepadPlugin">
       </df>
+      <df name="SetupLatino">
+        <df name="Release">
+        </df>
+      </df>
       <df name="src">
         <df name="CMakeFiles">
           <df name="latino.dir">
+            <df name="linenoise">
+            </df>
           </df>
         </df>
         <df name="linenoise">
+          <in>ConvertUTF.cpp</in>
+          <in>ConvertUTF.h</in>
           <in>example.c</in>
           <in>linenoise.c</in>
+          <in>linenoise.cpp</in>
           <in>linenoise.h</in>
           <in>utf8.c</in>
           <in>utf8.h</in>
+          <in>wcwidth.cpp</in>
         </df>
         <in>ast.c</in>
         <in>ast.h</in>
@@ -68,6 +84,7 @@
         <in>lex.l</in>
         <in>libio.c</in>
         <in>libio.h</in>
+        <in>liblist.h</in>
         <in>libmath.c</in>
         <in>libmath.h</in>
         <in>libmem.c</in>
@@ -84,6 +101,8 @@
         <in>vm.c</in>
         <in>vm.h</in>
       </df>
+      <df name="SublimeTextSyntax">
+      </df>
       <df name="visualstudio">
         <df name=".vs">
           <df name="latino">
@@ -97,10 +116,22 @@
               <df name="latino.tlog">
               </df>
             </df>
+            <df name="Release">
+              <df name="latino.tlog">
+              </df>
+            </df>
           </df>
         </df>
         <df name="Win32">
           <df name="Debug">
+            <df name="ALL_BUILD">
+            </df>
+            <df name="ZERO_CHECK">
+              <df name="ZERO_CHECK.tlog">
+              </df>
+            </df>
+          </df>
+          <df name="Release">
             <df name="ALL_BUILD">
             </df>
             <df name="ZERO_CHECK">
