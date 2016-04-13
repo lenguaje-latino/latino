@@ -17,6 +17,8 @@
         </df>
         <df name="CMakeTmp">
         </df>
+        <df name="Progress">
+        </df>
         <in>feature_tests.c</in>
         <in>feature_tests.cxx</in>
       </df>
