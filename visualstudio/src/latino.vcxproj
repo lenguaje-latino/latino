@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
+﻿<?xml version="1.0" encoding="UTF-8"?>
 <Project DefaultTargets="Build" ToolsVersion="14.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup Label="ProjectConfigurations">
     <ProjectConfiguration Include="Debug|Win32">
@@ -19,7 +19,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <PropertyGroup Label="Globals">
-    <ProjectGUID>{E1A4155A-0494-3B1C-901D-892EA6CCDD78}</ProjectGUID>
+    <ProjectGUID>{43B90B47-0938-38A7-9B6B-5B990254BE9D}</ProjectGUID>
     <Keyword>Win32Proj</Keyword>
     <Platform>Win32</Platform>
     <ProjectName>latino</ProjectName>
@@ -58,25 +58,25 @@
   <PropertyGroup Label="UserMacros" />
     <PropertyGroup>
       <_ProjectFileVersion>10.0.20506.1</_ProjectFileVersion>
-      <OutDir Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">C:\src\latino\visualstudio\bin\Debug\</OutDir>
+      <OutDir Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">C:\Users\ciber\Documents\latino\visualstudio\bin\Debug\</OutDir>
       <IntDir Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">latino.dir\Debug\</IntDir>
       <TargetName Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">latino</TargetName>
       <TargetExt Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">.exe</TargetExt>
       <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</LinkIncremental>
       <GenerateManifest Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</GenerateManifest>
-      <OutDir Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">C:\src\latino\visualstudio\bin\Release\</OutDir>
+      <OutDir Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">C:\Users\ciber\Documents\latino\visualstudio\bin\Release\</OutDir>
       <IntDir Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">latino.dir\Release\</IntDir>
       <TargetName Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">latino</TargetName>
       <TargetExt Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">.exe</TargetExt>
       <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">false</LinkIncremental>
       <GenerateManifest Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</GenerateManifest>
-      <OutDir Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|Win32'">C:\src\latino\visualstudio\bin\MinSizeRel\</OutDir>
+      <OutDir Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|Win32'">C:\Users\ciber\Documents\latino\visualstudio\bin\MinSizeRel\</OutDir>
       <IntDir Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|Win32'">latino.dir\MinSizeRel\</IntDir>
       <TargetName Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|Win32'">latino</TargetName>
       <TargetExt Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|Win32'">.exe</TargetExt>
       <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|Win32'">false</LinkIncremental>
       <GenerateManifest Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|Win32'">true</GenerateManifest>
-      <OutDir Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|Win32'">C:\src\latino\visualstudio\bin\RelWithDebInfo\</OutDir>
+      <OutDir Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|Win32'">C:\Users\ciber\Documents\latino\visualstudio\bin\RelWithDebInfo\</OutDir>
       <IntDir Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|Win32'">latino.dir\RelWithDebInfo\</IntDir>
       <TargetName Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|Win32'">latino</TargetName>
       <TargetExt Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|Win32'">.exe</TargetExt>
@@ -118,8 +118,8 @@
       <AdditionalLibraryDirectories>%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <GenerateDebugInformation>Debug</GenerateDebugInformation>
       <IgnoreSpecificDefaultLibraries>%(IgnoreSpecificDefaultLibraries)</IgnoreSpecificDefaultLibraries>
-      <ImportLibrary>C:/src/latino/visualstudio/bin/Debug/latino.lib</ImportLibrary>
-      <ProgramDataBaseFile>C:/src/latino/visualstudio/bin/Debug/latino.pdb</ProgramDataBaseFile>
+      <ImportLibrary>C:/Users/ciber/Documents/latino/visualstudio/bin/Debug/latino.lib</ImportLibrary>
+      <ProgramDataBaseFile>C:/Users/ciber/Documents/latino/visualstudio/bin/Debug/latino.pdb</ProgramDataBaseFile>
       <SubSystem>Console</SubSystem>
       <Version></Version>
     </Link>
@@ -161,8 +161,8 @@
       <AdditionalLibraryDirectories>%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <GenerateDebugInformation>No</GenerateDebugInformation>
       <IgnoreSpecificDefaultLibraries>%(IgnoreSpecificDefaultLibraries)</IgnoreSpecificDefaultLibraries>
-      <ImportLibrary>C:/src/latino/visualstudio/bin/Release/latino.lib</ImportLibrary>
-      <ProgramDataBaseFile>C:/src/latino/visualstudio/bin/Release/latino.pdb</ProgramDataBaseFile>
+      <ImportLibrary>C:/Users/ciber/Documents/latino/visualstudio/bin/Release/latino.lib</ImportLibrary>
+      <ProgramDataBaseFile>C:/Users/ciber/Documents/latino/visualstudio/bin/Release/latino.pdb</ProgramDataBaseFile>
       <SubSystem>Console</SubSystem>
       <Version></Version>
     </Link>
@@ -204,8 +204,8 @@
       <AdditionalLibraryDirectories>%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <GenerateDebugInformation>No</GenerateDebugInformation>
       <IgnoreSpecificDefaultLibraries>%(IgnoreSpecificDefaultLibraries)</IgnoreSpecificDefaultLibraries>
-      <ImportLibrary>C:/src/latino/visualstudio/bin/MinSizeRel/latino.lib</ImportLibrary>
-      <ProgramDataBaseFile>C:/src/latino/visualstudio/bin/MinSizeRel/latino.pdb</ProgramDataBaseFile>
+      <ImportLibrary>C:/Users/ciber/Documents/latino/visualstudio/bin/MinSizeRel/latino.lib</ImportLibrary>
+      <ProgramDataBaseFile>C:/Users/ciber/Documents/latino/visualstudio/bin/MinSizeRel/latino.pdb</ProgramDataBaseFile>
       <SubSystem>Console</SubSystem>
       <Version></Version>
     </Link>
@@ -247,8 +247,8 @@
       <AdditionalLibraryDirectories>%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <GenerateDebugInformation>Debug</GenerateDebugInformation>
       <IgnoreSpecificDefaultLibraries>%(IgnoreSpecificDefaultLibraries)</IgnoreSpecificDefaultLibraries>
-      <ImportLibrary>C:/src/latino/visualstudio/bin/RelWithDebInfo/latino.lib</ImportLibrary>
-      <ProgramDataBaseFile>C:/src/latino/visualstudio/bin/RelWithDebInfo/latino.pdb</ProgramDataBaseFile>
+      <ImportLibrary>C:/Users/ciber/Documents/latino/visualstudio/bin/RelWithDebInfo/latino.lib</ImportLibrary>
+      <ProgramDataBaseFile>C:/Users/ciber/Documents/latino/visualstudio/bin/RelWithDebInfo/latino.pdb</ProgramDataBaseFile>
       <SubSystem>Console</SubSystem>
       <Version></Version>
     </Link>
@@ -257,10 +257,10 @@
     </ProjectReference>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <CustomBuild Include="C:\src\latino\src\CMakeLists.txt">
-      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Building Custom Rule C:/src/latino/src/CMakeLists.txt</Message>
+    <CustomBuild Include="C:\Users\ciber\Documents\latino\src\CMakeLists.txt">
+      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Building Custom Rule C:/Users/ciber/Documents/latino/src/CMakeLists.txt</Message>
       <Command Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">setlocal
-C:\CMake\bin\cmake.exe -HC:/src/latino -BC:/src/latino/visualstudio --check-stamp-file C:\src\latino\visualstudio\src\CMakeFiles\generate.stamp
+C:\CMake\bin\cmake.exe -HC:/Users/ciber/Documents/latino -BC:/Users/ciber/Documents/latino/visualstudio --check-stamp-file C:\Users\ciber\Documents\latino\visualstudio\src\CMakeFiles\generate.stamp
 if %errorlevel% neq 0 goto :cmEnd
 :cmEnd
 endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
@@ -268,12 +268,12 @@ endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
 exit /b %1
 :cmDone
 if %errorlevel% neq 0 goto :VCEnd</Command>
-      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">C:/src/latino/src/CMakeLists.txt;C:\src\latino\src\CMakeLists.txt;C:\src\latino\src\CMakeLists.txt;%(AdditionalInputs)</AdditionalInputs>
-      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">C:\src\latino\visualstudio\src\CMakeFiles\generate.stamp</Outputs>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">C:/Users/ciber/Documents/latino/src/CMakeLists.txt;C:\Users\ciber\Documents\latino\src\CMakeLists.txt;C:\Users\ciber\Documents\latino\src\CMakeLists.txt;%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">C:\Users\ciber\Documents\latino\visualstudio\src\CMakeFiles\generate.stamp</Outputs>
       <LinkObjects Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</LinkObjects>
-      <Message Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Building Custom Rule C:/src/latino/src/CMakeLists.txt</Message>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Building Custom Rule C:/Users/ciber/Documents/latino/src/CMakeLists.txt</Message>
       <Command Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">setlocal
-C:\CMake\bin\cmake.exe -HC:/src/latino -BC:/src/latino/visualstudio --check-stamp-file C:\src\latino\visualstudio\src\CMakeFiles\generate.stamp
+C:\CMake\bin\cmake.exe -HC:/Users/ciber/Documents/latino -BC:/Users/ciber/Documents/latino/visualstudio --check-stamp-file C:\Users\ciber\Documents\latino\visualstudio\src\CMakeFiles\generate.stamp
 if %errorlevel% neq 0 goto :cmEnd
 :cmEnd
 endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
@@ -281,12 +281,12 @@ endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
 exit /b %1
 :cmDone
 if %errorlevel% neq 0 goto :VCEnd</Command>
-      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">C:/src/latino/src/CMakeLists.txt;C:\src\latino\src\CMakeLists.txt;C:\src\latino\src\CMakeLists.txt;%(AdditionalInputs)</AdditionalInputs>
-      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">C:\src\latino\visualstudio\src\CMakeFiles\generate.stamp</Outputs>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">C:/Users/ciber/Documents/latino/src/CMakeLists.txt;C:\Users\ciber\Documents\latino\src\CMakeLists.txt;C:\Users\ciber\Documents\latino\src\CMakeLists.txt;%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">C:\Users\ciber\Documents\latino\visualstudio\src\CMakeFiles\generate.stamp</Outputs>
       <LinkObjects Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">false</LinkObjects>
-      <Message Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|Win32'">Building Custom Rule C:/src/latino/src/CMakeLists.txt</Message>
+      <Message Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|Win32'">Building Custom Rule C:/Users/ciber/Documents/latino/src/CMakeLists.txt</Message>
       <Command Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|Win32'">setlocal
-C:\CMake\bin\cmake.exe -HC:/src/latino -BC:/src/latino/visualstudio --check-stamp-file C:\src\latino\visualstudio\src\CMakeFiles\generate.stamp
+C:\CMake\bin\cmake.exe -HC:/Users/ciber/Documents/latino -BC:/Users/ciber/Documents/latino/visualstudio --check-stamp-file C:\Users\ciber\Documents\latino\visualstudio\src\CMakeFiles\generate.stamp
 if %errorlevel% neq 0 goto :cmEnd
 :cmEnd
 endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
@@ -294,12 +294,12 @@ endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
 exit /b %1
 :cmDone
 if %errorlevel% neq 0 goto :VCEnd</Command>
-      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|Win32'">C:/src/latino/src/CMakeLists.txt;C:\src\latino\src\CMakeLists.txt;C:\src\latino\src\CMakeLists.txt;%(AdditionalInputs)</AdditionalInputs>
-      <Outputs Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|Win32'">C:\src\latino\visualstudio\src\CMakeFiles\generate.stamp</Outputs>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|Win32'">C:/Users/ciber/Documents/latino/src/CMakeLists.txt;C:\Users\ciber\Documents\latino\src\CMakeLists.txt;C:\Users\ciber\Documents\latino\src\CMakeLists.txt;%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|Win32'">C:\Users\ciber\Documents\latino\visualstudio\src\CMakeFiles\generate.stamp</Outputs>
       <LinkObjects Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|Win32'">false</LinkObjects>
-      <Message Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|Win32'">Building Custom Rule C:/src/latino/src/CMakeLists.txt</Message>
+      <Message Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|Win32'">Building Custom Rule C:/Users/ciber/Documents/latino/src/CMakeLists.txt</Message>
       <Command Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|Win32'">setlocal
-C:\CMake\bin\cmake.exe -HC:/src/latino -BC:/src/latino/visualstudio --check-stamp-file C:\src\latino\visualstudio\src\CMakeFiles\generate.stamp
+C:\CMake\bin\cmake.exe -HC:/Users/ciber/Documents/latino -BC:/Users/ciber/Documents/latino/visualstudio --check-stamp-file C:\Users\ciber\Documents\latino\visualstudio\src\CMakeFiles\generate.stamp
 if %errorlevel% neq 0 goto :cmEnd
 :cmEnd
 endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
@@ -307,39 +307,41 @@ endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
 exit /b %1
 :cmDone
 if %errorlevel% neq 0 goto :VCEnd</Command>
-      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|Win32'">C:/src/latino/src/CMakeLists.txt;C:\src\latino\src\CMakeLists.txt;C:\src\latino\src\CMakeLists.txt;%(AdditionalInputs)</AdditionalInputs>
-      <Outputs Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|Win32'">C:\src\latino\visualstudio\src\CMakeFiles\generate.stamp</Outputs>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|Win32'">C:/Users/ciber/Documents/latino/src/CMakeLists.txt;C:\Users\ciber\Documents\latino\src\CMakeLists.txt;C:\Users\ciber\Documents\latino\src\CMakeLists.txt;%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|Win32'">C:\Users\ciber\Documents\latino\visualstudio\src\CMakeFiles\generate.stamp</Outputs>
       <LinkObjects Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|Win32'">false</LinkObjects>
     </CustomBuild>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="C:\src\latino\src\khash.h" />
-    <ClInclude Include="C:\src\latino\src\latino.h" />
-    <ClInclude Include="C:\src\latino\src\ast.h" />
-    <ClInclude Include="C:\src\latino\src\utils.h" />
-    <ClInclude Include="C:\src\latino\src\vm.h" />
-    <ClInclude Include="C:\src\latino\src\object.h" />
-    <ClInclude Include="C:\src\latino\src\libstring.h" />
-    <ClInclude Include="C:\src\latino\src\libmem.h" />
-    <ClInclude Include="C:\src\latino\src\lex.h" />
-    <ClInclude Include="C:\src\latino\src\parse.h" />
-    <ClInclude Include="C:\src\latino\src\libmath.h" />
-    <ClInclude Include="C:\src\latino\src\libio.h" />
-    <ClCompile Include="C:\src\latino\src\latino.c"  />
-    <ClCompile Include="C:\src\latino\src\ast.c"  />
-    <ClCompile Include="C:\src\latino\src\utils.c"  />
-    <ClCompile Include="C:\src\latino\src\vm.c"  />
-    <ClCompile Include="C:\src\latino\src\object.c"  />
-    <ClCompile Include="C:\src\latino\src\libstring.c"  />
-    <ClCompile Include="C:\src\latino\src\libmem.c"  />
-    <ClCompile Include="C:\src\latino\src\lex.c"  />
-    <ClCompile Include="C:\src\latino\src\parse.c"  />
-    <ClCompile Include="C:\src\latino\src\libmath.c"  />
-    <ClCompile Include="C:\src\latino\src\libio.c"  />
+    <ClInclude Include="C:\Users\ciber\Documents\latino\src\khash.h" />
+    <ClInclude Include="C:\Users\ciber\Documents\latino\src\latino.h" />
+    <ClInclude Include="C:\Users\ciber\Documents\latino\src\ast.h" />
+    <ClInclude Include="C:\Users\ciber\Documents\latino\src\utils.h" />
+    <ClInclude Include="C:\Users\ciber\Documents\latino\src\vm.h" />
+    <ClInclude Include="C:\Users\ciber\Documents\latino\src\object.h" />
+    <ClInclude Include="C:\Users\ciber\Documents\latino\src\libstring.h" />
+    <ClInclude Include="C:\Users\ciber\Documents\latino\src\libmem.h" />
+    <ClInclude Include="C:\Users\ciber\Documents\latino\src\lex.h" />
+    <ClInclude Include="C:\Users\ciber\Documents\latino\src\parse.h" />
+    <ClInclude Include="C:\Users\ciber\Documents\latino\src\libmath.h" />
+    <ClInclude Include="C:\Users\ciber\Documents\latino\src\libio.h" />
+    <ClInclude Include="C:\Users\ciber\Documents\latino\src\linenoise\linenoise.h" />
+    <ClCompile Include="C:\Users\ciber\Documents\latino\src\latino.c"  />
+    <ClCompile Include="C:\Users\ciber\Documents\latino\src\ast.c"  />
+    <ClCompile Include="C:\Users\ciber\Documents\latino\src\utils.c"  />
+    <ClCompile Include="C:\Users\ciber\Documents\latino\src\vm.c"  />
+    <ClCompile Include="C:\Users\ciber\Documents\latino\src\object.c"  />
+    <ClCompile Include="C:\Users\ciber\Documents\latino\src\libstring.c"  />
+    <ClCompile Include="C:\Users\ciber\Documents\latino\src\libmem.c"  />
+    <ClCompile Include="C:\Users\ciber\Documents\latino\src\lex.c"  />
+    <ClCompile Include="C:\Users\ciber\Documents\latino\src\parse.c"  />
+    <ClCompile Include="C:\Users\ciber\Documents\latino\src\libmath.c"  />
+    <ClCompile Include="C:\Users\ciber\Documents\latino\src\libio.c"  />
+    <ClCompile Include="C:\Users\ciber\Documents\latino\src\linenoise\linenoise.c"  />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="C:/src/latino/visualstudio/ZERO_CHECK.vcxproj">
-      <Project>5D4D3EC1-3B81-3E09-8F64-EC0419A6E928</Project>
+    <ProjectReference Include="C:/Users/ciber/Documents/latino/visualstudio/ZERO_CHECK.vcxproj">
+      <Project>A1FF9F28-323A-3353-91B2-DF6CF513CF11</Project>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

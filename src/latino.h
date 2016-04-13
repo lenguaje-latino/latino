@@ -56,14 +56,17 @@ defined(__ELF__)
 //#include <vld.h>
 #define LAT_FUNC extern
 #define lnsprintf(s, l, f, i) _snprintf(s, l, f, i)
+#define _WIN32_WINNT 0x0500
 #endif
 
 /** Version mayor de Latino */
 #define LAT_VERSION_MAYOR "0"
 /** Version menor de Latino */
 #define LAT_VERSION_MENOR "4"
+/** Version de correcion de errores */
+#define LAT_VERSION_PARCHE "1"
 /** Version de Latino */
-#define LAT_VERSION "Latino " LAT_VERSION_MAYOR "." LAT_VERSION_MENOR
+#define LAT_VERSION "Latino " LAT_VERSION_MAYOR "." LAT_VERSION_MENOR "." LAT_VERSION_PARCHE
 /** Derechos de Latino */
 #define LAT_DERECHOS LAT_VERSION "\nTodos los derechos reservados (C) 2015-2016. Latinoamerica"
 
