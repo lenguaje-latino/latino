@@ -1,3 +1,4 @@
+#obtener el mayor de dos numeros
 #condicion con SI normal
 a = 5
 b = 10
@@ -8,6 +9,7 @@ sino
 fin
 escribir("el mayor es: " . c)
 
+#obtener el menor de dos numeros
 #con operador condicional ternario (cond ? exp1 : exp2 )
 c = (a < 10) ? a : b
-escribir("el mayor es: " . c)
+escribir("el menor es: " . c)

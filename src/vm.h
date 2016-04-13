@@ -391,6 +391,12 @@ void lat_es_decimal(lat_vm* vm);
   */
 void lat_formato_numero(lat_vm* vm);
 
+/**\brief Sale del sistema de Latino REPL
+  *
+  *\param vm: Apuntador a la MV
+  */
+void lat_salir(lat_vm* vm);
+
 /**\brief Crea un objeto bytecode
   *
   *\param i: Tipo de instruccion
