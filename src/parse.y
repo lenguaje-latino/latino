@@ -101,7 +101,6 @@ int yylex (YYSTYPE * yylval_param,YYLTYPE * yylloc_param ,yyscan_t yyscanner);
 %left OP_EQ OP_GE OP_GT OP_LE OP_LT OP_NEQ
 %left UMINUS UNEG
 
-
 %start program
 
 %%
@@ -129,7 +128,7 @@ statement: /* empty */ { $$ = NULL; }
     | iteration_statement { $$ = $1; }
     | jump_statement { $$ = $1; }
     | function_definition { $$ = $1; }
-    | function_call { $$ = $1; }
+    | function_call { $$ = $1; }    
     ;
 
 declaration:
