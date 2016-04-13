@@ -1,26 +1,2 @@
-#cuando un entero empieza con 0 se toma como octal
-#tel = 0474624707
-#escribir("Bienvenido" . tel)
-
-
-#ticket = "ganador"
-#fecha = "lunes"
-#si (ticket=="ganador" && fecha=="lunes")
-#	escribir("Ganador")
-#sino
-#	escribir("Talvez para la proxima")
-#fin
-
-
-t = 1
-a = 2
-si (t==1 && a==2)
-	escribir("Ganador")
-sino
-	escribir("Talvez para la proxima")
-fin
-
-
-formateado = rellenar_izquierda("35", 10, "0")
-escribir(formateado)
-escribir(reemplazar(formateado, "0", "-"))
+escribir(3 != '3')
+escribir(3.0 != 3)

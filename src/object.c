@@ -225,6 +225,9 @@ void lat_eliminar_objeto(lat_vm* vm, lat_objeto* o)
   case T_LIST:
     //lat_eliminar_lista(vm, o->data.list);
     break;
+  case T_DICT:
+    //lat_eliminar_lista(vm, o->data.list);
+    break;
   case T_LIT:
   case T_INT:
   case T_DOUBLE:
@@ -363,6 +366,9 @@ long lat_obtener_entero(lat_objeto* o)
 {
   if (o->type == T_INT) {
     return o->data.i;
+  }
+  if (o->type == T_DOUBLE) {
+    return (long)o->data.d;
   }
   lat_registrar_error("Object no es un tipo entero");
 }

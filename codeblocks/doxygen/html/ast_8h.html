@@ -218,7 +218,7 @@ Enumerations</h2></td></tr>
 <a class="el" href="ast_8h.html#ae4fa669767fd0d22c5cd84814721c297af97a134e08051fdbabbdb10883911fd6">NODO_CONCATENAR</a>, 
 <a class="el" href="ast_8h.html#ae4fa669767fd0d22c5cd84814721c297ac540f5c2dc56e2120d11c1e675b1a3b6">NODO_LISTA</a>, 
 <br />
-&#160;&#160;<a class="el" href="ast_8h.html#ae4fa669767fd0d22c5cd84814721c297ad6cab9046bd42e590616aadad4770630">NODO_LISTA_ASIGNAR_ELEMENTO</a>, 
+&#160;&#160;<a class="el" href="ast_8h.html#ae4fa669767fd0d22c5cd84814721c297ad6cab9046bd42e590616aadad4770630">NODO_LISTA_AGREGAR_ELEMENTO</a>, 
 <a class="el" href="ast_8h.html#ae4fa669767fd0d22c5cd84814721c297a59fdf4829a509905428a41ccf1ea2257">NODO_LISTA_OBTENER_ELEMENTO</a>, 
 <a class="el" href="ast_8h.html#ae4fa669767fd0d22c5cd84814721c297a929a023c34454acbc811d316ec1e5147">NODO_DICCIONARIO</a>, 
 <a class="el" href="ast_8h.html#ae4fa669767fd0d22c5cd84814721c297affa0d3cc1f7ccf274a7276b78b3ca683">NODO_DICCIONARIO_ELEMENTOS</a>, 
@@ -243,7 +243,7 @@ Functions</h2></td></tr>
 <tr class="separator:adc20f4b49b83220f054dbfa6dba29274"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:af8423d8a844abb6ac0cdd46d1820af2b"><td class="memItemLeft" align="right" valign="top"><a class="el" href="structast.html">ast</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="ast_8h.html#af8423d8a844abb6ac0cdd46d1820af2b">nodo_nuevo_asignacion</a> (<a class="el" href="structast.html">ast</a> *s, <a class="el" href="structast.html">ast</a> *v)</td></tr>
 <tr class="separator:af8423d8a844abb6ac0cdd46d1820af2b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a6c32fe8c08f8a124eaca63bc37cf7120"><td class="memItemLeft" align="right" valign="top"><a class="el" href="structast.html">ast</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="ast_8h.html#a6c32fe8c08f8a124eaca63bc37cf7120">nodo_nuevo_asignacion_lista</a> (<a class="el" href="structast.html">ast</a> *s, <a class="el" href="structast.html">ast</a> *v, <a class="el" href="structast.html">ast</a> *pos)</td></tr>
+<tr class="memitem:a6c32fe8c08f8a124eaca63bc37cf7120"><td class="memItemLeft" align="right" valign="top"><a class="el" href="structast.html">ast</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="ast_8h.html#a6c32fe8c08f8a124eaca63bc37cf7120">nodo_nuevo_asignacion_lista_elem</a> (<a class="el" href="structast.html">ast</a> *s, <a class="el" href="structast.html">ast</a> *v, <a class="el" href="structast.html">ast</a> *pos)</td></tr>
 <tr class="separator:a6c32fe8c08f8a124eaca63bc37cf7120"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a6f66244174c22d96ee983cc22d4344fe"><td class="memItemLeft" align="right" valign="top"><a class="el" href="structast.html">ast</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="ast_8h.html#a6f66244174c22d96ee983cc22d4344fe">nodo_nuevo_logico</a> (int b)</td></tr>
 <tr class="separator:a6f66244174c22d96ee983cc22d4344fe"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -423,7 +423,7 @@ Functions</h2></td></tr>
 <tr><td class="fieldname"><a class="anchor" id="ae4fa669767fd0d22c5cd84814721c297ac540f5c2dc56e2120d11c1e675b1a3b6"></a>NODO_LISTA&#160;</td><td class="fielddoc">
 <p>Nodo lista nueva </p>
 </td></tr>
-<tr><td class="fieldname"><a class="anchor" id="ae4fa669767fd0d22c5cd84814721c297ad6cab9046bd42e590616aadad4770630"></a>NODO_LISTA_ASIGNAR_ELEMENTO&#160;</td><td class="fielddoc">
+<tr><td class="fieldname"><a class="anchor" id="ae4fa669767fd0d22c5cd84814721c297ad6cab9046bd42e590616aadad4770630"></a>NODO_LISTA_AGREGAR_ELEMENTO&#160;</td><td class="fielddoc">
 <p>Nodo asignar elemento a una lista </p>
 </td></tr>
 <tr><td class="fieldname"><a class="anchor" id="ae4fa669767fd0d22c5cd84814721c297a59fdf4829a509905428a41ccf1ea2257"></a>NODO_LISTA_OBTENER_ELEMENTO&#160;</td><td class="fielddoc">
@@ -670,7 +670,7 @@ Functions</h2></td></tr>
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="structast.html">ast</a>* nodo_nuevo_asignacion_lista </td>
+          <td class="memname"><a class="el" href="structast.html">ast</a>* nodo_nuevo_asignacion_lista_elem </td>
           <td>(</td>
           <td class="paramtype"><a class="el" href="structast.html">ast</a> *&#160;</td>
           <td class="paramname"><em>s</em>, </td>

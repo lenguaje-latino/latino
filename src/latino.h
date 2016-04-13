@@ -51,6 +51,7 @@ defined(__ELF__)
 #include <dlfcn.h>
 #include <unistd.h>
 #else
+#define WINDOWS
 /* Visual Leak Detector for Visual C++ */
 //#include <vld.h>
 #define LAT_FUNC extern
@@ -64,7 +65,7 @@ defined(__ELF__)
 /** Version de Latino */
 #define LAT_VERSION "Latino " LAT_VERSION_MAYOR "." LAT_VERSION_MENOR
 /** Derechos de Latino */
-#define LAT_DERECHOS LAT_VERSION "\nTodos los derechos reservados (C) 2015-2016. Mexico"
+#define LAT_DERECHOS LAT_VERSION "\nTodos los derechos reservados (C) 2015-2016. Latinoamerica"
 
 /** Afirmar (asset), sirve para testear una condicion */
 #define lat_afirmar(cond) ((void)(false && (cond)))
@@ -82,6 +83,9 @@ extern int debug;
 #define MAX_STR_LENGTH (1024*2)
 /** Tamanio maximo de la pila de la maquina virtual */
 #define MAX_STACK_SIZE 255
+
+/** Tamanio maximo de la entrada por teclado */
+#define MAX_INPUT_SIZE 512
 
 /** Interface con flex */
 typedef struct YYLTYPE {

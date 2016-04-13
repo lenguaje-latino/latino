@@ -33,7 +33,16 @@ void lat_leer(lat_vm *vm){
   int i = strlen(str) - 1;
   if (str[i] == '\n')
     str[i] = '\0';
-  vm->regs[255] = lat_cadena_nueva(vm, parse_string(str, strlen(str)));
+
+  //obtiene decimal
+  char *ptr;
+  double ret;
+  ret =strtod(str, &ptr);
+  if(strcmp(ptr, "") == 0){
+    vm->regs[255] = lat_decimal_nuevo(vm, ret);
+  }else{
+    vm->regs[255] = lat_cadena_nueva(vm, parse_string(str, strlen(str)));
+  }
 }
 void lat_leer_archivo(lat_vm *vm){
   lat_objeto* o = lat_desapilar(vm);

@@ -524,10 +524,10 @@ void lat_dividir(lat_vm* vm)
     }
     else {
       if (a->type == T_DOUBLE) {
-        vm->regs[255] = lat_entero_nuevo(vm, ((int)(lat_obtener_decimal(a) / tmp)));
+        vm->regs[255] = lat_decimal_nuevo(vm, (lat_obtener_decimal(a) / tmp));
       }
       else {
-        vm->regs[255] = lat_entero_nuevo(vm, ((int)(lat_obtener_entero(a) / tmp)));
+        vm->regs[255] = lat_decimal_nuevo(vm, (lat_obtener_entero(a) / tmp));
       }
     }
   }
@@ -557,11 +557,7 @@ void lat_diferente(lat_vm* vm)
     vm->regs[255] = lat_obtener_logico(a) != lat_obtener_logico(b) ? vm->true_object : vm->false_object;
     return;
   }
-  if (a->type == T_INT || b->type == T_INT) {
-    vm->regs[255] = (lat_obtener_entero(a) != lat_obtener_entero(b)) ? vm->true_object : vm->false_object;
-    return;
-  }
-  if (a->type == T_DOUBLE || b->type == T_DOUBLE) {
+  if ((a->type == T_DOUBLE || a->type == T_INT) && (b->type == T_DOUBLE || b->type == T_DOUBLE)) {
     vm->regs[255] = (lat_obtener_decimal(a) != lat_obtener_decimal(b)) ? vm->true_object : vm->false_object;
     return;
   }
@@ -573,7 +569,7 @@ void lat_diferente(lat_vm* vm)
     vm->regs[255] = strcmp(lat_obtener_literal(a), lat_obtener_literal(b)) != 0 ? vm->true_object : vm->false_object;
     return;
   }
-  lat_registrar_error("Intento de aplicar operador \"!=\" en tipos invalidos");
+  vm->regs[255] = vm->false_object;
 }
 
 void lat_igualdad(lat_vm* vm)
@@ -584,11 +580,7 @@ void lat_igualdad(lat_vm* vm)
     vm->regs[255] = lat_obtener_logico(a) == lat_obtener_logico(b) ? vm->true_object : vm->false_object;
     return;
   }
-  if (a->type == T_INT || b->type == T_INT) {
-    vm->regs[255] = (lat_obtener_entero(a) == lat_obtener_entero(b)) ? vm->true_object : vm->false_object;
-    return;
-  }
-  if (a->type == T_DOUBLE || b->type == T_DOUBLE) {
+  if ((a->type == T_DOUBLE || a->type == T_INT) && (b->type == T_DOUBLE || b->type == T_DOUBLE)) {
     vm->regs[255] = (lat_obtener_decimal(a) == lat_obtener_decimal(b)) ? vm->true_object : vm->false_object;
     return;
   }
@@ -600,18 +592,14 @@ void lat_igualdad(lat_vm* vm)
     vm->regs[255] = strcmp(lat_obtener_literal(a), lat_obtener_literal(b)) == 0 ? vm->true_object : vm->false_object;
     return;
   }
-  lat_registrar_error("Intento de aplicar operador \"==\" en tipos invalidos");
+  vm->regs[255] = vm->false_object;
 }
 
 void lat_menor_que(lat_vm* vm)
 {
   lat_objeto* b = lat_desapilar(vm);
   lat_objeto* a = lat_desapilar(vm);
-  if (a->type == T_INT || b->type == T_INT) {
-    vm->regs[255] = (lat_obtener_entero(a) < lat_obtener_entero(b)) ? vm->true_object : vm->false_object;
-    return;
-  }
-  if (a->type == T_DOUBLE || b->type == T_DOUBLE) {
+  if ((a->type == T_DOUBLE || a->type == T_INT) && (b->type == T_DOUBLE || b->type == T_DOUBLE)) {
     vm->regs[255] = (lat_obtener_decimal(a) < lat_obtener_decimal(b)) ? vm->true_object : vm->false_object;
     return;
   }
@@ -630,11 +618,7 @@ void lat_menor_igual(lat_vm* vm)
 {
   lat_objeto* b = lat_desapilar(vm);
   lat_objeto* a = lat_desapilar(vm);
-  if (a->type == T_INT || b->type == T_INT) {
-    vm->regs[255] = (lat_obtener_entero(a) <= lat_obtener_entero(b)) ? vm->true_object : vm->false_object;
-    return;
-  }
-  if (a->type == T_DOUBLE || b->type == T_DOUBLE) {
+  if ((a->type == T_DOUBLE || a->type == T_INT) && (b->type == T_DOUBLE || b->type == T_DOUBLE)) {
     vm->regs[255] = (lat_obtener_decimal(a) <= lat_obtener_decimal(b)) ? vm->true_object : vm->false_object;
     return;
   }
@@ -653,11 +637,7 @@ void lat_mayor_que(lat_vm* vm)
 {
   lat_objeto* b = lat_desapilar(vm);
   lat_objeto* a = lat_desapilar(vm);
-  if (a->type == T_INT || b->type == T_INT) {
-    vm->regs[255] = (lat_obtener_entero(a) > lat_obtener_entero(b)) ? vm->true_object : vm->false_object;
-    return;
-  }
-  if (a->type == T_DOUBLE || b->type == T_DOUBLE) {
+  if ((a->type == T_DOUBLE || a->type == T_INT) && (b->type == T_DOUBLE || b->type == T_DOUBLE)) {
     vm->regs[255] = (lat_obtener_decimal(a) > lat_obtener_decimal(b)) ? vm->true_object : vm->false_object;
     return;
   }
@@ -676,11 +656,7 @@ void lat_mayor_igual(lat_vm* vm)
 {
   lat_objeto* b = lat_desapilar(vm);
   lat_objeto* a = lat_desapilar(vm);
-  if (a->type == T_INT || b->type == T_INT) {
-    vm->regs[255] = (lat_obtener_entero(a) >= lat_obtener_entero(b)) ? vm->true_object : vm->false_object;
-    return;
-  }
-  if (a->type == T_DOUBLE || b->type == T_DOUBLE) {
+  if ((a->type == T_DOUBLE || a->type == T_INT) && (b->type == T_DOUBLE || b->type == T_DOUBLE)) {
     vm->regs[255] = (lat_obtener_decimal(a) >= lat_obtener_decimal(b)) ? vm->true_object : vm->false_object;
     return;
   }
@@ -734,6 +710,39 @@ lat_bytecode lat_bc(lat_ins i, int a, int b, void* meta)
   return ret;
 }
 
+static void list_modify_element(list_node* l, void* data, int pos){
+  list_node* c;
+  int i = -1;
+  int tam = length_list(l);
+  if(pos > tam){
+    pos = tam - 1;
+  }
+  for (c = l; c->next != NULL; c = c->next) {
+    if(i == pos) {
+        c->data = data;
+        return;
+    }
+    i++;
+  }
+}
+
+static lat_objeto* list_get_element(list_node* l, int pos){
+  list_node* c;
+  int i = -1;
+  int tam = length_list(l);
+  //si el indice esta fuera de rango, traemos el ultimo
+  if(pos > tam){
+    pos = tam - 1;
+  }
+  for (c = l; c->next != NULL; c = c->next) {
+    if(i == pos) {
+        return (lat_objeto *)c->data;
+    }
+    i++;
+  }
+  lat_registrar_error("Indice fuera de rango");
+}
+
 void lat_llamar_funcion(lat_vm* vm, lat_objeto* func)
 {
   if (func->type == T_FUNC) {
@@ -785,7 +794,7 @@ void lat_llamar_funcion(lat_vm* vm, lat_objeto* func)
       case OP_STORECHAR:
         vm->regs[cur.a] = ((lat_objeto*)cur.meta);
 #if DEBUG_VM
-        printf("STORECHAR r%i, %c", cur.a, ((lat_objeto*)cur.meta)->data.c);
+        printf("STORECHAR r%i, %i", cur.a, ((lat_objeto*)cur.meta)->data.c);
 #endif
         break;
       case OP_STOREINT: {
@@ -831,12 +840,27 @@ void lat_llamar_funcion(lat_vm* vm, lat_objeto* func)
         printf("POPLIST r%i, r%i", cur.a, cur.b);
 #endif
         break;
-      case OP_LISTGETITEM:
-        //TODO: Pendiente
-        //vm->regs[cur.a] = lat_desapilar_lista(vm->regs[cur.b]);
+      case OP_LISTGETITEM:{
+        lat_objeto *l = vm->regs[cur.a];
+        lat_objeto *pos = vm->regs[cur.b];
+        vm->regs[cur.a] = list_get_element(l->data.list, pos->data.i);
+
 #if DEBUG_VM
         printf("LISTGETITEM r%i, r%i", cur.a, cur.b);
 #endif
+      }
+      break;
+      case OP_LISTSETITEM:{
+        lat_objeto *l = vm->regs[cur.a];
+        lat_objeto *pos = vm->regs[(int)cur.meta];
+        if(pos->type != T_INT){
+          lat_registrar_error("%s", "la posicion de la lista no es un entero");
+        }
+        list_modify_element(l->data.list, (lat_objeto*)vm->regs[cur.b], pos->data.i);
+#if DEBUG_VM
+        printf("LISTSETITEM r%i, r%i", cur.a, cur.b);
+#endif
+        }
         break;
       case OP_STOREDICT:
         //TODO: Pendiente
