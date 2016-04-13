@@ -131,10 +131,10 @@ lat_vm* lat_crear_maquina_virtual()
   lat_asignar_contexto_objeto(lat_obtener_contexto(ret), lat_cadena_nueva(ret, "entero"), lat_definir_cfuncion(ret, lat_entero));
   lat_asignar_contexto_objeto(lat_obtener_contexto(ret), lat_cadena_nueva(ret, "decimal"), lat_definir_cfuncion(ret, lat_decimal));
   lat_asignar_contexto_objeto(lat_obtener_contexto(ret), lat_cadena_nueva(ret, "cadena"), lat_definir_cfuncion(ret, lat_cadena));
+  lat_asignar_contexto_objeto(lat_obtener_contexto(ret), lat_cadena_nueva(ret, "salir"), lat_definir_cfuncion(ret, lat_salir));
 
   /*ejemplo de implementacion de una funcion en C */
   lat_asignar_contexto_objeto(lat_obtener_contexto(ret), lat_cadena_nueva(ret, "maximo"), lat_definir_cfuncion(ret, lat_maximo));
-
   /*Creacion dela funcion minimo*/
   lat_asignar_contexto_objeto(lat_obtener_contexto(ret), lat_cadena_nueva(ret, "minimo"), lat_definir_cfuncion(ret, lat_minimo));
 
@@ -1167,4 +1167,9 @@ void lat_tipo(lat_vm* vm){
       vm->regs[255] = lat_cadena_nueva(vm, "nulo");
       break;
   }
+}
+
+void lat_salir(lat_vm* vm){
+  vm->regs[255] = lat_entero_nuevo(vm, 0L);
+  exit(0);
 }
