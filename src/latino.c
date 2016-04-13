@@ -92,7 +92,7 @@ ast *lat_analizar_archivo(char *infile) {
 }
 
 void lat_version(){
-    printf("%s\n", LAT_DERECHOS);    
+    printf("%s\n", LAT_DERECHOS);
 }
 
 void lat_ayuda(){
@@ -103,14 +103,12 @@ void lat_ayuda(){
     printf("%s\n", "-i           : Inicia el interprete de Latino (Modo interactivo)");
     printf("%s\n", "-v           : Muestra la version de Latino");
     printf("%s\n", "archivo      : Nombre del archivo con extension .lat");
-    printf("%s\n", "Ctrl-C       : Para salir");    
-    printf("%s\n", "Variables de entorno Latino:");    
-    printf("%s%s\n", "LATINO_PATH  : ", getenv("LATINO_PATH"));
+    printf("%s\n", "Ctrl-C       : Para salir");
+    printf("%s\n", "Variables de entorno:");
     printf("%s%s\n", "LATINO_HOME  : ", getenv("LATINO_HOME"));
-    printf("%s%s\n", "LATINO_LIB   : ", getenv("LATINO_LIB"));
     printf("%s%s\n", "LC_LANG      : ", getenv("LC_LANG"));
     printf("%s%s\n", "HOME         : ", getenv("HOME"));
-    printf("%s%s\n", "PATH         : ", getenv("PATH"));    
+    printf("%s%s\n", "PATH         : ", getenv("PATH"));
 }
 
 static void lat_repl(lat_vm *vm)
@@ -143,16 +141,16 @@ int main(int argc, char *argv[]) {
       lat_version();
       return EXIT_SUCCESS;
     } else if (strcmp(argv[i], "-h") == 0) {
-      lat_ayuda();      
+      lat_ayuda();
       return EXIT_SUCCESS;
     } else if (strcmp(argv[i], "-i") == 0) {
       lat_version();
-      lat_repl(vm);      
+      lat_repl(vm);
       return EXIT_SUCCESS;
     } else{
       infile = argv[i];
     }
-  }  
+  }
   if(argc > 1) {
     ast *tree = lat_analizar_archivo(infile);
     if (!tree) {
@@ -166,7 +164,7 @@ int main(int argc, char *argv[]) {
       fclose(file);
     }
   }
-  else{  	
+  else{
     lat_ayuda();
     lat_repl(vm);
   }
