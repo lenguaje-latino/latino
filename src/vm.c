@@ -557,11 +557,7 @@ void lat_diferente(lat_vm* vm)
     vm->regs[255] = lat_obtener_logico(a) != lat_obtener_logico(b) ? vm->true_object : vm->false_object;
     return;
   }
-  if (a->type == T_INT || b->type == T_INT) {
-    vm->regs[255] = (lat_obtener_entero(a) != lat_obtener_entero(b)) ? vm->true_object : vm->false_object;
-    return;
-  }
-  if (a->type == T_DOUBLE || b->type == T_DOUBLE) {
+  if ((a->type == T_DOUBLE || a->type == T_INT) && (b->type == T_DOUBLE || b->type == T_DOUBLE)) {
     vm->regs[255] = (lat_obtener_decimal(a) != lat_obtener_decimal(b)) ? vm->true_object : vm->false_object;
     return;
   }
@@ -573,7 +569,7 @@ void lat_diferente(lat_vm* vm)
     vm->regs[255] = strcmp(lat_obtener_literal(a), lat_obtener_literal(b)) != 0 ? vm->true_object : vm->false_object;
     return;
   }
-  lat_registrar_error("Intento de aplicar operador \"!=\" en tipos invalidos");
+  vm->regs[255] = vm->false_object;
 }
 
 void lat_igualdad(lat_vm* vm)
@@ -584,11 +580,7 @@ void lat_igualdad(lat_vm* vm)
     vm->regs[255] = lat_obtener_logico(a) == lat_obtener_logico(b) ? vm->true_object : vm->false_object;
     return;
   }
-  if (a->type == T_INT || b->type == T_INT) {
-    vm->regs[255] = (lat_obtener_entero(a) == lat_obtener_entero(b)) ? vm->true_object : vm->false_object;
-    return;
-  }
-  if (a->type == T_DOUBLE || b->type == T_DOUBLE) {
+  if ((a->type == T_DOUBLE || a->type == T_INT) && (b->type == T_DOUBLE || b->type == T_DOUBLE)) {
     vm->regs[255] = (lat_obtener_decimal(a) == lat_obtener_decimal(b)) ? vm->true_object : vm->false_object;
     return;
   }
@@ -600,18 +592,14 @@ void lat_igualdad(lat_vm* vm)
     vm->regs[255] = strcmp(lat_obtener_literal(a), lat_obtener_literal(b)) == 0 ? vm->true_object : vm->false_object;
     return;
   }
-  lat_registrar_error("Intento de aplicar operador \"==\" en tipos invalidos");
+  vm->regs[255] = vm->false_object;
 }
 
 void lat_menor_que(lat_vm* vm)
 {
   lat_objeto* b = lat_desapilar(vm);
   lat_objeto* a = lat_desapilar(vm);
-  if (a->type == T_INT || b->type == T_INT) {
-    vm->regs[255] = (lat_obtener_entero(a) < lat_obtener_entero(b)) ? vm->true_object : vm->false_object;
-    return;
-  }
-  if (a->type == T_DOUBLE || b->type == T_DOUBLE) {
+  if ((a->type == T_DOUBLE || a->type == T_INT) && (b->type == T_DOUBLE || b->type == T_DOUBLE)) {
     vm->regs[255] = (lat_obtener_decimal(a) < lat_obtener_decimal(b)) ? vm->true_object : vm->false_object;
     return;
   }
@@ -630,11 +618,7 @@ void lat_menor_igual(lat_vm* vm)
 {
   lat_objeto* b = lat_desapilar(vm);
   lat_objeto* a = lat_desapilar(vm);
-  if (a->type == T_INT || b->type == T_INT) {
-    vm->regs[255] = (lat_obtener_entero(a) <= lat_obtener_entero(b)) ? vm->true_object : vm->false_object;
-    return;
-  }
-  if (a->type == T_DOUBLE || b->type == T_DOUBLE) {
+  if ((a->type == T_DOUBLE || a->type == T_INT) && (b->type == T_DOUBLE || b->type == T_DOUBLE)) {
     vm->regs[255] = (lat_obtener_decimal(a) <= lat_obtener_decimal(b)) ? vm->true_object : vm->false_object;
     return;
   }
@@ -653,11 +637,7 @@ void lat_mayor_que(lat_vm* vm)
 {
   lat_objeto* b = lat_desapilar(vm);
   lat_objeto* a = lat_desapilar(vm);
-  if (a->type == T_INT || b->type == T_INT) {
-    vm->regs[255] = (lat_obtener_entero(a) > lat_obtener_entero(b)) ? vm->true_object : vm->false_object;
-    return;
-  }
-  if (a->type == T_DOUBLE || b->type == T_DOUBLE) {
+  if ((a->type == T_DOUBLE || a->type == T_INT) && (b->type == T_DOUBLE || b->type == T_DOUBLE)) {
     vm->regs[255] = (lat_obtener_decimal(a) > lat_obtener_decimal(b)) ? vm->true_object : vm->false_object;
     return;
   }
@@ -676,11 +656,7 @@ void lat_mayor_igual(lat_vm* vm)
 {
   lat_objeto* b = lat_desapilar(vm);
   lat_objeto* a = lat_desapilar(vm);
-  if (a->type == T_INT || b->type == T_INT) {
-    vm->regs[255] = (lat_obtener_entero(a) >= lat_obtener_entero(b)) ? vm->true_object : vm->false_object;
-    return;
-  }
-  if (a->type == T_DOUBLE || b->type == T_DOUBLE) {
+  if ((a->type == T_DOUBLE || a->type == T_INT) && (b->type == T_DOUBLE || b->type == T_DOUBLE)) {
     vm->regs[255] = (lat_obtener_decimal(a) >= lat_obtener_decimal(b)) ? vm->true_object : vm->false_object;
     return;
   }

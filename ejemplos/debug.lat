@@ -1,8 +1,2 @@
-a = 5
-b = 10
-si (a > 10)
-  c = a
-sino
-  c = b
-fin
-escribir("el mayor es: " . c)
+escribir(3 != '3')
+escribir(3.0 != 3)

@@ -1,0 +1,13 @@
+#condicion con SI normal
+a = 5
+b = 10
+si (a > 10)
+  c = a
+sino
+  c = b
+fin
+escribir("el mayor es: " . c)
+
+#con operador condicional ternario (cond ? exp1 : exp2 )
+c = (a < 10) ? a : b
+escribir("el mayor es: " . c)

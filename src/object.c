@@ -367,6 +367,9 @@ long lat_obtener_entero(lat_objeto* o)
   if (o->type == T_INT) {
     return o->data.i;
   }
+  if (o->type == T_DOUBLE) {
+    return (long)o->data.d;
+  }
   lat_registrar_error("Object no es un tipo entero");
 }
 
