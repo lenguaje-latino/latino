@@ -110,7 +110,7 @@ void lat_ayuda(){
     printf("%s\n", "_____________________");
     printf("%s%s\n", "LATINO_HOME  : ", getenv("LATINO_HOME")); // HOME ??? buscar una palabra en espanol
     printf("%s%s\n", "LC_LANG      : ", getenv("LC_LANG")); // LC LANG ?? igualmente
-    printf("%s%s\n", "HOME         : ", getenv("HOME")); // HOME es necesiario en ingles?   
+    printf("%s%s\n", "HOME         : ", getenv("HOME")); // HOME es necesiario en ingles?
 }
 
 static void lat_repl(lat_vm *vm)

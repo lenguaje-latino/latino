@@ -56,7 +56,6 @@ defined(__ELF__)
 //#include <vld.h>
 #define LAT_FUNC extern
 #define lnsprintf(s, l, f, i) _snprintf(s, l, f, i)
-#define _WIN32_WINNT 0x0500
 #endif
 
 /** Version mayor de Latino */

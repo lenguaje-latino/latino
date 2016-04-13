@@ -1,2 +1,1 @@
-escribir(3 != '3')
-escribir(3.0 != 3)
+salir()
