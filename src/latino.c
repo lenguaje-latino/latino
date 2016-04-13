@@ -90,11 +90,16 @@ ast *lat_analizar_archivo(char *infile) {
   buffer[newSize] = '\0';
   return lat_analizar_expresion(buffer);
 }
-
+/**
+ * Muestra la versio de Latino
+ */
 void lat_version(){
     printf("%s\n", LAT_DERECHOS);
 }
 
+/**
+ * Muestra la Ayuda en a consola 
+ */
 void lat_ayuda(){
     lat_version();
     printf("%s\n", "Uso de latino: latino [opcion] archivo");
@@ -107,9 +112,7 @@ void lat_ayuda(){
     printf("%s\n", "Ctrl-C       : Para cerrar");
     printf("\n");    
     printf("%s\n", "Variables de entorno:");
-    printf("%s\n", "_____________________");
-    
-    
+    printf("%s\n", "_____________________");    
     printf("%s%s\n", "LATINO_HOME  : ", getenv("LATINO_HOME")); // HOME ??? buscar una palabra en espanol
     printf("%s%s\n", "LC_LANG      : ", getenv("LC_LANG")); // LC LANG ?? igualmente
     printf("%s%s\n", "HOME         : ", getenv("HOME")); // HOME es necesiario en ingles? 
@@ -146,11 +149,11 @@ int main(int argc, char *argv[]) {
       lat_version();
       return EXIT_SUCCESS;
     } else if (strcmp(argv[i], "-a") == 0) {
-      lat_ayuda();
+     // lat_ayuda();
       return EXIT_SUCCESS;
     } else if (strcmp(argv[i], "-i") == 0) {
       lat_version();
-      lat_repl(vm);
+     // lat_repl(vm);
       return EXIT_SUCCESS;
     } else{
       infile = argv[i];
