@@ -1,5 +1,5 @@
-  Building Custom Rule C:/src/latino/src/CMakeLists.txt
-  CMake does not need to re-run because C:\src\latino\visualstudio\src\CMakeFiles\generate.stamp is up-to-date.
+﻿  Building Custom Rule C:/Users/ciber/Documents/latino/src/CMakeLists.txt
+  CMake does not need to re-run because C:\Users\ciber\Documents\latino\visualstudio\src\CMakeFiles\generate.stamp is up-to-date.
   latino.c
   ast.c
   utils.c
@@ -9,32 +9,9 @@
   libmem.c
   lex.c
   parse.c
-parse.c(1441): warning C4013: 'yylex' undefined; assuming extern returning int
-parse.y(126): warning C4013: 'nodo_nuevo_operador' undefined; assuming extern returning int
-parse.y(126): warning C4047: 'function': 'ast *' differs in levels of indirection from 'int'
-parse.y(126): warning C4024: 'nodo_nuevo_asignacion': different types for formal and actual parameter 1
-parse.y(173): warning C4047: '=': 'ast *' differs in levels of indirection from 'int'
-parse.y(174): warning C4047: '=': 'ast *' differs in levels of indirection from 'int'
-parse.y(175): warning C4047: '=': 'ast *' differs in levels of indirection from 'int'
-parse.y(176): warning C4047: '=': 'ast *' differs in levels of indirection from 'int'
-parse.y(177): warning C4047: '=': 'ast *' differs in levels of indirection from 'int'
-parse.y(178): warning C4047: '=': 'ast *' differs in levels of indirection from 'int'
-parse.y(179): warning C4047: '=': 'ast *' differs in levels of indirection from 'int'
-parse.y(180): warning C4047: '=': 'ast *' differs in levels of indirection from 'int'
-parse.y(181): warning C4047: '=': 'ast *' differs in levels of indirection from 'int'
-parse.y(182): warning C4047: '=': 'ast *' differs in levels of indirection from 'int'
-parse.y(183): warning C4047: '=': 'ast *' differs in levels of indirection from 'int'
-parse.y(184): warning C4047: '=': 'ast *' differs in levels of indirection from 'int'
-parse.y(185): warning C4047: '=': 'ast *' differs in levels of indirection from 'int'
-parse.y(186): warning C4047: '=': 'ast *' differs in levels of indirection from 'int'
-parse.y(187): warning C4047: '=': 'ast *' differs in levels of indirection from 'int'
-parse.y(189): warning C4047: '=': 'ast *' differs in levels of indirection from 'int'
-parse.y(201): warning C4013: 'nodo_nuevo_logico' undefined; assuming extern returning int
-parse.y(201): warning C4047: '=': 'ast *' differs in levels of indirection from 'int'
-parse.y(202): warning C4047: '=': 'ast *' differs in levels of indirection from 'int'
   libmath.c
   libio.c
+  linenoise.c
   Generating Code...
-c:\src\latino\src\utils.c(288): warning C4172: returning address of local variable or temporary: buffer
-  latino.vcxproj -> C:\src\latino\visualstudio\bin\Debug\latino.exe
-  latino.vcxproj -> C:/src/latino/visualstudio/bin/Debug/latino.pdb (Full PDB)
+  latino.vcxproj -> C:\Users\ciber\Documents\latino\visualstudio\bin\Debug\latino.exe
+  latino.vcxproj -> C:/Users/ciber/Documents/latino/visualstudio/bin/Debug/latino.pdb (Full PDB)
