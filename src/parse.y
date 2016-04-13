@@ -80,6 +80,7 @@ int yylex (YYSTYPE * yylval_param,YYLTYPE * yylloc_param ,yyscan_t yyscanner);
 %type <node> constant_expression function_call selection_statement identifier_list
 %type <node> list_items get_list_item
 %type <node> dict_items dict_item dict_key
+%type <node> ternary_expression
 
 /* get_dict_item */
 
@@ -160,6 +161,9 @@ selection_statement:
         $$ = nodo_nuevo(NODO_SELECCION, $3, $5); }*/
     ;
 
+ternary_expression :
+    '(' expression ')' expression ':' expression {
+        $$ = nodo_nuevo_si($2, $4, $6); }
 
 iteration_statement:
     KDO statement_list KWHEN '(' expression ')' {
@@ -202,6 +206,7 @@ expression:
     | primary_expression
     | function_call
     | get_list_item
+    | ternary_expression
     ;
 
 function_call:
