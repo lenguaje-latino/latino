@@ -98,14 +98,14 @@ void lat_version(){
 void lat_ayuda(){
     lat_version();
     printf("%s\n", "Uso de latino: latino [opcion] archivo");
+    printf("\n");
     printf("%s\n", "Opciones:");
     printf("%s\n", "-a           : Muestra la ayuda de Latino");
     printf("%s\n", "-i           : Inicia el interprete de Latino (Modo interactivo)");
     printf("%s\n", "-v           : Muestra la version de Latino");
     printf("%s\n", "archivo      : Nombre del archivo con extension .lat");
     printf("%s\n", "Ctrl-C       : Para cerrar");
-    printf("\n\n");
-    
+    printf("\n");    
     printf("%s\n", "Variables de entorno:");
     printf("%s\n", "_____________________");
     
