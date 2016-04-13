@@ -1,18 +1,14 @@
 /*
 The MIT License (MIT)
-
 Copyright (c) 2015 - Latino
-
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
 in the Software without restriction, including without limitation the rights
 to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
 copies of the Software, and to permit persons to whom the Software is
 furnished to do so, subject to the following conditions:
-
 The above copyright notice and this permission notice shall be included in
 all copies or substantial portions of the Software.
-
 THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
 IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
 FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -91,14 +87,13 @@ ast *lat_analizar_archivo(char *infile) {
   return lat_analizar_expresion(buffer);
 }
 /**
- * Muestra la versio de Latino
+ * Muestra la version de latino en la consola 
  */
 void lat_version(){
     printf("%s\n", LAT_DERECHOS);
 }
-
 /**
- * Muestra la Ayuda en a consola 
+ * Muestra la ayuda en la consola 
  */
 void lat_ayuda(){
     lat_version();
@@ -112,7 +107,9 @@ void lat_ayuda(){
     printf("%s\n", "Ctrl-C       : Para cerrar");
     printf("\n");    
     printf("%s\n", "Variables de entorno:");
-    printf("%s\n", "_____________________");    
+    printf("%s\n", "_____________________");
+    
+    
     printf("%s%s\n", "LATINO_HOME  : ", getenv("LATINO_HOME")); // HOME ??? buscar una palabra en espanol
     printf("%s%s\n", "LC_LANG      : ", getenv("LC_LANG")); // LC LANG ?? igualmente
     printf("%s%s\n", "HOME         : ", getenv("HOME")); // HOME es necesiario en ingles? 
@@ -149,11 +146,11 @@ int main(int argc, char *argv[]) {
       lat_version();
       return EXIT_SUCCESS;
     } else if (strcmp(argv[i], "-a") == 0) {
-     // lat_ayuda();
+      lat_ayuda();
       return EXIT_SUCCESS;
     } else if (strcmp(argv[i], "-i") == 0) {
       lat_version();
-     // lat_repl(vm);
+      lat_repl(vm);
       return EXIT_SUCCESS;
     } else{
       infile = argv[i];
