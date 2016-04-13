@@ -111,7 +111,10 @@
 #else
 /* Microsoft headers don't like old POSIX names */
 #define strdup _strdup
-#define snprintf _snprintf
+/*FIX: Corrige el error:
+Error	C1189	#error:  Macro definition of snprintf conflicts with Standard Library function declaration	latino
+*/
+/*#define snprintf _snprintf*/
 #endif
 #else
 #include <termios.h>
