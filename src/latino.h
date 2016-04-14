@@ -69,6 +69,15 @@ defined(__ELF__)
 /** Derechos de Latino */
 #define LAT_DERECHOS LAT_VERSION "\nTodos los derechos reservados (C) 2015-2016. Latinoamerica"
 
+// generado en 
+// http://www.patorjk.com/software/taag/#p=display&f=Graffiti&t=latino
+/**
+ Dibuja el logo 
+ */
+#define LAT_LOGO "\n.__          __  .__               \n|  | _____ _/  |_|__| ____   ____  \n|  | \\__  \\\\   __\\  |/    \\ /  _ \\ \n|  |__/ __ \\|  | |  |   |  (  <_> )\n|____(____  /__| |__|___|  /\\____/ \n          \\/             \\/        \n"
+
+
+
 /** Afirmar (asset), sirve para testear una condicion */
 #define lat_afirmar(cond) ((void)(false && (cond)))
 
