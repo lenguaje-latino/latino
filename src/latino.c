@@ -103,6 +103,7 @@ void lat_logo(){
  * Muestra la ayuda en la consola
  */
 void lat_ayuda(){
+    lat_logo();
     lat_version();
     printf("%s\n", "Uso de latino: latino [opcion] [archivo]");
     printf("\n");
