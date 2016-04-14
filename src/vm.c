@@ -557,7 +557,7 @@ void lat_diferente(lat_vm* vm)
     vm->regs[255] = lat_obtener_logico(a) != lat_obtener_logico(b) ? vm->true_object : vm->false_object;
     return;
   }
-  if ((a->type == T_DOUBLE || a->type == T_INT) && (b->type == T_DOUBLE || b->type == T_DOUBLE)) {
+  if ((a->type == T_INT || a->type == T_DOUBLE) && (b->type == T_INT || b->type == T_DOUBLE)) {
     vm->regs[255] = (lat_obtener_decimal(a) != lat_obtener_decimal(b)) ? vm->true_object : vm->false_object;
     return;
   }
@@ -580,7 +580,7 @@ void lat_igualdad(lat_vm* vm)
     vm->regs[255] = lat_obtener_logico(a) == lat_obtener_logico(b) ? vm->true_object : vm->false_object;
     return;
   }
-  if ((a->type == T_DOUBLE || a->type == T_INT) && (b->type == T_DOUBLE || b->type == T_DOUBLE)) {
+  if ((a->type == T_INT || a->type == T_DOUBLE) && (b->type == T_INT || b->type == T_DOUBLE)) {
     vm->regs[255] = (lat_obtener_decimal(a) == lat_obtener_decimal(b)) ? vm->true_object : vm->false_object;
     return;
   }
@@ -599,7 +599,7 @@ void lat_menor_que(lat_vm* vm)
 {
   lat_objeto* b = lat_desapilar(vm);
   lat_objeto* a = lat_desapilar(vm);
-  if ((a->type == T_DOUBLE || a->type == T_INT) && (b->type == T_DOUBLE || b->type == T_DOUBLE)) {
+  if ((a->type == T_INT || a->type == T_DOUBLE) && (b->type == T_INT || b->type == T_DOUBLE)) {
     vm->regs[255] = (lat_obtener_decimal(a) < lat_obtener_decimal(b)) ? vm->true_object : vm->false_object;
     return;
   }
@@ -618,7 +618,7 @@ void lat_menor_igual(lat_vm* vm)
 {
   lat_objeto* b = lat_desapilar(vm);
   lat_objeto* a = lat_desapilar(vm);
-  if ((a->type == T_DOUBLE || a->type == T_INT) && (b->type == T_DOUBLE || b->type == T_DOUBLE)) {
+  if ((a->type == T_INT || a->type == T_DOUBLE) && (b->type == T_INT || b->type == T_DOUBLE)) {
     vm->regs[255] = (lat_obtener_decimal(a) <= lat_obtener_decimal(b)) ? vm->true_object : vm->false_object;
     return;
   }
@@ -637,7 +637,7 @@ void lat_mayor_que(lat_vm* vm)
 {
   lat_objeto* b = lat_desapilar(vm);
   lat_objeto* a = lat_desapilar(vm);
-  if ((a->type == T_DOUBLE || a->type == T_INT) && (b->type == T_DOUBLE || b->type == T_DOUBLE)) {
+  if ((a->type == T_INT || a->type == T_DOUBLE) && (b->type == T_INT || b->type == T_DOUBLE)) {
     vm->regs[255] = (lat_obtener_decimal(a) > lat_obtener_decimal(b)) ? vm->true_object : vm->false_object;
     return;
   }
@@ -656,7 +656,7 @@ void lat_mayor_igual(lat_vm* vm)
 {
   lat_objeto* b = lat_desapilar(vm);
   lat_objeto* a = lat_desapilar(vm);
-  if ((a->type == T_DOUBLE || a->type == T_INT) && (b->type == T_DOUBLE || b->type == T_DOUBLE)) {
+  if ((a->type == T_INT || a->type == T_DOUBLE) && (b->type == T_INT || b->type == T_DOUBLE)) {
     vm->regs[255] = (lat_obtener_decimal(a) >= lat_obtener_decimal(b)) ? vm->true_object : vm->false_object;
     return;
   }
