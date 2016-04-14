@@ -12,6 +12,7 @@ var searchData=
   ['op_5fjmp',['OP_JMP',['../vm_8h.html#aae829cba00eeaf5cc6cae30d65c003aaafd679fab86e6a91d22c91734e287639b',1,'vm.h']]],
   ['op_5fjmpif',['OP_JMPIF',['../vm_8h.html#aae829cba00eeaf5cc6cae30d65c003aaafc9f860cff497c3e2541b98202fa0718',1,'vm.h']]],
   ['op_5flistgetitem',['OP_LISTGETITEM',['../vm_8h.html#aae829cba00eeaf5cc6cae30d65c003aaafffa4f5d43e5020a0d875ee94a98ed8a',1,'vm.h']]],
+  ['op_5flistsetitem',['OP_LISTSETITEM',['../vm_8h.html#aae829cba00eeaf5cc6cae30d65c003aaa503d10aa5c7c914d8250eaa2ec86d539',1,'vm.h']]],
   ['op_5flocalns',['OP_LOCALNS',['../vm_8h.html#aae829cba00eeaf5cc6cae30d65c003aaa7d00be45772600c91a35a75f41c2bf1e',1,'vm.h']]],
   ['op_5fmov',['OP_MOV',['../vm_8h.html#aae829cba00eeaf5cc6cae30d65c003aaa301c8d5e459e6ca0626636f7c35b07fe',1,'vm.h']]],
   ['op_5fnop',['OP_NOP',['../vm_8h.html#aae829cba00eeaf5cc6cae30d65c003aaa4a0a7e9f97df6a4ad105a5382f9b54bc',1,'vm.h']]],
