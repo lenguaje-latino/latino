@@ -3,6 +3,7 @@ var searchData=
   ['make_5fhash_5fmap',['make_hash_map',['../utils_8h.html#ad38807f90aa796fcd8e7f84bb0e0a189',1,'utils.c']]],
   ['marked',['marked',['../structlat__objeto.html#aff9a19141ca816130b4fa52fb1658cc6',1,'lat_objeto']]],
   ['max_5fbytecode_5ffunction',['MAX_BYTECODE_FUNCTION',['../latino_8h.html#a4d3423174127ca25b325b387e829432d',1,'latino.h']]],
+  ['max_5finput_5fsize',['MAX_INPUT_SIZE',['../latino_8h.html#a479e2087967dffd589c1b8b65c8e65e6',1,'latino.h']]],
   ['max_5fstack_5fsize',['MAX_STACK_SIZE',['../latino_8h.html#accbb358028675c83675d8b34c386268d',1,'latino.h']]],
   ['max_5fstr_5fintern',['MAX_STR_INTERN',['../latino_8h.html#a57a422b66722090404c410853d42ef91',1,'latino.h']]],
   ['max_5fstr_5flength',['MAX_STR_LENGTH',['../latino_8h.html#aaa695591372841e2c5580e4ed0f3620f',1,'latino.h']]],
