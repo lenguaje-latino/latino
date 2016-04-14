@@ -714,8 +714,17 @@ static void list_modify_element(list_node* l, void* data, int pos){
   list_node* c;
   int i = -1;
   int tam = length_list(l);
+  //si el indice esta fuera de rango, traemos el ultimo
   if(pos > tam){
     pos = tam - 1;
+  }
+  //si el indice es negativo traer el ultimo elemento
+  if(pos < 0){
+    pos = (tam + pos);
+    //si el indice es muy negativo traer el primer elemento
+    if((pos + tam) < 0){
+      pos = 0;
+    }
   }
   for (c = l; c->next != NULL; c = c->next) {
     if(i == pos) {
@@ -733,6 +742,14 @@ static lat_objeto* list_get_element(list_node* l, int pos){
   //si el indice esta fuera de rango, traemos el ultimo
   if(pos > tam){
     pos = tam - 1;
+  }
+  //si el indice es negativo traer el ultimo elemento
+  if(pos < 0){
+    pos = (tam + pos);
+    //si el indice es muy negativo traer el primer elemento
+    if((pos + tam) < 0){
+      pos = 0;
+    }
   }
   for (c = l; c->next != NULL; c = c->next) {
     if(i == pos) {

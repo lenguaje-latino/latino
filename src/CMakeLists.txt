@@ -1,3 +1,6 @@
+set(CMAKE_C_FLAGS_DEBUG "${CMAKE_C_FLAGS_DEBUG} -g -Wall -std=c11")
+set(CMAKE_VERBOSE_MAKEFILE true)
+
 if(UNIX)
     link_libraries(m)
     set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -g -Wall -std=c11")
@@ -26,4 +29,6 @@ TARGET_LINK_LIBRARIES(latino LINK_PUBLIC
     ${BISON_LIBRARIES} ${CMAKE_DL_LIBS}
 )
 
-install (TARGETS latino DESTINATION /usr/bin)
+if(UNIX)
+  install (TARGETS latino DESTINATION /usr/bin)
+endif(UNIX)

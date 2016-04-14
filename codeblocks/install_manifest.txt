@@ -1,1 +1,1 @@
-/usr/local/bin/latino
+/usr/bin/latino.exe
