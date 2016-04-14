@@ -97,7 +97,7 @@ void lat_version(){
  */
 void lat_ayuda(){
     lat_version();
-    printf("%s\n", "Uso de latino: latino [opcion] archivo");
+    printf("%s\n", "Uso de latino: latino [opcion] [archivo]");
     printf("\n");
     printf("%s\n", "Opciones:");
     printf("%s\n", "-a           : Muestra la ayuda de Latino");
@@ -167,8 +167,12 @@ int main(int argc, char *argv[]) {
     }
   }
   else{
+#ifdef _WIN32
+    system("cmd");
+#else
     lat_version();
     lat_repl(vm);
+#endif
   }
 
   return EXIT_SUCCESS;

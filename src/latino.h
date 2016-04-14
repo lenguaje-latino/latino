@@ -63,7 +63,7 @@ defined(__ELF__)
 /** Version menor de Latino */
 #define LAT_VERSION_MENOR "4"
 /** Version de correcion de errores */
-#define LAT_VERSION_PARCHE "1"
+#define LAT_VERSION_PARCHE "2"
 /** Version de Latino */
 #define LAT_VERSION "Latino " LAT_VERSION_MAYOR "." LAT_VERSION_MENOR "." LAT_VERSION_PARCHE
 /** Derechos de Latino */

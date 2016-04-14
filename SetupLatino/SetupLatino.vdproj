@@ -117,6 +117,12 @@
         }
         "Entry"
         {
+        "MsmKey" = "8:_A0FB664B2C904B6C89CD3FF2D3D42121"
+        "OwnerKey" = "8:_UNDEFINED"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
         "MsmKey" = "8:_AF2852B4E5024D4BA7BFE548465CE94A"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
@@ -176,6 +182,14 @@
             "PrerequisitesLocation" = "2:1"
             "Url" = "8:"
             "ComponentsUrl" = "8:"
+                "Items"
+                {
+                    "{EDC2488A-8267-493A-A98E-7D9C3B36CDF3}:.NETFramework,Version=v4.5"
+                    {
+                    "Name" = "8:Microsoft .NET Framework 4.5 (x86 and x64)"
+                    "ProductCode" = "8:.NETFramework,Version=v4.5"
+                    }
+                }
             }
         }
         "Release"
@@ -570,6 +584,26 @@
             "IsDependency" = "11:FALSE"
             "IsolateTo" = "8:"
             }
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_A0FB664B2C904B6C89CD3FF2D3D42121"
+            {
+            "SourcePath" = "8:..\\ejemplos\\21-operador_ternario.lat"
+            "TargetName" = "8:21-operador_ternario.lat"
+            "Tag" = "8:"
+            "Folder" = "8:_391ECC0BD2544DB38DE84A1AE04ACBC7"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            }
             "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_AF2852B4E5024D4BA7BFE548465CE94A"
             {
             "SourcePath" = "8:..\\ejemplos\\12-factorial.lat"
@@ -758,7 +792,7 @@
         "Name" = "8:Microsoft Visual Studio"
         "ProductName" = "8:Latino"
         "ProductCode" = "8:{98C09F21-93D7-47B6-AF64-01DFE43F7CD8}"
-        "PackageCode" = "8:{6072DE15-20F6-4B6E-97EE-D3446E0560BE}"
+        "PackageCode" = "8:{4A052BF4-46AA-4A66-8D8D-037A5FF64631}"
         "UpgradeCode" = "8:{281BBCAC-CC2E-4335-A075-8BE50C5CCACD}"
         "AspNetVersion" = "8:4.0.30319.0"
         "RestartWWWService" = "11:FALSE"
@@ -790,6 +824,84 @@
             {
                 "Keys"
                 {
+                    "{60EA8692-D2D5-43EB-80DC-7906BF13D6EF}:_0D4EBB42CEC04C55AF3B81CECC769D69"
+                    {
+                    "Name" = "8:System"
+                    "Condition" = "8:"
+                    "AlwaysCreate" = "11:FALSE"
+                    "DeleteAtUninstall" = "11:FALSE"
+                    "Transitive" = "11:FALSE"
+                        "Keys"
+                        {
+                            "{60EA8692-D2D5-43EB-80DC-7906BF13D6EF}:_F728C50D4C304F55B8756BD83117F726"
+                            {
+                            "Name" = "8:CurrentControlSet"
+                            "Condition" = "8:"
+                            "AlwaysCreate" = "11:FALSE"
+                            "DeleteAtUninstall" = "11:FALSE"
+                            "Transitive" = "11:FALSE"
+                                "Keys"
+                                {
+                                    "{60EA8692-D2D5-43EB-80DC-7906BF13D6EF}:_F4803836B04E41F894E2FED9A4205426"
+                                    {
+                                    "Name" = "8:Control"
+                                    "Condition" = "8:"
+                                    "AlwaysCreate" = "11:FALSE"
+                                    "DeleteAtUninstall" = "11:FALSE"
+                                    "Transitive" = "11:FALSE"
+                                        "Keys"
+                                        {
+                                            "{60EA8692-D2D5-43EB-80DC-7906BF13D6EF}:_D01AFFFB321042C68B732636D8607D27"
+                                            {
+                                            "Name" = "8:Session Manager"
+                                            "Condition" = "8:"
+                                            "AlwaysCreate" = "11:FALSE"
+                                            "DeleteAtUninstall" = "11:FALSE"
+                                            "Transitive" = "11:FALSE"
+                                                "Keys"
+                                                {
+                                                    "{60EA8692-D2D5-43EB-80DC-7906BF13D6EF}:_C1BF7F5752A84BBD90E4BE24F7709A41"
+                                                    {
+                                                    "Name" = "8:Environment"
+                                                    "Condition" = "8:"
+                                                    "AlwaysCreate" = "11:FALSE"
+                                                    "DeleteAtUninstall" = "11:FALSE"
+                                                    "Transitive" = "11:FALSE"
+                                                        "Keys"
+                                                        {
+                                                        }
+                                                        "Values"
+                                                        {
+                                                            "{ADCFDA98-8FDD-45E4-90BC-E3D20B029870}:_CC0384B16EDF4A3EA62B77CDC00639B4"
+                                                            {
+                                                            "Name" = "8:Path"
+                                                            "Condition" = "8:"
+                                                            "Transitive" = "11:FALSE"
+                                                            "ValueTypes" = "3:1"
+                                                            "Value" = "8:[%Path];[TARGETDIR]"
+                                                            }
+                                                        }
+                                                    }
+                                                }
+                                                "Values"
+                                                {
+                                                }
+                                            }
+                                        }
+                                        "Values"
+                                        {
+                                        }
+                                    }
+                                }
+                                "Values"
+                                {
+                                }
+                            }
+                        }
+                        "Values"
+                        {
+                        }
+                    }
                     "{60EA8692-D2D5-43EB-80DC-7906BF13D6EF}:_FDFB503C4CEA43498E1E52D636D93E1B"
                     {
                     "Name" = "8:Software"
@@ -826,27 +938,13 @@
                 {
                     "{60EA8692-D2D5-43EB-80DC-7906BF13D6EF}:_58F72C55C2504079B450CFE2E9024F44"
                     {
-                    "Name" = "8:Software"
+                    "Name" = "8:[Manufacturer]"
                     "Condition" = "8:"
                     "AlwaysCreate" = "11:FALSE"
                     "DeleteAtUninstall" = "11:FALSE"
                     "Transitive" = "11:FALSE"
                         "Keys"
                         {
-                            "{60EA8692-D2D5-43EB-80DC-7906BF13D6EF}:_4163BCBA2429499D940B4E89061D98F4"
-                            {
-                            "Name" = "8:[Manufacturer]"
-                            "Condition" = "8:"
-                            "AlwaysCreate" = "11:FALSE"
-                            "DeleteAtUninstall" = "11:FALSE"
-                            "Transitive" = "11:FALSE"
-                                "Keys"
-                                {
-                                }
-                                "Values"
-                                {
-                                }
-                            }
                         }
                         "Values"
                         {
