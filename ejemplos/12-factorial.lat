@@ -20,4 +20,4 @@ funcion factorial(n)
     retorno x
 fin
 
-imprimir("el factorial de 5 es: " . factorial(5))
+escribir("el factorial de 5 es: " . factorial(5))

@@ -104,7 +104,7 @@ EXP ([Ee][-+]?[0-9]+)
 [_A-Z][_A-Z0-9]*       { yylval->node = nodo_nuevo_constante(yytext, yylloc->first_line, yylloc->first_column); return TCONSTANT; }
 [_a-zA-Z][_a-zA-Z0-9]* { yylval->node = nodo_nuevo_identificador(yytext); return TIDENTIFIER; }
 [0-9]+"."+[0-9]*{EXP}?|"."+[0-9]+{EXP}?       { yylval->node = nodo_nuevo_decimal(strtod(yytext, NULL)); return TNUMBER; }
-[0-9]+                 { yylval->node = nodo_nuevo_entero(strtol(yytext, NULL, 0)); return TINT; }
+-?[0-9]+                 { yylval->node = nodo_nuevo_entero(strtol(yytext, NULL, 0)); return TINT; }
 \"([^\\\"]|\\.)*\"     { yytext[strlen(yytext) - 1] = '\0'; yylval->node = nodo_nuevo_cadena(yytext+1);return TSTRING; }
 '([^\\\']|\\.)*'       { yytext[strlen(yytext) - 1] = '\0'; yylval->node = nodo_nuevo_literal(yytext+1); return TLIT; }
 "#".* /* ignore comments */
