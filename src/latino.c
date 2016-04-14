@@ -93,6 +93,13 @@ void lat_version(){
     printf("%s\n", LAT_DERECHOS);
 }
 /**
+ * Para crear el logo en ascii
+ */
+void lat_logo(){
+    printf("%s\n", LAT_LOGO);
+}
+
+/**
  * Muestra la ayuda en la consola
  */
 void lat_ayuda(){
