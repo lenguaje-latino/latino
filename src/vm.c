@@ -710,21 +710,11 @@ lat_bytecode lat_bc(lat_ins i, int a, int b, void* meta)
   return ret;
 }
 
-static void list_modify_element(list_node* l, void* data, int pos){
+void lista_modificar_elemento(list_node* l, void* data, int pos){
   list_node* c;
   int i = -1;
-  int tam = length_list(l);
-  //si el indice esta fuera de rango, traemos el ultimo
-  if(pos > tam){
-    pos = tam - 1;
-  }
-  //si el indice es negativo traer el ultimo elemento
-  if(pos < 0){
-    pos = (tam + pos);
-    //si el indice es muy negativo traer el primer elemento
-    if((pos + tam) < 0){
-      pos = 0;
-    }
+  if(pos < 0 || pos >= length_list(l)){
+    lat_registrar_error("Indice fuera de rango");
   }
   for (c = l; c->next != NULL; c = c->next) {
     if(i == pos) {
@@ -735,21 +725,11 @@ static void list_modify_element(list_node* l, void* data, int pos){
   }
 }
 
-static lat_objeto* list_get_element(list_node* l, int pos){
+lat_objeto* lista_obtener_elemento(list_node* l, int pos){
   list_node* c;
   int i = -1;
-  int tam = length_list(l);
-  //si el indice esta fuera de rango, traemos el ultimo
-  if(pos > tam){
-    pos = tam - 1;
-  }
-  //si el indice es negativo traer el ultimo elemento
-  if(pos < 0){
-    pos = (tam + pos);
-    //si el indice es muy negativo traer el primer elemento
-    if((pos + tam) < 0){
-      pos = 0;
-    }
+  if(pos < 0 || pos >= length_list(l)){
+    lat_registrar_error("Indice fuera de rango");
   }
   for (c = l; c->next != NULL; c = c->next) {
     if(i == pos) {
@@ -757,7 +737,6 @@ static lat_objeto* list_get_element(list_node* l, int pos){
     }
     i++;
   }
-  lat_registrar_error("Indice fuera de rango");
 }
 
 void lat_llamar_funcion(lat_vm* vm, lat_objeto* func)
@@ -769,102 +748,53 @@ void lat_llamar_funcion(lat_vm* vm, lat_objeto* func)
     lat_bytecode cur;
     int pos;
     for (pos = 0, cur = inslist[pos]; cur.ins != OP_END; cur = inslist[++pos]) {
-#if DEBUG_VM
-      printf("%6i\t", pos);
-#endif
       switch (cur.ins) {
       case OP_END:
-#if DEBUG_VM
-        printf("END");
-#endif
         return;
         break;
       case OP_NOP:
-#if DEBUG_VM
-        printf("NOP");
-#endif
         break;
       case OP_PUSH:
         lat_apilar(vm, vm->regs[cur.a]);
-#if DEBUG_VM
-        printf("PUSH r%i", cur.a);
-#endif
         break;
       case OP_POP:
         vm->regs[cur.a] = lat_desapilar(vm);
-#if DEBUG_VM
-        printf("POP r%i", cur.a);
-#endif
         break;
       case OP_GET:
         vm->regs[cur.a] = lat_lat_obtener_contexto_objeto(vm->regs[cur.b], vm->regs[cur.a]);
-#if DEBUG_VM
-        printf("GET r%i r%i", cur.a, cur.b);
-#endif
         break;
       case OP_SET:
         lat_asignar_contexto_objeto(vm->regs[cur.b], lat_clonar_objeto(vm, ((lat_objeto*)cur.meta)), vm->regs[cur.a]);
-#if DEBUG_VM
-        printf("SET r%i r%i", cur.b, cur.a);
-#endif
         break;
       case OP_STORECHAR:
         vm->regs[cur.a] = ((lat_objeto*)cur.meta);
-#if DEBUG_VM
-        printf("STORECHAR r%i, %i", cur.a, ((lat_objeto*)cur.meta)->data.c);
-#endif
         break;
       case OP_STOREINT: {
         vm->regs[cur.a] = ((lat_objeto*)cur.meta);
-#if DEBUG_VM
-        printf("STOREINT r%i, %ld", cur.a, ((lat_objeto*)cur.meta)->data.i);
-#endif
       } break;
       case OP_STOREDOUBLE:
         vm->regs[cur.a] = ((lat_objeto*)cur.meta);
-#if DEBUG_VM
-        printf("STOREDOUBLE r%i, %lf", cur.a, ((lat_objeto*)cur.meta)->data.d);
-#endif
         break;
       case OP_STORESTR: {
         vm->regs[cur.a] = ((lat_objeto*)cur.meta);
-#if DEBUG_VM
-        printf("STORESTR r%i, %s", cur.a, ((lat_objeto*)cur.meta)->data.str);
-#endif
       } break;
       case OP_STOREBOOL:
         vm->regs[cur.a] = ((lat_objeto*)cur.meta);
-#if DEBUG_VM
-        printf("STOREBOOL r%i, %i", cur.a, ((lat_objeto*)cur.meta)->data.b);
-#endif
         break;
       case OP_STORELIST:
         vm->regs[cur.a] = lat_lista_nueva(vm, lat_crear_lista());
-#if DEBUG_VM
-        printf("STORELIST r%i, %s", cur.a, "lat_crear_lista");
-#endif
         break;
       case OP_PUSHLIST:
         lat_apilar_lista(vm->regs[cur.a], vm->regs[cur.b]);
-#if DEBUG_VM
-        printf("PUSHLIST r%i, r%i", cur.a, cur.b);
-#endif
         break;
       case OP_POPLIST:
         //TODO: Pendiente
         //vm->regs[cur.a] = lat_desapilar_lista(vm->regs[cur.b]);
-#if DEBUG_VM
-        printf("POPLIST r%i, r%i", cur.a, cur.b);
-#endif
         break;
       case OP_LISTGETITEM:{
         lat_objeto *l = vm->regs[cur.a];
         lat_objeto *pos = vm->regs[cur.b];
-        vm->regs[cur.a] = list_get_element(l->data.list, pos->data.i);
-
-#if DEBUG_VM
-        printf("LISTGETITEM r%i, r%i", cur.a, cur.b);
-#endif
+        vm->regs[cur.a] = lista_obtener_elemento(l->data.list, pos->data.i);
       }
       break;
       case OP_LISTSETITEM:{
@@ -873,109 +803,61 @@ void lat_llamar_funcion(lat_vm* vm, lat_objeto* func)
         if(pos->type != T_INT){
           lat_registrar_error("%s", "la posicion de la lista no es un entero");
         }
-        list_modify_element(l->data.list, (lat_objeto*)vm->regs[cur.b], pos->data.i);
-#if DEBUG_VM
-        printf("LISTSETITEM r%i, r%i", cur.a, cur.b);
-#endif
+        lista_modificar_elemento(l->data.list, (lat_objeto*)vm->regs[cur.b], pos->data.i);
         }
         break;
       case OP_STOREDICT:
         //TODO: Pendiente
         //vm->regs[cur.a] = lat_lista_nueva(vm, make_dict());
-#if DEBUG_VM
-        printf("STOREDICT r%i, %s", cur.a, "make_dict");
-#endif
         break;
       case OP_PUSHDICT:
         //TODO: Pendiente
         //lat_push_dict(vm->regs[cur.a], vm->regs[cur.b]);
-#if DEBUG_VM
-        printf("PUSHDICT r%i, r%i", cur.a, cur.b);
-#endif
         break;
       case OP_POPDICT:
         //TODO: Pendiente
         //vm->regs[cur.a] = lat_pop_dict(vm->regs[cur.b]);
-#if DEBUG_VM
-        printf("POPDICT r%i, r%i", cur.a, cur.b);
-#endif
         break;
       case OP_MOV:
         vm->regs[cur.a] = vm->regs[cur.b];
-#if DEBUG_VM
-        printf("MOV r%i, r%i", cur.a, cur.b);
-#endif
         break;
       case OP_GLOBALNS:
         vm->regs[cur.a] = vm->ctx_stack[0];
         break;
       case OP_LOCALNS:
         vm->regs[cur.a] = lat_obtener_contexto(vm);
-#if DEBUG_VM
-        printf("LOCALNS r%i", cur.a);
-#endif
         break;
       case OP_FN:
         vm->regs[cur.a] = lat_definir_funcion(vm, (lat_bytecode*)cur.meta);
-#if DEBUG_VM
-        printf("FN %i", cur.a);
-#endif
         break;
       case OP_NS:
-#if DEBUG_VM
-        printf("NS r%i", cur.a);
-#endif
         vm->regs[cur.a] = lat_clonar_objeto(vm, lat_obtener_contexto(vm));
         lat_apilar_contexto_predefinido(vm, vm->regs[cur.a]);
         break;
       case OP_ENDNS:
-#if DEBUG_VM
-        printf("ENDNS r%i", cur.a);
-#endif
         vm->regs[cur.a] = lat_desapilar_contexto_predefinido(vm);
         break;
       case OP_JMP:
         pos = cur.a - 1;
-#if DEBUG_VM
-        printf("JMP %i", pos);
-#endif
         break;
       case OP_JMPIF:
-#if DEBUG_VM
-        printf("JMPIF r%i %i", cur.b, (cur.a - 1));
-#endif
         if (lat_obtener_logico(vm->regs[cur.b])) {
           pos = cur.a - 1;
         }
         break;
       case OP_CALL:
-#if DEBUG_VM
-        printf("CALL r%i\n>> ", cur.a);
-#endif
         lat_llamar_funcion(vm, vm->regs[cur.a]);
         break;
       case OP_NOT:
-#if DEBUG_VM
-        printf("NOT r%i", cur.a);
-#endif
         vm->regs[cur.a] = lat_obtener_logico(vm->regs[cur.a]) == true ? vm->false_object : vm->true_object;
         break;
       case OP_INC:
-#if DEBUG_VM
-        printf("INC r%i", cur.a);
-#endif
         ((lat_objeto*)vm->regs[cur.a])->data.i++;
         break;
       case OP_DEC:
-#if DEBUG_VM
-        printf("INC r%i", cur.a);
-#endif
         ((lat_objeto*)vm->regs[cur.a])->data.i--;
         break;
       }
-#if DEBUG_VM
-      printf("\n");
-#endif
     }
     lat_desapilar_contexto(vm);
   }

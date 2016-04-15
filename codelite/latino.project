@@ -9,6 +9,7 @@
     <File Name="../src/libmem.c"/>
     <File Name="../src/libstring.c"/>
     <File Name="../src/linenoise/linenoise.c"/>
+    <File Name="../src/linenoise/utf8.c"/>
     <File Name="../src/object.c"/>
     <File Name="../src/parse.c"/>
     <File Name="../src/utils.c"/>
@@ -24,6 +25,7 @@
     <File Name="../src/libmem.h"/>
     <File Name="../src/libstring.h"/>
     <File Name="../src/linenoise/linenoise.h"/>
+    <File Name="../src/linenoise/utf8.h"/>
     <File Name="../src/object.h"/>
     <File Name="../src/parse.h"/>
     <File Name="../src/utils.h"/>
