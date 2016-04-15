@@ -201,7 +201,7 @@ expression:
     | expression '/' expression { $$ = nodo_nuevo_operador(NODO_DIVISION, $1, $3); }
     | expression '%' expression { $$ = nodo_nuevo_operador(NODO_MODULO, $1, $3); }
     | '(' expression ')' { $$ = $2; }
-    | '-' expression %prec UMINUS { $$ = nodo_nuevo_operador(NODO_MENOS_UNARIO, $2, NULL); }
+    | '-' expression %prec '*' { $$ = nodo_nuevo_operador(NODO_MENOS_UNARIO, $2, NULL); }
     | primary_expression
     | function_call
     | get_list_item
