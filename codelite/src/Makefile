@@ -344,6 +344,33 @@ linenoise/linenoise.c.s:
 	cd C:/src/latino/codelite && $(MAKE) -f src/CMakeFiles/latino.dir/build.make src/CMakeFiles/latino.dir/linenoise/linenoise.c.s
 .PHONY : linenoise/linenoise.c.s
 
+linenoise/utf8.obj: linenoise/utf8.c.obj
+
+.PHONY : linenoise/utf8.obj
+
+# target to build an object file
+linenoise/utf8.c.obj:
+	cd C:/src/latino/codelite && $(MAKE) -f src/CMakeFiles/latino.dir/build.make src/CMakeFiles/latino.dir/linenoise/utf8.c.obj
+.PHONY : linenoise/utf8.c.obj
+
+linenoise/utf8.i: linenoise/utf8.c.i
+
+.PHONY : linenoise/utf8.i
+
+# target to preprocess a source file
+linenoise/utf8.c.i:
+	cd C:/src/latino/codelite && $(MAKE) -f src/CMakeFiles/latino.dir/build.make src/CMakeFiles/latino.dir/linenoise/utf8.c.i
+.PHONY : linenoise/utf8.c.i
+
+linenoise/utf8.s: linenoise/utf8.c.s
+
+.PHONY : linenoise/utf8.s
+
+# target to generate assembly for a file
+linenoise/utf8.c.s:
+	cd C:/src/latino/codelite && $(MAKE) -f src/CMakeFiles/latino.dir/build.make src/CMakeFiles/latino.dir/linenoise/utf8.c.s
+.PHONY : linenoise/utf8.c.s
+
 object.obj: object.c.obj
 
 .PHONY : object.obj
@@ -485,6 +512,9 @@ help:
 	@echo "... linenoise/linenoise.obj"
 	@echo "... linenoise/linenoise.i"
 	@echo "... linenoise/linenoise.s"
+	@echo "... linenoise/utf8.obj"
+	@echo "... linenoise/utf8.i"
+	@echo "... linenoise/utf8.s"
 	@echo "... object.obj"
 	@echo "... object.i"
 	@echo "... object.s"

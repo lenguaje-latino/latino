@@ -499,24 +499,15 @@ int nodo_analizar(lat_vm *vm, ast *node, lat_bytecode *bcode, int i) {
     }
     fpn(vm, node->r);
     dbc(OP_FN, 255, 0, funcion_bcode);
-#if DEBUG_VM
-    printf("FN R255\n");
-#endif
     funcion_bcode = NULL;
     fi = 0;
   } break;
   case NODO_LISTA: {
     nested++;
     dbc(OP_STORELIST, nested, 0, NULL);
-#if DEBUG_VM
-    printf("STORELIST R%i\n", nested);
-#endif
     if (node->l) {
       pn(vm, node->l);
       dbc(OP_MOV, 255, nested, NULL);
-#if DEBUG_VM
-    printf("MOV R255 R%i\n", nested);
-#endif
     }
     nested--;
   } break;
@@ -524,9 +515,6 @@ int nodo_analizar(lat_vm *vm, ast *node, lat_bytecode *bcode, int i) {
     if (node->l) {
       pn(vm, node->l);
       dbc(OP_PUSHLIST, nested, 255, NULL);
-#if DEBUG_VM
-    printf("PUSHLIST R%i R255\n", nested);
-#endif
     }
     if (node->r) {
       pn(vm, node->r);
@@ -537,37 +525,22 @@ int nodo_analizar(lat_vm *vm, ast *node, lat_bytecode *bcode, int i) {
     if (elem->exp) {
       pn(vm, elem->exp);
       dbc(OP_MOV, 3, 255, NULL);
-#if DEBUG_VM
-    printf("MOV R3 R255\n");
-#endif
     }
     if(elem->id) {
         pn(vm, elem->pos);
         dbc(OP_MOV, 4, 255, NULL);
-#if DEBUG_VM
-    printf("MOV R4 R255\n");
-#endif
         pn(vm, elem->id);
         dbc(OP_LISTSETITEM, 255, 3, (void*)4);
-#if DEBUG_VM
-    printf("LISTSETITEM R255 R3\n");
-#endif
     }
   } break;
   case NODO_LISTA_OBTENER_ELEMENTO:{
     if (node->l){
       pn(vm, node->l);
       dbc(OP_MOV, 3, 255, NULL);
-#if DEBUG_VM
-    printf("MOV R3 R255\n");
-#endif
     }
     if (node->r){
       pn(vm, node->r);
       dbc(OP_LISTGETITEM, 255, 3, NULL);
-#if DEBUG_VM
-    printf("LISTGETITEM R55 R3\n");
-#endif
     }
   } break;
   case NODO_DICCIONARIO: {

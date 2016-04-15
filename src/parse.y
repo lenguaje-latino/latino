@@ -78,7 +78,7 @@ int yylex (YYSTYPE * yylval_param,YYLTYPE * yylloc_param ,yyscan_t yyscanner);
 %type <node> iteration_statement jump_statement function_definition
 %type <node> argument_expression_list declaration primary_expression
 %type <node> constant_expression function_call selection_statement identifier_list
-%type <node> list_items get_list_item
+%type <node> list_new list_items get_list_item
 %type <node> dict_items dict_item dict_key
 %type <node> ternary_expression
 
@@ -128,7 +128,7 @@ statement: /* empty */ { $$ = NULL; }
     | iteration_statement { $$ = $1; }
     | jump_statement { $$ = $1; }
     | function_definition { $$ = $1; }
-    | function_call { $$ = $1; }    
+    | function_call { $$ = $1; }
     ;
 
 declaration:
@@ -206,6 +206,7 @@ expression:
     | function_call
     | get_list_item
     | ternary_expression
+    | list_new
     ;
 
 function_call:
@@ -242,6 +243,10 @@ argument_expression_list: /* empty */ { $$ = NULL; }
 identifier_list: /* empty */ { $$ = NULL; }
     | TIDENTIFIER { $$ = nodo_nuevo(NODO_LISTA_PARAMETROS, $1, NULL); }
     | identifier_list ',' TIDENTIFIER { $$ = nodo_nuevo(NODO_LISTA_PARAMETROS, $3, $1); }
+    ;
+
+list_new:
+    '[' list_items ']' { $$ = nodo_nuevo(NODO_LISTA, $2, NULL); }
     ;
 
 list_items: /* empty */ { $$ = NULL; }
