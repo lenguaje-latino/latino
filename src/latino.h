@@ -33,6 +33,7 @@ THE SOFTWARE.
 #include <stdlib.h>
 #include <stdarg.h>
 #include <float.h>
+#include <setjmp.h>
 
 #include "ast.h"
 #include "vm.h"
@@ -58,6 +59,11 @@ defined(__ELF__)
 #define lnsprintf(s, l, f, i) _snprintf(s, l, f, i)
 #endif
 
+/** Define el manejo de excepciones en Latino */
+#define LAT_THROW(L,c)		longjmp((c)->b, 1)
+#define LAT_TRY(L,c,a)		if (setjmp((c)->b) == 0) { a }
+#define lat_jmpbuf		jmp_buf
+
 /** Version mayor de Latino */
 #define LAT_VERSION_MAYOR "0"
 /** Version menor de Latino */
@@ -69,14 +75,12 @@ defined(__ELF__)
 /** Derechos de Latino */
 #define LAT_DERECHOS LAT_VERSION "\nTodos los derechos reservados (C) 2015-2016. Latinoamerica"
 
-// generado en 
+// generado en
 // http://www.patorjk.com/software/taag/#p=display&f=Graffiti&t=latino
 /**
- Dibuja el logo 
+ Dibuja el logo
  */
 #define LAT_LOGO "\n.__          __  .__               \n|  | _____ _/  |_|__| ____   ____  \n|  | \\__  \\\\   __\\  |/    \\ /  _ \\ \n|  |__/ __ \\|  | |  |   |  (  <_> )\n|____(____  /__| |__|___|  /\\____/ \n          \\/             \\/        \n"
-
-
 
 /** Afirmar (asset), sirve para testear una condicion */
 #define lat_afirmar(cond) ((void)(false && (cond)))
