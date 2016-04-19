@@ -45,18 +45,22 @@ THE SOFTWARE.
 */
 
 /** Determina si el sistema es GNU */
-#if defined(__GNUC__) && ((__GNUC__ * 100 + __GNUC_MINOR__) >= 302) && \
-defined(__ELF__)
-#define LAT_FUNC __attribute__((visibility("hidden"))) extern
-#define lnsprintf(s, l, f, i) snprintf(s, l, f, i)
-#include <dlfcn.h>
-#include <unistd.h>
-#else
-#define WINDOWS
+#ifdef _WIN32
+#define PATH_SEP "\\"
 /* Visual Leak Detector for Visual C++ */
 //#include <vld.h>
 #define LAT_FUNC extern
 #define lnsprintf(s, l, f, i) _snprintf(s, l, f, i)
+#include <windows.h>
+#include <limits.h>
+#define ldirectorio_actual(ruta, tamanio) GetCurrentDirectory (MAX_PATH, ruta);
+#else
+#define PATH_SEP "/"
+#define LAT_FUNC __attribute__((visibility("hidden"))) extern
+#define lnsprintf(s, l, f, i) snprintf(s, l, f, i)
+#include <dlfcn.h>
+#include <unistd.h>
+#define ldirectorio_actual(ruta, tamanio) getcwd (ruta, tamanio)
 #endif
 
 /** Define el manejo de excepciones en Latino */
@@ -99,6 +103,9 @@ extern int debug;
 /** Tamanio maximo de la pila de la maquina virtual */
 #define MAX_STACK_SIZE 255
 
+/** Tamanio maximo de una ruta de derectorio */
+#define MAX_PATH_LENGTH 1024
+
 /** Tamanio maximo de la entrada por teclado */
 #define MAX_INPUT_SIZE 512
 
@@ -126,10 +133,10 @@ ast* lat_analizar_expresion(char* expr);
 
 /** Analiza un archivo
   *
-  * \param path: Ruta del archivo a analizar
+  * \param ruta: Ruta del archivo a analizar
   * \return ast: Nodo AST
   *
   */
-ast* lat_analizar_archivo(char* path);
+ast* lat_analizar_archivo(char* ruta);
 
 #endif /* _LATINO_H_ */

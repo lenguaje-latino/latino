@@ -11,8 +11,8 @@
 #include "ast.h"
 #include "lex.h"
 
-#ifndef WINDOWS
-#include <libintl.h> /* INFRINGES ON USER NAME SPACE */
+#ifndef _WIN32
+#include <libintl.h>
 #define YY_(Msgid) dgettext ("bison-runtime", Msgid)
 #endif
 
@@ -31,6 +31,8 @@ int yylex (YYSTYPE * yylval_param,YYLTYPE * yylloc_param ,yyscan_t yyscanner);
 %parse-param {void *scanner}
 
 /* declare tokens */
+%token <node> TTRUE
+%token <node> TFALSE
 %token <node> TINT
 %token <node> TLIT
 %token <node> TNUMBER
@@ -51,8 +53,7 @@ int yylex (YYSTYPE * yylval_param,YYLTYPE * yylloc_param ,yyscan_t yyscanner);
     KFROM
     KBOOL
     KRETURN
-    KTRUE
-    KFALSE
+    KINCLUDE
     /*
     KSWITCH
     KCASE
@@ -74,6 +75,7 @@ int yylex (YYSTYPE * yylval_param,YYLTYPE * yylloc_param ,yyscan_t yyscanner);
     OP_CONCAT
     OP_CONCAT_IGUAL
 
+%type <node> include_statement
 %type <node> expression statement statement_list unary_expression
 %type <node> iteration_statement jump_statement function_definition
 %type <node> argument_expression_list declaration primary_expression
@@ -123,12 +125,17 @@ statement_list:
 
     /*| labeled_statement { $$ = $1; }*/
 statement: /* empty */ { $$ = NULL; }
+    | include_statement { $$ = $1; }
     | declaration  { $$ = $1; }
     | selection_statement { $$ = $1; }
     | iteration_statement { $$ = $1; }
     | jump_statement { $$ = $1; }
     | function_definition { $$ = $1; }
     | function_call { $$ = $1; }
+    ;
+
+include_statement:
+    KINCLUDE TSTRING { $$ = nodo_nuevo_incluir($2); }
     ;
 
 declaration:
@@ -216,8 +223,8 @@ function_call:
 primary_expression:
       TIDENTIFIER { $$ = $1; }
     | TCONSTANT { $$ = $1; }
-    | KTRUE { $$ = nodo_nuevo_logico(1); }
-    | KFALSE { $$ = nodo_nuevo_logico(0); }
+    | TTRUE { $$ = $1; }
+    | TFALSE { $$ = $1; }
     | constant_expression  { $$ = $1; }
     ;
 

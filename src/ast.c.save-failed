@@ -339,7 +339,7 @@ int nodo_analizar(lat_vm *vm, ast *node, lat_bytecode *bcode, int i) {
   } break;
   case NODO_LITERAL: {
     lat_objeto *ret = lat_literal_nuevo(vm, node->valor->v.c);
-    dbc(OP_STORECHAR, 255, 0, ret);
+    dbc(OP_STORELIT, 255, 0, ret);
 #if DEBUG_VM
     printf("STORECHAR R255 %s\n", ret->data.str);
 #endif

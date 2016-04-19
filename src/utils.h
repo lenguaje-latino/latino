@@ -337,4 +337,11 @@ char *toUpper(const char* str);
   */
 char *trim(const char* str);
 
+
+/**\brief Valida si un archivo se puede leer
+  *
+  *\param archivo: Nombre completo del archivo
+  *\return bool: true si se puede leer
+  */
+bool readable(const char *archivo);
 #endif /*_UTILS_H_*/

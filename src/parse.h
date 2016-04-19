@@ -45,81 +45,83 @@ extern int yydebug;
 # define YYTOKENTYPE
   enum yytokentype
   {
-    TINT = 258,
-    TLIT = 259,
-    TNUMBER = 260,
-    TSTRING = 261,
-    TIDENTIFIER = 262,
-    TCONSTANT = 263,
-    TFUNC = 264,
-    KIF = 265,
-    KEND = 266,
-    KELSE = 267,
-    KWHILE = 268,
-    KDO = 269,
-    KBREAK = 270,
-    KCONTINUE = 271,
-    KWHEN = 272,
-    KFUNCTION = 273,
-    KFROM = 274,
-    KBOOL = 275,
-    KRETURN = 276,
-    KTRUE = 277,
-    KFALSE = 278,
-    OP_GT = 279,
-    OP_LT = 280,
-    OP_GE = 281,
-    OP_LE = 282,
-    OP_EQ = 283,
-    OP_NEQ = 284,
-    OP_AND = 285,
-    OP_OR = 286,
-    OP_NEG = 287,
-    OP_INCR = 288,
-    OP_DECR = 289,
-    OP_CONCAT = 290,
-    OP_CONCAT_IGUAL = 291,
-    UMINUS = 292,
-    UNEG = 293
+    TTRUE = 258,
+    TFALSE = 259,
+    TINT = 260,
+    TLIT = 261,
+    TNUMBER = 262,
+    TSTRING = 263,
+    TIDENTIFIER = 264,
+    TCONSTANT = 265,
+    TFUNC = 266,
+    KIF = 267,
+    KEND = 268,
+    KELSE = 269,
+    KWHILE = 270,
+    KDO = 271,
+    KBREAK = 272,
+    KCONTINUE = 273,
+    KWHEN = 274,
+    KFUNCTION = 275,
+    KFROM = 276,
+    KBOOL = 277,
+    KRETURN = 278,
+    KINCLUDE = 279,
+    OP_GT = 280,
+    OP_LT = 281,
+    OP_GE = 282,
+    OP_LE = 283,
+    OP_EQ = 284,
+    OP_NEQ = 285,
+    OP_AND = 286,
+    OP_OR = 287,
+    OP_NEG = 288,
+    OP_INCR = 289,
+    OP_DECR = 290,
+    OP_CONCAT = 291,
+    OP_CONCAT_IGUAL = 292,
+    UMINUS = 293,
+    UNEG = 294
   };
 #endif
 /* Tokens.  */
-#define TINT 258
-#define TLIT 259
-#define TNUMBER 260
-#define TSTRING 261
-#define TIDENTIFIER 262
-#define TCONSTANT 263
-#define TFUNC 264
-#define KIF 265
-#define KEND 266
-#define KELSE 267
-#define KWHILE 268
-#define KDO 269
-#define KBREAK 270
-#define KCONTINUE 271
-#define KWHEN 272
-#define KFUNCTION 273
-#define KFROM 274
-#define KBOOL 275
-#define KRETURN 276
-#define KTRUE 277
-#define KFALSE 278
-#define OP_GT 279
-#define OP_LT 280
-#define OP_GE 281
-#define OP_LE 282
-#define OP_EQ 283
-#define OP_NEQ 284
-#define OP_AND 285
-#define OP_OR 286
-#define OP_NEG 287
-#define OP_INCR 288
-#define OP_DECR 289
-#define OP_CONCAT 290
-#define OP_CONCAT_IGUAL 291
-#define UMINUS 292
-#define UNEG 293
+#define TTRUE 258
+#define TFALSE 259
+#define TINT 260
+#define TLIT 261
+#define TNUMBER 262
+#define TSTRING 263
+#define TIDENTIFIER 264
+#define TCONSTANT 265
+#define TFUNC 266
+#define KIF 267
+#define KEND 268
+#define KELSE 269
+#define KWHILE 270
+#define KDO 271
+#define KBREAK 272
+#define KCONTINUE 273
+#define KWHEN 274
+#define KFUNCTION 275
+#define KFROM 276
+#define KBOOL 277
+#define KRETURN 278
+#define KINCLUDE 279
+#define OP_GT 280
+#define OP_LT 281
+#define OP_GE 282
+#define OP_LE 283
+#define OP_EQ 284
+#define OP_NEQ 285
+#define OP_AND 286
+#define OP_OR 287
+#define OP_NEG 288
+#define OP_INCR 289
+#define OP_DECR 290
+#define OP_CONCAT 291
+#define OP_CONCAT_IGUAL 292
+#define UMINUS 293
+#define UNEG 294
 
 /* Value type.  */
 

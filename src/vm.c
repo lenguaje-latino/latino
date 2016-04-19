@@ -766,7 +766,7 @@ void lat_llamar_funcion(lat_vm* vm, lat_objeto* func)
       case OP_SET:
         lat_asignar_contexto_objeto(vm->regs[cur.b], lat_clonar_objeto(vm, ((lat_objeto*)cur.meta)), vm->regs[cur.a]);
         break;
-      case OP_STORECHAR:
+      case OP_STORELIT:
         vm->regs[cur.a] = ((lat_objeto*)cur.meta);
         break;
       case OP_STOREINT: {
@@ -1030,7 +1030,6 @@ void lat_maximo(lat_vm* vm){
 void lat_minimo(lat_vm* vm){
     lat_objeto* b = lat_desapilar(vm);
     lat_objeto* a = lat_desapilar(vm);
-
     if(lat_obtener_entero(b) < lat_obtener_entero(a)) {
         vm->regs[255] = b;
     }else{
