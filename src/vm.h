@@ -26,7 +26,7 @@ THE SOFTWARE.
 
 /** \file vm.h
   *
-  * Contiene funciones para el manejo de la mÃ¡quina virtual
+  * Contiene funciones para el manejo de la máquina virtual
   *
   */
 
@@ -36,18 +36,18 @@ typedef struct lat_vm lat_vm;
 #include "utils.h"
 #include "object.h"
 
-/**\brief Bandera para debuguear las instrucciones de la mÃ¡quina virtual */
+/**\brief Bandera para debuguear las instrucciones de la máquina virtual */
 #define DEBUG_VM 0
 
-/**\brief Instrucciones de la mÃ¡quina virtual */
+/**\brief Instrucciones de la máquina virtual */
 typedef enum lat_ins {
-  OP_END,    /**< Fin de la mÃ¡quina virtual */
-  OP_NOP,    /**< Indica No operaciÃ³n */
+  OP_END,    /**< Fin de la máquina virtual */
+  OP_NOP,    /**< Indica No operación */
   OP_PUSH,    /**< Inserta en la pila */
   OP_POP,    /**< Extrae de la pila */
   OP_GET,    /**< Obtiene un valor */
   OP_SET,    /**< Establece un valor */
-  OP_STORECHAR,    /**< Almacena un caracter */
+  OP_STORELIT,    /**< Almacena un cadena tipo literal */
   OP_STOREINT,    /**< Almacena un entero */
   OP_STOREDOUBLE,    /**< Almacena un decimal */
   OP_STORESTR,    /**< Almacena una cadena */
@@ -64,7 +64,7 @@ typedef enum lat_ins {
   OP_NS,    /**< Define un contexto */
   OP_ENDNS,    /**< Define el fin de un contexto */
   OP_JMP,    /**< Saltar a otra instruccion */
-  OP_JMPIF,    /**< Saltar a otra instrucciÃ³n SI la condiciÃ³n se cumple */
+  OP_JMPIF,    /**< Saltar a otra instrucción SI la condición se cumple */
   OP_CALL,    /**< Llamada a una funcion */
   OP_NOT,    /**< Negacion de un valor logico */
   OP_INC,    /**< Incrementa un valor entero en 1 */

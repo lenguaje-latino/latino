@@ -68,7 +68,6 @@ ast *lat_analizar_archivo(char *infile) {
     printf("El archivo no contiene la extension .lat\n");
     return NULL;
   }
-
   file = fopen(infile, "r");
   if (file == NULL) {
     printf("No se pudo abrir el archivo\n");
@@ -116,9 +115,10 @@ void lat_ayuda(){
     printf("\n");
     printf("%s\n", "Variables de entorno:");
     printf("%s\n", "_____________________");
-    printf("%s%s\n", "LATINO_HOME  : ", getenv("LATINO_HOME")); // HOME ??? buscar una palabra en espanol
-    printf("%s%s\n", "LC_LANG      : ", getenv("LC_LANG")); // LC LANG ?? igualmente
-    printf("%s%s\n", "HOME         : ", getenv("HOME")); // HOME es necesiario en ingles?
+    printf("%s%s\n", "LATINO_PATH  : ", getenv("LATINO_PATH"));
+    printf("%s%s\n", "LATINO_LIB  : ", getenv("LATINO_LIB"));
+    printf("%s%s\n", "LC_LANG      : ", getenv("LC_LANG"));
+    printf("%s%s\n", "HOME         : ", getenv("HOME"));
 }
 
 static void lat_repl(lat_vm *vm)

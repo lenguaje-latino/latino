@@ -482,3 +482,13 @@ hash_map *copy_hash(hash_map *m)
     }
     return ret;
 }
+
+
+bool readable(const char *archivo){
+  FILE *f = fopen(archivo, "r");
+  if(f == NULL) {
+    return false;
+  }
+  fclose(f);
+  return true;
+}

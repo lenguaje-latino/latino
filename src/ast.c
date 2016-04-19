@@ -37,56 +37,56 @@ ast *nodo_nuevo_operador(nodo_tipo nt, ast *l, ast *r) {
   ast *a = (ast*)lat_asignar_memoria(sizeof(ast));
   switch (nt) {
   case NODO_SUMA: {
-    a->l = nodo_nuevo_identificador("+");
+    a->l = nodo_nuevo_identificador("+", 1, 1);
   } break;
   case NODO_MENOS_UNARIO:
   case NODO_RESTA: {
-    a->l = nodo_nuevo_identificador("-");
+    a->l = nodo_nuevo_identificador("-", 1, 1);
   } break;
   case NODO_MULTIPLICACION: {
-    a->l = nodo_nuevo_identificador("*");
+    a->l = nodo_nuevo_identificador("*", 1, 1);
   } break;
   case NODO_DIVISION: {
-    a->l = nodo_nuevo_identificador("/");
+    a->l = nodo_nuevo_identificador("/", 1, 1);
   } break;
   case NODO_MODULO: {
-    a->l = nodo_nuevo_identificador("%");
+    a->l = nodo_nuevo_identificador("%", 1, 1);
   } break;
   case NODO_MAYOR_IGUAL: {
-    a->l = nodo_nuevo_identificador(">=");
+    a->l = nodo_nuevo_identificador(">=", 1, 1);
   } break;
   case NODO_MAYOR_QUE: {
-    a->l = nodo_nuevo_identificador(">");
+    a->l = nodo_nuevo_identificador(">", 1, 1);
   } break;
   case NODO_MENOR_IGUAL: {
-    a->l = nodo_nuevo_identificador("<=");
+    a->l = nodo_nuevo_identificador("<=", 1, 1);
   } break;
   case NODO_MENOR_QUE: {
-    a->l = nodo_nuevo_identificador("<");
+    a->l = nodo_nuevo_identificador("<", 1, 1);
   } break;
   case NODO_DESIGUALDAD: {
-    a->l = nodo_nuevo_identificador("!=");
+    a->l = nodo_nuevo_identificador("!=", 1, 1);
   } break;
   case NODO_IGUALDAD: {
-    a->l = nodo_nuevo_identificador("==");
+    a->l = nodo_nuevo_identificador("==", 1, 1);
   } break;
   case NODO_NEGACION: {
-    a->l = nodo_nuevo_identificador("!");
+    a->l = nodo_nuevo_identificador("!", 1, 1);
   } break;
   case NODO_Y: {
-    a->l = nodo_nuevo_identificador("&&");
+    a->l = nodo_nuevo_identificador("&&", 1, 1);
   } break;
   case NODO_O: {
-    a->l = nodo_nuevo_identificador("||");
+    a->l = nodo_nuevo_identificador("||", 1, 1);
   } break;
   case NODO_CONCATENAR:{
-    a->l = nodo_nuevo_identificador(".");
+    a->l = nodo_nuevo_identificador(".", 1, 1);
   } break;
   default:
     break;
   }
   if (nt == NODO_MENOS_UNARIO) {
-    a->r = nodo_nuevo(NODO_FUNCION_ARGUMENTOS, nodo_nuevo_entero(0), l);
+    a->r = nodo_nuevo(NODO_FUNCION_ARGUMENTOS, nodo_nuevo_entero(0, 1, 1), l);
   } else if (nt == NODO_NEGACION) {
     a->r = nodo_nuevo(NODO_FUNCION_ARGUMENTOS, NULL, l);
   }else {
@@ -106,54 +106,68 @@ ast *nodo_nuevo(nodo_tipo nt, ast *l, ast *r) {
   return a;
 }
 
-ast *nodo_nuevo_entero(long i) {
+ast *nodo_nuevo_entero(long i, int num_linea, int num_columna) {
   ast *a = (ast*)lat_asignar_memoria(sizeof(ast));
   a->tipo = NODO_ENTERO;
   nodo_valor *val = (nodo_valor*)lat_asignar_memoria(sizeof(nodo_valor));
   val->t = VALOR_ENTERO;
   val->v.i = i;
   a->valor = val;
+  a->valor->es_constante = false;
+  a->valor->num_linea = num_linea;
+  a->valor->num_columna = num_columna;
   return a;
 }
 
-ast *nodo_nuevo_decimal(double d) {
+ast *nodo_nuevo_decimal(double d, int num_linea, int num_columna) {
   ast *a = (ast*)lat_asignar_memoria(sizeof(ast));
   a->tipo = NODO_DECIMAL;
   nodo_valor *val = (nodo_valor*)lat_asignar_memoria(sizeof(nodo_valor));
   val->t = VALOR_DECIMAL;
   val->v.d = d;
   a->valor = val;
+  a->valor->es_constante = false;
+  a->valor->num_linea = num_linea;
+  a->valor->num_columna = num_columna;
   return a;
 }
 
-ast *nodo_nuevo_logico(int b) {
+ast *nodo_nuevo_logico(int b, int num_linea, int num_columna) {
   ast *a = (ast*)lat_asignar_memoria(sizeof(ast));
   a->tipo = NODO_LOGICO;
   nodo_valor *val = (nodo_valor*)lat_asignar_memoria(sizeof(nodo_valor));
   val->t = VALOR_LOGICO;
   val->v.b = b;
   a->valor = val;
+  a->valor->es_constante = false;
+  a->valor->num_linea = num_linea;
+  a->valor->num_columna = num_columna;
   return a;
 }
 
-ast *nodo_nuevo_literal(char *c) {
+ast *nodo_nuevo_literal(char *c, int num_linea, int num_columna) {
   ast *a = (ast*)lat_asignar_memoria(sizeof(ast));
   a->tipo = NODO_LITERAL;
   nodo_valor *val = (nodo_valor*)lat_asignar_memoria(sizeof(nodo_valor));
   val->t = VALOR_LITERAL;
   a->valor = val;
-  //TODO: Pendiente de manipular literal
   a->valor->v.c = parse_string(c, strlen(c));
+  a->valor->es_constante = false;
+  a->valor->num_linea = num_linea;
+  a->valor->num_columna = num_columna;
   return a;
 }
 
-ast *nodo_nuevo_cadena(const char *s) {
+ast *nodo_nuevo_cadena(const char *s, int num_linea, int num_columna) {
   ast *a = (ast*)lat_asignar_memoria(sizeof(ast));
   a->tipo = NODO_CADENA;
   nodo_valor *val = (nodo_valor*)lat_asignar_memoria(sizeof(nodo_valor));
   val->t = VALOR_CADENA;
   val->v.s = parse_string(s, strlen(s));
   a->valor = val;
+  a->valor->es_constante = false;
+  a->valor->num_linea = num_linea;
+  a->valor->num_columna = num_columna;
   return a;
 }
 
@@ -170,7 +184,7 @@ ast *nodo_nuevo_constante(char *s, int num_linea, int num_columna) {
   return a;
 }
 
-ast *nodo_nuevo_identificador(const char *s) {
+ast *nodo_nuevo_identificador(const char *s, int num_linea, int num_columna) {
   ast *a = (ast*)lat_asignar_memoria(sizeof(ast));
   a->tipo = NODO_IDENTIFICADOR;
   nodo_valor *val = (nodo_valor*)lat_asignar_memoria(sizeof(nodo_valor));
@@ -178,6 +192,8 @@ ast *nodo_nuevo_identificador(const char *s) {
   val->v.s = strdup0(s);
   a->valor = val;
   a->valor->es_constante = false;
+  a->valor->num_linea = num_linea;
+  a->valor->num_columna = num_columna;
   return a;
 }
 
@@ -244,6 +260,35 @@ ast *nodo_nuevo_funcion(ast *s, ast *syms, ast *func) {
   return a;
 }
 
+ast* nodo_nuevo_incluir(ast* ruta){
+  /*FIXME: Prevenir cargar un modulo que ya exista.*/
+  char* archivo = ruta->valor->v.s;
+  /*encontrar el modulo en la ruta actual*/
+  char dir_actual[MAX_PATH_LENGTH];
+  ldirectorio_actual(dir_actual, sizeof(dir_actual));
+  strcat(dir_actual, PATH_SEP);
+  strcat(dir_actual, archivo);
+  if(!endsWith(dir_actual, ".lat")){
+    strcat(dir_actual, ".lat");
+  }
+  if(readable(dir_actual)){
+    return lat_analizar_archivo(dir_actual);
+  }
+  /*sino existe buscar en el path_home de latino/lib*/
+  char* latino_lib = getenv("LATINO_LIB");
+  if(latino_lib != NULL){
+    strcat(latino_lib, PATH_SEP);
+    strcat(latino_lib, archivo);
+    if(!endsWith(latino_lib, ".lat")){
+      strcat(latino_lib, ".lat");
+    }
+    if(readable(latino_lib)){
+      return lat_analizar_archivo(latino_lib);
+    }
+  }
+  return NULL;
+}
+
 void nodo_liberar(ast *a) {
   if (a) {
     switch (a->tipo) {
@@ -294,10 +339,10 @@ int nodo_analizar(lat_vm *vm, ast *node, lat_bytecode *bcode, int i) {
     dbc(OP_GET, 2, 1, NULL);
     dbc(OP_MOV, 255, 2, NULL);
 #if DEBUG_VM
-    printf("LOCALNS R1\n");
-    printf("STORESTR R2 %s\n", ret->data.str);
-    printf("GET R2 R1\n");
-    printf("MOV R255 R2\n");
+printf("LOCALNS R1\n");
+printf("STORESTR R2 %s\n", ret->data.str);
+printf("GET R2 R1\n");
+printf("MOV R255 R2\n");
 #endif
   } break;
   case NODO_ASIGNACION: /*SET*/
@@ -317,59 +362,59 @@ int nodo_analizar(lat_vm *vm, ast *node, lat_bytecode *bcode, int i) {
     dbc(OP_POP, 255, 0, NULL);
     dbc(OP_SET, 255, 1, ret);
 #if DEBUG_VM
-    printf("PUSH R255 R0\n");
-    printf("LOCALNS R1 R0\n");
-    printf("POP R255 R0\n");
-    printf("SET R255 R1\n");
+printf("PUSH R255 R0\n");
+printf("LOCALNS R1 R0\n");
+printf("POP R255 R0\n");
+printf("SET R255 R1\n");
 #endif
   } break;
   case NODO_INCREMENTO: {
     pn(vm, node->l);
     dbc(OP_INC, 255, 0, NULL);
 #if DEBUG_VM
-    printf("INC R255 R0\n");
+printf("INC R255 R0\n");
 #endif
   } break;
   case NODO_DECREMENTO: {
     pn(vm, node->l);
     dbc(OP_DEC, 255, 0, NULL);
 #if DEBUG_VM
-    printf("DEC R255 R0\n");
+printf("DEC R255 R0\n");
 #endif
   } break;
   case NODO_LITERAL: {
     lat_objeto *ret = lat_literal_nuevo(vm, node->valor->v.c);
-    dbc(OP_STORECHAR, 255, 0, ret);
+    dbc(OP_STORELIT, 255, 0, ret);
 #if DEBUG_VM
-    printf("STORECHAR R255 %s\n", ret->data.str);
+printf("STORECHAR R255 %s\n", ret->data.str);
 #endif
   } break;
   case NODO_ENTERO: {
     lat_objeto *ret = lat_entero_nuevo(vm, node->valor->v.i);
     dbc(OP_STOREINT, 255, 0, ret);
 #if DEBUG_VM
-    printf("STOREINT R255 %ld\n", ret->data.i);
+printf("STOREINT R255 %ld\n", ret->data.i);
 #endif
   } break;
   case NODO_DECIMAL: {
     lat_objeto *ret = lat_decimal_nuevo(vm, node->valor->v.d);
     dbc(OP_STOREDOUBLE, 255, 0, ret);
 #if DEBUG_VM
-    printf("STOREINT R255 %.14g\n", ret->data.d);
+printf("OP_STOREDOUBLE R255 %.14g\n", ret->data.d);
 #endif
   } break;
   case NODO_CADENA: {
     lat_objeto *ret = lat_cadena_nueva(vm, node->valor->v.s);
     dbc(OP_STORESTR, 255, 0, ret);
 #if DEBUG_VM
-    printf("STORESTR R255 %s\n", ret->data.str);
+printf("STORESTR R255 %s\n", ret->data.str);
 #endif
   } break;
   case NODO_LOGICO: {
     lat_objeto *ret = node->valor->v.b ? vm->true_object : vm->false_object;
     dbc(OP_STOREBOOL, 255, 0, ret);
 #if DEBUG_VM
-    printf("STOREBOOL R255 %i\n", ret->data.b);
+printf("STOREBOOL R255 %i\n", ret->data.b);
 #endif
   } break;
   case NODO_SI: {
@@ -383,11 +428,11 @@ int nodo_analizar(lat_vm *vm, ast *node, lat_bytecode *bcode, int i) {
     pn(vm, nIf->th);
     bcode[temp[0]] = lat_bc(OP_JMPIF, i, 2, NULL);
 #if DEBUG_VM
-    printf("MOV R2 R255\n");
-    printf("MOV R3 R255\n");
-    printf("NOT\n");
-    printf("NOP R0 R0\n");
-    printf("JMPIF R%i R2\n", i);
+printf("MOV R2 R255\n");
+printf("MOV R3 R255\n");
+printf("NOT\n");
+printf("NOP R0 R0\n");
+printf("JMPIF R%i R2\n", i);
 #endif
     if (nIf->el) {
       temp[1] = i;
@@ -395,9 +440,9 @@ int nodo_analizar(lat_vm *vm, ast *node, lat_bytecode *bcode, int i) {
       pn(vm, nIf->el);
       bcode[temp[1]] = lat_bc(OP_JMPIF, i, 3, NULL);
 #if DEBUG_VM
-    printf("NOP\n");
-    printf("MOV R3 R255\n");
-    printf("JMPIF R%i R3\n", i);
+printf("NOP\n");
+printf("MOV R3 R255\n");
+printf("JMPIF R%i R3\n", i);
 #endif
     }
   } break;
@@ -412,11 +457,11 @@ int nodo_analizar(lat_vm *vm, ast *node, lat_bytecode *bcode, int i) {
     dbc(OP_JMP, temp[0], 0, NULL);
     bcode[temp[1]] = lat_bc(OP_JMPIF, i, 2, NULL);
 #if DEBUG_VM
-    printf("MOV R2 R255\n");
-    printf("NOT R2 R0\n");
-    printf("NOP\n");
-    printf("JMP R%i\n", temp[0]);
-    printf("JMPIF R%i R2\n", i);
+printf("MOV R2 R255\n");
+printf("NOT R2 R0\n");
+printf("NOP\n");
+printf("JMP R%i\n", temp[0]);
+printf("JMPIF R%i R2\n", i);
 #endif
   } break;
   case NODO_HACER: {
@@ -431,11 +476,11 @@ int nodo_analizar(lat_vm *vm, ast *node, lat_bytecode *bcode, int i) {
     dbc(OP_JMP, temp[0], 0, NULL);
     bcode[temp[1]] = lat_bc(OP_JMPIF, i, 2, NULL);
 #if DEBUG_VM
-    printf("MOV R2 R255\n");
-    printf("NOT R2 R0\n");
-    printf("NOP\n");
-    printf("JMP R%i\n", temp[0]);
-    printf("JMPIF R%i R2\n", i);
+printf("MOV R2 R255\n");
+printf("NOT R2 R0\n");
+printf("NOP\n");
+printf("JMP R%i\n", temp[0]);
+printf("JMPIF R%i R2\n", i);
 #endif
   } break;
   case NODO_FUNCION_LLAMADA: {
@@ -445,14 +490,14 @@ int nodo_analizar(lat_vm *vm, ast *node, lat_bytecode *bcode, int i) {
     pn(vm, node->l);
     dbc(OP_CALL, 255, 0, NULL);
 #if DEBUG_VM
-    printf("CALL R255\n");
+printf("CALL R255\n");
 #endif
   } break;
   case NODO_RETORNO: {
     pn(vm, node->l);
     dbc(OP_END, 0, 0, NULL);
 #if DEBUG_VM
-    printf("END R255\n");
+printf("END R255\n");
 #endif
   } break;
   case NODO_FUNCION_ARGUMENTOS: {
@@ -460,7 +505,7 @@ int nodo_analizar(lat_vm *vm, ast *node, lat_bytecode *bcode, int i) {
       pn(vm, node->l);
       dbc(OP_PUSH, 255, 0, NULL);
 #if DEBUG_VM
-    printf("PUSH R255\n");
+printf("PUSH R255\n");
 #endif
     }
     if (node->r) {
@@ -469,7 +514,7 @@ int nodo_analizar(lat_vm *vm, ast *node, lat_bytecode *bcode, int i) {
       if (node->r->valor || node->r->tipo == NODO_FUNCION_LLAMADA) {
         dbc(OP_PUSH, 255, 0, NULL);
 #if DEBUG_VM
-    printf("PUSH R255\n");
+printf("PUSH R255\n");
 #endif
       }
     }
@@ -481,9 +526,9 @@ int nodo_analizar(lat_vm *vm, ast *node, lat_bytecode *bcode, int i) {
       lat_objeto *ret = lat_clonar_objeto(vm, lat_cadena_nueva(vm, node->l->valor->v.s));
       dbc(OP_SET, 2, 1, ret);
 #if DEBUG_VM
-    printf("LOCALNS R1\n");
-    printf("POP R2\n");
-    printf("SET R2 R1 %s\n", ret->data.str);
+printf("LOCALNS R1\n");
+printf("POP R2\n");
+printf("SET R2 R1 %s\n", ret->data.str);
 #endif
     }
     if (node->r) {
@@ -509,7 +554,7 @@ int nodo_analizar(lat_vm *vm, ast *node, lat_bytecode *bcode, int i) {
     nested++;
     dbc(OP_STORELIST, nested, 0, NULL);
 #if DEBUG_VM
-    printf("STORELIST R%i\n", nested);
+printf("STORELIST R%i\n", nested);
 #endif
     if (node->l) {
       pn(vm, node->l);
@@ -538,19 +583,19 @@ int nodo_analizar(lat_vm *vm, ast *node, lat_bytecode *bcode, int i) {
       pn(vm, elem->exp);
       dbc(OP_MOV, 3, 255, NULL);
 #if DEBUG_VM
-    printf("MOV R3 R255\n");
+printf("MOV R3 R255\n");
 #endif
     }
     if(elem->id) {
         pn(vm, elem->pos);
         dbc(OP_MOV, 4, 255, NULL);
 #if DEBUG_VM
-    printf("MOV R4 R255\n");
+printf("MOV R4 R255\n");
 #endif
         pn(vm, elem->id);
         dbc(OP_LISTSETITEM, 255, 3, (void*)4);
 #if DEBUG_VM
-    printf("LISTSETITEM R255 R3\n");
+printf("LISTSETITEM R255 R3\n");
 #endif
     }
   } break;

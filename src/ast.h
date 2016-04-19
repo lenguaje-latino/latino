@@ -164,7 +164,7 @@ ast *nodo_nuevo(nodo_tipo tipo, ast *l, ast *r);
   * \return ast: Un nodo AST
   *
   */
-ast *nodo_nuevo_identificador(const char *s);
+ast *nodo_nuevo_identificador(const char *s, int num_linea, int num_columna);
 
 /** Nuevo nodo tipo Constante (PI)
   *
@@ -175,6 +175,45 @@ ast *nodo_nuevo_identificador(const char *s);
   *
   */
 ast *nodo_nuevo_constante(char *s, int num_linea, int num_columna);
+/** Nuevo nodo tipo Logico (verdadero/falso)
+  *
+  * \param b: Nodo valor (0 o 1)
+  * \return ast: Un nodo AST
+  *
+  */
+ast *nodo_nuevo_logico(int b, int num_linea, int num_columna);
+
+/** Nuevo nodo tipo Entero (1234)
+  *
+  * \param i: Nodo valor
+  * \return ast: Un nodo AST
+  *
+  */
+ast *nodo_nuevo_entero(long i, int num_linea, int num_columna);
+
+/** Nuevo nodo tipo Decimal (1.25)
+  *
+  * \param d: Nodo valor
+  * \return ast: Un nodo AST
+  *
+  */
+ast *nodo_nuevo_decimal(double d, int num_linea, int num_columna);
+
+/** Nuevo nodo tipo Literal ('Esto es una "literal"')
+  *
+  * \param c: Nodo valor
+  * \return ast: Un nodo AST
+  *
+  */
+ast *nodo_nuevo_literal(char *c, int num_linea, int num_columna);
+
+/** Nuevo nodo tipo Cadena ("Esto es una 'cadena'")
+  *
+  * \param s: Nodo valor
+  * \return ast: Un nodo AST
+  *
+  */
+ast *nodo_nuevo_cadena(const char *s, int num_linea, int num_columna);
 
 /** Nuevo nodo tipo Operador (var1 + var2)
   *
@@ -204,46 +243,6 @@ ast *nodo_nuevo_asignacion(ast *s, ast *v);
   *
   */
 ast *nodo_nuevo_asignacion_lista_elem(ast *s, ast *v, ast *pos);
-
-/** Nuevo nodo tipo Logico (verdadero/falso)
-  *
-  * \param b: Nodo valor (0 o 1)
-  * \return ast: Un nodo AST
-  *
-  */
-ast *nodo_nuevo_logico(int b);
-
-/** Nuevo nodo tipo Entero (1234)
-  *
-  * \param i: Nodo valor
-  * \return ast: Un nodo AST
-  *
-  */
-ast *nodo_nuevo_entero(long i);
-
-/** Nuevo nodo tipo Decimal (1.25)
-  *
-  * \param d: Nodo valor
-  * \return ast: Un nodo AST
-  *
-  */
-ast *nodo_nuevo_decimal(double d);
-
-/** Nuevo nodo tipo Literal ('Esto es una "literal"')
-  *
-  * \param c: Nodo valor
-  * \return ast: Un nodo AST
-  *
-  */
-ast *nodo_nuevo_literal(char *c);
-
-/** Nuevo nodo tipo Cadena ("Esto es una 'cadena'")
-  *
-  * \param s: Nodo valor
-  * \return ast: Un nodo AST
-  *
-  */
-ast *nodo_nuevo_cadena(const char *s);
 
 /** Nuevo nodo tipo si (if)
   *
@@ -293,6 +292,14 @@ ast *nodo_nuevo_desde(ast *dec, ast *cond, ast *inc, ast *stmts);
   *
   */
 ast *nodo_nuevo_funcion(ast *name, ast *syms, ast *stmts);
+
+/** Nuevo nodo que incluye un modulo
+  *
+  * \param name: Nodo nombre del modulo
+  * \return ast: Un nodo AST
+  *
+  */
+ast* nodo_nuevo_incluir(ast* ruta);
 
 /** Libera la memoria creada dinamicamente
   *
