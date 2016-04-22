@@ -111,6 +111,9 @@ typedef enum {
   NODO_DICCIONARIO_OBTENER_ELEMENTO   /**< Nodo obtener un elemento del diccionario */
 } nodo_tipo;
 
+/**\brief Objeto tipo maquina virtual */
+//typedef struct lat_vm lat_vm;
+
 /** \brief Nodos en arbol abstacto de sintaxis (abstract syntax tree).
   *
   * Todos los nodos son inicializados con un tipo de nodo */
@@ -119,6 +122,7 @@ typedef struct ast {
   nodo_valor *valor; /**< Valor del nodo */
   struct ast *l; /**< Nodo izquierdo */
   struct ast *r; /**< Nodo derecho */
+  lat_vm *vm;
 } ast;
 
 /** \brief Estado del analizador lexico */

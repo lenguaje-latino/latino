@@ -162,6 +162,8 @@ int main(int argc, char *argv[]) {
     }
   }
   if(argc > 1 && infile != NULL) {
+    lat_objeto *mod = lat_cadena_nueva(vm, "modulo1");
+    insert_list(vm->modulos, mod);
     ast *tree = lat_analizar_archivo(infile);
     if (!tree) {
       return EXIT_FAILURE;
