@@ -91,7 +91,8 @@ typedef struct lat_function {
 
 /**\brief Define la maquina virtual (MV) */
 struct lat_vm {
-  list_node* stack;     /**< pila de la maquina virtual */
+  list_node* pila;     /**< pila de la maquina virtual */
+  list_node* modulos;     /**< modulos importados en la MV */
   list_node* all_objects;     /**< objetos creados dinamicamente en la MV */
   list_node* gc_objects;     /**< objetos listos para liberar por el colector de basura */
   lat_objeto* regs[256];    /**< Registros de la MV */

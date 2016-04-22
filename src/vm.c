@@ -35,9 +35,10 @@ THE SOFTWARE.
 lat_vm* lat_crear_maquina_virtual()
 {
   lat_vm* ret = (lat_vm*)lat_asignar_memoria(sizeof(lat_vm));
-  ret->stack = lat_crear_lista();
+  ret->pila = lat_crear_lista();
   ret->all_objects = lat_crear_lista();
   ret->gc_objects = lat_crear_lista();
+  ret->modulos = lat_crear_lista();
   ret->memory_usage = 0;
   ret->true_object = lat_logico_nuevo(ret, true);
   ret->false_object = lat_logico_nuevo(ret, false);
@@ -143,12 +144,12 @@ lat_vm* lat_crear_maquina_virtual()
 
 void lat_apilar(lat_vm* vm, lat_objeto* o)
 {
-  insert_list(vm->stack, (void*)o);
+  insert_list(vm->pila, (void*)o);
 }
 
 lat_objeto* lat_desapilar(lat_vm* vm)
 {
-  list_node* n = vm->stack->next;
+  list_node* n = vm->pila->next;
   if (n->data == NULL) {
     lat_registrar_error("Pila vacia");
   }
