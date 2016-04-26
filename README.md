@@ -48,27 +48,29 @@ $sudo make install
 1. Descargue el instalador de la última version de https://github.com/primitivorm/latino/releases
 2. Descompima el archivo zip
 3. Ejecute el instalador
-######Nota:
+#####Nota:
 Puede requerir el framework de C++, descarguelo desde la pagina oficial de Microsoft:
 https://www.microsoft.com/en-us/download/details.aspx?id=5555
 
 
-### COMPILAR Requiere:
+### COMPILAR
+#####Requiere:
 * bison 3.04
 * flex 2.5.39
 * cmake 3.3.1
-* gcc 4.9.3 (Linux) / Visual Studio Community Edition o CodeBlocks (Windows)
+* gcc 4.9.3 (Linux)
+* Visual Studio Community Edition ó CodeBlocks ó CodeLite (Windows)
 
 #####Compilar en Visual Studio https://www.visualstudio.com/en-us/products/visual-studio-community-vs.aspx
 1. Abra la solución visualstudio/latino.sln
 2. Compile
 
-#####Compilar el proyecto con CodeBlocks http://www.codeblocks.org/
+#####Compilar en CodeBlocks http://www.codeblocks.org/
 1. Abra el proyecto codeblocks/latino.cbp
 2. Compile
 
-#####Compilar el proyecto con CodeLite http://codelite.org//
+#####Compilar en CodeLite http://codelite.org//
 1. Abra el proyecto codelite/latino.workspace
 2. Compile
 
-#####Cualquier aportación o sugerencia es bienvenida.
+####Cualquier aportación o sugerencia es bienvenida.
