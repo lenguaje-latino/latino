@@ -108,7 +108,8 @@ typedef enum {
   NODO_DICCIONARIO,   /**< Nodo diccionario nuevo */
   NODO_DICCIONARIO_ELEMENTOS,   /**< Nodo elementos de un diccionario */
   NODO_DICCIONARIO_ELEMENTO,   /**< Nodo elemento de un diccionario */
-  NODO_DICCIONARIO_OBTENER_ELEMENTO   /**< Nodo obtener un elemento del diccionario */
+  NODO_DICCIONARIO_OBTENER_ELEMENTO,   /**< Nodo obtener un elemento del diccionario */
+  NODO_INCLUIR  /**< Nodo para incluir codigo de otro archivo */
 } nodo_tipo;
 
 /**\brief Objeto tipo maquina virtual */

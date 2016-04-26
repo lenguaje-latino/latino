@@ -261,32 +261,12 @@ ast *nodo_nuevo_funcion(ast *s, ast *syms, ast *func) {
 }
 
 ast* nodo_nuevo_incluir(ast* ruta){
-  /*FIXME: Prevenir cargar un modulo que ya exista.*/
-  char* archivo = ruta->valor->v.s;
-  /*encontrar el modulo en la ruta actual*/
-  char dir_actual[MAX_PATH_LENGTH];
-  ldirectorio_actual(dir_actual, sizeof(dir_actual));
-  strcat(dir_actual, PATH_SEP);
-  strcat(dir_actual, archivo);
-  if(!endsWith(dir_actual, ".lat")){
-    strcat(dir_actual, ".lat");
-  }
-  if(readable(dir_actual)){
-    return lat_analizar_archivo(dir_actual);
-  }
-  /*sino existe buscar en el path_home de latino/lib*/
-  char* latino_lib = getenv("LATINO_LIB");
-  if(latino_lib != NULL){
-    strcat(latino_lib, PATH_SEP);
-    strcat(latino_lib, archivo);
-    if(!endsWith(latino_lib, ".lat")){
-      strcat(latino_lib, ".lat");
-    }
-    if(readable(latino_lib)){
-      return lat_analizar_archivo(latino_lib);
-    }
-  }
-  return NULL;
+  ast *a = (ast*)lat_asignar_memoria(sizeof(ast));
+  a->tipo = NODO_INCLUIR;
+  a->l = ruta;
+  a->r = NULL;
+  a->valor = NULL;
+  return a;
 }
 
 void nodo_liberar(ast *a) {
@@ -323,6 +303,40 @@ int nodo_analizar(lat_vm *vm, ast *node, lat_bytecode *bcode, int i) {
   lat_bytecode *funcion_bcode = NULL;
   int fi = 0;
   switch (node->tipo) {
+  case NODO_INCLUIR:{
+    //TODO: Incluir rutas con punto ej. incluir "lib.modulos.myModulo"
+    char* archivo = node->l->valor->v.s;
+    lat_objeto* mod = lat_cadena_nueva(vm, archivo);
+    if(!find_list(vm->modulos, (void*)mod)){
+      //encontrar el modulo en la ruta actual
+      char dir_actual[MAX_PATH_LENGTH];
+      ldirectorio_actual(dir_actual, sizeof(dir_actual));
+      strcat(dir_actual, PATH_SEP);
+      strcat(dir_actual, archivo);
+      if(!endsWith(dir_actual, ".lat")){
+        strcat(dir_actual, ".lat");
+      }
+      if(legible(dir_actual)){
+        insert_list(vm->modulos, mod);
+        pn(vm, lat_analizar_archivo(vm, dir_actual));
+      }else{
+        //sino existe buscar en el path_home de latino/lib
+        char* latino_lib = getenv("LATINO_LIB");
+        if(latino_lib != NULL){
+          strcat(latino_lib, PATH_SEP);
+          strcat(latino_lib, archivo);
+          if(!endsWith(latino_lib, ".lat")){
+            strcat(latino_lib, ".lat");
+          }
+          if(legible(latino_lib)){
+            insert_list(vm->modulos, mod);
+            pn(vm, lat_analizar_archivo(vm, latino_lib));
+          }
+        }
+      }
+    }
+    //return NULL;
+    } break;
   case NODO_BLOQUE: {
     if (node->r) {
       pn(vm, node->r);

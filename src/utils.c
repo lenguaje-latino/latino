@@ -484,7 +484,7 @@ hash_map *copy_hash(hash_map *m)
 }
 
 
-bool readable(const char *archivo){
+bool legible(const char *archivo){
   FILE *f = fopen(archivo, "r");
   if(f == NULL) {
     return false;
