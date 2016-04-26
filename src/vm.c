@@ -415,7 +415,7 @@ void lat_imprimir_lista(lat_vm* vm, list_node* l)
 }
 
 void lat_ejecutar(lat_vm *vm) {
-  lat_objeto *func = nodo_analizar_arbol(vm, lat_analizar_expresion(lat_obtener_cadena(lat_desapilar(vm))));
+  lat_objeto *func = nodo_analizar_arbol(vm, lat_analizar_expresion(vm, lat_obtener_cadena(lat_desapilar(vm))));
   lat_llamar_funcion(vm, func);
   lat_apilar(vm, vm->regs[255]);
 }
@@ -430,7 +430,7 @@ void lat_ejecutar_archivo(lat_vm *vm) {
     extension = dot + 1;
   }
   if (strcmp(extension, "lat") == 0) {
-    ast *tree = lat_analizar_archivo(input);
+    ast *tree = lat_analizar_archivo(vm, input);
     if (!tree) {
       lat_registrar_error("error al leer el archivo: %s", input);
     }
