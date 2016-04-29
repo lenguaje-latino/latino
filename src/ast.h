@@ -106,9 +106,10 @@ typedef enum {
   NODO_LISTA_AGREGAR_ELEMENTO,   /**< Nodo agregar elemento a una lista */
   NODO_LISTA_OBTENER_ELEMENTO,   /**< Nodo obtener un elemento de una lista */
   NODO_DICCIONARIO,   /**< Nodo diccionario nuevo */
-  NODO_DICCIONARIO_ELEMENTOS,   /**< Nodo elementos de un diccionario */
-  NODO_DICCIONARIO_ELEMENTO,   /**< Nodo elemento de un diccionario */
-  NODO_DICCIONARIO_OBTENER_ELEMENTO,   /**< Nodo obtener un elemento del diccionario */
+  NODO_DICC_ASIGNAR_ELEMENTO,   /**< Nodo un nuevo valor a un elemento del diccionario */
+  NODO_DICC_AGREGAR_ELEMENTO,   /**< Nodo agregar un elemento al diccionario */
+  NODO_DICC_OBTENER_ELEMENTO,   /**< Nodo obtener un elemento del diccionario */
+  NODO_DICC_ELEMENTO,   /**< Nodo par de llave valor del diccionario (key : value) */
   NODO_INCLUIR  /**< Nodo para incluir codigo de otro archivo */
 } nodo_tipo;
 
@@ -152,6 +153,15 @@ typedef struct {
   struct ast *id;   /**< Identificador */
   struct ast *pos;  /**< Posicion de la lista */
 } nodo_lista_elem;
+
+/** \brief Nodo para el elemento de un diccionario */
+typedef struct {
+  nodo_tipo tipo;
+  struct ast *exp;  /**< Expresion */
+  struct ast *id;   /**< Identificador */
+  struct ast *llave;  /**< Llave del diccionario */
+} nodo_dicc_elem;
+
 
 /** \brief Nuevo nodo generico para el AST
   *
@@ -248,6 +258,16 @@ ast *nodo_nuevo_asignacion(ast *s, ast *v);
   *
   */
 ast *nodo_nuevo_asignacion_lista_elem(ast *s, ast *v, ast *pos);
+
+/** Nuevo nodo tipo Asignacion Diccionario (dicc[llave] = exp)
+  *
+  * \param s: Nodo identificador del diccionario
+  * \param v: Nodo valor o expresion
+  * \param llave: Nodo llave del diccionario
+  * \return ast: Un nodo AST
+  *
+  */
+ast *nodo_nuevo_asignacion_dicc_elem(ast *s, ast *v, ast *llave);
 
 /** Nuevo nodo tipo si (if)
   *

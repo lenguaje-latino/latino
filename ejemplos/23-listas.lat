@@ -22,6 +22,8 @@ escribir(numeros)
 #salida: Indice fuera de rango
 
 #listas multiples
-m = [[1,2,3], ['a', 'b', 'c'], ['alpha', 'beta', 'gamma']]
+m = [[1,2,3],
+     ['a', 'b', 'c'],
+     ['alpha', 'beta', 'gamma']]
 
 escribir(m)

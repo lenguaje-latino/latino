@@ -29,7 +29,6 @@ THE SOFTWARE.
 #include "lex.h"
 #include "ast.h"
 
-
 /* 1 para debuguear analizador */
 int yydebug = 0;
 
@@ -40,15 +39,12 @@ int yyparse(ast **root, yyscan_t scanner);
 
 ast *lat_analizar_expresion(lat_vm* vm, char *expr) {
   setlocale (LC_ALL, "");
-  //ast *ret = NULL;
-  ast* ret = (ast*)lat_asignar_memoria(sizeof(ast));
-  ret->vm = vm;
+  ast *ret = NULL;
   yyscan_t scanner;
   YY_BUFFER_STATE state;
   lex_state scan_state = {.insert = 0};
   yylex_init_extra(&scan_state, &scanner);
   state = yy_scan_string(expr, scanner);
-  //yyparse(&ret, scanner);
   yyparse(&ret, scanner);
   yy_delete_buffer(state, scanner);
   yylex_destroy(scanner);
