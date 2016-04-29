@@ -50,7 +50,7 @@
 				<Option object_output="./" />
 				<Option type="1" />
 				<Option compiler="gcc" />
-				<Option parameters="..\..\ejemplos\incluir.lat" />
+				<Option parameters="..\..\ejemplos\debug.lat" />
 				<Compiler>
 					<Add option="-D_CRT_SECURE_NO_WARNINGS" />
 					<Add option="-D_DEBUG" />
