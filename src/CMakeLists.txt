@@ -30,5 +30,5 @@ TARGET_LINK_LIBRARIES(latino LINK_PUBLIC
 )
 
 if(UNIX)
-  install (TARGETS latino DESTINATION /usr/bin)
+  install (TARGETS latino DESTINATION /usr/local/bin)
 endif(UNIX)
