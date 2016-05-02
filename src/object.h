@@ -69,7 +69,8 @@ typedef union lat_objeto_data {
   double d;  /**< valor decimal */
   char* str;  /**< valor cadena */
   bool b;  /**< valor logico */
-  list_node* list;  /**< valor lista */
+  list_node* list;  /**< valor de la lista */
+  hash_map* dict;  /**< valor del diccionario */
   void* func;  /**< valor funcion */
   void (*cfunc)(lat_vm*);  /**< valor funcion C */
   void* cstruct;  /**< valor estructura */

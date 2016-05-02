@@ -70,11 +70,7 @@ EXP ([Ee][-+]?[0-9]+)
 "!="    { return OP_NEQ; }
 "=="    { return OP_EQ; }
 "&&"    { return OP_AND; }
-"y"     { return OP_AND; }
 "||"    { return OP_OR; }
-"o"     { return OP_OR; }
-"!"     { return OP_NEG; }
-"no"    { return OP_NEG; }
 ".="    { return OP_CONCAT_IGUAL; }
 "."     { return OP_CONCAT; }
 
@@ -106,10 +102,9 @@ EXP ([Ee][-+]?[0-9]+)
 [_a-zA-Z][_a-zA-Z0-9]* { yylval->node = nodo_nuevo_identificador(yytext, yylloc->first_line, yylloc->first_column); return TIDENTIFIER; }
 [0-9]+"."+[0-9]*{EXP}?|"."+[0-9]+{EXP}?       { yylval->node = nodo_nuevo_decimal(strtod(yytext, NULL), yylloc->first_line, yylloc->first_column); return TNUMBER; }
 [0-9]+                 { yylval->node = nodo_nuevo_entero(strtol(yytext, NULL, 0), yylloc->first_line, yylloc->first_column); return TINT; }
-\"([^\\\"]|\\.)*\"     { yytext[strlen(yytext) - 1] = '\0'; yylval->node = nodo_nuevo_cadena(yytext+1, yylloc->first_line, yylloc->first_column);return TSTRING; }
+\"([^\\\"]|\\.)*\"     { yytext[strlen(yytext) - 1] = '\0'; yylval->node = nodo_nuevo_cadena(yytext+1, yylloc->first_line, yylloc->first_column); return TSTRING; }
 '([^\\\']|\\.)*'       { yytext[strlen(yytext) - 1] = '\0'; yylval->node = nodo_nuevo_literal(yytext+1, yylloc->first_line, yylloc->first_column); return TLIT; }
 "#".* /* ignore comments */
-"$".* /* ignore comments */
 [\n]                   { yycolumn = 1; }
 [ \t]+                 { ; } /* ignora espacios en blanco y tabuladores */
 .                      { ; } /* ignora caracteres incorrectos */

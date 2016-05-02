@@ -69,7 +69,6 @@ int yylex (YYSTYPE * yylval_param,YYLTYPE * yylloc_param ,yyscan_t yyscanner);
     OP_NEQ
     OP_AND
     OP_OR
-    OP_NEG
     OP_INCR
     OP_DECR
     OP_CONCAT
@@ -80,13 +79,9 @@ int yylex (YYSTYPE * yylval_param,YYLTYPE * yylloc_param ,yyscan_t yyscanner);
 %type <node> iteration_statement jump_statement function_definition
 %type <node> argument_expression_list declaration primary_expression
 %type <node> constant_expression function_call selection_statement identifier_list
-%type <node> list_new list_items get_list_item
-%type <node> dict_items dict_item dict_key
+%type <node> list_new list_items list_get_item
+%type <node> dict_new dict_items dict_item key value
 %type <node> ternary_expression
-
-/* get_dict_item */
-
- /*labeled_statement*/
 
 /*
  * precedencia de operadores
@@ -98,10 +93,8 @@ int yylex (YYSTYPE * yylval_param,YYLTYPE * yylloc_param ,yyscan_t yyscanner);
 %right '='
 %left '+' '-' OP_CONCAT OP_CONCAT_IGUAL
 %left '*' '/' '%'
-%left OP_NEG
 %left OP_AND OP_OR
 %left OP_EQ OP_GE OP_GT OP_LE OP_LT OP_NEQ
-%left UMINUS UNEG
 
 %start program
 
@@ -141,8 +134,11 @@ include_statement:
 declaration:
       TIDENTIFIER '=' expression { $$ = nodo_nuevo_asignacion($3, $1); }
     | TIDENTIFIER '=' '[' list_items ']' { $$ = nodo_nuevo_asignacion(nodo_nuevo(NODO_LISTA, $4, NULL), $1); }
+    | TIDENTIFIER '=' '{' dict_items '}' { $$ = nodo_nuevo_asignacion(nodo_nuevo(NODO_DICCIONARIO, $4, NULL), $1); }
     | TIDENTIFIER '[' TINT ']' '=' expression { $$ = nodo_nuevo_asignacion_lista_elem($6, $1, $3); }
     | TIDENTIFIER '[' TIDENTIFIER ']' '=' expression { $$ = nodo_nuevo_asignacion_lista_elem($6, $1, $3); }
+    | TIDENTIFIER '[' TLIT ']' '=' expression { $$ = nodo_nuevo_asignacion_dicc_elem($6, $1, $3); }
+    | TIDENTIFIER '[' TSTRING ']' '=' expression { $$ = nodo_nuevo_asignacion_dicc_elem($6, $1, $3); }
     | TIDENTIFIER OP_CONCAT_IGUAL expression { $$ = nodo_nuevo_asignacion((nodo_nuevo_operador(NODO_CONCATENAR, $1, $3)), $1); }
     | TCONSTANT '=' constant_expression { $$ = nodo_nuevo_asignacion($3, $1); }
     | unary_expression { $$ = $1; }
@@ -201,7 +197,7 @@ expression:
     | expression OP_AND expression { $$ = nodo_nuevo_operador(NODO_Y, $1, $3); }
     | expression OP_OR expression { $$ = nodo_nuevo_operador(NODO_O, $1, $3); }
     | expression OP_CONCAT expression { $$ = nodo_nuevo_operador(NODO_CONCATENAR, $1, $3); }
-    | OP_NEG expression %prec UNEG { $$ = nodo_nuevo_operador(NODO_NEGACION, $2, NULL); }
+    | '!' expression %prec '*' { $$ = nodo_nuevo_operador(NODO_NEGACION, $2, NULL); }    
     | expression '+' expression { $$ = nodo_nuevo_operador(NODO_SUMA, $1, $3); }
     | expression '-' expression { $$ = nodo_nuevo_operador(NODO_RESTA, $1, $3); }
     | expression '*' expression { $$ = nodo_nuevo_operador(NODO_MULTIPLICACION, $1, $3); }
@@ -211,9 +207,10 @@ expression:
     | '-' expression %prec '*' { $$ = nodo_nuevo_operador(NODO_MENOS_UNARIO, $2, NULL); }
     | primary_expression
     | function_call
-    | get_list_item
     | ternary_expression
     | list_new
+    | list_get_item
+    | dict_new
     ;
 
 function_call:
@@ -233,8 +230,6 @@ constant_expression:
     | TNUMBER { $$ = $1; }
     | TLIT { $$ = $1; }
     | TSTRING { $$ = $1; }
-    | '{' dict_items '}' { $$ = nodo_nuevo(NODO_DICCIONARIO, $2, NULL); }
-    /* | get_dict_item { $$ = $1; }*/
     ;
 
 unary_expression:
@@ -256,34 +251,40 @@ list_new:
     '[' list_items ']' { $$ = nodo_nuevo(NODO_LISTA, $2, NULL); }
     ;
 
+dict_new:
+    '{' dict_items '}' { $$ = nodo_nuevo(NODO_DICCIONARIO, $2, NULL); }
+    ;
+
 list_items: /* empty */ { $$ = NULL; }
     | list_items ',' expression { $$ = nodo_nuevo(NODO_LISTA_AGREGAR_ELEMENTO, $3, $1); }
     | expression { $$ = nodo_nuevo(NODO_LISTA_AGREGAR_ELEMENTO, $1, NULL); }
     ;
 
-get_list_item:
-      TIDENTIFIER '[' TINT ']' { $$ = nodo_nuevo(NODO_LISTA_OBTENER_ELEMENTO, $3, $1); }
-    | TIDENTIFIER '[' TIDENTIFIER ']' { $$ = nodo_nuevo(NODO_LISTA_OBTENER_ELEMENTO, $3, $1); }
-
-dict_items: /* empty */ { $$ = nodo_nuevo(NODO_DICCIONARIO_ELEMENTOS, NULL, NULL); }
-    | dict_items ',' dict_item { $$ = nodo_nuevo(NODO_DICCIONARIO_ELEMENTOS, $3, $1); }
-    | dict_item { $$ = nodo_nuevo(NODO_DICCIONARIO_ELEMENTOS, $1, NULL); }
+dict_items: /* empty */ { $$ = NULL; }
+    | dict_item ',' dict_item { $$ = nodo_nuevo(NODO_DICC_AGREGAR_ELEMENTO, $3, $1); }
+    | dict_item { $$ = nodo_nuevo(NODO_DICC_AGREGAR_ELEMENTO, $1, NULL); }
     ;
 
-dict_item: /* empty */ { $$ = NULL; }
-    | dict_key ':' primary_expression { $$ = nodo_nuevo(NODO_DICCIONARIO_ELEMENTO, $1, $3); }
+dict_item:
+    key ':' value { $$ = nodo_nuevo(NODO_DICC_ELEMENTO, $3, $1); }
     ;
 
-dict_key:
-    TINT { $$ = $1; }
+key:
+    TLIT { $$ = $1; }
     | TSTRING { $$ = $1; }
     ;
 
-/*
-get_dict_item:
-     TIDENTIFIER '[' TSTRING ']' { $$ = nodo_nuevo(NODO_DICCIONARIO_OBTENER_ELEMENTO, $1, $3); }
+value:
+    primary_expression { $$ = $1; }
     ;
-    */
+
+list_get_item:
+      TIDENTIFIER '[' TSTRING ']' { $$ = nodo_nuevo(NODO_DICC_OBTENER_ELEMENTO, $3, $1); }
+    | TIDENTIFIER '[' TLIT ']' { $$ = nodo_nuevo(NODO_DICC_OBTENER_ELEMENTO, $3, $1); }
+    | TIDENTIFIER '[' TINT ']' { $$ = nodo_nuevo(NODO_LISTA_OBTENER_ELEMENTO, $3, $1); }
+    | TIDENTIFIER '[' TIDENTIFIER ']' { $$ = nodo_nuevo(NODO_LISTA_OBTENER_ELEMENTO, $3, $1); }
+    ;
+
 %%
 
 //se define para analisis sintactico (bison)

@@ -343,5 +343,5 @@ char *trim(const char* str);
   *\param archivo: Nombre completo del archivo
   *\return bool: true si se puede leer
   */
-bool readable(const char *archivo);
+bool legible(const char *archivo);
 #endif /*_UTILS_H_*/

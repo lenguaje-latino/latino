@@ -1,2 +1,9 @@
-numeros = [1, 2, 3, 4, 5]
-escribir(numeros[1])
+#vacio = {}
+#escribir(vacio)
+#Error Pila Vacia
+
+dic = { "uno": "1" , "dos" : "2" }
+#dic = { 1: "uno", 2: "dos" }
+#dic = { 'uno': '1' , 'dos' : '2' }
+#dic['uno'] = 10
+escribir(dic)

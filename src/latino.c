@@ -29,16 +29,15 @@ THE SOFTWARE.
 #include "lex.h"
 #include "ast.h"
 
-
 /* 1 para debuguear analizador */
 int yydebug = 0;
 
 static FILE *file;
 static char *buffer;
 
-int yyparse(ast **expression, yyscan_t scanner);
+int yyparse(ast **root, yyscan_t scanner);
 
-ast *lat_analizar_expresion(char *expr) {
+ast *lat_analizar_expresion(lat_vm* vm, char *expr) {
   setlocale (LC_ALL, "");
   ast *ret = NULL;
   yyscan_t scanner;
@@ -52,7 +51,7 @@ ast *lat_analizar_expresion(char *expr) {
   return ret;
 }
 
-ast *lat_analizar_archivo(char *infile) {
+ast *lat_analizar_archivo(lat_vm* vm, char *infile) {
   if (infile == NULL) {
     printf("Especifique un archivo\n");
     return NULL;
@@ -83,7 +82,7 @@ ast *lat_analizar_archivo(char *infile) {
     return NULL;
   }
   buffer[newSize] = '\0';
-  return lat_analizar_expresion(buffer);
+  return lat_analizar_expresion(vm, buffer);
 }
 /**
  * Muestra la version de latino en la consola
@@ -130,7 +129,7 @@ static void lat_repl(lat_vm *vm)
 			buffer = calloc(strlen(input) + 1, sizeof(char));
 			strcpy(buffer, input);
 			buffer[strlen(input)] = '\n';
-			lat_objeto *curexpr = nodo_analizar_arbol(vm, lat_analizar_expresion(buffer));
+			lat_objeto *curexpr = nodo_analizar_arbol(vm, lat_analizar_expresion(vm, buffer));
 			lat_llamar_funcion(vm, curexpr);
 		}
 	}
@@ -162,9 +161,7 @@ int main(int argc, char *argv[]) {
     }
   }
   if(argc > 1 && infile != NULL) {
-    lat_objeto *mod = lat_cadena_nueva(vm, "modulo1");
-    insert_list(vm->modulos, mod);
-    ast *tree = lat_analizar_archivo(infile);
+    ast *tree = lat_analizar_archivo(vm, infile);
     if (!tree) {
       return EXIT_FAILURE;
     }

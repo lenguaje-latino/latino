@@ -1,0 +1,6 @@
+vacio = {}
+dic = { "Chilindrina": "Maria Antonieta de las Nieves",
+     "El chavo del 8": "Roberto Gomez Bolaños",
+     "Tres patines": "Leopoldo Fernandez" }
+
+escribir(vacio)
