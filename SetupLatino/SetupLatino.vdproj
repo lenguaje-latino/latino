@@ -962,9 +962,17 @@
                         }
                         "Values"
                         {
+                            "{ADCFDA98-8FDD-45E4-90BC-E3D20B029870}:_0F7B13518311452B8F2ACC1DB9BEFB09"
+                            {
+                            "Name" = "8:LATINO_LIB"
+                            "Condition" = "8:"
+                            "Transitive" = "11:TRUE"
+                            "ValueTypes" = "3:1"
+                            "Value" = "8:[TARGETDIR]lib"
+                            }
                             "{ADCFDA98-8FDD-45E4-90BC-E3D20B029870}:_16D5785430A94021B170B0916BEBFBE6"
                             {
-                            "Name" = "8:LATINO_HOME"
+                            "Name" = "8:LATINO_PATH"
                             "Condition" = "8:"
                             "Transitive" = "11:TRUE"
                             "ValueTypes" = "3:1"
