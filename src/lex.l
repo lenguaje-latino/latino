@@ -90,6 +90,7 @@ EXP ([Ee][-+]?[0-9]+)
 "funcion"   { return KFUNCTION; }
 "desde"     { return KFROM; }
 "verdadero" { yylval->node = nodo_nuevo_logico(1, yylloc->first_line, yylloc->first_column); return TTRUE; }
+"cierto" { yylval->node = nodo_nuevo_logico(1, yylloc->first_line, yylloc->first_column); return TTRUE; }
 "falso"     { yylval->node = nodo_nuevo_logico(0, yylloc->first_line, yylloc->first_column); return TFALSE; }
 "retorno"   { return KRETURN; }
 "incluir"   { return KINCLUDE; }

@@ -3,11 +3,15 @@ si(verdadero)
     imprimir("es verdadero")
 fin
 
-#asignado a una variable
-b = verdadero
-si (b)
-    imprimir("es verdad")
+#asignado a una variable, tambien se acepta la palabra clave "cierto"
+escribir("---------------------------------------------------------------------")
+escribir("se agrega la palabra clave cierto para referirse a un valor verdadero")
+escribir("---------------------------------------------------------------------")
+b = cierto
+si b
+    imprimir("cierto tambien es verdadero")
 fin
+escribir("---------------------------------------------------------------------")
 
 #si-sino
 b = falso
