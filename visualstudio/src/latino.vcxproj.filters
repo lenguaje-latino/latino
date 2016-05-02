@@ -34,6 +34,9 @@
     <ClCompile Include="C:\Users\ciber\Documents\latino\src\libio.c">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="C:\Users\ciber\Documents\latino\src\linenoise\utf8.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
     <ClCompile Include="C:\Users\ciber\Documents\latino\src\linenoise\linenoise.c">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -73,6 +76,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="C:\Users\ciber\Documents\latino\src\libio.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\ciber\Documents\latino\src\linenoise\utf8.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="C:\Users\ciber\Documents\latino\src\linenoise\linenoise.h">
