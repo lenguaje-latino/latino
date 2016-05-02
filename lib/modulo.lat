@@ -1,3 +1,6 @@
+#incluirse a si mismo
+incluir "modulo"
+
 funcion sumatoria(a, b)
   retorno (a + b)
 fin

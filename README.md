@@ -30,32 +30,47 @@ El lenguaje deberá de ser de código abierto bajo la licencia del MIT por ser l
 http://opensource.org/licenses/MIT
 
 Leer LICENSE.txt
-### Requiere:
+
+###INSTALAR
+
+#####Instalar en Linux
+Para instalar en Linux ejecute los siguientes comandos en su terminal
+
+```
+$git clone https://github.com/primitivorm/latino
+$cd latino
+$cmake .
+$make
+$sudo make install
+```
+
+#####Instalar en Windows
+1. Descargue el instalador de la última version de https://github.com/primitivorm/latino/releases
+2. Descompima el archivo zip
+3. Ejecute el instalador
+#####Nota:
+Puede requerir el framework de C++, descarguelo desde la pagina oficial de Microsoft:
+https://www.microsoft.com/en-us/download/details.aspx?id=5555
+
+
+### COMPILAR
+#####Requiere:
 * bison 3.04
 * flex 2.5.39
 * cmake 3.3.1
-* gcc 4.9.3 (Linux) / Visual Studio Community Edition o CodeBlocks (Windows)
+* gcc 4.9.3 (Linux)
+* Visual Studio Community Edition ó CodeBlocks ó CodeLite (Windows)
 
-###COMPILAR
+#####Compilar en Visual Studio https://www.visualstudio.com/en-us/products/visual-studio-community-vs.aspx
+1. Abra la solución visualstudio/latino.sln
+2. Compile
 
-#####Linux
-ir al directorio latino/ y ejecutar
+#####Compilar en CodeBlocks http://www.codeblocks.org/
+1. Abra el proyecto codeblocks/latino.cbp
+2. Compile
 
-```
-$cmake .
-$make
-```
+#####Compilar en CodeLite http://codelite.org//
+1. Abra el proyecto codelite/latino.workspace
+2. Compile
 
-#####Windows
-1. Instale cmake desde https://cmake.org/
-2. Inicie cmake
-3. Elija la ruta que contiene su carpeta latino
-4. Elija la ruta en donde se generar la solucion de Visual Studio latino/build
-5. Clic en el botón configurar (Configure)
-6. Clic en el botón generar (Generate)
-7. Abrir la solucion en Visual Studio generada en la ruta latino/build/ y compile
-
-#####Tambien puede compilar el proyecto con CodeBlocks http://www.codeblocks.org/
-1. Abra el proyecto latino.cbp y compile
-
-#####Cualquier aportación o sugerencia es bienvenida.
+####Cualquier aportación o sugerencia es bienvenida.

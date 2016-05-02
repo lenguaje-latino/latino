@@ -302,7 +302,7 @@ static void lat_imprimir_elem(lat_vm* vm)
     fprintf(stdout, "%s", "nulo");
   }
   else if (in->type == T_INSTANCE) {
-    fprintf(stdout, "%s", "Objeto");
+    fprintf(stdout, "%s", "objeto");
   }
   else if (in->type == T_LIT) {
     fprintf(stdout, "%s", lat_obtener_literal(in));
@@ -321,6 +321,9 @@ static void lat_imprimir_elem(lat_vm* vm)
   }
   else if (in->type == T_LIST) {
     lat_imprimir_lista(vm, in->data.list);
+  }
+  else if (in->type == T_DICT) {
+    lat_imprimir_diccionario(vm, in->data.dict);
   }
   else if (in->type == T_FUNC) {
     fprintf(stdout, "%s", "Funcion");
@@ -415,8 +418,44 @@ void lat_imprimir_lista(lat_vm* vm, list_node* l)
   fprintf(stdout, "%s", " ]");
 }
 
+void lat_imprimir_diccionario(lat_vm* vm, hash_map* d)
+{
+  fprintf(stdout, "%s", "{ ");
+  if (d != NULL) {
+    list_node* c;
+    for (c = d->buckets; c != NULL; c = c->next) {
+      if (c->data != NULL) {
+        lat_objeto* o = ((lat_objeto*)c->data);
+        //printf("\ntype %i, obj_ref: %p\t, marked: %i", o->type, o, o->marked);
+        if (o->type == T_LIST) {
+          lat_imprimir_lista(vm, o->data.list);
+          if (c->next->data) {
+            fprintf(stdout, "%s", ", ");
+          }
+        }
+        if (o->type == T_LIST) {
+          lat_imprimir_diccionario(vm, o->data.dict);
+          if (c->next->data) {
+            fprintf(stdout, "%s", ", ");
+          }
+        }
+        else {
+          if (o->type) {
+            lat_apilar(vm, o);
+            lat_imprimir_elem(vm);
+            if (c->next->data) {
+              fprintf(stdout, "%s", ", ");
+            }
+          }
+        }
+      }
+    }
+  }
+  fprintf(stdout, "%s", " ]");
+}
+
 void lat_ejecutar(lat_vm *vm) {
-  lat_objeto *func = nodo_analizar_arbol(vm, lat_analizar_expresion(lat_obtener_cadena(lat_desapilar(vm))));
+  lat_objeto *func = nodo_analizar_arbol(vm, lat_analizar_expresion(vm, lat_obtener_cadena(lat_desapilar(vm))));
   lat_llamar_funcion(vm, func);
   lat_apilar(vm, vm->regs[255]);
 }
@@ -431,7 +470,7 @@ void lat_ejecutar_archivo(lat_vm *vm) {
     extension = dot + 1;
   }
   if (strcmp(extension, "lat") == 0) {
-    ast *tree = lat_analizar_archivo(input);
+    ast *tree = lat_analizar_archivo(vm, input);
     if (!tree) {
       lat_registrar_error("error al leer el archivo: %s", input);
     }

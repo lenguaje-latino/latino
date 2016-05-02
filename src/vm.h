@@ -71,7 +71,10 @@ typedef enum lat_ins {
   OP_DEC,    /**< Disminuye un valor entero en 1 */
   OP_STOREDICT,    /**< Almacena un objeto diccionario */
   OP_PUSHDICT,    /**< Inserta un objeto diccionario en la pila */
-  OP_POPDICT    /**< Extrae un objeto diccionario de la pila */
+  OP_POPDICT,    /**< Extrae un objeto diccionario de la pila */
+  OP_PUSHDICTELEM, /**< Crea un objeto par (llave-valor) y lo agrega al diccionario de la pila */
+  OP_DICTGETITEM,    /**< Obtiene un valor del diccionario */
+  OP_DICTSETITEM    /**< Asigna un valor del diccionario */
 } lat_ins;
 
 
@@ -223,6 +226,13 @@ void lat_numero_lista(lat_vm* vm);
   *\param l: Apuntador a la lista
   */
 void lat_imprimir_lista(lat_vm* vm, list_node* l);
+
+/**\brief Envia a consola el contenido del diccionario
+  *
+  *\param vm: Apuntador a la MV
+  *\param d: Apuntador al diccionario
+  */
+void lat_imprimir_diccionario(lat_vm* vm, hash_map* d);
 
 /**\brief Envia a consola el valor del objeto
   *
