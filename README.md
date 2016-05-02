@@ -48,6 +48,7 @@ $sudo make install
 1. Descargue el instalador de la última version de https://github.com/primitivorm/latino/releases
 2. Descompima el archivo zip
 3. Ejecute el instalador
+
 #####Nota:
 Puede requerir el framework de C++, descarguelo desde la pagina oficial de Microsoft:
 https://www.microsoft.com/en-us/download/details.aspx?id=5555

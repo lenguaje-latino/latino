@@ -5,7 +5,7 @@ fin
 
 #asignado a una variable
 b = verdadero
-si(b)
+si (b)
     imprimir("es verdad")
 fin
 
@@ -39,4 +39,15 @@ si(g)
     imprimir('a')
 sino
     imprimir("error")
+fin
+
+escribir("----------------------------------")
+escribir("condicion sin parentesis permitida")
+escribir("----------------------------------")
+escribir("ingresa un numero:")
+num = leer()
+si num < 0
+    escribir("es negativo")
+sino
+    escribir("es positivo")
 fin
