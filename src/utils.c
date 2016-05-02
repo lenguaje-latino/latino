@@ -47,9 +47,10 @@ char* strdup0(const char* s)
 char* parse_string(const char* s, size_t len)
 {
   char* ret = lat_asignar_memoria(len + 1);
+  int i = 0;
   int j = 0;
   int c = '@';
-  for (size_t i = 0; i < len; i++) {
+  for (i = 0; i < len; i++) {
     switch (s[i]) {
     case '\\': {
       switch (s[i + 1]) {
@@ -246,8 +247,8 @@ char* padLeft(char* base, int n, char* c){
   }
   ret = malloc(n + 1);
   ret = "";
-  //int i = 0;
-  for (int i = 0; i < (n - len); i++){
+  int i = 0;
+  for (i = 0; i < (n - len); i++){
     ret = concat(ret, c);
   }
   ret = concat(ret, base);
@@ -298,9 +299,10 @@ char *substring(const char* str, int beg, int n)
 }
 
 char *toLower(const char* str){
+  int i = 0;
   int len = strlen(str);
   char *ret = (char*)malloc(len + 1);
-  for (int i = 0; i < len; i++){
+  for (i = 0; i < len; i++){
     ret[i] = tolower(str[i]);
   }
   ret[len] = 0;
@@ -308,9 +310,10 @@ char *toLower(const char* str){
 }
 
 char *toUpper(const char* str){
+  int i = 0;
   int len = strlen(str);
   char *ret = malloc(len + 1);
-  for (int i = 0; i < len; i++){
+  for (i = 0; i < len; i++){
     ret[i] = toupper(str[i]);
   }
   ret[len] = 0;
