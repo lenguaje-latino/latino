@@ -226,7 +226,8 @@ void lat_basurero_agregar(lat_vm* vm, lat_objeto* o)
 
 void lat_basurero(lat_vm* vm)
 {
-  for (size_t i = 0; i < 256; i++) {
+  int i = 0;
+  for (i = 0; i < 256; i++) {
     if (((lat_objeto*)vm->regs[i]) != 0x0) {
       if (((lat_objeto*)vm->regs[i])->marked != 3) {
         ((lat_objeto*)vm->regs[i])->marked = 2;
