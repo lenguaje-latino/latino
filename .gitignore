@@ -1,6 +1,7 @@
 #ignora directorios
 bin/
 CMakeFiles/
+Release/
 
 #ignora archivo objeto
 *.o

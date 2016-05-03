@@ -15,10 +15,10 @@
  * met:
  *
  *  *  Redistributions of source code must retain the above copyright
- *     notice, this list of conditions and the following disclaimer.
+ *     notice, this lista of conditions and the following disclaimer.
  *
  *  *  Redistributions in binary form must reproduce the above copyright
- *     notice, this list of conditions and the following disclaimer in the
+ *     notice, this lista of conditions and the following disclaimer in the
  *     documentation and/or other materials provided with the distribution.
  *
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
@@ -55,7 +55,7 @@ typedef void(linenoiseCompletionCallback)(const char *, linenoiseCompletions *);
 linenoiseCompletionCallback * linenoiseSetCompletionCallback(linenoiseCompletionCallback *);
 
 /*
- * Adds a copy of the given string to the given completion list. The copy is owned
+ * Adds a copy of the given string to the given completion lista. The copy is owned
  * by the linenoiseCompletions object.
  */
 void linenoiseAddCompletion(linenoiseCompletions *, const char *);
@@ -106,7 +106,7 @@ int linenoiseHistoryLoad(const char *filename);
 void linenoiseHistoryFree(void);
 
 /*
- * Returns a pointer to the list of history entries, writing its
+ * Returns a pointer to the lista of history entries, writing its
  * length to *len if len is not NULL. The memory is owned by linenoise
  * and must not be freed.
  */

@@ -39,6 +39,7 @@ int yyparse(ast **root, yyscan_t scanner);
 
 ast *lat_analizar_expresion(lat_vm* vm, char *expr) {
   setlocale (LC_ALL, "");
+  //setlocale (LC_MESSAGES, "");
   ast *ret = NULL;
   yyscan_t scanner;
   YY_BUFFER_STATE state;
@@ -115,7 +116,7 @@ void lat_ayuda(){
     printf("%s\n", "Variables de entorno:");
     printf("%s\n", "_____________________");
     printf("%s%s\n", "LATINO_PATH  : ", getenv("LATINO_PATH"));
-    printf("%s%s\n", "LATINO_LIB  : ", getenv("LATINO_LIB"));
+    printf("%s%s\n", "LATINO_LIB   : ", getenv("LATINO_LIB"));
     printf("%s%s\n", "LC_LANG      : ", getenv("LC_LANG"));
     printf("%s%s\n", "HOME         : ", getenv("HOME"));
 }
@@ -167,7 +168,7 @@ int main(int argc, char *argv[]) {
     }
     lat_objeto *mainFunc = nodo_analizar_arbol(vm, tree);
     lat_llamar_funcion(vm, mainFunc);
-    lat_apilar(vm, vm->regs[255]);
+    lat_apilar(vm, vm->registros[255]);
     if(file != NULL)
     {
       fclose(file);

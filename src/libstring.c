@@ -105,7 +105,7 @@ void lat_comparar(lat_vm* vm)
 {
   lat_objeto* b = lat_desapilar(vm);
   lat_objeto* a = lat_desapilar(vm);
-  vm->regs[255] = lat_entero_nuevo(vm, strcmp(lat_obtener_cadena(a), lat_obtener_cadena(b)));
+  vm->registros[255] = lat_entero_nuevo(vm, strcmp(lat_obtener_cadena(a), lat_obtener_cadena(b)));
 }
 
 void lat_concatenar(lat_vm* vm)
@@ -144,7 +144,7 @@ void lat_concatenar(lat_vm* vm)
     break;
   }
 
-  vm->regs[255] = lat_cadena_nueva(vm, concat(lat_obtener_cadena(x), lat_obtener_cadena(y)));
+  vm->registros[255] = lat_cadena_nueva(vm, concat(lat_obtener_cadena(x), lat_obtener_cadena(y)));
   //lat_liberar_memoria(x);
   //lat_liberar_memoria(y);
 }
@@ -155,17 +155,17 @@ void lat_contiene(lat_vm* vm)
   lat_objeto* a = lat_desapilar(vm);
   char *result = strstr(lat_obtener_cadena(a), lat_obtener_cadena(b));
   if (result != NULL){
-	  vm->regs[255] = vm->true_object;
+	  vm->registros[255] = vm->objeto_cierto;
   }
   else{
-	  vm->regs[255] = vm->false_object;
+	  vm->registros[255] = vm->objeto_falso;
   }
 }
 
 void lat_copiar(lat_vm* vm)
 {
   lat_objeto* b = lat_desapilar(vm);
-  vm->regs[255] = lat_clonar_objeto(vm, b);
+  vm->registros[255] = lat_clonar_objeto(vm, b);
 }
 
 void lat_termina_con(lat_vm* vm)
@@ -173,10 +173,10 @@ void lat_termina_con(lat_vm* vm)
   lat_objeto* b = lat_desapilar(vm);
   lat_objeto* a = lat_desapilar(vm);
   if (endsWith(lat_obtener_cadena(a), lat_obtener_cadena(b))){
-    vm->regs[255] = vm->true_object;
+    vm->registros[255] = vm->objeto_cierto;
   }
   else{
-    vm->regs[255] = vm->false_object;
+    vm->registros[255] = vm->objeto_falso;
   }
 }
 
@@ -185,10 +185,10 @@ void lat_es_igual(lat_vm* vm)
   lat_objeto* b = lat_desapilar(vm);
   lat_objeto* a = lat_desapilar(vm);
   if (strcmp(lat_obtener_cadena(a), lat_obtener_cadena(b)) == 0){
-    vm->regs[255] = vm->true_object;
+    vm->registros[255] = vm->objeto_cierto;
   }
   else{
-    vm->regs[255] = vm->false_object;
+    vm->registros[255] = vm->objeto_falso;
   }
 }
 
@@ -201,62 +201,62 @@ void lat_format(lat_vm* vm){
 void lat_indice(lat_vm* vm){
   lat_objeto* b = lat_desapilar(vm);
   lat_objeto* a = lat_desapilar(vm);
-  vm->regs[255] = lat_entero_nuevo(vm, indexOf(lat_obtener_cadena(a), lat_obtener_cadena(b)));
+  vm->registros[255] = lat_entero_nuevo(vm, indexOf(lat_obtener_cadena(a), lat_obtener_cadena(b)));
 }
 
 void lat_insertar(lat_vm* vm){
   lat_objeto* c = lat_desapilar(vm);
   lat_objeto* b = lat_desapilar(vm);
   lat_objeto* a = lat_desapilar(vm);
-  vm->regs[255] = lat_cadena_nueva(vm, insert(lat_obtener_cadena(a), lat_obtener_cadena(b), lat_obtener_entero(c)));
+  vm->registros[255] = lat_cadena_nueva(vm, insert(lat_obtener_cadena(a), lat_obtener_cadena(b), lat_obtener_entero(c)));
 }
 
 void lat_ultimo_indice(lat_vm* vm){
   lat_objeto* b = lat_desapilar(vm);
   lat_objeto* a = lat_desapilar(vm);
-  vm->regs[255] = lat_entero_nuevo(vm, lastIndexOf(lat_obtener_cadena(a), lat_obtener_cadena(b)));
+  vm->registros[255] = lat_entero_nuevo(vm, lastIndexOf(lat_obtener_cadena(a), lat_obtener_cadena(b)));
 }
 
 void lat_rellenar_izquierda(lat_vm* vm){
   lat_objeto* c = lat_desapilar(vm);
   lat_objeto* b = lat_desapilar(vm);
   lat_objeto* a = lat_desapilar(vm);
-  vm->regs[255] = lat_cadena_nueva(vm, padLeft(lat_obtener_cadena(a), lat_obtener_entero(b), lat_obtener_literal(c)));
+  vm->registros[255] = lat_cadena_nueva(vm, padLeft(lat_obtener_cadena(a), lat_obtener_entero(b), lat_obtener_literal(c)));
 }
 
 void lat_rellenar_derecha(lat_vm* vm){
   lat_objeto* c = lat_desapilar(vm);
   lat_objeto* b = lat_desapilar(vm);
   lat_objeto* a = lat_desapilar(vm);
-  vm->regs[255] = lat_cadena_nueva(vm, padRight(lat_obtener_cadena(a), lat_obtener_entero(b), lat_obtener_literal(c)));
+  vm->registros[255] = lat_cadena_nueva(vm, padRight(lat_obtener_cadena(a), lat_obtener_entero(b), lat_obtener_literal(c)));
 }
 
 void lat_eliminar(lat_vm* vm){
   lat_objeto* b = lat_desapilar(vm);
   lat_objeto* a = lat_desapilar(vm);
-  vm->regs[255] = lat_cadena_nueva(vm, replace(lat_obtener_cadena(a), lat_obtener_cadena(b), ""));
+  vm->registros[255] = lat_cadena_nueva(vm, replace(lat_obtener_cadena(a), lat_obtener_cadena(b), ""));
 }
 
 void lat_esta_vacia(lat_vm* vm){
   lat_objeto* a = lat_desapilar(vm);
   if (strcmp(lat_obtener_cadena(a), "") == 0){
-    vm->regs[255] = vm->true_object;
+    vm->registros[255] = vm->objeto_cierto;
   }
   else{
-    vm->regs[255] = vm->false_object;
+    vm->registros[255] = vm->objeto_falso;
   }
 }
 
 void lat_longitud(lat_vm* vm){
   lat_objeto* a = lat_desapilar(vm);
-  vm->regs[255] = lat_entero_nuevo(vm, strlen(lat_obtener_cadena(a)));
+  vm->registros[255] = lat_entero_nuevo(vm, strlen(lat_obtener_cadena(a)));
 }
 
 void lat_reemplazar(lat_vm* vm){
   lat_objeto* c = lat_desapilar(vm);
   lat_objeto* b = lat_desapilar(vm);
   lat_objeto* a = lat_desapilar(vm);
-  vm->regs[255] = lat_cadena_nueva(vm, replace(lat_obtener_cadena(a), lat_obtener_cadena(b), lat_obtener_cadena(c)));
+  vm->registros[255] = lat_cadena_nueva(vm, replace(lat_obtener_cadena(a), lat_obtener_cadena(b), lat_obtener_cadena(c)));
 }
 
 void lat_empieza_con(lat_vm* vm)
@@ -264,10 +264,10 @@ void lat_empieza_con(lat_vm* vm)
   lat_objeto* b = lat_desapilar(vm);
   lat_objeto* a = lat_desapilar(vm);
   if (startsWith(lat_obtener_cadena(a), lat_obtener_cadena(b))){
-    vm->regs[255] = vm->true_object;
+    vm->registros[255] = vm->objeto_cierto;
   }
   else{
-    vm->regs[255] = vm->false_object;
+    vm->registros[255] = vm->objeto_falso;
   }
 }
 
@@ -275,20 +275,20 @@ void lat_subcadena(lat_vm* vm){
   lat_objeto* c = lat_desapilar(vm);
   lat_objeto* b = lat_desapilar(vm);
   lat_objeto* a = lat_desapilar(vm);
-  vm->regs[255] = lat_cadena_nueva(vm, substring(lat_obtener_cadena(a), lat_obtener_entero(b), lat_obtener_entero(c)));
+  vm->registros[255] = lat_cadena_nueva(vm, substring(lat_obtener_cadena(a), lat_obtener_entero(b), lat_obtener_entero(c)));
 }
 
 void lat_minusculas(lat_vm* vm){
   lat_objeto* a = lat_desapilar(vm);
-  vm->regs[255] = lat_cadena_nueva(vm, toLower(lat_obtener_cadena(a)));
+  vm->registros[255] = lat_cadena_nueva(vm, toLower(lat_obtener_cadena(a)));
 }
 
 void lat_mayusculas(lat_vm* vm){
   lat_objeto* a = lat_desapilar(vm);
-  vm->regs[255] = lat_cadena_nueva(vm, toUpper(lat_obtener_cadena(a)));
+  vm->registros[255] = lat_cadena_nueva(vm, toUpper(lat_obtener_cadena(a)));
 }
 
 void lat_quitar_espacios(lat_vm* vm){
   lat_objeto* a = lat_desapilar(vm);
-  vm->regs[255] = lat_cadena_nueva(vm, trim(lat_obtener_cadena(a)));
+  vm->registros[255] = lat_cadena_nueva(vm, trim(lat_obtener_cadena(a)));
 }

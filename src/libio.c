@@ -39,9 +39,9 @@ void lat_leer(lat_vm *vm){
   double ret;
   ret =strtod(str, &ptr);
   if(strcmp(ptr, "") == 0){
-    vm->regs[255] = lat_decimal_nuevo(vm, ret);
+    vm->registros[255] = lat_decimal_nuevo(vm, ret);
   }else{
-    vm->regs[255] = lat_cadena_nueva(vm, parse_string(str, strlen(str)));
+    vm->registros[255] = lat_cadena_nueva(vm, parse_string(str, strlen(str)));
   }
 }
 void lat_leer_archivo(lat_vm *vm){
@@ -63,7 +63,7 @@ void lat_leer_archivo(lat_vm *vm){
       printf("No se pudo asignar %d bytes de memoria\n", fsize);
     }
     buf[newSize] = '\0';
-    vm->regs[255] = lat_cadena_nueva(vm, buf);
+    vm->registros[255] = lat_cadena_nueva(vm, buf);
   }else{
     lat_registrar_error("No se pudo abrir el archivo\n");
   }

@@ -40,7 +40,7 @@ void lat_asignar_contexto_objeto(lat_objeto* ns, lat_objeto* name, lat_objeto* o
     lat_registrar_error("Namespace no es una instancia");
   }
   else {
-    hash_map* h = ns->data.instance;
+    hash_map* h = ns->data.nombre;
     set_hash(h, lat_obtener_cadena(name), (void*)o);
   }
 }
@@ -49,10 +49,10 @@ lat_objeto* lat_lat_obtener_contexto_objeto(lat_objeto* ns, lat_objeto* name)
 {
   if (ns->type != T_INSTANCE) {
     debug("ns->type: %d", ns->type);
-    lat_registrar_error("Namespace is not an instance");
+    lat_registrar_error("Namespace is not an nombre");
   }
   else {
-    hash_map* h = ns->data.instance;
+    hash_map* h = ns->data.nombre;
     lat_objeto* ret = (lat_objeto*)get_hash(h, lat_obtener_cadena(name));
     if (ret == NULL) {
       lat_registrar_error("Variable \"%s\" indefinida", lat_obtener_cadena(name));
@@ -68,7 +68,7 @@ int lat_contexto_contiene(lat_objeto* ns, lat_objeto* name)
     lat_registrar_error("Namespace no es una instancia");
   }
   else {
-    hash_map* h = ns->data.instance;
+    hash_map* h = ns->data.nombre;
     lat_objeto* ret = (lat_objeto*)get_hash(h, lat_obtener_cadena(name));
     if (ret == NULL) {
       return 0;
@@ -90,7 +90,7 @@ lat_objeto* lat_instancia(lat_vm* vm)
   lat_objeto* ret = lat_crear_objeto(vm);
   ret->type = T_INSTANCE;
   ret->data_size = sizeof(hash_map*);
-  ret->data.instance = make_hash_map();
+  ret->data.nombre = make_hash_map();
   return ret;
 }
 
@@ -138,7 +138,7 @@ lat_objeto* lat_lista_nueva(lat_vm* vm, list_node* l)
   lat_objeto* ret = lat_crear_objeto(vm);
   ret->type = T_LIST;
   ret->data_size = sizeof(list_node*);
-  ret->data.list = l;
+  ret->data.lista = l;
   return ret;
 }
 
@@ -171,10 +171,10 @@ void lat_marcar_objeto(lat_objeto* o, int m)
     o->marked = m;
     switch (o->type) {
     case T_INSTANCE:
-      lat_marcar_hash(o->data.instance, m);
+      lat_marcar_hash(o->data.nombre, m);
       break;
     case T_LIST:
-      lat_marcar_lista(o->data.list, m);
+      lat_marcar_lista(o->data.lista, m);
       break;
     default:
       break;
@@ -223,10 +223,10 @@ void lat_eliminar_objeto(lat_vm* vm, lat_objeto* o)
     return;
     break;
   case T_LIST:
-    //lat_eliminar_lista(vm, o->data.list);
+    //lat_eliminar_lista(vm, o->data.lista);
     break;
   case T_DICT:
-    //lat_eliminar_lista(vm, o->data.list);
+    //lat_eliminar_lista(vm, o->data.lista);
     break;
   case T_LIT:
   case T_INT:
@@ -292,12 +292,12 @@ lat_objeto* lat_clonar_objeto(lat_vm* vm, lat_objeto* obj)
     ret = lat_crear_objeto(vm);
     ret->type = T_INSTANCE;
     ret->data_size = sizeof(hash_map*);
-    ret->data.instance = lat_clonar_hash(vm, obj->data.instance);
-    //ret->data.instance = obj->data.instance;
+    ret->data.nombre = lat_clonar_hash(vm, obj->data.nombre);
+    //ret->data.nombre = obj->data.nombre;
     break;
   case T_LIST:
-    ret = lat_lista_nueva(vm, lat_clonar_lista(vm, obj->data.list));
-    //ret = lat_lista_nueva(vm, obj->data.list);
+    ret = lat_lista_nueva(vm, lat_clonar_lista(vm, obj->data.lista));
+    //ret = lat_lista_nueva(vm, obj->data.lista);
     break;
   case T_FUNC:
   case T_CFUNC:
@@ -342,7 +342,7 @@ hash_map* lat_clonar_hash(lat_vm* vm, hash_map* h)
         for (cur = l->next; cur != NULL; cur = cur->next) {
           if (cur->data != NULL) {
             hash_val* hv = (hash_val*)lat_asignar_memoria(sizeof(hash_val));
-            //vm->memory_usage += sizeof(hash_val);
+            //vm->memoria_usada += sizeof(hash_val);
             strncpy(hv->key, ((hash_val*)cur->data)->key, 256);
             hv->val = lat_clonar_objeto(vm, (lat_objeto*)((hash_val*)cur->data)->val);
             insert_list(ret->buckets[c], hv);
@@ -406,7 +406,7 @@ bool lat_obtener_logico(lat_objeto* o)
 list_node* lat_obtener_lista(lat_objeto* o)
 {
   if (o->type == T_LIST) {
-    return o->data.list;
+    return o->data.lista;
   }
   lat_registrar_error("Object no es un tipo lista");
 }
@@ -414,7 +414,7 @@ list_node* lat_obtener_lista(lat_objeto* o)
 void* lat_obtener_estructura(lat_objeto* o)
 {
   if (o->type == T_STRUCT) {
-    return o->data.list;
+    return o->data.lista;
   }
   lat_registrar_error("Object no es un tipo estructura");
 }

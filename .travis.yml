@@ -1,0 +1,13 @@
+language: c
+
+compiler:
+    - gcc
+    - clang
+
+script:
+    - if [[ -a .git/shallow ]]; then git fetch --unshallow; fi
+        mkdir Release
+        cd Release
+        cmake -DCMAKE_BUILD_TYPE=Release ..
+        make
+        make test
