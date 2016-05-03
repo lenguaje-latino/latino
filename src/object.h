@@ -62,19 +62,19 @@ typedef enum lat_type {
 *
 * Almacena la informacion del objeto
 */
-typedef union lat_objeto_data {
-  hash_map* instance;   /**< nombre del objeto */
+typedef union lat_datos_objeto {
+  hash_map* nombre;   /**< nombre del objeto */
   char* c;  /**< valor literal */
   long i;  /**< valor entero */
   double d;  /**< valor decimal */
   char* str;  /**< valor cadena */
   bool b;  /**< valor logico */
-  list_node* list;  /**< valor de la lista */
+  list_node* lista;  /**< valor de la lista */
   hash_map* dict;  /**< valor del diccionario */
   void* func;  /**< valor funcion */
   void (*cfunc)(lat_vm*);  /**< valor funcion C */
   void* cstruct;  /**< valor estructura */
-} lat_objeto_data;
+} lat_datos_objeto;
 
 /** \brief Objeto
 *
@@ -86,7 +86,7 @@ struct lat_objeto {
   size_t data_size;   /**< Tamanio de la informacion */
   bool es_constante;   /**< Valida si es una constante */
   int num_declared;   /**< Numero de veces declarado */
-  lat_objeto_data data;   /**< Informacion del objeto */
+  lat_datos_objeto data;   /**< Informacion del objeto */
 };
 
 /** \brief Asigna el objeto a un contexto (local / publico)

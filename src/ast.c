@@ -525,7 +525,7 @@ int nodo_analizar(lat_vm *vm, ast *node, lat_bytecode *bcode, int i)
     break;
     case NODO_LOGICO:
     {
-        lat_objeto *ret = node->valor->v.b ? vm->true_object : vm->false_object;
+        lat_objeto *ret = node->valor->v.b ? vm->objeto_cierto : vm->objeto_falso;
         dbc(OP_STOREBOOL, 255, 0, ret);
 #if DEBUG_VM
         printf("STOREBOOL R255 %i\n", ret->data.b);

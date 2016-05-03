@@ -26,7 +26,7 @@ THE SOFTWARE.
 
 /** \file vm.h
   *
-  * Contiene funciones para el manejo de la máquina virtual
+  * Contiene funciones para el manejo de la mï¿½quina virtual
   *
   */
 
@@ -36,13 +36,13 @@ typedef struct lat_vm lat_vm;
 #include "utils.h"
 #include "object.h"
 
-/**\brief Bandera para debuguear las instrucciones de la máquina virtual */
+/**\brief Bandera para debuguear las instrucciones de la mï¿½quina virtual */
 #define DEBUG_VM 0
 
-/**\brief Instrucciones de la máquina virtual */
+/**\brief Instrucciones de la mï¿½quina virtual */
 typedef enum lat_ins {
-  OP_END,    /**< Fin de la máquina virtual */
-  OP_NOP,    /**< Indica No operación */
+  OP_END,    /**< Fin de la mï¿½quina virtual */
+  OP_NOP,    /**< Indica No operaciï¿½n */
   OP_PUSH,    /**< Inserta en la pila */
   OP_POP,    /**< Extrae de la pila */
   OP_GET,    /**< Obtiene un valor */
@@ -64,7 +64,7 @@ typedef enum lat_ins {
   OP_NS,    /**< Define un contexto */
   OP_ENDNS,    /**< Define el fin de un contexto */
   OP_JMP,    /**< Saltar a otra instruccion */
-  OP_JMPIF,    /**< Saltar a otra instrucción SI la condición se cumple */
+  OP_JMPIF,    /**< Saltar a otra instrucciï¿½n SI la condiciï¿½n se cumple */
   OP_CALL,    /**< Llamada a una funcion */
   OP_NOT,    /**< Negacion de un valor logico */
   OP_INC,    /**< Incrementa un valor entero en 1 */
@@ -96,14 +96,14 @@ typedef struct lat_function {
 struct lat_vm {
   list_node* pila;     /**< pila de la maquina virtual */
   list_node* modulos;     /**< modulos importados en la MV */
-  list_node* all_objects;     /**< objetos creados dinamicamente en la MV */
-  list_node* gc_objects;     /**< objetos listos para liberar por el colector de basura */
-  lat_objeto* regs[256];    /**< Registros de la MV */
-  lat_objeto* ctx_stack[256];   /**< Tabla hash para el contexto actual */
-  lat_objeto* true_object;   /**< Valor logico verdadero */
-  lat_objeto* false_object;   /**< Valor logico falso */
-  size_t memory_usage;      /**< Tamanio de memoria creado dinamicamente */
-  int ctx_stack_pointer;      /**< Apuntador de la pila */
+  list_node* todos_objetos;     /**< objetos creados dinamicamente en la MV */
+  list_node* basurero_objetos;     /**< objetos listos para liberar por el colector de basura */
+  lat_objeto* registros[256];    /**< Registros de la MV */
+  lat_objeto* contexto_pila[256];   /**< Tabla hash para el contexto actual */
+  lat_objeto* objeto_cierto;   /**< Valor logico verdadero */
+  lat_objeto* objeto_falso;   /**< Valor logico falso */
+  size_t memoria_usada;      /**< Tamanio de memoria creado dinamicamente */
+  int apuntador_pila;      /**< Apuntador de la pila */
 };
 
 /**\brief Crea la maquina virtual (MV)
@@ -140,17 +140,17 @@ lat_objeto* lat_desapilar(lat_vm* vm);
 
 /**\brief Inserta un objeto al final de la lista
   *
-  *\param list: Apuntador a la lista
+  *\param lista: Apuntador a la lista
   *\param o: Apuntador a objeto
   */
-void lat_apilar_lista(lat_objeto* list, lat_objeto* o);
+void lat_apilar_lista(lat_objeto* lista, lat_objeto* o);
 
 /**\brief Extrae el ultimo elemento de la lista
   *
-  *\param list: Apuntador a la lista
+  *\param lista: Apuntador a la lista
   *\return lat_objeto: Apuntador a objeto
   */
-lat_objeto* lat_desapilar_lista(lat_objeto* list);
+lat_objeto* lat_desapilar_lista(lat_objeto* lista);
 
 /**\brief Inserta un contexto en la pila de la MV
   *

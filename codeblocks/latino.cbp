@@ -37,6 +37,16 @@
             <DistClean command="C:/gcc/bin/gmake.exe -f &quot;C:/src/latino/codeblocks/Makefile&quot;  VERBOSE=1 clean" />
          </MakeCommands>
       </Target>
+      <Target title="test">
+         <Option working_dir="C:/src/latino/codeblocks" />
+         <Option type="4" />
+         <MakeCommands>
+            <Build command="C:/gcc/bin/gmake.exe -f &quot;C:/src/latino/codeblocks/Makefile&quot;  VERBOSE=1 test" />
+            <CompileFile command="C:/gcc/bin/gmake.exe -f &quot;C:/src/latino/codeblocks/Makefile&quot;  VERBOSE=1 &quot;$file&quot;" />
+            <Clean command="C:/gcc/bin/gmake.exe -f &quot;C:/src/latino/codeblocks/Makefile&quot;  VERBOSE=1 clean" />
+            <DistClean command="C:/gcc/bin/gmake.exe -f &quot;C:/src/latino/codeblocks/Makefile&quot;  VERBOSE=1 clean" />
+         </MakeCommands>
+      </Target>
       <Target title="latino">
          <Option output="C:/src/latino/codeblocks/bin/latino.exe" prefix_auto="0" extension_auto="0" />
          <Option working_dir="C:/src/latino/codeblocks/bin" />
