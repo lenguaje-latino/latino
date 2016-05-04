@@ -64,10 +64,10 @@ typedef enum lat_type {
 */
 typedef union lat_datos_objeto {
   hash_map* nombre;   /**< nombre del objeto */
-  char* c;  /**< valor literal */
-  long i;  /**< valor entero */
-  double d;  /**< valor decimal */
-  char* str;  /**< valor cadena */
+  char* c;            /**< valor literal */
+  long i;             /**< valor entero */
+  double d;           /**< valor decimal */
+  char* str;          /**< valor cadena */
   bool b;  /**< valor logico */
   list_node* lista;  /**< valor de la lista */
   hash_map* dict;  /**< valor del diccionario */
@@ -88,6 +88,10 @@ struct lat_objeto {
   int num_declared;   /**< Numero de veces declarado */
   lat_datos_objeto data;   /**< Informacion del objeto */
 };
+
+struct lat_llave_valor {
+    lat_type type;
+}
 
 /** \brief Asigna el objeto a un contexto (local / publico)
   *
