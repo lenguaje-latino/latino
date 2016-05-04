@@ -52,7 +52,7 @@ $sudo make install
 
 #####Nota:
 Puede requerir el framework de C++, descarguelo desde la pagina oficial de Microsoft:
-https://www.microsoft.com/en-us/download/details.aspx?id=5555
+https://www.microsoft.com/en-us/download/details.aspx?id=49984
 
 
 ### COMPILAR

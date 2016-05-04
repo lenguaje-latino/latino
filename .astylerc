@@ -1,0 +1,321 @@
+#http://astyle.sourceforge.net/astyle.html
+
+#Kernighan&Ritchie style formatting/indenting.
+#namespace foospace {
+#int Foo() {
+#    if (isBar) {
+#        bar();
+#        return 1;
+#    } else
+#        return 0;
+#}
+#}
+style=kr
+
+#-C / --indent-classes
+#Indent 'class' blocks so that the headers 'public:', 'protected:' and 'private:' are indented in the class block.
+#class Foo
+#{
+#public:
+#    Foo();
+#    virtual ~Foo();
+#};
+#
+#becomes:
+#
+#class Foo
+#{
+#    public:
+#        Foo();
+#        virtual ~Foo();
+#};
+indent-classes
+
+#-S / --indent-switches
+#Indent 'switch' blocks so that the 'case X:' headers are indented in the switch block.
+#switch (foo)
+#{
+#case 1:
+#    a += 1;
+#    break;
+#case 2:
+#{
+#    a += 2;
+#    break;
+#}
+#}
+#
+#becomes:
+#
+#switch (foo)
+#{
+#    case 1:
+#        a += 1;
+#        break;
+#    case 2:
+#    {
+#        a += 2;
+#        break;
+#    }
+#}
+indent-switches
+
+#-N / --indent-namespaces
+#Add extra indentation to namespaces.
+#namespace foospace
+#{
+#class Foo
+#{
+#    public:
+#        Foo();
+#        virtual ~Foo();
+#};
+#}
+#
+#becomes:
+#
+#namespace foospace
+#{
+#    class Foo
+#    {
+#        public:
+#            Foo();
+#            virtual ~Foo();
+#    };
+#}
+indent-namespaces
+
+#-s# / --indent=spaces=#
+#Indentation Options
+indent=spaces=4
+
+#--min-conditional-indent=# / -m#
+# Set the minimal indent that is added when a header is built of multiple
+# lines. This indent helps to easily separate the header from the command
+# statements that follow. The value for # indicates a number of indents and is
+# a minimum value. The indent may be greater to align with the data on the
+# previous line.
+# The valid values are:
+# 0 - no minimal indent. The lines will be aligned with the paren on the
+# preceding line.
+# 1 - indent at least one additional indent.
+# 2 - indent at least two additional indents.
+# 3 - indent at least one-half an additional indent. This is intended for large
+# indents (e.g. 8).
+#
+# The default value is 2, two additional indents.
+#
+# // default setting makes this non-bracketed code clear
+# if (a < b
+#       || c > d)
+#   foo++;
+#
+# // but creates an exaggerated indent in this bracketed code
+# if (a < b
+#       || c > d)
+# {
+#   foo++;
+# }
+#
+# becomes (when setting --min-conditional-indent=0):
+#
+# // setting makes this non-bracketed code less clear
+# if (a < b
+#       || c > d)
+#       foo++;
+#
+# // but makes this bracketed code clearer
+# if (a < b
+#       || c > d)
+# {
+#    foo++;
+# }
+#
+min-conditional-indent=0
+
+#-M# / --max-instatement-indent=#
+#Indent a maximum of # spaces in a continuous statement, relatively to the previous line (e.g. --max-instatement-indent=40).
+
+#fooArray[] = { red,
+#            green,
+#            darkblue };
+#fooFunction(barArg1,
+#            barArg2,
+#            barArg3);
+#
+#becomes (larger value):
+#
+#fooArray[] = { red,
+#                green,
+#                darkblue };
+#fooFunction(barArg1,
+#            barArg2,
+#            barArg3);
+max-instatement-indent=40
+
+# Indent multi line preprocessor definitions ending with a backslash
+# For example:
+#
+# #define Is_Bar(arg,a,b) \
+# (Is_Foo((arg), (a)) \
+# || Is_Foo((arg), (b)))
+#
+# becomes:
+#
+# #define Is_Bar(arg,a,b) \
+#     (Is_Foo((arg), (a)) \
+#      || Is_Foo((arg), (b)))
+#has been depreciated and will be removed in a future release
+#indent-preprocessor
+#--indent-preproc-define / -w
+indent-preproc-define
+#--indent-preproc-cond / -xw
+indent-preproc-cond
+
+#--indent-col1-comments / -Y
+# Indent C++ comments beginning in column one.
+# For example
+# void Foo()\n"
+# {
+# // comment
+#     if (isFoo)
+#         bar();
+# }
+#
+# becomes:
+#
+# void Foo()\n"
+# {
+#     // comment
+#     if (isFoo)
+#         bar();
+# }
+indent-col1-comments
+
+#--convert-tabs
+#Converts tabs into single spaces.
+convert-tabs
+
+#-p / --pad=oper
+#Insert space padding around operators only.
+#if (isFoo)
+#    a = bar((b-c)*a,*d--);
+#
+#becomes:
+#
+#if (isFoo)
+#    a = bar((b - c) * a, *d--);
+pad-oper
+
+#--pad-header / -H
+# Insert space padding after paren headers only (e.g. 'if', 'for', 'while'...).
+# Any end of line comments will remain in the original column, if possible.
+# This can be used with unpad-paren to remove unwanted spaces.
+#
+# if(isFoo(a, b))
+#     bar(a, b);
+#
+# becomes:
+#
+# if (isFoo(a, b))
+#     bar(a, b);
+#
+pad-header
+
+#--unpad-paren / -U
+# Remove extra space padding around parenthesis on the inside and outside. Any
+# end of line comments will remain in the original column, if possible. This
+# option can be used in combination with the paren padding options pad‑paren,
+# pad‑paren‑out, pad‑paren‑in, and pad‑header above. Only padding that has not
+# been requested by other options will be removed.
+#
+# For example, if a source has parens padded on both the inside and outside,
+# and you want inside only. You need to use unpad-paren to remove the outside
+# padding, and pad‑paren‑in to retain the inside padding. Using only
+# pad‑paren‑in would not remove the outside padding.
+#
+# if ( isFoo( a, b ) )
+#     bar ( a, b );
+#
+# becomes (with no padding option requested):
+#
+# if(isFoo(a, b))
+#     bar(a, b);
+#
+unpad-paren
+
+#--delete-empty-lines / -xe
+# Delete empty lines within a function or method. Empty lines outside of
+# functions or methods are NOT deleted. If used with break-blocks or
+# break-blocks=all it will delete all lines EXCEPT the lines added by the
+# break-blocks options.
+#
+# void Foo()
+# {
+#
+#     foo1 = 1;
+#
+#     foo2 = 2;
+#
+# }
+#
+# becomes:
+#
+# void Foo()
+# {
+#     foo1 = 1;
+#     foo2 = 2;
+# }
+#
+delete-empty-lines
+
+#--align-pointer=type   / -k1
+#--align-pointer=middle / -k2
+#--align-pointer=name   / -k3
+# Attach a pointer or reference operator (* or &) to either the variable type
+# (left) or variable name (right), or place it between the type and name
+# (middle). The spacing between the type and name will be preserved, if
+# possible. To format references separately use the following align-reference
+# option.
+#
+# char *foo1;
+# char &foo2;
+#
+# becomes (with align-pointer=type):
+#
+# char* foo1;
+# char& foo2;
+#
+# char* foo1;
+# char& foo2;
+#
+# becomes (with align-pointer=middle):
+#
+# char * foo1;
+# char & foo2;
+#
+# char* foo1;
+# char& foo2;
+#
+# becomes (with align-pointer=name):
+#
+# char *foo1;
+# char &foo2;
+#
+align-pointer=name
+
+#-a / --brackets=attach
+#Attach brackets to their pre-block statements ( i.e. Java / K&R style ).
+#if (isFoo) {
+#    bar();
+#} else {
+#    bar();
+#}
+#--attach-namespaces / -xn
+attach-namespaces
+#--attach-classes / -xc
+attach-classes
+#--attach-inlines / -xl
+attach-inlines
+#--attach-extern-c / -xk
+attach-extern-c
