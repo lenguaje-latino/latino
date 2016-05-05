@@ -91,7 +91,7 @@ struct lat_objeto {
 
 struct lat_llave_valor {
     lat_type type;
-}
+};
 
 /** \brief Asigna el objeto a un contexto (local / publico)
   *
@@ -113,7 +113,7 @@ lat_objeto* lat_lat_obtener_contexto_objeto(lat_objeto* ns, lat_objeto* name);
   * \param ns: Contexto en el que se encuentra el objeto
   * \param name: Nombre del objeto
   */
-int lat_contexto_contiene(lat_objeto* ns, lat_objeto* name);
+int  lat_contexto_contiene(lat_objeto* ns, lat_objeto* name);
 
 /** \brief Crea un objeto determinado
   *

@@ -1,0 +1,20 @@
+Start testing: May 04 22:38 CDT
+----------------------------------------------------------
+1/1 Testing: test
+1/1 Test: test
+Command: "/home/primi/src/latino/bin/latino" "-v"
+Directory: /home/primi/src/latino
+"test" start time: May 04 22:38 CDT
+Output:
+----------------------------------------------------------
+Latino 0.5.0
+Todos los derechos reservados (C) 2015-2016. Latinoamerica
+<end of output>
+Test time =   0.00 sec
+----------------------------------------------------------
+Test Passed.
+"test" end time: May 04 22:38 CDT
+"test" time elapsed: 00:00:00
+----------------------------------------------------------
+
+End testing: May 04 22:38 CDT
