@@ -11,7 +11,7 @@
 #include "ast.h"
 #include "lex.h"
 
-#ifndef _WIN32
+#ifdef __linux
 #include <libintl.h>
 #define YY_(Msgid) dgettext ("bison-runtime", Msgid)
 #endif
