@@ -2,6 +2,17 @@ language: c
 compiler:
     - gcc
     - clang
+sudo: false
+os:
+  - linux
+  - osx
+addons:
+  apt:
+    sources:
+      - ubuntu-toolchain-r-test
+    packages:
+      - gcc-4.7
+      - g++-4.7
 before_install:
     - pip install --user cpp-coveralls
     - if [ $TRAVIS_OS_NAME == "linux" ]; then
@@ -10,6 +21,8 @@ before_install:
         export LINK="gcc-4.7";
         export LINKXX="g++-4.7";
         fi
+    - gcc --version
+    - g++ --version
 script:
     - cmake . && make && make test
 after_success:
