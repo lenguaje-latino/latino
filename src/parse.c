@@ -76,7 +76,7 @@
 #include "ast.h"
 #include "lex.h"
 
-#ifndef _WIN32
+#ifdef __linux
 #include <libintl.h>
 #define YY_(Msgid) dgettext ("bison-runtime", Msgid)
 #endif
@@ -1256,12 +1256,12 @@ yysyntax_error (YYSIZE_T *yymsg_alloc, char **yymsg,
        consistent state with a default action.  There might have been a
        previous inconsistent state, consistent state with a non-default
        action, or user semantic action that manipulated yychar.
-     - Of course, the expected token lista depends on states to have
+     - Of course, the expected token list depends on states to have
        correct lookahead information, and it depends on the parser not
        to perform extra reductions after fetching a lookahead from the
        scanner and before detecting a syntax error.  Thus, state merging
        (from LALR or IELR) and default reductions corrupt the expected
-       tokenlistat.  However, thelistat is correct for canonical LR with
+       token list.  However, the list is correct for canonical LR with
        one exception: it will still contain any token that will not be
        accepted due to an error action in a later state.
   */
