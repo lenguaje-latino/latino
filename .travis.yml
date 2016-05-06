@@ -21,6 +21,11 @@ before_install:
         export LINK="gcc-4.7";
         export LINKXX="g++-4.7";
         fi
+    - if [ $TRAVIS_OS_NAME == "osx" ]; then
+        sudo port install gettext
+        sudo port install php55-gettext
+        sudo port install gcc47 libgcc
+      fi
     - gcc --version
     - g++ --version
 script:
