@@ -2,7 +2,7 @@
 bin/
 CMakeFiles/
 Release/
-doxygen/
+codeblocks/doxygen/
 
 #ignora archivo objeto
 *.o
