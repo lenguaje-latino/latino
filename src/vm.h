@@ -37,7 +37,7 @@ typedef struct lat_vm lat_vm;
 #include "object.h"
 
 /**\brief Bandera para debuguear las instrucciones de la m�quina virtual */
-#define DEBUG_VM 1
+#define DEBUG_VM 0
 
 /**\brief Instrucciones de la m�quina virtual */
 typedef enum lat_ins {

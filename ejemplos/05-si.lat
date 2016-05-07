@@ -48,8 +48,7 @@ fin
 escribir("----------------------------------")
 escribir("condicion sin parentesis permitida")
 escribir("----------------------------------")
-escribir("ingresa un numero:")
-num = leer()
+num = 10
 si num < 0
     escribir("es negativo")
 sino
