@@ -1,27 +1,550 @@
-Start testing: May 07 10:54 CDT
+Start testing: May 07 11:28 CDT
 ----------------------------------------------------------
-1/2 Testing: test
-1/2 Test: test
-Command: "/home/primi/src/latino/bin/latino" "-v"
+1/20 Testing: test
+1/20 Test: test
+Command: "/home/primi/src/latino/bin/latino" "ejemplos/00-vacio.lat"
 Directory: /home/primi/src/latino
-"test" start time: May 07 10:54 CDT
+"test" start time: May 07 11:28 CDT
 Output:
 ----------------------------------------------------------
-Latino 0.5.0
-Todos los derechos reservados (C) 2015-2016. Latinoamerica
 <end of output>
 Test time =   0.00 sec
 ----------------------------------------------------------
 Test Passed.
-"test" end time: May 07 10:54 CDT
+"test" end time: May 07 11:28 CDT
 "test" time elapsed: 00:00:00
 ----------------------------------------------------------
 
-2/2 Testing: test
-2/2 Test: test
+2/20 Testing: test1
+2/20 Test: test1
+Command: "/home/primi/src/latino/bin/latino" "ejemplos/01-comentarios.lat"
+Directory: /home/primi/src/latino
+"test1" start time: May 07 11:28 CDT
+Output:
+----------------------------------------------------------
+<end of output>
+Test time =   0.00 sec
+----------------------------------------------------------
+Test Passed.
+"test1" end time: May 07 11:28 CDT
+"test1" time elapsed: 00:00:00
+----------------------------------------------------------
+
+3/20 Testing: test2
+3/20 Test: test2
+Command: "/home/primi/src/latino/bin/latino" "ejemplos/02-hola.lat"
+Directory: /home/primi/src/latino
+"test2" start time: May 07 11:28 CDT
+Output:
+----------------------------------------------------------
+hola latino
+<end of output>
+Test time =   0.00 sec
+----------------------------------------------------------
+Test Passed.
+"test2" end time: May 07 11:28 CDT
+"test2" time elapsed: 00:00:00
+----------------------------------------------------------
+
+4/20 Testing: test3
+4/20 Test: test3
+Command: "/home/primi/src/latino/bin/latino" "ejemplos/03-variables.lat"
+Directory: /home/primi/src/latino
+"test3" start time: May 07 11:28 CDT
+Output:
+----------------------------------------------------------
+verdadero
+10
+1.5
+a
+hola latino
+<end of output>
+Test time =   0.00 sec
+----------------------------------------------------------
+Test Passed.
+"test3" end time: May 07 11:28 CDT
+"test3" time elapsed: 00:00:00
+----------------------------------------------------------
+
+5/20 Testing: test4
+5/20 Test: test4
+Command: "/home/primi/src/latino/bin/latino" "ejemplos/04-expresiones.lat"
+Directory: /home/primi/src/latino
+"test4" start time: May 07 11:28 CDT
+Output:
+----------------------------------------------------------
+############## suma ###############
+2
+11.05
+11.05
+20.1
+############## resta ###############
+2
+-9.05
+9.05
+10
+############## multiplicacion ###############
+1
+10.05
+10.05
+5.025
+############## division ###############
+1
+0.099502487562189
+10.05
+20.1
+<end of output>
+Test time =   0.00 sec
+----------------------------------------------------------
+Test Passed.
+"test4" end time: May 07 11:28 CDT
+"test4" time elapsed: 00:00:00
+----------------------------------------------------------
+
+6/20 Testing: test5
+6/20 Test: test5
+Command: "/home/primi/src/latino/bin/latino" "ejemplos/05-si.lat"
+Directory: /home/primi/src/latino
+"test5" start time: May 07 11:28 CDT
+Output:
+----------------------------------------------------------
+es verdadero
+---------------------------------------------------------------------
+se agrega la palabra clave cierto para referirse a un valor verdadero
+---------------------------------------------------------------------
+cierto tambien es verdadero
+---------------------------------------------------------------------
+falsedad
+1
+hola latino
+verdadero
+verdadero
+a
+----------------------------------
+condicion sin parentesis permitida
+----------------------------------
+es positivo
+<end of output>
+Test time =   0.00 sec
+----------------------------------------------------------
+Test Passed.
+"test5" end time: May 07 11:28 CDT
+"test5" time elapsed: 00:00:00
+----------------------------------------------------------
+
+7/20 Testing: test6
+7/20 Test: test6
+Command: "/home/primi/src/latino/bin/latino" "ejemplos/06-mientras.lat"
+Directory: /home/primi/src/latino
+"test6" start time: May 07 11:28 CDT
+Output:
+----------------------------------------------------------
+------------------------------
+---condicion con parentesis---
+------------------------------
+0
+1
+2
+3
+4
+cinco
+6
+7
+8
+9
+------------------------------
+---condicion sin parentesis---
+------------------------------
+0
+1
+2
+3
+4
+5
+6
+7
+8
+9
+<end of output>
+Test time =   0.00 sec
+----------------------------------------------------------
+Test Passed.
+"test6" end time: May 07 11:28 CDT
+"test6" time elapsed: 00:00:00
+----------------------------------------------------------
+
+8/20 Testing: test7
+8/20 Test: test7
+Command: "/home/primi/src/latino/bin/latino" "ejemplos/07-hacer.lat"
+Directory: /home/primi/src/latino
+"test7" start time: May 07 11:28 CDT
+Output:
+----------------------------------------------------------
+------------------------------
+---condicion con parentesis---
+------------------------------
+0
+1
+2
+3
+4
+5
+6
+7
+8
+9
+------------------------------
+---condicion sin parentesis---
+------------------------------
+0
+1
+2
+3
+4
+5
+6
+7
+8
+9
+<end of output>
+Test time =   0.00 sec
+----------------------------------------------------------
+Test Passed.
+"test7" end time: May 07 11:28 CDT
+"test7" time elapsed: 00:00:00
+----------------------------------------------------------
+
+9/20 Testing: test9
+9/20 Test: test9
+Command: "/home/primi/src/latino/bin/latino" "ejemplos/09-desde.lat"
+Directory: /home/primi/src/latino
+"test9" start time: May 07 11:28 CDT
+Output:
+----------------------------------------------------------
+0 a 9:
+0
+1
+2
+3
+4
+5
+6
+7
+8
+9
+10 a 1:
+10
+9
+8
+7
+6
+5
+4
+3
+2
+1
+<end of output>
+Test time =   0.00 sec
+----------------------------------------------------------
+Test Passed.
+"test9" end time: May 07 11:28 CDT
+"test9" time elapsed: 00:00:00
+----------------------------------------------------------
+
+10/20 Testing: test10
+10/20 Test: test10
+Command: "/home/primi/src/latino/bin/latino" "ejemplos/10-funciones.lat"
+Directory: /home/primi/src/latino
+"test10" start time: May 07 11:28 CDT
+Output:
+----------------------------------------------------------
+4
+5
+3
+<end of output>
+Test time =   0.00 sec
+----------------------------------------------------------
+Test Passed.
+"test10" end time: May 07 11:28 CDT
+"test10" time elapsed: 00:00:00
+----------------------------------------------------------
+
+11/20 Testing: test11
+11/20 Test: test11
+Command: "/home/primi/src/latino/bin/latino" "ejemplos/11-fibonacci.lat"
+Directory: /home/primi/src/latino
+"test11" start time: May 07 11:28 CDT
+Output:
+----------------------------------------------------------
+version recursiva
+0
+1
+1
+2
+3
+5
+8
+13
+21
+34
+version iterativa
+0
+1
+1
+2
+3
+5
+8
+13
+21
+34
+55
+89
+144
+233
+377
+610
+987
+1597
+2584
+4181
+6765
+10946
+17711
+28657
+46368
+75025
+121393
+196418
+317811
+514229
+832040
+1346269
+2178309
+3524578
+5702887
+9227465
+14930352
+24157817
+39088169
+63245986
+102334155
+165580141
+267914296
+433494437
+701408733
+1134903170
+<end of output>
+Test time =   0.03 sec
+----------------------------------------------------------
+Test Passed.
+"test11" end time: May 07 11:28 CDT
+"test11" time elapsed: 00:00:00
+----------------------------------------------------------
+
+12/20 Testing: test12
+12/20 Test: test12
+Command: "/home/primi/src/latino/bin/latino" "ejemplos/12-factorial.lat"
+Directory: /home/primi/src/latino
+"test12" start time: May 07 11:28 CDT
+Output:
+----------------------------------------------------------
+el factorial de 5 es: 120
+<end of output>
+Test time =   0.00 sec
+----------------------------------------------------------
+Test Passed.
+"test12" end time: May 07 11:28 CDT
+"test12" time elapsed: 00:00:00
+----------------------------------------------------------
+
+13/20 Testing: test16
+13/20 Test: test16
+Command: "/home/primi/src/latino/bin/latino" "ejemplos/16-funciones_cadena.lat"
+Directory: /home/primi/src/latino
+"test16" start time: May 07 11:28 CDT
+Output:
+----------------------------------------------------------
+Lorem ipsum dolor sit amet, consectetur adipisicing elit,sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+Lorem ipsum dolor sit amet, consectetur adipisicing elit,sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+lorem contiene 'ipsum'? verdadero
+Lorem ipsum dolor sit amet, consectetur adipisicing elit,sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+Amen
+ipsum termina con 'Amen'?verdadero
+Lorem ipsum dolor sit amet, consectetur adipisicing elit,sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+Amen
+ipsum termina con 'Amen'? verdadero
+se encontro la palabra 'amet' en la posicion: 22
+Lorem ipsum dolor sit  amore amet, consectetur adipisicing elit,sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+la ultima posicion en que se encuentra 'do' es: 103
+0000000035
+3500000000
+Lorem ipsum dolor sit , consectetur adipisicing elit,sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+esta vacia? verdadero
+la longitu de lorem es: 123
+35--------
+lorem empieza con 'lorem'? falso
+lorem ipsum dolor sit amet, consectetur adipisicing elit,sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+LOREM IPSUM DOLOR SIT AMET, CONSECTETUR ADIPISICING ELIT,SED DO EIUSMOD TEMPOR INCIDIDUNT UT LABORE ET DOLORE MAGNA ALIQUA.
+palabra con espacios.
+<end of output>
+Test time =   0.00 sec
+----------------------------------------------------------
+Test Passed.
+"test16" end time: May 07 11:28 CDT
+"test16" time elapsed: 00:00:00
+----------------------------------------------------------
+
+14/20 Testing: test17
+14/20 Test: test17
+Command: "/home/primi/src/latino/bin/latino" "ejemplos/17-escribir_archivo.lat"
+Directory: /home/primi/src/latino
+"test17" start time: May 07 11:28 CDT
+Output:
+----------------------------------------------------------
+<end of output>
+Test time =   0.00 sec
+----------------------------------------------------------
+Test Passed.
+"test17" end time: May 07 11:28 CDT
+"test17" time elapsed: 00:00:00
+----------------------------------------------------------
+
+15/20 Testing: test18
+15/20 Test: test18
+Command: "/home/primi/src/latino/bin/latino" "ejemplos/18-leer_archivo.lat"
+Directory: /home/primi/src/latino
+"test18" start time: May 07 11:28 CDT
+Output:
+----------------------------------------------------------
+prueba de escritura de archivo
+desde Latino
+<end of output>
+Test time =   0.00 sec
+----------------------------------------------------------
+Test Passed.
+"test18" end time: May 07 11:28 CDT
+"test18" time elapsed: 00:00:00
+----------------------------------------------------------
+
+16/20 Testing: test19
+16/20 Test: test19
+Command: "/home/primi/src/latino/bin/latino" "ejemplos/19-operadores_logicos.lat"
+Directory: /home/primi/src/latino
+"test19" start time: May 07 11:28 CDT
+Output:
+----------------------------------------------------------
+&& y (and) logico
+falso y falso: falso
+verdadero y falso: falso
+falso y verdadero: falso
+verdadero y verdadero: verdadero
+=============================
+|| o (or) logico
+falso o falso: falso
+verdadero o falso: verdadero
+falso o verdadero: verdadero
+verdadero o verdadero: verdadero
+<end of output>
+Test time =   0.00 sec
+----------------------------------------------------------
+Test Passed.
+"test19" end time: May 07 11:28 CDT
+"test19" time elapsed: 00:00:00
+----------------------------------------------------------
+
+17/20 Testing: test20
+17/20 Test: test20
+Command: "/home/primi/src/latino/bin/latino" "ejemplos/20-operadores_comparacion.lat"
+Directory: /home/primi/src/latino
+"test20" start time: May 07 11:28 CDT
+Output:
+----------------------------------------------------------
+comparador de igualdad ==
+verdadero == falso: falso
+10 == 10: verdadero
+3.14 == 3.0: falso
+esto es una "literal" == 'hola': falso
+esto es una 'cadena' == esto es una 'cadena': verdadero
+----------------------------------------------------------------
+comparador de desigualdad !=
+verdadero != falso: verdadero
+10 != 10: falso
+3.14 != 3.0: verdadero
+esto es una "literal" != 'hola': verdadero
+esto es una 'cadena' != esto es una 'cadena': falso
+----------------------------------------------------------------
+comparador menor que <
+10 < 10: falso
+3.14 < 3.0: falso
+esto es una "literal" < 'hola': verdadero
+esto es una 'cadena' < esto es una 'cadena': falso
+----------------------------------------------------------------
+comparador mayor que >
+10 > 10: falso
+3.14 > 3.0: verdadero
+esto es una "literal" > 'hola': falso
+esto es una 'cadena' > esto es una 'cadena': falso
+----------------------------------------------------------------
+comparador menor igual que <=
+10 <= 10: verdadero
+3.14 <= 3.0: falso
+esto es una "literal" <= 'hola': verdadero
+esto es una 'cadena' <= esto es una 'cadena': verdadero
+----------------------------------------------------------------
+comparador mayor igual que >=
+10 >= 10: verdadero
+3.14 >= 3.0: verdadero
+esto es una "literal" >= 'hola': falso
+esto es una 'cadena' >= esto es una 'cadena': verdadero
+<end of output>
+Test time =   0.00 sec
+----------------------------------------------------------
+Test Passed.
+"test20" end time: May 07 11:28 CDT
+"test20" time elapsed: 00:00:00
+----------------------------------------------------------
+
+18/20 Testing: test21
+18/20 Test: test21
+Command: "/home/primi/src/latino/bin/latino" "ejemplos/21-operador_ternario.lat"
+Directory: /home/primi/src/latino
+"test21" start time: May 07 11:28 CDT
+Output:
+----------------------------------------------------------
+el mayor es: 10
+el menor es: 5
+<end of output>
+Test time =   0.00 sec
+----------------------------------------------------------
+Test Passed.
+"test21" end time: May 07 11:28 CDT
+"test21" time elapsed: 00:00:00
+----------------------------------------------------------
+
+19/20 Testing: test23
+19/20 Test: test23
+Command: "/home/primi/src/latino/bin/latino" "ejemplos/23-listas.lat"
+Directory: /home/primi/src/latino
+"test23" start time: May 07 11:28 CDT
+Output:
+----------------------------------------------------------
+2
+[ 99, 2, 3, 4, 5 ]
+[ [ 1, 2, 3 ], [ a, b, c ], [ alpha, beta, gamma ] ]
+<end of output>
+Test time =   0.00 sec
+----------------------------------------------------------
+Test Passed.
+"test23" end time: May 07 11:28 CDT
+"test23" time elapsed: 00:00:00
+----------------------------------------------------------
+
+20/20 Testing: test
+20/20 Test: test
 Command: "/home/primi/src/latino/bin/latino" "-v"
 Directory: /home/primi/src/latino/src
-"test" start time: May 07 10:54 CDT
+"test" start time: May 07 11:28 CDT
 Output:
 ----------------------------------------------------------
 Latino 0.5.0
@@ -30,8 +553,8 @@ Todos los derechos reservados (C) 2015-2016. Latinoamerica
 Test time =   0.00 sec
 ----------------------------------------------------------
 Test Passed.
-"test" end time: May 07 10:54 CDT
+"test" end time: May 07 11:28 CDT
 "test" time elapsed: 00:00:00
 ----------------------------------------------------------
 
-End testing: May 07 10:54 CDT
+End testing: May 07 11:28 CDT
