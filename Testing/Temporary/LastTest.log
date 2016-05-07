@@ -1,17 +1,17 @@
-Start testing: May 07 11:28 CDT
+Start testing: May 07 11:41 CDT
 ----------------------------------------------------------
 1/20 Testing: test
 1/20 Test: test
 Command: "/home/primi/src/latino/bin/latino" "ejemplos/00-vacio.lat"
 Directory: /home/primi/src/latino
-"test" start time: May 07 11:28 CDT
+"test" start time: May 07 11:41 CDT
 Output:
 ----------------------------------------------------------
 <end of output>
 Test time =   0.00 sec
 ----------------------------------------------------------
 Test Passed.
-"test" end time: May 07 11:28 CDT
+"test" end time: May 07 11:41 CDT
 "test" time elapsed: 00:00:00
 ----------------------------------------------------------
 
@@ -19,14 +19,14 @@ Test Passed.
 2/20 Test: test1
 Command: "/home/primi/src/latino/bin/latino" "ejemplos/01-comentarios.lat"
 Directory: /home/primi/src/latino
-"test1" start time: May 07 11:28 CDT
+"test1" start time: May 07 11:41 CDT
 Output:
 ----------------------------------------------------------
 <end of output>
 Test time =   0.00 sec
 ----------------------------------------------------------
 Test Passed.
-"test1" end time: May 07 11:28 CDT
+"test1" end time: May 07 11:41 CDT
 "test1" time elapsed: 00:00:00
 ----------------------------------------------------------
 
@@ -34,7 +34,7 @@ Test Passed.
 3/20 Test: test2
 Command: "/home/primi/src/latino/bin/latino" "ejemplos/02-hola.lat"
 Directory: /home/primi/src/latino
-"test2" start time: May 07 11:28 CDT
+"test2" start time: May 07 11:41 CDT
 Output:
 ----------------------------------------------------------
 hola latino
@@ -42,7 +42,7 @@ hola latino
 Test time =   0.00 sec
 ----------------------------------------------------------
 Test Passed.
-"test2" end time: May 07 11:28 CDT
+"test2" end time: May 07 11:41 CDT
 "test2" time elapsed: 00:00:00
 ----------------------------------------------------------
 
@@ -50,7 +50,7 @@ Test Passed.
 4/20 Test: test3
 Command: "/home/primi/src/latino/bin/latino" "ejemplos/03-variables.lat"
 Directory: /home/primi/src/latino
-"test3" start time: May 07 11:28 CDT
+"test3" start time: May 07 11:41 CDT
 Output:
 ----------------------------------------------------------
 verdadero
@@ -62,7 +62,7 @@ hola latino
 Test time =   0.00 sec
 ----------------------------------------------------------
 Test Passed.
-"test3" end time: May 07 11:28 CDT
+"test3" end time: May 07 11:41 CDT
 "test3" time elapsed: 00:00:00
 ----------------------------------------------------------
 
@@ -70,7 +70,7 @@ Test Passed.
 5/20 Test: test4
 Command: "/home/primi/src/latino/bin/latino" "ejemplos/04-expresiones.lat"
 Directory: /home/primi/src/latino
-"test4" start time: May 07 11:28 CDT
+"test4" start time: May 07 11:41 CDT
 Output:
 ----------------------------------------------------------
 ############## suma ###############
@@ -97,7 +97,7 @@ Output:
 Test time =   0.00 sec
 ----------------------------------------------------------
 Test Passed.
-"test4" end time: May 07 11:28 CDT
+"test4" end time: May 07 11:41 CDT
 "test4" time elapsed: 00:00:00
 ----------------------------------------------------------
 
@@ -105,7 +105,7 @@ Test Passed.
 6/20 Test: test5
 Command: "/home/primi/src/latino/bin/latino" "ejemplos/05-si.lat"
 Directory: /home/primi/src/latino
-"test5" start time: May 07 11:28 CDT
+"test5" start time: May 07 11:41 CDT
 Output:
 ----------------------------------------------------------
 es verdadero
@@ -128,7 +128,7 @@ es positivo
 Test time =   0.00 sec
 ----------------------------------------------------------
 Test Passed.
-"test5" end time: May 07 11:28 CDT
+"test5" end time: May 07 11:41 CDT
 "test5" time elapsed: 00:00:00
 ----------------------------------------------------------
 
@@ -136,7 +136,7 @@ Test Passed.
 7/20 Test: test6
 Command: "/home/primi/src/latino/bin/latino" "ejemplos/06-mientras.lat"
 Directory: /home/primi/src/latino
-"test6" start time: May 07 11:28 CDT
+"test6" start time: May 07 11:41 CDT
 Output:
 ----------------------------------------------------------
 ------------------------------
@@ -169,7 +169,7 @@ cinco
 Test time =   0.00 sec
 ----------------------------------------------------------
 Test Passed.
-"test6" end time: May 07 11:28 CDT
+"test6" end time: May 07 11:41 CDT
 "test6" time elapsed: 00:00:00
 ----------------------------------------------------------
 
@@ -177,7 +177,7 @@ Test Passed.
 8/20 Test: test7
 Command: "/home/primi/src/latino/bin/latino" "ejemplos/07-hacer.lat"
 Directory: /home/primi/src/latino
-"test7" start time: May 07 11:28 CDT
+"test7" start time: May 07 11:41 CDT
 Output:
 ----------------------------------------------------------
 ------------------------------
@@ -210,7 +210,7 @@ Output:
 Test time =   0.00 sec
 ----------------------------------------------------------
 Test Passed.
-"test7" end time: May 07 11:28 CDT
+"test7" end time: May 07 11:41 CDT
 "test7" time elapsed: 00:00:00
 ----------------------------------------------------------
 
@@ -218,7 +218,7 @@ Test Passed.
 9/20 Test: test9
 Command: "/home/primi/src/latino/bin/latino" "ejemplos/09-desde.lat"
 Directory: /home/primi/src/latino
-"test9" start time: May 07 11:28 CDT
+"test9" start time: May 07 11:41 CDT
 Output:
 ----------------------------------------------------------
 0 a 9:
@@ -247,7 +247,7 @@ Output:
 Test time =   0.00 sec
 ----------------------------------------------------------
 Test Passed.
-"test9" end time: May 07 11:28 CDT
+"test9" end time: May 07 11:41 CDT
 "test9" time elapsed: 00:00:00
 ----------------------------------------------------------
 
@@ -255,7 +255,7 @@ Test Passed.
 10/20 Test: test10
 Command: "/home/primi/src/latino/bin/latino" "ejemplos/10-funciones.lat"
 Directory: /home/primi/src/latino
-"test10" start time: May 07 11:28 CDT
+"test10" start time: May 07 11:41 CDT
 Output:
 ----------------------------------------------------------
 4
@@ -265,7 +265,7 @@ Output:
 Test time =   0.00 sec
 ----------------------------------------------------------
 Test Passed.
-"test10" end time: May 07 11:28 CDT
+"test10" end time: May 07 11:41 CDT
 "test10" time elapsed: 00:00:00
 ----------------------------------------------------------
 
@@ -273,7 +273,7 @@ Test Passed.
 11/20 Test: test11
 Command: "/home/primi/src/latino/bin/latino" "ejemplos/11-fibonacci.lat"
 Directory: /home/primi/src/latino
-"test11" start time: May 07 11:28 CDT
+"test11" start time: May 07 11:41 CDT
 Output:
 ----------------------------------------------------------
 version recursiva
@@ -335,10 +335,10 @@ version iterativa
 701408733
 1134903170
 <end of output>
-Test time =   0.03 sec
+Test time =   0.02 sec
 ----------------------------------------------------------
 Test Passed.
-"test11" end time: May 07 11:28 CDT
+"test11" end time: May 07 11:41 CDT
 "test11" time elapsed: 00:00:00
 ----------------------------------------------------------
 
@@ -346,7 +346,7 @@ Test Passed.
 12/20 Test: test12
 Command: "/home/primi/src/latino/bin/latino" "ejemplos/12-factorial.lat"
 Directory: /home/primi/src/latino
-"test12" start time: May 07 11:28 CDT
+"test12" start time: May 07 11:41 CDT
 Output:
 ----------------------------------------------------------
 el factorial de 5 es: 120
@@ -354,7 +354,7 @@ el factorial de 5 es: 120
 Test time =   0.00 sec
 ----------------------------------------------------------
 Test Passed.
-"test12" end time: May 07 11:28 CDT
+"test12" end time: May 07 11:41 CDT
 "test12" time elapsed: 00:00:00
 ----------------------------------------------------------
 
@@ -362,7 +362,7 @@ Test Passed.
 13/20 Test: test16
 Command: "/home/primi/src/latino/bin/latino" "ejemplos/16-funciones_cadena.lat"
 Directory: /home/primi/src/latino
-"test16" start time: May 07 11:28 CDT
+"test16" start time: May 07 11:41 CDT
 Output:
 ----------------------------------------------------------
 Lorem ipsum dolor sit amet, consectetur adipisicing elit,sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
@@ -391,7 +391,7 @@ palabra con espacios.
 Test time =   0.00 sec
 ----------------------------------------------------------
 Test Passed.
-"test16" end time: May 07 11:28 CDT
+"test16" end time: May 07 11:41 CDT
 "test16" time elapsed: 00:00:00
 ----------------------------------------------------------
 
@@ -399,14 +399,14 @@ Test Passed.
 14/20 Test: test17
 Command: "/home/primi/src/latino/bin/latino" "ejemplos/17-escribir_archivo.lat"
 Directory: /home/primi/src/latino
-"test17" start time: May 07 11:28 CDT
+"test17" start time: May 07 11:41 CDT
 Output:
 ----------------------------------------------------------
 <end of output>
 Test time =   0.00 sec
 ----------------------------------------------------------
 Test Passed.
-"test17" end time: May 07 11:28 CDT
+"test17" end time: May 07 11:41 CDT
 "test17" time elapsed: 00:00:00
 ----------------------------------------------------------
 
@@ -414,7 +414,7 @@ Test Passed.
 15/20 Test: test18
 Command: "/home/primi/src/latino/bin/latino" "ejemplos/18-leer_archivo.lat"
 Directory: /home/primi/src/latino
-"test18" start time: May 07 11:28 CDT
+"test18" start time: May 07 11:41 CDT
 Output:
 ----------------------------------------------------------
 prueba de escritura de archivo
@@ -423,7 +423,7 @@ desde Latino
 Test time =   0.00 sec
 ----------------------------------------------------------
 Test Passed.
-"test18" end time: May 07 11:28 CDT
+"test18" end time: May 07 11:41 CDT
 "test18" time elapsed: 00:00:00
 ----------------------------------------------------------
 
@@ -431,7 +431,7 @@ Test Passed.
 16/20 Test: test19
 Command: "/home/primi/src/latino/bin/latino" "ejemplos/19-operadores_logicos.lat"
 Directory: /home/primi/src/latino
-"test19" start time: May 07 11:28 CDT
+"test19" start time: May 07 11:41 CDT
 Output:
 ----------------------------------------------------------
 && y (and) logico
@@ -449,7 +449,7 @@ verdadero o verdadero: verdadero
 Test time =   0.00 sec
 ----------------------------------------------------------
 Test Passed.
-"test19" end time: May 07 11:28 CDT
+"test19" end time: May 07 11:41 CDT
 "test19" time elapsed: 00:00:00
 ----------------------------------------------------------
 
@@ -457,7 +457,7 @@ Test Passed.
 17/20 Test: test20
 Command: "/home/primi/src/latino/bin/latino" "ejemplos/20-operadores_comparacion.lat"
 Directory: /home/primi/src/latino
-"test20" start time: May 07 11:28 CDT
+"test20" start time: May 07 11:41 CDT
 Output:
 ----------------------------------------------------------
 comparador de igualdad ==
@@ -501,7 +501,7 @@ esto es una 'cadena' >= esto es una 'cadena': verdadero
 Test time =   0.00 sec
 ----------------------------------------------------------
 Test Passed.
-"test20" end time: May 07 11:28 CDT
+"test20" end time: May 07 11:41 CDT
 "test20" time elapsed: 00:00:00
 ----------------------------------------------------------
 
@@ -509,7 +509,7 @@ Test Passed.
 18/20 Test: test21
 Command: "/home/primi/src/latino/bin/latino" "ejemplos/21-operador_ternario.lat"
 Directory: /home/primi/src/latino
-"test21" start time: May 07 11:28 CDT
+"test21" start time: May 07 11:41 CDT
 Output:
 ----------------------------------------------------------
 el mayor es: 10
@@ -518,7 +518,7 @@ el menor es: 5
 Test time =   0.00 sec
 ----------------------------------------------------------
 Test Passed.
-"test21" end time: May 07 11:28 CDT
+"test21" end time: May 07 11:41 CDT
 "test21" time elapsed: 00:00:00
 ----------------------------------------------------------
 
@@ -526,7 +526,7 @@ Test Passed.
 19/20 Test: test23
 Command: "/home/primi/src/latino/bin/latino" "ejemplos/23-listas.lat"
 Directory: /home/primi/src/latino
-"test23" start time: May 07 11:28 CDT
+"test23" start time: May 07 11:41 CDT
 Output:
 ----------------------------------------------------------
 2
@@ -536,7 +536,7 @@ Output:
 Test time =   0.00 sec
 ----------------------------------------------------------
 Test Passed.
-"test23" end time: May 07 11:28 CDT
+"test23" end time: May 07 11:41 CDT
 "test23" time elapsed: 00:00:00
 ----------------------------------------------------------
 
@@ -544,7 +544,7 @@ Test Passed.
 20/20 Test: test
 Command: "/home/primi/src/latino/bin/latino" "-v"
 Directory: /home/primi/src/latino/src
-"test" start time: May 07 11:28 CDT
+"test" start time: May 07 11:41 CDT
 Output:
 ----------------------------------------------------------
 Latino 0.5.0
@@ -553,8 +553,8 @@ Todos los derechos reservados (C) 2015-2016. Latinoamerica
 Test time =   0.00 sec
 ----------------------------------------------------------
 Test Passed.
-"test" end time: May 07 11:28 CDT
+"test" end time: May 07 11:41 CDT
 "test" time elapsed: 00:00:00
 ----------------------------------------------------------
 
-End testing: May 07 11:28 CDT
+End testing: May 07 11:41 CDT
