@@ -3,6 +3,8 @@ bin/
 CMakeFiles/
 Release/
 codeblocks/doxygen/
+Testing/
+test/
 
 #ignora archivo objeto
 *.o
