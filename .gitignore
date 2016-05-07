@@ -12,4 +12,8 @@ test/
 *.exe
 CMakeCache.txt
 cmake_install.cmake
+CTestTestfile.cmake
+compile_commands.json
+install_manifest.txt
+prueba.txt
 <scratch>
