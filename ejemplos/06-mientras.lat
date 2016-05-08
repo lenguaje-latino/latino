@@ -4,9 +4,9 @@ escribir("------------------------------")
 i = 0
 mientras (i < 10)
     si (i == 5)
-        imprimir("cinco")
+        escribir("cinco")
     sino
-        imprimir(i)
+        escribir(i)
     fin
     i = i + 1
 fin

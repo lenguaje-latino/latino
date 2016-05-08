@@ -7,4 +7,3 @@ dic = { "uno": "1" , "dos" : "2" }
 #dic = { 'uno': '1' , 'dos' : '2' }
 #dic['uno'] = 10
 escribir(dic)
-

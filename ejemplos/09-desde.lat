@@ -1,9 +1,9 @@
-imprimir("0 a 9:")
+escribir("0 a 9:")
 desde(i=0; i<10; i++)
-    imprimir(i)
+    escribir(i)
 fin
 
-imprimir("10 a 1:")
+escribir("10 a 1:")
 desde(i=10; i>0; i--)
-    imprimir(i)
+    escribir(i)
 fin
