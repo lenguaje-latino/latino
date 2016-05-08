@@ -3,7 +3,7 @@ escribir("---condicion con parentesis---")
 escribir("------------------------------")
 i = 0
 hacer
-    imprimir(i)
+    escribir(i)
     i++
 cuando (i < 10)
 
@@ -12,6 +12,6 @@ escribir("---condicion sin parentesis---")
 escribir("------------------------------")
 i = 0
 hacer
-    imprimir(i)
+    escribir(i)
     i++
 cuando i < 10

@@ -2,7 +2,6 @@
 
 [![Join the chat at https://gitter.im/primitivorm/latino](https://badges.gitter.im/primitivorm/latino.svg)](https://gitter.im/primitivorm/latino?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 [![Build Status](https://travis-ci.org/primitivorm/latino.svg?branch=master)](https://travis-ci.org/primitivorm/latino)
-[![Coverage Status](https://coveralls.io/repos/github/primitivorm/latino/badge.svg?branch=master)](https://coveralls.io/github/primitivorm/latino?branch=master)
 <a href="http://lenguaje-latino.org"><img src="https://img.shields.io/npm/l/vue.svg" alt="License"></a>
 ![latino sublime](https://raw.githubusercontent.com/primitivorm/latino/master/SublimeTextSyntax/latino_sublime.png "latino sublime")
 
@@ -53,6 +52,9 @@ $sudo make install
 
 #####Nota:
 Puede requerir el framework de C++, descarguelo desde la pagina oficial de Microsoft:
+Si tu sistema operativo esta en español:
+https://www.microsoft.com/es-ES/download/details.aspx?id=49984
+Si tu sistema operativo esta en ingles:
 https://www.microsoft.com/en-us/download/details.aspx?id=49984
 
 
@@ -62,7 +64,7 @@ https://www.microsoft.com/en-us/download/details.aspx?id=49984
 * flex 2.5.39
 * cmake 3.3.1
 * gcc 4.9.3 (Linux)
-* Visual Studio Community Edition ó CodeBlocks ó CodeLite (Windows)
+* Visual Studio Community Edition | CodeBlocks | CodeLite
 
 #####Compilar en Visual Studio https://www.visualstudio.com/en-us/products/visual-studio-community-vs.aspx
 1. Abra la solución visualstudio/latino.sln

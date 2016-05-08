@@ -136,13 +136,6 @@ typedef union YYSTYPE {
   ast *node;
 } YYSTYPE;
 
-/*
-         si (cond)
-        /         \
-       /           \
-      verdadero    falso
-*/
-
 /** \brief nodo para representar un ast SI (if).
   *
   * si (condicion) [sentencias] sino [sentencias] fin */
