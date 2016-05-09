@@ -423,7 +423,7 @@ void lat_imprimir_diccionario(lat_vm* vm, hash_map* d)
   fprintf(stdout, "%s", "{ ");
   if (d != NULL) {
     list_node* c;
-    for (c = d->buckets; c != NULL; c = c->next) {
+    for (c = (list_node*) d->buckets; c != NULL; c = c->next) {
       if (c->data != NULL) {
         lat_objeto* o = ((lat_objeto*)c->data);
         //printf("\ntype %i, obj_ref: %p\t, marked: %i", o->type, o, o->marked);
