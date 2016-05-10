@@ -125,13 +125,19 @@ static void lat_repl(lat_vm *vm)
 {
 	char *input;
 	char *buffer;
+	ast *tmp = NULL;
 	while ((input = linenoise("latino> ")) != NULL) {
 		if (input[0] != '\0') {
 			buffer = calloc(strlen(input) + 1, sizeof(char));
 			strcpy(buffer, input);
 			buffer[strlen(input)] = '\n';
-			lat_objeto *curexpr = nodo_analizar_arbol(vm, lat_analizar_expresion(vm, buffer));
-			lat_llamar_funcion(vm, curexpr);
+			tmp = lat_analizar_expresion(vm, buffer);
+			if(tmp != NULL) {
+                lat_objeto *curexpr = nodo_analizar_arbol(vm, tmp);
+                lat_llamar_funcion(vm, curexpr);
+			}else{
+                continue;
+			}
 		}
 	}
 }

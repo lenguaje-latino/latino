@@ -22,5 +22,4 @@ ADD_TEST(test18 "/home/primi/src/latino/bin/latino" "ejemplos/18-leer_archivo.la
 ADD_TEST(test19 "/home/primi/src/latino/bin/latino" "ejemplos/19-operadores_logicos.lat")
 ADD_TEST(test20 "/home/primi/src/latino/bin/latino" "ejemplos/20-operadores_comparacion.lat")
 ADD_TEST(test21 "/home/primi/src/latino/bin/latino" "ejemplos/21-operador_ternario.lat")
-ADD_TEST(test23 "/home/primi/src/latino/bin/latino" "ejemplos/23-listas.lat")
 SUBDIRS(src)
