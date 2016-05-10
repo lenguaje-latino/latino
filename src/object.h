@@ -43,53 +43,57 @@ typedef struct lat_objeto lat_objeto;
 *
 * Tipo de dato que maneja la maquina virtual
 */
-typedef enum lat_type {
-  T_NULO,    /**< nulo */
-  T_INSTANCE,    /**< instancia */
-  T_LIT,    /**< literal */
-  T_INT,    /**< entero */
-  T_DOUBLE,    /**< decimal */
-  T_STR,    /**< cadena */
-  T_BOOL,    /**< logico */
-  T_LIST,    /**< lista */
-  T_DICT,    /**< diccionario */
-  T_FUNC,    /**< funcion */
-  T_CFUNC,    /**< funcion C */
-  T_STRUCT,    /**< estructura */
+typedef enum lat_type
+{
+    T_NULO,    /**< nulo */
+    T_INSTANCE,    /**< instancia */
+    T_LIT,    /**< literal */
+    T_INT,    /**< entero */
+    T_DOUBLE,    /**< decimal */
+    T_STR,    /**< cadena */
+    T_BOOL,    /**< logico */
+    T_LIST,    /**< lista */
+    T_DICT,    /**< diccionario */
+    T_FUNC,    /**< funcion */
+    T_CFUNC,    /**< funcion C */
+    T_STRUCT,    /**< estructura */
 } lat_type;
 
 /** \brief Datos del objeto
 *
 * Almacena la informacion del objeto
 */
-typedef union lat_datos_objeto {
-  hash_map* nombre;   /**< nombre del objeto */
-  char* c;            /**< valor literal */
-  long i;             /**< valor entero */
-  double d;           /**< valor decimal */
-  char* str;          /**< valor cadena */
-  bool b;  /**< valor logico */
-  list_node* lista;  /**< valor de la lista */
-  hash_map* dict;  /**< valor del diccionario */
-  void* func;  /**< valor funcion */
-  void (*cfunc)(lat_vm*);  /**< valor funcion C */
-  void* cstruct;  /**< valor estructura */
+typedef union lat_datos_objeto
+{
+    hash_map* nombre;   /**< nombre del objeto */
+    char* c;            /**< valor literal */
+    long i;             /**< valor entero */
+    double d;           /**< valor decimal */
+    char* str;          /**< valor cadena */
+    bool b;  /**< valor logico */
+    list_node* lista;  /**< valor de la lista */
+    hash_map* dict;  /**< valor del diccionario */
+    void* func;  /**< valor funcion */
+    void (*cfunc)(lat_vm*);  /**< valor funcion C */
+    void* cstruct;  /**< valor estructura */
 } lat_datos_objeto;
 
 /** \brief Objeto
 *
 * Almacena toda la informacion del objeto
 */
-struct lat_objeto {
-  lat_type type;    /**< Tipo de objeto */
-  int marked;    /**< para marcar el objeto Colector de basura */
-  size_t data_size;   /**< Tamanio de la informacion */
-  bool es_constante;   /**< Valida si es una constante */
-  int num_declared;   /**< Numero de veces declarado */
-  lat_datos_objeto data;   /**< Informacion del objeto */
+struct lat_objeto
+{
+    lat_type type;    /**< Tipo de objeto */
+    int marked;    /**< para marcar el objeto Colector de basura */
+    size_t data_size;   /**< Tamanio de la informacion */
+    bool es_constante;   /**< Valida si es una constante */
+    int num_declared;   /**< Numero de veces declarado */
+    lat_datos_objeto data;   /**< Informacion del objeto */
 };
 
-struct lat_llave_valor {
+struct lat_llave_valor
+{
     lat_type type;
 };
 

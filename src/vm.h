@@ -40,70 +40,74 @@ typedef struct lat_vm lat_vm;
 #define DEBUG_VM 0
 
 /**\brief Instrucciones de la m�quina virtual */
-typedef enum lat_ins {
-  OP_END,    /**< Fin de la m�quina virtual */
-  OP_NOP,    /**< Indica No operaci�n */
-  OP_PUSH,    /**< Inserta en la pila */
-  OP_POP,    /**< Extrae de la pila */
-  OP_GET,    /**< Obtiene un valor */
-  OP_SET,    /**< Establece un valor */
-  OP_STORELIT,    /**< Almacena un cadena tipo literal */
-  OP_STOREINT,    /**< Almacena un entero */
-  OP_STOREDOUBLE,    /**< Almacena un decimal */
-  OP_STORESTR,    /**< Almacena una cadena */
-  OP_STOREBOOL,    /**< Almacena un valor logico */
-  OP_STORELIST,    /**< Almacena una lista */
-  OP_PUSHLIST,    /**< Inserta la lista en la pila */
-  OP_POPLIST,    /**< Extrae la lista de la pila */
-  OP_LISTGETITEM,    /**< Obtiene un valor de la lista */
-  OP_LISTSETITEM,    /**< Asigna un valor de la lista */
-  OP_MOV,    /**< Mueve valores a los registros de la MV */
-  OP_GLOBALNS,    /**< Almacena variables globales */
-  OP_LOCALNS,    /**< Almacena variables locales */
-  OP_FN,    /**< Define una funcion */
-  OP_NS,    /**< Define un contexto */
-  OP_ENDNS,    /**< Define el fin de un contexto */
-  OP_JMP,    /**< Saltar a otra instruccion */
-  OP_JMPIF,    /**< Saltar a otra instrucci�n SI la condici�n se cumple */
-  OP_CALL,    /**< Llamada a una funcion */
-  OP_NOT,    /**< Negacion de un valor logico */
-  OP_INC,    /**< Incrementa un valor entero en 1 */
-  OP_DEC,    /**< Disminuye un valor entero en 1 */
-  OP_STOREDICT,    /**< Almacena un objeto diccionario */
-  OP_PUSHDICT,    /**< Inserta un objeto diccionario en la pila */
-  OP_POPDICT,    /**< Extrae un objeto diccionario de la pila */
-  OP_PUSHDICTELEM, /**< Crea un objeto par (llave-valor) y lo agrega al diccionario de la pila */
-  OP_DICTGETITEM,    /**< Obtiene un valor del diccionario */
-  OP_DICTSETITEM    /**< Asigna un valor del diccionario */
+typedef enum lat_ins
+{
+    OP_END,    /**< Fin de la m�quina virtual */
+    OP_NOP,    /**< Indica No operaci�n */
+    OP_PUSH,    /**< Inserta en la pila */
+    OP_POP,    /**< Extrae de la pila */
+    OP_GET,    /**< Obtiene un valor */
+    OP_SET,    /**< Establece un valor */
+    OP_STORELIT,    /**< Almacena un cadena tipo literal */
+    OP_STOREINT,    /**< Almacena un entero */
+    OP_STOREDOUBLE,    /**< Almacena un decimal */
+    OP_STORESTR,    /**< Almacena una cadena */
+    OP_STOREBOOL,    /**< Almacena un valor logico */
+    OP_STORELIST,    /**< Almacena una lista */
+    OP_PUSHLIST,    /**< Inserta la lista en la pila */
+    OP_POPLIST,    /**< Extrae la lista de la pila */
+    OP_LISTGETITEM,    /**< Obtiene un valor de la lista */
+    OP_LISTSETITEM,    /**< Asigna un valor de la lista */
+    OP_MOV,    /**< Mueve valores a los registros de la MV */
+    OP_GLOBALNS,    /**< Almacena variables globales */
+    OP_LOCALNS,    /**< Almacena variables locales */
+    OP_FN,    /**< Define una funcion */
+    OP_NS,    /**< Define un contexto */
+    OP_ENDNS,    /**< Define el fin de un contexto */
+    OP_JMP,    /**< Saltar a otra instruccion */
+    OP_JMPIF,    /**< Saltar a otra instrucci�n SI la condici�n se cumple */
+    OP_CALL,    /**< Llamada a una funcion */
+    OP_NOT,    /**< Negacion de un valor logico */
+    OP_INC,    /**< Incrementa un valor entero en 1 */
+    OP_DEC,    /**< Disminuye un valor entero en 1 */
+    OP_STOREDICT,    /**< Almacena un objeto diccionario */
+    OP_PUSHDICT,    /**< Inserta un objeto diccionario en la pila */
+    OP_POPDICT,    /**< Extrae un objeto diccionario de la pila */
+    OP_PUSHDICTELEM, /**< Crea un objeto par (llave-valor) y lo agrega al diccionario de la pila */
+    OP_DICTGETITEM,    /**< Obtiene un valor del diccionario */
+    OP_DICTSETITEM    /**< Asigna un valor del diccionario */
 } lat_ins;
 
 
 /**\brief Estructura que almacena las instrucciones bytecode de la MV */
-typedef struct lat_bytecode {
-  lat_ins ins;    /**< Instruccion */
-  int a;    /**< registro a */
-  int b;    /**< registro b */
-  void* meta;    /**< datos */
+typedef struct lat_bytecode
+{
+    lat_ins ins;    /**< Instruccion */
+    int a;    /**< registro a */
+    int b;    /**< registro b */
+    void* meta;    /**< datos */
 } lat_bytecode;
 
 /**\brief Define una funcion de usuario */
-typedef struct lat_function {
-  lat_bytecode* bcode;    /**< Instrucciones de la funcion */
-  //lat_objeto *closure;
+typedef struct lat_function
+{
+    lat_bytecode* bcode;    /**< Instrucciones de la funcion */
+    //lat_objeto *closure;
 } lat_function;
 
 /**\brief Define la maquina virtual (MV) */
-struct lat_vm {
-  list_node* pila;     /**< pila de la maquina virtual */
-  list_node* modulos;     /**< modulos importados en la MV */
-  list_node* todos_objetos;     /**< objetos creados dinamicamente en la MV */
-  list_node* basurero_objetos;     /**< objetos listos para liberar por el colector de basura */
-  lat_objeto* registros[256];    /**< Registros de la MV */
-  lat_objeto* contexto_pila[256];   /**< Tabla hash para el contexto actual */
-  lat_objeto* objeto_cierto;   /**< Valor logico verdadero */
-  lat_objeto* objeto_falso;   /**< Valor logico falso */
-  size_t memoria_usada;      /**< Tamanio de memoria creado dinamicamente */
-  int apuntador_pila;      /**< Apuntador de la pila */
+struct lat_vm
+{
+    list_node* pila;     /**< pila de la maquina virtual */
+    list_node* modulos;     /**< modulos importados en la MV */
+    list_node* todos_objetos;     /**< objetos creados dinamicamente en la MV */
+    list_node* basurero_objetos;     /**< objetos listos para liberar por el colector de basura */
+    lat_objeto* registros[256];    /**< Registros de la MV */
+    lat_objeto* contexto_pila[256];   /**< Tabla hash para el contexto actual */
+    lat_objeto* objeto_cierto;   /**< Valor logico verdadero */
+    lat_objeto* objeto_falso;   /**< Valor logico falso */
+    size_t memoria_usada;      /**< Tamanio de memoria creado dinamicamente */
+    int apuntador_pila;      /**< Apuntador de la pila */
 };
 
 /**\brief Crea la maquina virtual (MV)

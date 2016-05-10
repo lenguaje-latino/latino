@@ -79,26 +79,30 @@ THE SOFTWARE.
   }
 
 /** \brief Nodo de una lista */
-typedef struct list_node {
-  struct list_node* prev;   /**< Nodo previo*/
-  struct list_node* next;   /**< Nodo siguiente*/
-  void* data;   /**< Informacion del nodo*/
+typedef struct list_node
+{
+    struct list_node* prev;   /**< Nodo previo*/
+    struct list_node* next;   /**< Nodo siguiente*/
+    void* data;   /**< Informacion del nodo*/
 } list_node;
 
 /**\brief Valor hash */
-typedef struct hash_val {
-  char key[256];    /**< Llave */
-  void* val;    /**< Valor */
+typedef struct hash_val
+{
+    char key[256];    /**< Llave */
+    void* val;    /**< Valor */
 } hash_val;
 
 /**\brief Tabla hash */
-typedef struct hash_map {
-  list_node* buckets[256];  /**< Arreglo de valores hash */
+typedef struct hash_map
+{
+    list_node* buckets[256];  /**< Arreglo de valores hash */
 } hash_map;
 
 /**\brief Conjunto hash */
-typedef struct hash_set {
-  list_node* buckets;   /**< Nodo */
+typedef struct hash_set
+{
+    list_node* buckets;   /**< Nodo */
 } hash_set;
 
 /**\brief Crea un nodo para la lista

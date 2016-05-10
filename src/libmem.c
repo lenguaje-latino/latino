@@ -29,23 +29,24 @@ THE SOFTWARE.
 
 void* lat_asignar_memoria(size_t size)
 {
-  void* value = malloc(size);
-  if (value == 0)
-    lat_registrar_error("Memoria virtual agotada\n");
-  return value;
+    void* value = malloc(size);
+    if (value == 0)
+        lat_registrar_error("Memoria virtual agotada\n");
+    return value;
 }
 
 void* lat_reasignar_memoria(void* ptr, size_t size)
 {
-  void* value = realloc(ptr, size);
-  if (value == 0)
-    lat_registrar_error("Memoria virtual agotada\n");
-  return value;
+    void* value = realloc(ptr, size);
+    if (value == 0)
+        lat_registrar_error("Memoria virtual agotada\n");
+    return value;
 }
 
 void lat_liberar_memoria(void* ptr)
 {
-  if (ptr != NULL) {
-    free(ptr);
-  }
+    if (ptr != NULL)
+    {
+        free(ptr);
+    }
 }
