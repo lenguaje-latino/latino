@@ -339,6 +339,8 @@ list_get_item:
 //se define para analisis sintactico (bison)
 int yyerror(struct YYLTYPE *yylloc_param, void *scanner, struct ast **root,
             const char *s) {
-  lat_registrar_error("Linea %d: %s", (yylloc_param->first_line + 1), s);
+  if(!parse_silent){
+      lat_registrar_error("Linea %d: %s", (yylloc_param->first_line + 1), s);
+  }
   return 0;
 }

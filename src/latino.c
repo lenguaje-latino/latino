@@ -31,6 +31,7 @@ THE SOFTWARE.
 
 /* 1 para debuguear analizador */
 int yydebug = 0;
+int parse_silent;
 static FILE *file;
 static char *buffer;
 
@@ -134,6 +135,7 @@ void lat_ayuda()
 }
 
 static int leer_linea(lat_vm *vm, char* buffer){
+    parse_silent = 1;
     int resultado;
     char *input;
     //buffer = lat_asignar_memoria(MAX_STR_LENGTH);
@@ -152,6 +154,7 @@ static int leer_linea(lat_vm *vm, char* buffer){
             goto REPETIR;
         }else{
             //lat_liberar_memoria(buffer);
+            strcpy(buffer, tmp);
             return 0;
         }
     }
@@ -167,6 +170,7 @@ static void lat_repl(lat_vm *vm)
     int status;
     while (leer_linea(vm, buf) != -1)
     {
+        parse_silent = 0;
         tmp = lat_analizar_expresion(vm, buf, &status);
         if(tmp != NULL)
         {

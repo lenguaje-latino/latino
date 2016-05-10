@@ -92,6 +92,8 @@ THE SOFTWARE.
 /** Indica si se desea debuguear el parser de bison */
 extern int debug;
 
+extern int parse_silent;
+
 //extern int parse_silent = 0;
 
 /** Tamanio maximo de instrucciones bytecode de una funcion */

@@ -1,8 +1,8 @@
-/* A Bison parser, made by GNU Bison 3.0.4.  */
+/* A Bison parser, made by GNU Bison 3.0.2.  */
 
 /* Bison implementation for Yacc-like parsers in C
 
-   Copyright (C) 1984, 1989-1990, 2000-2015 Free Software Foundation, Inc.
+   Copyright (C) 1984, 1989-1990, 2000-2013 Free Software Foundation, Inc.
 
    This program is free software: you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -44,7 +44,7 @@
 #define YYBISON 1
 
 /* Bison version.  */
-#define YYBISON_VERSION "3.0.4"
+#define YYBISON_VERSION "3.0.2"
 
 /* Skeleton name.  */
 #define YYSKELETON_NAME "yacc.c"
@@ -2461,6 +2461,8 @@ yyreturn:
 //se define para analisis sintactico (bison)
 int yyerror(struct YYLTYPE *yylloc_param, void *scanner, struct ast **root,
             const char *s) {
-  lat_registrar_error("Linea %d: %s", (yylloc_param->first_line + 1), s);
+  if(!parse_silent){
+      lat_registrar_error("Linea %d: %s", (yylloc_param->first_line + 1), s);
+  }
   return 0;
 }
