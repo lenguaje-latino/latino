@@ -31,24 +31,22 @@ THE SOFTWARE.
 
 /* 1 para debuguear analizador */
 int yydebug = 0;
-
 static FILE *file;
 static char *buffer;
 
 int yyparse(ast **root, yyscan_t scanner);
 
-ast *lat_analizar_expresion(lat_vm* vm, char *expr)
+ast *lat_analizar_expresion(lat_vm* vm, char* expr, int* status)
 {
     setlocale (LC_ALL, "");
     //setlocale (LC_MESSAGES, "");
     ast *ret = NULL;
-    int result = 0;
     yyscan_t scanner;
     YY_BUFFER_STATE state;
     lex_state scan_state = {.insert = 0};
     yylex_init_extra(&scan_state, &scanner);
     state = yy_scan_string(expr, scanner);
-    result = yyparse(&ret, scanner);
+    *status = yyparse(&ret, scanner);
     yy_delete_buffer(state, scanner);
     yylex_destroy(scanner);
     return ret;
@@ -93,7 +91,8 @@ ast *lat_analizar_archivo(lat_vm* vm, char *infile)
         return NULL;
     }
     buffer[newSize] = '\0';
-    return lat_analizar_expresion(vm, buffer);
+    int status;
+    return lat_analizar_expresion(vm, buffer, &status);
 }
 /**
  * Muestra la version de latino en la consola
@@ -134,29 +133,45 @@ void lat_ayuda()
     printf("%s%s\n", "HOME         : ", getenv("HOME"));
 }
 
+static int leer_linea(lat_vm *vm, char* buffer){
+    int resultado;
+    char *input;
+    //buffer = lat_asignar_memoria(MAX_STR_LENGTH);
+    char *tmp = "";
+    REPETIR:
+    input = linenoise("latino> ");
+    if(input == NULL){
+        return -1;
+    }
+    for(;;){
+        tmp = concat(tmp, "\n");
+        tmp = concat(tmp, input);
+        int estatus;
+        lat_analizar_expresion(vm, tmp, &estatus);
+        if(estatus == 1){
+            goto REPETIR;
+        }else{
+            //lat_liberar_memoria(buffer);
+            return 0;
+        }
+    }
+    //lat_liberar_memoria(buffer);
+    return resultado;
+}
+
 static void lat_repl(lat_vm *vm)
 {
     char *input;
-    char *buffer;
+    char* buf = lat_asignar_memoria(MAX_STR_INTERN);
     ast *tmp = NULL;
-REPERTIR:
-    while ((input = linenoise("latino> ")) != NULL)
+    int status;
+    while (leer_linea(vm, buf) != -1)
     {
-        if (input[0] != '\0')
+        tmp = lat_analizar_expresion(vm, buf, &status);
+        if(tmp != NULL)
         {
-            buffer = calloc(strlen(input) + 1, sizeof(char));
-            strcpy(buffer, input);
-            buffer[strlen(input)] = '\n';
-            tmp = lat_analizar_expresion(vm, buffer);
-            if(tmp != NULL)
-            {
-                lat_objeto *curexpr = nodo_analizar_arbol(vm, tmp);
-                lat_llamar_funcion(vm, curexpr);
-            }
-            else
-            {
-                goto REPERTIR;
-            }
+            lat_objeto *curexpr = nodo_analizar_arbol(vm, tmp);
+            lat_llamar_funcion(vm, curexpr);
         }
     }
 }
@@ -213,7 +228,9 @@ int main(int argc, char *argv[])
     else
     {
 #ifdef _WIN32
-        system("cmd");
+        //system("cmd");
+        lat_version();
+        lat_repl(vm);
 #else
         lat_version();
         lat_repl(vm);

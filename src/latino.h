@@ -92,6 +92,8 @@ THE SOFTWARE.
 /** Indica si se desea debuguear el parser de bison */
 extern int debug;
 
+//extern int parse_silent = 0;
+
 /** Tamanio maximo de instrucciones bytecode de una funcion */
 #define MAX_BYTECODE_FUNCTION (1024 * 10)
 /** Tamanio maximo de memoria virtual permitida */
@@ -130,7 +132,7 @@ typedef struct YYLTYPE
   * \return ast: Nodo AST
   *
   */
-ast* lat_analizar_expresion(lat_vm* vm, char* expr);
+ast* lat_analizar_expresion(lat_vm* vm, char* expr, int* status);
 
 /** Analiza un archivo
   *
