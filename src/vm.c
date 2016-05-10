@@ -522,7 +522,8 @@ void lat_imprimir_diccionario(lat_vm* vm, hash_map* d)
 
 void lat_ejecutar(lat_vm *vm)
 {
-    lat_objeto *func = nodo_analizar_arbol(vm, lat_analizar_expresion(vm, lat_obtener_cadena(lat_desapilar(vm))));
+    int status;
+    lat_objeto *func = nodo_analizar_arbol(vm, lat_analizar_expresion(vm, lat_obtener_cadena(lat_desapilar(vm)), &status));
     lat_llamar_funcion(vm, func);
     lat_apilar(vm, vm->registros[255]);
 }
