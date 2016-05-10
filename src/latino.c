@@ -37,71 +37,84 @@ static char *buffer;
 
 int yyparse(ast **root, yyscan_t scanner);
 
-ast *lat_analizar_expresion(lat_vm* vm, char *expr) {
-  setlocale (LC_ALL, "");
-  //setlocale (LC_MESSAGES, "");
-  ast *ret = NULL;
-  yyscan_t scanner;
-  YY_BUFFER_STATE state;
-  lex_state scan_state = {.insert = 0};
-  yylex_init_extra(&scan_state, &scanner);
-  state = yy_scan_string(expr, scanner);
-  yyparse(&ret, scanner);
-  yy_delete_buffer(state, scanner);
-  yylex_destroy(scanner);
-  return ret;
+ast *lat_analizar_expresion(lat_vm* vm, char *expr)
+{
+    setlocale (LC_ALL, "");
+    //setlocale (LC_MESSAGES, "");
+    ast *ret = NULL;
+    int result = 0;
+    yyscan_t scanner;
+    YY_BUFFER_STATE state;
+    lex_state scan_state = {.insert = 0};
+    yylex_init_extra(&scan_state, &scanner);
+    state = yy_scan_string(expr, scanner);
+    result = yyparse(&ret, scanner);
+    yy_delete_buffer(state, scanner);
+    yylex_destroy(scanner);
+    return ret;
 }
 
-ast *lat_analizar_archivo(lat_vm* vm, char *infile) {
-  if (infile == NULL) {
-    printf("Especifique un archivo\n");
-    return NULL;
-  }
-  char *dot = strrchr(infile, '.');
-  char *extension;
-  if (!dot || dot == infile) {
-    extension = "";
-  }else{
-    extension = dot + 1;
-  }
-  if (strcmp(extension, "lat") != 0) {
-    printf("El archivo no contiene la extension .lat\n");
-    return NULL;
-  }
-  file = fopen(infile, "r");
-  if (file == NULL) {
-    printf("No se pudo abrir el archivo\n");
-    return NULL;
-  }
-  fseek(file, 0, SEEK_END);
-  int fsize = ftell(file);
-  fseek(file, 0, SEEK_SET);
-  buffer = calloc(fsize, 1);
-  size_t newSize = fread(buffer, sizeof(char), fsize, file);
-  if (buffer == NULL) {
-    printf("No se pudo asignar %d bytes de memoria\n", fsize);
-    return NULL;
-  }
-  buffer[newSize] = '\0';
-  return lat_analizar_expresion(vm, buffer);
+ast *lat_analizar_archivo(lat_vm* vm, char *infile)
+{
+    if (infile == NULL)
+    {
+        printf("Especifique un archivo\n");
+        return NULL;
+    }
+    char *dot = strrchr(infile, '.');
+    char *extension;
+    if (!dot || dot == infile)
+    {
+        extension = "";
+    }
+    else
+    {
+        extension = dot + 1;
+    }
+    if (strcmp(extension, "lat") != 0)
+    {
+        printf("El archivo no contiene la extension .lat\n");
+        return NULL;
+    }
+    file = fopen(infile, "r");
+    if (file == NULL)
+    {
+        printf("No se pudo abrir el archivo\n");
+        return NULL;
+    }
+    fseek(file, 0, SEEK_END);
+    int fsize = ftell(file);
+    fseek(file, 0, SEEK_SET);
+    buffer = calloc(fsize, 1);
+    size_t newSize = fread(buffer, sizeof(char), fsize, file);
+    if (buffer == NULL)
+    {
+        printf("No se pudo asignar %d bytes de memoria\n", fsize);
+        return NULL;
+    }
+    buffer[newSize] = '\0';
+    return lat_analizar_expresion(vm, buffer);
 }
 /**
  * Muestra la version de latino en la consola
  */
-void lat_version(){
+void lat_version()
+{
     printf("%s\n", LAT_DERECHOS);
 }
 /**
  * Para crear el logo en ascii
  */
-void lat_logo(){
+void lat_logo()
+{
     printf("%s\n", LAT_LOGO);
 }
 
 /**
  * Muestra la ayuda en la consola
  */
-void lat_ayuda(){
+void lat_ayuda()
+{
     lat_logo();
     lat_version();
     printf("%s\n", "Uso de latino: latino [opcion] [archivo]");
@@ -123,71 +136,89 @@ void lat_ayuda(){
 
 static void lat_repl(lat_vm *vm)
 {
-	char *input;
-	char *buffer;
-	ast *tmp = NULL;
-	while ((input = linenoise("latino> ")) != NULL) {
-		if (input[0] != '\0') {
-			buffer = calloc(strlen(input) + 1, sizeof(char));
-			strcpy(buffer, input);
-			buffer[strlen(input)] = '\n';
-			tmp = lat_analizar_expresion(vm, buffer);
-			if(tmp != NULL) {
+    char *input;
+    char *buffer;
+    ast *tmp = NULL;
+REPERTIR:
+    while ((input = linenoise("latino> ")) != NULL)
+    {
+        if (input[0] != '\0')
+        {
+            buffer = calloc(strlen(input) + 1, sizeof(char));
+            strcpy(buffer, input);
+            buffer[strlen(input)] = '\n';
+            tmp = lat_analizar_expresion(vm, buffer);
+            if(tmp != NULL)
+            {
                 lat_objeto *curexpr = nodo_analizar_arbol(vm, tmp);
                 lat_llamar_funcion(vm, curexpr);
-			}else{
-                continue;
-			}
-		}
-	}
+            }
+            else
+            {
+                goto REPERTIR;
+            }
+        }
+    }
 }
 
-int main(int argc, char *argv[]) {
-  /*
-  Para debuguear en visual studio:
-  Menu propiedades del proyecto-> Debugging -> Command Arguments. Agregar
-  $(SolutionDir)..\ejemplos\debug.lat
-  */
+int main(int argc, char *argv[])
+{
+    /*
+    Para debuguear en visual studio:
+    Menu propiedades del proyecto-> Debugging -> Command Arguments. Agregar
+    $(SolutionDir)..\ejemplos\debug.lat
+    */
 
-  int i;
-  char *infile = NULL;
-  lat_vm *vm = lat_crear_maquina_virtual();
-  for (i = 1; i < argc; i++) {
-    if (strcmp(argv[i], "-v") == 0) {
-      lat_version();
-      return EXIT_SUCCESS;
-    } else if (strcmp(argv[i], "-a") == 0) {
-      lat_ayuda();
-      return EXIT_SUCCESS;
-    } else if (strcmp(argv[i], "-i") == 0) {
-      lat_version();
-      lat_repl(vm);
-      return EXIT_SUCCESS;
-    } else{
-      infile = argv[i];
-    }
-  }
-  if(argc > 1 && infile != NULL) {
-    ast *tree = lat_analizar_archivo(vm, infile);
-    if (!tree) {
-      return EXIT_FAILURE;
-    }
-    lat_objeto *mainFunc = nodo_analizar_arbol(vm, tree);
-    lat_llamar_funcion(vm, mainFunc);
-    lat_apilar(vm, vm->registros[255]);
-    if(file != NULL)
+    int i;
+    char *infile = NULL;
+    lat_vm *vm = lat_crear_maquina_virtual();
+    for (i = 1; i < argc; i++)
     {
-      fclose(file);
+        if (strcmp(argv[i], "-v") == 0)
+        {
+            lat_version();
+            return EXIT_SUCCESS;
+        }
+        else if (strcmp(argv[i], "-a") == 0)
+        {
+            lat_ayuda();
+            return EXIT_SUCCESS;
+        }
+        else if (strcmp(argv[i], "-i") == 0)
+        {
+            lat_version();
+            lat_repl(vm);
+            return EXIT_SUCCESS;
+        }
+        else
+        {
+            infile = argv[i];
+        }
     }
-  }
-  else{
+    if(argc > 1 && infile != NULL)
+    {
+        ast *tree = lat_analizar_archivo(vm, infile);
+        if (!tree)
+        {
+            return EXIT_FAILURE;
+        }
+        lat_objeto *mainFunc = nodo_analizar_arbol(vm, tree);
+        lat_llamar_funcion(vm, mainFunc);
+        lat_apilar(vm, vm->registros[255]);
+        if(file != NULL)
+        {
+            fclose(file);
+        }
+    }
+    else
+    {
 #ifdef _WIN32
-    system("cmd");
+        system("cmd");
 #else
-    lat_version();
-    lat_repl(vm);
+        lat_version();
+        lat_repl(vm);
 #endif
-  }
+    }
 
-  return EXIT_SUCCESS;
+    return EXIT_SUCCESS;
 }
