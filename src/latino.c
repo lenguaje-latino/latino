@@ -153,20 +153,18 @@ static int leer_linea(lat_vm *vm, char* buffer){
         if(estatus == 1){
             goto REPETIR;
         }else{
-            //lat_liberar_memoria(buffer);
             strcpy(buffer, tmp);
             return 0;
         }
     }
-    //lat_liberar_memoria(buffer);
     return resultado;
 }
 
 static void lat_repl(lat_vm *vm)
 {
-    char *input;
+    char* input;
     char* buf = lat_asignar_memoria(MAX_STR_INTERN);
-    ast *tmp = NULL;
+    ast* tmp = NULL;
     int status;
     while (leer_linea(vm, buf) != -1)
     {
@@ -232,9 +230,11 @@ int main(int argc, char *argv[])
     else
     {
 #ifdef _WIN32
-        //system("cmd");
+        system("cmd");
+        /*
         lat_version();
         lat_repl(vm);
+        */
 #else
         lat_version();
         lat_repl(vm);
