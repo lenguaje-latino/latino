@@ -110,7 +110,7 @@ void lat_asignar_contexto_objeto(lat_objeto* ns, lat_objeto* name, lat_objeto* o
   * \param ns: Contexto en el que se encuentra el objeto
   * \param name: Nombre del objeto
   */
-lat_objeto* lat_lat_obtener_contexto_objeto(lat_objeto* ns, lat_objeto* name);
+lat_objeto* lat_obtener_contexto_objeto(lat_objeto* ns, lat_objeto* name);
 
 /** \brief Valida si el contexto enviado contiene al objeto
   *

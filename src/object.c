@@ -47,7 +47,7 @@ void lat_asignar_contexto_objeto(lat_objeto* ns, lat_objeto* name, lat_objeto* o
     }
 }
 
-lat_objeto* lat_lat_obtener_contexto_objeto(lat_objeto* ns, lat_objeto* name)
+lat_objeto* lat_obtener_contexto_objeto(lat_objeto* ns, lat_objeto* name)
 {
     if (ns->type != T_INSTANCE)
     {

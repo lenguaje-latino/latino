@@ -40,7 +40,6 @@ int yyparse(ast **root, yyscan_t scanner);
 ast *lat_analizar_expresion(lat_vm* vm, char* expr, int* status)
 {
     setlocale (LC_ALL, "");
-    //setlocale (LC_MESSAGES, "");
     ast *ret = NULL;
     yyscan_t scanner;
     YY_BUFFER_STATE state;
@@ -166,6 +165,7 @@ static void lat_repl(lat_vm *vm)
     char* buf = lat_asignar_memoria(MAX_STR_INTERN);
     ast* tmp = NULL;
     int status;
+    vm->REPL = true;
     while (leer_linea(vm, buf) != -1)
     {
         parse_silent = 0;
@@ -176,6 +176,7 @@ static void lat_repl(lat_vm *vm)
             lat_llamar_funcion(vm, curexpr);
         }
     }
+    lat_liberar_memoria(buf);
 }
 
 int main(int argc, char *argv[])
@@ -214,6 +215,7 @@ int main(int argc, char *argv[])
     }
     if(argc > 1 && infile != NULL)
     {
+        vm->REPL = false;
         ast *tree = lat_analizar_archivo(vm, infile);
         if (!tree)
         {
@@ -230,11 +232,9 @@ int main(int argc, char *argv[])
     else
     {
 #ifdef _WIN32
-        system("cmd");
-        /*
+        //system("cmd");
         lat_version();
         lat_repl(vm);
-        */
 #else
         lat_version();
         lat_repl(vm);

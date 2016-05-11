@@ -911,7 +911,9 @@ void lat_llamar_funcion(lat_vm* vm, lat_objeto* func)
 {
     if (func->type == T_FUNC)
     {
-        lat_apilar_contexto(vm);
+        if(!vm->REPL){
+            lat_apilar_contexto(vm);
+        }
         lat_asignar_contexto_objeto(lat_obtener_contexto(vm), lat_cadena_nueva(vm, "$"), func);
         lat_bytecode* inslist = ((lat_function*)func->data.func)->bcode;
         lat_bytecode cur;
@@ -932,7 +934,7 @@ void lat_llamar_funcion(lat_vm* vm, lat_objeto* func)
                 vm->registros[cur.a] = lat_desapilar(vm);
                 break;
             case OP_GET:
-                vm->registros[cur.a] = lat_lat_obtener_contexto_objeto(vm->registros[cur.b], vm->registros[cur.a]);
+                vm->registros[cur.a] = lat_obtener_contexto_objeto(vm->registros[cur.b], vm->registros[cur.a]);
                 break;
             case OP_SET:
                 lat_asignar_contexto_objeto(vm->registros[cur.b], lat_clonar_objeto(vm, ((lat_objeto*)cur.meta)), vm->registros[cur.a]);
@@ -1041,7 +1043,9 @@ void lat_llamar_funcion(lat_vm* vm, lat_objeto* func)
                 break;
             }
         }
-        lat_desapilar_contexto(vm);
+        if(!vm->REPL){
+            lat_desapilar_contexto(vm);
+        }
     }
     else if (func->type == T_CFUNC)
     {
