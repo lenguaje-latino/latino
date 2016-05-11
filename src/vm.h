@@ -108,6 +108,7 @@ struct lat_vm
     lat_objeto* objeto_falso;   /**< Valor logico falso */
     size_t memoria_usada;      /**< Tamanio de memoria creado dinamicamente */
     int apuntador_pila;      /**< Apuntador de la pila */
+    bool REPL;  /***< Indica si esta corriendo REPL */
 };
 
 /**\brief Crea la maquina virtual (MV)

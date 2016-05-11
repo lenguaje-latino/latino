@@ -1,9 +1,8 @@
-#vacio = {}
-#escribir(vacio)
-#Error Pila Vacia
+x = 1
+y = 2
+funcion algo()
+    x = 2
+    retorno x + y
+fin
 
-dic = { "uno": "1" , "dos" : "2" }
-#dic = { 1: "uno", 2: "dos" }
-#dic = { 'uno': '1' , 'dos' : '2' }
-#dic['uno'] = 10
-escribir(dic)
+escribir(algo())

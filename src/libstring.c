@@ -150,10 +150,7 @@ void lat_concatenar(lat_vm* vm)
         y = lat_cadena_nueva(vm, b->data.str);
         break;
     }
-
     vm->registros[255] = lat_cadena_nueva(vm, concat(lat_obtener_cadena(x), lat_obtener_cadena(y)));
-    //lat_liberar_memoria(x);
-    //lat_liberar_memoria(y);
 }
 
 void lat_contiene(lat_vm* vm)
