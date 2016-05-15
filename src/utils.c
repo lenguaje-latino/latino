@@ -549,7 +549,6 @@ hash_map *copy_hash(hash_map *m)
     return ret;
 }
 
-
 bool legible(const char *archivo)
 {
     FILE *f = fopen(archivo, "r");
