@@ -159,6 +159,117 @@ static int leer_linea(lat_vm *vm, char* buffer){
     return resultado;
 }
 
+static void completion(const char *buf, linenoiseCompletions *lc) {
+    if (startsWith(buf, "esc")) {
+        linenoiseAddCompletion(lc,"escribir");
+    }
+    if (startsWith(buf, "imp")) {
+        linenoiseAddCompletion(lc,"imprimir");
+    }
+    if (startsWith(buf, "eje")) {
+        linenoiseAddCompletion(lc,"ejecutar");
+    }
+    if (startsWith(buf, "ejea")) {
+        linenoiseAddCompletion(lc,"ejecutar_archivo");
+    }
+    if (startsWith(buf, "fun")) {
+        linenoiseAddCompletion(lc,"funcion");
+    }
+    if (startsWith(buf, "com")) {
+        linenoiseAddCompletion(lc,"comparar");
+    }
+    if (startsWith(buf, "con")) {
+        linenoiseAddCompletion(lc,"concatenar");
+    }
+    if (startsWith(buf, "cont")) {
+        linenoiseAddCompletion(lc,"contiene");
+    }
+    if (startsWith(buf, "cop")) {
+        linenoiseAddCompletion(lc,"copiar");
+    }
+    if (startsWith(buf, "ter")) {
+        linenoiseAddCompletion(lc,"termina_con");
+    }
+    if (startsWith(buf, "es_")) {
+        linenoiseAddCompletion(lc,"es_igual");
+    }
+    if (startsWith(buf, "ind")) {
+        linenoiseAddCompletion(lc,"indice");
+    }
+    if (startsWith(buf, "ins")) {
+        linenoiseAddCompletion(lc,"insertar");
+    }
+    if (startsWith(buf, "ult")) {
+        linenoiseAddCompletion(lc,"ultimo_indice");
+    }
+    if (startsWith(buf, "reli")) {
+        linenoiseAddCompletion(lc,"rellenar_izquierda");
+    }
+    if (startsWith(buf, "reld")) {
+        linenoiseAddCompletion(lc,"rellenar_derecha");
+    }
+    if (startsWith(buf, "eli")) {
+        linenoiseAddCompletion(lc,"eliminar");
+    }
+    if (startsWith(buf, "est")) {
+        linenoiseAddCompletion(lc,"esta_vacia");
+    }
+    if (startsWith(buf, "lon")) {
+        linenoiseAddCompletion(lc,"longitud");
+    }
+    if (startsWith(buf, "ree")) {
+        linenoiseAddCompletion(lc,"reemplazar");
+    }
+    if (startsWith(buf, "emp")) {
+        linenoiseAddCompletion(lc,"empieza_con");
+    }
+    if (startsWith(buf, "sub")) {
+        linenoiseAddCompletion(lc,"subcadena");
+    }
+    if (startsWith(buf, "min")) {
+        linenoiseAddCompletion(lc,"minusculas");
+    }
+    if (startsWith(buf, "may")) {
+        linenoiseAddCompletion(lc,"mayusculas");
+    }
+    if (startsWith(buf, "qui")) {
+        linenoiseAddCompletion(lc,"quitar_espacios");
+    }
+    if (startsWith(buf, "lee")) {
+        linenoiseAddCompletion(lc,"leer");
+    }
+    if (startsWith(buf, "esca")) {
+        linenoiseAddCompletion(lc,"escribir_archivo");
+    }
+    if (startsWith(buf, "tip")) {
+        linenoiseAddCompletion(lc,"tipo");
+    }
+    if (startsWith(buf, "log")) {
+        linenoiseAddCompletion(lc,"logico");
+    }
+    if (startsWith(buf, "ent")) {
+        linenoiseAddCompletion(lc,"entero");
+    }
+    if (startsWith(buf, "dec")) {
+        linenoiseAddCompletion(lc,"decimal");
+    }
+    if (startsWith(buf, "cad")) {
+        linenoiseAddCompletion(lc,"cadena");
+    }
+    if (startsWith(buf, "sal")) {
+        linenoiseAddCompletion(lc,"salir");
+    }
+}
+
+static char *hints(const char *buf, int *color, int *bold) {
+    if (!strcasecmp(buf,"escribir")) {
+        *color = 35;
+        *bold = 0;
+        return " Hola Latinos";
+    }
+    return NULL;
+}
+
 static void lat_repl(lat_vm *vm)
 {
     char* input;
@@ -166,6 +277,10 @@ static void lat_repl(lat_vm *vm)
     ast* tmp = NULL;
     int status;
     vm->REPL = true;
+    //linenoiseSetMultiLine(1);
+    linenoiseHistoryLoad("history.txt");
+    linenoiseSetCompletionCallback(completion);
+    //linenoiseSetHintsCallback(hints);
     while (leer_linea(vm, buf) != -1)
     {
         parse_silent = 0;
@@ -174,6 +289,12 @@ static void lat_repl(lat_vm *vm)
         {
             lat_objeto *curexpr = nodo_analizar_arbol(vm, tmp);
             lat_llamar_funcion(vm, curexpr);
+            if(vm->registros[255] != NULL && (strstr(buf, "escribir") == NULL && strstr(buf, "imprimir") == NULL)){
+                lat_apilar(vm, vm->registros[255]);
+                lat_imprimir(vm);
+            }
+            linenoiseHistoryAdd(replace(buf, "\n", ""));
+            linenoiseHistorySave("history.txt");
         }
     }
     lat_liberar_memoria(buf);
@@ -232,9 +353,9 @@ int main(int argc, char *argv[])
     else
     {
 #ifdef _WIN32
-        //system("cmd");
-        lat_version();
-        lat_repl(vm);
+        system("cmd");
+        //lat_version();
+        //lat_repl(vm);
 #else
         lat_version();
         lat_repl(vm);

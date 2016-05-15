@@ -26,7 +26,7 @@ THE SOFTWARE.
 
 /** \file vm.h
   *
-  * Contiene funciones para el manejo de la m�quina virtual
+  * Contiene funciones para el manejo de la maquina virtual
   *
   */
 
@@ -36,13 +36,13 @@ typedef struct lat_vm lat_vm;
 #include "utils.h"
 #include "object.h"
 
-/**\brief Bandera para debuguear las instrucciones de la m�quina virtual */
+/**\brief Bandera para debuguear las instrucciones de la maquina virtual */
 #define DEBUG_VM 0
 
-/**\brief Instrucciones de la m�quina virtual */
+/**\brief Instrucciones de la maquina virtual */
 typedef enum lat_ins
 {
-    OP_END,    /**< Fin de la m�quina virtual */
+    OP_END,    /**< Fin de la maquina virtual */
     OP_NOP,    /**< Indica No operaci�n */
     OP_PUSH,    /**< Inserta en la pila */
     OP_POP,    /**< Extrae de la pila */
@@ -65,7 +65,7 @@ typedef enum lat_ins
     OP_NS,    /**< Define un contexto */
     OP_ENDNS,    /**< Define el fin de un contexto */
     OP_JMP,    /**< Saltar a otra instruccion */
-    OP_JMPIF,    /**< Saltar a otra instrucci�n SI la condici�n se cumple */
+    OP_JMPIF,    /**< Saltar a otra instruccion SI la condicion se cumple */
     OP_CALL,    /**< Llamada a una funcion */
     OP_NOT,    /**< Negacion de un valor logico */
     OP_INC,    /**< Incrementa un valor entero en 1 */
@@ -108,7 +108,8 @@ struct lat_vm
     lat_objeto* objeto_falso;   /**< Valor logico falso */
     size_t memoria_usada;      /**< Tamanio de memoria creado dinamicamente */
     int apuntador_pila;      /**< Apuntador de la pila */
-    bool REPL;  /***< Indica si esta corriendo REPL */
+    int tope;   /**< Tope de la pila */
+    bool REPL;  /**< Indica si esta corriendo REPL */
 };
 
 /**\brief Crea la maquina virtual (MV)

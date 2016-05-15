@@ -42,12 +42,10 @@ lat_vm* lat_crear_maquina_virtual()
     ret->memoria_usada = 0;
     ret->objeto_cierto = lat_logico_nuevo(ret, true);
     ret->objeto_falso = lat_logico_nuevo(ret, false);
-    //memset(ret->registros, 0, 256);
-    memset(ret->registros, 0, 1024);
+    memset(ret->registros, 0, 256);
     memset(ret->contexto_pila, 0, 256);
     ret->contexto_pila[0] = lat_instancia(ret);
     ret->apuntador_pila = 0;
-    lat_asignar_contexto_objeto(lat_obtener_contexto(ret), lat_cadena_nueva(ret, "imprimir"), lat_definir_cfuncion(ret, lat_imprimir));
     lat_asignar_contexto_objeto(lat_obtener_contexto(ret), lat_cadena_nueva(ret, "+"), lat_definir_cfuncion(ret, lat_sumar));
     lat_asignar_contexto_objeto(lat_obtener_contexto(ret), lat_cadena_nueva(ret, "-"), lat_definir_cfuncion(ret, lat_restar));
     lat_asignar_contexto_objeto(lat_obtener_contexto(ret), lat_cadena_nueva(ret, "*"), lat_definir_cfuncion(ret, lat_multiplicar));
@@ -60,12 +58,14 @@ lat_vm* lat_crear_maquina_virtual()
     lat_asignar_contexto_objeto(lat_obtener_contexto(ret), lat_cadena_nueva(ret, ">"), lat_definir_cfuncion(ret, lat_mayor_que));
     lat_asignar_contexto_objeto(lat_obtener_contexto(ret), lat_cadena_nueva(ret, ">="), lat_definir_cfuncion(ret, lat_mayor_igual));
     lat_asignar_contexto_objeto(lat_obtener_contexto(ret), lat_cadena_nueva(ret, "&&"), lat_definir_cfuncion(ret, lat_y));
-    lat_asignar_contexto_objeto(lat_obtener_contexto(ret), lat_cadena_nueva(ret, "y"), lat_definir_cfuncion(ret, lat_y));
+    //lat_asignar_contexto_objeto(lat_obtener_contexto(ret), lat_cadena_nueva(ret, "y"), lat_definir_cfuncion(ret, lat_y));
     lat_asignar_contexto_objeto(lat_obtener_contexto(ret), lat_cadena_nueva(ret, "||"), lat_definir_cfuncion(ret, lat_o));
-    lat_asignar_contexto_objeto(lat_obtener_contexto(ret), lat_cadena_nueva(ret, "o"), lat_definir_cfuncion(ret, lat_o));
+    //lat_asignar_contexto_objeto(lat_obtener_contexto(ret), lat_cadena_nueva(ret, "o"), lat_definir_cfuncion(ret, lat_o));
     lat_asignar_contexto_objeto(lat_obtener_contexto(ret), lat_cadena_nueva(ret, "!"), lat_definir_cfuncion(ret, lat_negacion));
-    lat_asignar_contexto_objeto(lat_obtener_contexto(ret), lat_cadena_nueva(ret, "no"), lat_definir_cfuncion(ret, lat_negacion));
-    lat_asignar_contexto_objeto(lat_obtener_contexto(ret), lat_cadena_nueva(ret, "gc"), lat_definir_cfuncion(ret, lat_basurero));
+    //lat_asignar_contexto_objeto(lat_obtener_contexto(ret), lat_cadena_nueva(ret, "no"), lat_definir_cfuncion(ret, lat_negacion));
+    //lat_asignar_contexto_objeto(lat_obtener_contexto(ret), lat_cadena_nueva(ret, "gc"), lat_definir_cfuncion(ret, lat_basurero));
+    lat_asignar_contexto_objeto(lat_obtener_contexto(ret), lat_cadena_nueva(ret, "imprimir"), lat_definir_cfuncion(ret, lat_imprimir));
+
     lat_asignar_contexto_objeto(lat_obtener_contexto(ret), lat_cadena_nueva(ret, "ejecutar"), lat_definir_cfuncion(ret, lat_ejecutar));
     lat_asignar_contexto_objeto(lat_obtener_contexto(ret), lat_cadena_nueva(ret, "ejecutar_archivo"), lat_definir_cfuncion(ret, lat_ejecutar_archivo));
 
@@ -911,7 +911,8 @@ void lat_llamar_funcion(lat_vm* vm, lat_objeto* func)
 {
     if (func->type == T_FUNC)
     {
-        if(!vm->REPL){
+        if(!vm->REPL)
+        {
             lat_apilar_contexto(vm);
         }
         lat_asignar_contexto_objeto(lat_obtener_contexto(vm), lat_cadena_nueva(vm, "$"), func);
@@ -943,10 +944,8 @@ void lat_llamar_funcion(lat_vm* vm, lat_objeto* func)
                 vm->registros[cur.a] = ((lat_objeto*)cur.meta);
                 break;
             case OP_STOREINT:
-            {
                 vm->registros[cur.a] = ((lat_objeto*)cur.meta);
-            }
-            break;
+                break;
             case OP_STOREDOUBLE:
                 vm->registros[cur.a] = ((lat_objeto*)cur.meta);
                 break;
@@ -1043,7 +1042,8 @@ void lat_llamar_funcion(lat_vm* vm, lat_objeto* func)
                 break;
             }
         }
-        if(!vm->REPL){
+        if(!vm->REPL)
+        {
             lat_desapilar_contexto(vm);
         }
     }

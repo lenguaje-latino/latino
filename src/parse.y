@@ -202,6 +202,7 @@ statement: /* empty */ { $$ = NULL; }
     | jump_statement { $$ = $1; }
     | function_definition { $$ = $1; }
     | function_call { $$ = $1; }
+    | expression { $$ = $1; }
     ;
 
 include_declaration:
