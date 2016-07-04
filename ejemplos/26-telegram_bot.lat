@@ -1,10 +1,10 @@
 TOKEN='186576226:AAGeKBmWV8KyG3rwX2mbjxI0X4aAoBmmB8g'   #token de bot @HolaIngrataBot
-escribir('vamos a enviar un mensaje')
-chatId = '1001051061242' #chat latino
-escribir('que texto?')
+escribir('Vamos a enviar un mensaje')
+chatId = '-1001051061242' #chat latino
+escribir('Escribe un texto')
 texto = leer()
 texto = reemplazar(texto, " ", "%20") #reemplazamos los espacio con %20
-cmd = "curl  -s 'https://api.telegram.org/bot" . TOKEN . "/sendMessage?chat_id=" . chatId . "&text=" . texto . "' &>/dev/null"
+cmd = "curl  -s 'https://api.telegram.org/bot" . TOKEN . "/sendMessage?chat_id=" . chatId . "&text=" . texto . "'"
 #ver el comando que se ejecutara
 #escribir(cmd)
 sistema(cmd)
