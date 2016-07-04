@@ -10,7 +10,6 @@ _CPack_Packages/
 #ignora archivo objeto
 *.o
 *.gch
-*.exe
 *.deb
 CMakeCache.txt
 cmake_install.cmake
