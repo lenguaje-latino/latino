@@ -852,11 +852,11 @@ void lat_o(lat_vm* vm)
 void lat_negacion(lat_vm* vm)
 {
     lat_objeto* o = lat_desapilar(vm);
-    if (o->type != T_BOOL && o->type != T_INT)
+    if (o->type != T_BOOL)
     {
         lat_registrar_error("Intento de negar tipo invalido");
     }
-    vm->registros[255] =  lat_obtener_logico(o) == true ? vm->objeto_falso : vm->objeto_cierto;
+    vm->registros[255] =  lat_obtener_logico(o) == true ? vm->objeto_cierto : vm->objeto_falso;
 }
 
 lat_bytecode lat_bc(lat_ins i, int a, int b, void* meta)
