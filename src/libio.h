@@ -55,4 +55,7 @@ void lat_leer_archivo(lat_vm *vm);
   */
 void lat_escribir_archivo(lat_vm *vm);
 
+
+void lat_sistema(lat_vm *vm);
+
 #endif /* ifndef _LIBIO_H_ */

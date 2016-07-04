@@ -97,3 +97,16 @@ void lat_escribir_archivo(lat_vm *vm)
         lat_registrar_error("No se pudo escribir en el archivo\n");
     }
 }
+
+void lat_sistema(lat_vm *vm)
+{
+    lat_objeto* o = lat_desapilar(vm);
+    if(o->type == T_STR || o->type == T_LIT)
+    {
+        system(lat_obtener_cadena(o));
+    }
+    else
+    {
+        lat_registrar_error("El argumento esperado debe de ser una cadena\n");
+    }
+}
