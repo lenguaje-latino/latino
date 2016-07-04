@@ -78,12 +78,17 @@ https://www.microsoft.com/en-us/download/details.aspx?id=49984
 --
 
 ### COMPILAR
-#####Requiere:
-* bison 3.04
-* flex 2.5.39
-* cmake 3.3.1
-* gcc 4.9.3 (Linux)
-* Visual Studio Community Edition | CodeBlocks | CodeLite
+
+|Requiere | Versión |
+| :---    |    ---: |
+| bison   |    3.04 |
+| flex    |  2.5.39 |
+| cmake   |   3.3.1 |
+| gcc (Linux)|4.9.3 |
+| CodeBlocks | * |
+| Visual Studio Community Edition| * |
+| CodeLite | * |
+
 
 --
 
