@@ -358,11 +358,11 @@ static void lat_imprimir_elem(lat_vm* vm)
     }
     else if (in->type == T_FUNC)
     {
-        fprintf(stdout, "%s", "Funcion");
+        //fprintf(stdout, "%s", "Funcion");
     }
     else if (in->type == T_CFUNC)
     {
-        fprintf(stdout, "%s", "C_Funcion");
+        //fprintf(stdout, "%s", "C_Funcion");
     }
     else if (in->type == T_STRUCT)
     {
@@ -420,11 +420,11 @@ void lat_imprimir(lat_vm* vm)
     }
     else if (in->type == T_FUNC)
     {
-        fprintf(stdout, "%s\n", "Funcion");
+        //fprintf(stdout, "%s\n", "Funcion");
     }
     else if (in->type == T_CFUNC)
     {
-        fprintf(stdout, "%s\n", "C_Funcion");
+        //fprintf(stdout, "%s\n", "C_Funcion");
     }
     else if (in->type == T_STRUCT)
     {

@@ -1,0 +1,5 @@
+escribir("hola latino")
+1+6
+3.1416*2*10
+sistema("echo 'hola mundo'")
+sistema("echo 'hola ingrata'")
