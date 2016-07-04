@@ -1,9 +1,0 @@
-Package: latino
-Version: 0.5.0
-Section: education
-Priority: optional
-Architecture: amd64
-Installed-Size: 243
-Maintainer: primitivo.roman.montero@gmail.com
-Description: Lenguaje de programación de código abierto para latinos y de habla hispana. http://lenguaje-latino.org/
-
