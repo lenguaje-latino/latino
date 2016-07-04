@@ -5,6 +5,7 @@ Release/
 codeblocks/doxygen/
 Testing/
 test/
+_CPack_Packages/
 
 #ignora archivo objeto
 *.o
