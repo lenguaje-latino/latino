@@ -856,7 +856,7 @@ void lat_negacion(lat_vm* vm)
     {
         lat_registrar_error("Intento de negar tipo invalido");
     }
-    vm->registros[255] =  lat_obtener_logico(o) == true ? vm->objeto_cierto : vm->objeto_falso;
+    vm->registros[255] =  (lat_obtener_logico(o) == false) ? vm->objeto_cierto : vm->objeto_falso;
 }
 
 lat_bytecode lat_bc(lat_ins i, int a, int b, void* meta)

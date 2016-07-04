@@ -78,7 +78,8 @@ extern int yydebug;
     OP_INCR = 288,
     OP_DECR = 289,
     OP_CONCAT = 290,
-    OP_CONCAT_IGUAL = 291
+    OP_CONCAT_IGUAL = 291,
+    OP_NEG = 292
   };
 #endif
 /* Tokens.  */
@@ -116,6 +117,7 @@ extern int yydebug;
 #define OP_DECR 289
 #define OP_CONCAT 290
 #define OP_CONCAT_IGUAL 291
+#define OP_NEG 292
 
 /* Value type.  */
 

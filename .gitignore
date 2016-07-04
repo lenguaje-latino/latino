@@ -10,6 +10,7 @@ test/
 *.o
 *.gch
 *.exe
+*.deb
 CMakeCache.txt
 cmake_install.cmake
 CTestTestfile.cmake

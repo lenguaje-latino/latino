@@ -5,7 +5,7 @@
       <Option title="latino" />
       <Option makefile_is_custom="1" />
       <Option compiler="gcc" />
-      <Option virtualFolders="CMake Files\;CMake Files\src\;CMake Files\src\linenoise\;" />
+      <Option virtualFolders="CMake Files\;CMake Files\src\;CMake Files\src\linenoise\;CMake Files\cmake\;CMake Files\cmake\Modules\;" />
       <Build>
       <Target title="all">
          <Option working_dir="/home/primi/src/latino/codeblocks" />
@@ -62,6 +62,26 @@
          <Option type="4" />
          <MakeCommands>
             <Build command="/usr/bin/make -f &quot;/home/primi/src/latino/codeblocks/Makefile&quot;  VERBOSE=1 list_install_components" />
+            <CompileFile command="/usr/bin/make -f &quot;/home/primi/src/latino/codeblocks/Makefile&quot;  VERBOSE=1 &quot;$file&quot;" />
+            <Clean command="/usr/bin/make -f &quot;/home/primi/src/latino/codeblocks/Makefile&quot;  VERBOSE=1 clean" />
+            <DistClean command="/usr/bin/make -f &quot;/home/primi/src/latino/codeblocks/Makefile&quot;  VERBOSE=1 clean" />
+         </MakeCommands>
+      </Target>
+      <Target title="package">
+         <Option working_dir="/home/primi/src/latino/codeblocks" />
+         <Option type="4" />
+         <MakeCommands>
+            <Build command="/usr/bin/make -f &quot;/home/primi/src/latino/codeblocks/Makefile&quot;  VERBOSE=1 package" />
+            <CompileFile command="/usr/bin/make -f &quot;/home/primi/src/latino/codeblocks/Makefile&quot;  VERBOSE=1 &quot;$file&quot;" />
+            <Clean command="/usr/bin/make -f &quot;/home/primi/src/latino/codeblocks/Makefile&quot;  VERBOSE=1 clean" />
+            <DistClean command="/usr/bin/make -f &quot;/home/primi/src/latino/codeblocks/Makefile&quot;  VERBOSE=1 clean" />
+         </MakeCommands>
+      </Target>
+      <Target title="package_source">
+         <Option working_dir="/home/primi/src/latino/codeblocks" />
+         <Option type="4" />
+         <MakeCommands>
+            <Build command="/usr/bin/make -f &quot;/home/primi/src/latino/codeblocks/Makefile&quot;  VERBOSE=1 package_source" />
             <CompileFile command="/usr/bin/make -f &quot;/home/primi/src/latino/codeblocks/Makefile&quot;  VERBOSE=1 &quot;$file&quot;" />
             <Clean command="/usr/bin/make -f &quot;/home/primi/src/latino/codeblocks/Makefile&quot;  VERBOSE=1 clean" />
             <DistClean command="/usr/bin/make -f &quot;/home/primi/src/latino/codeblocks/Makefile&quot;  VERBOSE=1 clean" />
@@ -250,6 +270,9 @@
       </Unit>
       <Unit filename="/home/primi/src/latino/src/linenoise/CMakeLists.txt">
           <Option virtualFolder="CMake Files\src\linenoise\" />
+      </Unit>
+      <Unit filename="/home/primi/src/latino/cmake/Modules/CPack.cmake">
+          <Option virtualFolder="CMake Files\cmake\Modules\" />
       </Unit>
    </Project>
 </CodeBlocks_project_file>

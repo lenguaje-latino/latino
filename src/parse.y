@@ -96,7 +96,7 @@ int yylex (YYSTYPE * yylval_param,YYLTYPE * yylloc_param ,yyscan_t yyscanner);
 %left '+' '-' OP_CONCAT OP_CONCAT_IGUAL
 %left '*' '/' '%'
 %left OP_AND OP_OR
-%left OP_EQ OP_GE OP_GT OP_LE OP_LT OP_NEQ
+%left OP_EQ OP_GE OP_GT OP_LE OP_LT OP_NEQ OP_NEG
 
 %start program
 
