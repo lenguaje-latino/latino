@@ -1,0 +1,1 @@
+{"virtualbox":{"/home/vagrant/latino":{"guestpath":"/home/vagrant/latino","hostpath":"C:/src/latino","disabled":false,"__vagrantfile":true},"/vagrant":{"guestpath":"/vagrant","hostpath":"C:/src/latino/contrib/vagrant","disabled":false,"__vagrantfile":true}}}
