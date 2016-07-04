@@ -1,4 +1,4 @@
-﻿  Building Custom Rule C:/Users/ciber/Documents/latino/src/CMakeLists.txt
+  Building Custom Rule C:/Users/ciber/Documents/latino/src/CMakeLists.txt
   CMake does not need to re-run because C:\Users\ciber\Documents\latino\visualstudio\src\CMakeFiles\generate.stamp is up-to-date.
   latino.c
   ast.c

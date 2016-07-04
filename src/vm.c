@@ -139,6 +139,7 @@ lat_vm* lat_crear_maquina_virtual()
     /*Creacion dela funcion minimo*/
     lat_asignar_contexto_objeto(lat_obtener_contexto(ret), lat_cadena_nueva(ret, "minimo"), lat_definir_cfuncion(ret, lat_minimo));
 
+    lat_asignar_contexto_objeto(lat_obtener_contexto(ret), lat_cadena_nueva(ret, "sistema"), lat_definir_cfuncion(ret, lat_sistema));
     return ret;
 }
 
