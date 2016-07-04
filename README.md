@@ -32,18 +32,36 @@ http://opensource.org/licenses/MIT
 
 Leer LICENSE.txt
 
+
 ###INSTALAR
 
 #####Instalar en Linux
-Para instalar en Linux ejecute los siguientes comandos en su terminal
+Para instalar en Linux, ejecute los siguientes comandos en su terminal.
 
+###### Paquete de Debian ó Ubuntu
+
+
+``` bash
+# Debian ó Ubuntu | 
+wget https://github.com/primitivorm/latino/releases/download/v0.5/latino-0.5.0-Linux.deb && dpkg -i latino-0.5.0-Linux.deb && sudo rm -f latino-0.5.0-Linux.deb
 ```
-$git clone https://github.com/primitivorm/latino
-$cd latino
-$cmake .
-$make
-$sudo make install
+ * [Descargar](https://github.com/primitivorm/latino/releases/download/v0.5/latino-0.5.0-Linux.deb)
+ 
+--
+
+
+######Otras distribuidoras:
+
+``` bash
+# Ejecuta esto si usas otra distribuidora.
+git clone https://github.com/primitivorm/latino
+cd latino
+cmake .
+make
+sudo make install
 ```
+
+---
 
 #####Instalar en Windows
 1. Descargue el instalador de la última version de https://github.com/primitivorm/latino/releases
@@ -58,21 +76,35 @@ Si tu sistema operativo esta en ingles:
 https://www.microsoft.com/en-us/download/details.aspx?id=49984
 
 
+
 ### COMPILAR
-#####Requiere:
-* bison 3.04
-* flex 2.5.39
-* cmake 3.3.1
-* gcc 4.9.3 (Linux)
-* Visual Studio Community Edition | CodeBlocks | CodeLite
+
+---
+
+|Requiere | Versión |
+| :---    |    ---: |
+| bison   |    3.04 |
+| flex    |  2.5.39 |
+| cmake   |   3.3.1 |
+| gcc (Linux)|4.9.3 |
+| CodeBlocks | * |
+| Visual Studio Community Edition| * |
+| CodeLite | * |
+
+
+--
 
 #####Compilar en Visual Studio https://www.visualstudio.com/en-us/products/visual-studio-community-vs.aspx
 1. Abra la solución visualstudio/latino.sln
 2. Compile
 
+--
+
 #####Compilar en CodeBlocks http://www.codeblocks.org/
 1. Abra el proyecto codeblocks/latino.cbp
 2. Compile
+
+--
 
 #####Compilar en CodeLite http://codelite.org//
 1. Abra el proyecto codelite/latino.workspace
