@@ -35,14 +35,29 @@ Leer LICENSE.txt
 ###INSTALAR
 
 #####Instalar en Linux
-Para instalar en Linux ejecute los siguientes comandos en su terminal
+Para instalar en Linux, ejecute los siguientes comandos en su terminal.
 
+###### Paquete de Debian ó Ubuntu
+
+
+``` bash
+# Debian ó Ubuntu | 
+wget https://github.com/primitivorm/latino/releases/download/v0.5/latino-0.5.0-Linux.deb && dpkg -i latino-0.5.0-Linux.deb && sudo rm -f latino-0.5.0-Linux.deb
 ```
-$git clone https://github.com/primitivorm/latino
-$cd latino
-$cmake .
-$make
-$sudo make install
+ * [Descargar](https://github.com/primitivorm/latino/releases/download/v0.5/latino-0.5.0-Linux.deb)
+ 
+--
+
+
+######Otros:
+
+``` bash
+# Ejecuta esto si usas otra distribuidora.
+git clone https://github.com/primitivorm/latino
+cd latino
+cmake .
+make
+sudo make install
 ```
 
 #####Instalar en Windows
