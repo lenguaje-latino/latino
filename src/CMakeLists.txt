@@ -32,3 +32,14 @@ TARGET_LINK_LIBRARIES(latino LINK_PUBLIC
 if(UNIX)
   install (TARGETS latino DESTINATION /usr/local/bin)
 endif(UNIX)
+
+#crear paquete .deb https://cmake.org/Wiki/CMake/CPack/Examples/Linux/DEB
+#ejecutar en terminal
+#make package
+INCLUDE(CPack)
+SET (CPACK_DEBIAN_PACKAGE_NAME "latino")
+SET (CPACK_PACKAGE_VERSION "0.5.0")
+SET (CPACK_DEBIAN_PACKAGE_MAINTAINER "primitivo.roman.montero@gmail.com")
+SET (CPACK_DEBIAN_PACKAGE_DESCRIPTION "Lenguaje de programación de código abierto para latinos y de habla hispana. http://lenguaje-latino.org/")
+SET (CPACK_DEBIAN_PACKAGE_SECTION "education")
+SET (CPACK_GENERATOR "DEB")

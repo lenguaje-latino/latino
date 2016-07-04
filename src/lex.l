@@ -61,6 +61,7 @@ EXP ([Ee][-+]?[0-9]+)
 "{" |
 "}" |
 "?" |
+"!" |
 "="     { return yytext[0]; }
 
  /* operadores de comparacion */
