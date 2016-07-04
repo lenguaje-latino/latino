@@ -32,6 +32,7 @@ http://opensource.org/licenses/MIT
 
 Leer LICENSE.txt
 
+
 ###INSTALAR
 
 #####Instalar en Linux
@@ -49,7 +50,7 @@ wget https://github.com/primitivorm/latino/releases/download/v0.5/latino-0.5.0-L
 --
 
 
-######Otros:
+######Otras distribuidoras:
 
 ``` bash
 # Ejecuta esto si usas otra distribuidora.
@@ -59,6 +60,8 @@ cmake .
 make
 sudo make install
 ```
+
+---
 
 #####Instalar en Windows
 1. Descargue el instalador de la última version de https://github.com/primitivorm/latino/releases
@@ -72,6 +75,7 @@ https://www.microsoft.com/es-ES/download/details.aspx?id=49984
 Si tu sistema operativo esta en ingles:
 https://www.microsoft.com/en-us/download/details.aspx?id=49984
 
+--
 
 ### COMPILAR
 #####Requiere:
@@ -81,13 +85,19 @@ https://www.microsoft.com/en-us/download/details.aspx?id=49984
 * gcc 4.9.3 (Linux)
 * Visual Studio Community Edition | CodeBlocks | CodeLite
 
+--
+
 #####Compilar en Visual Studio https://www.visualstudio.com/en-us/products/visual-studio-community-vs.aspx
 1. Abra la solución visualstudio/latino.sln
 2. Compile
 
+--
+
 #####Compilar en CodeBlocks http://www.codeblocks.org/
 1. Abra el proyecto codeblocks/latino.cbp
 2. Compile
+
+--
 
 #####Compilar en CodeLite http://codelite.org//
 1. Abra el proyecto codelite/latino.workspace
