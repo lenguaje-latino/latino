@@ -1,6 +1,0 @@
-1+2
-!verdadero
-!falso
-escribir(!verdadero)
-escribir(!1)
-!falso
