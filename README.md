@@ -75,9 +75,11 @@ https://www.microsoft.com/es-ES/download/details.aspx?id=49984
 Si tu sistema operativo esta en ingles:
 https://www.microsoft.com/en-us/download/details.aspx?id=49984
 
---
+
 
 ### COMPILAR
+
+---
 
 |Requiere | Versión |
 | :---    |    ---: |
