@@ -6,15 +6,22 @@ codeblocks/doxygen/
 Testing/
 test/
 _CPack_Packages/
+blog/
+nbproject/
+test/
+Testing/
 
 #ignora archivo objeto
 *.o
 *.gch
 *.deb
+*.exe
+*.msi
 CMakeCache.txt
 cmake_install.cmake
 CTestTestfile.cmake
 compile_commands.json
 install_manifest.txt
 prueba.txt
+compile_commands.json
 <scratch>
