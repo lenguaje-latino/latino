@@ -13,11 +13,14 @@ Testing/
 
 #ignora archivo objeto
 *.o
+*.a
 *.gch
 *.deb
 *.exe
 *.msi
 CMakeCache.txt
+CPackConfig.cmake
+CPackSourceConfig.cmake
 cmake_install.cmake
 CTestTestfile.cmake
 compile_commands.json
