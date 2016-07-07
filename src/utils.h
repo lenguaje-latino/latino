@@ -239,7 +239,7 @@ char* bool2str(int i);
   *\param str: Cadena a buscar
   *\return bool: true si la cadena base inicia con el valor de str
   */
-bool startsWith(char* base, char* str);
+bool startsWith(const char* base, const char* str);
 
 /**\brief Valida si una cadena termina con
   *

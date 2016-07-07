@@ -28,6 +28,7 @@ THE SOFTWARE.
 #include "parse.h"
 #include "lex.h"
 #include "ast.h"
+#include "libmem.h"
 
 /* 1 para debuguear analizador */
 int yydebug = 0;
@@ -261,18 +262,17 @@ static void completion(const char *buf, linenoiseCompletions *lc) {
     }
 }
 
-static char *hints(const char *buf, int *color, int *bold) {
+/*static char *hints(const char *buf, int *color, int *bold) {
     if (!strcasecmp(buf,"escribir")) {
         *color = 35;
         *bold = 0;
         return " Hola Latinos";
     }
     return NULL;
-}
+}*/
 
 static void lat_repl(lat_vm *vm)
 {
-    char* input;
     char* buf = lat_asignar_memoria(MAX_STR_INTERN);
     ast* tmp = NULL;
     int status;
