@@ -742,7 +742,7 @@ int nodo_analizar(lat_vm *vm, ast *node, lat_bytecode *bcode, int i)
             printf("MOV R4 R255\n");
 #endif
             pn(vm, elem->id);
-            dbc(OP_LISTSETITEM, 255, 3, (void*)4);
+            dbc(OP_LISTSETITEM, 255, 3, (void *)4);
 #if DEBUG_VM
             printf("LISTSETITEM R255 R3\n");
 #endif
@@ -868,6 +868,12 @@ int nodo_analizar(lat_vm *vm, ast *node, lat_bytecode *bcode, int i)
             #endif
         }
     }break;
+    case OP_PUSHDICTELEM:
+    break;
+    case OP_DICTGETITEM:
+    break;
+    case OP_DICTSETITEM:
+    break;
     /*case NS:
       {
           dbc(OP_NS, 255, 0, NULL);

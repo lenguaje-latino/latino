@@ -5,6 +5,7 @@
 %option bison-bridge bison-locations
 %option yylineno
 %option extra-type="struct lex_state *"
+%option nounput
 
 %{
 
@@ -16,6 +17,7 @@
 #include "ast.h"
 #include "parse.h"
 
+#define YY_NO_INPUT
 #define YYBISON 1
 
 #define YY_USER_ACTION \

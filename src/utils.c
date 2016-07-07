@@ -156,7 +156,7 @@ char* bool2str(int i)
     return r;
 }
 
-bool startsWith(char* base, char* str)
+bool startsWith(const char* base, const char* str)
 {
     return (strstr(base, str) - base) == 0;
 }

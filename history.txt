@@ -3,3 +3,5 @@ escribir("hola latino")
 3.1416*2*10
 sistema("echo 'hola mundo'")
 sistema("echo 'hola ingrata'")
+1*3+4
+2*3+4

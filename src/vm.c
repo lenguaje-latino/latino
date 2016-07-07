@@ -978,7 +978,7 @@ void lat_llamar_funcion(lat_vm* vm, lat_objeto* func)
             case OP_LISTSETITEM:
             {
                 lat_objeto *l = vm->registros[cur.a];
-                lat_objeto *pos = vm->registros[(int)cur.meta];
+                lat_objeto *pos = vm->registros[(long) cur.meta];
                 if(pos->type != T_INT)
                 {
                     lat_registrar_error("%s", "la posicion de la lista no es un entero");
@@ -1040,6 +1040,12 @@ void lat_llamar_funcion(lat_vm* vm, lat_objeto* func)
                 break;
             case OP_DEC:
                 ((lat_objeto*)vm->registros[cur.a])->data.i--;
+                break;
+            case OP_PUSHDICTELEM:
+                break;
+            case OP_DICTGETITEM:
+                break;
+            case OP_DICTSETITEM:
                 break;
             }
         }
