@@ -84,7 +84,7 @@ ast *lat_analizar_archivo(lat_vm* vm, char *infile)
     fseek(file, 0, SEEK_END);
     int fsize = ftell(file);
     fseek(file, 0, SEEK_SET);
-    buffer = calloc(fsize, 1);
+    buffer = calloc(fsize+1, 1);
     size_t newSize = fread(buffer, sizeof(char), fsize, file);
     if (buffer == NULL)
     {

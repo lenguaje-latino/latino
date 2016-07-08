@@ -311,7 +311,7 @@ list_items: /* empty */ { $$ = NULL; }
     ;
 
 dict_items: /* empty */ { $$ = NULL; }
-    | dict_item ',' dict_item { $$ = nodo_nuevo(NODO_DICC_AGREGAR_ELEMENTO, $3, $1); }
+    | dict_items ',' dict_item { $$ = nodo_nuevo(NODO_DICC_AGREGAR_ELEMENTO, $3, $1); }
     | dict_item { $$ = nodo_nuevo(NODO_DICC_AGREGAR_ELEMENTO, $1, NULL); }
     ;
 
