@@ -281,6 +281,30 @@ libio.c.s:
 	cd /home/latino/src/latino && $(MAKE) -f src/CMakeFiles/latino.dir/build.make src/CMakeFiles/latino.dir/libio.c.s
 .PHONY : libio.c.s
 
+liblist.o: liblist.c.o
+.PHONY : liblist.o
+
+# target to build an object file
+liblist.c.o:
+	cd /home/latino/src/latino && $(MAKE) -f src/CMakeFiles/latino.dir/build.make src/CMakeFiles/latino.dir/liblist.c.o
+.PHONY : liblist.c.o
+
+liblist.i: liblist.c.i
+.PHONY : liblist.i
+
+# target to preprocess a source file
+liblist.c.i:
+	cd /home/latino/src/latino && $(MAKE) -f src/CMakeFiles/latino.dir/build.make src/CMakeFiles/latino.dir/liblist.c.i
+.PHONY : liblist.c.i
+
+liblist.s: liblist.c.s
+.PHONY : liblist.s
+
+# target to generate assembly for a file
+liblist.c.s:
+	cd /home/latino/src/latino && $(MAKE) -f src/CMakeFiles/latino.dir/build.make src/CMakeFiles/latino.dir/liblist.c.s
+.PHONY : liblist.c.s
+
 libmath.o: libmath.c.o
 .PHONY : libmath.o
 
@@ -524,6 +548,9 @@ help:
 	@echo "... libio.o"
 	@echo "... libio.i"
 	@echo "... libio.s"
+	@echo "... liblist.o"
+	@echo "... liblist.i"
+	@echo "... liblist.s"
 	@echo "... libmath.o"
 	@echo "... libmath.i"
 	@echo "... libmath.s"

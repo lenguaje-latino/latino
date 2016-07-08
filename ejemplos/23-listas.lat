@@ -15,6 +15,11 @@ numeros[0] = 99
 escribir(numeros)
 #salida:  [99, 2, 3, 4, 5]
 
+#agrega un elemento a la lista
+agregar(numeros, 6)
+escribir(numeros)
+#salida:  [99, 2, 3, 4, 5, 6]
+
 #se valida que el valor este en el rango del numero de elementos
 #escribir(numeros[-1])
 #salida: Indice fuera de rango

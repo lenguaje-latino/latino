@@ -31,6 +31,7 @@ THE SOFTWARE.
 #include "libmath.h"
 #include "libstring.h"
 #include "libio.h"
+#include "liblist.h"
 
 lat_vm* lat_crear_maquina_virtual()
 {
@@ -140,6 +141,9 @@ lat_vm* lat_crear_maquina_virtual()
     lat_asignar_contexto_objeto(lat_obtener_contexto(ret), lat_cadena_nueva(ret, "minimo"), lat_definir_cfuncion(ret, lat_minimo));
 
     lat_asignar_contexto_objeto(lat_obtener_contexto(ret), lat_cadena_nueva(ret, "sistema"), lat_definir_cfuncion(ret, lat_sistema));
+
+    /*operaciones con listas*/
+    lat_asignar_contexto_objeto(lat_obtener_contexto(ret), lat_cadena_nueva(ret, "agregar"), lat_definir_cfuncion(ret, lat_agregar));
     return ret;
 }
 

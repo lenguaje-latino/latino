@@ -1,4 +1,4 @@
-﻿Public Class Form1
+Public Class Form1
     Private Sub ArchivoToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles ArchivoToolStripMenuItem.Click
 
     End Sub
