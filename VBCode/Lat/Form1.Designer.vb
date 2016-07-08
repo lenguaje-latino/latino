@@ -1,4 +1,4 @@
-<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()>
+﻿<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()>
 Partial Class Form1
     Inherits System.Windows.Forms.Form
 
@@ -200,7 +200,7 @@ Partial Class Form1
         'FuenteToolStripMenuItem
         '
         Me.FuenteToolStripMenuItem.Name = "FuenteToolStripMenuItem"
-        Me.FuenteToolStripMenuItem.Size = New System.Drawing.Size(171, 22)
+        Me.FuenteToolStripMenuItem.Size = New System.Drawing.Size(202, 22)
         Me.FuenteToolStripMenuItem.Text = "Seleccionar fuente"
         '
         'MásToolStripMenuItem
