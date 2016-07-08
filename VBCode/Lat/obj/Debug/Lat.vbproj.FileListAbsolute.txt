@@ -1,0 +1,11 @@
+c:\users\alarmasycamarasmty\documents\visual studio 2015\Projects\Lat\Lat\bin\Debug\Lat.exe.config
+c:\users\alarmasycamarasmty\documents\visual studio 2015\Projects\Lat\Lat\bin\Debug\Lat.exe
+c:\users\alarmasycamarasmty\documents\visual studio 2015\Projects\Lat\Lat\bin\Debug\Lat.pdb
+c:\users\alarmasycamarasmty\documents\visual studio 2015\Projects\Lat\Lat\bin\Debug\Lat.xml
+c:\users\alarmasycamarasmty\documents\visual studio 2015\Projects\Lat\Lat\obj\Debug\Lat.vbprojResolveAssemblyReference.cache
+c:\users\alarmasycamarasmty\documents\visual studio 2015\Projects\Lat\Lat\obj\Debug\Lat.Form1.resources
+c:\users\alarmasycamarasmty\documents\visual studio 2015\Projects\Lat\Lat\obj\Debug\Lat.Resources.resources
+c:\users\alarmasycamarasmty\documents\visual studio 2015\Projects\Lat\Lat\obj\Debug\Lat.vbproj.GenerateResource.Cache
+c:\users\alarmasycamarasmty\documents\visual studio 2015\Projects\Lat\Lat\obj\Debug\Lat.exe
+c:\users\alarmasycamarasmty\documents\visual studio 2015\Projects\Lat\Lat\obj\Debug\Lat.xml
+c:\users\alarmasycamarasmty\documents\visual studio 2015\Projects\Lat\Lat\obj\Debug\Lat.pdb
