@@ -25,6 +25,11 @@ THE SOFTWARE.
 #ifndef _LIBLIST_H_
 #define _LIBLIST_H_
 
+#include "latino.h"
 
+/** Agrega un elemento al final de la lista
+  * \param vm: Maquina virtual de latino
+ * */
+void lat_agregar(lat_vm *vm);
 
 #endif /* ifndef _LIBLIST_H_ */
