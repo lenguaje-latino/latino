@@ -15,12 +15,7 @@ Public Class Form1
         SaveFileDialog1.ShowDialog()
         SaveFileDialog1.Filter = "|*.lat"
         SaveFileDialog1.Title = "Guardar como..."
-        ' If (SaveFileDialog1.FileName) Then
-        System.IO.File.Create(SaveFileDialog1.FileName).Dispose()
-        ' End If
-        '  If Not (SaveFileDialog1.FileName) Then
-        '  Me.Close()
-        '  End If
+        IO.File.Create(SaveFileDialog1.FileName).Dispose()
     End Sub
 
     Private Sub PegarToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles PegarToolStripMenuItem.Click
