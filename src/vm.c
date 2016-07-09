@@ -499,7 +499,7 @@ void lat_imprimir_diccionario(lat_vm* vm, hash_map* d)
                         fprintf(stdout, "%s", ", ");
                     }
                 }
-                if (o->type == T_LIST)
+                if (o->type == T_DICT)
                 {
                     lat_imprimir_diccionario(vm, o->data.dict);
                     if (c->next->data)
@@ -522,7 +522,7 @@ void lat_imprimir_diccionario(lat_vm* vm, hash_map* d)
             }
         }
     }
-    fprintf(stdout, "%s", " ]");
+    fprintf(stdout, "%s", " }");
 }
 
 void lat_ejecutar(lat_vm *vm)
