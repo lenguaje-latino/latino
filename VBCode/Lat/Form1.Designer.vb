@@ -22,6 +22,7 @@ Partial Class Form1
     'No lo modifique con el editor de código.
     <System.Diagnostics.DebuggerStepThrough()>
     Private Sub InitializeComponent()
+        Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(Form1))
         Me.RichTextBox1 = New System.Windows.Forms.RichTextBox()
         Me.MenuStrip1 = New System.Windows.Forms.MenuStrip()
         Me.ArchivoToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
@@ -33,8 +34,8 @@ Partial Class Form1
         Me.ToolStripMenuItem2 = New System.Windows.Forms.ToolStripSeparator()
         Me.SalirToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.EditarToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
-        Me.CortarToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.CopiarToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.CortarToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.PegarToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.ToolStripMenuItem3 = New System.Windows.Forms.ToolStripSeparator()
         Me.DeshacerToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
@@ -58,7 +59,7 @@ Partial Class Form1
         Me.RichTextBox1.Anchor = CType((((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
             Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.RichTextBox1.Font = New System.Drawing.Font("Times New Roman", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.RichTextBox1.Font = New System.Drawing.Font("Times New Roman", 12.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.RichTextBox1.Location = New System.Drawing.Point(0, 27)
         Me.RichTextBox1.Name = "RichTextBox1"
         Me.RichTextBox1.Size = New System.Drawing.Size(523, 431)
@@ -128,66 +129,68 @@ Partial Class Form1
         '
         'EditarToolStripMenuItem
         '
-        Me.EditarToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.CortarToolStripMenuItem, Me.CopiarToolStripMenuItem, Me.PegarToolStripMenuItem, Me.ToolStripMenuItem3, Me.DeshacerToolStripMenuItem, Me.RehacerToolStripMenuItem, Me.ToolStripMenuItem4, Me.SeleccionarTodoToolStripMenuItem, Me.LimpiarToolStripMenuItem})
+        Me.EditarToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.CopiarToolStripMenuItem, Me.CortarToolStripMenuItem, Me.PegarToolStripMenuItem, Me.ToolStripMenuItem3, Me.DeshacerToolStripMenuItem, Me.RehacerToolStripMenuItem, Me.ToolStripMenuItem4, Me.SeleccionarTodoToolStripMenuItem, Me.LimpiarToolStripMenuItem})
         Me.EditarToolStripMenuItem.Name = "EditarToolStripMenuItem"
         Me.EditarToolStripMenuItem.Size = New System.Drawing.Size(49, 20)
         Me.EditarToolStripMenuItem.Text = "Editar"
-        '
-        'CortarToolStripMenuItem
-        '
-        Me.CortarToolStripMenuItem.Name = "CortarToolStripMenuItem"
-        Me.CortarToolStripMenuItem.ShortcutKeys = CType((System.Windows.Forms.Keys.Control Or System.Windows.Forms.Keys.X), System.Windows.Forms.Keys)
-        Me.CortarToolStripMenuItem.Size = New System.Drawing.Size(163, 22)
-        Me.CortarToolStripMenuItem.Text = "Cortar"
         '
         'CopiarToolStripMenuItem
         '
         Me.CopiarToolStripMenuItem.Name = "CopiarToolStripMenuItem"
         Me.CopiarToolStripMenuItem.ShortcutKeys = CType((System.Windows.Forms.Keys.Control Or System.Windows.Forms.Keys.C), System.Windows.Forms.Keys)
-        Me.CopiarToolStripMenuItem.Size = New System.Drawing.Size(163, 22)
+        Me.CopiarToolStripMenuItem.Size = New System.Drawing.Size(204, 22)
         Me.CopiarToolStripMenuItem.Text = "Copiar"
+        '
+        'CortarToolStripMenuItem
+        '
+        Me.CortarToolStripMenuItem.Name = "CortarToolStripMenuItem"
+        Me.CortarToolStripMenuItem.ShortcutKeys = CType((System.Windows.Forms.Keys.Control Or System.Windows.Forms.Keys.X), System.Windows.Forms.Keys)
+        Me.CortarToolStripMenuItem.Size = New System.Drawing.Size(204, 22)
+        Me.CortarToolStripMenuItem.Text = "Cortar"
         '
         'PegarToolStripMenuItem
         '
         Me.PegarToolStripMenuItem.Name = "PegarToolStripMenuItem"
         Me.PegarToolStripMenuItem.ShortcutKeys = CType((System.Windows.Forms.Keys.Control Or System.Windows.Forms.Keys.V), System.Windows.Forms.Keys)
-        Me.PegarToolStripMenuItem.Size = New System.Drawing.Size(163, 22)
+        Me.PegarToolStripMenuItem.Size = New System.Drawing.Size(204, 22)
         Me.PegarToolStripMenuItem.Text = "Pegar"
         '
         'ToolStripMenuItem3
         '
         Me.ToolStripMenuItem3.Name = "ToolStripMenuItem3"
-        Me.ToolStripMenuItem3.Size = New System.Drawing.Size(160, 6)
+        Me.ToolStripMenuItem3.Size = New System.Drawing.Size(201, 6)
         '
         'DeshacerToolStripMenuItem
         '
         Me.DeshacerToolStripMenuItem.Name = "DeshacerToolStripMenuItem"
         Me.DeshacerToolStripMenuItem.ShortcutKeys = CType((System.Windows.Forms.Keys.Control Or System.Windows.Forms.Keys.Z), System.Windows.Forms.Keys)
-        Me.DeshacerToolStripMenuItem.Size = New System.Drawing.Size(163, 22)
+        Me.DeshacerToolStripMenuItem.Size = New System.Drawing.Size(204, 22)
         Me.DeshacerToolStripMenuItem.Text = "Deshacer"
         '
         'RehacerToolStripMenuItem
         '
         Me.RehacerToolStripMenuItem.Name = "RehacerToolStripMenuItem"
         Me.RehacerToolStripMenuItem.ShortcutKeys = CType((System.Windows.Forms.Keys.Control Or System.Windows.Forms.Keys.Y), System.Windows.Forms.Keys)
-        Me.RehacerToolStripMenuItem.Size = New System.Drawing.Size(163, 22)
+        Me.RehacerToolStripMenuItem.Size = New System.Drawing.Size(204, 22)
         Me.RehacerToolStripMenuItem.Text = "Rehacer"
         '
         'ToolStripMenuItem4
         '
         Me.ToolStripMenuItem4.Name = "ToolStripMenuItem4"
-        Me.ToolStripMenuItem4.Size = New System.Drawing.Size(160, 6)
+        Me.ToolStripMenuItem4.Size = New System.Drawing.Size(201, 6)
         '
         'SeleccionarTodoToolStripMenuItem
         '
         Me.SeleccionarTodoToolStripMenuItem.Name = "SeleccionarTodoToolStripMenuItem"
-        Me.SeleccionarTodoToolStripMenuItem.Size = New System.Drawing.Size(163, 22)
+        Me.SeleccionarTodoToolStripMenuItem.ShortcutKeys = CType((System.Windows.Forms.Keys.Control Or System.Windows.Forms.Keys.A), System.Windows.Forms.Keys)
+        Me.SeleccionarTodoToolStripMenuItem.Size = New System.Drawing.Size(204, 22)
         Me.SeleccionarTodoToolStripMenuItem.Text = "Seleccionar todo"
         '
         'LimpiarToolStripMenuItem
         '
         Me.LimpiarToolStripMenuItem.Name = "LimpiarToolStripMenuItem"
-        Me.LimpiarToolStripMenuItem.Size = New System.Drawing.Size(163, 22)
+        Me.LimpiarToolStripMenuItem.ShortcutKeys = CType((System.Windows.Forms.Keys.Control Or System.Windows.Forms.Keys.T), System.Windows.Forms.Keys)
+        Me.LimpiarToolStripMenuItem.Size = New System.Drawing.Size(204, 22)
         Me.LimpiarToolStripMenuItem.Text = "Limpiar"
         '
         'FormatoToolStripMenuItem
@@ -200,7 +203,7 @@ Partial Class Form1
         'FuenteToolStripMenuItem
         '
         Me.FuenteToolStripMenuItem.Name = "FuenteToolStripMenuItem"
-        Me.FuenteToolStripMenuItem.Size = New System.Drawing.Size(202, 22)
+        Me.FuenteToolStripMenuItem.Size = New System.Drawing.Size(171, 22)
         Me.FuenteToolStripMenuItem.Text = "Seleccionar fuente"
         '
         'MásToolStripMenuItem
@@ -213,7 +216,8 @@ Partial Class Form1
         'ImprimirFechaToolStripMenuItem
         '
         Me.ImprimirFechaToolStripMenuItem.Name = "ImprimirFechaToolStripMenuItem"
-        Me.ImprimirFechaToolStripMenuItem.Size = New System.Drawing.Size(152, 22)
+        Me.ImprimirFechaToolStripMenuItem.ShortcutKeys = CType((System.Windows.Forms.Keys.Control Or System.Windows.Forms.Keys.D), System.Windows.Forms.Keys)
+        Me.ImprimirFechaToolStripMenuItem.Size = New System.Drawing.Size(194, 22)
         Me.ImprimirFechaToolStripMenuItem.Text = "Imprimir fecha"
         '
         'OpenFileDialog1
@@ -231,6 +235,7 @@ Partial Class Form1
         Me.ClientSize = New System.Drawing.Size(523, 459)
         Me.Controls.Add(Me.RichTextBox1)
         Me.Controls.Add(Me.MenuStrip1)
+        Me.Icon = CType(resources.GetObject("$this.Icon"), System.Drawing.Icon)
         Me.MainMenuStrip = Me.MenuStrip1
         Me.Name = "Form1"
         Me.Text = "Latino Editor - Sin título"

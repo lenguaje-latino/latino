@@ -12,15 +12,12 @@
     End Sub
 
     Private Sub GuardarToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles GuardarToolStripMenuItem.Click
-        SaveFileDialog1.ShowDialog()
-        SaveFileDialog1.Filter = "|*.lat"
-        SaveFileDialog1.Title = "Guardar como..."
-        ' If (SaveFileDialog1.FileName) Then
-        System.IO.File.Create(SaveFileDialog1.FileName).Dispose()
-        ' End If
-        '  If Not (SaveFileDialog1.FileName) Then
-        '  Me.Close()
-        '  End If
+        Dim lat As New SaveFileDialog()
+        lat.Filter = "Código latino|*.lat"
+        If (lat.ShowDialog() = System.Windows.Forms.DialogResult.OK) _
+            And (lat.FileName.Length) > 0 Then
+            RichTextBox1.SaveFile(lat.FileName, RichTextBoxStreamType.PlainText)
+        End If
     End Sub
 
     Private Sub PegarToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles PegarToolStripMenuItem.Click
@@ -34,14 +31,24 @@
     End Sub
 
     Private Sub AbrirToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles AbrirToolStripMenuItem.Click
-        OpenFileDialog1.ShowDialog()
-        OpenFileDialog1.Filter = "Código Latino|*.lat"
+        If (OpenFileDialog1.FileName = "OpenFileDialog1") Then
+            OpenFileDialog1.FileName = ""
+        End If
+        OpenFileDialog1.DefaultExt = ".lat"
+        OpenFileDialog1.Filter = String.Format("
+Código latino|*.lat|
+Archivo de texto|*.txt|
+Todos los archivos|*.*
+")
         OpenFileDialog1.Title = "Latino Editor"
         If (OpenFileDialog1.ShowDialog = DialogResult.OK) Then
-            RichTextBox1.Text = My.Computer.FileSystem.ReadAllText(OpenFileDialog1.FileName)
-
+            RichTextBox1.Text = My.Computer.FileSystem.ReadAllText(OpenFileDialog1.FileName,
+                                                                   System.Text.Encoding.UTF7)
         End If
-        Me.Text = OpenFileDialog1.FileName
+
+        Text = OpenFileDialog1.FileName
+
+
     End Sub
 
     Private Sub ImprimirToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles ImprimirToolStripMenuItem.Click
@@ -82,12 +89,18 @@
     End Sub
 
     Private Sub ImprimirFechaToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles ImprimirFechaToolStripMenuItem.Click
-        RichTextBox1.Text = Date.Now
+        RichTextBox1.AppendText(Date.Now)
     End Sub
 
     Private Sub FormatoToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles FormatoToolStripMenuItem.Click
 
     End Sub
 
+    Private Sub RichTextBox1_TextChanged(sender As Object, e As EventArgs) Handles RichTextBox1.TextChanged
+        RichTextBox1.Multiline = True
+        RichTextBox1.AcceptsTab = True
+    End Sub
 
 End Class
+
+
