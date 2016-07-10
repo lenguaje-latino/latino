@@ -65,7 +65,7 @@ wget https://github.com/primitivorm/latino/raw/master/install && chmod +x instal
 ######Otras distribuiciones:
 
 ``` bash
-# Ejecuta esto si usas otra distribuidora.
+# Ejecuta esto si usas otra distribuición.
  # Con el instalador
  ./install --all
  ./install --clonar # Clona el repositorio (opcional)
