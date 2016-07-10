@@ -1,8 +1,8 @@
 #Latino
 
-[![https://gitter.im/primitivorm/latino](https://img.shields.io/badge/Soporte-Gitter-green.svg)](https://gitter.im/primitivorm/latino)
-[![Build Status](https://travis-ci.org/primitivorm/latino.svg?branch=master)](https://travis-ci.org/primitivorm/latino)
-<a href="http://lenguaje-latino.org"><img src="https://img.shields.io/npm/l/vue.svg" alt="License"></a>
+[![https://gitter.im/primitivorm/latino](https://img.shields.io/badge/Soporte-Gitter-green.svg?style=plastic)](https://gitter.im/primitivorm/latino)
+[![Build Status](https://travis-ci.org/primitivorm/latino.svg?style=plastic)](https://travis-ci.org/primitivorm/latino)
+<a href="http://lenguaje-latino.org"><img src="https://img.shields.io/npm/l/vue.svg?style=plastic" alt="License"></a>
 ![latino sublime](https://raw.githubusercontent.com/primitivorm/latino/master/SublimeTextSyntax/latino_sublime.png "latino sublime")
 
 Este proyecto nace de la necesidad de incrementar la educación de nivel básico (primaria y secundaria)
