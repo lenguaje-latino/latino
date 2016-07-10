@@ -452,11 +452,11 @@ void lat_imprimir_lista(lat_vm* vm, list_node* l)
             if (c->data != NULL)
             {
                 lat_objeto* o = ((lat_objeto*)c->data);
-                //printf("\ntype %i, obj_ref: %p\t, marked: %i", o->type, o, o->marked);
+                //printf("\ntype %i, obj_ref: %p\n", o->type, o);
                 if (o->type == T_LIST)
                 {
                     lat_imprimir_lista(vm, o->data.lista);
-                    if (c->next->data)
+                    if (c->next)
                     {
                         fprintf(stdout, "%s", ", ");
                     }
@@ -467,7 +467,7 @@ void lat_imprimir_lista(lat_vm* vm, list_node* l)
                     {
                         lat_apilar(vm, o);
                         lat_imprimir_elem(vm);
-                        if (c->next->data)
+                        if (c->next)
                         {
                             fprintf(stdout, "%s", ", ");
                         }
@@ -565,7 +565,7 @@ void lat_clonar(lat_vm* vm)
     vm->registros[255] = lat_clonar_objeto(vm, ns);
 }
 
-void lat_cons(lat_vm* vm)
+/*void lat_cons(lat_vm* vm)
 {
     lat_objeto* lista = lat_desapilar(vm);
     lat_objeto* elem = lat_desapilar(vm);
@@ -574,7 +574,7 @@ void lat_cons(lat_vm* vm)
     ret->next->next = lista->data.lista;
     lista->data.lista->prev = ret->next;
     vm->registros[255] = lat_lista_nueva(vm, ret);
-}
+}*/
 
 void lat_sumar(lat_vm* vm)
 {
