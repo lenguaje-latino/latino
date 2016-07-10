@@ -100,17 +100,18 @@ typedef struct hash_map
 } hash_map;
 
 /**\brief Conjunto hash */
-typedef struct hash_set
-{
-    list_node* buckets;   /**< Nodo */
-} hash_set;
+//typedef struct hash_set
+//{
+//    list_node* buckets;   /**< Nodo */
+//} hash_set;
+
 
 /**\brief Crea un nodo para la lista
   *
   *\param d: Apuntador a objeto
   *\return list_node: Apuntador al nodo de la lista
   */
-list_node* lat_crear_lista_node(void* d);
+//list_node* lat_crear_lista_node(void* d);
 
 /**\brief Crear una lista vacia
   *

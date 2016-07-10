@@ -1,8 +1,7 @@
-x = 1
-y = 2
-funcion algo()
-    x = 2
-    retorno x + y
-fin
-
-escribir(algo())
+numeros = [1,2,3]
+escribir(numeros)
+#agrega un elemento a la lista
+agregar(numeros, 6)
+escribir(numeros)
+#eliminar(numeros, 2)
+#escribir(numeros)

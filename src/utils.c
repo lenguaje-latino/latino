@@ -428,19 +428,28 @@ void insert_list(list_node* l, void* data)
     ins->data = data;
     ins->next = l->next;
     l->next = ins;
-    ins->next->prev = ins;
+    //ins->next->prev = ins;
     ins->prev = l;
+    //printf("insertar :: anterior:%p\tactual:%p\tsiguiente:%p\n", ins->prev, ins, ins->next);
 }
 
 void remove_list(list_node* l, void* data)
 {
     list_node* c;
+    lat_objeto *find = (lat_objeto*)data;
     for (c = l; c->next != NULL; c = c->next)
     {
-        if (c->data == data)
-        {
-            c->prev->next = c->next;
-            c->next->prev = c->prev;
+        lat_objeto *curr = c->data;
+        if(curr){
+            if (curr->data.i == find->data.i)
+            {
+                //printf("eliminar :: anterior:%p\tactual:%p\tsiguiente:%p\n", c->prev, c, c->next);
+                //c->prev->next = c->next;
+                //c->next->prev = c->prev;
+                c->prev->next = c->next;
+                //c->next->prev = c;
+                return;
+            }
         }
     }
 }

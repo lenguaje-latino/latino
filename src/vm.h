@@ -256,7 +256,7 @@ void lat_clonar(lat_vm* vm);
   *
   *\param vm: Apuntador a la MV
   */
-void lat_cons(lat_vm* vm);
+//void lat_cons(lat_vm* vm);
 
 /**\brief Operador +
   *
