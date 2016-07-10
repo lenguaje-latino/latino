@@ -42,8 +42,8 @@ Para instalar en Linux, ejecute los siguientes comandos en su terminal.
 
 
 ``` bash
-# Debian ó Ubuntu | 
-wget https://github.com/primitivorm/latino/releases/download/v0.5/latino-0.5.0-Linux.deb && dpkg -i latino-0.5.0-Linux.deb && sudo rm -f latino-0.5.0-Linux.deb
+# Debian ó Ubuntu (amd64) | 
+wget https://github.com/primitivorm/latino/releases/download/v0.5/latino-0.5.0-Linux.deb && sudo dpkg -i latino-0.5.0-Linux.deb && sudo rm -f latino-0.5.0-Linux.deb
 ```
  * [Descargar](https://github.com/primitivorm/latino/releases/download/v0.5/latino-0.5.0-Linux.deb)
  
