@@ -1,6 +1,6 @@
 #Latino
 
-[![Join the chat at https://gitter.im/primitivorm/latino](https://badges.gitter.im/primitivorm/latino.svg)](https://gitter.im/primitivorm/latino?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+[![https://gitter.im/primitivorm/latino](https://img.shields.io/badge/Soporte-Gitter-green.svg)](https://gitter.im/primitivorm/latino)
 [![Build Status](https://travis-ci.org/primitivorm/latino.svg?branch=master)](https://travis-ci.org/primitivorm/latino)
 <a href="http://lenguaje-latino.org"><img src="https://img.shields.io/npm/l/vue.svg" alt="License"></a>
 ![latino sublime](https://raw.githubusercontent.com/primitivorm/latino/master/SublimeTextSyntax/latino_sublime.png "latino sublime")
@@ -36,14 +36,24 @@ Leer LICENSE.txt
 ###INSTALAR
 
 #####Instalar en Linux
-Para instalar en Linux, ejecute los siguientes comandos en su terminal.
+Para instalar en Linux hay dos formas de hacerlo, la primera es con el install (automático y con utilidades) y la segunda es manualmente.
+
+Para obtener el instalador ejecute el siguiente comando en su terminal.
+```bash
+wget https://github.com/primitivorm/latino/raw/master/install && chmod +x install
+```
+
 
 ###### Paquete de Debian ó Ubuntu
 
 
 ``` bash
-# Debian ó Ubuntu (amd64) | 
-wget https://github.com/primitivorm/latino/releases/download/v0.5/latino-0.5.0-Linux.deb && sudo dpkg -i latino-0.5.0-Linux.deb && sudo rm -f latino-0.5.0-Linux.deb
+# Debian ó Ubuntu (amd64)
+ # Con el instalador
+ ./install --deb
+ 
+ # Ó forma manual, mismo proceso.
+ wget https://github.com/primitivorm/latino/releases/download/v0.5/latino-0.5.0-Linux.deb && sudo dpkg -i latino-0.5.0-Linux.deb && sudo rm -f latino-0.5.0-Linux.deb
 ```
  * [Descargar](https://github.com/primitivorm/latino/releases/download/v0.5/latino-0.5.0-Linux.deb)
  
@@ -54,11 +64,16 @@ wget https://github.com/primitivorm/latino/releases/download/v0.5/latino-0.5.0-L
 
 ``` bash
 # Ejecuta esto si usas otra distribuidora.
-git clone https://github.com/primitivorm/latino
-cd latino
-cmake .
-make
-sudo make install
+ # Con el instalador
+ ./install --all
+ ./install --clonar # Clona el repositorio (opcional)
+ 
+ # Ó forma manual, mismo proceso.
+ git clone https://github.com/primitivorm/latino
+ cd latino
+ cmake .
+ make
+ sudo make install
 ```
 
 ---
