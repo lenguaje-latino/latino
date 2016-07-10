@@ -110,11 +110,11 @@
     <Import Include="System.Threading.Tasks" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="..\..\..\..\botm\proyectos\Form1.vb">
+    <Compile Include="Form1.vb">
       <SubType>Form</SubType>
       <Link>Form1.vb</Link>
     </Compile>
-    <Compile Include="..\..\..\..\botm\proyectos\Form1.Designer.vb">
+    <Compile Include="Form1.Designer.vb">
       <DependentUpon>Form1.vb</DependentUpon>
       <SubType>Form</SubType>
       <Link>Form1.Designer.vb</Link>
@@ -136,7 +136,7 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="..\..\..\..\botm\proyectos\Form1.resx">
+    <EmbeddedResource Include="Form1.resx">
       <DependentUpon>Form1.vb</DependentUpon>
       <Link>Form1.resx</Link>
     </EmbeddedResource>
@@ -159,7 +159,9 @@
       <CustomToolNamespace>My</CustomToolNamespace>
       <LastGenOutput>Settings.Designer.vb</LastGenOutput>
     </None>
-    <None Include="App.config" />
+    <None Include="App.config">
+      <SubType>Designer</SubType>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <BootstrapperPackage Include=".NETFramework,Version=v4.5.2">
