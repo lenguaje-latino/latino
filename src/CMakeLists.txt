@@ -1,19 +1,24 @@
-set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -g -Wall -std=c11")
-set(CMAKE_C_FLAGS_DEBUG "${CMAKE_C_FLAGS_DEBUG} -g -Wall -std=c11")
 set(CMAKE_VERBOSE_MAKEFILE true)
+SET(CMAKE_C_OUTPUT_EXTENSION_REPLACE 1)
 
-if(UNIX)
-    link_libraries(m)
-    set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -D_GNU_SOURCE")
-    add_subdirectory(linenoise)
-else(UNIX)
-    if(CMAKE_COMPILER_IS_GNUCXX)
-      add_definitions(-g -std=c11)
-    endif()
-    set_property(DIRECTORY APPEND PROPERTY COMPILE_DEFINITIONS _CRT_SECURE_NO_WARNINGS)
-endif(UNIX)
+
+IF(UNIX)
+    LINK_LIBRARIEs(m)
+    SET(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -D_GNU_SOURCE -Wall -std=c11")
+    SET(CMAKE_C_FLAGS_DEBUG "${CMAKE_C_FLAGS} -D_GNU_SOURCE -g -Wall -std=c11")
+ELSE(UNIX)
+    IF(MSVC)
+        SET(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} /W4")
+        SET(CMAKE_C_FLAGS_DEBUG "${CMAKE_C_FLAGS_DEBUG} /W4")
+        SET_PROPERTY(DIRECTORY APPEND PROPERTY COMPILE_DEFINITIONS _CRT_SECURE_NO_WARNINGS)
+    ELSEIF(CMAKE_COMPILER_IS_GNUCC OR CMAKE_COMPILER_IS_GNUCXX)
+        SET(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -Wall -std=c11")
+        SET(CMAKE_C_FLAGS_DEBUG "${CMAKE_C_FLAGS_DEBUG} -g -Wall -std=c11")
+    ENDIF()
+ENDIF(UNIX)
 
 ADD_DEFINITIONS(-D_DEBUG -D__STDC_CONSTANT_MACROS -D__STDC_FORMAT_MACROS -D__STDC_LIMIT_MACROS)
+ADD_SUBDIRECTORY(linenoise)
 
 SET(SOURCES khash.h
     latino.h ast.h utils.h vm.h object.h libstring.h libmem.h liblist.h
@@ -28,17 +33,17 @@ ADD_EXECUTABLE(latino ${SOURCES})
 TARGET_LINK_LIBRARIES(latino LINK_PUBLIC
     ${BISON_LIBRARIES} ${CMAKE_DL_LIBS})
 
-if(UNIX)
-  install (TARGETS latino DESTINATION /usr/local/bin)
-endif(UNIX)
+IF(UNIX)
+  INSTALL(TARGETS latino DESTINATION /usr/local/bin)
+ENDIF(UNIX)
 
 #crear paquete .deb https://cmake.org/Wiki/CMake/CPack/Examples/Linux/DEB
 #ejecutar en terminal
 #make package
-SET (CPACK_GENERATOR "DEB")
-SET (CPACK_DEBIAN_PACKAGE_NAME "latino")
-SET (CPACK_PACKAGE_VERSION "0.5.0")
-SET (CPACK_DEBIAN_PACKAGE_MAINTAINER "primitivo.roman.montero@gmail.com")
-SET (CPACK_DEBIAN_PACKAGE_DESCRIPTION "Lenguaje de programación de código abierto para latinos y de habla hispana. http://lenguaje-latino.org/")
-SET (CPACK_DEBIAN_PACKAGE_SECTION "education")
+SET(CPACK_GENERATOR "DEB")
+SET(CPACK_DEBIAN_PACKAGE_NAME "latino")
+SET(CPACK_PACKAGE_VERSION "0.5.0")
+SET(CPACK_DEBIAN_PACKAGE_MAINTAINER "primitivo.roman.montero@gmail.com")
+SET(CPACK_DEBIAN_PACKAGE_DESCRIPTION "Lenguaje de programación de código abierto para latinos y de habla hispana. http://lenguaje-latino.org/")
+SET(CPACK_DEBIAN_PACKAGE_SECTION "education")
 INCLUDE(CPack)

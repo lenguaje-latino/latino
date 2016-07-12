@@ -1,17 +1,110 @@
-  Building Custom Rule C:/Users/ciber/Documents/latino/src/CMakeLists.txt
-  CMake does not need to re-run because C:\Users\ciber\Documents\latino\visualstudio\src\CMakeFiles\generate.stamp is up-to-date.
-  latino.c
-  ast.c
-  utils.c
-  vm.c
-  object.c
-  libstring.c
-  libmem.c
-  lex.c
-  parse.c
-  libmath.c
-  libio.c
-  linenoise.c
-  Generating Code...
-  latino.vcxproj -> C:\Users\ciber\Documents\latino\visualstudio\bin\Debug\latino.exe
-  latino.vcxproj -> C:/Users/ciber/Documents/latino/visualstudio/bin/Debug/latino.pdb (Full PDB)
+﻿Build started 12/07/2016 04:32:39 p.m..
+     1>Project "C:\src\latino\visualstudio\src\latino.vcxproj" on node 2 (Rebuild target(s)).
+     1>CustomBuild:
+         Building Custom Rule C:/src/latino/src/CMakeLists.txt
+         CMake does not need to re-run because C:\src\latino\visualstudio\src\CMakeFiles\generate.stamp is up-to-date.
+       ClCompile:
+         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\CL.exe /c /I"C:\Program Files (x86)\Visual Leak Detector\include" /Zi /W4 /WX- /Od /Ob0 /Oy- /D WIN32 /D _WINDOWS /D _DEBUG /D _CRT_SECURE_NO_WARNINGS /D _DEBUG /D __STDC_CONSTANT_MACROS /D __STDC_FORMAT_MACROS /D __STDC_LIMIT_MACROS /D "CMAKE_INTDIR=\"Debug\"" /D _MBCS /Gm- /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"latino.dir\Debug\\" /Fd"latino.dir\Debug\vc120.pdb" /Gd /TC /analyze- /errorReport:prompt C:\src\latino\src\latino.c C:\src\latino\src\ast.c C:\src\latino\src\utils.c C:\src\latino\src\vm.c C:\src\latino\src\object.c C:\src\latino\src\libstring.c C:\src\latino\src\libmem.c C:\src\latino\src\liblist.c C:\src\latino\src\lex.c C:\src\latino\src\parse.c C:\src\latino\src\libmath.c C:\src\latino\src\libio.c C:\src\latino\src\linenoise\utf8.c C:\src\latino\src\linenoise\linenoise.c
+         Microsoft (R) C/C++ Optimizing Compiler Version 18.00.40629 for x86
+         Copyright (C) Microsoft Corporation.  All rights reserved.
+         
+         cl /c /I"C:\Program Files (x86)\Visual Leak Detector\include" /Zi /W4 /WX- /Od /Ob0 /Oy- /D WIN32 /D _WINDOWS /D _DEBUG /D _CRT_SECURE_NO_WARNINGS /D _DEBUG /D __STDC_CONSTANT_MACROS /D __STDC_FORMAT_MACROS /D __STDC_LIMIT_MACROS /D "CMAKE_INTDIR=\"Debug\"" /D _MBCS /Gm- /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"latino.dir\Debug\\" /Fd"latino.dir\Debug\vc120.pdb" /Gd /TC /analyze- /errorReport:prompt C:\src\latino\src\latino.c C:\src\latino\src\ast.c C:\src\latino\src\utils.c C:\src\latino\src\vm.c C:\src\latino\src\object.c C:\src\latino\src\libstring.c C:\src\latino\src\libmem.c C:\src\latino\src\liblist.c C:\src\latino\src\lex.c C:\src\latino\src\parse.c C:\src\latino\src\libmath.c C:\src\latino\src\libio.c C:\src\latino\src\linenoise\utf8.c C:\src\latino\src\linenoise\linenoise.c
+         
+         latino.c
+     1>C:\src\latino\src\latino.c(41): warning C4100: 'vm' : unreferenced formal parameter
+         ast.c
+         utils.c
+     1>C:\src\latino\src\utils.c(54): warning C4018: '<' : signed/unsigned mismatch
+     1>C:\src\latino\src\utils.c(100): warning C4244: '=' : conversion from 'int' to 'char', possible loss of data
+     1>C:\src\latino\src\utils.c(346): warning C4244: '=' : conversion from 'int' to 'char', possible loss of data
+     1>C:\src\latino\src\utils.c(359): warning C4244: '=' : conversion from 'int' to 'char', possible loss of data
+         vm.c
+     1>C:\src\latino\src\vm.c(1063): warning C4055: 'type cast' : from data pointer 'void *' to function pointer 'void (__cdecl *)(lat_vm *)'
+         object.c
+     1>C:\src\latino\src\object.c(90): warning C4100: 'vm' : unreferenced formal parameter
+     1>C:\src\latino\src\object.c(107): warning C4100: 'vm' : unreferenced formal parameter
+     1>C:\src\latino\src\object.c(140): warning C4100: 'vm' : unreferenced formal parameter
+     1>C:\src\latino\src\object.c(186): warning C4244: 'function' : conversion from 'int' to 'unsigned char', possible loss of data
+     1>C:\src\latino\src\object.c(189): warning C4244: 'function' : conversion from 'int' to 'unsigned char', possible loss of data
+     1>C:\src\latino\src\object.c(235): warning C4100: 'vm' : unreferenced formal parameter
+         libstring.c
+     1>C:\src\latino\src\libstring.c(31): warning C4127: conditional expression is constant
+     1>C:\src\latino\src\libstring.c(65): warning C4127: conditional expression is constant
+         libmem.c
+         liblist.c
+         lex.c
+     1>lex.c(886): warning C4127: conditional expression is constant
+     1>lex.c(902): warning C4244: 'initializing' : conversion from 'flex_int32_t' to 'YY_CHAR', possible loss of data
+     1>lex.c(912): warning C4244: '=' : conversion from 'flex_int32_t' to 'YY_CHAR', possible loss of data
+     1>lex.c(934): warning C4127: conditional expression is constant
+     1>lex.c(1264): warning C4127: conditional expression is constant
+     1>lex.c(1472): warning C4244: 'initializing' : conversion from 'int' to 'YY_CHAR', possible loss of data
+     1>lex.c(1482): warning C4244: '=' : conversion from 'flex_int32_t' to 'YY_CHAR', possible loss of data
+     1>lex.c(1511): warning C4244: '=' : conversion from 'flex_int32_t' to 'YY_CHAR', possible loss of data
+     1>lex.c(1964): warning C4100: 'yyscanner' : unreferenced formal parameter
+     1>lex.c(2308): warning C4100: 'yyscanner' : unreferenced formal parameter
+     1>lex.c(2313): warning C4100: 'yyscanner' : unreferenced formal parameter
+     1>lex.c(2325): warning C4100: 'yyscanner' : unreferenced formal parameter
+         parse.c
+     1>parse.c(1418): warning C4127: conditional expression is constant
+     1>parse.c(1515): warning C4127: conditional expression is constant
+     1>parse.c(1533): warning C4244: '=' : conversion from 'int' to 'yytype_int16', possible loss of data
+     1>parse.c(1580): warning C4127: conditional expression is constant
+     1>parse.c(1581): warning C4127: conditional expression is constant
+     1>parse.c(1582): warning C4127: conditional expression is constant
+     1>parse.c(1595): warning C4127: conditional expression is constant
+     1>parse.c(1601): warning C4127: conditional expression is constant
+     1>parse.c(1626): warning C4127: conditional expression is constant
+     1>parse.c(1633): warning C4127: conditional expression is constant
+     1>parse.c(1638): warning C4127: conditional expression is constant
+     1>parse.c(1649): warning C4127: conditional expression is constant
+     1>parse.c(1661): warning C4127: conditional expression is constant
+     1>parse.c(1702): warning C4127: conditional expression is constant
+     1>parse.c(1703): warning C4127: conditional expression is constant
+     1>parse.c(2290): warning C4127: conditional expression is constant
+     1>parse.c(2294): warning C4127: conditional expression is constant
+     1>parse.c(2396): warning C4127: conditional expression is constant
+     1>parse.c(2404): warning C4127: conditional expression is constant
+     1>parse.c(2438): warning C4127: conditional expression is constant
+     1>parse.c(2448): warning C4127: conditional expression is constant
+     1>parse.c(2452): warning C4127: conditional expression is constant
+     1>parse.c(2494): warning C4127: conditional expression is constant
+     1>parse.y(341): warning C4100: 'root' : unreferenced formal parameter
+     1>parse.y(341): warning C4100: 'scanner' : unreferenced formal parameter
+         libmath.c
+         libio.c
+         utf8.c
+         linenoise.c
+     1>C:\src\latino\src\linenoise\linenoise.c(704): warning C4127: conditional expression is constant
+     1>C:\src\latino\src\linenoise\linenoise.c(754): warning C4100: 'prompt' : unreferenced formal parameter
+     1>C:\src\latino\src\linenoise\linenoise.c(785): warning C4244: '=' : conversion from 'int' to 'char', possible loss of data
+     1>C:\src\latino\src\linenoise\linenoise.c(889): warning C4244: 'function' : conversion from 'int' to 'char', possible loss of data
+     1>C:\src\latino\src\linenoise\linenoise.c(1152): warning C4127: conditional expression is constant
+     1>C:\src\latino\src\linenoise\linenoise.c(1236): warning C4127: conditional expression is constant
+         Generating Code...
+     1>c:\src\latino\visualstudio\src\parse.c(2399): warning C4702: unreachable code
+     1>c:\src\latino\visualstudio\src\parse.c(2404): warning C4702: unreachable code
+     1>c:\src\latino\visualstudio\src\parse.c(2405): warning C4702: unreachable code
+     1>c:\src\latino\src\utils.c(315): warning C4706: assignment within conditional expression
+     1>c:\src\latino\src\latino.c(160): warning C4702: unreachable code
+       Link:
+         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"C:\src\latino\visualstudio\bin\Debug\latino.exe" /INCREMENTAL /NOLOGO /LIBPATH:"C:\Program Files (x86)\Visual Leak Detector\lib\Win32" kernel32.lib user32.lib gdi32.lib winspool.lib shell32.lib ole32.lib oleaut32.lib uuid.lib comdlg32.lib advapi32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"C:/src/latino/visualstudio/bin/Debug/latino.pdb" /SUBSYSTEM:CONSOLE /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"C:/src/latino/visualstudio/bin/Debug/latino.lib" /MACHINE:X86 /SAFESEH  /machine:X86 /debug latino.dir\Debug\latino.obj
+         latino.dir\Debug\ast.obj
+         latino.dir\Debug\utils.obj
+         latino.dir\Debug\vm.obj
+         latino.dir\Debug\object.obj
+         latino.dir\Debug\libstring.obj
+         latino.dir\Debug\libmem.obj
+         latino.dir\Debug\liblist.obj
+         latino.dir\Debug\lex.obj
+         latino.dir\Debug\parse.obj
+         latino.dir\Debug\libmath.obj
+         latino.dir\Debug\libio.obj
+         latino.dir\Debug\utf8.obj
+         latino.dir\Debug\linenoise.obj
+         latino.vcxproj -> C:\src\latino\visualstudio\bin\Debug\latino.exe
+     1>Done Building Project "C:\src\latino\visualstudio\src\latino.vcxproj" (Rebuild target(s)).
+
+Build succeeded.
+
+Time Elapsed 00:00:11.32

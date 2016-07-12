@@ -38,6 +38,11 @@
 #define __LINENOISE_H
 
 #ifndef NO_COMPLETION
+
+#ifdef _WIN32
+#define snprintf(s, l, f, i) _snprintf(s, l, f, i)
+#endif
+
 typedef struct linenoiseCompletions {
   size_t len;
   char **cvec;
