@@ -1,0 +1,10 @@
+﻿Build started 12/07/2016 04:32:50 p.m..
+     1>Project "C:\src\latino\visualstudio\ALL_BUILD.vcxproj" on node 3 (Rebuild target(s)).
+     1>CustomBuild:
+         Building Custom Rule C:/src/latino/CMakeLists.txt
+         CMake does not need to re-run because C:\src\latino\visualstudio\CMakeFiles\generate.stamp is up-to-date.
+     1>Done Building Project "C:\src\latino\visualstudio\ALL_BUILD.vcxproj" (Rebuild target(s)).
+
+Build succeeded.
+
+Time Elapsed 00:00:00.33

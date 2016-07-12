@@ -1,3 +1,7 @@
+#Para debuguear en visual studio:
+#Menu propiedades del proyecto-> Debugging -> Command Arguments. Agregar
+#$(SolutionDir)..\ejemplos\debug.lat
+
 numeros = [1,2,3]
 escribir(numeros)
 #agrega un elemento a la lista
