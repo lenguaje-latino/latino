@@ -1,0 +1,43 @@
+'.source.lat':
+    'escribir':
+        'prefix': 'esc'
+        'body': 'escribir("${0:...}"})'
+    'si':
+        'prefix': 'si'
+        'body': 'si(${0:verdadero})\n\tescribir("${1:...}")\nfin'
+    'si-sino':
+        'prefix': 'sino'
+        'body': 'si(${0:verdadero})\n\tescribir("${1:...}")\nsino\n\tescribir("${2:...}")\nfin'
+    'mientras':
+        'prefix': 'mie'
+        'body': 'mientras (i < ${0:10})\n\tescribir("${1:...}")\nfin'
+    'hacer':
+        'prefix': 'hac'
+        'body': 'hacer\n\tescribir(i)\n\ti++\ncuando (i < ${0:10})'
+    'elegir':
+        'prefix': 'ele'
+        'body': 'elegir(${0:str})\nfin'
+    'caso':
+        'prefix': 'cas'
+        'body': "caso '${0:x}':"
+    'desde':
+        'prefix': 'des'
+        'body': 'desde(i=0; i<${0:10}; i++)\n\tescribir(i)\nfin'
+    'funcion':
+        'prefix': 'fun'
+        'body': 'funcion ${0:name}(s)\n\tretorno s\nfin'
+    'leer teclado':
+        'prefix': 'leer'
+        'body': 'entrada = leer()'
+    'ejecutar archivo':
+        'prefix': 'ejea'
+        'body': 'ejecutar_archivo("${0:name}.lat")'
+    'leer archivo':
+        'prefix': 'leer'
+        'body': 'leer_archivo("${0:name}.txt")'
+    'escribir archivo':
+        'prefix': 'esca'
+        'body': 'escribir_archivo("${0:name}.txt", s)'
+    'ejecutar comando':
+        'prefix': 'ejec'
+        'body': 'sistema(${0:date})'
