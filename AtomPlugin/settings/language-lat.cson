@@ -1,0 +1,5 @@
+'.source.lat':
+  'editor':
+    'commentStart': '# '
+    'increaseIndentPattern': '\\b((si|sino|fin)|(mientras|desde|hasta|elegir|caso|defecto|hacer|cuando|retorno|romper|defecto|salto)|(funcion)|)\\b((?!fin).)*$'
+    "decreaseIndentPattern": "^\\s*(\\}|\\])\\s*$"
