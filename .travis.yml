@@ -22,7 +22,8 @@ before_install:
         export CXX="g++-4.7";
         export LINK="gcc-4.7";
         export LINKXX="g++-4.7";
-      else
+      fi
+    - if [ $TRAVIS_OS_NAME == "osx" ]; then
         export CC="clang";
         export CXX="clang++";
         export LINK="clang";
@@ -33,16 +34,11 @@ before_install:
 script:
     - cmake . && make
     - if [ $TRAVIS_OS_NAME == "linux" ]; then
-        cd bin
-        ./latino ../ejemplos/coverage.lat
-        gcov ../src/latino.c --object-directory ../src/CMakeFiles/latino.dir/
-        cd ..
-      else
-        cd bin
-        ./latino ../ejemplos/coverage.lat
-        gcov ../src/latino.c --object-directory ../src/CMakeFiles/latino.dir/
-        cd ..
+        cd bin && ./latino ../ejemplos/coverage.lat && gcov ../src/latino.c --object-directory ../src/CMakeFiles/latino.dir/
       fi
+    - if [ $TRAVIS_OS_NAME == "osx" ]; then
+        cd bin && ./latino ../ejemplos/coverage.lat && llvm-cov ../src/latino.c --object-directory ../src/CMakeFiles/latino.dir/
+        fi
 after_success:
     - bash <(curl -s https://codecov.io/bash)
     - coveralls --exclude lib --exclude tests --gcov-options '\-lp'
