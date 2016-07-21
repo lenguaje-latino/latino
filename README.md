@@ -5,9 +5,10 @@
 [![https://gitter.im/primitivorm/latino](https://img.shields.io/wercker/ci/wercker/docs.svg?style=plastic)](https://travis-ci.org/primitivorm/latino)
 [![http://lenguaje-latino.org](https://img.shields.io/badge/Sitio%20web-Latino-blue.svg?style=plastic)](http://lenguaje-latino.org)
 
-![latino sublime](https://raw.githubusercontent.com/primitivorm/latino/master/SublimeTextSyntax/latino_sublime.png "latino sublime")
+[![Coverage Status](https://coveralls.io/repos/primitivorm/latino/badge.svg?branch=master)](https://coveralls.io/r/primitivorm/latino?branch=master) 
+[![codecov.io](http://codecov.io/github/primitivorm/latino/coverage.svg?branch=master)](http://codecov.io/github/primitivorm/latino?branch=master)
 
-Code Coverage: [![Coverage Status](https://coveralls.io/repos/primitivorm/latino/badge.svg?branch=master)](https://coveralls.io/r/primitivorm/latino?branch=master) [![codecov.io](http://codecov.io/github/primitivorm/latino/coverage.svg?branch=master)](http://codecov.io/github/primitivorm/latino?branch=master)
+![latino sublime](https://raw.githubusercontent.com/primitivorm/latino/master/SublimeTextSyntax/latino_sublime.png "latino sublime")
 
 Este proyecto nace de la necesidad de incrementar la educación de nivel básico (primaria y secundaria)
 debido a que los niños tienen la capacidad de entender la lógica a muy temprana edad y es en esta edad
