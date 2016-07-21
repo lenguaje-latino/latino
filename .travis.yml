@@ -27,7 +27,9 @@ before_install:
     - g++ --version
 script:
     - cmake . && make
-    - cmake -DCMAKE_BUILD_TYPE=Coverage && make latino_coverage
+    - cd bin 
+    - ./latino ../ejemplos/coverage.lat
+    - gcov ../src/latino.c --object-directory ../src/CMakeFiles/latino.dir/
 after_success:
-    - coveralls --exclude lib --exclude tests --gcov-options '\-lp'
     - bash <(curl -s https://codecov.io/bash)
+    - coveralls --exclude lib --exclude tests --gcov-options '\-lp'

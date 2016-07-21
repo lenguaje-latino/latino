@@ -7,6 +7,8 @@
 
 ![latino sublime](https://raw.githubusercontent.com/primitivorm/latino/master/SublimeTextSyntax/latino_sublime.png "latino sublime")
 
+Code Coverage: [![Coverage Status](https://coveralls.io/repos/primitivorm/latino/badge.svg?branch=master)](https://coveralls.io/r/primitivorm/latino?branch=master) [![codecov.io](http://codecov.io/github/primitivorm/latino/coverage.svg?branch=master)](http://codecov.io/github/primitivorm/latino?branch=master)
+
 Este proyecto nace de la necesidad de incrementar la educación de nivel básico (primaria y secundaria)
 debido a que los niños tienen la capacidad de entender la lógica a muy temprana edad y es en esta edad
 cuando más aprenden, esto motivará a los niños y jovenes por interesarse en el mundo del desarrollo de aplicaciones.

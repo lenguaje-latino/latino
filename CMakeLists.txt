@@ -1,6 +1,10 @@
 CMAKE_MINIMUM_REQUIRED(VERSION 2.6)
 set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${CMAKE_CURRENT_LIST_DIR}/cmake/Modules/")
 
+if(NOT CMAKE_CONFIGURATION_TYPES AND NOT CMAKE_BUILD_TYPE) # Default to a Release build
+    set(CMAKE_BUILD_TYPE Release CACHE STRING "Choose the type of build [Release MinSizeRel Debug RelWithDebInfo]" FORCE)
+endif()
+
 if(CMAKE_COMPILER_IS_GNUCXX)
     target_link_libraries(${PROJECT_TEST_NAME} gcov)
 endif()
@@ -42,6 +46,6 @@ if (CMAKE_BUILD_TYPE STREQUAL "Coverage")
     include(CodeCoverage)
     setup_target_for_coverage(${PROJECT}_coverage ${PROJECT_TEST_NAME} coverage)
 
-    SET(CMAKE_CXX_FLAGS "-g -O0 -fprofile-arcs -ftest-coverage")
-    SET(CMAKE_C_FLAGS "-g -O0 -fprofile-arcs -ftest-coverage")
+    SET(CMAKE_CXX_FLAGS "-g -O0 -fprofile-arcs -ftest-coverage -coverage")
+    SET(CMAKE_C_FLAGS "-g -O0 -fprofile-arcs -ftest-coverage -coverage")
 endif() #CMAKE_BUILD_TYPE STREQUAL "Coverage"

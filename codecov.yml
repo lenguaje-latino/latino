@@ -1,4 +1,5 @@
 codecov:
+  token: b67d6931-675c-4437-879b-2e1e6e3454d0
   branch: master
   bot: null
 
