@@ -1,9 +1,10 @@
 #Latino
-
-[![https://gitter.im/primitivorm/latino](https://img.shields.io/badge/Soporte-Gitter-green.svg?style=plastic)](https://gitter.im/primitivorm/latino)
+[![Join the chat at https://gitter.im/primitivorm/latino](https://badges.gitter.im/primitivorm/latino.svg)](https://gitter.im/primitivorm/latino?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 [![https://telegram.me/joinchat/EBHu7z6l6_o0_qtHlnbdOw](https://img.shields.io/badge/Soporte-Telegram-green.svg?style=plastic)](https://telegram.me/joinchat/EBHu7z6l6_o0_qtHlnbdOw)
+[![Build Status](https://travis-ci.org/primitivorm/latino.svg?branch=master)](https://travis-ci.org/primitivorm/latino)
 [![https://gitter.im/primitivorm/latino](https://img.shields.io/wercker/ci/wercker/docs.svg?style=plastic)](https://travis-ci.org/primitivorm/latino)
 [![http://lenguaje-latino.org](https://img.shields.io/badge/Sitio%20web-Latino-blue.svg?style=plastic)](http://lenguaje-latino.org)
+<a href="http://lenguaje-latino.org"><img src="https://img.shields.io/npm/l/vue.svg" alt="License"></a>
 
 [![Coverage Status](https://coveralls.io/repos/primitivorm/latino/badge.svg?branch=master)](https://coveralls.io/r/primitivorm/latino?branch=master) 
 [![codecov.io](http://codecov.io/github/primitivorm/latino/coverage.svg?branch=master)](http://codecov.io/github/primitivorm/latino?branch=master)
