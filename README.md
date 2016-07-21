@@ -3,7 +3,6 @@
 [![https://telegram.me/joinchat/EBHu7z6l6_o0_qtHlnbdOw](https://img.shields.io/badge/Soporte-Telegram-green.svg?style=plastic)](https://telegram.me/joinchat/EBHu7z6l6_o0_qtHlnbdOw)
 [![Build Status](https://travis-ci.org/primitivorm/latino.svg?branch=master)](https://travis-ci.org/primitivorm/latino)
 <a href="http://lenguaje-latino.org"><img src="https://img.shields.io/npm/l/vue.svg" alt="License"></a>
-[![Coverage Status](https://coveralls.io/repos/primitivorm/latino/badge.svg?branch=master)](https://coveralls.io/r/primitivorm/latino?branch=master)
 [![codecov.io](http://codecov.io/github/primitivorm/latino/coverage.svg?branch=master)](http://codecov.io/github/primitivorm/latino?branch=master)
 
 ![latino sublime](https://raw.githubusercontent.com/primitivorm/latino/master/SublimeTextSyntax/latino_sublime.png "latino sublime")
