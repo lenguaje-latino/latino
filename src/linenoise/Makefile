@@ -179,29 +179,20 @@ linenoise/fast:
 	cd /home/primi/src/latino && $(MAKE) -f src/linenoise/CMakeFiles/linenoise.dir/build.make src/linenoise/CMakeFiles/linenoise.dir/build
 .PHONY : linenoise/fast
 
-linenoise.o: linenoise.c.o
+# target to build an object file
+linenoise.o:
+	cd /home/primi/src/latino && $(MAKE) -f src/linenoise/CMakeFiles/linenoise.dir/build.make src/linenoise/CMakeFiles/linenoise.dir/linenoise.o
 .PHONY : linenoise.o
 
-# target to build an object file
-linenoise.c.o:
-	cd /home/primi/src/latino && $(MAKE) -f src/linenoise/CMakeFiles/linenoise.dir/build.make src/linenoise/CMakeFiles/linenoise.dir/linenoise.c.o
-.PHONY : linenoise.c.o
-
-linenoise.i: linenoise.c.i
+# target to preprocess a source file
+linenoise.i:
+	cd /home/primi/src/latino && $(MAKE) -f src/linenoise/CMakeFiles/linenoise.dir/build.make src/linenoise/CMakeFiles/linenoise.dir/linenoise.i
 .PHONY : linenoise.i
 
-# target to preprocess a source file
-linenoise.c.i:
-	cd /home/primi/src/latino && $(MAKE) -f src/linenoise/CMakeFiles/linenoise.dir/build.make src/linenoise/CMakeFiles/linenoise.dir/linenoise.c.i
-.PHONY : linenoise.c.i
-
-linenoise.s: linenoise.c.s
-.PHONY : linenoise.s
-
 # target to generate assembly for a file
-linenoise.c.s:
-	cd /home/primi/src/latino && $(MAKE) -f src/linenoise/CMakeFiles/linenoise.dir/build.make src/linenoise/CMakeFiles/linenoise.dir/linenoise.c.s
-.PHONY : linenoise.c.s
+linenoise.s:
+	cd /home/primi/src/latino && $(MAKE) -f src/linenoise/CMakeFiles/linenoise.dir/build.make src/linenoise/CMakeFiles/linenoise.dir/linenoise.s
+.PHONY : linenoise.s
 
 # Help Target
 help:

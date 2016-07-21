@@ -1,11 +1,10 @@
 set(CMAKE_VERBOSE_MAKEFILE true)
 SET(CMAKE_C_OUTPUT_EXTENSION_REPLACE 1)
 
-
 IF(UNIX)
     LINK_LIBRARIEs(m)
-    SET(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -D_GNU_SOURCE -Wall -std=c11")
-    SET(CMAKE_C_FLAGS_DEBUG "${CMAKE_C_FLAGS} -D_GNU_SOURCE -g -Wall -std=c11")
+    SET(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -D_GNU_SOURCE -Wall -coverage -std=c11")
+    SET(CMAKE_C_FLAGS_DEBUG "${CMAKE_C_FLAGS} -D_GNU_SOURCE -coverage -g -Wall -std=c11")
 ELSE(UNIX)
     IF(MSVC)
         SET(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} /W4")
@@ -47,3 +46,4 @@ SET(CPACK_DEBIAN_PACKAGE_MAINTAINER "primitivo.roman.montero@gmail.com")
 SET(CPACK_DEBIAN_PACKAGE_DESCRIPTION "Lenguaje de programación de código abierto para latinos y de habla hispana. http://lenguaje-latino.org/")
 SET(CPACK_DEBIAN_PACKAGE_SECTION "education")
 INCLUDE(CPack)
+

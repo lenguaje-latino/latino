@@ -36,3 +36,12 @@ add_test (NAME 21-operador_ternario COMMAND latino ejemplos/21-operador_ternario
 #add_test (NAME test22 COMMAND latino ejemplos/22-teorema_pitagoras.lat)
 #add_test (NAME test23 COMMAND latino ejemplos/23-listas.lat)
 #add_test (NAME test24 COMMAND latino ejemplos/24-diccionarios.lat)
+
+
+if (CMAKE_BUILD_TYPE STREQUAL "Coverage")
+    include(CodeCoverage)
+    setup_target_for_coverage(${PROJECT}_coverage ${PROJECT_TEST_NAME} coverage)
+
+    SET(CMAKE_CXX_FLAGS "-g -O0 -fprofile-arcs -ftest-coverage")
+    SET(CMAKE_C_FLAGS "-g -O0 -fprofile-arcs -ftest-coverage")
+endif() #CMAKE_BUILD_TYPE STREQUAL "Coverage"

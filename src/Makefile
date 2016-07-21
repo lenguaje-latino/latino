@@ -184,341 +184,215 @@ latino/preinstall:
 	cd /home/primi/src/latino && $(MAKE) -f CMakeFiles/Makefile2 src/CMakeFiles/latino.dir/preinstall
 .PHONY : latino/preinstall
 
-ast.o: ast.c.o
+# target to build an object file
+ast.o:
+	cd /home/primi/src/latino && $(MAKE) -f src/CMakeFiles/latino.dir/build.make src/CMakeFiles/latino.dir/ast.o
 .PHONY : ast.o
 
-# target to build an object file
-ast.c.o:
-	cd /home/primi/src/latino && $(MAKE) -f src/CMakeFiles/latino.dir/build.make src/CMakeFiles/latino.dir/ast.c.o
-.PHONY : ast.c.o
-
-ast.i: ast.c.i
+# target to preprocess a source file
+ast.i:
+	cd /home/primi/src/latino && $(MAKE) -f src/CMakeFiles/latino.dir/build.make src/CMakeFiles/latino.dir/ast.i
 .PHONY : ast.i
 
-# target to preprocess a source file
-ast.c.i:
-	cd /home/primi/src/latino && $(MAKE) -f src/CMakeFiles/latino.dir/build.make src/CMakeFiles/latino.dir/ast.c.i
-.PHONY : ast.c.i
-
-ast.s: ast.c.s
+# target to generate assembly for a file
+ast.s:
+	cd /home/primi/src/latino && $(MAKE) -f src/CMakeFiles/latino.dir/build.make src/CMakeFiles/latino.dir/ast.s
 .PHONY : ast.s
 
-# target to generate assembly for a file
-ast.c.s:
-	cd /home/primi/src/latino && $(MAKE) -f src/CMakeFiles/latino.dir/build.make src/CMakeFiles/latino.dir/ast.c.s
-.PHONY : ast.c.s
-
-latino.o: latino.c.o
+# target to build an object file
+latino.o:
+	cd /home/primi/src/latino && $(MAKE) -f src/CMakeFiles/latino.dir/build.make src/CMakeFiles/latino.dir/latino.o
 .PHONY : latino.o
 
-# target to build an object file
-latino.c.o:
-	cd /home/primi/src/latino && $(MAKE) -f src/CMakeFiles/latino.dir/build.make src/CMakeFiles/latino.dir/latino.c.o
-.PHONY : latino.c.o
-
-latino.i: latino.c.i
+# target to preprocess a source file
+latino.i:
+	cd /home/primi/src/latino && $(MAKE) -f src/CMakeFiles/latino.dir/build.make src/CMakeFiles/latino.dir/latino.i
 .PHONY : latino.i
 
-# target to preprocess a source file
-latino.c.i:
-	cd /home/primi/src/latino && $(MAKE) -f src/CMakeFiles/latino.dir/build.make src/CMakeFiles/latino.dir/latino.c.i
-.PHONY : latino.c.i
-
-latino.s: latino.c.s
+# target to generate assembly for a file
+latino.s:
+	cd /home/primi/src/latino && $(MAKE) -f src/CMakeFiles/latino.dir/build.make src/CMakeFiles/latino.dir/latino.s
 .PHONY : latino.s
 
-# target to generate assembly for a file
-latino.c.s:
-	cd /home/primi/src/latino && $(MAKE) -f src/CMakeFiles/latino.dir/build.make src/CMakeFiles/latino.dir/latino.c.s
-.PHONY : latino.c.s
-
-lex.o: lex.c.o
+# target to build an object file
+lex.o:
+	cd /home/primi/src/latino && $(MAKE) -f src/CMakeFiles/latino.dir/build.make src/CMakeFiles/latino.dir/lex.o
 .PHONY : lex.o
 
-# target to build an object file
-lex.c.o:
-	cd /home/primi/src/latino && $(MAKE) -f src/CMakeFiles/latino.dir/build.make src/CMakeFiles/latino.dir/lex.c.o
-.PHONY : lex.c.o
-
-lex.i: lex.c.i
+# target to preprocess a source file
+lex.i:
+	cd /home/primi/src/latino && $(MAKE) -f src/CMakeFiles/latino.dir/build.make src/CMakeFiles/latino.dir/lex.i
 .PHONY : lex.i
 
-# target to preprocess a source file
-lex.c.i:
-	cd /home/primi/src/latino && $(MAKE) -f src/CMakeFiles/latino.dir/build.make src/CMakeFiles/latino.dir/lex.c.i
-.PHONY : lex.c.i
-
-lex.s: lex.c.s
+# target to generate assembly for a file
+lex.s:
+	cd /home/primi/src/latino && $(MAKE) -f src/CMakeFiles/latino.dir/build.make src/CMakeFiles/latino.dir/lex.s
 .PHONY : lex.s
 
-# target to generate assembly for a file
-lex.c.s:
-	cd /home/primi/src/latino && $(MAKE) -f src/CMakeFiles/latino.dir/build.make src/CMakeFiles/latino.dir/lex.c.s
-.PHONY : lex.c.s
-
-libio.o: libio.c.o
+# target to build an object file
+libio.o:
+	cd /home/primi/src/latino && $(MAKE) -f src/CMakeFiles/latino.dir/build.make src/CMakeFiles/latino.dir/libio.o
 .PHONY : libio.o
 
-# target to build an object file
-libio.c.o:
-	cd /home/primi/src/latino && $(MAKE) -f src/CMakeFiles/latino.dir/build.make src/CMakeFiles/latino.dir/libio.c.o
-.PHONY : libio.c.o
-
-libio.i: libio.c.i
+# target to preprocess a source file
+libio.i:
+	cd /home/primi/src/latino && $(MAKE) -f src/CMakeFiles/latino.dir/build.make src/CMakeFiles/latino.dir/libio.i
 .PHONY : libio.i
 
-# target to preprocess a source file
-libio.c.i:
-	cd /home/primi/src/latino && $(MAKE) -f src/CMakeFiles/latino.dir/build.make src/CMakeFiles/latino.dir/libio.c.i
-.PHONY : libio.c.i
-
-libio.s: libio.c.s
+# target to generate assembly for a file
+libio.s:
+	cd /home/primi/src/latino && $(MAKE) -f src/CMakeFiles/latino.dir/build.make src/CMakeFiles/latino.dir/libio.s
 .PHONY : libio.s
 
-# target to generate assembly for a file
-libio.c.s:
-	cd /home/primi/src/latino && $(MAKE) -f src/CMakeFiles/latino.dir/build.make src/CMakeFiles/latino.dir/libio.c.s
-.PHONY : libio.c.s
-
-liblist.o: liblist.c.o
+# target to build an object file
+liblist.o:
+	cd /home/primi/src/latino && $(MAKE) -f src/CMakeFiles/latino.dir/build.make src/CMakeFiles/latino.dir/liblist.o
 .PHONY : liblist.o
 
-# target to build an object file
-liblist.c.o:
-	cd /home/primi/src/latino && $(MAKE) -f src/CMakeFiles/latino.dir/build.make src/CMakeFiles/latino.dir/liblist.c.o
-.PHONY : liblist.c.o
-
-liblist.i: liblist.c.i
+# target to preprocess a source file
+liblist.i:
+	cd /home/primi/src/latino && $(MAKE) -f src/CMakeFiles/latino.dir/build.make src/CMakeFiles/latino.dir/liblist.i
 .PHONY : liblist.i
 
-# target to preprocess a source file
-liblist.c.i:
-	cd /home/primi/src/latino && $(MAKE) -f src/CMakeFiles/latino.dir/build.make src/CMakeFiles/latino.dir/liblist.c.i
-.PHONY : liblist.c.i
-
-liblist.s: liblist.c.s
+# target to generate assembly for a file
+liblist.s:
+	cd /home/primi/src/latino && $(MAKE) -f src/CMakeFiles/latino.dir/build.make src/CMakeFiles/latino.dir/liblist.s
 .PHONY : liblist.s
 
-# target to generate assembly for a file
-liblist.c.s:
-	cd /home/primi/src/latino && $(MAKE) -f src/CMakeFiles/latino.dir/build.make src/CMakeFiles/latino.dir/liblist.c.s
-.PHONY : liblist.c.s
-
-libmath.o: libmath.c.o
+# target to build an object file
+libmath.o:
+	cd /home/primi/src/latino && $(MAKE) -f src/CMakeFiles/latino.dir/build.make src/CMakeFiles/latino.dir/libmath.o
 .PHONY : libmath.o
 
-# target to build an object file
-libmath.c.o:
-	cd /home/primi/src/latino && $(MAKE) -f src/CMakeFiles/latino.dir/build.make src/CMakeFiles/latino.dir/libmath.c.o
-.PHONY : libmath.c.o
-
-libmath.i: libmath.c.i
+# target to preprocess a source file
+libmath.i:
+	cd /home/primi/src/latino && $(MAKE) -f src/CMakeFiles/latino.dir/build.make src/CMakeFiles/latino.dir/libmath.i
 .PHONY : libmath.i
 
-# target to preprocess a source file
-libmath.c.i:
-	cd /home/primi/src/latino && $(MAKE) -f src/CMakeFiles/latino.dir/build.make src/CMakeFiles/latino.dir/libmath.c.i
-.PHONY : libmath.c.i
-
-libmath.s: libmath.c.s
+# target to generate assembly for a file
+libmath.s:
+	cd /home/primi/src/latino && $(MAKE) -f src/CMakeFiles/latino.dir/build.make src/CMakeFiles/latino.dir/libmath.s
 .PHONY : libmath.s
 
-# target to generate assembly for a file
-libmath.c.s:
-	cd /home/primi/src/latino && $(MAKE) -f src/CMakeFiles/latino.dir/build.make src/CMakeFiles/latino.dir/libmath.c.s
-.PHONY : libmath.c.s
-
-libmem.o: libmem.c.o
+# target to build an object file
+libmem.o:
+	cd /home/primi/src/latino && $(MAKE) -f src/CMakeFiles/latino.dir/build.make src/CMakeFiles/latino.dir/libmem.o
 .PHONY : libmem.o
 
-# target to build an object file
-libmem.c.o:
-	cd /home/primi/src/latino && $(MAKE) -f src/CMakeFiles/latino.dir/build.make src/CMakeFiles/latino.dir/libmem.c.o
-.PHONY : libmem.c.o
-
-libmem.i: libmem.c.i
+# target to preprocess a source file
+libmem.i:
+	cd /home/primi/src/latino && $(MAKE) -f src/CMakeFiles/latino.dir/build.make src/CMakeFiles/latino.dir/libmem.i
 .PHONY : libmem.i
 
-# target to preprocess a source file
-libmem.c.i:
-	cd /home/primi/src/latino && $(MAKE) -f src/CMakeFiles/latino.dir/build.make src/CMakeFiles/latino.dir/libmem.c.i
-.PHONY : libmem.c.i
-
-libmem.s: libmem.c.s
+# target to generate assembly for a file
+libmem.s:
+	cd /home/primi/src/latino && $(MAKE) -f src/CMakeFiles/latino.dir/build.make src/CMakeFiles/latino.dir/libmem.s
 .PHONY : libmem.s
 
-# target to generate assembly for a file
-libmem.c.s:
-	cd /home/primi/src/latino && $(MAKE) -f src/CMakeFiles/latino.dir/build.make src/CMakeFiles/latino.dir/libmem.c.s
-.PHONY : libmem.c.s
-
-libstring.o: libstring.c.o
+# target to build an object file
+libstring.o:
+	cd /home/primi/src/latino && $(MAKE) -f src/CMakeFiles/latino.dir/build.make src/CMakeFiles/latino.dir/libstring.o
 .PHONY : libstring.o
 
-# target to build an object file
-libstring.c.o:
-	cd /home/primi/src/latino && $(MAKE) -f src/CMakeFiles/latino.dir/build.make src/CMakeFiles/latino.dir/libstring.c.o
-.PHONY : libstring.c.o
-
-libstring.i: libstring.c.i
+# target to preprocess a source file
+libstring.i:
+	cd /home/primi/src/latino && $(MAKE) -f src/CMakeFiles/latino.dir/build.make src/CMakeFiles/latino.dir/libstring.i
 .PHONY : libstring.i
 
-# target to preprocess a source file
-libstring.c.i:
-	cd /home/primi/src/latino && $(MAKE) -f src/CMakeFiles/latino.dir/build.make src/CMakeFiles/latino.dir/libstring.c.i
-.PHONY : libstring.c.i
-
-libstring.s: libstring.c.s
+# target to generate assembly for a file
+libstring.s:
+	cd /home/primi/src/latino && $(MAKE) -f src/CMakeFiles/latino.dir/build.make src/CMakeFiles/latino.dir/libstring.s
 .PHONY : libstring.s
 
-# target to generate assembly for a file
-libstring.c.s:
-	cd /home/primi/src/latino && $(MAKE) -f src/CMakeFiles/latino.dir/build.make src/CMakeFiles/latino.dir/libstring.c.s
-.PHONY : libstring.c.s
-
-linenoise/linenoise.o: linenoise/linenoise.c.o
+# target to build an object file
+linenoise/linenoise.o:
+	cd /home/primi/src/latino && $(MAKE) -f src/CMakeFiles/latino.dir/build.make src/CMakeFiles/latino.dir/linenoise/linenoise.o
 .PHONY : linenoise/linenoise.o
 
-# target to build an object file
-linenoise/linenoise.c.o:
-	cd /home/primi/src/latino && $(MAKE) -f src/CMakeFiles/latino.dir/build.make src/CMakeFiles/latino.dir/linenoise/linenoise.c.o
-.PHONY : linenoise/linenoise.c.o
-
-linenoise/linenoise.i: linenoise/linenoise.c.i
+# target to preprocess a source file
+linenoise/linenoise.i:
+	cd /home/primi/src/latino && $(MAKE) -f src/CMakeFiles/latino.dir/build.make src/CMakeFiles/latino.dir/linenoise/linenoise.i
 .PHONY : linenoise/linenoise.i
 
-# target to preprocess a source file
-linenoise/linenoise.c.i:
-	cd /home/primi/src/latino && $(MAKE) -f src/CMakeFiles/latino.dir/build.make src/CMakeFiles/latino.dir/linenoise/linenoise.c.i
-.PHONY : linenoise/linenoise.c.i
-
-linenoise/linenoise.s: linenoise/linenoise.c.s
+# target to generate assembly for a file
+linenoise/linenoise.s:
+	cd /home/primi/src/latino && $(MAKE) -f src/CMakeFiles/latino.dir/build.make src/CMakeFiles/latino.dir/linenoise/linenoise.s
 .PHONY : linenoise/linenoise.s
 
-# target to generate assembly for a file
-linenoise/linenoise.c.s:
-	cd /home/primi/src/latino && $(MAKE) -f src/CMakeFiles/latino.dir/build.make src/CMakeFiles/latino.dir/linenoise/linenoise.c.s
-.PHONY : linenoise/linenoise.c.s
-
-linenoise/utf8.o: linenoise/utf8.c.o
+# target to build an object file
+linenoise/utf8.o:
+	cd /home/primi/src/latino && $(MAKE) -f src/CMakeFiles/latino.dir/build.make src/CMakeFiles/latino.dir/linenoise/utf8.o
 .PHONY : linenoise/utf8.o
 
-# target to build an object file
-linenoise/utf8.c.o:
-	cd /home/primi/src/latino && $(MAKE) -f src/CMakeFiles/latino.dir/build.make src/CMakeFiles/latino.dir/linenoise/utf8.c.o
-.PHONY : linenoise/utf8.c.o
-
-linenoise/utf8.i: linenoise/utf8.c.i
+# target to preprocess a source file
+linenoise/utf8.i:
+	cd /home/primi/src/latino && $(MAKE) -f src/CMakeFiles/latino.dir/build.make src/CMakeFiles/latino.dir/linenoise/utf8.i
 .PHONY : linenoise/utf8.i
 
-# target to preprocess a source file
-linenoise/utf8.c.i:
-	cd /home/primi/src/latino && $(MAKE) -f src/CMakeFiles/latino.dir/build.make src/CMakeFiles/latino.dir/linenoise/utf8.c.i
-.PHONY : linenoise/utf8.c.i
-
-linenoise/utf8.s: linenoise/utf8.c.s
+# target to generate assembly for a file
+linenoise/utf8.s:
+	cd /home/primi/src/latino && $(MAKE) -f src/CMakeFiles/latino.dir/build.make src/CMakeFiles/latino.dir/linenoise/utf8.s
 .PHONY : linenoise/utf8.s
 
-# target to generate assembly for a file
-linenoise/utf8.c.s:
-	cd /home/primi/src/latino && $(MAKE) -f src/CMakeFiles/latino.dir/build.make src/CMakeFiles/latino.dir/linenoise/utf8.c.s
-.PHONY : linenoise/utf8.c.s
-
-object.o: object.c.o
+# target to build an object file
+object.o:
+	cd /home/primi/src/latino && $(MAKE) -f src/CMakeFiles/latino.dir/build.make src/CMakeFiles/latino.dir/object.o
 .PHONY : object.o
 
-# target to build an object file
-object.c.o:
-	cd /home/primi/src/latino && $(MAKE) -f src/CMakeFiles/latino.dir/build.make src/CMakeFiles/latino.dir/object.c.o
-.PHONY : object.c.o
-
-object.i: object.c.i
+# target to preprocess a source file
+object.i:
+	cd /home/primi/src/latino && $(MAKE) -f src/CMakeFiles/latino.dir/build.make src/CMakeFiles/latino.dir/object.i
 .PHONY : object.i
 
-# target to preprocess a source file
-object.c.i:
-	cd /home/primi/src/latino && $(MAKE) -f src/CMakeFiles/latino.dir/build.make src/CMakeFiles/latino.dir/object.c.i
-.PHONY : object.c.i
-
-object.s: object.c.s
+# target to generate assembly for a file
+object.s:
+	cd /home/primi/src/latino && $(MAKE) -f src/CMakeFiles/latino.dir/build.make src/CMakeFiles/latino.dir/object.s
 .PHONY : object.s
 
-# target to generate assembly for a file
-object.c.s:
-	cd /home/primi/src/latino && $(MAKE) -f src/CMakeFiles/latino.dir/build.make src/CMakeFiles/latino.dir/object.c.s
-.PHONY : object.c.s
-
-parse.o: parse.c.o
+# target to build an object file
+parse.o:
+	cd /home/primi/src/latino && $(MAKE) -f src/CMakeFiles/latino.dir/build.make src/CMakeFiles/latino.dir/parse.o
 .PHONY : parse.o
 
-# target to build an object file
-parse.c.o:
-	cd /home/primi/src/latino && $(MAKE) -f src/CMakeFiles/latino.dir/build.make src/CMakeFiles/latino.dir/parse.c.o
-.PHONY : parse.c.o
-
-parse.i: parse.c.i
+# target to preprocess a source file
+parse.i:
+	cd /home/primi/src/latino && $(MAKE) -f src/CMakeFiles/latino.dir/build.make src/CMakeFiles/latino.dir/parse.i
 .PHONY : parse.i
 
-# target to preprocess a source file
-parse.c.i:
-	cd /home/primi/src/latino && $(MAKE) -f src/CMakeFiles/latino.dir/build.make src/CMakeFiles/latino.dir/parse.c.i
-.PHONY : parse.c.i
-
-parse.s: parse.c.s
+# target to generate assembly for a file
+parse.s:
+	cd /home/primi/src/latino && $(MAKE) -f src/CMakeFiles/latino.dir/build.make src/CMakeFiles/latino.dir/parse.s
 .PHONY : parse.s
 
-# target to generate assembly for a file
-parse.c.s:
-	cd /home/primi/src/latino && $(MAKE) -f src/CMakeFiles/latino.dir/build.make src/CMakeFiles/latino.dir/parse.c.s
-.PHONY : parse.c.s
-
-utils.o: utils.c.o
+# target to build an object file
+utils.o:
+	cd /home/primi/src/latino && $(MAKE) -f src/CMakeFiles/latino.dir/build.make src/CMakeFiles/latino.dir/utils.o
 .PHONY : utils.o
 
-# target to build an object file
-utils.c.o:
-	cd /home/primi/src/latino && $(MAKE) -f src/CMakeFiles/latino.dir/build.make src/CMakeFiles/latino.dir/utils.c.o
-.PHONY : utils.c.o
-
-utils.i: utils.c.i
+# target to preprocess a source file
+utils.i:
+	cd /home/primi/src/latino && $(MAKE) -f src/CMakeFiles/latino.dir/build.make src/CMakeFiles/latino.dir/utils.i
 .PHONY : utils.i
 
-# target to preprocess a source file
-utils.c.i:
-	cd /home/primi/src/latino && $(MAKE) -f src/CMakeFiles/latino.dir/build.make src/CMakeFiles/latino.dir/utils.c.i
-.PHONY : utils.c.i
-
-utils.s: utils.c.s
+# target to generate assembly for a file
+utils.s:
+	cd /home/primi/src/latino && $(MAKE) -f src/CMakeFiles/latino.dir/build.make src/CMakeFiles/latino.dir/utils.s
 .PHONY : utils.s
 
-# target to generate assembly for a file
-utils.c.s:
-	cd /home/primi/src/latino && $(MAKE) -f src/CMakeFiles/latino.dir/build.make src/CMakeFiles/latino.dir/utils.c.s
-.PHONY : utils.c.s
-
-vm.o: vm.c.o
+# target to build an object file
+vm.o:
+	cd /home/primi/src/latino && $(MAKE) -f src/CMakeFiles/latino.dir/build.make src/CMakeFiles/latino.dir/vm.o
 .PHONY : vm.o
 
-# target to build an object file
-vm.c.o:
-	cd /home/primi/src/latino && $(MAKE) -f src/CMakeFiles/latino.dir/build.make src/CMakeFiles/latino.dir/vm.c.o
-.PHONY : vm.c.o
-
-vm.i: vm.c.i
+# target to preprocess a source file
+vm.i:
+	cd /home/primi/src/latino && $(MAKE) -f src/CMakeFiles/latino.dir/build.make src/CMakeFiles/latino.dir/vm.i
 .PHONY : vm.i
 
-# target to preprocess a source file
-vm.c.i:
-	cd /home/primi/src/latino && $(MAKE) -f src/CMakeFiles/latino.dir/build.make src/CMakeFiles/latino.dir/vm.c.i
-.PHONY : vm.c.i
-
-vm.s: vm.c.s
-.PHONY : vm.s
-
 # target to generate assembly for a file
-vm.c.s:
-	cd /home/primi/src/latino && $(MAKE) -f src/CMakeFiles/latino.dir/build.make src/CMakeFiles/latino.dir/vm.c.s
-.PHONY : vm.c.s
+vm.s:
+	cd /home/primi/src/latino && $(MAKE) -f src/CMakeFiles/latino.dir/build.make src/CMakeFiles/latino.dir/vm.s
+.PHONY : vm.s
 
 # Help Target
 help:
