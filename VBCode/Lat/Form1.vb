@@ -1,4 +1,4 @@
-﻿Public Class Form1
+Public Class Form1
 
     Dim CARACTER As Integer
     Private Declare Function LockWindowUpdate Lib "user32" (ByVal hWnd As Integer) As Integer
