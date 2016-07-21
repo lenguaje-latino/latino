@@ -167,14 +167,6 @@ lat_objeto* lat_cfuncion_nueva(lat_vm* vm)
     return ret;
 }
 
-lat_objeto* lat_estructura_nueva(lat_vm* vm, void* val)
-{
-    lat_objeto* ret = lat_crear_objeto(vm);
-    ret->type = T_STRUCT;
-    ret->data.cstruct = val;
-    return ret;
-}
-
 void lat_marcar_objeto(lat_objeto* o, int m)
 {
     if (o != NULL)
@@ -321,7 +313,8 @@ lat_objeto* lat_clonar_objeto(lat_vm* vm, lat_objeto* obj)
         ret = lat_crear_objeto(vm);
         ret->type = T_INSTANCE;
         ret->data_size = sizeof(hash_map*);
-        ret->data.nombre = lat_clonar_hash(vm, obj->data.nombre);
+        //ret->data.nombre = lat_clonar_hash(vm, obj->data.nombre);
+        ret->data.nombre = copy_hash(obj->data.nombre);
         //ret->data.nombre = obj->data.nombre;
         break;
     case T_LIST:
@@ -378,8 +371,7 @@ hash_map* lat_clonar_hash(lat_vm* vm, hash_map* h)
                 {
                     if (cur->data != NULL)
                     {
-                        hash_val* hv = (hash_val*)lat_asignar_memoria(sizeof(hash_val));
-                        //vm->memoria_usada += sizeof(hash_val);
+                        hash_val* hv = (hash_val*)lat_asignar_memoria(sizeof(hash_val));                        
                         strncpy(hv->key, ((hash_val*)cur->data)->key, 256);
                         hv->val = lat_clonar_objeto(vm, (lat_objeto*)((hash_val*)cur->data)->val);
                         insert_list(ret->buckets[c], hv);
@@ -460,15 +452,5 @@ list_node* lat_obtener_lista(lat_objeto* o)
         return o->data.lista;
     }
     lat_registrar_error("Object no es un tipo lista");
-    return NULL;
-}
-
-void* lat_obtener_estructura(lat_objeto* o)
-{
-    if (o->type == T_STRUCT)
-    {
-        return o->data.lista;
-    }
-    lat_registrar_error("Object no es un tipo estructura");
     return NULL;
 }

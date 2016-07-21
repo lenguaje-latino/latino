@@ -9,5 +9,6 @@ void lat_agregar(lat_vm *vm){
     while(actual->next != NULL){
         actual = actual->next;
     }
+    //lat_apilar_lista(actual, elem);
     insert_list(actual, elem);
 }

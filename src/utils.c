@@ -116,7 +116,7 @@ char* int2str(long i)
 {
     char s[255];
     char* r = malloc(strlen(s) + 1);
-    lnsprintf(s, 255, "%ld", i);
+    snprintf(s, 255, "%ld", i);
     strcpy(r, s);
     return r;
 }
@@ -125,7 +125,7 @@ char* double2str(double d)
 {
     char s[64];
     char* r = malloc(strlen(s) + 1);
-    lnsprintf(s, 64, "%g", (float)d);
+    snprintf(s, 64, "%g", (float)d);
     strcpy(r, s);
     return r;
 }
@@ -134,7 +134,7 @@ char* char2str(char c)
 {
     char s[2];
     char* r = malloc(2);
-    lnsprintf(s, 2, "%c", c);
+    snprintf(s, 2, "%c", c);
     strcpy(r, s);
     return r;
 }
@@ -145,12 +145,12 @@ char* bool2str(int i)
     char* r = malloc(11);
     if (i)
     {
-        lnsprintf(s, 10, "%s", "verdadero");
+        snprintf(s, 10, "%s", "verdadero");
         strcpy(r, s);
     }
     else
     {
-        lnsprintf(s, 10, "%s", "falso");
+        snprintf(s, 10, "%s", "falso");
         strcpy(r, s);
     }
     return r;
@@ -389,13 +389,6 @@ char* trim(const char *str)
     return ret;
 }
 
-list_node* lat_crear_lista_node(void* d)
-{
-    list_node* ret = (list_node*)lat_asignar_memoria(sizeof(list_node));
-    ret->data = d;
-    return ret;
-}
-
 list_node* lat_crear_lista()
 {
     list_node* start = (list_node*)lat_asignar_memoria(sizeof(list_node));
@@ -409,18 +402,15 @@ list_node* lat_crear_lista()
     return start;
 }
 
-int find_list(list_node* l, void* data)
+/*list_node* lat_crear_lista()
 {
-    list_node* c;
-    for (c = l; c->next != NULL; c = c->next)
-    {
-        if (c->data == data)
-        {
-            return 1;
-        }
-    }
-    return 0;
-}
+    list_node* nodo = (list_node*)lat_asignar_memoria(sizeof(list_node));    
+    nodo->prev = NULL;
+    nodo->next = NULL;
+    nodo->data = NULL;    
+    return nodo;
+}*/
+
 
 void insert_list(list_node* l, void* data)
 {
@@ -428,10 +418,23 @@ void insert_list(list_node* l, void* data)
     ins->data = data;
     ins->next = l->next;
     l->next = ins;
-    //ins->next->prev = ins;
     ins->prev = l;
-    //printf("insertar :: anterior:%p\tactual:%p\tsiguiente:%p\n", ins->prev, ins, ins->next);
 }
+
+/*
+void insert_list(list_node* l, void* data)
+{
+    list_node *curr = l;
+    while (curr->next != NULL){
+        curr = curr->next;
+    }
+    curr->data = data;
+    curr->next = (list_node*)lat_asignar_memoria(sizeof(list_node));    
+    curr->next->data = NULL;
+    curr->next->prev = curr;
+    curr->next->next = NULL;
+    
+}*/
 
 void remove_list(list_node* l, void* data)
 {
@@ -466,6 +469,19 @@ int length_list(list_node* l)
         }
     }
     return a;
+}
+
+int find_list(list_node* l, void* data)
+{
+    list_node* c;
+    for (c = l; c->next != NULL; c = c->next)
+    {
+        if (c->data == data)
+        {
+            return 1;
+        }
+    }
+    return 0;
 }
 
 hash_map* make_hash_map()

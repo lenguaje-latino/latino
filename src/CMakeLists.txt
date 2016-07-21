@@ -46,4 +46,3 @@ SET(CPACK_DEBIAN_PACKAGE_MAINTAINER "primitivo.roman.montero@gmail.com")
 SET(CPACK_DEBIAN_PACKAGE_DESCRIPTION "Lenguaje de programación de código abierto para latinos y de habla hispana. http://lenguaje-latino.org/")
 SET(CPACK_DEBIAN_PACKAGE_SECTION "education")
 INCLUDE(CPack)
-

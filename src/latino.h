@@ -50,17 +50,15 @@ THE SOFTWARE.
 /* Visual Leak Detector for Visual C++ */
 //#include <vld.h>
 #define LAT_FUNC extern
-#define lnsprintf(s, l, f, i) _snprintf(s, l, f, i)
+#define snprintf(s, l, f, i) _snprintf(s, l, f, i)
 #include <windows.h>
 #include <limits.h>
-#define ldirectorio_actual(ruta, tamanio) GetCurrentDirectory (MAX_PATH, ruta);
+#define getcwd(ruta, tamanio) GetCurrentDirectory (MAX_PATH, ruta);
 #else
 #define PATH_SEP "/"
 #define LAT_FUNC __attribute__((visibility("hidden"))) extern
-#define lnsprintf(s, l, f, i) snprintf(s, l, f, i)
 #include <dlfcn.h>
 #include <unistd.h>
-#define ldirectorio_actual(ruta, tamanio) getcwd (ruta, tamanio)
 #endif
 
 /** Define el manejo de excepciones en Latino */
