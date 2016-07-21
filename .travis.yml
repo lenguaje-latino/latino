@@ -34,13 +34,13 @@ before_install:
 script:
     - cmake . && make
     - if [ $TRAVIS_OS_NAME == "linux" ]; then
-        cd bin
-        ./latino ../ejemplos/coverage.lat
-        gcov ../src/latino.c --object-directory ../src/CMakeFiles/latino.dir/
+        cd bin;
+        ./latino ../ejemplos/coverage.lat;
+        gcov ../src/latino.c --object-directory ../src/CMakeFiles/latino.dir/;
       elif [ $TRAVIS_OS_NAME == "osx" ]; then
-        cd bin
-        ./latino ../ejemplos/coverage.lat
-        llvm-cov ../src/latino.c --object-directory ../src/CMakeFiles/latino.dir/
+        cd bin;
+        ./latino ../ejemplos/coverage.lat;
+        llvm-cov ../src/latino.c --object-directory ../src/CMakeFiles/latino.dir/;
       fi
 after_success:
     - bash <(curl -s https://codecov.io/bash)
