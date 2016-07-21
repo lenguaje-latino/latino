@@ -6,3 +6,6 @@ export CMAKE_CXX_COMPILER=g++
 cmake -G "Unix Makefiles" .
 make clean
 make
+cd bin
+gcov ../src/latino.c --object-directory ../src/CMakeFiles/latino.dir/
+cd ..

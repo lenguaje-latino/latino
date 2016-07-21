@@ -1,0 +1,7 @@
+#test coverage para "si"
+num = 10
+si num < 0
+    escribir("es negativo")
+sino
+    escribir("es positivo")
+fin
