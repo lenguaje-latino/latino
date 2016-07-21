@@ -1,4 +1,4 @@
-Build started 12/07/2016 04:32:39 p.m..
+﻿Build started 21/07/2016 12:45:30 p.m..
      1>Project "C:\src\latino\visualstudio\src\latino.vcxproj" on node 2 (Rebuild target(s)).
      1>CustomBuild:
          Building Custom Rule C:/src/latino/src/CMakeLists.txt
@@ -19,14 +19,14 @@ Build started 12/07/2016 04:32:39 p.m..
      1>C:\src\latino\src\utils.c(346): warning C4244: '=' : conversion from 'int' to 'char', possible loss of data
      1>C:\src\latino\src\utils.c(359): warning C4244: '=' : conversion from 'int' to 'char', possible loss of data
          vm.c
-     1>C:\src\latino\src\vm.c(1063): warning C4055: 'type cast' : from data pointer 'void *' to function pointer 'void (__cdecl *)(lat_vm *)'
+     1>C:\src\latino\src\vm.c(1074): warning C4055: 'type cast' : from data pointer 'void *' to function pointer 'void (__cdecl *)(lat_vm *)'
          object.c
      1>C:\src\latino\src\object.c(90): warning C4100: 'vm' : unreferenced formal parameter
      1>C:\src\latino\src\object.c(107): warning C4100: 'vm' : unreferenced formal parameter
      1>C:\src\latino\src\object.c(140): warning C4100: 'vm' : unreferenced formal parameter
-     1>C:\src\latino\src\object.c(186): warning C4244: 'function' : conversion from 'int' to 'unsigned char', possible loss of data
-     1>C:\src\latino\src\object.c(189): warning C4244: 'function' : conversion from 'int' to 'unsigned char', possible loss of data
-     1>C:\src\latino\src\object.c(235): warning C4100: 'vm' : unreferenced formal parameter
+     1>C:\src\latino\src\object.c(178): warning C4244: 'function' : conversion from 'int' to 'unsigned char', possible loss of data
+     1>C:\src\latino\src\object.c(181): warning C4244: 'function' : conversion from 'int' to 'unsigned char', possible loss of data
+     1>C:\src\latino\src\object.c(227): warning C4100: 'vm' : unreferenced formal parameter
          libstring.c
      1>C:\src\latino\src\libstring.c(31): warning C4127: conditional expression is constant
      1>C:\src\latino\src\libstring.c(65): warning C4127: conditional expression is constant
@@ -107,4 +107,4 @@ Build started 12/07/2016 04:32:39 p.m..
 
 Build succeeded.
 
-Time Elapsed 00:00:11.32
+Time Elapsed 00:00:16.45

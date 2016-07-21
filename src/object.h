@@ -33,6 +33,7 @@ typedef struct lat_objeto lat_objeto;
 #include "utils.h"
 #include "vm.h"
 
+
 /** \file object.h
 *
 * Contiene las funciones para el manejo de objetos
@@ -74,8 +75,7 @@ typedef union lat_datos_objeto
     list_node* lista;  /**< valor de la lista */
     hash_map* dict;  /**< valor del diccionario */
     void* func;  /**< valor funcion */
-    void (*cfunc)(lat_vm*);  /**< valor funcion C */
-    void* cstruct;  /**< valor estructura */
+    void (*cfunc)(lat_vm*);  /**< valor funcion C */    
 } lat_datos_objeto;
 
 /** \brief Objeto
@@ -299,11 +299,5 @@ bool lat_obtener_logico(lat_objeto* o);
   * \return list_node: Apuntador al nodo de la lista
   */
 list_node* lat_obtener_lista(lat_objeto* o);
-
-/** \brief Obtiene el valor de la estructura de un objeto
-  *
-  * \param o: Apuntador al objeto
-  */
-void* lat_obtener_estructura(lat_objeto* o);
 
 #endif // !_OBJECT_H_

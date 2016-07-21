@@ -381,7 +381,7 @@ int nodo_analizar(lat_vm *vm, ast *node, lat_bytecode *bcode, int i)
         {
             //encontrar el modulo en la ruta actual
             char dir_actual[MAX_PATH_LENGTH];
-            ldirectorio_actual(dir_actual, sizeof(dir_actual));
+            getcwd(dir_actual, sizeof(dir_actual));
             strcat(dir_actual, PATH_SEP);
             strcat(dir_actual, archivo);
             if(!endsWith(dir_actual, ".lat"))

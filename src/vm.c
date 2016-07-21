@@ -170,6 +170,28 @@ lat_objeto* lat_desapilar(lat_vm* vm)
     return NULL;
 }
 
+/*
+lat_objeto* lat_desapilar(lat_vm* vm)
+{
+    list_node* n = vm->pila;
+    if (n->data == NULL)
+    {
+        lat_registrar_error("Pila vacia");
+    }
+    else
+    {
+        list_node * curr = n;
+        while (curr->next != NULL)
+        {
+            curr = curr->next;
+        }        
+        lat_objeto* ret = (lat_objeto*)curr->data;
+        return ret;
+    }
+    return NULL;
+}
+*/
+
 void lat_apilar_lista(lat_objeto* lista, lat_objeto* o)
 {
     insert_list(lista->data.lista, (void*)o);
@@ -564,17 +586,6 @@ void lat_clonar(lat_vm* vm)
     lat_objeto* ns = lat_desapilar(vm);
     vm->registros[255] = lat_clonar_objeto(vm, ns);
 }
-
-/*void lat_cons(lat_vm* vm)
-{
-    lat_objeto* lista = lat_desapilar(vm);
-    lat_objeto* elem = lat_desapilar(vm);
-    list_node* ret = lat_crear_lista();
-    insert_list(ret, (void*)elem);
-    ret->next->next = lista->data.lista;
-    lista->data.lista->prev = ret->next;
-    vm->registros[255] = lat_lista_nueva(vm, ret);
-}*/
 
 void lat_sumar(lat_vm* vm)
 {

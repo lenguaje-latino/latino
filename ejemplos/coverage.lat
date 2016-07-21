@@ -1,7 +1,123 @@
+####################################################################
+#test coverage para variables
+####################################################################
+l=cierto
+escribir(l)
+e=10
+escribir(e)
+d=1.5
+escribir(d)
+c='a'
+escribir(c)
+s="hola latino"
+escribir(s)
+s='ahora esta es una literal "hola latino"'
+escribir(s)
+PI=3.1416
+
+####################################################################
+#test coverage para expresiones
+####################################################################
+i = 1
+d = 10.05
+
+escribir("############## suma ###############")
+#entero + entero
+escribir(i + i)  #a 1 se le suma 1 da como resultado 2
+
+#entero + decimal
+escribir(i + d) #a 1 se le suma 10.05 da como resultado 11.05
+
+#decimal + entero
+escribir(d + i) #da como resultado el decimal 11.05
+
+#decimal + decimal
+escribir(d + d) #da como resultado el decimal 20.1
+
+escribir("############## resta ###############")
+#entero - entero
+escribir(i - (-1))  #a 1 se le resta -1 da como resultado 2
+
+#entero - decimal
+escribir(i - d) #a 1 se le suma 10.05 da como resultado -9.05
+
+#decimal - entero
+escribir(d - i) #da como resultado el decimal 9.05
+
+#decimal - decimal
+escribir(d - 0.05) #da como resultado el decimal 10
+
+escribir("############## multiplicacion ###############")
+#entero * entero
+escribir(i * i) #da como resultado el decimal 1
+
+#entero * decimal
+escribir(i * d) #da como resultado el decimal 10.05
+
+#decimal * entero
+escribir(d * i) #da como resultado el decimal 10.05
+
+#decimal * decimal
+escribir(d * 0.5) #da como resultado el decimal 5.025
+
+escribir("############## division ###############")
+#entero / entero
+escribir(i / i) #da como resultado el entero 1
+
+#entero / decimal
+escribir(i / d) #da como resultado el decimal 0.099502487562189
+
+#decimal / entero
+escribir(d / i) #da como resultado el entero 10
+
+#decimal / decimal
+escribir(d / 0.5) #da como resultado el decimal 20.1
+
+####################################################################
 #test coverage para "si"
+####################################################################
 num = 10
 si num < 0
     escribir("es negativo")
 sino
     escribir("es positivo")
 fin
+
+####################################################################
+#test coverage para "mientras"
+####################################################################
+escribir("------------------------------")
+escribir("---condicion sin parentesis---")
+escribir("------------------------------")
+i = 0
+mientras i < 10
+    escribir(i)
+    i++     #esto es lo mismo que i = i + 1
+fin
+
+####################################################################
+#test coverage para "funciones"
+####################################################################
+funcion promedio(a,b)
+    retorno (a+b)/2
+fin
+
+funcion max(a,b)
+    si (a > b)
+        retorno a
+    sino
+        retorno b
+    fin
+fin
+
+funcion min(a,b)
+    si (a < b)
+        retorno a
+    sino
+        retorno b
+    fin
+fin
+
+imprimir(promedio(3, 5)) #4
+imprimir(max(3, 5)) #5
+imprimir(min(3, 5)) #3
