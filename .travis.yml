@@ -22,8 +22,7 @@ before_install:
         export CXX="g++-4.8";
         export LINK="gcc-4.8";
         export LINKXX="g++-4.8";
-      fi
-    - if [ $TRAVIS_OS_NAME == "osx" ]; then
+      elif [ $TRAVIS_OS_NAME == "osx" ]; then
         export CC="clang";
         export CXX="clang++";
         export LINK="clang";
@@ -32,7 +31,11 @@ before_install:
     - gcc --version
     - g++ --version
 script:
-    - cmake . && make
+    - if [ $TRAVIS_OS_NAME == "linux" ]; then
+        ./compilar_gcc.sh
+      elif [ $TRAVIS_OS_NAME == "osx" ]; then
+        ./compilar_clang.sh
+      fi
 after_success:
     - bash <(curl -s https://codecov.io/bash)
     - coveralls --exclude lib --exclude tests --gcov-options '\-lp'
