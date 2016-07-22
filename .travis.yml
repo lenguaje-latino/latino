@@ -37,5 +37,6 @@ script:
         ./compilar_clang.sh;
       fi
 after_success:
+    - cd bin
     - bash <(curl -s https://codecov.io/bash)
     - coveralls --exclude lib --exclude tests --gcov-options '\-lp'
