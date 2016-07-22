@@ -7,5 +7,6 @@ cmake -G "Unix Makefiles" .
 make clean
 make
 cd bin
-gcov ../src/latino.c --object-directory ../src/CMakeFiles/latino.dir/
+./latino ../ejemplos/coverage.lat
+gcov ../src/*.c --object-directory ../src/CMakeFiles/latino.dir/
 cd ..
