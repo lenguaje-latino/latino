@@ -1,0 +1,577 @@
+        -:    0:Source:/home/latino/src/latino/src/libstring.c
+        -:    0:Programs:13
+        -:    1:/*
+        -:    2:The MIT License (MIT)
+        -:    3:
+        -:    4:Copyright (c) 2015 - Latino
+        -:    5:
+        -:    6:Permission is hereby granted, free of charge, to any person obtaining a copy
+        -:    7:of this software and associated documentation files (the "Software"), to deal
+        -:    8:in the Software without restriction, including without limitation the rights
+        -:    9:to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+        -:   10:copies of the Software, and to permit persons to whom the Software is
+        -:   11:furnished to do so, subject to the following conditions:
+        -:   12:
+        -:   13:The above copyright notice and this permission notice shall be included in
+        -:   14:all copies or substantial portions of the Software.
+        -:   15:
+        -:   16:THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+        -:   17:IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+        -:   18:FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+        -:   19:AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+        -:   20:LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+        -:   21:OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+        -:   22:THE SOFTWARE.
+        -:   23:*/
+        -:   24:
+        -:   25:#include "khash.h"
+        -:   26:#include "latino.h"
+        -:   27:#include "object.h"
+        -:   28:#include "libmem.h"
+        -:   29:#include "utils.h"
+        -:   30:
+        -:   31:KHASH_MAP_INIT_INT64(env, lat_objeto);
+        -:   32:typedef khash_t(env) lat_env;
+        -:   33:lat_env* globals;
+        -:   34:
+        -:   35:struct sym_key
+        -:   36:{
+        -:   37:    const char* ptr;
+        -:   38:    size_t len;
+        -:   39:};
+        -:   40:
+        -:   41:static khint_t
+        -:   42:sym_hash(struct sym_key key)
+        -:   43:{
+        -:   44:    const char* s = key.ptr;
+        -:   45:    khint_t h;
+        -:   46:    size_t len = key.len;
+      311:   47:    h = *s++;
+     2199:   48:    while (len--)
+branch  0 taken 86%
+branch  1 taken 14% (fallthrough)
+branch  2 taken 86%
+branch  3 taken 14% (fallthrough)
+        -:   49:    {
+     1888:   50:        h = (h << 5) - h + (khint_t)*s++;
+        -:   51:    }
+      311:   52:    return h;
+        -:   53:}
+        -:   54:
+        -:   55:static khint_t
+        -:   56:sym_eq(struct sym_key a, struct sym_key b)
+        -:   57:{
+      327:   58:    if (a.len != b.len)
+branch  0 taken 55% (fallthrough)
+branch  1 taken 45%
+        -:   59:        return false;
+      179:   60:    if (memcmp(a.ptr, b.ptr, a.len) == 0)
+branch  0 taken 32% (fallthrough)
+branch  1 taken 68%
+        -:   61:        return true;
+        -:   62:    return false;
+        -:   63:}
+        -:   64:
+function kh_put_sym called 216 returned 100% blocks executed 79%
+function kh_resize_sym called 6 returned 100% blocks executed 88%
+      861:   65:KHASH_INIT(sym, struct sym_key, lat_objeto*, 1, sym_hash, sym_eq);
+branch  0 taken 3% (fallthrough)
+branch  1 taken 97%
+branch  2 taken 0% (fallthrough)
+branch  3 taken 100%
+call    4 never executed
+branch  5 never executed
+branch  6 never executed
+call    7 returned 100%
+branch  8 taken 0% (fallthrough)
+branch  9 taken 100%
+branch 10 taken 78%
+branch 11 taken 22%
+branch 12 taken 0% (fallthrough)
+branch 13 taken 100%
+branch 14 taken 0% (fallthrough)
+branch 15 taken 100%
+branch 16 taken 87% (fallthrough)
+branch 17 taken 13%
+branch 18 taken 0%
+branch 19 taken 100% (fallthrough)
+branch 20 taken 63%
+branch 21 taken 37% (fallthrough)
+branch 22 taken 100% (fallthrough)
+branch 23 taken 0%
+branch 24 taken 28% (fallthrough)
+branch 25 taken 72%
+branch 26 taken 100% (fallthrough)
+branch 27 taken 0%
+branch 28 taken 44% (fallthrough)
+branch 29 taken 56%
+branch 30 taken 0% (fallthrough)
+branch 31 taken 100%
+branch 32 taken 17% (fallthrough)
+branch 33 taken 83%
+branch 34 taken 100% (fallthrough)
+branch 35 taken 0%
+branch 36 taken 67% (fallthrough)
+branch 37 taken 33%
+branch 38 taken 100% (fallthrough)
+branch 39 taken 0%
+branch 40 taken 67% (fallthrough)
+branch 41 taken 33%
+branch 42 taken 100% (fallthrough)
+branch 43 taken 0%
+branch 44 taken 0% (fallthrough)
+branch 45 taken 100%
+branch 46 taken 0% (fallthrough)
+branch 47 taken 100%
+branch 48 taken 100% (fallthrough)
+branch 49 taken 0%
+branch 50 taken 77% (fallthrough)
+branch 51 taken 23%
+branch 52 taken 29%
+branch 53 taken 71% (fallthrough)
+branch 54 taken 47% (fallthrough)
+branch 55 taken 53%
+branch 56 taken 0% (fallthrough)
+branch 57 taken 100%
+branch 58 taken 95%
+branch 59 taken 5% (fallthrough)
+branch 60 taken 0% (fallthrough)
+branch 61 taken 100%
+        -:   66:static khash_t(sym) * sym_table;
+        -:   67:
+        -:   68:static lat_objeto* str_new(const char* p, size_t len)
+        -:   69:{
+       95:   70:    lat_objeto* str = (lat_objeto*)lat_asignar_memoria(sizeof(lat_objeto));
+call    0 never executed
+call    1 returned 100%
+       95:   71:    str->type = T_STR;
+       95:   72:    str->data_size = len;
+       95:   73:    str->data.str = (char *)p;
+        -:   74:    return str;
+        -:   75:}
+        -:   76:
+function str_intern called 216 returned 100% blocks executed 100%
+      216:   77:static lat_objeto* str_intern(const char* p, size_t len)
+        -:   78:{
+        -:   79:    khiter_t k;
+        -:   80:    struct sym_key key;
+        -:   81:    int ret;
+        -:   82:    lat_objeto* str;
+      216:   83:    if (!sym_table)
+branch  0 taken 1% (fallthrough)
+branch  1 taken 99%
+        -:   84:    {
+        1:   85:        sym_table = kh_init(sym);
+        -:   86:    }
+      216:   87:    key.ptr = p;
+      216:   88:    key.len = len;
+      216:   89:    k = kh_put(sym, sym_table, key, &ret);
+call    0 returned 100%
+      216:   90:    if (ret == 0)
+branch  0 taken 56% (fallthrough)
+branch  1 taken 44%
+        -:   91:    {
+      121:   92:        return kh_value(sym_table, k);
+        -:   93:    }
+        -:   94:    str = str_new(p, len);
+       95:   95:    kh_key(sym_table, k).ptr = str->data.str;
+       95:   96:    kh_value(sym_table, k) = str;
+       95:   97:    return str;
+        -:   98:}
+        -:   99:
+function lat_cadena_hash called 216 returned 100% blocks executed 60%
+      216:  100:lat_objeto* lat_cadena_hash(const char* p, size_t len)
+        -:  101:{
+      216:  102:    if (p && (len < MAX_STR_INTERN))
+branch  0 taken 100% (fallthrough)
+branch  1 taken 0%
+        -:  103:    {
+      216:  104:        return str_intern(p, len);
+call    0 returned 100%
+        -:  105:    }
+    #####:  106:    return str_new(p, len);
+        -:  107:}
+        -:  108:
+function lat_comparar called 0 returned 0% blocks executed 0%
+    #####:  109:void lat_comparar(lat_vm* vm)
+        -:  110:{
+    #####:  111:    lat_objeto* b = lat_desapilar(vm);
+call    0 never executed
+    #####:  112:    lat_objeto* a = lat_desapilar(vm);
+call    0 never executed
+    #####:  113:    vm->registros[255] = lat_entero_nuevo(vm, strcmp(lat_obtener_cadena(a), lat_obtener_cadena(b)));
+call    0 never executed
+call    1 never executed
+call    2 never executed
+    #####:  114:}
+        -:  115:
+function lat_concatenar called 0 returned 0% blocks executed 0%
+    #####:  116:void lat_concatenar(lat_vm* vm)
+        -:  117:{
+    #####:  118:    lat_objeto* b = lat_desapilar(vm);
+call    0 never executed
+    #####:  119:    lat_objeto* a = lat_desapilar(vm);
+call    0 never executed
+        -:  120:    lat_objeto* x = NULL;
+        -:  121:    lat_objeto* y = NULL;
+    #####:  122:    switch (a->type)
+branch  0 never executed
+branch  1 never executed
+branch  2 never executed
+branch  3 never executed
+        -:  123:    {
+        -:  124:    case T_BOOL:
+    #####:  125:        x = lat_cadena_nueva(vm, bool2str(a->data.b));
+call    0 never executed
+call    1 never executed
+    #####:  126:        break;
+        -:  127:    case T_INT:
+    #####:  128:        x = lat_cadena_nueva(vm, int2str(a->data.i));
+call    0 never executed
+call    1 never executed
+    #####:  129:        break;
+        -:  130:    case T_DOUBLE:
+    #####:  131:        x = lat_cadena_nueva(vm, double2str(a->data.d));
+call    0 never executed
+call    1 never executed
+    #####:  132:        break;
+        -:  133:    default:
+    #####:  134:        x = lat_cadena_nueva(vm, a->data.str);
+call    0 never executed
+    #####:  135:        break;
+        -:  136:    }
+        -:  137:
+    #####:  138:    switch (b->type)
+branch  0 never executed
+branch  1 never executed
+branch  2 never executed
+branch  3 never executed
+        -:  139:    {
+        -:  140:    case T_BOOL:
+    #####:  141:        y = lat_cadena_nueva(vm, bool2str(b->data.b));
+call    0 never executed
+call    1 never executed
+    #####:  142:        break;
+        -:  143:    case T_INT:
+    #####:  144:        y = lat_cadena_nueva(vm, int2str(b->data.i));
+call    0 never executed
+call    1 never executed
+    #####:  145:        break;
+        -:  146:    case T_DOUBLE:
+    #####:  147:        y = lat_cadena_nueva(vm, double2str(b->data.d));
+call    0 never executed
+call    1 never executed
+    #####:  148:        break;
+        -:  149:    default:
+    #####:  150:        y = lat_cadena_nueva(vm, b->data.str);
+call    0 never executed
+    #####:  151:        break;
+        -:  152:    }
+    #####:  153:    vm->registros[255] = lat_cadena_nueva(vm, concat(lat_obtener_cadena(x), lat_obtener_cadena(y)));
+call    0 never executed
+call    1 never executed
+call    2 never executed
+call    3 never executed
+    #####:  154:}
+        -:  155:
+function lat_contiene called 0 returned 0% blocks executed 0%
+    #####:  156:void lat_contiene(lat_vm* vm)
+        -:  157:{
+    #####:  158:    lat_objeto* b = lat_desapilar(vm);
+call    0 never executed
+    #####:  159:    lat_objeto* a = lat_desapilar(vm);
+call    0 never executed
+    #####:  160:    char *result = strstr(lat_obtener_cadena(a), lat_obtener_cadena(b));
+call    0 never executed
+call    1 never executed
+    #####:  161:    if (result != NULL)
+branch  0 never executed
+branch  1 never executed
+        -:  162:    {
+    #####:  163:        vm->registros[255] = vm->objeto_cierto;
+        -:  164:    }
+        -:  165:    else
+        -:  166:    {
+    #####:  167:        vm->registros[255] = vm->objeto_falso;
+        -:  168:    }
+    #####:  169:}
+        -:  170:
+function lat_copiar called 0 returned 0% blocks executed 0%
+    #####:  171:void lat_copiar(lat_vm* vm)
+        -:  172:{
+    #####:  173:    lat_objeto* b = lat_desapilar(vm);
+call    0 never executed
+    #####:  174:    vm->registros[255] = lat_clonar_objeto(vm, b);
+call    0 never executed
+    #####:  175:}
+        -:  176:
+function lat_termina_con called 0 returned 0% blocks executed 0%
+    #####:  177:void lat_termina_con(lat_vm* vm)
+        -:  178:{
+    #####:  179:    lat_objeto* b = lat_desapilar(vm);
+call    0 never executed
+    #####:  180:    lat_objeto* a = lat_desapilar(vm);
+call    0 never executed
+    #####:  181:    if (endsWith(lat_obtener_cadena(a), lat_obtener_cadena(b)))
+call    0 never executed
+call    1 never executed
+call    2 never executed
+branch  3 never executed
+branch  4 never executed
+        -:  182:    {
+    #####:  183:        vm->registros[255] = vm->objeto_cierto;
+        -:  184:    }
+        -:  185:    else
+        -:  186:    {
+    #####:  187:        vm->registros[255] = vm->objeto_falso;
+        -:  188:    }
+    #####:  189:}
+        -:  190:
+function lat_es_igual called 0 returned 0% blocks executed 0%
+    #####:  191:void lat_es_igual(lat_vm* vm)
+        -:  192:{
+    #####:  193:    lat_objeto* b = lat_desapilar(vm);
+call    0 never executed
+    #####:  194:    lat_objeto* a = lat_desapilar(vm);
+call    0 never executed
+    #####:  195:    if (strcmp(lat_obtener_cadena(a), lat_obtener_cadena(b)) == 0)
+call    0 never executed
+call    1 never executed
+branch  2 never executed
+branch  3 never executed
+        -:  196:    {
+    #####:  197:        vm->registros[255] = vm->objeto_cierto;
+        -:  198:    }
+        -:  199:    else
+        -:  200:    {
+    #####:  201:        vm->registros[255] = vm->objeto_falso;
+        -:  202:    }
+    #####:  203:}
+        -:  204:
+        -:  205:/*
+        -:  206:void lat_format(lat_vm* vm){
+        -:  207:
+        -:  208:}
+        -:  209:*/
+        -:  210:
+function lat_indice called 0 returned 0% blocks executed 0%
+    #####:  211:void lat_indice(lat_vm* vm)
+        -:  212:{
+    #####:  213:    lat_objeto* b = lat_desapilar(vm);
+call    0 never executed
+    #####:  214:    lat_objeto* a = lat_desapilar(vm);
+call    0 never executed
+    #####:  215:    vm->registros[255] = lat_entero_nuevo(vm, indexOf(lat_obtener_cadena(a), lat_obtener_cadena(b)));
+call    0 never executed
+call    1 never executed
+call    2 never executed
+call    3 never executed
+    #####:  216:}
+        -:  217:
+function lat_insertar called 0 returned 0% blocks executed 0%
+    #####:  218:void lat_insertar(lat_vm* vm)
+        -:  219:{
+    #####:  220:    lat_objeto* c = lat_desapilar(vm);
+call    0 never executed
+    #####:  221:    lat_objeto* b = lat_desapilar(vm);
+call    0 never executed
+    #####:  222:    lat_objeto* a = lat_desapilar(vm);
+call    0 never executed
+    #####:  223:    vm->registros[255] = lat_cadena_nueva(vm, insert(lat_obtener_cadena(a), lat_obtener_cadena(b), lat_obtener_entero(c)));
+call    0 never executed
+call    1 never executed
+call    2 never executed
+call    3 never executed
+call    4 never executed
+    #####:  224:}
+        -:  225:
+function lat_ultimo_indice called 0 returned 0% blocks executed 0%
+    #####:  226:void lat_ultimo_indice(lat_vm* vm)
+        -:  227:{
+    #####:  228:    lat_objeto* b = lat_desapilar(vm);
+call    0 never executed
+    #####:  229:    lat_objeto* a = lat_desapilar(vm);
+call    0 never executed
+    #####:  230:    vm->registros[255] = lat_entero_nuevo(vm, lastIndexOf(lat_obtener_cadena(a), lat_obtener_cadena(b)));
+call    0 never executed
+call    1 never executed
+call    2 never executed
+call    3 never executed
+    #####:  231:}
+        -:  232:
+function lat_rellenar_izquierda called 0 returned 0% blocks executed 0%
+    #####:  233:void lat_rellenar_izquierda(lat_vm* vm)
+        -:  234:{
+    #####:  235:    lat_objeto* c = lat_desapilar(vm);
+call    0 never executed
+    #####:  236:    lat_objeto* b = lat_desapilar(vm);
+call    0 never executed
+    #####:  237:    lat_objeto* a = lat_desapilar(vm);
+call    0 never executed
+    #####:  238:    vm->registros[255] = lat_cadena_nueva(vm, padLeft(lat_obtener_cadena(a), lat_obtener_entero(b), lat_obtener_literal(c)));
+call    0 never executed
+call    1 never executed
+call    2 never executed
+call    3 never executed
+call    4 never executed
+    #####:  239:}
+        -:  240:
+function lat_rellenar_derecha called 0 returned 0% blocks executed 0%
+    #####:  241:void lat_rellenar_derecha(lat_vm* vm)
+        -:  242:{
+    #####:  243:    lat_objeto* c = lat_desapilar(vm);
+call    0 never executed
+    #####:  244:    lat_objeto* b = lat_desapilar(vm);
+call    0 never executed
+    #####:  245:    lat_objeto* a = lat_desapilar(vm);
+call    0 never executed
+    #####:  246:    vm->registros[255] = lat_cadena_nueva(vm, padRight(lat_obtener_cadena(a), lat_obtener_entero(b), lat_obtener_literal(c)));
+call    0 never executed
+call    1 never executed
+call    2 never executed
+call    3 never executed
+call    4 never executed
+    #####:  247:}
+        -:  248:
+function lat_eliminar called 0 returned 0% blocks executed 0%
+    #####:  249:void lat_eliminar(lat_vm* vm)
+        -:  250:{
+    #####:  251:    lat_objeto* b = lat_desapilar(vm);
+call    0 never executed
+    #####:  252:    lat_objeto* a = lat_desapilar(vm);
+call    0 never executed
+    #####:  253:    if(a->type == T_STR || a->type == T_LIT)
+branch  0 never executed
+branch  1 never executed
+        -:  254:    {
+    #####:  255:        vm->registros[255] = lat_cadena_nueva(vm, replace(lat_obtener_cadena(a), lat_obtener_cadena(b), ""));
+call    0 never executed
+call    1 never executed
+call    2 never executed
+call    3 never executed
+        -:  256:    }
+    #####:  257:    if(a->type == T_LIST)
+branch  0 never executed
+branch  1 never executed
+        -:  258:    {
+    #####:  259:        remove_list(a->data.lista, b);
+call    0 never executed
+        -:  260:    }
+    #####:  261:}
+        -:  262:
+function lat_esta_vacia called 0 returned 0% blocks executed 0%
+    #####:  263:void lat_esta_vacia(lat_vm* vm)
+        -:  264:{
+    #####:  265:    lat_objeto* a = lat_desapilar(vm);
+call    0 never executed
+    #####:  266:    if (strcmp(lat_obtener_cadena(a), "") == 0)
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+        -:  267:    {
+    #####:  268:        vm->registros[255] = vm->objeto_cierto;
+        -:  269:    }
+        -:  270:    else
+        -:  271:    {
+    #####:  272:        vm->registros[255] = vm->objeto_falso;
+        -:  273:    }
+    #####:  274:}
+        -:  275:
+function lat_longitud called 0 returned 0% blocks executed 0%
+    #####:  276:void lat_longitud(lat_vm* vm)
+        -:  277:{
+    #####:  278:    lat_objeto* a = lat_desapilar(vm);
+call    0 never executed
+    #####:  279:    vm->registros[255] = lat_entero_nuevo(vm, strlen(lat_obtener_cadena(a)));
+call    0 never executed
+call    1 never executed
+    #####:  280:}
+        -:  281:
+function lat_reemplazar called 0 returned 0% blocks executed 0%
+    #####:  282:void lat_reemplazar(lat_vm* vm)
+        -:  283:{
+    #####:  284:    lat_objeto* c = lat_desapilar(vm);
+call    0 never executed
+    #####:  285:    lat_objeto* b = lat_desapilar(vm);
+call    0 never executed
+    #####:  286:    lat_objeto* a = lat_desapilar(vm);
+call    0 never executed
+    #####:  287:    vm->registros[255] = lat_cadena_nueva(vm, replace(lat_obtener_cadena(a), lat_obtener_cadena(b), lat_obtener_cadena(c)));
+call    0 never executed
+call    1 never executed
+call    2 never executed
+call    3 never executed
+call    4 never executed
+    #####:  288:}
+        -:  289:
+function lat_empieza_con called 0 returned 0% blocks executed 0%
+    #####:  290:void lat_empieza_con(lat_vm* vm)
+        -:  291:{
+    #####:  292:    lat_objeto* b = lat_desapilar(vm);
+call    0 never executed
+    #####:  293:    lat_objeto* a = lat_desapilar(vm);
+call    0 never executed
+    #####:  294:    if (startsWith(lat_obtener_cadena(a), lat_obtener_cadena(b)))
+call    0 never executed
+call    1 never executed
+call    2 never executed
+branch  3 never executed
+branch  4 never executed
+        -:  295:    {
+    #####:  296:        vm->registros[255] = vm->objeto_cierto;
+        -:  297:    }
+        -:  298:    else
+        -:  299:    {
+    #####:  300:        vm->registros[255] = vm->objeto_falso;
+        -:  301:    }
+    #####:  302:}
+        -:  303:
+function lat_subcadena called 0 returned 0% blocks executed 0%
+    #####:  304:void lat_subcadena(lat_vm* vm)
+        -:  305:{
+    #####:  306:    lat_objeto* c = lat_desapilar(vm);
+call    0 never executed
+    #####:  307:    lat_objeto* b = lat_desapilar(vm);
+call    0 never executed
+    #####:  308:    lat_objeto* a = lat_desapilar(vm);
+call    0 never executed
+    #####:  309:    vm->registros[255] = lat_cadena_nueva(vm, substring(lat_obtener_cadena(a), lat_obtener_entero(b), lat_obtener_entero(c)));
+call    0 never executed
+call    1 never executed
+call    2 never executed
+call    3 never executed
+call    4 never executed
+    #####:  310:}
+        -:  311:
+function lat_minusculas called 0 returned 0% blocks executed 0%
+    #####:  312:void lat_minusculas(lat_vm* vm)
+        -:  313:{
+    #####:  314:    lat_objeto* a = lat_desapilar(vm);
+call    0 never executed
+    #####:  315:    vm->registros[255] = lat_cadena_nueva(vm, toLower(lat_obtener_cadena(a)));
+call    0 never executed
+call    1 never executed
+call    2 never executed
+    #####:  316:}
+        -:  317:
+function lat_mayusculas called 0 returned 0% blocks executed 0%
+    #####:  318:void lat_mayusculas(lat_vm* vm)
+        -:  319:{
+    #####:  320:    lat_objeto* a = lat_desapilar(vm);
+call    0 never executed
+    #####:  321:    vm->registros[255] = lat_cadena_nueva(vm, toUpper(lat_obtener_cadena(a)));
+call    0 never executed
+call    1 never executed
+call    2 never executed
+    #####:  322:}
+        -:  323:
+function lat_quitar_espacios called 0 returned 0% blocks executed 0%
+    #####:  324:void lat_quitar_espacios(lat_vm* vm)
+        -:  325:{
+    #####:  326:    lat_objeto* a = lat_desapilar(vm);
+call    0 never executed
+    #####:  327:    vm->registros[255] = lat_cadena_nueva(vm, trim(lat_obtener_cadena(a)));
+call    0 never executed
+call    1 never executed
+call    2 never executed
+    #####:  328:}
