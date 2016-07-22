@@ -32,9 +32,9 @@ before_install:
     - g++ --version
 script:
     - if [ $TRAVIS_OS_NAME == "linux" ]; then
-        ./compilar_gcc.sh
+        ./compilar_gcc.sh;
       elif [ $TRAVIS_OS_NAME == "osx" ]; then
-        ./compilar_clang.sh
+        ./compilar_clang.sh;
       fi
 after_success:
     - bash <(curl -s https://codecov.io/bash)
