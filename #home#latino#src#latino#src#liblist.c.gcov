@@ -1,0 +1,22 @@
+        -:    0:Source:/home/latino/src/latino/src/liblist.c
+        -:    0:Programs:13
+        -:    1:#include "liblist.h"
+        -:    2:#include "latino.h"
+        -:    3:
+function lat_agregar called 0 returned 0% blocks executed 0%
+    #####:    4:void lat_agregar(lat_vm *vm){
+    #####:    5:    lat_objeto *elem = lat_desapilar(vm);
+call    0 never executed
+    #####:    6:    lat_objeto *lst = lat_desapilar(vm);
+call    0 never executed
+    #####:    7:    list_node *actual = lst->data.lista;
+        -:    8:    /*vamos al nodo final para agregar el elemento*/
+    #####:    9:    while(actual->next != NULL){
+branch  0 never executed
+branch  1 never executed
+        -:   10:        actual = actual->next;
+        -:   11:    }
+        -:   12:    //lat_apilar_lista(actual, elem);
+    #####:   13:    insert_list(actual, elem);
+call    0 never executed
+    #####:   14:}

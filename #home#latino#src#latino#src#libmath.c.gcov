@@ -1,0 +1,255 @@
+        -:    0:Source:/home/latino/src/latino/src/libmath.c
+        -:    0:Programs:13
+        -:    1:/*
+        -:    2:The MIT License (MIT)
+        -:    3:
+        -:    4:Copyright (c) 2015 - Latino
+        -:    5:
+        -:    6:Permission is hereby granted, free of charge, to any person obtaining a copy
+        -:    7:of this software and associated documentation files (the "Software"), to deal
+        -:    8:in the Software without restriction, including without limitation the rights
+        -:    9:to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+        -:   10:copies of the Software, and to permit persons to whom the Software is
+        -:   11:furnished to do so, subject to the following conditions:
+        -:   12:
+        -:   13:The above copyright notice and this permission notice shall be included in
+        -:   14:all copies or substantial portions of the Software.
+        -:   15:
+        -:   16:THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+        -:   17:IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+        -:   18:FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+        -:   19:AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+        -:   20:LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+        -:   21:OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+        -:   22:THE SOFTWARE.
+        -:   23:*/
+        -:   24:
+        -:   25:#include <math.h>
+        -:   26:#include "libmath.h"
+        -:   27:#include "vm.h"
+        -:   28:
+function lat_arco_coseno called 0 returned 0% blocks executed 0%
+    #####:   29:void lat_arco_coseno(lat_vm *vm)
+        -:   30:{
+    #####:   31:    lat_objeto *a = lat_desapilar(vm);
+call    0 never executed
+    #####:   32:    vm->registros[255] = lat_decimal_nuevo(vm, acos(lat_obtener_decimal(a)));
+call    0 never executed
+call    1 never executed
+    #####:   33:}
+        -:   34:
+function lat_arco_seno called 0 returned 0% blocks executed 0%
+    #####:   35:void lat_arco_seno(lat_vm *vm)
+        -:   36:{
+    #####:   37:    lat_objeto *a = lat_desapilar(vm);
+call    0 never executed
+    #####:   38:    vm->registros[255] = lat_decimal_nuevo(vm, asin(lat_obtener_decimal(a)));
+call    0 never executed
+call    1 never executed
+    #####:   39:}
+        -:   40:
+function lat_arco_tangente called 0 returned 0% blocks executed 0%
+    #####:   41:void lat_arco_tangente(lat_vm *vm)
+        -:   42:{
+    #####:   43:    lat_objeto *a = lat_desapilar(vm);
+call    0 never executed
+    #####:   44:    vm->registros[255] = lat_decimal_nuevo(vm, atan(lat_obtener_decimal(a)));
+call    0 never executed
+call    1 never executed
+    #####:   45:}
+        -:   46:
+function lat_arco_tangente2 called 0 returned 0% blocks executed 0%
+    #####:   47:void lat_arco_tangente2(lat_vm *vm)
+        -:   48:{
+    #####:   49:    lat_objeto *a = lat_desapilar(vm);
+call    0 never executed
+    #####:   50:    lat_objeto *b = lat_desapilar(vm);
+call    0 never executed
+    #####:   51:    vm->registros[255] =
+    #####:   52:        lat_decimal_nuevo(vm, atan2(lat_obtener_decimal(a), lat_obtener_decimal(b)));
+call    0 never executed
+call    1 never executed
+call    2 never executed
+    #####:   53:}
+        -:   54:
+function lat_coseno called 0 returned 0% blocks executed 0%
+    #####:   55:void lat_coseno(lat_vm *vm)
+        -:   56:{
+    #####:   57:    lat_objeto *a = lat_desapilar(vm);
+call    0 never executed
+    #####:   58:    vm->registros[255] = lat_decimal_nuevo(vm, cos(lat_obtener_decimal(a)));
+call    0 never executed
+call    1 never executed
+    #####:   59:}
+        -:   60:
+function lat_coseno_hiperbolico called 0 returned 0% blocks executed 0%
+    #####:   61:void lat_coseno_hiperbolico(lat_vm *vm)
+        -:   62:{
+    #####:   63:    lat_objeto *a = lat_desapilar(vm);
+call    0 never executed
+    #####:   64:    vm->registros[255] = lat_decimal_nuevo(vm, cosh(lat_obtener_decimal(a)));
+call    0 never executed
+call    1 never executed
+    #####:   65:}
+        -:   66:
+function lat_seno called 0 returned 0% blocks executed 0%
+    #####:   67:void lat_seno(lat_vm *vm)
+        -:   68:{
+    #####:   69:    lat_objeto *a = lat_desapilar(vm);
+call    0 never executed
+    #####:   70:    vm->registros[255] = lat_decimal_nuevo(vm, sin(lat_obtener_decimal(a)));
+call    0 never executed
+call    1 never executed
+    #####:   71:}
+        -:   72:
+function lat_seno_hiperbolico called 0 returned 0% blocks executed 0%
+    #####:   73:void lat_seno_hiperbolico(lat_vm *vm)
+        -:   74:{
+    #####:   75:    lat_objeto *a = lat_desapilar(vm);
+call    0 never executed
+    #####:   76:    vm->registros[255] = lat_decimal_nuevo(vm, sinh(lat_obtener_decimal(a)));
+call    0 never executed
+call    1 never executed
+    #####:   77:}
+        -:   78:
+function lat_tangente called 0 returned 0% blocks executed 0%
+    #####:   79:void lat_tangente(lat_vm *vm)
+        -:   80:{
+    #####:   81:    lat_objeto *a = lat_desapilar(vm);
+call    0 never executed
+    #####:   82:    vm->registros[255] = lat_decimal_nuevo(vm, tan(lat_obtener_decimal(a)));
+call    0 never executed
+call    1 never executed
+    #####:   83:}
+        -:   84:
+function lat_tangente_hiperbolica called 0 returned 0% blocks executed 0%
+    #####:   85:void lat_tangente_hiperbolica(lat_vm *vm)
+        -:   86:{
+    #####:   87:    lat_objeto *a = lat_desapilar(vm);
+call    0 never executed
+    #####:   88:    vm->registros[255] = lat_decimal_nuevo(vm, tanh(lat_obtener_decimal(a)));
+call    0 never executed
+call    1 never executed
+    #####:   89:}
+        -:   90:
+function lat_exponente called 0 returned 0% blocks executed 0%
+    #####:   91:void lat_exponente(lat_vm *vm)
+        -:   92:{
+    #####:   93:    lat_objeto *a = lat_desapilar(vm);
+call    0 never executed
+    #####:   94:    vm->registros[255] = lat_decimal_nuevo(vm, exp(lat_obtener_decimal(a)));
+call    0 never executed
+call    1 never executed
+    #####:   95:}
+        -:   96:
+        -:   97:/*
+        -:   98:void lat_frexp(lat_vm *vm){
+        -:   99:  lat_objeto *a = lat_desapilar(vm);
+        -:  100:  vm->registros[255] = lat_decimal_nuevo(vm, frexp(lat_obtener_decimal(a)));
+        -:  101:}
+        -:  102:*/
+        -:  103:
+        -:  104:/*
+        -:  105:void lat_ldexp(lat_vm* vm)
+        -:  106:{
+        -:  107:  lat_objeto* a = lat_desapilar(vm);
+        -:  108:  lat_objeto* b = lat_desapilar(vm);
+        -:  109:  vm->registros[255] = lat_decimal_nuevo(vm, ldexp(lat_obtener_decimal(a),
+        -:  110:lat_obtener_entero(b)));
+        -:  111:}
+        -:  112:*/
+        -:  113:
+function lat_logaritmo_natural called 0 returned 0% blocks executed 0%
+    #####:  114:void lat_logaritmo_natural(lat_vm *vm)
+        -:  115:{
+    #####:  116:    lat_objeto *a = lat_desapilar(vm);
+call    0 never executed
+    #####:  117:    vm->registros[255] = lat_decimal_nuevo(vm, log(lat_obtener_decimal(a)));
+call    0 never executed
+call    1 never executed
+    #####:  118:}
+        -:  119:
+function lat_logaritmo_base10 called 0 returned 0% blocks executed 0%
+    #####:  120:void lat_logaritmo_base10(lat_vm *vm)
+        -:  121:{
+    #####:  122:    lat_objeto *a = lat_desapilar(vm);
+call    0 never executed
+    #####:  123:    vm->registros[255] = lat_decimal_nuevo(vm, log10(lat_obtener_decimal(a)));
+call    0 never executed
+call    1 never executed
+    #####:  124:}
+        -:  125:
+        -:  126:/*
+        -:  127:void lat_modf(lat_vm *vm){
+        -:  128:  lat_objeto *a = lat_desapilar(vm);
+        -:  129:  vm->registros[255] = lat_decimal_nuevo(vm, modf(lat_obtener_decimal(a)));
+        -:  130:}
+        -:  131:*/
+        -:  132:
+function lat_potencia called 0 returned 0% blocks executed 0%
+    #####:  133:void lat_potencia(lat_vm *vm)
+        -:  134:{
+    #####:  135:    lat_objeto *a = lat_desapilar(vm);
+call    0 never executed
+    #####:  136:    lat_objeto *b = lat_desapilar(vm);
+call    0 never executed
+    #####:  137:    vm->registros[255] =
+    #####:  138:        lat_decimal_nuevo(vm, pow(lat_obtener_decimal(a), lat_obtener_decimal(b)));
+call    0 never executed
+call    1 never executed
+call    2 never executed
+    #####:  139:}
+        -:  140:
+function lat_raiz_cuadrada called 0 returned 0% blocks executed 0%
+    #####:  141:void lat_raiz_cuadrada(lat_vm *vm)
+        -:  142:{
+    #####:  143:    lat_objeto *a = lat_desapilar(vm);
+call    0 never executed
+    #####:  144:    vm->registros[255] = lat_decimal_nuevo(vm, sqrt(lat_obtener_decimal(a)));
+call    0 never executed
+call    1 never executed
+    #####:  145:}
+        -:  146:
+function lat_redondear_arriba called 0 returned 0% blocks executed 0%
+    #####:  147:void lat_redondear_arriba(lat_vm *vm)
+        -:  148:{
+    #####:  149:    lat_objeto *a = lat_desapilar(vm);
+call    0 never executed
+    #####:  150:    vm->registros[255] = lat_decimal_nuevo(vm, ceil(lat_obtener_decimal(a)));
+call    0 never executed
+call    1 never executed
+    #####:  151:}
+        -:  152:
+function lat_valor_absoluto called 0 returned 0% blocks executed 0%
+    #####:  153:void lat_valor_absoluto(lat_vm *vm)
+        -:  154:{
+    #####:  155:    lat_objeto *a = lat_desapilar(vm);
+call    0 never executed
+    #####:  156:    vm->registros[255] = lat_decimal_nuevo(vm, fabs(lat_obtener_decimal(a)));
+call    0 never executed
+call    1 never executed
+    #####:  157:}
+        -:  158:
+function lat_redondeo_abajo called 0 returned 0% blocks executed 0%
+    #####:  159:void lat_redondeo_abajo(lat_vm *vm)
+        -:  160:{
+    #####:  161:    lat_objeto *a = lat_desapilar(vm);
+call    0 never executed
+    #####:  162:    vm->registros[255] = lat_decimal_nuevo(vm, floor(lat_obtener_decimal(a)));
+call    0 never executed
+call    1 never executed
+    #####:  163:}
+        -:  164:
+function lat_modulo_decimal called 0 returned 0% blocks executed 0%
+    #####:  165:void lat_modulo_decimal(lat_vm *vm)
+        -:  166:{
+    #####:  167:    lat_objeto *a = lat_desapilar(vm);
+call    0 never executed
+    #####:  168:    lat_objeto *b = lat_desapilar(vm);
+call    0 never executed
+    #####:  169:    vm->registros[255] =
+    #####:  170:        lat_decimal_nuevo(vm, fmod(lat_obtener_decimal(a), lat_obtener_decimal(b)));
+call    0 never executed
+call    1 never executed
+call    2 never executed
+    #####:  171:}

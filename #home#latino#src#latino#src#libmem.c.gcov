@@ -1,0 +1,65 @@
+        -:    0:Source:/home/latino/src/latino/src/libmem.c
+        -:    0:Programs:13
+        -:    1:/*
+        -:    2:The MIT License (MIT)
+        -:    3:
+        -:    4:Copyright (c) 2015 - Latino
+        -:    5:
+        -:    6:Permission is hereby granted, free of charge, to any person obtaining a copy
+        -:    7:of this software and associated documentation files (the "Software"), to deal
+        -:    8:in the Software without restriction, including without limitation the rights
+        -:    9:to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+        -:   10:copies of the Software, and to permit persons to whom the Software is
+        -:   11:furnished to do so, subject to the following conditions:
+        -:   12:
+        -:   13:The above copyright notice and this permission notice shall be included in
+        -:   14:all copies or substantial portions of the Software.
+        -:   15:
+        -:   16:THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+        -:   17:IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+        -:   18:FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+        -:   19:AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+        -:   20:LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+        -:   21:OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+        -:   22:THE SOFTWARE.
+        -:   23:*/
+        -:   24:
+        -:   25:#include <stdio.h>
+        -:   26:
+        -:   27:#include "libmem.h"
+        -:   28:#include "utils.h"
+        -:   29:
+function lat_asignar_memoria called 2527 returned 100% blocks executed 67%
+     2527:   30:void* lat_asignar_memoria(size_t size)
+        -:   31:{
+     2527:   32:    void* value = malloc(size);
+     2527:   33:    if (value == 0)
+branch  0 taken 0% (fallthrough)
+branch  1 taken 100%
+    #####:   34:        lat_registrar_error("Memoria virtual agotada\n");
+call    0 never executed
+     2527:   35:    return value;
+        -:   36:}
+        -:   37:
+function lat_reasignar_memoria called 0 returned 0% blocks executed 0%
+    #####:   38:void* lat_reasignar_memoria(void* ptr, size_t size)
+        -:   39:{
+    #####:   40:    void* value = realloc(ptr, size);
+    #####:   41:    if (value == 0)
+branch  0 never executed
+branch  1 never executed
+    #####:   42:        lat_registrar_error("Memoria virtual agotada\n");
+call    0 never executed
+    #####:   43:    return value;
+        -:   44:}
+        -:   45:
+function lat_liberar_memoria called 225 returned 100% blocks executed 100%
+      225:   46:void lat_liberar_memoria(void* ptr)
+        -:   47:{
+      225:   48:    if (ptr != NULL)
+branch  0 taken 79% (fallthrough)
+branch  1 taken 21%
+        -:   49:    {
+      178:   50:        free(ptr);
+        -:   51:    }
+      225:   52:}
