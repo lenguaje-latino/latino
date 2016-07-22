@@ -42,10 +42,22 @@ add_test (NAME 21-operador_ternario COMMAND latino ejemplos/21-operador_ternario
 #add_test (NAME test24 COMMAND latino ejemplos/24-diccionarios.lat)
 
 
-if (CMAKE_BUILD_TYPE STREQUAL "Coverage")
-    include(CodeCoverage)
-    setup_target_for_coverage(${PROJECT}_coverage ${PROJECT_TEST_NAME} coverage)
+#if (CMAKE_BUILD_TYPE STREQUAL "Coverage")
+#    include(CodeCoverage)
+#    setup_target_for_coverage(${PROJECT}_coverage ${PROJECT_TEST_NAME} coverage)
+#
+#    SET(CMAKE_CXX_FLAGS "-g -O0 -fprofile-arcs -ftest-coverage -coverage")
+#    SET(CMAKE_C_FLAGS "-g -O0 -fprofile-arcs -ftest-coverage -coverage")
+#endif() #CMAKE_BUILD_TYPE STREQUAL "Coverage"
 
-    SET(CMAKE_CXX_FLAGS "-g -O0 -fprofile-arcs -ftest-coverage -coverage")
-    SET(CMAKE_C_FLAGS "-g -O0 -fprofile-arcs -ftest-coverage -coverage")
-endif() #CMAKE_BUILD_TYPE STREQUAL "Coverage"
+set(GCOV "gcov")
+if(DEFINED ENV{GCOV})
+  set(GCOV $ENV{GCOV})
+endif()
+add_custom_target(coverage
+  COMMAND lcov --gcov-tool ${GCOV} --capture --directory . --output-file coverage.info
+  COMMAND lcov --gcov-tool ${GCOV} --remove coverage.info "/usr/*" "*/test/*" --output-file coverage.info
+  COMMAND lcov --gcov-tool ${GCOV} --list coverage.info
+  COMMAND genhtml coverage.info --output-directory ./coverage
+  WORKING_DIRECTORY ${CMAKE_BINARY_DIR}
+  VERBATIM)
