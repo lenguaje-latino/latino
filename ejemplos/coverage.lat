@@ -73,6 +73,92 @@ escribir(d / i) #da como resultado el entero 10
 #decimal / decimal
 escribir(d / 0.5) #da como resultado el decimal 20.1
 
+escribir("############## modulo ###############")
+#entero % entero
+escribir(i % i) #da como resultado el entero 0
+
+i = 21
+#entero % decimal
+escribir(i % d) #da como resultado el entero 1
+
+
+####################################################################
+#test coverage para "operadores de comparacion en latino"
+####################################################################
+l = verdadero
+e = 10
+d = 3.14
+lit = 'esto es una "literal"'
+cad = "esto es una 'cadena'"
+#comparador de negacion !
+escribir("comparador de negacion !")
+escribir(" no falso: " . !falso)
+escribir(" no verdadero: " . !verdadero)
+#comparador de igualdad ==
+escribir("comparador de igualdad ==")
+escribir(l . " == falso: " . l == falso)
+escribir(e . " == 10: " . e == 10)
+escribir(d . " == 3.0: " . d == 3.0)
+escribir(lit . " == 'hola': " . lit == 'hola')
+escribir(cad . " == esto es una 'cadena': " . cad == "esto es una 'cadena'")
+escribir("----------------------------------------------------------------")
+#comparador de desigualdad !=
+escribir("comparador de desigualdad !=")
+escribir(l . " != falso: " . l != falso)
+escribir(e . " != 10: " . e != 10)
+escribir(d . " != 3.0: " . d != 3.0)
+escribir(lit . " != 'hola': " . lit != 'hola')
+escribir(cad . " != esto es una 'cadena': " . cad != "esto es una 'cadena'")
+escribir("----------------------------------------------------------------")
+#comparador menor que <
+escribir("comparador menor que <")
+escribir(e . " < 10: " . e < 10)
+escribir(d . " < 3.0: " . d < 3.0)
+escribir(lit . " < 'hola': " . lit < 'hola')
+escribir(cad . " < esto es una 'cadena': " . cad < "esto es una 'cadena'")
+escribir("----------------------------------------------------------------")
+#comparador mayor que >
+escribir("comparador mayor que >")
+escribir(e . " > 10: " . e > 10)
+escribir(d . " > 3.0: " . d > 3.0)
+escribir(lit . " > 'hola': " . lit > 'hola')
+escribir(cad . " > esto es una 'cadena': " . cad > "esto es una 'cadena'")
+escribir("----------------------------------------------------------------")
+#comparador menor igual que <=
+escribir("comparador menor igual que <=")
+escribir(e . " <= 10: " . e <= 10)
+escribir(d . " <= 3.0: " . d <= 3.0)
+escribir(lit . " <= 'hola': " . lit <= 'hola')
+escribir(cad . " <= esto es una 'cadena': " . cad <= "esto es una 'cadena'")
+escribir("----------------------------------------------------------------")
+#comparador mayor igual que >=
+escribir("comparador mayor igual que >=")
+escribir(e . " >= 10: " . e >= 10)
+escribir(d . " >= 3.0: " . d >= 3.0)
+escribir(lit . " >= 'hola': " . lit >= 'hola')
+escribir(cad . " >= esto es una 'cadena': " . cad >= "esto es una 'cadena'")
+
+####################################################################
+#test coverage para "operadores logicos en Latino"
+####################################################################
+v = verdadero
+f = falso
+#&& y (and) logico
+escribir("&& y (and) logico")
+escribir("falso y falso: " . f && f)
+escribir("verdadero y falso: " . v && f)
+escribir("falso y verdadero: " . f && v)
+escribir("verdadero y verdadero: " . v && v)
+
+#|| o (or) logico
+escribir("=============================")
+escribir("|| o (or) logico")
+escribir("falso o falso: " . f || f)
+escribir("verdadero o falso: " . v || f)
+escribir("falso o verdadero: " . f || v)
+escribir("verdadero o verdadero: " . v || v)
+
+
 ####################################################################
 #test coverage para "si"
 ####################################################################
@@ -94,6 +180,24 @@ mientras i < 10
     escribir(i)
     i++     #esto es lo mismo que i = i + 1
 fin
+
+####################################################################
+#test coverage para "hacer"
+####################################################################
+i = 0
+hacer
+    escribir(i)
+    i++
+cuando i < 10
+
+####################################################################
+#test coverage para "desde" y "decremento"
+####################################################################
+escribir("10 a 1:")
+desde(i=10; i>0; i--)
+    escribir(i)
+fin
+
 
 ####################################################################
 #test coverage para "funciones"
@@ -121,3 +225,19 @@ fin
 imprimir(promedio(3, 5)) #4
 imprimir(max(3, 5)) #5
 imprimir(min(3, 5)) #3
+
+####################################################################
+#test coverage para "escribir_archivo"
+####################################################################
+s = "funcion sumatoria(a, b)
+  retorno (a + b)
+fin"
+
+escribir_archivo("modulo.lat", s)
+
+####################################################################
+#test coverage para "incluir"
+####################################################################
+incluir "modulo"
+r = sumatoria(2, 3)
+escribir(r)
