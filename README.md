@@ -38,6 +38,21 @@ Leer LICENSE.txt
 ###INSTALAR
 
 #####Instalar en Linux
+
+Cualquier versión de linux
+
+```
+ git clone https://github.com/primitivorm/latino
+ cd latino
+ cmake .
+ make
+ sudo make install
+ 
+```
+
+
+#####Otras opciones para instalar en Linux
+
 Para instalar en Linux hay dos formas de hacerlo, la primera es con el install (automático y con utilidades) y la segunda es manualmente.
 
 Para obtener el instalador ejecute el siguiente comando en su terminal.
@@ -70,12 +85,6 @@ wget https://github.com/primitivorm/latino/raw/master/install && chmod +x instal
  ./install --all
  ./install --clonar # Clona el repositorio (opcional)
  
- # Ó forma manual, mismo proceso.
- git clone https://github.com/primitivorm/latino
- cd latino
- cmake .
- make
- sudo make install
 ```
 
 ---
