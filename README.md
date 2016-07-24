@@ -39,7 +39,7 @@ Leer LICENSE.txt
 
 #####Instalar en Linux
 
-Cualquier versión de linux
+Cualquier versión/distribución de linux
 
 ```
  git clone https://github.com/primitivorm/latino
