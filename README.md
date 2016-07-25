@@ -139,6 +139,9 @@ https://www.microsoft.com/en-us/download/details.aspx?id=49984
 
 
 #Como desinstalar 'Latino' en Linux
+
+Puedes ver un video de como proceder aca https://youtu.be/Q5xGm_Bp22k
+
 Pirmero debes saber donde esta instalado
  
  ```
