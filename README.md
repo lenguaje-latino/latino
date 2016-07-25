@@ -113,9 +113,11 @@ https://www.microsoft.com/en-us/download/details.aspx?id=49984
 | flex    |  2.5.39 |
 | cmake   |   3.3.1 |
 | gcc (Linux)|4.9.3 |
+|jsoncpp| Fedora|
 | CodeBlocks | * |
 | Visual Studio Community Edition| * |
 | CodeLite | * |
+
 
 
 --
