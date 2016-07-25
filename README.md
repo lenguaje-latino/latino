@@ -136,4 +136,46 @@ https://www.microsoft.com/en-us/download/details.aspx?id=49984
 1. Abra el proyecto codelite/latino.workspace
 2. Compile
 
+
+
+#Como desinstalar 'Latino' en Linux
+Pirmero debes saber donde esta instalado
+ 
+ ```
+ whereis latino
+ ```
+ 
+ te dara algo parecido a esto
+
+ ```
+ latino: /usr/local/bin/latino
+
+ ```
+ 
+ ahora que sabemos donde esta solamente lo borramos 
+ ```
+ sudo rm /usr/local/bin/latino
+
+ ```
+ 
+ Listo!
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+
+
+
+
+
+
+
+
+
 ####Cualquier aportación o sugerencia es bienvenida.
