@@ -51,7 +51,7 @@ lat_vm* lat_crear_maquina_virtual()
     lat_asignar_contexto_objeto(lat_obtener_contexto(ret), lat_cadena_nueva(ret, "-"), lat_definir_cfuncion(ret, lat_restar));
     lat_asignar_contexto_objeto(lat_obtener_contexto(ret), lat_cadena_nueva(ret, "*"), lat_definir_cfuncion(ret, lat_multiplicar));
     lat_asignar_contexto_objeto(lat_obtener_contexto(ret), lat_cadena_nueva(ret, "/"), lat_definir_cfuncion(ret, lat_dividir));
-    lat_asignar_contexto_objeto(lat_obtener_contexto(ret), lat_cadena_nueva(ret, "%"), lat_definir_cfuncion(ret, lat_modulo));
+    lat_asignar_contexto_objeto(lat_obtener_contexto(ret), lat_cadena_nueva(ret, "%"), lat_definir_cfuncion(ret, lat_modulo_decimal));
     lat_asignar_contexto_objeto(lat_obtener_contexto(ret), lat_cadena_nueva(ret, "!="), lat_definir_cfuncion(ret, lat_diferente));
     lat_asignar_contexto_objeto(lat_obtener_contexto(ret), lat_cadena_nueva(ret, "=="), lat_definir_cfuncion(ret, lat_igualdad));
     lat_asignar_contexto_objeto(lat_obtener_contexto(ret), lat_cadena_nueva(ret, "<"), lat_definir_cfuncion(ret, lat_menor_que));
@@ -679,25 +679,6 @@ void lat_dividir(lat_vm* vm)
                 vm->registros[255] = lat_decimal_nuevo(vm, (lat_obtener_entero(a) / tmp));
             }
         }
-    }
-}
-
-void lat_modulo(lat_vm* vm)
-{
-    lat_objeto* b = lat_desapilar(vm);
-    lat_objeto* a = lat_desapilar(vm);
-    if (a->type != T_INT || b->type != T_INT)
-    {
-        lat_registrar_error("Intento de aplicar operador \"%%\" en tipos invalidos");
-    }
-    int tmp = lat_obtener_entero(b);
-    if (tmp == 0)
-    {
-        lat_registrar_error("Modulo por cero");
-    }
-    else
-    {
-        vm->registros[255] = lat_entero_nuevo(vm, (lat_obtener_entero(a) % tmp));
     }
 }
 

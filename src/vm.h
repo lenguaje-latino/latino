@@ -282,12 +282,6 @@ void lat_multiplicar(lat_vm* vm);
   */
 void lat_dividir(lat_vm* vm);
 
-/**\brief Operador %
-  *
-  *\param vm: Apuntador a la MV
-  */
-void lat_modulo(lat_vm* vm);
-
 /**\brief Operador !=
   *
   *\param vm: Apuntador a la MV

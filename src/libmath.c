@@ -132,8 +132,8 @@ void lat_modf(lat_vm *vm){
 
 void lat_potencia(lat_vm *vm)
 {
-    lat_objeto *a = lat_desapilar(vm);
     lat_objeto *b = lat_desapilar(vm);
+    lat_objeto *a = lat_desapilar(vm);
     vm->registros[255] =
         lat_decimal_nuevo(vm, pow(lat_obtener_decimal(a), lat_obtener_decimal(b)));
 }
@@ -164,8 +164,8 @@ void lat_redondeo_abajo(lat_vm *vm)
 
 void lat_modulo_decimal(lat_vm *vm)
 {
-    lat_objeto *a = lat_desapilar(vm);
     lat_objeto *b = lat_desapilar(vm);
+    lat_objeto *a = lat_desapilar(vm);
     vm->registros[255] =
         lat_decimal_nuevo(vm, fmod(lat_obtener_decimal(a), lat_obtener_decimal(b)));
 }

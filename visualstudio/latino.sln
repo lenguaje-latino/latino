@@ -20,6 +20,11 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "ZERO_CHECK", "ZERO_CHECK.vc
 	ProjectSection(ProjectDependencies) = postProject
 	EndProjectSection
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "coverage", "coverage.vcxproj", "{888DA27E-0B83-3F31-8448-E4EE95246FA2}"
+	ProjectSection(ProjectDependencies) = postProject
+		{5D4D3EC1-3B81-3E09-8F64-EC0419A6E928} = {5D4D3EC1-3B81-3E09-8F64-EC0419A6E928}
+	EndProjectSection
+EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "latino", "src\latino.vcxproj", "{E1A4155A-0494-3B1C-901D-892EA6CCDD78}"
 	ProjectSection(ProjectDependencies) = postProject
 		{5D4D3EC1-3B81-3E09-8F64-EC0419A6E928} = {5D4D3EC1-3B81-3E09-8F64-EC0419A6E928}
@@ -62,6 +67,10 @@ Global
 		{5D4D3EC1-3B81-3E09-8F64-EC0419A6E928}.MinSizeRel|Win32.Build.0 = MinSizeRel|Win32
 		{5D4D3EC1-3B81-3E09-8F64-EC0419A6E928}.RelWithDebInfo|Win32.ActiveCfg = RelWithDebInfo|Win32
 		{5D4D3EC1-3B81-3E09-8F64-EC0419A6E928}.RelWithDebInfo|Win32.Build.0 = RelWithDebInfo|Win32
+		{888DA27E-0B83-3F31-8448-E4EE95246FA2}.Debug|Win32.ActiveCfg = Debug|Win32
+		{888DA27E-0B83-3F31-8448-E4EE95246FA2}.Release|Win32.ActiveCfg = Release|Win32
+		{888DA27E-0B83-3F31-8448-E4EE95246FA2}.MinSizeRel|Win32.ActiveCfg = MinSizeRel|Win32
+		{888DA27E-0B83-3F31-8448-E4EE95246FA2}.RelWithDebInfo|Win32.ActiveCfg = RelWithDebInfo|Win32
 		{E1A4155A-0494-3B1C-901D-892EA6CCDD78}.Debug|Win32.ActiveCfg = Debug|Win32
 		{E1A4155A-0494-3B1C-901D-892EA6CCDD78}.Debug|Win32.Build.0 = Debug|Win32
 		{E1A4155A-0494-3B1C-901D-892EA6CCDD78}.Release|Win32.ActiveCfg = Release|Win32
