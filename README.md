@@ -50,45 +50,6 @@ Cualquier versión/distribución de linux
  
 ```
 
-
-#####Otras opciones para instalar en Linux
-
-Para instalar en Linux hay dos formas de hacerlo, la primera es con el install (automático y con utilidades) y la segunda es manualmente.
-
-Para obtener el instalador ejecute el siguiente comando en su terminal.
-```bash
-wget https://github.com/primitivorm/latino/raw/master/install && chmod +x install
-```
-
-
-###### Paquete de Debian ó Ubuntu
-
-
-``` bash
-# Debian ó Ubuntu (amd64)
- # Con el instalador
- ./install --deb
- 
- # Ó forma manual, mismo proceso.
- wget https://github.com/primitivorm/latino/releases/download/v0.5/latino-0.5.0-Linux.deb && sudo dpkg -i latino-0.5.0-Linux.deb && sudo rm -f latino-0.5.0-Linux.deb
-```
- * [Descargar](https://github.com/primitivorm/latino/releases/download/v0.5/latino-0.5.0-Linux.deb)
- 
---
-
-
-######Otras distribuiciones:
-
-``` bash
-# Ejecuta esto si usas otra distribuición.
- # Con el instalador
- ./install --all
- ./install --clonar # Clona el repositorio (opcional)
- 
-```
-
----
-
 #####Instalar en Windows
 1. Descargue el instalador de la última version de https://github.com/primitivorm/latino/releases
 2. Descompima el archivo zip
@@ -100,7 +61,6 @@ Si tu sistema operativo esta en español:
 https://www.microsoft.com/es-ES/download/details.aspx?id=49984
 Si tu sistema operativo esta en ingles:
 https://www.microsoft.com/en-us/download/details.aspx?id=49984
-
 
 
 ### COMPILAR
@@ -117,10 +77,8 @@ https://www.microsoft.com/en-us/download/details.aspx?id=49984
 | CodeBlocks | * |
 | Visual Studio Community Edition| * |
 | CodeLite | * |
-
-
-
 --
+
 
 #####Compilar en Visual Studio https://www.visualstudio.com/en-us/products/visual-studio-community-vs.aspx
 1. Abra la solución visualstudio/latino.sln
@@ -164,23 +122,5 @@ Pirmero debes saber donde esta instalado
  ```
  
  Listo!
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
-
-
-
-
-
-
-
-
 
 ####Cualquier aportación o sugerencia es bienvenida.
