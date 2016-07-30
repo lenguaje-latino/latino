@@ -74,6 +74,7 @@ https://www.microsoft.com/en-us/download/details.aspx?id=49984
 | cmake   |   3.3.1 |
 | gcc (Linux)|4.9.3 |
 |jsoncpp| Fedora|
+|yum install make automake gcc gcc-c++ kernel-devel|Fedora|
 | CodeBlocks | * |
 | Visual Studio Community Edition| * |
 | CodeLite | * |
