@@ -1,65 +1,93 @@
+#define _XOPEN_SOURCE 700
+
+#include <assert.h>
+#include <stdbool.h>
 #include <stdio.h>
-#include <string.h>
 #include <stdlib.h>
-#include <unistd.h>
-#include <fcntl.h>
+#include <string.h>
 
-#include <netinet/tcp.h>
-#include <sys/socket.h>
-#include <sys/types.h>
+#include <arpa/inet.h>
+#include <netdb.h> /* getprotobyname */
 #include <netinet/in.h>
-#include <netdb.h>
+#include <sys/socket.h>
+#include <unistd.h>
 
-int socket_connect(char *host, in_port_t port){
-	struct hostent *hp;
-	struct sockaddr_in addr;
-	int on = 1, sock;     
+int main(int argc, char** argv) {
+    char buffer[BUFSIZ];
+    enum CONSTEXPR { MAX_REQUEST_LEN = 1024};
+    char request[MAX_REQUEST_LEN];
+    char request_template[] = "GET / HTTP/1.1\r\nHost: %s\r\n\r\n";
+    struct protoent *protoent;
+    char *hostname = "example.com";
+    in_addr_t in_addr;
+    int request_len;
+    int socket_file_descriptor;
+    ssize_t nbytes_total, nbytes_last;
+    struct hostent *hostent;
+    struct sockaddr_in sockaddr_in;
+    unsigned short server_port = 80;
 
-	if((hp = gethostbyname(host)) == NULL){
-		herror("gethostbyname");
-		exit(1);
-	}
-	bcopy(hp->h_addr, &addr.sin_addr, hp->h_length);
-	addr.sin_port = htons(port);
-	addr.sin_family = AF_INET;
-	sock = socket(PF_INET, SOCK_STREAM, IPPROTO_TCP);
-	setsockopt(sock, IPPROTO_TCP, TCP_NODELAY, (const char *)&on, sizeof(int));
+    if (argc > 1)
+        hostname = argv[1];
 
-	if(sock == -1){
-		perror("setsockopt");
-		exit(1);
-	}
-	
-	if(connect(sock, (struct sockaddr *)&addr, sizeof(struct sockaddr_in)) == -1){
-		perror("connect");
-		exit(1);
+    request_len = snprintf(request, MAX_REQUEST_LEN, request_template, hostname);
+    if (request_len >= MAX_REQUEST_LEN) {
+        fprintf(stderr, "request length large: %d\n", request_len);
+        exit(EXIT_FAILURE);
+    }
 
-	}
-	return sock;
-}
- 
-#define BUFFER_SIZE 1024
+    /* Build the socket. */
+    protoent = getprotobyname("tcp");
+    if (protoent == NULL) {
+        perror("getprotobyname");
+        exit(EXIT_FAILURE);
+    }
+    socket_file_descriptor = socket(AF_INET, SOCK_STREAM, protoent->p_proto);
+    if (socket_file_descriptor == -1) {
+        perror("socket");
+        exit(EXIT_FAILURE);
+    }
 
-int main(int argc, char *argv[]){
-	int fd;
-	char buffer[BUFFER_SIZE];
+    /* Build the address. */
+    hostent = gethostbyname(hostname);
+    if (hostent == NULL) {
+        fprintf(stderr, "error: el host solicitado no existe(\"%s\")\n", hostname);
+        exit(EXIT_FAILURE);
+    }
+    in_addr = inet_addr(inet_ntoa(*(struct in_addr*)*(hostent->h_addr_list)));
+    if (in_addr == (in_addr_t)-1) {
+        fprintf(stderr, "error: inet_addr(\"%s\")\n", *(hostent->h_addr_list));
+        exit(EXIT_FAILURE);
+    }
+    sockaddr_in.sin_addr.s_addr = in_addr;
+    sockaddr_in.sin_family = AF_INET;
+    sockaddr_in.sin_port = htons(server_port);
 
-	if(argc < 3){
-		fprintf(stderr, "Usage: %s <hostname> <port>\n", argv[0]);
-		exit(1); 
-	}
-       
-	fd = socket_connect(argv[1], atoi(argv[2])); 
-	write(fd, "GET /\r\n", strlen("GET /\r\n")); // write(fd, char[]*, len);  
-	bzero(buffer, BUFFER_SIZE);
-	
-	while(read(fd, buffer, BUFFER_SIZE - 1) != 0){
-		fprintf(stderr, "%s", buffer);
-		bzero(buffer, BUFFER_SIZE);
-	}
+    /* Actually connect. */
+    if (connect(socket_file_descriptor, (struct sockaddr*)&sockaddr_in, sizeof(sockaddr_in)) == -1) {
+        perror("connect");
+        exit(EXIT_FAILURE);
+    }
 
-	shutdown(fd, SHUT_RDWR); 
-	close(fd); 
+    /* Send HTTP request. */
+    nbytes_total = 0;
+    while (nbytes_total < request_len) {
+        nbytes_last = write(socket_file_descriptor, request + nbytes_total, request_len - nbytes_total);
+        if (nbytes_last == -1) {
+            perror("write");
+            exit(EXIT_FAILURE);
+        }
+        nbytes_total += nbytes_last;
+    }
 
-	return 0;
+    while ((nbytes_total = read(socket_file_descriptor, buffer, BUFSIZ)) > 0) {
+        write(STDOUT_FILENO, buffer, nbytes_total);
+    }
+    if (nbytes_total == -1) {
+        perror("read");
+        exit(EXIT_FAILURE);
+    }
+
+    close(socket_file_descriptor);
+    exit(EXIT_SUCCESS);
 }
