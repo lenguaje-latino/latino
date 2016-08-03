@@ -32,6 +32,7 @@ THE SOFTWARE.
 #include "libstring.h"
 #include "libio.h"
 #include "liblist.h"
+#include "libnet.h"
 
 lat_vm* lat_crear_maquina_virtual()
 {
@@ -144,6 +145,10 @@ lat_vm* lat_crear_maquina_virtual()
 
     /*operaciones con listas*/
     lat_asignar_contexto_objeto(lat_obtener_contexto(ret), lat_cadena_nueva(ret, "agregar"), lat_definir_cfuncion(ret, lat_agregar));
+
+
+    /* operaciones con sockets */
+    lat_asignar_contexto_objeto(lat_obtener_contexto(ret), lat_cadena_nueva(ret, "peticion"), lat_definir_cfuncion(ret, lat_peticion));
     return ret;
 }
 
