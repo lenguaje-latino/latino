@@ -12,4 +12,4 @@
 
 Ejemplo: `"Packages are published to atom.io and are installed to /home/root/.atom/packages"`
 
-El directorió será `/home/root/.atom/packages`
+El directorio será `/home/root/.atom/packages`
