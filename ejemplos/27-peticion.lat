@@ -1,0 +1,3 @@
+respuesta = peticion("www.telegramforo.com")
+escribir(respuesta)
+

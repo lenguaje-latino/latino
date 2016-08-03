@@ -21,9 +21,9 @@ ADD_SUBDIRECTORY(linenoise)
 
 SET(SOURCES khash.h
     latino.h ast.h utils.h vm.h object.h libstring.h libmem.h liblist.h
-    lex.h parse.h libmath.h libio.h linenoise/utf8.h linenoise/linenoise.h
+    lex.h parse.h libmath.h libio.h linenoise/utf8.h linenoise/linenoise.h libnet.h
     latino.c ast.c utils.c vm.c object.c libstring.c libmem.c liblist.c
-    lex.c parse.c libmath.c libio.c linenoise/utf8.c linenoise/linenoise.c)
+    lex.c parse.c libmath.c libio.c linenoise/utf8.c linenoise/linenoise.c libnet.c)
 
 SET(EXECUTABLE_OUTPUT_PATH ${PROJECT_BINARY_DIR}/bin)
 
