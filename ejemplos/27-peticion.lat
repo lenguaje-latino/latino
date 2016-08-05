@@ -1,3 +1,1 @@
-respuesta = peticion("www.telegramforo.com")
-escribir(respuesta)
-
+peticion("www.telegramforo.com")
