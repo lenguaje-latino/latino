@@ -326,3 +326,22 @@ void lat_quitar_espacios(lat_vm* vm)
     lat_objeto* a = lat_desapilar(vm);
     vm->registros[255] = lat_cadena_nueva(vm, trim(lat_obtener_cadena(a)));
 }
+
+void lat_es_numero(lat_vm* vm)
+{
+    lat_objeto* a = lat_desapilar(vm);
+    if(a->type == T_INT || a->type == T_DOUBLE){
+        vm->registros[255] = vm->objeto_cierto;
+        return;
+    }
+    if(a->type != T_STR && a->type != T_LIT){
+        lat_registrar_error("El parametro debe de ser una cadena");
+        return;
+    }
+    char* cad = lat_obtener_cadena(a);
+    if(atoi(cad)){
+        vm->registros[255] = vm->objeto_cierto;
+    }else{
+        vm->registros[255] = vm->objeto_falso;
+    }       
+}

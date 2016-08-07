@@ -190,4 +190,11 @@ void lat_mayusculas(lat_vm* vm);
 void lat_quitar_espacios(lat_vm* vm);
 //void lat_valueOf(lat_vm* vm);
 
+/** Es numero: Valida si una cadena es un numero
+  *
+  * \param vm: Maquina virtual de latino
+  *
+  */
+void lat_es_numero(lat_vm* vm);
+
 #endif // !_LIBSTRING_H_
