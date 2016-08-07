@@ -33,8 +33,10 @@ before_install:
 script:
     - if [ $TRAVIS_OS_NAME == "linux" ]; then
         ./compilar_gcc.sh;
+        ./run_coverage_gcc.sh;
       elif [ $TRAVIS_OS_NAME == "osx" ]; then
         ./compilar_clang.sh;
+        ./run_coverage_clang.sh;
       fi
 after_success:
     - cd bin
