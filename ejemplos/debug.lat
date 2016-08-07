@@ -1,16 +1,9 @@
-#Para debuguear en visual studio:
-#Menu propiedades del proyecto-> Debugging -> Command Arguments. Agregar
-#$(SolutionDir)..\ejemplos\debug.lat
-
-#numeros = [1,2,3]
-#escribir(numeros)
-#agrega un elemento a la lista
-#agregar(numeros, 6)
-#escribir(numeros)
-#eliminar(numeros, 2)
-#escribir(numeros)
-
-d = 2.0
-i = 21
-#entero % decimal
-escribir(i % d) #da como resultado el entero 1
+i=1
+mientras i <= 10
+    j=1
+    mientras j <= 10
+        escribir(i*j)
+        j++
+    fin
+    i++
+fin
