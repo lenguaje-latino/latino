@@ -118,8 +118,8 @@ constant_expression:
     ;
 
 unary_expression:
-	  TIDENTIFIER OP_INCR { $$ = nodo_nuevo(NODO_INCREMENTO, $1, NULL); }
-	| TIDENTIFIER OP_DECR { $$ = nodo_nuevo(NODO_DECREMENTO, $1, NULL); }
+	  TIDENTIFIER OP_INCR { $$ = nodo_nuevo_asignacion(nodo_nuevo_operador(NODO_SUMA, $1, nodo_nuevo_entero(1, @1.first_line, @1.first_column)), $1); }
+	| TIDENTIFIER OP_DECR { $$ = nodo_nuevo_asignacion(nodo_nuevo_operador(NODO_RESTA, $1, nodo_nuevo_entero(1, @1.first_line, @1.first_column)), $1); }
     | '-' expression %prec '*' { $$ = nodo_nuevo_operador(NODO_MENOS_UNARIO, $2, NULL); }
     ;
 
@@ -207,6 +207,7 @@ statement: /* empty */ { $$ = NULL; }
 
 include_declaration:
     KINCLUDE TSTRING { $$ = nodo_nuevo_incluir($2); }
+    | KINCLUDE TLIT { $$ = nodo_nuevo_incluir($2); }
     ;
 
 declaration:

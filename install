@@ -1,0 +1,94 @@
+#!/bin/bash
+
+if [ "$1" = "--deb" ]; then
+sudo apt-get remove latino -y &>/dev/null
+wget https://github.com/primitivorm/latino/releases/download/v0.5/latino-0.5.0-Linux.deb &>/dev/null
+dpkg -i latino-0.5.0-Linux.deb &>/dev/null
+
+sudo rm -f latino-0.5.0-Linux.deb &>/dev/null
+
+clear
+	echo 'Instalando.'
+sleep 1s
+	clear
+	echo 'Instalando..'
+sleep 1s
+	clear
+	echo 'Instalando...'
+sleep 2s
+	clear
+	clear
+	echo -e '\e[0;32m		    ¡Instalación completada con éxito!\e[0m'
+	echo -en '\n'
+	echo -e '\e[1;37m                              COPYRIGHT '
+	echo -en '\n'
+	echo -en '\n'
+	echo 'Se concede permiso, de forma gratuita, a cualquier persona que obtenga una copia'
+	echo 'de este software y archivos de documentación asociados (el "Software"), para hacer frente'
+	echo 'el Software sin restricción, incluyendo sin limitación, los derechos'
+	echo 'para usar, copiar, modificar, fusionar, publicar, distribuir, sublicenciar y / o vender'
+	echo 'las copias del Software y permitir a las personas a las que el Software es'
+	echo 'amueblado para hacerlo, con sujeción a las siguientes condiciones:'
+	echo -en '\n'
+	echo 'El aviso de copyright anterior y este aviso de permiso se incluirán en'
+	echo 'todas las copias o partes sustanciales del Software.'
+	echo -en '\n'
+	echo -en '\n'
+	echo -e  '			Copyright (c) 2015 - Latino\e[0m' || echo -e '\e[0;31mERROR\e[0m' | echo -e '\e[0;31m¿Tu sistema es compatible?\e[0m'
+	echo -en '\n'
+	echo -en '\n'
+fi
+
+if [ "$1" = "--rm" ]; then
+	sudo rm -R /usr/local/bin/latino &>/dev/null
+	sudo apt-get remove latino -y &>/dev/null
+	echo -e '\e[0;32mLatino removido del sistema.\e[0m'
+fi
+
+if [ "$1" = "--all" ]; then
+	git clone https://github.com/primitivorm/latino .temp
+	cd .temp
+	sudo cmake .
+	sudo make
+	sudo make install
+	cd .. && sudo rm -Rf .temp
+		echo -e '\e[0;32m		    ¡Instalación completada con éxito!\e[0m'
+	echo -en '\n'
+	echo -e '\e[1;37m                              COPYRIGHT '
+	echo -en '\n'
+	echo -en '\n'
+	echo 'Se concede permiso, de forma gratuita, a cualquier persona que obtenga una copia'
+	echo 'de este software y archivos de documentación asociados (el "Software"), para hacer frente'
+	echo 'el Software sin restricción, incluyendo sin limitación, los derechos'
+	echo 'para usar, copiar, modificar, fusionar, publicar, distribuir, sublicenciar y / o vender'
+	echo 'las copias del Software y permitir a las personas a las que el Software es'
+	echo 'amueblado para hacerlo, con sujeción a las siguientes condiciones:'
+	echo -en '\n'
+	echo 'El aviso de copyright anterior y este aviso de permiso se incluirán en'
+	echo 'todas las copias o partes sustanciales del Software.'
+	echo -en '\n'
+	echo -en '\n'
+	echo -e  '			Copyright (c) 2015 - Latino\e[0m' || echo -e '\e[0;31mERROR\e[0m' | echo -e '\e[0;31m¿Tu sistema es compatible?\e[0m'
+	echo -en '\n'
+	echo -en '\n'
+	
+	
+fi
+
+if [ "$1" = "--clonar" ]; then
+git clone https://github.com/primitivorm/latino
+fi
+
+if [ "$1" = "--make" ]; then
+	pwd=$(pwd)
+	git clone https://github.com/primitivorm/latino .new &>/dev/null
+	cd .new
+	sudo cmake .
+	sudo make
+	make package &>/dev/null
+	mv *.deb ..
+	cd ..
+	sudo rm -Rf .new
+	echo -e '\e[0;32mPaquete deb guardado en '$pwd'\e[0m'
+fi
+	

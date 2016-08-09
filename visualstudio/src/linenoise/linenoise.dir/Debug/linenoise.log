@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 ﻿Build started 09/08/2016 11:04:02 a.m..
+=======
+Build started 25/07/2016 09:18:12 a.m..
+>>>>>>> 2a2cacfa96f4ebe9f8762657b1bc24ae1576e7c5
      1>Project "C:\src\latino\visualstudio\src\linenoise\linenoise.vcxproj" on node 3 (Rebuild target(s)).
      1>CustomBuild:
          Building Custom Rule C:/src/latino/src/linenoise/CMakeLists.txt

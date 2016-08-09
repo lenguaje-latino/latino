@@ -32,6 +32,7 @@ THE SOFTWARE.
 #include "libstring.h"
 #include "libio.h"
 #include "liblist.h"
+#include "libnet.h"
 
 lat_vm* lat_crear_maquina_virtual()
 {
@@ -120,6 +121,8 @@ lat_vm* lat_crear_maquina_virtual()
     lat_asignar_contexto_objeto(lat_obtener_contexto(ret), lat_cadena_nueva(ret, "minusculas"), lat_definir_cfuncion(ret, lat_minusculas));
     lat_asignar_contexto_objeto(lat_obtener_contexto(ret), lat_cadena_nueva(ret, "mayusculas"), lat_definir_cfuncion(ret, lat_mayusculas));
     lat_asignar_contexto_objeto(lat_obtener_contexto(ret), lat_cadena_nueva(ret, "quitar_espacios"), lat_definir_cfuncion(ret, lat_quitar_espacios));
+    lat_asignar_contexto_objeto(lat_obtener_contexto(ret), lat_cadena_nueva(ret, "es_numero"), lat_definir_cfuncion(ret, lat_es_numero));
+
 
     //entrada / salida
     lat_asignar_contexto_objeto(lat_obtener_contexto(ret), lat_cadena_nueva(ret, "leer"), lat_definir_cfuncion(ret, lat_leer));
@@ -144,6 +147,10 @@ lat_vm* lat_crear_maquina_virtual()
 
     /*operaciones con listas*/
     lat_asignar_contexto_objeto(lat_obtener_contexto(ret), lat_cadena_nueva(ret, "agregar"), lat_definir_cfuncion(ret, lat_agregar));
+
+
+    /* operaciones con sockets */
+    lat_asignar_contexto_objeto(lat_obtener_contexto(ret), lat_cadena_nueva(ret, "peticion"), lat_definir_cfuncion(ret, lat_peticion));
     return ret;
 }
 
@@ -184,7 +191,7 @@ lat_objeto* lat_desapilar(lat_vm* vm)
         while (curr->next != NULL)
         {
             curr = curr->next;
-        }        
+        }
         lat_objeto* ret = (lat_objeto*)curr->data;
         return ret;
     }
@@ -1032,12 +1039,6 @@ void lat_llamar_funcion(lat_vm* vm, lat_objeto* func)
                 break;
             case OP_NOT:
                 vm->registros[cur.a] = lat_obtener_logico(vm->registros[cur.a]) == true ? vm->objeto_falso : vm->objeto_cierto;
-                break;
-            case OP_INC:
-                ((lat_objeto*)vm->registros[cur.a])->data.i++;
-                break;
-            case OP_DEC:
-                ((lat_objeto*)vm->registros[cur.a])->data.i--;
                 break;
             case OP_PUSHDICTELEM:
                 break;
