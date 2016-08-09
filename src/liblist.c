@@ -3,12 +3,7 @@
 
 void lat_agregar(lat_vm *vm){
     lat_objeto *elem = lat_desapilar(vm);
-    lat_objeto *lst = lat_desapilar(vm);
-    list_node *actual = lst->data.lista;
-    /*vamos al nodo final para agregar el elemento*/
-    while(actual->next != NULL){
-        actual = actual->next;
-    }
-    //lat_apilar_lista(actual, elem);
-    insert_list(actual, elem);
+    lat_objeto *lst = lat_desapilar(vm);    
+    insert_list(lst->data.lista, elem);
+    //vm->registros[255] = lat_lista_nueva(vm, lat_clonar_lista(vm, lst->data.lista));
 }

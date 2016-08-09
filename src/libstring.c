@@ -276,7 +276,13 @@ void lat_esta_vacia(lat_vm* vm)
 void lat_longitud(lat_vm* vm)
 {
     lat_objeto* a = lat_desapilar(vm);
-    vm->registros[255] = lat_entero_nuevo(vm, strlen(lat_obtener_cadena(a)));
+    if (a->type == T_STR || a->type == T_LIT){
+        vm->registros[255] = lat_entero_nuevo(vm, strlen(lat_obtener_cadena(a)));
+    }
+    if (a->type == T_LIST){
+        vm->registros[255] = lat_entero_nuevo(vm, length_list(lat_obtener_lista(a)));
+    }
+
 }
 
 void lat_reemplazar(lat_vm* vm)

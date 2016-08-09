@@ -37,7 +37,7 @@ typedef struct lat_vm lat_vm;
 #include "object.h"
 
 /**\brief Bandera para debuguear las instrucciones de la maquina virtual */
-#define DEBUG_VM 0
+#define DEBUG_VM 1
 
 /**\brief Instrucciones de la maquina virtual */
 typedef enum lat_ins
@@ -224,7 +224,7 @@ lat_objeto* lat_definir_cfuncion(lat_vm* vm, void (*function)(lat_vm* vm));
   *
   *\param vm: Apuntador a la MV
   */
-void lat_numero_lista(lat_vm* vm);
+//void lat_numero_lista(lat_vm* vm);
 
 /**\brief Envia a consola el contenido de la lista
   *
