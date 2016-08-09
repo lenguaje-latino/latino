@@ -233,7 +233,7 @@ void lat_desapilar_contexto(lat_vm* vm)
     lat_eliminar_objeto(vm, vm->contexto_pila[vm->apuntador_pila--]);
 }
 
-void lat_apilar_contexto_predefinido(lat_vm* vm, lat_objeto* ctx)
+/*void lat_apilar_contexto_predefinido(lat_vm* vm, lat_objeto* ctx)
 {
     if (vm->apuntador_pila >= 255)
     {
@@ -250,12 +250,13 @@ lat_objeto* lat_desapilar_contexto_predefinido(lat_vm* vm)
     }
     return vm->contexto_pila[vm->apuntador_pila--];
 }
+*/
 
 lat_objeto* lat_obtener_contexto(lat_vm* vm)
 {
     return vm->contexto_pila[vm->apuntador_pila];
 }
-
+/*
 void lat_basurero_agregar(lat_vm* vm, lat_objeto* o)
 {
     insert_list(vm->basurero_objetos, (void*)o);
@@ -302,6 +303,7 @@ void lat_basurero(lat_vm* vm)
         //free(c);
     }
 }
+*/
 
 lat_objeto* lat_definir_funcion(lat_vm* vm, lat_bytecode* inslist)
 {
@@ -1006,13 +1008,13 @@ void lat_llamar_funcion(lat_vm* vm, lat_objeto* func)
             case OP_FN:
                 vm->registros[cur.a] = lat_definir_funcion(vm, (lat_bytecode*)cur.meta);
                 break;
-            case OP_NS:
+            /*case OP_NS:
                 vm->registros[cur.a] = lat_clonar_objeto(vm, lat_obtener_contexto(vm));
                 lat_apilar_contexto_predefinido(vm, vm->registros[cur.a]);
                 break;
             case OP_ENDNS:
                 vm->registros[cur.a] = lat_desapilar_contexto_predefinido(vm);
-                break;
+                break;*/
             case OP_JMP:
                 pos = cur.a - 1;
                 break;

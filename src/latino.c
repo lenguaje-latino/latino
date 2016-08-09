@@ -332,6 +332,7 @@ int main(int argc, char *argv[])
         else
         {
             infile = argv[i];
+            //printf("%s", infile);
         }
     }
     if(argc > 1 && infile != NULL)

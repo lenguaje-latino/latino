@@ -436,7 +436,7 @@ void insert_list(list_node* l, void* data)
     
 }*/
 
-void remove_list(list_node* l, void* data)
+/*void remove_list(list_node* l, void* data)
 {
     list_node* c;
     lat_objeto *find = (lat_objeto*)data;
@@ -456,6 +456,7 @@ void remove_list(list_node* l, void* data)
         }
     }
 }
+*/
 
 int length_list(list_node* l)
 {
