@@ -150,15 +150,18 @@ lat_vm* lat_crear_maquina_virtual()
 
 
     /* operaciones con sockets */
-    lat_asignar_contexto_objeto(lat_obtener_contexto(ret), lat_cadena_nueva(ret, "peticion"), lat_definir_cfuncion(ret, lat_peticion));
+    //lat_asignar_contexto_objeto(lat_obtener_contexto(ret), lat_cadena_nueva(ret, "peticion"), lat_definir_cfuncion(ret, lat_peticion));
     return ret;
 }
 
 void lat_apilar(lat_vm* vm, lat_objeto* o)
 {
+    //printf("\n%s\n", "lat_apilar");
     insert_list(vm->pila, (void*)o);
+    //lat_imprimir_lista(vm, vm->pila);
 }
 
+/*
 lat_objeto* lat_desapilar(lat_vm* vm)
 {
     list_node* n = vm->pila->next;
@@ -176,10 +179,12 @@ lat_objeto* lat_desapilar(lat_vm* vm)
     }
     return NULL;
 }
+*/
 
-/*
 lat_objeto* lat_desapilar(lat_vm* vm)
 {
+    //printf("\n%s\n", "lat_desapilar");
+    //lat_imprimir_lista(vm, vm->pila);
     list_node* n = vm->pila;
     if (n->data == NULL)
     {
@@ -188,24 +193,28 @@ lat_objeto* lat_desapilar(lat_vm* vm)
     else
     {
         list_node * curr = n;
-        while (curr->next != NULL)
+        while (curr->next != NULL && curr->next->data != NULL)
         {
             curr = curr->next;
         }
-        lat_objeto* ret = (lat_objeto*)curr->data;
+        //lat_objeto* ret = lat_clonar_objeto(vm, (lat_objeto*)curr->data);
+        lat_objeto* ret = (lat_objeto*)curr->data;        
+        if (curr->prev)
+            curr->prev->next = curr->next;        
         return ret;
     }
     return NULL;
 }
-*/
 
 void lat_apilar_lista(lat_objeto* lista, lat_objeto* o)
 {
+    printf("\n%s\n", "lat_apilar_lista");
     insert_list(lista->data.lista, (void*)o);
 }
 
 lat_objeto* lat_desapilar_lista(lat_objeto* lista)
 {
+    printf("\n%s\n", "lat_desapilar_lista");
     list_node* n = ((list_node*)lista)->next;
     if (n->data == NULL)
     {
@@ -329,7 +338,7 @@ lat_objeto* lat_definir_cfuncion(lat_vm* vm, void (*function)(lat_vm* vm))
     return ret;
 }
 
-void lat_numero_lista(lat_vm* vm)
+/*void lat_numero_lista(lat_vm* vm)
 {
     lat_objeto* index = lat_desapilar(vm);
     long i = lat_obtener_entero(index);
@@ -350,7 +359,7 @@ void lat_numero_lista(lat_vm* vm)
         }
     }
     lat_registrar_error("Lista: indice fuera de rango");
-}
+}*/
 
 static void lat_imprimir_elem(lat_vm* vm)
 {
@@ -410,10 +419,68 @@ static void lat_imprimir_elem(lat_vm* vm)
     vm->registros[255] = in;
 }
 
+static void lat_imprimir_objeto(lat_objeto* in)
+{
+    //lat_objeto* in = lat_desapilar(vm);
+    if (in->type == T_NULO)
+    {
+        fprintf(stdout, "%s", "nulo");
+    }
+    else if (in->type == T_INSTANCE)
+    {
+        fprintf(stdout, "%s", "objeto");
+    }
+    else if (in->type == T_LIT)
+    {
+        fprintf(stdout, "%s", lat_obtener_literal(in));
+    }
+    else if (in->type == T_INT)
+    {
+        fprintf(stdout, "%ld", lat_obtener_entero(in));
+    }
+    else if (in->type == T_DOUBLE)
+    {
+        fprintf(stdout, "%.14g\n", lat_obtener_decimal(in));
+    }
+    else if (in->type == T_STR)
+    {
+        fprintf(stdout, "%s", lat_obtener_cadena(in));
+    }
+    else if (in->type == T_BOOL)
+    {
+        fprintf(stdout, "%i", lat_obtener_logico(in));
+    }
+    /*else if (in->type == T_LIST)
+    {
+        lat_imprimir_lista(vm, in->data.lista);
+    }
+    else if (in->type == T_DICT)
+    {
+        lat_imprimir_diccionario(vm, in->data.dict);
+    }*/
+    else if (in->type == T_FUNC)
+    {
+        //fprintf(stdout, "%s", "Funcion");
+    }
+    else if (in->type == T_CFUNC)
+    {
+        //fprintf(stdout, "%s", "C_Funcion");
+    }
+    else if (in->type == T_STRUCT)
+    {
+        fprintf(stdout, "%s", "Struct");
+    }
+    else
+    {
+        fprintf(stdout, "Tipo desconocido %d\n", in->type);
+    }
+    //vm->registros[255] = in;
+}
+
 void lat_imprimir(lat_vm* vm)
 {
     lat_objeto* in = lat_desapilar(vm);
-    if (in->type == T_NULO)
+    if (in == NULL || in->type == T_NULO)
     {
         fprintf(stdout, "%s\n", "nulo");
     }
@@ -472,6 +539,7 @@ void lat_imprimir(lat_vm* vm)
     vm->registros[255] = in;
 }
 
+/*
 void lat_imprimir_lista(lat_vm* vm, list_node* l)
 {
     fprintf(stdout, "%s", "[ ");
@@ -498,6 +566,46 @@ void lat_imprimir_lista(lat_vm* vm, list_node* l)
                     {
                         lat_apilar(vm, o);
                         lat_imprimir_elem(vm);
+                        if (c->next)
+                        {
+                            fprintf(stdout, "%s", ", ");
+                        }
+                    }
+                }
+            }
+        }
+    }
+    fprintf(stdout, "%s", " ]");
+}
+*/
+
+void lat_imprimir_lista(lat_vm* vm, list_node* l)
+{
+    fprintf(stdout, "%s", "[ ");
+    if (l != NULL && length_list(l) > 0)
+    {
+        list_node* c;
+        for (c = l; c != NULL; c = c->next)
+        {
+            if (c->data != NULL)
+            {
+                lat_objeto* o = ((lat_objeto*)c->data);
+                //printf("\ntype %i, obj_ref: %p\n", o->type, o);
+                if (o->type == T_LIST)
+                {
+                    lat_imprimir_lista(vm, o->data.lista);
+                    if (c->next)
+                    {
+                        fprintf(stdout, "%s", ", ");
+                    }
+                }
+                else
+                {
+                    if (o->type)
+                    {
+                        //lat_apilar(vm, o);
+                        //lat_imprimir_elem(vm);
+                        lat_imprimir_objeto(o);
                         if (c->next)
                         {
                             fprintf(stdout, "%s", ", ");

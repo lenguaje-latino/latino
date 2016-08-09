@@ -305,7 +305,7 @@ void lat_eliminar_hash(lat_vm* vm, hash_map* h)
     }
 }
 */
-
+/*
 lat_objeto* lat_clonar_objeto(lat_vm* vm, lat_objeto* obj)
 {
     lat_objeto* ret;
@@ -337,7 +337,39 @@ lat_objeto* lat_clonar_objeto(lat_vm* vm, lat_objeto* obj)
     }
     return ret;
 }
-
+*/
+lat_objeto* lat_clonar_objeto(lat_vm* vm, lat_objeto* obj)
+{
+    lat_objeto* ret;
+    switch (obj->type)
+    {
+    case T_INSTANCE:
+        ret = lat_crear_objeto(vm);
+        ret->type = T_INSTANCE;
+        ret->data_size = sizeof(hash_map*);
+        //ret->data.nombre = lat_clonar_hash(vm, obj->data.nombre);
+        ret->data.nombre = copy_hash(obj->data.nombre);
+        //ret->data.nombre = obj->data.nombre;
+        break;
+    case T_LIST:
+        ret = lat_lista_nueva(vm, lat_clonar_lista(vm, obj->data.lista));
+        //ret = lat_lista_nueva(vm, obj->data.lista);
+        break;
+    case T_FUNC:
+    case T_CFUNC:
+        ret = obj;
+        break;
+    default:
+        ret = lat_crear_objeto(vm);
+        ret->type = obj->type;
+        ret->marked = obj->marked;
+        ret->data_size = obj->data_size;
+        ret->data = obj->data;
+        break;
+    }
+    return ret;
+}
+/*
 list_node* lat_clonar_lista(lat_vm* vm, list_node* l)
 {
     list_node* ret = lat_crear_lista();
@@ -354,7 +386,24 @@ list_node* lat_clonar_lista(lat_vm* vm, list_node* l)
     }
     return ret;
 }
-
+*/
+list_node* lat_clonar_lista(lat_vm* vm, list_node* l)
+{
+    list_node* ret = lat_crear_lista();
+    if (l != NULL)
+    {
+        list_node* c;
+        for (c = l; c->next != NULL; c = c->next)
+        {
+            if (c->data != NULL)
+            {
+                insert_list(ret, lat_clonar_objeto(vm, (lat_objeto*)c->data));
+            }
+        }
+    }
+    return ret;
+}
+/*
 hash_map* lat_clonar_hash(lat_vm* vm, hash_map* h)
 {
     int c = 0;
@@ -374,6 +423,36 @@ hash_map* lat_clonar_hash(lat_vm* vm, hash_map* h)
                     if (cur->data != NULL)
                     {
                         hash_val* hv = (hash_val*)lat_asignar_memoria(sizeof(hash_val));                        
+                        strncpy(hv->key, ((hash_val*)cur->data)->key, 256);
+                        hv->val = lat_clonar_objeto(vm, (lat_objeto*)((hash_val*)cur->data)->val);
+                        insert_list(ret->buckets[c], hv);
+                    }
+                }
+            }
+        }
+    }
+    return ret;
+}
+*/
+hash_map* lat_clonar_hash(lat_vm* vm, hash_map* h)
+{
+    int c = 0;
+    hash_map* ret = make_hash_map();
+    list_node* l;
+    for (c = 0; c < 256; ++c)
+    {
+        l = h->buckets[c];
+        if (l != NULL)
+        {
+            ret->buckets[c] = lat_crear_lista();
+            if (l != NULL)
+            {
+                list_node* cur;
+                for (cur = l; cur->next != NULL; cur = cur->next)
+                {
+                    if (cur->data != NULL)
+                    {
+                        hash_val* hv = (hash_val*)lat_asignar_memoria(sizeof(hash_val));
                         strncpy(hv->key, ((hash_val*)cur->data)->key, 256);
                         hv->val = lat_clonar_objeto(vm, (lat_objeto*)((hash_val*)cur->data)->val);
                         insert_list(ret->buckets[c], hv);

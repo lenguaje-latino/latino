@@ -1,8 +1,4 @@
-<<<<<<< HEAD
-﻿Build started 09/08/2016 11:04:01 a.m..
-=======
-Build started 25/07/2016 09:18:11 a.m..
->>>>>>> 2a2cacfa96f4ebe9f8762657b1bc24ae1576e7c5
+﻿Build started 09/08/2016 05:10:27 p.m..
      1>Project "C:\src\latino\visualstudio\ZERO_CHECK.vcxproj" on node 2 (Rebuild target(s)).
      1>CustomBuild:
          Checking Build System
@@ -13,4 +9,4 @@ Build started 25/07/2016 09:18:11 a.m..
 
 Build succeeded.
 
-Time Elapsed 00:00:00.68
+Time Elapsed 00:00:01.33

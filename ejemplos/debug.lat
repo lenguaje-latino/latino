@@ -1,22 +1,11 @@
-<<<<<<< HEAD
+########################################################################
 #Para debuguear en visual studio:
 #Menu propiedades del proyecto-> Debugging -> Command Arguments. Agregar
 #$(SolutionDir)..\ejemplos\debug.lat
-
-#numeros = [1,2,3]
-#escribir(numeros)
-#agrega un elemento a la lista
-#agregar(numeros, 6)
-#escribir(numeros)
-#eliminar(numeros, 2)
-#escribir(numeros)
-
-i=1
-mientras i <= 10
-    j=1
-    mientras j <= 10
-        escribir(i*j)
-        j++
-    fin
-    i++
-fin
+########################################################################
+numeros = [1,2,3]
+escribir(numeros)
+#agregar elementos a la lista
+agregar(numeros, 4)
+agregar(numeros, 5)
+escribir(numeros)

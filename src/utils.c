@@ -389,6 +389,7 @@ char* trim(const char *str)
     return ret;
 }
 
+/*
 list_node* lat_crear_lista()
 {
     list_node* start = (list_node*)lat_asignar_memoria(sizeof(list_node));
@@ -401,17 +402,18 @@ list_node* lat_crear_lista()
     end->data = NULL;
     return start;
 }
+*/
 
-/*list_node* lat_crear_lista()
+list_node* lat_crear_lista()
 {
-    list_node* nodo = (list_node*)lat_asignar_memoria(sizeof(list_node));    
+    list_node* nodo = (list_node*)lat_asignar_memoria(sizeof(list_node));
     nodo->prev = NULL;
     nodo->next = NULL;
     nodo->data = NULL;    
     return nodo;
-}*/
+}
 
-
+/*
 void insert_list(list_node* l, void* data)
 {
     list_node* ins = (list_node*)lat_asignar_memoria(sizeof(list_node));
@@ -420,21 +422,22 @@ void insert_list(list_node* l, void* data)
     l->next = ins;
     ins->prev = l;
 }
+*/
 
-/*
 void insert_list(list_node* l, void* data)
 {
     list_node *curr = l;
+    /*inserta al final de la lista*/
     while (curr->next != NULL){
         curr = curr->next;
     }
     curr->data = data;
-    curr->next = (list_node*)lat_asignar_memoria(sizeof(list_node));    
-    curr->next->data = NULL;
+    curr->next = (list_node*)lat_asignar_memoria(sizeof(list_node));        
+    //curr->next->prev = curr->next;
     curr->next->prev = curr;
-    curr->next->next = NULL;
-    
-}*/
+    curr->next->next = NULL;    
+    curr->next->data = NULL;
+}
 
 /*void remove_list(list_node* l, void* data)
 {
@@ -507,6 +510,25 @@ int hash(char* key)
     return abs(h % 256);
 }
 
+/*
+void* get_hash(hash_map* m, char* key)
+{
+    list_node* cur = m->buckets[hash(key)];
+    if (cur == NULL)
+        return NULL;
+    for (; cur->next != NULL; cur = cur->next)
+    {
+        if (cur->data != NULL)
+        {
+            if (strcmp(key, ((hash_val *)cur->data)->key) == 0)
+            {
+                return ((hash_val *)cur->data)->val;
+            }
+        }
+    }
+    return NULL;
+}
+*/
 void* get_hash(hash_map* m, char* key)
 {
     list_node* cur = m->buckets[hash(key)];
@@ -525,6 +547,7 @@ void* get_hash(hash_map* m, char* key)
     return NULL;
 }
 
+/*
 void set_hash(hash_map *m, char *key, void *val)
 {
     hash_val *hv = (hash_val *)lat_asignar_memoria(sizeof(hash_val));
@@ -553,6 +576,81 @@ void set_hash(hash_map *m, char *key, void *val)
     }
     insert_list(m->buckets[hk], (void *)hv);
 }
+*/
+void set_hash(hash_map *m, char *key, void *val)
+{
+    hash_val *hv = (hash_val *)lat_asignar_memoria(sizeof(hash_val));
+    strncpy(hv->key, key, (strlen(key) + 1));
+    hv->val = val;
+    int hk = hash(key);
+    if (m->buckets[hk] == NULL)
+    {
+        m->buckets[hk] = lat_crear_lista();
+    }
+    else
+    {
+        list_node *c;
+        for (c = m->buckets[hk]; c->next != NULL; c = c->next)
+        {
+            if (c->data != NULL)
+            {
+                if (strcmp(((hash_val *)c->data)->key, key) == 0)
+                {
+                    free(c->data);
+                    c->data = (void *)hv;
+                    return;
+                }
+            }
+        }
+    }
+    insert_list(m->buckets[hk], (void *)hv);
+}
+
+/*
+hash_map *copy_hash(hash_map *m)
+{
+    hash_map *ret = make_hash_map();
+    int i;
+    for (i = 0; i < 256; i++)
+    {
+        list_node *c = m->buckets[i];
+        if (c != NULL)
+        {
+            for (; c->next != NULL; c = c->next)
+            {
+                if (c->data != NULL)
+                {
+                    set_hash(ret, ((hash_val *)c->data)->key, ((hash_val *)c->data)->val);
+                }
+            }
+        }
+    }
+    return ret;
+}
+*/
+
+/*
+hash_map *copy_hash(hash_map *m)
+{
+    hash_map *ret = make_hash_map();
+    int i;
+    for (i = 0; i < 256; i++)
+    {
+        list_node *c = m->buckets[i];
+        if (c != NULL)
+        {
+            for (; c->next != NULL; c = c->next)
+            {
+                if (c->data != NULL)
+                {
+                    set_hash(ret, ((hash_val *)c->data)->key, ((hash_val *)c->data)->val);
+                }
+            }
+        }
+    }
+    return ret;
+}
+*/
 
 hash_map *copy_hash(hash_map *m)
 {

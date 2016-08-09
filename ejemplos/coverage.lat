@@ -238,6 +238,6 @@ escribir_archivo("modulo.lat", s)
 ####################################################################
 #test coverage para "incluir"
 ####################################################################
-incluir "modulo"
-r = sumatoria(2, 3)
-escribir(r)
+#incluir "modulo"
+#r = sumatoria(2, 3)
+#escribir(r)
