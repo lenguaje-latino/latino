@@ -139,7 +139,7 @@ void insert_list(list_node* l, void* data);
   *\param l: Apuntador a la lista
   *\param data: Apuntador a objeto
   */
-void remove_list(list_node* l, void* data);
+//void remove_list(list_node* l, void* data);
 
 /**\brief Devuelve la longitud de la lista
   *

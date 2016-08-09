@@ -92,7 +92,12 @@ extern int debug;
 
 extern int parse_silent;
 
-//extern int parse_silent = 0;
+/** Maximo numero de size_t */
+#ifdef SIZE_MAX
+#define LAT_SIZE_MAX SIZE_MAX
+#else
+#define LAT_SIZE_MAX ((size_t)-1)
+#endif
 
 /** Tamanio maximo de instrucciones bytecode de una funcion */
 #define MAX_BYTECODE_FUNCTION (1024 * 10)

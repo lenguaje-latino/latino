@@ -175,14 +175,14 @@ void lat_desapilar_contexto(lat_vm* vm);
   *\param vm: Apuntador a la MV
   *\param ctx: Apuntador al contexto
   */
-void lat_apilar_contexto_predefinido(lat_vm* vm, lat_objeto* ctx);
+//void lat_apilar_contexto_predefinido(lat_vm* vm, lat_objeto* ctx);
 
 /**\brief Extrae el contexto principal de la pila de la MV
   *
   *\param vm: Apuntador a la MV
   *\return lat_objeto: Apuntador al contexto
   */
-lat_objeto* lat_desapilar_contexto_predefinido(lat_vm* vm);
+//lat_objeto* lat_desapilar_contexto_predefinido(lat_vm* vm);
 
 /**\brief Extrae el contexto de la pila de la MV
   *
@@ -196,13 +196,13 @@ lat_objeto* lat_obtener_contexto(lat_vm* vm);
   *\param vm: Apuntador a la MV
   *\param o: Apuntador a objeto
   */
-void lat_basurero_agregar(lat_vm* vm, lat_objeto* o);
+//void lat_basurero_agregar(lat_vm* vm, lat_objeto* o);
 
 /**\brief Crea un objeto basurero
   *
   *\param vm: Apuntador a la MV
   */
-void lat_basurero(lat_vm* vm);
+//void lat_basurero(lat_vm* vm);
 
 /**\brief Define una funcion creada por el usuario
   *

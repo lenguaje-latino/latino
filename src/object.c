@@ -167,7 +167,7 @@ lat_objeto* lat_cfuncion_nueva(lat_vm* vm)
     return ret;
 }
 
-void lat_marcar_objeto(lat_objeto* o, int m)
+/*void lat_marcar_objeto(lat_objeto* o, int m)
 {
     if (o != NULL)
     {
@@ -223,6 +223,7 @@ void lat_marcar_hash(hash_map* h, unsigned char m)
         }
     }
 }
+*/
 
 void lat_eliminar_objeto(lat_vm* vm, lat_objeto* o)
 {
@@ -257,7 +258,7 @@ void lat_eliminar_objeto(lat_vm* vm, lat_objeto* o)
     }
     lat_liberar_memoria(o);
 }
-
+/*
 void lat_eliminar_lista(lat_vm* vm, list_node* l)
 {
     if (l != NULL)
@@ -303,6 +304,7 @@ void lat_eliminar_hash(lat_vm* vm, hash_map* h)
         }
     }
 }
+*/
 
 lat_objeto* lat_clonar_objeto(lat_vm* vm, lat_objeto* obj)
 {

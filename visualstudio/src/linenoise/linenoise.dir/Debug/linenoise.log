@@ -1,4 +1,4 @@
-﻿Build started 25/07/2016 09:18:12 a.m..
+﻿Build started 09/08/2016 11:04:02 a.m..
      1>Project "C:\src\latino\visualstudio\src\linenoise\linenoise.vcxproj" on node 3 (Rebuild target(s)).
      1>CustomBuild:
          Building Custom Rule C:/src/latino/src/linenoise/CMakeLists.txt
@@ -24,4 +24,4 @@
 
 Build succeeded.
 
-Time Elapsed 00:00:04.62
+Time Elapsed 00:00:04.87

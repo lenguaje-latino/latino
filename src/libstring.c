@@ -254,10 +254,10 @@ void lat_eliminar(lat_vm* vm)
     {
         vm->registros[255] = lat_cadena_nueva(vm, replace(lat_obtener_cadena(a), lat_obtener_cadena(b), ""));
     }
-    if(a->type == T_LIST)
+    /*if(a->type == T_LIST)
     {
         remove_list(a->data.lista, b);
-    }
+    }*/
 }
 
 void lat_esta_vacia(lat_vm* vm)

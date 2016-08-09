@@ -200,35 +200,35 @@ lat_objeto* lat_cfuncion_nueva(lat_vm* vm);
   * \param o: Apuntador al objeto
   * \param m: valor de la marca
   */
-void lat_marcar_objeto(lat_objeto* o, int m);
+//void lat_marcar_objeto(lat_objeto* o, int m);
 
 /** \brief Marca una lista de objetos para el colector de basura
   *
   * \param l: Apuntador al nodo de la lista
   * \param m: valor de la marca
   */
-void lat_marcar_lista(list_node* l, unsigned char m);
+//void lat_marcar_lista(list_node* l, unsigned char m);
 
 /** \brief Marca una tabla hash de objetos para el colector de basura
   *
   * \param l: Apuntador al nodo de la tabla hash
   * \param m: valor de la marca
   */
-void lat_marcar_hash(hash_map* l, unsigned char m);
+//void lat_marcar_hash(hash_map* l, unsigned char m);
 
 /** \brief Elimina un objeto de la lista de objetos creados dinamicamente
   *
   * \param vm: Intancia de la maquina virtual
   * \param o: Apuntador al objeto
   */
-void lat_eliminar_objeto(lat_vm* vm, lat_objeto* o);
+//void lat_eliminar_objeto(lat_vm* vm, lat_objeto* o);
 
 /** \brief Elimina un objeto lista de la lista de objetos creados dinamicamente
   *
   * \param vm: Intancia de la maquina virtual
   * \param l: Apuntador al nodo de la lista
   */
-void lat_eliminar_lista(lat_vm* vm, list_node* l);
+//void lat_eliminar_lista(lat_vm* vm, list_node* l);
 
 /** \brief Elimina una tabla hash de la lista de objetos creados dinamicamente
   *
