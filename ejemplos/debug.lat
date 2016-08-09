@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 #Para debuguear en visual studio:
 #Menu propiedades del proyecto-> Debugging -> Command Arguments. Agregar
 #$(SolutionDir)..\ejemplos\debug.lat
@@ -10,12 +11,12 @@
 #eliminar(numeros, 2)
 #escribir(numeros)
 
-i=0
-j=0
-mientras i<=10
-    mientras j<=10
-        escribir(i . " X " . j . " = " . (i*j))
-        j=j+1
+i=1
+mientras i <= 10
+    j=1
+    mientras j <= 10
+        escribir(i*j)
+        j++
     fin
-    i=i+1
+    i++
 fin

@@ -68,8 +68,8 @@ typedef enum lat_ins
     OP_JMPIF,    /**< Saltar a otra instruccion SI la condicion se cumple */
     OP_CALL,    /**< Llamada a una funcion */
     OP_NOT,    /**< Negacion de un valor logico */
-    OP_INC,    /**< Incrementa un valor entero en 1 */
-    OP_DEC,    /**< Disminuye un valor entero en 1 */
+    //OP_INC,    /**< Incrementa un valor entero en 1 */
+    //OP_DEC,    /**< Disminuye un valor entero en 1 */
     OP_STOREDICT,    /**< Almacena un objeto diccionario */
     OP_PUSHDICT,    /**< Inserta un objeto diccionario en la pila */
     OP_POPDICT,    /**< Extrae un objeto diccionario de la pila */

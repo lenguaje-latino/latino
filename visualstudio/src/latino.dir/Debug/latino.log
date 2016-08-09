@@ -1,7 +1,17 @@
+<<<<<<< HEAD
 ﻿Build started 09/08/2016 11:06:47 a.m..
      1>Project "C:\src\latino\visualstudio\src\latino.vcxproj" on node 2 (Build target(s)).
      1>ClCompile:
          C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\CL.exe /c /I"C:\Program Files (x86)\Visual Leak Detector\include" /Zi /W4 /WX- /Od /Ob0 /Oy- /D WIN32 /D _WINDOWS /D _DEBUG /D _CRT_SECURE_NO_WARNINGS /D _DEBUG /D __STDC_CONSTANT_MACROS /D __STDC_FORMAT_MACROS /D __STDC_LIMIT_MACROS /D "CMAKE_INTDIR=\"Debug\"" /D _MBCS /Gm- /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"latino.dir\Debug\\" /Fd"latino.dir\Debug\vc120.pdb" /Gd /TC /analyze- /errorReport:prompt C:\src\latino\src\latino.c
+=======
+Build started 25/07/2016 09:18:12 a.m..
+     1>Project "C:\src\latino\visualstudio\src\latino.vcxproj" on node 2 (Rebuild target(s)).
+     1>CustomBuild:
+         Building Custom Rule C:/src/latino/src/CMakeLists.txt
+         CMake does not need to re-run because C:\src\latino\visualstudio\src\CMakeFiles\generate.stamp is up-to-date.
+       ClCompile:
+         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\CL.exe /c /I"C:\Program Files (x86)\Visual Leak Detector\include" /Zi /W4 /WX- /Od /Ob0 /Oy- /D WIN32 /D _WINDOWS /D _DEBUG /D _CRT_SECURE_NO_WARNINGS /D _DEBUG /D __STDC_CONSTANT_MACROS /D __STDC_FORMAT_MACROS /D __STDC_LIMIT_MACROS /D "CMAKE_INTDIR=\"Debug\"" /D _MBCS /Gm- /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"latino.dir\Debug\\" /Fd"latino.dir\Debug\vc120.pdb" /Gd /TC /analyze- /errorReport:prompt C:\src\latino\src\latino.c C:\src\latino\src\ast.c C:\src\latino\src\utils.c C:\src\latino\src\vm.c C:\src\latino\src\object.c C:\src\latino\src\libstring.c C:\src\latino\src\libmem.c C:\src\latino\src\liblist.c C:\src\latino\src\lex.c C:\src\latino\src\parse.c C:\src\latino\src\libmath.c C:\src\latino\src\libio.c C:\src\latino\src\linenoise\utf8.c C:\src\latino\src\linenoise\linenoise.c
+>>>>>>> 2a2cacfa96f4ebe9f8762657b1bc24ae1576e7c5
          Microsoft (R) C/C++ Optimizing Compiler Version 18.00.40629 for x86
          Copyright (C) Microsoft Corporation.  All rights reserved.
          

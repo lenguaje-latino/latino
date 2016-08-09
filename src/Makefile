@@ -291,6 +291,21 @@ libmem.s:
 .PHONY : libmem.s
 
 # target to build an object file
+libnet.o:
+	cd /home/latino/src/latino && $(MAKE) -f src/CMakeFiles/latino.dir/build.make src/CMakeFiles/latino.dir/libnet.o
+.PHONY : libnet.o
+
+# target to preprocess a source file
+libnet.i:
+	cd /home/latino/src/latino && $(MAKE) -f src/CMakeFiles/latino.dir/build.make src/CMakeFiles/latino.dir/libnet.i
+.PHONY : libnet.i
+
+# target to generate assembly for a file
+libnet.s:
+	cd /home/latino/src/latino && $(MAKE) -f src/CMakeFiles/latino.dir/build.make src/CMakeFiles/latino.dir/libnet.s
+.PHONY : libnet.s
+
+# target to build an object file
 libstring.o:
 	cd /home/latino/src/latino && $(MAKE) -f src/CMakeFiles/latino.dir/build.make src/CMakeFiles/latino.dir/libstring.o
 .PHONY : libstring.o
@@ -431,6 +446,9 @@ help:
 	@echo "... libmem.o"
 	@echo "... libmem.i"
 	@echo "... libmem.s"
+	@echo "... libnet.o"
+	@echo "... libnet.i"
+	@echo "... libnet.s"
 	@echo "... libstring.o"
 	@echo "... libstring.i"
 	@echo "... libstring.s"

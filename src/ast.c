@@ -469,24 +469,6 @@ int nodo_analizar(lat_vm *vm, ast *node, lat_bytecode *bcode, int i)
 #endif
     }
     break;
-    case NODO_INCREMENTO:
-    {
-        pn(vm, node->l);
-        dbc(OP_INC, 255, 0, NULL);
-#if DEBUG_VM
-        printf("INC R255 R0\n");
-#endif
-    }
-    break;
-    case NODO_DECREMENTO:
-    {
-        pn(vm, node->l);
-        dbc(OP_DEC, 255, 0, NULL);
-#if DEBUG_VM
-        printf("DEC R255 R0\n");
-#endif
-    }
-    break;
     case NODO_LITERAL:
     {
         lat_objeto *ret = lat_literal_nuevo(vm, node->valor->v.c);
