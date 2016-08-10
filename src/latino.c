@@ -25,10 +25,13 @@ THE SOFTWARE.
 
 #include "linenoise/linenoise.h"
 #include "latino.h"
+#include "object.h"
+#include "vm.h"
 #include "parse.h"
 #include "lex.h"
 #include "ast.h"
 #include "libmem.h"
+#include "libstring.h"
 
 /* 1 para debuguear analizador */
 int yydebug = 0;
@@ -138,7 +141,6 @@ static int leer_linea(lat_vm *vm, char* buffer){
     parse_silent = 1;
     int resultado;
     char *input;
-    //buffer = lat_asignar_memoria(MAX_STR_LENGTH);
     char *tmp = "";
     REPETIR:
     input = linenoise("latino> ");
@@ -262,25 +264,14 @@ static void completion(const char *buf, linenoiseCompletions *lc) {
     }
 }
 
-/*static char *hints(const char *buf, int *color, int *bold) {
-    if (!strcasecmp(buf,"escribir")) {
-        *color = 35;
-        *bold = 0;
-        return " Hola Latinos";
-    }
-    return NULL;
-}*/
-
 static void lat_repl(lat_vm *vm)
 {
     char* buf = lat_asignar_memoria(MAX_STR_INTERN);
     ast* tmp = NULL;
     int status;
     vm->REPL = true;
-    //linenoiseSetMultiLine(1);
     linenoiseHistoryLoad("history.txt");
     linenoiseSetCompletionCallback(completion);
-    //linenoiseSetHintsCallback(hints);
     while (leer_linea(vm, buf) != -1)
     {
         parse_silent = 0;

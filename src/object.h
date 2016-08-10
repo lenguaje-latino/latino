@@ -30,8 +30,9 @@ THE SOFTWARE.
 
 typedef struct lat_objeto lat_objeto;
 
-#include "utils.h"
 #include "vm.h"
+#include "liblist.h"
+#include "libdict.h"
 
 
 /** \file object.h
@@ -57,7 +58,7 @@ typedef enum lat_type
     T_DICT,    /**< diccionario */
     T_FUNC,    /**< funcion */
     T_CFUNC,    /**< funcion C */
-    T_STRUCT,    /**< estructura */
+    T_CLASS,    /**< estructura */
 } lat_type;
 
 /** \brief Datos del objeto
@@ -82,7 +83,7 @@ typedef union lat_datos_objeto
 *
 * Almacena toda la informacion del objeto
 */
-struct lat_objeto
+typedef struct lat_objeto
 {
     lat_type type;    /**< Tipo de objeto */
     int marked;    /**< para marcar el objeto Colector de basura */
@@ -90,7 +91,7 @@ struct lat_objeto
     bool es_constante;   /**< Valida si es una constante */
     int num_declared;   /**< Numero de veces declarado */
     lat_datos_objeto data;   /**< Informacion del objeto */
-};
+}lat_objeto;
 
 struct lat_llave_valor
 {
@@ -111,13 +112,6 @@ void lat_asignar_contexto_objeto(lat_objeto* ns, lat_objeto* name, lat_objeto* o
   * \param name: Nombre del objeto
   */
 lat_objeto* lat_obtener_contexto_objeto(lat_objeto* ns, lat_objeto* name);
-
-/** \brief Valida si el contexto enviado contiene al objeto
-  *
-  * \param ns: Contexto en el que se encuentra el objeto
-  * \param name: Nombre del objeto
-  */
-int  lat_contexto_contiene(lat_objeto* ns, lat_objeto* name);
 
 /** \brief Crea un objeto determinado
   *
@@ -195,47 +189,12 @@ lat_objeto* lat_funcion_nueva(lat_vm* vm);
   */
 lat_objeto* lat_cfuncion_nueva(lat_vm* vm);
 
-/** \brief Marca un objeto para el colector de basura
-  *
-  * \param o: Apuntador al objeto
-  * \param m: valor de la marca
-  */
-//void lat_marcar_objeto(lat_objeto* o, int m);
-
-/** \brief Marca una lista de objetos para el colector de basura
-  *
-  * \param l: Apuntador al nodo de la lista
-  * \param m: valor de la marca
-  */
-//void lat_marcar_lista(list_node* l, unsigned char m);
-
-/** \brief Marca una tabla hash de objetos para el colector de basura
-  *
-  * \param l: Apuntador al nodo de la tabla hash
-  * \param m: valor de la marca
-  */
-//void lat_marcar_hash(hash_map* l, unsigned char m);
-
 /** \brief Elimina un objeto de la lista de objetos creados dinamicamente
   *
   * \param vm: Intancia de la maquina virtual
   * \param o: Apuntador al objeto
   */
-//void lat_eliminar_objeto(lat_vm* vm, lat_objeto* o);
-
-/** \brief Elimina un objeto lista de la lista de objetos creados dinamicamente
-  *
-  * \param vm: Intancia de la maquina virtual
-  * \param l: Apuntador al nodo de la lista
-  */
-//void lat_eliminar_lista(lat_vm* vm, list_node* l);
-
-/** \brief Elimina una tabla hash de la lista de objetos creados dinamicamente
-  *
-  * \param vm: Intancia de la maquina virtual
-  * \param l: Apuntador al nodo de la tabla hash
-  */
-void lat_eliminar_hash(lat_vm* vm, hash_map* l);
+void lat_eliminar_objeto(lat_vm* vm, lat_objeto* o);
 
 /** \brief Clona (copia) un objeto
   *

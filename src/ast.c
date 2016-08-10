@@ -24,9 +24,12 @@ THE SOFTWARE.
 #include <stdbool.h>
 #include "latino.h"
 #include "ast.h"
-#include "utils.h"
 #include "vm.h"
+#include "object.h"
 #include "libmem.h"
+#include "libstring.h"
+#include "liblist.h"
+#include "libio.h"
 
 #define dbc(I, A, B, M) bcode[i++] = lat_bc(I, A, B, M)
 #define pn(vm, N) i = nodo_analizar(vm, N, bcode, i)
@@ -38,6 +41,7 @@ ast *nodo_nuevo_operador(nodo_tipo nt, ast *l, ast *r)
     ast *a = (ast*)lat_asignar_memoria(sizeof(ast));
     switch (nt)
     {
+    case NODO_MAS_UNARIO:
     case NODO_SUMA:
     {
         a->l = nodo_nuevo_identificador("+", 1, 1);
@@ -117,13 +121,13 @@ ast *nodo_nuevo_operador(nodo_tipo nt, ast *l, ast *r)
     default:
         break;
     }
-    if (nt == NODO_MENOS_UNARIO)
+    if (nt == NODO_MENOS_UNARIO || nt == NODO_MAS_UNARIO)
     {
         a->r = nodo_nuevo(NODO_FUNCION_ARGUMENTOS, nodo_nuevo_entero(0, 1, 1), l);
     }
     else if (nt == NODO_NEGACION)
     {
-        a->r = nodo_nuevo(NODO_FUNCION_ARGUMENTOS, NULL, l);
+        a->r = nodo_nuevo(NODO_FUNCION_ARGUMENTOS, l, NULL);
     }
     else
     {
@@ -354,18 +358,9 @@ void nodo_liberar(ast *a)
     }
 }
 
-lat_objeto *nodo_analizar_arbol(lat_vm *vm, ast *tree)
-{
-    lat_bytecode *bcode = (lat_bytecode *)lat_asignar_memoria(sizeof(lat_bytecode) * MAX_BYTECODE_FUNCTION);
-    int i = nodo_analizar(vm, tree, bcode, 0);
-    dbc(OP_END, 0, 0, NULL);
-    nodo_liberar(tree);
-    return lat_definir_funcion(vm, bcode);
-}
-
 int nested = -1;
 
-int nodo_analizar(lat_vm *vm, ast *node, lat_bytecode *bcode, int i)
+static int nodo_analizar(lat_vm *vm, ast *node, lat_bytecode *bcode, int i)
 {
     int temp[8] = {0};
     lat_bytecode *funcion_bcode = NULL;
@@ -377,18 +372,18 @@ int nodo_analizar(lat_vm *vm, ast *node, lat_bytecode *bcode, int i)
         //TODO: Incluir rutas con punto ej. incluir "lib.modulos.myModulo"
         char* archivo = node->l->valor->v.s;
         lat_objeto* mod = lat_cadena_nueva(vm, archivo);
-        if(!find_list(vm->modulos, (void*)mod))
+        if (!find_list(vm->modulos, (void*)mod))
         {
             //encontrar el modulo en la ruta actual
             char dir_actual[MAX_PATH_LENGTH];
             getcwd(dir_actual, sizeof(dir_actual));
             strcat(dir_actual, PATH_SEP);
             strcat(dir_actual, archivo);
-            if(!endsWith(dir_actual, ".lat"))
+            if (!endsWith(dir_actual, ".lat"))
             {
                 strcat(dir_actual, ".lat");
             }
-            if(legible(dir_actual))
+            if (legible(dir_actual))
             {
                 insert_list(vm->modulos, mod);
                 pn(vm, lat_analizar_archivo(vm, dir_actual));
@@ -397,15 +392,15 @@ int nodo_analizar(lat_vm *vm, ast *node, lat_bytecode *bcode, int i)
             {
                 //sino existe buscar en el path_home de latino/lib
                 char* latino_lib = getenv("LATINO_LIB");
-                if(latino_lib != NULL)
+                if (latino_lib != NULL)
                 {
                     strcat(latino_lib, PATH_SEP);
                     strcat(latino_lib, archivo);
-                    if(!endsWith(latino_lib, ".lat"))
+                    if (!endsWith(latino_lib, ".lat"))
                     {
                         strcat(latino_lib, ".lat");
                     }
-                    if(legible(latino_lib))
+                    if (legible(latino_lib))
                     {
                         insert_list(vm->modulos, mod);
                         pn(vm, lat_analizar_archivo(vm, latino_lib));
@@ -413,7 +408,6 @@ int nodo_analizar(lat_vm *vm, ast *node, lat_bytecode *bcode, int i)
                 }
             }
         }
-        //return NULL;
     }
     break;
     case NODO_BLOQUE:
@@ -456,7 +450,7 @@ int nodo_analizar(lat_vm *vm, ast *node, lat_bytecode *bcode, int i)
         ret->num_declared++;
         if (ret->es_constante && ret->num_declared > 1)
         {
-            lat_registrar_error("Linea %d: %s", (node->r->valor->num_linea + 1),  "Intento de asignar un nuevo valor a una constante ");
+            lat_error("Linea %d: %s", (node->r->valor->num_linea + 1),  "Intento de asignar un nuevo valor a una constante ");
         }
         dbc(OP_LOCALNS, 1, 0, NULL);
         dbc(OP_POP, 255, 0, NULL);
@@ -507,7 +501,7 @@ int nodo_analizar(lat_vm *vm, ast *node, lat_bytecode *bcode, int i)
     break;
     case NODO_LOGICO:
     {
-        lat_objeto *ret = node->valor->v.b ? vm->objeto_cierto : vm->objeto_falso;
+        lat_objeto *ret = (node->valor->v.b == true) ? vm->objeto_cierto : vm->objeto_falso;
         dbc(OP_STOREBOOL, 255, 0, ret);
 #if DEBUG_VM
         printf("STOREBOOL R255 %i\n", ret->data.b);
@@ -716,7 +710,7 @@ int nodo_analizar(lat_vm *vm, ast *node, lat_bytecode *bcode, int i)
             printf("MOV R3 R255\n");
 #endif
         }
-        if(elem->id)
+        if (elem->id)
         {
             pn(vm, elem->pos);
             dbc(OP_MOV, 4, 255, NULL);
@@ -771,7 +765,7 @@ int nodo_analizar(lat_vm *vm, ast *node, lat_bytecode *bcode, int i)
     break;
     case NODO_DICC_AGREGAR_ELEMENTO:
     {
-        if(node->l)
+        if (node->l)
         {
             pn(vm, node->l);
             dbc(OP_PUSHDICT, nested, 255, NULL);
@@ -779,7 +773,7 @@ int nodo_analizar(lat_vm *vm, ast *node, lat_bytecode *bcode, int i)
             printf("PUSHDICT R%i R255\n", nested);
 #endif
         }
-        if(node->r)
+        if (node->r)
         {
             pn(vm, node->r);
         }
@@ -787,30 +781,32 @@ int nodo_analizar(lat_vm *vm, ast *node, lat_bytecode *bcode, int i)
     break;
     case NODO_DICC_ELEMENTO:
     {
-        if(node->l){
+        if (node->l)
+        {
             pn(vm, node->l);
             dbc(OP_PUSH, 255, 0, NULL);
-            #if DEBUG_VM
-                printf("PUSH R255\n");
-            #endif
+#if DEBUG_VM
+            printf("PUSH R255\n");
+#endif
         }
-        if(node->r){
+        if (node->r)
+        {
             pn(vm, node->r);
             dbc(OP_PUSH, 255, 0, NULL);
-            #if DEBUG_VM
-                printf("PUSH R255\n");
-            #endif
+#if DEBUG_VM
+            printf("PUSH R255\n");
+#endif
         }
         dbc(OP_PUSHDICTELEM, 0, 0, NULL);
-        #if DEBUG_VM
-            printf("OP_PUSHDICTELEM\n");
-        #endif
+#if DEBUG_VM
+        printf("OP_PUSHDICTELEM\n");
+#endif
     }
     break;
     case NODO_DICC_ASIGNAR_ELEMENTO:
     {
         nodo_dicc_elem *elem = ((nodo_dicc_elem *)node);
-        if(elem->exp)
+        if (elem->exp)
         {
             pn(vm, elem->exp);
             dbc(OP_MOV, 3, 255, NULL);
@@ -818,7 +814,7 @@ int nodo_analizar(lat_vm *vm, ast *node, lat_bytecode *bcode, int i)
             printf("MOV R3 R255\n");
 #endif
         }
-        if(elem->id)
+        if (elem->id)
         {
             pn(vm, elem->llave);
             dbc(OP_MOV, 4, 255, NULL);
@@ -835,34 +831,24 @@ int nodo_analizar(lat_vm *vm, ast *node, lat_bytecode *bcode, int i)
     break;
     case NODO_DICC_OBTENER_ELEMENTO:
     {
-        if(node->l){
+        if (node->l)
+        {
             pn(vm, node->l);
             dbc(OP_MOV, 3, 255, NULL);
-            #if DEBUG_VM
+#if DEBUG_VM
             printf("MOV R3 R255\n");
-            #endif
+#endif
         }
-        if(node->r){
+        if (node->r)
+        {
             pn(vm, node->r);
             dbc(OP_DICTGETITEM, 255, 3, NULL);
-            #if DEBUG_VM
+#if DEBUG_VM
             printf("MOV R255 R3\n");
-            #endif
+#endif
         }
-    }break;
-    case OP_PUSHDICTELEM:
+    }
     break;
-    case OP_DICTGETITEM:
-    break;
-    case OP_DICTSETITEM:
-    break;
-    /*case NS:
-      {
-          dbc(OP_NS, 255, 0, NULL);
-          pn(node->l);
-          dbc(OP_ENDNS, 255, 0, NULL);
-      }
-      break;*/
     default:
         printf("nodo_tipo:%i\n", node->tipo);
         return 0;
@@ -870,3 +856,13 @@ int nodo_analizar(lat_vm *vm, ast *node, lat_bytecode *bcode, int i)
     // printf("i = %i\n", i);
     return i;
 }
+
+lat_objeto *nodo_analizar_arbol(lat_vm *vm, ast *tree)
+{
+    lat_bytecode *bcode = (lat_bytecode *)lat_asignar_memoria(sizeof(lat_bytecode) * MAX_BYTECODE_FUNCTION);
+    int i = nodo_analizar(vm, tree, bcode, 0);
+    dbc(OP_END, 0, 0, NULL);
+    nodo_liberar(tree);
+    return lat_definir_funcion(vm, bcode);
+}
+

@@ -26,10 +26,47 @@ THE SOFTWARE.
 #define _LIBLIST_H_
 
 #include "latino.h"
+#include "vm.h"
+
+/** \brief Nodo de una lista */
+typedef struct list_node
+{
+    struct list_node* prev;   /**< Nodo previo*/
+    struct list_node* next;   /**< Nodo siguiente*/
+    void* data;   /**< Informacion del nodo*/
+} list_node;
+
+/**\brief Crear una lista vacia
+  *
+  *\return list_node: Apuntador al primer nodo de la lista
+  */
+list_node* lat_crear_lista();
+
+/**\brief Busca un elemento en la lista
+  *
+  *\param l: Apuntador a la lista
+  *\param data: Apuntador a objeto buscado
+  *\return int: Retorna 1 si se encontro el objeto 0 en caso contrario
+  */
+int find_list(list_node* l, void* data);
+
+/**\brief Inserta un elemento en la lista
+  *
+  *\param l: Apuntador a la lista
+  *\param data: Apuntador a objeto
+  */
+void insert_list(list_node* l, void* data);
+
+/**\brief Devuelve la longitud de la lista
+  *
+  *\param l: Apuntador a la lista
+  *\return int: La longitud de la lista
+  */
+int length_list(list_node* l);
 
 /** Agrega un elemento al final de la lista
   * \param vm: Maquina virtual de latino
  * */
 void lat_agregar(lat_vm *vm);
 
-#endif /* ifndef _LIBLIST_H_ */
+#endif /* !_LIBLIST_H_ */

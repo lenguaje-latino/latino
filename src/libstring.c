@@ -26,7 +26,8 @@ THE SOFTWARE.
 #include "latino.h"
 #include "object.h"
 #include "libmem.h"
-#include "utils.h"
+#include "libstring.h"
+#include "liblist.h"
 
 KHASH_MAP_INIT_INT64(env, lat_objeto);
 typedef khash_t(env) lat_env;
@@ -97,6 +98,362 @@ static lat_objeto* str_intern(const char* p, size_t len)
     return str;
 }
 
+char* strdup0(const char* s)
+{
+    size_t len = strlen(s);
+    char* p;
+    p = lat_asignar_memoria(len + 1);
+    if (p)
+    {
+        strncpy(p, s, len);
+    }
+    p[len] = '\0';
+    return p;
+}
+
+char* parse_string(const char* s, size_t len)
+{
+    char* ret = lat_asignar_memoria(len + 1);
+    int i = 0;
+    int j = 0;
+    int c = '@';
+    for (i = 0; i < ((int)len); i++)
+    {
+        switch (s[i])
+        {
+        case '\\':
+        {
+            switch (s[i + 1])
+            {
+            case 'a':
+                c = '\n';
+                i++;
+                goto save;
+            case 'b':
+                c = '\n';
+                i++;
+                goto save;
+            case 'f':
+                c = '\n';
+                i++;
+                goto save;
+            case 'n':
+                c = '\n';
+                i++;
+                goto save;
+            case 'r':
+                c = '\n';
+                i++;
+                goto save;
+            case 't':
+                c = '\t';
+                i++;
+                goto save;
+            case 'v':
+                c = '\n';
+                i++;
+                goto save;
+            default:
+                break;
+            }
+        }
+        break;
+        default:
+            c = s[i];
+            break;
+        }
+save:
+        ret[j] = c;
+        j++;
+    }
+    ret[j] = '\0';
+    return ret;
+}
+
+char* concat(char* s1, char* s2)
+{
+    char* s3 = malloc(strlen(s1) + strlen(s2) + 1);
+    strcpy(s3, s1);
+    strcat(s3, s2);
+    return s3;
+}
+
+char* int2str(long i)
+{
+    char s[255];
+    char* r = malloc(strlen(s) + 1);
+    snprintf(s, 255, "%ld", i);
+    strcpy(r, s);
+    return r;
+}
+
+char* double2str(double d)
+{
+    char s[64];
+    char* r = malloc(strlen(s) + 1);
+    snprintf(s, 64, "%g", (float)d);
+    strcpy(r, s);
+    return r;
+}
+
+char* char2str(char c)
+{
+    char s[2];
+    char* r = malloc(2);
+    snprintf(s, 2, "%c", c);
+    strcpy(r, s);
+    return r;
+}
+
+char* bool2str(int i)
+{
+    char s[10];
+    char* r = malloc(11);
+    if (i)
+    {
+        snprintf(s, 10, "%s", "verdadero");
+        strcpy(r, s);
+    }
+    else
+    {
+        snprintf(s, 10, "%s", "falso");
+        strcpy(r, s);
+    }
+    return r;
+}
+
+bool startsWith(const char* base, const char* str)
+{
+    return (strstr(base, str) - base) == 0;
+}
+
+bool endsWith(char* base, char* str)
+{
+    int blen = strlen(base);
+    int slen = strlen(str);
+    return (blen >= slen) && (0 == strcmp(base + blen - slen, str));
+}
+
+int indexOf(char* base, char* str)
+{
+    return indexOf_shift(base, str, 0);
+}
+
+int indexOf_shift(char* base, char* str, int startIndex)
+{
+    int result;
+    int baselen = strlen(base);
+    if ((int)strlen(str) > baselen || startIndex > baselen)
+    {
+        result = -1;
+    }
+    else
+    {
+        if (startIndex < 0)
+        {
+            startIndex = 0;
+        }
+        char* pos = strstr(base + startIndex, str);
+        if (pos == NULL)
+        {
+            result = -1;
+        }
+        else
+        {
+            result = pos - base;
+        }
+    }
+    return result;
+}
+
+int lastIndexOf(char* base, char* str)
+{
+    int result;
+    if (strlen(str) > strlen(base))
+    {
+        result = -1;
+    }
+    else
+    {
+        int start = 0;
+        int endinit = strlen(base) - strlen(str);
+        int end = endinit;
+        int endtmp = endinit;
+        while (start != end)
+        {
+            start = indexOf_shift(base, str, start);
+            end = indexOf_shift(base, str, end);
+            if (start == -1)
+            {
+                end = -1;
+            }
+            else if (end == -1)
+            {
+                if (endtmp == (start + 1))
+                {
+                    end = start;
+                }
+                else
+                {
+                    end = endtmp - (endtmp - start) / 2;
+                    if (end <= start)
+                    {
+                        end = start + 1;
+                    }
+                    endtmp = end;
+                }
+            }
+            else
+            {
+                start = end;
+                end = endinit;
+            }
+        }
+        result = start;
+    }
+    return result;
+}
+
+char* insert(char *dest, char* src, int pos)
+{
+    int srclen = strlen(src);
+    int dstlen = strlen(dest);
+    if (pos < 0)
+    {
+        pos = dstlen + pos;
+    }
+    if (pos > dstlen)
+    {
+        pos = dstlen;
+    }
+    char *m = malloc(srclen + dstlen + 1);
+    memcpy(m, dest, pos);
+    memcpy(m + pos, src, srclen);
+    memcpy(m + pos + srclen, dest + pos, dstlen - pos + 1);
+    return m;
+}
+
+char* padLeft(char* base, int n, char* c)
+{
+    int len = (int)strlen(base);
+    char *ret = NULL;
+    if (n <= len)
+    {
+        ret = malloc(len + 1);
+        strcpy(ret, base);
+        return ret;
+    }
+    ret = malloc(n + 1);
+    ret = "";
+    int i = 0;
+    for (i = 0; i < (n - len); i++)
+    {
+        ret = concat(ret, c);
+    }
+    ret = concat(ret, base);
+    return ret;
+}
+
+char* padRight(char *base, int n, char* c)
+{
+    int len = (int)strlen(base);
+    char *ret = NULL;
+    if (len >= n)
+    {
+        ret = malloc(len + 1);
+        strcpy(ret, base);
+        return ret;
+    }
+    ret = malloc(n + 1);
+    ret = base;
+    int i;
+    for (i = 0; i < (n - len); i++)
+    {
+        ret = concat(ret, c);
+    }
+    return ret;
+}
+
+char *replace(char *str, char *orig, char *rep)
+{
+    char *buffer = lat_asignar_memoria(MAX_STR_LENGTH);
+    char *p;
+    if (!(p = strstr(str, orig)))
+    {
+        return str;
+    }
+    strncpy(buffer, str, p - str);
+    buffer[p - str] = '\0';
+    sprintf(buffer + (p - str), "%s%s", rep, p + strlen(orig));
+    //reemplazar todas las ocurrencias
+    if (strstr(buffer, orig) != NULL)
+    {
+        strcpy(buffer, replace(buffer, orig, rep));
+    }
+    return buffer;
+}
+
+char *substring(const char* str, int beg, int n)
+{
+    char *ret = malloc(n + 1);
+    strncpy(ret, (str + beg), n);
+    *(ret + n) = 0;
+
+    return ret;
+}
+
+char *toLower(const char* str)
+{
+    int i = 0;
+    int len = strlen(str);
+    char *ret = (char*)malloc(len + 1);
+    for (i = 0; i < len; i++)
+    {
+        ret[i] = tolower(str[i]);
+    }
+    ret[len] = 0;
+    return ret;
+}
+
+char *toUpper(const char* str)
+{
+    int i = 0;
+    int len = strlen(str);
+    char *ret = malloc(len + 1);
+    for (i = 0; i < len; i++)
+    {
+        ret[i] = toupper(str[i]);
+    }
+    ret[len] = 0;
+    return ret;
+}
+
+char* trim(const char *str)
+{
+    char *start;
+    char *end;
+    for (start = (char*) str; *start; start++)
+    {
+        if (!isspace((unsigned char)start[0]))
+            break;
+    }
+    for (end = start + strlen(start); end > start + 1; end--)
+    {
+        if (!isspace((unsigned char)end[-1]))
+            break;
+    }
+    char *ret = malloc((end - start) + 1);
+    *end = 0;
+    if (start > str)
+    {
+        memcpy(ret, start, (end - start) + 1);
+    }
+    else
+    {
+        memcpy(ret, str, strlen(str));
+    }
+    return ret;
+}
 lat_objeto* lat_cadena_hash(const char* p, size_t len)
 {
     if (p && (len < MAX_STR_INTERN))
@@ -115,8 +472,13 @@ void lat_comparar(lat_vm* vm)
 
 void lat_concatenar(lat_vm* vm)
 {
+    //lat_imprimir_lista(vm, vm->pila);
+    //printf("%s\n", "antes de concatenando\n");
     lat_objeto* b = lat_desapilar(vm);
+    //lat_imprimir_lista(vm, vm->pila);
     lat_objeto* a = lat_desapilar(vm);
+    //lat_imprimir_lista(vm, vm->pila);
+
     lat_objeto* x = NULL;
     lat_objeto* y = NULL;
     switch (a->type)
@@ -150,7 +512,9 @@ void lat_concatenar(lat_vm* vm)
         y = lat_cadena_nueva(vm, b->data.str);
         break;
     }
+    //lat_imprimir_lista(vm, vm->pila);
     vm->registros[255] = lat_cadena_nueva(vm, concat(lat_obtener_cadena(x), lat_obtener_cadena(y)));
+    //printf("%s\n", "despues de concatenando\n");
 }
 
 void lat_contiene(lat_vm* vm)
@@ -341,7 +705,7 @@ void lat_es_numero(lat_vm* vm)
         return;
     }
     if(a->type != T_STR && a->type != T_LIT){
-        lat_registrar_error("El parametro debe de ser una cadena");
+        lat_error("El parametro debe de ser una cadena");
         return;
     }
     char* cad = lat_obtener_cadena(a);

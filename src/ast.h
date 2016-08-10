@@ -25,6 +25,7 @@ THE SOFTWARE.
 #define _AST_H_
 
 #include <stdbool.h>
+#include "object.h"
 #include "vm.h"
 
 /** \file ast.h
@@ -68,6 +69,7 @@ typedef enum {
   NODO_DIVISION,    /**< Nodo division */
   NODO_MODULO,  /**< Nodo modulo */
   NODO_ASIGNACION,  /**< Nodo asignacion */
+  NODO_MAS_UNARIO,  /**< Nodo mas unario */
   NODO_MENOS_UNARIO,  /**< Nodo menos unario */
   NODO_IGUALDAD,  /**< Nodo igualdad */
   NODO_DESIGUALDAD,  /**< Nodo desigualdad */
@@ -112,9 +114,6 @@ typedef enum {
   NODO_DICC_ELEMENTO,   /**< Nodo par de llave valor del diccionario (key : value) */
   NODO_INCLUIR  /**< Nodo para incluir codigo de otro archivo */
 } nodo_tipo;
-
-/**\brief Objeto tipo maquina virtual */
-//typedef struct lat_vm lat_vm;
 
 /** \brief Nodos en arbol abstacto de sintaxis (abstract syntax tree).
   *
@@ -190,6 +189,7 @@ ast *nodo_nuevo_identificador(const char *s, int num_linea, int num_columna);
   *
   */
 ast *nodo_nuevo_constante(char *s, int num_linea, int num_columna);
+
 /** Nuevo nodo tipo Logico (verdadero/falso)
   *
   * \param b: Nodo valor (0 o 1)
@@ -341,16 +341,5 @@ void nodo_liberar(ast *a);
   *
   */
 lat_objeto *nodo_analizar_arbol(lat_vm *vm, ast *tree);
-
-/** Analiza un nodo del arbol abstracto de sintaxis
-  *
-  * \param vm: Referencia a un objeto tipo máquina virtual
-  * \param node: Nodo AST
-  * \param bcode: Referencia a un objeto tipo bytecode
-  * \param i: numero de instruccion actual
-  * \return int: numero de instruccion siguiente
-  *
-  */
-int nodo_analizar(lat_vm *vm, ast *node, lat_bytecode *bcode, int i);
 
 #endif /*_AST_H_*/

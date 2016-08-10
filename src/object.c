@@ -29,16 +29,17 @@ THE SOFTWARE.
 #include <stdio.h>
 
 #include "latino.h"
-#include "utils.h"
 #include "libstring.h"
+#include "liblist.h"
 #include "libmem.h"
+#include "libdict.h"
 
 void lat_asignar_contexto_objeto(lat_objeto* ns, lat_objeto* name, lat_objeto* o)
 {
     if (ns->type != T_INSTANCE)
     {
         debug("ns->type: %d", ns->type);
-        lat_registrar_error("Namespace no es una instancia");
+        lat_error("Namespace no es una instancia");
     }
     else
     {
@@ -52,7 +53,7 @@ lat_objeto* lat_obtener_contexto_objeto(lat_objeto* ns, lat_objeto* name)
     if (ns->type != T_INSTANCE)
     {
         debug("ns->type: %d", ns->type);
-        lat_registrar_error("Namespace is not an nombre");
+        lat_error("Namespace is not an nombre");
     }
     else
     {
@@ -60,31 +61,11 @@ lat_objeto* lat_obtener_contexto_objeto(lat_objeto* ns, lat_objeto* name)
         lat_objeto* ret = (lat_objeto*)get_hash(h, lat_obtener_cadena(name));
         if (ret == NULL)
         {
-            lat_registrar_error("Variable \"%s\" indefinida", lat_obtener_cadena(name));
+            lat_error("Variable \"%s\" indefinida", lat_obtener_cadena(name));
         }
         return ret;
     }
     return NULL;
-}
-
-int lat_contexto_contiene(lat_objeto* ns, lat_objeto* name)
-{
-    if (ns->type != T_INSTANCE)
-    {
-        debug("ns->type: %d", ns->type);
-        lat_registrar_error("Namespace no es una instancia");
-    }
-    else
-    {
-        hash_map* h = ns->data.nombre;
-        lat_objeto* ret = (lat_objeto*)get_hash(h, lat_obtener_cadena(name));
-        if (ret == NULL)
-        {
-            return 0;
-        }
-        return 1;
-    }
-    return 0;
 }
 
 lat_objeto* lat_crear_objeto(lat_vm* vm)
@@ -167,64 +148,6 @@ lat_objeto* lat_cfuncion_nueva(lat_vm* vm)
     return ret;
 }
 
-/*void lat_marcar_objeto(lat_objeto* o, int m)
-{
-    if (o != NULL)
-    {
-        o->marked = m;
-        switch (o->type)
-        {
-        case T_INSTANCE:
-            lat_marcar_hash(o->data.nombre, m);
-            break;
-        case T_LIST:
-            lat_marcar_lista(o->data.lista, m);
-            break;
-        default:
-            break;
-        }
-    }
-}
-
-void lat_marcar_lista(list_node* l, unsigned char m)
-{
-    if (l != NULL)
-    {
-        list_node* c;
-        for (c = l->next; c != NULL; c = c->next)
-        {
-            if (c->data != NULL)
-            {
-                lat_marcar_objeto((lat_objeto*)c->data, m);
-            }
-        }
-    }
-}
-
-void lat_marcar_hash(hash_map* h, unsigned char m)
-{
-    int c = 0;
-    list_node* l;
-    list_node* cur;
-    hash_val* hv;
-    for (c = 0; c < 256; ++c)
-    {
-        l = h->buckets[c];
-        if (l != NULL)
-        {
-            for (cur = l->next; cur != NULL; cur = cur->next)
-            {
-                if (cur->data != NULL)
-                {
-                    hv = (hash_val*)cur->data;
-                    lat_marcar_objeto((lat_objeto*)hv->val, m);
-                }
-            }
-        }
-    }
-}
-*/
-
 void lat_eliminar_objeto(lat_vm* vm, lat_objeto* o)
 {
     switch (o->type)
@@ -252,141 +175,45 @@ void lat_eliminar_objeto(lat_vm* vm, lat_objeto* o)
     case T_FUNC:
     case T_CFUNC:
         return;
-    case T_STRUCT:
+    case T_CLASS:
         return;
         break;
     }
     lat_liberar_memoria(o);
 }
-/*
-void lat_eliminar_lista(lat_vm* vm, list_node* l)
+
+lat_objeto* lat_clonar_objeto(lat_vm* vm, lat_objeto* obj)
 {
-    if (l != NULL)
+    lat_objeto* ret;
+    switch (obj->type)
     {
-        list_node* c;
-        for (c = l->next; c != NULL; c = c->next)
-        {
-            if (c->data != NULL)
-            {
-                lat_eliminar_objeto(vm, (lat_objeto*)c->data);
-            }
-            lat_liberar_memoria(c);
-        }
+    case T_INSTANCE:
+        ret = lat_crear_objeto(vm);
+        ret->type = T_INSTANCE;
+        ret->data_size = sizeof(hash_map*);
+        //ret->data.nombre = lat_clonar_hash(vm, obj->data.nombre);
+        ret->data.nombre = copy_hash(obj->data.nombre);
+        //ret->data.nombre = obj->data.nombre;
+        break;
+    case T_LIST:
+        ret = lat_lista_nueva(vm, lat_clonar_lista(vm, obj->data.lista));
+        //ret = lat_lista_nueva(vm, obj->data.lista);
+        break;
+    case T_FUNC:
+    case T_CFUNC:
+        ret = obj;
+        break;
+    default:
+        ret = lat_crear_objeto(vm);
+        ret->type = obj->type;
+        ret->marked = obj->marked;
+        ret->data_size = obj->data_size;
+        ret->data = obj->data;
+        break;
     }
-    lat_liberar_memoria(l);
+    return ret;
 }
 
-void lat_eliminar_hash(lat_vm* vm, hash_map* h)
-{
-    int c = 0;
-    list_node* l;
-    list_node* cur;
-    hash_val* hv;
-    for (c = 0; c < 256; ++c)
-    {
-        l = h->buckets[c];
-        if (l != NULL)
-        {
-            for (cur = l->next; cur != NULL; cur = cur->next)
-            {
-                if (cur != NULL)
-                {
-                    if (cur->data != NULL)
-                    {
-                        hv = (hash_val*)cur->data;
-                        lat_eliminar_objeto(vm, (lat_objeto*)hv->val);
-                        lat_liberar_memoria(hv);
-                    }
-                    //lat_liberar_memoria(cur);
-                }
-            }
-            lat_liberar_memoria(l);
-        }
-    }
-}
-*/
-/*
-lat_objeto* lat_clonar_objeto(lat_vm* vm, lat_objeto* obj)
-{
-    lat_objeto* ret;
-    switch (obj->type)
-    {
-    case T_INSTANCE:
-        ret = lat_crear_objeto(vm);
-        ret->type = T_INSTANCE;
-        ret->data_size = sizeof(hash_map*);
-        //ret->data.nombre = lat_clonar_hash(vm, obj->data.nombre);
-        ret->data.nombre = copy_hash(obj->data.nombre);
-        //ret->data.nombre = obj->data.nombre;
-        break;
-    case T_LIST:
-        ret = lat_lista_nueva(vm, lat_clonar_lista(vm, obj->data.lista));
-        //ret = lat_lista_nueva(vm, obj->data.lista);
-        break;
-    case T_FUNC:
-    case T_CFUNC:
-        ret = obj;
-        break;
-    default:
-        ret = lat_crear_objeto(vm);
-        ret->type = obj->type;
-        ret->marked = obj->marked;
-        ret->data_size = obj->data_size;
-        ret->data = obj->data;
-        break;
-    }
-    return ret;
-}
-*/
-lat_objeto* lat_clonar_objeto(lat_vm* vm, lat_objeto* obj)
-{
-    lat_objeto* ret;
-    switch (obj->type)
-    {
-    case T_INSTANCE:
-        ret = lat_crear_objeto(vm);
-        ret->type = T_INSTANCE;
-        ret->data_size = sizeof(hash_map*);
-        //ret->data.nombre = lat_clonar_hash(vm, obj->data.nombre);
-        ret->data.nombre = copy_hash(obj->data.nombre);
-        //ret->data.nombre = obj->data.nombre;
-        break;
-    case T_LIST:
-        ret = lat_lista_nueva(vm, lat_clonar_lista(vm, obj->data.lista));
-        //ret = lat_lista_nueva(vm, obj->data.lista);
-        break;
-    case T_FUNC:
-    case T_CFUNC:
-        ret = obj;
-        break;
-    default:
-        ret = lat_crear_objeto(vm);
-        ret->type = obj->type;
-        ret->marked = obj->marked;
-        ret->data_size = obj->data_size;
-        ret->data = obj->data;
-        break;
-    }
-    return ret;
-}
-/*
-list_node* lat_clonar_lista(lat_vm* vm, list_node* l)
-{
-    list_node* ret = lat_crear_lista();
-    if (l != NULL)
-    {
-        list_node* c;
-        for (c = l->next; c != NULL; c = c->next)
-        {
-            if (c->data != NULL)
-            {
-                insert_list(ret, lat_clonar_objeto(vm, (lat_objeto*)c->data));
-            }
-        }
-    }
-    return ret;
-}
-*/
 list_node* lat_clonar_lista(lat_vm* vm, list_node* l)
 {
     list_node* ret = lat_crear_lista();
@@ -403,66 +230,6 @@ list_node* lat_clonar_lista(lat_vm* vm, list_node* l)
     }
     return ret;
 }
-/*
-hash_map* lat_clonar_hash(lat_vm* vm, hash_map* h)
-{
-    int c = 0;
-    hash_map* ret = make_hash_map();
-    list_node* l;
-    for (c = 0; c < 256; ++c)
-    {
-        l = h->buckets[c];
-        if (l != NULL)
-        {
-            ret->buckets[c] = lat_crear_lista();
-            if (l != NULL)
-            {
-                list_node* cur;
-                for (cur = l->next; cur != NULL; cur = cur->next)
-                {
-                    if (cur->data != NULL)
-                    {
-                        hash_val* hv = (hash_val*)lat_asignar_memoria(sizeof(hash_val));                        
-                        strncpy(hv->key, ((hash_val*)cur->data)->key, 256);
-                        hv->val = lat_clonar_objeto(vm, (lat_objeto*)((hash_val*)cur->data)->val);
-                        insert_list(ret->buckets[c], hv);
-                    }
-                }
-            }
-        }
-    }
-    return ret;
-}
-*/
-hash_map* lat_clonar_hash(lat_vm* vm, hash_map* h)
-{
-    int c = 0;
-    hash_map* ret = make_hash_map();
-    list_node* l;
-    for (c = 0; c < 256; ++c)
-    {
-        l = h->buckets[c];
-        if (l != NULL)
-        {
-            ret->buckets[c] = lat_crear_lista();
-            if (l != NULL)
-            {
-                list_node* cur;
-                for (cur = l; cur->next != NULL; cur = cur->next)
-                {
-                    if (cur->data != NULL)
-                    {
-                        hash_val* hv = (hash_val*)lat_asignar_memoria(sizeof(hash_val));
-                        strncpy(hv->key, ((hash_val*)cur->data)->key, 256);
-                        hv->val = lat_clonar_objeto(vm, (lat_objeto*)((hash_val*)cur->data)->val);
-                        insert_list(ret->buckets[c], hv);
-                    }
-                }
-            }
-        }
-    }
-    return ret;
-}
 
 char* lat_obtener_literal(lat_objeto* o)
 {
@@ -470,7 +237,7 @@ char* lat_obtener_literal(lat_objeto* o)
     {
         return o->data.c;
     }
-    lat_registrar_error("Object no es un tipo caracter");
+    lat_error("Objeto no es un tipo caracter");
     return 0;
 }
 
@@ -484,7 +251,7 @@ long lat_obtener_entero(lat_objeto* o)
     {
         return (long)o->data.d;
     }
-    lat_registrar_error("Object no es un tipo entero");
+    lat_error("Objeto no es un tipo entero");
     return 0;
 }
 
@@ -498,7 +265,7 @@ double lat_obtener_decimal(lat_objeto* o)
     {
         return (double)o->data.i;
     }
-    lat_registrar_error("Object no es un tipo numerico");
+    lat_error("Objeto no es un tipo numerico");
     return 0;
 }
 
@@ -508,7 +275,7 @@ char* lat_obtener_cadena(lat_objeto* o)
     {
         return o->data.str;
     }
-    lat_registrar_error("Object no es un tipo cadena");
+    lat_error("Objeto no es un tipo cadena");
     return 0;
 }
 
@@ -518,11 +285,7 @@ bool lat_obtener_logico(lat_objeto* o)
     {
         return o->data.b;
     }
-    if (o->type == T_INT)
-    {
-        return o->data.i;
-    }
-    lat_registrar_error("Object no es un tipo logico");
+    lat_error("Objeto no es un tipo logico");
     return false;
 }
 
@@ -532,6 +295,6 @@ list_node* lat_obtener_lista(lat_objeto* o)
     {
         return o->data.lista;
     }
-    lat_registrar_error("Object no es un tipo lista");
+    lat_error("Objeto no es un tipo lista");
     return NULL;
 }

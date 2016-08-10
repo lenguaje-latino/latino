@@ -4,6 +4,6 @@
 
 #include "vm.h"
 
-//void lat_peticion(lat_vm* vm);
+void lat_peticion(lat_vm* vm);
 
 #endif /* _LIBNET_H_ */
