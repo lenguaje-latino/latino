@@ -93,10 +93,10 @@ int yylex (YYSTYPE * yylval_param,YYLTYPE * yylloc_param ,yyscan_t yyscanner);
  *
  */
 %right '='
-%left '+' '-' OP_CONCAT OP_CONCAT_IGUAL
-%left '*' '/' '%'
+%left '+' '-' OP_CONCAT OP_CONCAT_IGUAL 
+%left '*' '/' '%' '!'
 %left OP_AND OP_OR
-%left OP_EQ OP_GE OP_GT OP_LE OP_LT OP_NEQ OP_NEG
+%left OP_EQ OP_GE OP_GT OP_LE OP_LT OP_NEQ
 
 %start program
 
@@ -121,6 +121,7 @@ unary_expression:
 	  TIDENTIFIER OP_INCR { $$ = nodo_nuevo_asignacion(nodo_nuevo_operador(NODO_SUMA, $1, nodo_nuevo_entero(1, @1.first_line, @1.first_column)), $1); }
 	| TIDENTIFIER OP_DECR { $$ = nodo_nuevo_asignacion(nodo_nuevo_operador(NODO_RESTA, $1, nodo_nuevo_entero(1, @1.first_line, @1.first_column)), $1); }
     | '-' expression %prec '*' { $$ = nodo_nuevo_operador(NODO_MENOS_UNARIO, $2, NULL); }
+    | '+' expression %prec '*' { $$ = nodo_nuevo_operador(NODO_MAS_UNARIO, $2, NULL); }
     ;
 
 
@@ -289,8 +290,8 @@ function_call:
     ;
 
 argument_expression_list: /* empty */ { $$ = NULL; }
-    | expression { $$ = nodo_nuevo(NODO_FUNCION_ARGUMENTOS, $1, NULL); }
     | expression ',' argument_expression_list { $$ = nodo_nuevo(NODO_FUNCION_ARGUMENTOS, $1, $3); }
+    | expression { $$ = nodo_nuevo(NODO_FUNCION_ARGUMENTOS, $1, NULL); }
     ;
 
 identifier_list: /* empty */ { $$ = NULL; }
@@ -307,7 +308,7 @@ dict_new:
     ;
 
 list_items: /* empty */ { $$ = NULL; }
-    | list_items ',' expression { $$ = nodo_nuevo(NODO_LISTA_AGREGAR_ELEMENTO, $3, $1); }
+    | expression ',' list_items { $$ = nodo_nuevo(NODO_LISTA_AGREGAR_ELEMENTO, $1, $3); }
     | expression { $$ = nodo_nuevo(NODO_LISTA_AGREGAR_ELEMENTO, $1, NULL); }
     ;
 
@@ -342,7 +343,7 @@ list_get_item:
 int yyerror(struct YYLTYPE *yylloc_param, void *scanner, struct ast **root,
             const char *s) {
   if(!parse_silent){
-      lat_registrar_error("Linea %d: %s", (yylloc_param->first_line + 1), s);
+      lat_error("Linea %d: %s", (yylloc_param->first_line + 1), s);
   }
   return 0;
 }

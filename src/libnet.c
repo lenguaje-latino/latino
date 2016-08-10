@@ -110,7 +110,7 @@ void lat_peticion(lat_vm* vm)
     }
     else
     {
-        lat_registrar_error("se requiere una cadena como parametro\n");
+        lat_error("se requiere una cadena como parametro\n");
     }
 }
 

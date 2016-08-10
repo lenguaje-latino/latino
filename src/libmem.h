@@ -55,4 +55,4 @@ void* lat_reasignar_memoria(void* ptr, size_t size);
   */
 void lat_liberar_memoria(void* ptr);
 
-#endif /*_LIBMEM_H_*/
+#endif /* !_LIBMEM_H_ */

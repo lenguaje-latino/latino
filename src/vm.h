@@ -33,11 +33,13 @@ THE SOFTWARE.
 /**\brief Objeto tipo maquina virtual */
 typedef struct lat_vm lat_vm;
 
-#include "utils.h"
 #include "object.h"
+#include "liblist.h"
+#include "libdict.h"
+#include "libstring.h"
 
 /**\brief Bandera para debuguear las instrucciones de la maquina virtual */
-#define DEBUG_VM 1
+#define DEBUG_VM 0
 
 /**\brief Instrucciones de la maquina virtual */
 typedef enum lat_ins
@@ -62,8 +64,8 @@ typedef enum lat_ins
     OP_GLOBALNS,    /**< Almacena variables globales */
     OP_LOCALNS,    /**< Almacena variables locales */
     OP_FN,    /**< Define una funcion */
-    OP_NS,    /**< Define un contexto */
-    OP_ENDNS,    /**< Define el fin de un contexto */
+    //OP_NS,    /**< Define un contexto */
+    //OP_ENDNS,    /**< Define el fin de un contexto */
     OP_JMP,    /**< Saltar a otra instruccion */
     OP_JMPIF,    /**< Saltar a otra instruccion SI la condicion se cumple */
     OP_CALL,    /**< Llamada a una funcion */
@@ -96,7 +98,7 @@ typedef struct lat_function
 } lat_function;
 
 /**\brief Define la maquina virtual (MV) */
-struct lat_vm
+typedef struct lat_vm
 {
     list_node* pila;     /**< pila de la maquina virtual */
     list_node* modulos;     /**< modulos importados en la MV */
@@ -110,7 +112,7 @@ struct lat_vm
     int apuntador_pila;      /**< Apuntador de la pila */
     int tope;   /**< Tope de la pila */
     bool REPL;  /**< Indica si esta corriendo REPL */
-};
+}lat_vm;
 
 /**\brief Crea la maquina virtual (MV)
   *

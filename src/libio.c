@@ -25,7 +25,20 @@ THE SOFTWARE.
 #include <stdio.h>
 #include <string.h>
 #include "libio.h"
+#include "libstring.h"
 #include "vm.h"
+#include "latino.h"
+
+bool legible(const char *archivo)
+{
+    FILE *f = fopen(archivo, "r");
+    if(f == NULL)
+    {
+        return false;
+    }
+    fclose(f);
+    return true;
+}
 
 void lat_leer(lat_vm *vm)
 {
@@ -59,7 +72,7 @@ void lat_leer_archivo(lat_vm *vm)
         fp = fopen(lat_obtener_cadena(o), "r");
         if (fp == NULL)
         {
-            lat_registrar_error("No se pudo abrir el archivo\n");
+            lat_error("No se pudo abrir el archivo\n");
         }
         fseek(fp, 0, SEEK_END);
         int fsize = ftell(fp);
@@ -75,7 +88,7 @@ void lat_leer_archivo(lat_vm *vm)
     }
     else
     {
-        lat_registrar_error("No se pudo abrir el archivo\n");
+        lat_error("No se pudo abrir el archivo\n");
     }
 }
 
@@ -94,7 +107,7 @@ void lat_escribir_archivo(lat_vm *vm)
     }
     else
     {
-        lat_registrar_error("No se pudo escribir en el archivo\n");
+        lat_error("No se pudo escribir en el archivo\n");
     }
 }
 
@@ -107,6 +120,6 @@ void lat_sistema(lat_vm *vm)
     }
     else
     {
-        lat_registrar_error("El argumento esperado debe de ser una cadena\n");
+        lat_error("El argumento esperado debe de ser una cadena\n");
     }
 }

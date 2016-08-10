@@ -34,6 +34,13 @@ THE SOFTWARE.
 *
 */
 
+/**\brief Valida si un archivo se puede leer
+  *
+  *\param archivo: Nombre completo del archivo
+  *\return bool: true si se puede leer
+  */
+bool legible(const char *archivo);
+
 /** Lee de la entrada estandar (teclado)
   *
   * \param vm: Máquina virtual de latino
@@ -55,7 +62,6 @@ void lat_leer_archivo(lat_vm *vm);
   */
 void lat_escribir_archivo(lat_vm *vm);
 
-
 void lat_sistema(lat_vm *vm);
 
-#endif /* ifndef _LIBIO_H_ */
+#endif /* !_LIBIO_H_ */

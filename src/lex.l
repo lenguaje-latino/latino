@@ -63,12 +63,9 @@ EXP ([Ee][-+]?[0-9]+)
 "{" |
 "}" |
 "?" |
-"!" |
 "="     { return yytext[0]; }
 
  /* operadores de comparacion */
-">"     { return OP_GT; }
-"<"     { return OP_LT; }
 ">="    { return OP_GE; }
 "<="    { return OP_LE; }
 "!="    { return OP_NEQ; }
@@ -77,9 +74,11 @@ EXP ([Ee][-+]?[0-9]+)
 "||"    { return OP_OR; }
 ".="    { return OP_CONCAT_IGUAL; }
 "."     { return OP_CONCAT; }
-
+">"     { return OP_GT; }
+"<"     { return OP_LT; }
 "++"	{ return OP_INCR; }
 "--"	{ return OP_DECR; }
+"!"     { return yytext[0]; }
 
  /* palabras reservadas */
 "si"        { return KIF; }

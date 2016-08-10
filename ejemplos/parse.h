@@ -78,44 +78,10 @@ extern int yydebug;
     OP_INCR = 288,
     OP_DECR = 289,
     OP_CONCAT = 290,
-    OP_CONCAT_IGUAL = 291
+    OP_CONCAT_IGUAL = 291,
+    OP_NEG = 292
   };
 #endif
-/* Tokens.  */
-#define TTRUE 258
-#define TFALSE 259
-#define TINT 260
-#define TLIT 261
-#define TNUMBER 262
-#define TSTRING 263
-#define TIDENTIFIER 264
-#define TCONSTANT 265
-#define TFUNC 266
-#define KIF 267
-#define KEND 268
-#define KELSE 269
-#define KWHILE 270
-#define KDO 271
-#define KBREAK 272
-#define KCONTINUE 273
-#define KWHEN 274
-#define KFUNCTION 275
-#define KFROM 276
-#define KBOOL 277
-#define KRETURN 278
-#define KINCLUDE 279
-#define OP_GT 280
-#define OP_LT 281
-#define OP_GE 282
-#define OP_LE 283
-#define OP_EQ 284
-#define OP_NEQ 285
-#define OP_AND 286
-#define OP_OR 287
-#define OP_INCR 288
-#define OP_DECR 289
-#define OP_CONCAT 290
-#define OP_CONCAT_IGUAL 291
 
 /* Value type.  */
 

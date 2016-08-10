@@ -156,7 +156,7 @@ void lat_valor_absoluto(lat_vm *vm)
     vm->registros[255] = lat_decimal_nuevo(vm, fabs(lat_obtener_decimal(a)));
 }
 
-void lat_redondeo_abajo(lat_vm *vm)
+void lat_redondear_abajo(lat_vm *vm)
 {
     lat_objeto *a = lat_desapilar(vm);
     vm->registros[255] = lat_decimal_nuevo(vm, floor(lat_obtener_decimal(a)));

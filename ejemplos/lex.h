@@ -353,7 +353,7 @@ extern int yylex \
 #undef YY_DECL
 #endif
 
-#line 115 "lex.l"
+#line 115 "/home/latino/src/latino/src/lex.l"
 
 
 #line 360 "lex.h"
