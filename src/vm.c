@@ -274,16 +274,23 @@ lat_objeto* lat_desapilar(lat_vm* vm)
     }
     else
     {
-        list_node * curr = n;
+        list_node *curr = n;
+        lat_objeto *ret;
+        if(curr->next->data == NULL){
+            //primer nodo
+            ret = (lat_objeto*)curr->data;
+            curr = curr->next;
+            vm->pila = curr;
+            return ret;
+        }
         while (curr->next != NULL && curr->next->data != NULL)
         {
             curr = curr->next;
         }
-        //lat_objeto* ret = lat_clonar_objeto(vm, (lat_objeto*)curr->data);
-        lat_objeto* ret = (lat_objeto*)curr->data;
-        if (curr->prev){
-            curr->prev->next = curr->next;
-        }
+        ret = (lat_objeto*)curr->data;
+        curr->prev->next = curr->next;
+        curr->next->prev = curr->prev;
+        //lat_imprimir_lista(vm, vm->pila);
         return ret;
     }
     return NULL;
