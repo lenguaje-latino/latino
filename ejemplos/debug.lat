@@ -3,14 +3,3 @@
 #Menu propiedades del proyecto-> Debugging -> Command Arguments. Agregar
 #$(SolutionDir)..\ejemplos\debug.lat
 ########################################################################
-
-#f = !falso
-#exp = "hola " . !falso
-exp = 1+2
-escribir(exp)
-
-#escribir("hola " . falso)
-#escribir("hola " . !falso)
-#escribir(falso)
-#escribir(falso && falso)
-#escribir(verdadero || falso)
