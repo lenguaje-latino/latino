@@ -55,6 +55,20 @@ lat_vm* lat_crear_maquina_virtual()
     memset(vm->contexto_pila, 0, 256);
     vm->contexto_pila[0] = lat_instancia(vm);
     vm->apuntador_pila = 0;
+    
+    /**
+     * 10 Operadores
+     * 20 funciones matematicas
+     * 30 funciones para cadenas (string)
+     * 40 entrada y salida
+     * 50 conversion de tipos de dato
+     * 60
+     * 70
+     * 9999 otras funciones // a crear una categoria para ellas
+     *  
+     */
+    
+    
     /*lat_asignar_contexto_objeto(lat_obtener_contexto(ret), lat_cadena_nueva(ret, "+"), lat_definir_cfuncion(ret, lat_sumar));
     lat_asignar_contexto_objeto(lat_obtener_contexto(ret), lat_cadena_nueva(ret, "-"), lat_definir_cfuncion(ret, lat_restar));
     lat_asignar_contexto_objeto(lat_obtener_contexto(ret), lat_cadena_nueva(ret, "*"), lat_definir_cfuncion(ret, lat_multiplicar));
@@ -76,6 +90,9 @@ lat_vm* lat_crear_maquina_virtual()
     lat_asignar_contexto_objeto(lat_obtener_contexto(ret), lat_cadena_nueva(ret, "imprimir"), lat_definir_cfuncion(ret, lat_imprimir));
     */
 
+    /**
+     * 10 Operadores
+     */
     registrar_cfuncion(vm, "+", lat_sumar);
     registrar_cfuncion(vm, "-", lat_restar);
     registrar_cfuncion(vm, "*", lat_multiplicar);
@@ -126,7 +143,7 @@ lat_vm* lat_crear_maquina_virtual()
     lat_asignar_contexto_objeto(lat_obtener_contexto(ret), lat_cadena_nueva(ret, "modulo"), lat_definir_cfuncion(ret, lat_modulo_decimal));
     */
 
-    /* funciones matematicas */
+    /* 20 funciones matematicas */
     registrar_cfuncion(vm, "arco_coseno", lat_arco_coseno);
     registrar_cfuncion(vm, "arco_seno", lat_arco_seno);
     registrar_cfuncion(vm, "arco_tangente", lat_arco_tangente);
@@ -177,7 +194,7 @@ lat_vm* lat_crear_maquina_virtual()
     lat_asignar_contexto_objeto(lat_obtener_contexto(ret), lat_cadena_nueva(ret, "es_numero"), lat_definir_cfuncion(ret, lat_es_numero));
     */
 
-    /*funciones para cadenas (string)*/
+    /* 30 funciones para cadenas (string)*/
     registrar_cfuncion(vm, "comparar", lat_comparar);
     registrar_cfuncion(vm, "concatenar", lat_concatenar);
     registrar_cfuncion(vm, ".", lat_concatenar);
@@ -208,7 +225,7 @@ lat_vm* lat_crear_maquina_virtual()
     lat_asignar_contexto_objeto(lat_obtener_contexto(ret), lat_cadena_nueva(ret, "escribir_archivo"), lat_definir_cfuncion(ret, lat_escribir_archivo));
     */
 
-    //entrada / salida
+    // 40 entrada / salida
     registrar_cfuncion(vm, "leer", lat_leer);
     registrar_cfuncion(vm, "escribir", lat_imprimir);
     registrar_cfuncion(vm, "leer_archivo", lat_leer_archivo);
@@ -224,7 +241,7 @@ lat_vm* lat_crear_maquina_virtual()
     lat_asignar_contexto_objeto(lat_obtener_contexto(ret), lat_cadena_nueva(ret, "salir"), lat_definir_cfuncion(ret, lat_salir));
     */
 
-    /*conversion de tipos de dato*/
+    /* 50 conversion de tipos de dato*/
     registrar_cfuncion(vm, "tipo", lat_tipo);
     registrar_cfuncion(vm, "logico", lat_logico);
     registrar_cfuncion(vm, "entero", lat_entero);
@@ -246,7 +263,7 @@ lat_vm* lat_crear_maquina_virtual()
     /*operaciones con listas*/
     //registrar_cfuncion(vm, "cadena", lat_cadena);
 
-    /* otras funciones */
+    /* 9999 otras funciones */
     registrar_cfuncion(vm, "cadena", lat_cadena);
     registrar_cfuncion(vm, "maximo", lat_maximo);
     registrar_cfuncion(vm, "minimo", lat_minimo);
