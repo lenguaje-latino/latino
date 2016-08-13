@@ -125,4 +125,4 @@ Pirmero debes saber donde esta instalado
  
  Listo!
 
-####Cualquier aportación o sugerencia es bienvenida.
+####Cualquier aportación o sugerencia es bienvenida, gracias
