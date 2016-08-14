@@ -92,7 +92,7 @@ lit = 'esto es una "literal"'
 cad = "esto es una 'cadena'"
 #comparador de negacion !
 escribir("comparador de negacion !")
-escribir("no falso" . !falso)
+escribir("no falso: " . !falso)
 #escribir(" no falso: " . !falso)
 escribir(" no verdadero: " . !verdadero)
 #comparador de IGUAL_LOGICO ==

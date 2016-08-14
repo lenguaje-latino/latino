@@ -48,7 +48,7 @@ typedef enum lat_ins
     OP_NOP,    /**< Indica No operaci�n */
     OP_PUSH,    /**< Inserta en la pila */
     OP_POP,    /**< Extrae de la pila */
-    MAYOR_IGUALT,    /**< Obtiene un valor */
+    OP_GET,    /**< Obtiene un valor */
     OP_SET,    /**< Establece un valor */
     OP_STORELIT,    /**< Almacena un cadena tipo literal */
     OP_STOREINT,    /**< Almacena un entero */
@@ -294,7 +294,7 @@ void lat_diferente(lat_vm* vm);
   *
   *\param vm: Apuntador a la MV
   */
-void lat_IGUAL_LOGICO(lat_vm* vm);
+void lat_igualdad(lat_vm* vm);
 
 /**\brief Operador <
   *
