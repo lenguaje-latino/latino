@@ -93,7 +93,7 @@ int yylex (YYSTYPE * yylval_param,YYLTYPE * yylloc_param ,yyscan_t yyscanner);
  *
  */
 %right '='
-%left '+' '-' OP_CONCAT OP_CONCAT_IGUAL 
+%left '+' '-' OP_CONCAT OP_CONCAT_IGUAL
 %left '*' '/' '%' '!'
 %left OP_AND OP_OR
 %left OP_EQ OP_GE OP_GT OP_LE OP_LT OP_NEQ
@@ -343,7 +343,7 @@ list_get_item:
 int yyerror(struct YYLTYPE *yylloc_param, void *scanner, struct ast **root,
             const char *s) {
   if(!parse_silent){
-      lat_error("Linea %d: %s", (yylloc_param->first_line + 1), s);
+      lat_error("Linea %d: %s", (yylloc_param->first_line), s);
   }
   return 0;
 }
