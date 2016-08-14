@@ -5,16 +5,16 @@ d = 3.14
 lit = 'esto es una "literal"'
 cad = "esto es una 'cadena'"
 
-#comparador de igualdad ==
-escribir("comparador de igualdad ==")
+#comparador de IGUAL_LOGICO ==
+escribir("comparador de IGUAL_LOGICO ==")
 escribir(l . " == falso: " . l == falso)
 escribir(e . " == 10: " . e == 10)
 escribir(d . " == 3.0: " . d == 3.0)
 escribir(lit . " == 'hola': " . lit == 'hola')
 escribir(cad . " == esto es una 'cadena': " . cad == "esto es una 'cadena'")
 escribir("----------------------------------------------------------------")
-#comparador de desigualdad !=
-escribir("comparador de desigualdad !=")
+#comparador de desIGUAL_LOGICO !=
+escribir("comparador de desIGUAL_LOGICO !=")
 escribir(l . " != falso: " . l != falso)
 escribir(e . " != 10: " . e != 10)
 escribir(d . " != 3.0: " . d != 3.0)

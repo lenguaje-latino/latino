@@ -985,62 +985,62 @@ YY_RULE_SETUP
 case 17:
 YY_RULE_SETUP
 #line 69 "/home/latino/src/latino/src/lex.l"
-{ return OP_GE; }
+{ return MAYOR_IGUAL; }
 	YY_BREAK
 case 18:
 YY_RULE_SETUP
 #line 70 "/home/latino/src/latino/src/lex.l"
-{ return OP_LE; }
+{ return MENOR_IGUAL; }
 	YY_BREAK
 case 19:
 YY_RULE_SETUP
 #line 71 "/home/latino/src/latino/src/lex.l"
-{ return OP_NEQ; }
+{ return DIFERENTE; }
 	YY_BREAK
 case 20:
 YY_RULE_SETUP
 #line 72 "/home/latino/src/latino/src/lex.l"
-{ return OP_EQ; }
+{ return IGUAL_LOGICO; }
 	YY_BREAK
 case 21:
 YY_RULE_SETUP
 #line 73 "/home/latino/src/latino/src/lex.l"
-{ return OP_AND; }
+{ return Y_LOGICO; }
 	YY_BREAK
 case 22:
 YY_RULE_SETUP
 #line 74 "/home/latino/src/latino/src/lex.l"
-{ return OP_OR; }
+{ return O_LOGICO; }
 	YY_BREAK
 case 23:
 YY_RULE_SETUP
 #line 75 "/home/latino/src/latino/src/lex.l"
-{ return OP_CONCAT_IGUAL; }
+{ return CONCATENAR_IGUAL; }
 	YY_BREAK
 case 24:
 YY_RULE_SETUP
 #line 76 "/home/latino/src/latino/src/lex.l"
-{ return OP_CONCAT; }
+{ return CONCATENAR; }
 	YY_BREAK
 case 25:
 YY_RULE_SETUP
 #line 77 "/home/latino/src/latino/src/lex.l"
-{ return OP_GT; }
+{ return MAYOR_QUE; }
 	YY_BREAK
 case 26:
 YY_RULE_SETUP
 #line 78 "/home/latino/src/latino/src/lex.l"
-{ return OP_LT; }
+{ return MENOR_QUE; }
 	YY_BREAK
 case 27:
 YY_RULE_SETUP
 #line 79 "/home/latino/src/latino/src/lex.l"
-{ return OP_INCR; }
+{ return INCREMENTO; }
 	YY_BREAK
 case 28:
 YY_RULE_SETUP
 #line 80 "/home/latino/src/latino/src/lex.l"
-{ return OP_DECR; }
+{ return DECREMENTO; }
 	YY_BREAK
 case 29:
 YY_RULE_SETUP
@@ -1051,77 +1051,77 @@ YY_RULE_SETUP
 case 30:
 YY_RULE_SETUP
 #line 84 "/home/latino/src/latino/src/lex.l"
-{ return KIF; }
+{ return SI; }
 	YY_BREAK
 case 31:
 YY_RULE_SETUP
 #line 85 "/home/latino/src/latino/src/lex.l"
-{ return KEND; }
+{ return FIN; }
 	YY_BREAK
 case 32:
 YY_RULE_SETUP
 #line 86 "/home/latino/src/latino/src/lex.l"
-{ return KELSE; }
+{ return SINO; }
 	YY_BREAK
 case 33:
 YY_RULE_SETUP
 #line 87 "/home/latino/src/latino/src/lex.l"
-{ return KBREAK; }
+{ return ROMPER; }
 	YY_BREAK
 case 34:
 YY_RULE_SETUP
 #line 88 "/home/latino/src/latino/src/lex.l"
-{ return KCONTINUE; }
+{ return CONTINUAR; }
 	YY_BREAK
 case 35:
 YY_RULE_SETUP
 #line 89 "/home/latino/src/latino/src/lex.l"
-{ return KWHILE; }
+{ return MIENTRAS; }
 	YY_BREAK
 case 36:
 YY_RULE_SETUP
 #line 90 "/home/latino/src/latino/src/lex.l"
-{ return KDO; }
+{ return HACER; }
 	YY_BREAK
 case 37:
 YY_RULE_SETUP
 #line 91 "/home/latino/src/latino/src/lex.l"
-{ return KWHEN; }
+{ return CUANDO; }
 	YY_BREAK
 case 38:
 YY_RULE_SETUP
 #line 92 "/home/latino/src/latino/src/lex.l"
-{ return KFUNCTION; }
+{ return FUNCION; }
 	YY_BREAK
 case 39:
 YY_RULE_SETUP
 #line 93 "/home/latino/src/latino/src/lex.l"
-{ return KFROM; }
+{ return DESDE; }
 	YY_BREAK
 case 40:
 YY_RULE_SETUP
 #line 94 "/home/latino/src/latino/src/lex.l"
-{ yylval->node = nodo_nuevo_logico(1, yylloc->first_line, yylloc->first_column); return TTRUE; }
+{ yylval->node = nodo_nuevo_logico(1, yylloc->first_line, yylloc->first_column); return VERDADERO; }
 	YY_BREAK
 case 41:
 YY_RULE_SETUP
 #line 95 "/home/latino/src/latino/src/lex.l"
-{ yylval->node = nodo_nuevo_logico(1, yylloc->first_line, yylloc->first_column); return TTRUE; }
+{ yylval->node = nodo_nuevo_logico(1, yylloc->first_line, yylloc->first_column); return VERDADERO; }
 	YY_BREAK
 case 42:
 YY_RULE_SETUP
 #line 96 "/home/latino/src/latino/src/lex.l"
-{ yylval->node = nodo_nuevo_logico(0, yylloc->first_line, yylloc->first_column); return TFALSE; }
+{ yylval->node = nodo_nuevo_logico(0, yylloc->first_line, yylloc->first_column); return FALSO; }
 	YY_BREAK
 case 43:
 YY_RULE_SETUP
 #line 97 "/home/latino/src/latino/src/lex.l"
-{ return KRETURN; }
+{ return RETORNO; }
 	YY_BREAK
 case 44:
 YY_RULE_SETUP
 #line 98 "/home/latino/src/latino/src/lex.l"
-{ return KINCLUDE; }
+{ return INCLUIR; }
 	YY_BREAK
 /*"elegir"    { return KSWITCH; }
  "caso"      { return KCASE; }
@@ -1130,34 +1130,34 @@ YY_RULE_SETUP
 case 45:
 YY_RULE_SETUP
 #line 105 "/home/latino/src/latino/src/lex.l"
-{ yylval->node = nodo_nuevo_constante(yytext, yylloc->first_line, yylloc->first_column); return TCONSTANT; }
+{ yylval->node = nodo_nuevo_constante(yytext, yylloc->first_line, yylloc->first_column); return CONSTANTE; }
 	YY_BREAK
 case 46:
 YY_RULE_SETUP
 #line 106 "/home/latino/src/latino/src/lex.l"
-{ yylval->node = nodo_nuevo_identificador(yytext, yylloc->first_line, yylloc->first_column); return TIDENTIFIER; }
+{ yylval->node = nodo_nuevo_identificador(yytext, yylloc->first_line, yylloc->first_column); return IDENTIFICADOR; }
 	YY_BREAK
 case 47:
 YY_RULE_SETUP
 #line 107 "/home/latino/src/latino/src/lex.l"
-{ yylval->node = nodo_nuevo_decimal(strtod(yytext, NULL), yylloc->first_line, yylloc->first_column); return TNUMBER; }
+{ yylval->node = nodo_nuevo_decimal(strtod(yytext, NULL), yylloc->first_line, yylloc->first_column); return NUMERO; }
 	YY_BREAK
 case 48:
 YY_RULE_SETUP
 #line 108 "/home/latino/src/latino/src/lex.l"
-{ yylval->node = nodo_nuevo_entero(strtol(yytext, NULL, 0), yylloc->first_line, yylloc->first_column); return TINT; }
+{ yylval->node = nodo_nuevo_entero(strtol(yytext, NULL, 0), yylloc->first_line, yylloc->first_column); return ENTERO; }
 	YY_BREAK
 case 49:
 /* rule 49 can match eol */
 YY_RULE_SETUP
 #line 109 "/home/latino/src/latino/src/lex.l"
-{ yytext[strlen(yytext) - 1] = '\0'; yylval->node = nodo_nuevo_cadena(yytext+1, yylloc->first_line, yylloc->first_column); return TSTRING; }
+{ yytext[strlen(yytext) - 1] = '\0'; yylval->node = nodo_nuevo_cadena(yytext+1, yylloc->first_line, yylloc->first_column); return CADENA; }
 	YY_BREAK
 case 50:
 /* rule 50 can match eol */
 YY_RULE_SETUP
 #line 110 "/home/latino/src/latino/src/lex.l"
-{ yytext[strlen(yytext) - 1] = '\0'; yylval->node = nodo_nuevo_literal(yytext+1, yylloc->first_line, yylloc->first_column); return TLIT; }
+{ yytext[strlen(yytext) - 1] = '\0'; yylval->node = nodo_nuevo_literal(yytext+1, yylloc->first_line, yylloc->first_column); return LITERAL; }
 	YY_BREAK
 case 51:
 YY_RULE_SETUP

@@ -17,7 +17,7 @@ el hash de la clave para después poder encontrar la entrada correspondiente rá
 Si se modificara el objeto clave después de haber sido introducido en el diccionario, evidentemente,
 su hash también cambiaría y no podría ser encontrado.
 
-La diferencia principal entre los diccionarios y las listas es que a los valores almacenados en un diccionario
+La DIFERENTE principal entre los diccionarios y las listas es que a los valores almacenados en un diccionario
 se les accede no por su índice, porque de hecho no tienen orden, sino por su clave, utilizando de nuevo el operador [].
 
 dic["Chilindrina"]
