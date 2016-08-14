@@ -3,3 +3,9 @@
 #Menu propiedades del proyecto-> Debugging -> Command Arguments. Agregar
 #$(SolutionDir)..\ejemplos\debug.lat
 ########################################################################
+
+a = 0
+b = 1
+si(verdadero)
+   escribir("hola")
+fin

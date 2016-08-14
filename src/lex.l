@@ -76,8 +76,8 @@ EXP ([Ee][-+]?[0-9]+)
 "."     { return OP_CONCAT; }
 ">"     { return OP_GT; }
 "<"     { return OP_LT; }
-"++"	{ return OP_INCR; }
-"--"	{ return OP_DECR; }
+"++"	  { return OP_INCR; }
+"--"	  { return OP_DECR; }
 "!"     { return yytext[0]; }
 
  /* palabras reservadas */
@@ -92,7 +92,7 @@ EXP ([Ee][-+]?[0-9]+)
 "funcion"   { return KFUNCTION; }
 "desde"     { return KFROM; }
 "verdadero" { yylval->node = nodo_nuevo_logico(1, yylloc->first_line, yylloc->first_column); return TTRUE; }
-"cierto" { yylval->node = nodo_nuevo_logico(1, yylloc->first_line, yylloc->first_column); return TTRUE; }
+"cierto"    { yylval->node = nodo_nuevo_logico(1, yylloc->first_line, yylloc->first_column); return TTRUE; }
 "falso"     { yylval->node = nodo_nuevo_logico(0, yylloc->first_line, yylloc->first_column); return TFALSE; }
 "retorno"   { return KRETURN; }
 "incluir"   { return KINCLUDE; }
@@ -109,7 +109,7 @@ EXP ([Ee][-+]?[0-9]+)
 \"([^\\\"]|\\.)*\"     { yytext[strlen(yytext) - 1] = '\0'; yylval->node = nodo_nuevo_cadena(yytext+1, yylloc->first_line, yylloc->first_column); return TSTRING; }
 '([^\\\']|\\.)*'       { yytext[strlen(yytext) - 1] = '\0'; yylval->node = nodo_nuevo_literal(yytext+1, yylloc->first_line, yylloc->first_column); return TLIT; }
 "#".* /* ignore comments */
-[\n]                   { yycolumn = 1; }
+[\n\r]                 { ; }
 [ \t]+                 { ; } /* ignora espacios en blanco y tabuladores */
 .                      { ; } /* ignora caracteres incorrectos */
 

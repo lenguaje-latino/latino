@@ -84,6 +84,7 @@ void lat_leer_archivo(lat_vm *vm)
             printf("No se pudo asignar %d bytes de memoria\n", fsize);
         }
         buf[newSize] = '\0';
+        fclose(fp);
         vm->registros[255] = lat_cadena_nueva(vm, buf);
     }
     else

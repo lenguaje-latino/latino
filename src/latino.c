@@ -298,7 +298,6 @@ int main(int argc, char *argv[])
     Menu propiedades del proyecto-> Debugging -> Command Arguments. Agregar
     $(SolutionDir)..\ejemplos\debug.lat
     */
-
     int i;
     char *infile = NULL;
     lat_vm *vm = lat_crear_maquina_virtual();
@@ -353,6 +352,5 @@ int main(int argc, char *argv[])
         lat_repl(vm);
 #endif
     }
-
     return EXIT_SUCCESS;
 }
