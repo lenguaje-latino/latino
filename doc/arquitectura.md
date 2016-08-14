@@ -19,7 +19,7 @@ interpretado suelen conseguir mayor eficiencia de programación que los que
 programan en lenguajes compilables.
 
 ##Estructura de un intérprete
-La diferencia principal entre un compilador y un intérprete estriba en la ausencia
+La DIFERENTE principal entre un compilador y un intérprete estriba en la ausencia
 de una etapa de generación de código, que sustituye por un componente de ejecución
 de código.
 

@@ -81,7 +81,7 @@
 #define YY_(Msgid) dgettext ("bison-runtime", Msgid)
 #endif
 
-int yyerror(struct YYLTYPE *yylloc_param, void *scanner, struct ast **root, const char *s);
+int yyerror(struct YYLTYPE *yylloc_param, void *scanner, struct ast **nodo, const char *s);
 int yylex (YYSTYPE * yylval_param,YYLTYPE * yylloc_param ,yyscan_t yyscanner);
 
 
@@ -120,40 +120,40 @@ extern int yydebug;
 # define YYTOKENTYPE
   enum yytokentype
   {
-    TTRUE = 258,
-    TFALSE = 259,
-    TINT = 260,
-    TLIT = 261,
-    TNUMBER = 262,
-    TSTRING = 263,
-    TIDENTIFIER = 264,
-    TCONSTANT = 265,
-    TFUNC = 266,
-    KIF = 267,
-    KEND = 268,
-    KELSE = 269,
-    KWHILE = 270,
-    KDO = 271,
-    KBREAK = 272,
-    KCONTINUE = 273,
-    KWHEN = 274,
-    KFUNCTION = 275,
-    KFROM = 276,
-    KBOOL = 277,
-    KRETURN = 278,
-    KINCLUDE = 279,
-    OP_GT = 280,
-    OP_LT = 281,
-    OP_GE = 282,
-    OP_LE = 283,
-    OP_EQ = 284,
-    OP_NEQ = 285,
-    OP_AND = 286,
-    OP_OR = 287,
-    OP_INCR = 288,
-    OP_DECR = 289,
-    OP_CONCAT = 290,
-    OP_CONCAT_IGUAL = 291,
+    VERDADERO = 258,
+    FALSO = 259,
+    ENTERO = 260,
+    LITERAL = 261,
+    NUMERO = 262,
+    CADENA = 263,
+    IDENTIFICADOR = 264,
+    CONSTANTE = 265,
+    FUNCION = 266,
+    SI = 267,
+    FIN = 268,
+    SINO = 269,
+    MIENTRAS = 270,
+    HACER = 271,
+    ROMPER = 272,
+    CONTINUAR = 273,
+    CUANDO = 274,
+    FUNCION = 275,
+    DESDE = 276,
+    LOGICO = 277,
+    RETORNO = 278,
+    INCLUIR = 279,
+    MAYOR_QUE = 280,
+    MENOR_QUE = 281,
+    MAYOR_IGUAL = 282,
+    MENOR_IGUAL = 283,
+    IGUAL_LOGICO = 284,
+    DIFERENTE = 285,
+    Y_LOGICO = 286,
+    O_LOGICO = 287,
+    INCREMENTO = 288,
+    DECREMENTO = 289,
+    CONCATENAR = 290,
+    CONCATENAR_IGUAL = 291,
     OP_NEG = 292
   };
 #endif
@@ -176,7 +176,7 @@ struct YYLTYPE
 
 
 
-int yyparse (ast **root, void *scanner);
+int yyparse (ast **nodo, void *scanner);
 
 #endif /* !YY_YY_PARSE_H_INCLUDED  */
 
@@ -504,12 +504,12 @@ static const yytype_uint16 yyrline[] =
    First, the terminals, then, starting at YYNTOKENS, nonterminals.  */
 static const char *const yytname[] =
 {
-  "$end", "error", "$undefined", "TTRUE", "TFALSE", "TINT", "TLIT",
-  "TNUMBER", "TSTRING", "TIDENTIFIER", "TCONSTANT", "TFUNC", "KIF", "KEND",
-  "KELSE", "KWHILE", "KDO", "KBREAK", "KCONTINUE", "KWHEN", "KFUNCTION",
-  "KFROM", "KBOOL", "KRETURN", "KINCLUDE", "OP_GT", "OP_LT", "OP_GE",
-  "OP_LE", "OP_EQ", "OP_NEQ", "OP_AND", "OP_OR", "OP_INCR", "OP_DECR",
-  "OP_CONCAT", "OP_CONCAT_IGUAL", "'='", "'!'", "'+'", "'-'", "'*'", "'/'",
+  "$end", "error", "$undefined", "VERDADERO", "FALSO", "ENTERO", "LITERAL",
+  "NUMERO", "CADENA", "IDENTIFICADOR", "CONSTANTE", "FUNCION", "SI", "FIN",
+  "SINO", "MIENTRAS", "HACER", "ROMPER", "CONTINUAR", "CUANDO", "FUNCION",
+  "DESDE", "LOGICO", "RETORNO", "INCLUIR", "MAYOR_QUE", "MENOR_QUE", "MAYOR_IGUAL",
+  "MENOR_IGUAL", "IGUAL_LOGICO", "DIFERENTE", "Y_LOGICO", "O_LOGICO", "INCREMENTO", "DECREMENTO",
+  "CONCATENAR", "CONCATENAR_IGUAL", "'='", "'!'", "'+'", "'-'", "'*'", "'/'",
   "'%'", "OP_NEG", "'?'", "':'", "'('", "')'", "'['", "']'", "'{'", "'}'",
   "';'", "','", "$accept", "primary_expression", "constant_expression",
   "unary_expression", "multiplicative_expression", "additive_expression",
@@ -919,7 +919,7 @@ do                                                              \
     }                                                           \
   else                                                          \
     {                                                           \
-      yyerror (&yylloc, root, scanner, YY_("syntax error: cannot back up")); \
+      yyerror (&yylloc, nodo, scanner, YY_("syntax error: cannot back up")); \
       YYERROR;                                                  \
     }                                                           \
 while (0)
@@ -1021,7 +1021,7 @@ do {                                                                      \
     {                                                                     \
       YYFPRINTF (stderr, "%s ", Title);                                   \
       yy_symbol_print (stderr,                                            \
-                  Type, Value, Location, root, scanner); \
+                  Type, Value, Location, nodo, scanner); \
       YYFPRINTF (stderr, "\n");                                           \
     }                                                                     \
 } while (0)
@@ -1032,12 +1032,12 @@ do {                                                                      \
 `----------------------------------------*/
 
 static void
-yy_symbol_value_print (FILE *yyoutput, int yytype, YYSTYPE const * const yyvaluep, YYLTYPE const * const yylocationp, ast **root, void *scanner)
+yy_symbol_value_print (FILE *yyoutput, int yytype, YYSTYPE const * const yyvaluep, YYLTYPE const * const yylocationp, ast **nodo, void *scanner)
 {
   FILE *yyo = yyoutput;
   YYUSE (yyo);
   YYUSE (yylocationp);
-  YYUSE (root);
+  YYUSE (nodo);
   YYUSE (scanner);
   if (!yyvaluep)
     return;
@@ -1054,14 +1054,14 @@ yy_symbol_value_print (FILE *yyoutput, int yytype, YYSTYPE const * const yyvalue
 `--------------------------------*/
 
 static void
-yy_symbol_print (FILE *yyoutput, int yytype, YYSTYPE const * const yyvaluep, YYLTYPE const * const yylocationp, ast **root, void *scanner)
+yy_symbol_print (FILE *yyoutput, int yytype, YYSTYPE const * const yyvaluep, YYLTYPE const * const yylocationp, ast **nodo, void *scanner)
 {
   YYFPRINTF (yyoutput, "%s %s (",
              yytype < YYNTOKENS ? "token" : "nterm", yytname[yytype]);
 
   YY_LOCATION_PRINT (yyoutput, *yylocationp);
   YYFPRINTF (yyoutput, ": ");
-  yy_symbol_value_print (yyoutput, yytype, yyvaluep, yylocationp, root, scanner);
+  yy_symbol_value_print (yyoutput, yytype, yyvaluep, yylocationp, nodo, scanner);
   YYFPRINTF (yyoutput, ")");
 }
 
@@ -1094,7 +1094,7 @@ do {                                                            \
 `------------------------------------------------*/
 
 static void
-yy_reduce_print (yytype_int16 *yyssp, YYSTYPE *yyvsp, YYLTYPE *yylsp, int yyrule, ast **root, void *scanner)
+yy_reduce_print (yytype_int16 *yyssp, YYSTYPE *yyvsp, YYLTYPE *yylsp, int yyrule, ast **nodo, void *scanner)
 {
   unsigned long int yylno = yyrline[yyrule];
   int yynrhs = yyr2[yyrule];
@@ -1108,7 +1108,7 @@ yy_reduce_print (yytype_int16 *yyssp, YYSTYPE *yyvsp, YYLTYPE *yylsp, int yyrule
       yy_symbol_print (stderr,
                        yystos[yyssp[yyi + 1 - yynrhs]],
                        &(yyvsp[(yyi + 1) - (yynrhs)])
-                       , &(yylsp[(yyi + 1) - (yynrhs)])                       , root, scanner);
+                       , &(yylsp[(yyi + 1) - (yynrhs)])                       , nodo, scanner);
       YYFPRINTF (stderr, "\n");
     }
 }
@@ -1116,7 +1116,7 @@ yy_reduce_print (yytype_int16 *yyssp, YYSTYPE *yyvsp, YYLTYPE *yylsp, int yyrule
 # define YY_REDUCE_PRINT(Rule)          \
 do {                                    \
   if (yydebug)                          \
-    yy_reduce_print (yyssp, yyvsp, yylsp, Rule, root, scanner); \
+    yy_reduce_print (yyssp, yyvsp, yylsp, Rule, nodo, scanner); \
 } while (0)
 
 /* Nonzero means print parse trace.  It is left uninitialized so that
@@ -1374,11 +1374,11 @@ yysyntax_error (YYSIZE_T *yymsg_alloc, char **yymsg,
 `-----------------------------------------------*/
 
 static void
-yydestruct (const char *yymsg, int yytype, YYSTYPE *yyvaluep, YYLTYPE *yylocationp, ast **root, void *scanner)
+yydestruct (const char *yymsg, int yytype, YYSTYPE *yyvaluep, YYLTYPE *yylocationp, ast **nodo, void *scanner)
 {
   YYUSE (yyvaluep);
   YYUSE (yylocationp);
-  YYUSE (root);
+  YYUSE (nodo);
   YYUSE (scanner);
   if (!yymsg)
     yymsg = "Deleting";
@@ -1397,7 +1397,7 @@ yydestruct (const char *yymsg, int yytype, YYSTYPE *yyvaluep, YYLTYPE *yylocatio
 `----------*/
 
 int
-yyparse (ast **root, void *scanner)
+yyparse (ast **nodo, void *scanner)
 {
 /* The lookahead symbol.  */
 int yychar;
@@ -1804,13 +1804,13 @@ yyreduce:
 
   case 24:
 #line 147 "/home/latino/src/latino/src/parse.y" /* yacc.c:1646  */
-    { (yyval.node) = nodo_nuevo_operador(NODO_DESIGUALDAD, (yyvsp[-2].node), (yyvsp[0].node)); }
+    { (yyval.node) = nodo_nuevo_operador(NODO_DESIGUAL_LOGICO, (yyvsp[-2].node), (yyvsp[0].node)); }
 #line 1809 "parse.c" /* yacc.c:1646  */
     break;
 
   case 25:
 #line 148 "/home/latino/src/latino/src/parse.y" /* yacc.c:1646  */
-    { (yyval.node) = nodo_nuevo_operador(NODO_IGUALDAD, (yyvsp[-2].node), (yyvsp[0].node)); }
+    { (yyval.node) = nodo_nuevo_operador(NODO_IGUAL_LOGICO, (yyvsp[-2].node), (yyvsp[0].node)); }
 #line 1815 "parse.c" /* yacc.c:1646  */
     break;
 
@@ -1889,7 +1889,7 @@ yyreduce:
   case 39:
 #line 180 "/home/latino/src/latino/src/parse.y" /* yacc.c:1646  */
     {
-        *root = (yyvsp[0].node);
+        *nodo = (yyvsp[0].node);
     }
 #line 1895 "parse.c" /* yacc.c:1646  */
     break;
@@ -2303,7 +2303,7 @@ yyerrlab:
     {
       ++yynerrs;
 #if ! YYERROR_VERBOSE
-      yyerror (&yylloc, root, scanner, YY_("syntax error"));
+      yyerror (&yylloc, nodo, scanner, YY_("syntax error"));
 #else
 # define YYSYNTAX_ERROR yysyntax_error (&yymsg_alloc, &yymsg, \
                                         yyssp, yytoken)
@@ -2330,7 +2330,7 @@ yyerrlab:
                 yymsgp = yymsg;
               }
           }
-        yyerror (&yylloc, root, scanner, yymsgp);
+        yyerror (&yylloc, nodo, scanner, yymsgp);
         if (yysyntax_error_status == 2)
           goto yyexhaustedlab;
       }
@@ -2354,7 +2354,7 @@ yyerrlab:
       else
         {
           yydestruct ("Error: discarding",
-                      yytoken, &yylval, &yylloc, root, scanner);
+                      yytoken, &yylval, &yylloc, nodo, scanner);
           yychar = YYEMPTY;
         }
     }
@@ -2411,7 +2411,7 @@ yyerrlab1:
 
       yyerror_range[1] = *yylsp;
       yydestruct ("Error: popping",
-                  yystos[yystate], yyvsp, yylsp, root, scanner);
+                  yystos[yystate], yyvsp, yylsp, nodo, scanner);
       YYPOPSTACK (1);
       yystate = *yyssp;
       YY_STACK_PRINT (yyss, yyssp);
@@ -2453,7 +2453,7 @@ yyabortlab:
 | yyexhaustedlab -- memory exhaustion comes here.  |
 `-------------------------------------------------*/
 yyexhaustedlab:
-  yyerror (&yylloc, root, scanner, YY_("memory exhausted"));
+  yyerror (&yylloc, nodo, scanner, YY_("memory exhausted"));
   yyresult = 2;
   /* Fall through.  */
 #endif
@@ -2465,7 +2465,7 @@ yyreturn:
          user semantic actions for why this is necessary.  */
       yytoken = YYTRANSLATE (yychar);
       yydestruct ("Cleanup: discarding lookahead",
-                  yytoken, &yylval, &yylloc, root, scanner);
+                  yytoken, &yylval, &yylloc, nodo, scanner);
     }
   /* Do not reclaim the symbols of the rule whose action triggered
      this YYABORT or YYACCEPT.  */
@@ -2474,7 +2474,7 @@ yyreturn:
   while (yyssp != yyss)
     {
       yydestruct ("Cleanup: popping",
-                  yystos[*yyssp], yyvsp, yylsp, root, scanner);
+                  yystos[*yyssp], yyvsp, yylsp, nodo, scanner);
       YYPOPSTACK (1);
     }
 #ifndef yyoverflow
@@ -2491,7 +2491,7 @@ yyreturn:
 
 
 //se define para analisis sintactico (bison)
-int yyerror(struct YYLTYPE *yylloc_param, void *scanner, struct ast **root,
+int yyerror(struct YYLTYPE *yylloc_param, void *scanner, struct ast **nodo,
             const char *s) {
   if(!parse_silent){
       lat_error("Linea %d: %s", (yylloc_param->first_line + 1), s);
