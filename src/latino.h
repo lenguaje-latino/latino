@@ -38,6 +38,7 @@ THE SOFTWARE.
 #include <stdbool.h>
 #include <errno.h>
 
+#include "ast.h"
 #include "vm.h"
 
 /** \file latino.h
@@ -156,5 +157,36 @@ extern int parse_silent;
 
 /** Tamanio maximo de la entrada por teclado */
 #define MAX_INPUT_SIZE 512
+
+/** Interface con flex */
+typedef struct YYLTYPE
+{
+    int first_line;
+    int first_column;
+    int last_line;
+    int last_column;
+} YYLTYPE;
+
+/** Establece que se definio una interface con Flex */
+#define YYLTYPE_IS_DECLARED 1
+
+/** No se requiere cabecera unistd.h */
+#define YY_NO_UNISTD_H 1
+
+/** Analiza una cadena como expresion
+  *
+  * \param expr: cadena a analizar
+  * \return ast: Nodo AST
+  *
+  */
+ast* lat_analizar_expresion(lat_vm* vm, char* expr, int* status);
+
+/** Analiza un archivo
+  *
+  * \param ruta: Ruta del archivo a analizar
+  * \return ast: Nodo AST
+  *
+  */
+ast* lat_analizar_archivo(lat_vm* vm, char* ruta);
 
 #endif /* _LATINO_H_ */

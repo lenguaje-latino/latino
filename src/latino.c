@@ -24,10 +24,10 @@ THE SOFTWARE.
 #include <locale.h>
 
 #include "linenoise/linenoise.h"
-#include "ast.h"
 #include "latino.h"
 #include "object.h"
 #include "vm.h"
+#include "parse.h"
 #include "lex.h"
 #include "ast.h"
 #include "libmem.h"
@@ -39,7 +39,7 @@ int parse_silent;
 static FILE *file;
 static char *buffer;
 
-int yyparse(ast **nodo, yyscan_t scanner);
+int yyparse(ast **root, yyscan_t scanner);
 
 ast *lat_analizar_expresion(lat_vm* vm, char* expr, int* status)
 {
@@ -142,7 +142,7 @@ static int leer_linea(lat_vm *vm, char* buffer){
     int resultado;
     char *input;
     char *tmp = "";
-    LREPETIR:
+    REPETIR:
     input = linenoise("latino> ");
     if(input == NULL){
         return -1;
@@ -153,7 +153,7 @@ static int leer_linea(lat_vm *vm, char* buffer){
         int estatus;
         lat_analizar_expresion(vm, tmp, &estatus);
         if(estatus == 1){
-            goto LREPETIR;
+            goto REPETIR;
         }else{
             strcpy(buffer, tmp);
             return 0;
@@ -328,19 +328,18 @@ int main(int argc, char *argv[])
     if(argc > 1 && infile != NULL)
     {
         vm->REPL = false;
-        ast* nodo = NULL;
-        int estado = nodo_analizar_archivo(&nodo, infile);
+        ast *tree = lat_analizar_archivo(vm, infile);
+        if (!tree)
+        {
+            return EXIT_FAILURE;
+        }
+        lat_objeto *mainFunc = nodo_analizar_arbol(vm, tree);
+        lat_llamar_funcion(vm, mainFunc);
+        lat_apilar(vm, vm->registros[255]);
         if(file != NULL)
         {
             fclose(file);
         }
-        if (estado)
-        {
-            return EXIT_FAILURE;
-        }
-        lat_objeto *mainFunc = nodo_analizar_arbol(vm, nodo);
-        lat_llamar_funcion(vm, mainFunc);
-        lat_apilar(vm, vm->registros[255]);
     }
     else
     {
