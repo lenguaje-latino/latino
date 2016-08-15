@@ -109,6 +109,7 @@ EXP ([Ee][-+]?[0-9]+)
 \"([^\\\"]|\\.)*\"     { yytext[strlen(yytext) - 1] = '\0'; yylval->node = nodo_nuevo_cadena(yytext+1, yylloc->first_line, yylloc->first_column); return TSTRING; }
 '([^\\\']|\\.)*'       { yytext[strlen(yytext) - 1] = '\0'; yylval->node = nodo_nuevo_literal(yytext+1, yylloc->first_line, yylloc->first_column); return TLIT; }
 "#".*                  { ; }  /* ignora comments */
+"//".*                  { ; }  /* ignora comments */
 "/*"([^*]|(\*+[^*/]))*\*+\/ { ; } /* comentarios multilinea como en c/c++ */
 [\n\r]                 { ; }
 [ \t]+                 { ; } /* ignora espacios en blanco y tabuladores */

@@ -235,6 +235,21 @@ lex.s:
 .PHONY : lex.s
 
 # target to build an object file
+libdict.o:
+	cd /home/primi/src/latino/codeblocks && $(MAKE) -f src/CMakeFiles/latino.dir/build.make src/CMakeFiles/latino.dir/libdict.o
+.PHONY : libdict.o
+
+# target to preprocess a source file
+libdict.i:
+	cd /home/primi/src/latino/codeblocks && $(MAKE) -f src/CMakeFiles/latino.dir/build.make src/CMakeFiles/latino.dir/libdict.i
+.PHONY : libdict.i
+
+# target to generate assembly for a file
+libdict.s:
+	cd /home/primi/src/latino/codeblocks && $(MAKE) -f src/CMakeFiles/latino.dir/build.make src/CMakeFiles/latino.dir/libdict.s
+.PHONY : libdict.s
+
+# target to build an object file
 libio.o:
 	cd /home/primi/src/latino/codeblocks && $(MAKE) -f src/CMakeFiles/latino.dir/build.make src/CMakeFiles/latino.dir/libio.o
 .PHONY : libio.o
@@ -385,21 +400,6 @@ parse.s:
 .PHONY : parse.s
 
 # target to build an object file
-utils.o:
-	cd /home/primi/src/latino/codeblocks && $(MAKE) -f src/CMakeFiles/latino.dir/build.make src/CMakeFiles/latino.dir/utils.o
-.PHONY : utils.o
-
-# target to preprocess a source file
-utils.i:
-	cd /home/primi/src/latino/codeblocks && $(MAKE) -f src/CMakeFiles/latino.dir/build.make src/CMakeFiles/latino.dir/utils.i
-.PHONY : utils.i
-
-# target to generate assembly for a file
-utils.s:
-	cd /home/primi/src/latino/codeblocks && $(MAKE) -f src/CMakeFiles/latino.dir/build.make src/CMakeFiles/latino.dir/utils.s
-.PHONY : utils.s
-
-# target to build an object file
 vm.o:
 	cd /home/primi/src/latino/codeblocks && $(MAKE) -f src/CMakeFiles/latino.dir/build.make src/CMakeFiles/latino.dir/vm.o
 .PHONY : vm.o
@@ -439,6 +439,9 @@ help:
 	@echo "... lex.o"
 	@echo "... lex.i"
 	@echo "... lex.s"
+	@echo "... libdict.o"
+	@echo "... libdict.i"
+	@echo "... libdict.s"
 	@echo "... libio.o"
 	@echo "... libio.i"
 	@echo "... libio.s"
@@ -469,9 +472,6 @@ help:
 	@echo "... parse.o"
 	@echo "... parse.i"
 	@echo "... parse.s"
-	@echo "... utils.o"
-	@echo "... utils.i"
-	@echo "... utils.s"
 	@echo "... vm.o"
 	@echo "... vm.i"
 	@echo "... vm.s"

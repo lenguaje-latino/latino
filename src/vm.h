@@ -38,8 +38,8 @@ typedef struct lat_vm lat_vm;
 #include "libdict.h"
 #include "libstring.h"
 
-/**\brief Bandera para debuguear las instrucciones de la maquina virtual */
-#define DEBUG_VM 0
+/**\brief Bandera para debuguear las instrucciones que se generan con el AST */
+#define DEPURAR_MV 0
 
 /**\brief Instrucciones de la maquina virtual */
 typedef enum lat_ins

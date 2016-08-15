@@ -19,8 +19,7 @@ void insert_list(list_node* l, void* data)
         curr = curr->next;
     }
     curr->data = data;
-    curr->next = (list_node*)lat_asignar_memoria(sizeof(list_node));        
-    //curr->next->prev = curr->next;
+    curr->next = (list_node*)lat_asignar_memoria(sizeof(list_node));
     curr->next->prev = curr;
     curr->next->next = NULL;    
     curr->next->data = NULL;
