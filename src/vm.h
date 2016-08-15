@@ -64,14 +64,10 @@ typedef enum lat_ins
     OP_GLOBALNS,    /**< Almacena variables globales */
     OP_LOCALNS,    /**< Almacena variables locales */
     OP_FN,    /**< Define una funcion */
-    //OP_NS,    /**< Define un contexto */
-    //OP_ENDNS,    /**< Define el fin de un contexto */
     OP_JMP,    /**< Saltar a otra instruccion */
     OP_JMPIF,    /**< Saltar a otra instruccion SI la condicion se cumple */
     OP_CALL,    /**< Llamada a una funcion */
     OP_NOT,    /**< Negacion de un valor logico */
-    //OP_INC,    /**< Incrementa un valor entero en 1 */
-    //OP_DEC,    /**< Disminuye un valor entero en 1 */
     OP_STOREDICT,    /**< Almacena un objeto diccionario */
     OP_PUSHDICT,    /**< Inserta un objeto diccionario en la pila */
     OP_POPDICT,    /**< Extrae un objeto diccionario de la pila */
@@ -110,7 +106,8 @@ typedef struct lat_vm
     lat_objeto* objeto_falso;   /**< Valor logico falso */
     size_t memoria_usada;      /**< Tamanio de memoria creado dinamicamente */
     int apuntador_pila;      /**< Apuntador de la pila */
-    int tope;   /**< Tope de la pila */
+    int apuntador_base;   /**< Apuntador de marco o frame */
+    int apuntador_instruccion;   /**< Apuntador a la siguiente instruccion */
     bool REPL;  /**< Indica si esta corriendo REPL */
 }lat_vm;
 

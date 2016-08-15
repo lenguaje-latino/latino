@@ -649,8 +649,7 @@ static int nodo_analizar(lat_vm *vm, ast *node, lat_bytecode *bcode, int i)
     break;
     case NODO_FUNCION_USUARIO:
     {
-        funcion_bcode =
-            (lat_bytecode *)lat_asignar_memoria(sizeof(lat_bytecode) * MAX_BYTECODE_FUNCTION);
+        funcion_bcode = (lat_bytecode *)lat_asignar_memoria(sizeof(lat_bytecode) * MAX_BYTECODE_FUNCTION);
         fi = 0;
         if (node->l)
         {
