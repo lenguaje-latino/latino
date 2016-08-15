@@ -33,7 +33,7 @@ TARGET_LINK_LIBRARIES(latino LINK_PUBLIC
     ${BISON_LIBRARIES} ${CMAKE_DL_LIBS})
 
 IF(UNIX)
-  INSTALL(TARGETS latino DESTINATION /usr/local/bin)
+  INSTALL(TARGETS latino DESTINATION /usr/bin)
 ENDIF(UNIX)
 
 #crear paquete .deb https://cmake.org/Wiki/CMake/CPack/Examples/Linux/DEB

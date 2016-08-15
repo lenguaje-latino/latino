@@ -4,8 +4,10 @@
 #$(SolutionDir)..\ejemplos\debug.lat
 ########################################################################
 
-a = 0
-b = 1
-si(verdadero)
-   escribir("hola")
+#esta es una funcion que recibe 2 parametros
+funcion sumar(a,b)
+  retorno a+b
 fin
+
+s = sumar(1) #parametro insuficientes
+escribir(s)

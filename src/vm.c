@@ -55,27 +55,20 @@ lat_vm* lat_crear_maquina_virtual()
     memset(vm->contexto_pila, 0, 256);
     vm->contexto_pila[0] = lat_instancia(vm);
     vm->apuntador_pila = 0;
-    /*lat_asignar_contexto_objeto(lat_obtener_contexto(ret), lat_cadena_nueva(ret, "+"), lat_definir_cfuncion(ret, lat_sumar));
-    lat_asignar_contexto_objeto(lat_obtener_contexto(ret), lat_cadena_nueva(ret, "-"), lat_definir_cfuncion(ret, lat_restar));
-    lat_asignar_contexto_objeto(lat_obtener_contexto(ret), lat_cadena_nueva(ret, "*"), lat_definir_cfuncion(ret, lat_multiplicar));
-    lat_asignar_contexto_objeto(lat_obtener_contexto(ret), lat_cadena_nueva(ret, "/"), lat_definir_cfuncion(ret, lat_dividir));
-    lat_asignar_contexto_objeto(lat_obtener_contexto(ret), lat_cadena_nueva(ret, "%"), lat_definir_cfuncion(ret, lat_modulo_decimal));
-    lat_asignar_contexto_objeto(lat_obtener_contexto(ret), lat_cadena_nueva(ret, "!="), lat_definir_cfuncion(ret, lat_diferente));
-    lat_asignar_contexto_objeto(lat_obtener_contexto(ret), lat_cadena_nueva(ret, "=="), lat_definir_cfuncion(ret, lat_igualdad));
-    lat_asignar_contexto_objeto(lat_obtener_contexto(ret), lat_cadena_nueva(ret, "<"), lat_definir_cfuncion(ret, lat_menor_que));
-    lat_asignar_contexto_objeto(lat_obtener_contexto(ret), lat_cadena_nueva(ret, "<="), lat_definir_cfuncion(ret, lat_menor_igual));
-    lat_asignar_contexto_objeto(lat_obtener_contexto(ret), lat_cadena_nueva(ret, ">"), lat_definir_cfuncion(ret, lat_mayor_que));
-    lat_asignar_contexto_objeto(lat_obtener_contexto(ret), lat_cadena_nueva(ret, ">="), lat_definir_cfuncion(ret, lat_mayor_igual));
-    lat_asignar_contexto_objeto(lat_obtener_contexto(ret), lat_cadena_nueva(ret, "&&"), lat_definir_cfuncion(ret, lat_y));
-    //lat_asignar_contexto_objeto(lat_obtener_contexto(ret), lat_cadena_nueva(ret, "y"), lat_definir_cfuncion(ret, lat_y));
-    lat_asignar_contexto_objeto(lat_obtener_contexto(ret), lat_cadena_nueva(ret, "||"), lat_definir_cfuncion(ret, lat_o));
-    //lat_asignar_contexto_objeto(lat_obtener_contexto(ret), lat_cadena_nueva(ret, "o"), lat_definir_cfuncion(ret, lat_o));
-    lat_asignar_contexto_objeto(lat_obtener_contexto(ret), lat_cadena_nueva(ret, "!"), lat_definir_cfuncion(ret, lat_negacion));
-    //lat_asignar_contexto_objeto(lat_obtener_contexto(ret), lat_cadena_nueva(ret, "no"), lat_definir_cfuncion(ret, lat_negacion));
-    //lat_asignar_contexto_objeto(lat_obtener_contexto(ret), lat_cadena_nueva(ret, "gc"), lat_definir_cfuncion(ret, lat_basurero));
-    lat_asignar_contexto_objeto(lat_obtener_contexto(ret), lat_cadena_nueva(ret, "imprimir"), lat_definir_cfuncion(ret, lat_imprimir));
-    */
-
+    
+    /**
+     * 10 Operadores
+     * 20 funciones matematicas
+     * 30 funciones para cadenas (string)
+     * 40 entrada y salida
+     * 50 conversion de tipos de dato
+     * 60
+     * 70
+     * 9999 otras funciones // a crear una categoria para ellas
+     *  
+     */
+    
+    /*10 Operadores */
     registrar_cfuncion(vm, "+", lat_sumar);
     registrar_cfuncion(vm, "-", lat_restar);
     registrar_cfuncion(vm, "*", lat_multiplicar);
@@ -91,42 +84,8 @@ lat_vm* lat_crear_maquina_virtual()
     registrar_cfuncion(vm, "||", lat_o);
     registrar_cfuncion(vm, "!", lat_negacion);
     registrar_cfuncion(vm, "imprimir", lat_imprimir);
-
-    /*
-    lat_asignar_contexto_objeto(lat_obtener_contexto(ret), lat_cadena_nueva(ret, "ejecutar"), lat_definir_cfuncion(ret, lat_ejecutar));
-    lat_asignar_contexto_objeto(lat_obtener_contexto(ret), lat_cadena_nueva(ret, "ejecutar_archivo"), lat_definir_cfuncion(ret, lat_ejecutar_archivo));
-    */
-
-    registrar_cfuncion(vm, "ejecutar", lat_ejecutar);
-    registrar_cfuncion(vm, "ejecutar_archivo", lat_ejecutar_archivo);
-
-
-    /*
-    lat_asignar_contexto_objeto(lat_obtener_contexto(ret), lat_cadena_nueva(ret, "arco_coseno"), lat_definir_cfuncion(ret, lat_arco_coseno));
-    lat_asignar_contexto_objeto(lat_obtener_contexto(ret), lat_cadena_nueva(ret, "arco_seno"), lat_definir_cfuncion(ret, lat_arco_seno));
-    lat_asignar_contexto_objeto(lat_obtener_contexto(ret), lat_cadena_nueva(ret, "arco_tangente"), lat_definir_cfuncion(ret, lat_arco_tangente));
-    lat_asignar_contexto_objeto(lat_obtener_contexto(ret), lat_cadena_nueva(ret, "arco_tangente2"), lat_definir_cfuncion(ret, lat_arco_tangente2));
-    lat_asignar_contexto_objeto(lat_obtener_contexto(ret), lat_cadena_nueva(ret, "coseno"), lat_definir_cfuncion(ret, lat_coseno));
-    lat_asignar_contexto_objeto(lat_obtener_contexto(ret), lat_cadena_nueva(ret, "coseno_hiperbolico"), lat_definir_cfuncion(ret, lat_coseno_hiperbolico));
-    lat_asignar_contexto_objeto(lat_obtener_contexto(ret), lat_cadena_nueva(ret, "seno"), lat_definir_cfuncion(ret, lat_seno));
-    lat_asignar_contexto_objeto(lat_obtener_contexto(ret), lat_cadena_nueva(ret, "seno_hiperbolico"), lat_definir_cfuncion(ret, lat_seno_hiperbolico));
-    lat_asignar_contexto_objeto(lat_obtener_contexto(ret), lat_cadena_nueva(ret, "tangente"), lat_definir_cfuncion(ret, lat_tangente));
-    lat_asignar_contexto_objeto(lat_obtener_contexto(ret), lat_cadena_nueva(ret, "tangente_hiperbolica"), lat_definir_cfuncion(ret, lat_tangente_hiperbolica));
-    lat_asignar_contexto_objeto(lat_obtener_contexto(ret), lat_cadena_nueva(ret, "exponente"), lat_definir_cfuncion(ret, lat_exponente));
-    //lat_asignar_contexto_objeto(lat_obtener_contexto(ret), lat_cadena_nueva(ret, "frexp"), lat_definir_cfuncion(ret, lat_frexp));
-    //lat_asignar_contexto_objeto(lat_obtener_contexto(ret), lat_cadena_nueva(ret, "ldexp"), lat_definir_cfuncion(ret, lat_ldexp));
-    lat_asignar_contexto_objeto(lat_obtener_contexto(ret), lat_cadena_nueva(ret, "logaritmo_natural"), lat_definir_cfuncion(ret, lat_logaritmo_natural));
-    lat_asignar_contexto_objeto(lat_obtener_contexto(ret), lat_cadena_nueva(ret, "logaritmo_base10"), lat_definir_cfuncion(ret, lat_logaritmo_base10));
-    //lat_asignar_contexto_objeto(lat_obtener_contexto(ret), lat_cadena_nueva(ret, "modf"), lat_definir_cfuncion(ret, lat_modf));
-    lat_asignar_contexto_objeto(lat_obtener_contexto(ret), lat_cadena_nueva(ret, "potencia"), lat_definir_cfuncion(ret, lat_potencia));
-    lat_asignar_contexto_objeto(lat_obtener_contexto(ret), lat_cadena_nueva(ret, "raiz_cuadrada"), lat_definir_cfuncion(ret, lat_raiz_cuadrada));
-    lat_asignar_contexto_objeto(lat_obtener_contexto(ret), lat_cadena_nueva(ret, "redondear_arriba"), lat_definir_cfuncion(ret, lat_redondear_arriba));
-    lat_asignar_contexto_objeto(lat_obtener_contexto(ret), lat_cadena_nueva(ret, "valor_absoluto"), lat_definir_cfuncion(ret, lat_valor_absoluto));
-    lat_asignar_contexto_objeto(lat_obtener_contexto(ret), lat_cadena_nueva(ret, "redondear_abajo"), lat_definir_cfuncion(ret, lat_redondeo_abajo));
-    lat_asignar_contexto_objeto(lat_obtener_contexto(ret), lat_cadena_nueva(ret, "modulo"), lat_definir_cfuncion(ret, lat_modulo_decimal));
-    */
-
-    /* funciones matematicas */
+   
+    /*20 funciones matematicas */
     registrar_cfuncion(vm, "arco_coseno", lat_arco_coseno);
     registrar_cfuncion(vm, "arco_seno", lat_arco_seno);
     registrar_cfuncion(vm, "arco_tangente", lat_arco_tangente);
@@ -148,36 +107,7 @@ lat_vm* lat_crear_maquina_virtual()
     registrar_cfuncion(vm, "ejecutar_archivo", lat_ejecutar_archivo);
     registrar_cfuncion(vm, "modulo", lat_modulo_decimal);
 
-    /*
-    lat_asignar_contexto_objeto(lat_obtener_contexto(ret), lat_cadena_nueva(ret, "comparar"), lat_definir_cfuncion(ret, lat_comparar));
-    lat_asignar_contexto_objeto(lat_obtener_contexto(ret), lat_cadena_nueva(ret, "concatenar"), lat_definir_cfuncion(ret, lat_concatenar));
-    lat_asignar_contexto_objeto(lat_obtener_contexto(ret), lat_cadena_nueva(ret, "."), lat_definir_cfuncion(ret, lat_concatenar));
-    lat_asignar_contexto_objeto(lat_obtener_contexto(ret), lat_cadena_nueva(ret, "contiene"), lat_definir_cfuncion(ret, lat_contiene));
-    lat_asignar_contexto_objeto(lat_obtener_contexto(ret), lat_cadena_nueva(ret, "copiar"), lat_definir_cfuncion(ret, lat_copiar));
-    lat_asignar_contexto_objeto(lat_obtener_contexto(ret), lat_cadena_nueva(ret, "termina_con"), lat_definir_cfuncion(ret, lat_termina_con));
-    lat_asignar_contexto_objeto(lat_obtener_contexto(ret), lat_cadena_nueva(ret, "es_igual"), lat_definir_cfuncion(ret, lat_es_igual));
-    //TODO: Pendiente
-    //lat_asignar_contexto_objeto(lat_obtener_contexto(ret), lat_cadena_nueva(ret, "formato"), lat_definir_cfuncion(ret, lat_format));
-    lat_asignar_contexto_objeto(lat_obtener_contexto(ret), lat_cadena_nueva(ret, "indice"), lat_definir_cfuncion(ret, lat_indice));
-    lat_asignar_contexto_objeto(lat_obtener_contexto(ret), lat_cadena_nueva(ret, "insertar"), lat_definir_cfuncion(ret, lat_insertar));
-    lat_asignar_contexto_objeto(lat_obtener_contexto(ret), lat_cadena_nueva(ret, "ultimo_indice"), lat_definir_cfuncion(ret, lat_ultimo_indice));
-    lat_asignar_contexto_objeto(lat_obtener_contexto(ret), lat_cadena_nueva(ret, "rellenar_izquierda"), lat_definir_cfuncion(ret, lat_rellenar_izquierda));
-    lat_asignar_contexto_objeto(lat_obtener_contexto(ret), lat_cadena_nueva(ret, "rellenar_derecha"), lat_definir_cfuncion(ret, lat_rellenar_derecha));
-    lat_asignar_contexto_objeto(lat_obtener_contexto(ret), lat_cadena_nueva(ret, "eliminar"), lat_definir_cfuncion(ret, lat_eliminar));
-    lat_asignar_contexto_objeto(lat_obtener_contexto(ret), lat_cadena_nueva(ret, "esta_vacia"), lat_definir_cfuncion(ret, lat_esta_vacia));
-    lat_asignar_contexto_objeto(lat_obtener_contexto(ret), lat_cadena_nueva(ret, "longitud"), lat_definir_cfuncion(ret, lat_longitud));
-    lat_asignar_contexto_objeto(lat_obtener_contexto(ret), lat_cadena_nueva(ret, "reemplazar"), lat_definir_cfuncion(ret, lat_reemplazar));
-    //TODO: Pendiente, se implementara cuando se implementen Listas
-    //lat_asignar_contexto_objeto(lat_obtener_contexto(ret), lat_cadena_nueva(ret, "partir"), lat_definir_cfuncion(ret, lat_split));
-    lat_asignar_contexto_objeto(lat_obtener_contexto(ret), lat_cadena_nueva(ret, "empieza_con"), lat_definir_cfuncion(ret, lat_empieza_con));
-    lat_asignar_contexto_objeto(lat_obtener_contexto(ret), lat_cadena_nueva(ret, "subcadena"), lat_definir_cfuncion(ret, lat_subcadena));
-    lat_asignar_contexto_objeto(lat_obtener_contexto(ret), lat_cadena_nueva(ret, "minusculas"), lat_definir_cfuncion(ret, lat_minusculas));
-    lat_asignar_contexto_objeto(lat_obtener_contexto(ret), lat_cadena_nueva(ret, "mayusculas"), lat_definir_cfuncion(ret, lat_mayusculas));
-    lat_asignar_contexto_objeto(lat_obtener_contexto(ret), lat_cadena_nueva(ret, "quitar_espacios"), lat_definir_cfuncion(ret, lat_quitar_espacios));
-    lat_asignar_contexto_objeto(lat_obtener_contexto(ret), lat_cadena_nueva(ret, "es_numero"), lat_definir_cfuncion(ret, lat_es_numero));
-    */
-
-    /*funciones para cadenas (string)*/
+    /*30 funciones para cadenas (string)*/
     registrar_cfuncion(vm, "comparar", lat_comparar);
     registrar_cfuncion(vm, "concatenar", lat_concatenar);
     registrar_cfuncion(vm, ".", lat_concatenar);
@@ -201,52 +131,24 @@ lat_vm* lat_crear_maquina_virtual()
     registrar_cfuncion(vm, "quitar_espacios", lat_quitar_espacios);
     registrar_cfuncion(vm, "es_numero", lat_es_numero);
 
-    /*
-    lat_asignar_contexto_objeto(lat_obtener_contexto(ret), lat_cadena_nueva(ret, "leer"), lat_definir_cfuncion(ret, lat_leer));
-    lat_asignar_contexto_objeto(lat_obtener_contexto(ret), lat_cadena_nueva(ret, "escribir"), lat_definir_cfuncion(ret, lat_imprimir));
-    lat_asignar_contexto_objeto(lat_obtener_contexto(ret), lat_cadena_nueva(ret, "leer_archivo"), lat_definir_cfuncion(ret, lat_leer_archivo));
-    lat_asignar_contexto_objeto(lat_obtener_contexto(ret), lat_cadena_nueva(ret, "escribir_archivo"), lat_definir_cfuncion(ret, lat_escribir_archivo));
-    */
+    registrar_cfuncion(vm, "ejecutar", lat_ejecutar);
+    registrar_cfuncion(vm, "ejecutar_archivo", lat_ejecutar_archivo);
 
-    //entrada / salida
+    /* 40 entrada / salida */
     registrar_cfuncion(vm, "leer", lat_leer);
     registrar_cfuncion(vm, "escribir", lat_imprimir);
     registrar_cfuncion(vm, "leer_archivo", lat_leer_archivo);
     registrar_cfuncion(vm, "escribir_archivo", lat_escribir_archivo);
     registrar_cfuncion(vm, "salir", lat_salir);
 
-    /*
-    lat_asignar_contexto_objeto(lat_obtener_contexto(ret), lat_cadena_nueva(ret, "tipo"), lat_definir_cfuncion(ret, lat_tipo));
-    lat_asignar_contexto_objeto(lat_obtener_contexto(ret), lat_cadena_nueva(ret, "logico"), lat_definir_cfuncion(ret, lat_logico));
-    lat_asignar_contexto_objeto(lat_obtener_contexto(ret), lat_cadena_nueva(ret, "entero"), lat_definir_cfuncion(ret, lat_entero));
-    lat_asignar_contexto_objeto(lat_obtener_contexto(ret), lat_cadena_nueva(ret, "decimal"), lat_definir_cfuncion(ret, lat_decimal));
-    lat_asignar_contexto_objeto(lat_obtener_contexto(ret), lat_cadena_nueva(ret, "cadena"), lat_definir_cfuncion(ret, lat_cadena));
-    lat_asignar_contexto_objeto(lat_obtener_contexto(ret), lat_cadena_nueva(ret, "salir"), lat_definir_cfuncion(ret, lat_salir));
-    */
-
-    /*conversion de tipos de dato*/
+    /*50 conversion de tipos de dato*/
     registrar_cfuncion(vm, "tipo", lat_tipo);
     registrar_cfuncion(vm, "logico", lat_logico);
     registrar_cfuncion(vm, "entero", lat_entero);
     registrar_cfuncion(vm, "decimal", lat_decimal);
     registrar_cfuncion(vm, "cadena", lat_cadena);
 
-    /*ejemplo de implementacion de una funcion en C */
-    //lat_asignar_contexto_objeto(lat_obtener_contexto(ret), lat_cadena_nueva(ret, "maximo"), lat_definir_cfuncion(ret, lat_maximo));
-    /*Creacion dela funcion minimo*/
-    //lat_asignar_contexto_objeto(lat_obtener_contexto(ret), lat_cadena_nueva(ret, "minimo"), lat_definir_cfuncion(ret, lat_minimo));
-
-    //lat_asignar_contexto_objeto(lat_obtener_contexto(ret), lat_cadena_nueva(ret, "sistema"), lat_definir_cfuncion(ret, lat_sistema));
-
-    //lat_asignar_contexto_objeto(lat_obtener_contexto(ret), lat_cadena_nueva(ret, "agregar"), lat_definir_cfuncion(ret, lat_agregar));
-
-    /* operaciones con sockets */
-    //lat_asignar_contexto_objeto(lat_obtener_contexto(ret), lat_cadena_nueva(ret, "peticion"), lat_definir_cfuncion(ret, lat_peticion));
-
-    /*operaciones con listas*/
-    //registrar_cfuncion(vm, "cadena", lat_cadena);
-
-    /* otras funciones */
+    /*99 otras funciones */
     registrar_cfuncion(vm, "cadena", lat_cadena);
     registrar_cfuncion(vm, "maximo", lat_maximo);
     registrar_cfuncion(vm, "minimo", lat_minimo);
@@ -264,9 +166,6 @@ void lat_apilar(lat_vm* vm, lat_objeto* o)
 
 lat_objeto* lat_desapilar(lat_vm* vm)
 {
-    //FIXME: No desapila los objetos
-    //printf("\n%s\n", "lat_desapilar");
-    //lat_imprimir_lista(vm, vm->pila);
     list_node* n = vm->pila;
     if (n->data == NULL)
     {
@@ -290,7 +189,6 @@ lat_objeto* lat_desapilar(lat_vm* vm)
         ret = (lat_objeto*)curr->data;
         curr->prev->next = curr->next;
         curr->next->prev = curr->prev;
-        //lat_imprimir_lista(vm, vm->pila);
         return ret;
     }
     return NULL;
@@ -891,13 +789,9 @@ void lat_llamar_funcion(lat_vm* vm, lat_objeto* func)
                 break;
             case OP_PUSH:
                 lat_apilar(vm, vm->registros[cur.a]);
-                //lat_imprimir_lista(vm, vm->pila);
-                //printf("\n");
                 break;
             case OP_POP:
-                vm->registros[cur.a] = lat_desapilar(vm);
-                //lat_imprimir_lista(vm, vm->pila);
-                //printf("\n");
+                vm->registros[cur.a] = lat_desapilar(vm);                
                 break;
             case OP_GET:
                 vm->registros[cur.a] = lat_obtener_contexto_objeto(vm->registros[cur.b], vm->registros[cur.a]);
@@ -914,11 +808,9 @@ void lat_llamar_funcion(lat_vm* vm, lat_objeto* func)
             case OP_STOREDOUBLE:
                 vm->registros[cur.a] = ((lat_objeto*)cur.meta);
                 break;
-            case OP_STORESTR:
-            {
-                vm->registros[cur.a] = ((lat_objeto*)cur.meta);
-            }
-            break;
+            case OP_STORESTR:            
+                vm->registros[cur.a] = ((lat_objeto*)cur.meta);            
+                break;
             case OP_STOREBOOL:
                 vm->registros[cur.a] = ((lat_objeto*)cur.meta);
                 break;
@@ -974,13 +866,6 @@ void lat_llamar_funcion(lat_vm* vm, lat_objeto* func)
             case OP_FN:
                 vm->registros[cur.a] = lat_definir_funcion(vm, (lat_bytecode*)cur.meta);
                 break;
-            /*case OP_NS:
-                vm->registros[cur.a] = lat_clonar_objeto(vm, lat_obtener_contexto(vm));
-                lat_apilar_contexto_predefinido(vm, vm->registros[cur.a]);
-                break;
-            case OP_ENDNS:
-                vm->registros[cur.a] = lat_desapilar_contexto_predefinido(vm);
-                break;*/
             case OP_JMP:
                 pos = cur.a - 1;
                 break;
