@@ -55,7 +55,7 @@ lat_vm* lat_crear_maquina_virtual()
     memset(vm->contexto_pila, 0, 256);
     vm->contexto_pila[0] = lat_instancia(vm);
     vm->apuntador_pila = 0;
-    
+
     /**
      * 10 Operadores
      * 20 funciones matematicas
@@ -65,9 +65,9 @@ lat_vm* lat_crear_maquina_virtual()
      * 60
      * 70
      * 9999 otras funciones // a crear una categoria para ellas
-     *  
+     *
      */
-    
+
     /*10 Operadores */
     registrar_cfuncion(vm, "+", lat_sumar);
     registrar_cfuncion(vm, "-", lat_restar);
@@ -84,7 +84,7 @@ lat_vm* lat_crear_maquina_virtual()
     registrar_cfuncion(vm, "||", lat_o);
     registrar_cfuncion(vm, "!", lat_negacion);
     registrar_cfuncion(vm, "imprimir", lat_imprimir);
-   
+
     /*20 funciones matematicas */
     registrar_cfuncion(vm, "arco_coseno", lat_arco_coseno);
     registrar_cfuncion(vm, "arco_seno", lat_arco_seno);
@@ -455,7 +455,7 @@ void lat_sumar(lat_vm* vm)
     lat_objeto* a = lat_desapilar(vm);
     if ((a->type != T_INT && a->type != T_DOUBLE) || (b->type != T_INT && b->type != T_DOUBLE))
     {
-        lat_error("Intento de aplicar operador \"+\" en tipos invalidos");        
+        lat_error("Intento de aplicar operador \"+\" en tipos invalidos");
     }
     if (a->type == T_DOUBLE || b->type == T_DOUBLE)
     {
@@ -771,7 +771,7 @@ void lat_llamar_funcion(lat_vm* vm, lat_objeto* func)
 {
     if (func->type == T_FUNC)
     {
-#ifdef DEPURAR_MV
+#if DEPURAR_MV
             printf("Ejecutando...\n");
 #endif
         if (!vm->REPL)
@@ -784,41 +784,41 @@ void lat_llamar_funcion(lat_vm* vm, lat_objeto* func)
         int pos;
         for (pos = 0, cur = inslist[pos]; cur.ins != OP_END; cur = inslist[++pos])
         {
-#ifdef DEPURAR_MV
-            printf("%i\t", pos);        
+#if DEPURAR_MV
+            printf("%i\t", pos);
 #endif
             switch (cur.ins)
             {
             case OP_END:
-#ifdef DEPURAR_MV
-            printf("END\n");        
+#if DEPURAR_MV
+            printf("END\n");
 #endif
                 return;
                 break;
             case OP_NOP:
-#ifdef DEPURAR_MV
-            printf("NOP\n");        
+#if DEPURAR_MV
+            printf("NOP\n");
 #endif
                 break;
             case OP_PUSH:
                 lat_apilar(vm, vm->registros[cur.a]);
-#ifdef DEPURAR_MV
+#if DEPURAR_MV
             printf("PUSH ");
             imprimir_objeto(vm->registros[cur.a]);
             printf("\n");
-#endif                
+#endif
                 break;
             case OP_POP:
-                vm->registros[cur.a] = lat_desapilar(vm);  
-#ifdef DEPURAR_MV
+                vm->registros[cur.a] = lat_desapilar(vm);
+#if DEPURAR_MV
             printf("POP ");
             imprimir_objeto(vm->registros[cur.a]);
             printf("\n");
-#endif 
+#endif
                 break;
             case OP_GET:
                 vm->registros[cur.a] = lat_obtener_contexto_objeto(vm->registros[cur.b], vm->registros[cur.a]);
-#ifdef DEPURAR_MV
+#if DEPURAR_MV
             printf("GET ");
             imprimir_objeto(vm->registros[cur.a]);
             printf("\t");
@@ -828,7 +828,7 @@ void lat_llamar_funcion(lat_vm* vm, lat_objeto* func)
                 break;
             case OP_SET:
                 lat_asignar_contexto_objeto(vm->registros[cur.b], lat_clonar_objeto(vm, ((lat_objeto*)cur.meta)), vm->registros[cur.a]);
-#ifdef DEPURAR_MV
+#if DEPURAR_MV
             printf("SET ");
             imprimir_objeto(vm->registros[cur.a]);
             printf("\t");
@@ -838,15 +838,15 @@ void lat_llamar_funcion(lat_vm* vm, lat_objeto* func)
                 break;
             case OP_STORELIT:
                 vm->registros[cur.a] = ((lat_objeto*)cur.meta);
-#ifdef DEPURAR_MV
+#if DEPURAR_MV
             printf("STORELIT ");
             imprimir_objeto(vm->registros[cur.a]);
             printf("\n");
-#endif 
+#endif
                 break;
             case OP_STOREINT:
                 vm->registros[cur.a] = ((lat_objeto*)cur.meta);
-#ifdef DEPURAR_MV
+#if DEPURAR_MV
             printf("STOREINT ");
             imprimir_objeto(vm->registros[cur.a]);
             printf("\n");
@@ -854,15 +854,15 @@ void lat_llamar_funcion(lat_vm* vm, lat_objeto* func)
                 break;
             case OP_STOREDOUBLE:
                 vm->registros[cur.a] = ((lat_objeto*)cur.meta);
-#ifdef DEPURAR_MV
+#if DEPURAR_MV
             printf("STOREDOUBLE ");
             imprimir_objeto(vm->registros[cur.a]);
             printf("\n");
 #endif
                 break;
-            case OP_STORESTR:            
-                vm->registros[cur.a] = ((lat_objeto*)cur.meta);      
-#ifdef DEPURAR_MV
+            case OP_STORESTR:
+                vm->registros[cur.a] = ((lat_objeto*)cur.meta);
+#if DEPURAR_MV
             printf("STORESTR ");
             imprimir_objeto(vm->registros[cur.a]);
             printf("\n");
@@ -870,7 +870,7 @@ void lat_llamar_funcion(lat_vm* vm, lat_objeto* func)
                 break;
             case OP_STOREBOOL:
                 vm->registros[cur.a] = ((lat_objeto*)cur.meta);
-#ifdef DEPURAR_MV
+#if DEPURAR_MV
             printf("STOREBOOL ");
             imprimir_objeto(vm->registros[cur.a]);
             printf("\n");
@@ -878,7 +878,7 @@ void lat_llamar_funcion(lat_vm* vm, lat_objeto* func)
                 break;
             case OP_STORELIST:
                 vm->registros[cur.a] = lat_lista_nueva(vm, lat_crear_lista());
-#ifdef DEPURAR_MV
+#if DEPURAR_MV
             printf("STORELIST ");
             imprimir_objeto(vm->registros[cur.a]);
             printf("\n");
@@ -886,7 +886,7 @@ void lat_llamar_funcion(lat_vm* vm, lat_objeto* func)
                 break;
             case OP_PUSHLIST:
                 lat_apilar_lista(vm->registros[cur.a], vm->registros[cur.b]);
-#ifdef DEPURAR_MV
+#if DEPURAR_MV
             printf("PUSHLIST ");
             imprimir_objeto(vm->registros[cur.a]);
             printf("\n");
@@ -900,7 +900,7 @@ void lat_llamar_funcion(lat_vm* vm, lat_objeto* func)
             {
                 lat_objeto *l = vm->registros[cur.a];
                 lat_objeto *pos = vm->registros[cur.b];
-                vm->registros[cur.a] = lista_obtener_elemento(l->data.lista, pos->data.i);                
+                vm->registros[cur.a] = lista_obtener_elemento(l->data.lista, pos->data.i);
             }
             break;
             case OP_LISTSETITEM:
@@ -928,7 +928,7 @@ void lat_llamar_funcion(lat_vm* vm, lat_objeto* func)
                 break;
             case OP_MOV:
                 vm->registros[cur.a] = vm->registros[cur.b];
-#ifdef DEPURAR_MV
+#if DEPURAR_MV
             printf("MOV ");
             imprimir_objeto(vm->registros[cur.a]);
             printf("\t");
@@ -938,32 +938,32 @@ void lat_llamar_funcion(lat_vm* vm, lat_objeto* func)
                 break;
             case OP_GLOBALNS:
                 vm->registros[cur.a] = vm->contexto_pila[0];
-#ifdef DEPURAR_MV
+#if DEPURAR_MV
             printf("GLOBALNS ");
             imprimir_objeto(vm->registros[cur.a]);
-            printf("\n");            
+            printf("\n");
 #endif
                 break;
             case OP_LOCALNS:
                 vm->registros[cur.a] = lat_obtener_contexto(vm);
-#ifdef DEPURAR_MV
+#if DEPURAR_MV
             printf("LOCALNS ");
             imprimir_objeto(vm->registros[cur.a]);
-            printf("\n");            
+            printf("\n");
 #endif
                 break;
             case OP_FN:
                 vm->registros[cur.a] = lat_definir_funcion(vm, (lat_bytecode*)cur.meta);
-#ifdef DEPURAR_MV
+#if DEPURAR_MV
             printf("FN ");
-            imprimir_objeto(vm->registros[cur.a]);            
+            imprimir_objeto(vm->registros[cur.a]);
             printf("\n");
 #endif
                 break;
             case OP_JMP:
                 pos = cur.a - 1;
-#ifdef DEPURAR_MV
-            printf("JMP %i", pos);            
+#if DEPURAR_MV
+            printf("JMP %i", pos);
             printf("\n");
 #endif
                 break;
@@ -971,8 +971,8 @@ void lat_llamar_funcion(lat_vm* vm, lat_objeto* func)
                 if (lat_obtener_logico(vm->registros[cur.b]))
                 {
                     pos = cur.a - 1;
-#ifdef DEPURAR_MV
-            printf("JMPIF %i", pos);            
+#if DEPURAR_MV
+            printf("JMPIF %i", pos);
             printf("\n");
 #endif
                 }
@@ -981,18 +981,18 @@ void lat_llamar_funcion(lat_vm* vm, lat_objeto* func)
                 if (vm->registros[cur.a] != NULL)
                 {
                     lat_llamar_funcion(vm, vm->registros[cur.a]);
-#ifdef DEPURAR_MV
+#if DEPURAR_MV
             printf("CALL ");
-            //imprimir_objeto(vm->registros[cur.a]);            
+            //imprimir_objeto(vm->registros[cur.a]);
             printf("\n");
 #endif
                 }
                 break;
             case OP_NOT:
                 vm->registros[cur.a] = lat_obtener_logico(vm->registros[cur.a]) == true ? vm->objeto_falso : vm->objeto_cierto;
-#ifdef DEPURAR_MV
+#if DEPURAR_MV
             printf("NOT ");
-            imprimir_objeto(vm->registros[cur.a]);            
+            imprimir_objeto(vm->registros[cur.a]);
             printf("\n");
 #endif
                 break;
