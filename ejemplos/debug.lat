@@ -1,13 +1,13 @@
-########################################################################
+/*######################################################################
 #Para debuguear en visual studio:
 #Menu propiedades del proyecto-> Debugging -> Command Arguments. Agregar
 #$(SolutionDir)..\ejemplos\debug.lat
-########################################################################
+#######################################################################*/
 
 #esta es una funcion que recibe 2 parametros
 funcion sumar(a,b)
   retorno a+b
 fin
 
-s = sumar(1) #parametro insuficientes
+s = sumar(1,2) //parametro insuficientes
 escribir(s)

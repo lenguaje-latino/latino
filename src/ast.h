@@ -34,6 +34,9 @@ THE SOFTWARE.
 *
 */
 
+/**\brief Bandera para debuguear las instrucciones que se generan con el AST */
+#define DEPURAR_AST 0
+
 /** \brief Tipos de dato */
 typedef enum {
   VALOR_NULO, /**< Valor nulo */
