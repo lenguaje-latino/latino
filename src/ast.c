@@ -38,7 +38,7 @@ THE SOFTWARE.
 
 ast *nodo_nuevo_operador(nodo_tipo nt, ast *l, ast *r)
 {
-    ast *a = (ast*)lat_asignar_memoria(sizeof(ast));
+    ast *a = (ast*)__memoria_asignar(sizeof(ast));
     switch (nt)
     {
     case NODO_MAS_UNARIO:
@@ -140,7 +140,7 @@ ast *nodo_nuevo_operador(nodo_tipo nt, ast *l, ast *r)
 
 ast *nodo_nuevo(nodo_tipo nt, ast *l, ast *r)
 {
-    ast *a = (ast*)lat_asignar_memoria(sizeof(ast));
+    ast *a = (ast*)__memoria_asignar(sizeof(ast));
     a->tipo = nt;
     a->l = l;
     a->r = r;
@@ -150,9 +150,9 @@ ast *nodo_nuevo(nodo_tipo nt, ast *l, ast *r)
 
 ast *nodo_nuevo_entero(long i, int num_linea, int num_columna)
 {
-    ast *a = (ast*)lat_asignar_memoria(sizeof(ast));
+    ast *a = (ast*)__memoria_asignar(sizeof(ast));
     a->tipo = NODO_ENTERO;
-    nodo_valor *val = (nodo_valor*)lat_asignar_memoria(sizeof(nodo_valor));
+    nodo_valor *val = (nodo_valor*)__memoria_asignar(sizeof(nodo_valor));
     val->t = VALOR_ENTERO;
     val->v.i = i;
     a->valor = val;
@@ -164,9 +164,9 @@ ast *nodo_nuevo_entero(long i, int num_linea, int num_columna)
 
 ast *nodo_nuevo_decimal(double d, int num_linea, int num_columna)
 {
-    ast *a = (ast*)lat_asignar_memoria(sizeof(ast));
+    ast *a = (ast*)__memoria_asignar(sizeof(ast));
     a->tipo = NODO_DECIMAL;
-    nodo_valor *val = (nodo_valor*)lat_asignar_memoria(sizeof(nodo_valor));
+    nodo_valor *val = (nodo_valor*)__memoria_asignar(sizeof(nodo_valor));
     val->t = VALOR_DECIMAL;
     val->v.d = d;
     a->valor = val;
@@ -178,9 +178,9 @@ ast *nodo_nuevo_decimal(double d, int num_linea, int num_columna)
 
 ast *nodo_nuevo_logico(int b, int num_linea, int num_columna)
 {
-    ast *a = (ast*)lat_asignar_memoria(sizeof(ast));
+    ast *a = (ast*)__memoria_asignar(sizeof(ast));
     a->tipo = NODO_LOGICO;
-    nodo_valor *val = (nodo_valor*)lat_asignar_memoria(sizeof(nodo_valor));
+    nodo_valor *val = (nodo_valor*)__memoria_asignar(sizeof(nodo_valor));
     val->t = VALOR_LOGICO;
     val->v.b = b;
     a->valor = val;
@@ -192,12 +192,12 @@ ast *nodo_nuevo_logico(int b, int num_linea, int num_columna)
 
 ast *nodo_nuevo_literal(char *c, int num_linea, int num_columna)
 {
-    ast *a = (ast*)lat_asignar_memoria(sizeof(ast));
+    ast *a = (ast*)__memoria_asignar(sizeof(ast));
     a->tipo = NODO_LITERAL;
-    nodo_valor *val = (nodo_valor*)lat_asignar_memoria(sizeof(nodo_valor));
+    nodo_valor *val = (nodo_valor*)__memoria_asignar(sizeof(nodo_valor));
     val->t = VALOR_LITERAL;
     a->valor = val;
-    a->valor->v.c = parse_string(c, strlen(c));
+    a->valor->v.c = __str_analizar(c, strlen(c));
     a->valor->es_constante = false;
     a->valor->num_linea = num_linea;
     a->valor->num_columna = num_columna;
@@ -206,11 +206,11 @@ ast *nodo_nuevo_literal(char *c, int num_linea, int num_columna)
 
 ast *nodo_nuevo_cadena(const char *s, int num_linea, int num_columna)
 {
-    ast *a = (ast*)lat_asignar_memoria(sizeof(ast));
+    ast *a = (ast*)__memoria_asignar(sizeof(ast));
     a->tipo = NODO_CADENA;
-    nodo_valor *val = (nodo_valor*)lat_asignar_memoria(sizeof(nodo_valor));
+    nodo_valor *val = (nodo_valor*)__memoria_asignar(sizeof(nodo_valor));
     val->t = VALOR_CADENA;
-    val->v.s = parse_string(s, strlen(s));
+    val->v.s = __str_analizar(s, strlen(s));
     a->valor = val;
     a->valor->es_constante = false;
     a->valor->num_linea = num_linea;
@@ -220,11 +220,11 @@ ast *nodo_nuevo_cadena(const char *s, int num_linea, int num_columna)
 
 ast *nodo_nuevo_constante(char *s, int num_linea, int num_columna)
 {
-    ast *a = (ast*)lat_asignar_memoria(sizeof(ast));
+    ast *a = (ast*)__memoria_asignar(sizeof(ast));
     a->tipo = NODO_IDENTIFICADOR;
-    nodo_valor *val = (nodo_valor*)lat_asignar_memoria(sizeof(nodo_valor));
+    nodo_valor *val = (nodo_valor*)__memoria_asignar(sizeof(nodo_valor));
     val->t = VALOR_CADENA;
-    val->v.s = strdup0(s);
+    val->v.s = __str_duplicar(s);
     a->valor = val;
     a->valor->es_constante = true;
     a->valor->num_linea = num_linea;
@@ -234,11 +234,11 @@ ast *nodo_nuevo_constante(char *s, int num_linea, int num_columna)
 
 ast *nodo_nuevo_identificador(const char *s, int num_linea, int num_columna)
 {
-    ast *a = (ast*)lat_asignar_memoria(sizeof(ast));
+    ast *a = (ast*)__memoria_asignar(sizeof(ast));
     a->tipo = NODO_IDENTIFICADOR;
-    nodo_valor *val = (nodo_valor*)lat_asignar_memoria(sizeof(nodo_valor));
+    nodo_valor *val = (nodo_valor*)__memoria_asignar(sizeof(nodo_valor));
     val->t = VALOR_CADENA;
-    val->v.s = strdup0(s);
+    val->v.s = __str_duplicar(s);
     a->valor = val;
     a->valor->es_constante = false;
     a->valor->num_linea = num_linea;
@@ -248,7 +248,7 @@ ast *nodo_nuevo_identificador(const char *s, int num_linea, int num_columna)
 
 ast *nodo_nuevo_asignacion(ast *v, ast *s)
 {
-    ast *a = (ast*)lat_asignar_memoria(sizeof(ast));
+    ast *a = (ast*)__memoria_asignar(sizeof(ast));
     a->tipo = NODO_ASIGNACION;
     a->l = v;
     a->r = s;
@@ -258,7 +258,7 @@ ast *nodo_nuevo_asignacion(ast *v, ast *s)
 
 ast *nodo_nuevo_asignacion_lista_elem(ast *exp, ast *id, ast *pos)
 {
-    nodo_lista_elem *a = (nodo_lista_elem*)lat_asignar_memoria(sizeof(nodo_lista_elem));
+    nodo_lista_elem *a = (nodo_lista_elem*)__memoria_asignar(sizeof(nodo_lista_elem));
     a->tipo = NODO_LISTA_ASIGNAR_ELEMENTO;
     a->exp = exp;
     a->id = id;
@@ -268,7 +268,7 @@ ast *nodo_nuevo_asignacion_lista_elem(ast *exp, ast *id, ast *pos)
 
 ast *nodo_nuevo_asignacion_dicc_elem(ast *exp, ast *id, ast *llave)
 {
-    nodo_lista_elem *a = (nodo_lista_elem*)lat_asignar_memoria(sizeof(nodo_lista_elem));
+    nodo_lista_elem *a = (nodo_lista_elem*)__memoria_asignar(sizeof(nodo_lista_elem));
     a->tipo = NODO_DICC_ASIGNAR_ELEMENTO;
     a->exp = exp;
     a->id = id;
@@ -278,7 +278,7 @@ ast *nodo_nuevo_asignacion_dicc_elem(ast *exp, ast *id, ast *llave)
 
 ast *nodo_nuevo_si(ast *cond, ast *th, ast *el)
 {
-    nodo_si *a = (nodo_si*)lat_asignar_memoria(sizeof(nodo_si));
+    nodo_si *a = (nodo_si*)__memoria_asignar(sizeof(nodo_si));
     a->tipo = NODO_SI;
     a->cond = cond;
     a->th = th;
@@ -288,7 +288,7 @@ ast *nodo_nuevo_si(ast *cond, ast *th, ast *el)
 
 ast *nodo_nuevo_mientras(ast *cond, ast *stmts)
 {
-    ast *a = (ast*)lat_asignar_memoria(sizeof(ast));
+    ast *a = (ast*)__memoria_asignar(sizeof(ast));
     a->tipo = NODO_MIENTRAS;
     a->l = cond;
     a->r = stmts;
@@ -298,7 +298,7 @@ ast *nodo_nuevo_mientras(ast *cond, ast *stmts)
 
 ast *nodo_nuevo_hacer(ast *cond, ast *stmts)
 {
-    ast *a = (ast*)lat_asignar_memoria(sizeof(ast));
+    ast *a = (ast*)__memoria_asignar(sizeof(ast));
     a->tipo = NODO_HACER;
     a->l = cond;
     a->r = stmts;
@@ -308,7 +308,7 @@ ast *nodo_nuevo_hacer(ast *cond, ast *stmts)
 
 ast *nodo_nuevo_desde(ast *dec, ast *cond, ast *inc, ast *stmts)
 {
-    ast *a = (ast*)lat_asignar_memoria(sizeof(ast));
+    ast *a = (ast*)__memoria_asignar(sizeof(ast));
     a->tipo = NODO_BLOQUE;
     a->l = nodo_nuevo_mientras(cond, nodo_nuevo(NODO_BLOQUE, inc, stmts));
     a->r = dec;
@@ -318,7 +318,7 @@ ast *nodo_nuevo_desde(ast *dec, ast *cond, ast *inc, ast *stmts)
 
 ast *nodo_nuevo_funcion(ast *s, ast *syms, ast *func)
 {
-    ast *a = (ast*)lat_asignar_memoria(sizeof(ast));
+    ast *a = (ast*)__memoria_asignar(sizeof(ast));
     a->tipo = NODO_ASIGNACION;
     a->l = nodo_nuevo(NODO_FUNCION_USUARIO, syms, func);
     a->r = s;
@@ -328,7 +328,7 @@ ast *nodo_nuevo_funcion(ast *s, ast *syms, ast *func)
 
 ast* nodo_nuevo_incluir(ast* ruta)
 {
-    ast *a = (ast*)lat_asignar_memoria(sizeof(ast));
+    ast *a = (ast*)__memoria_asignar(sizeof(ast));
     a->tipo = NODO_INCLUIR;
     a->l = ruta;
     a->r = NULL;
@@ -351,8 +351,8 @@ void nodo_liberar(ast *a)
             break;
         default:
             if (a->tipo)
-                lat_liberar_memoria(a->valor);
-            lat_liberar_memoria(a);
+                __memoria_liberar(a->valor);
+            __memoria_liberar(a);
             break;
         }
     }
@@ -372,20 +372,20 @@ static int nodo_analizar(lat_vm *vm, ast *node, lat_bytecode *bcode, int i)
         //TODO: Incluir rutas con punto ej. incluir "lib.modulos.myModulo"
         char* archivo = node->l->valor->v.s;
         lat_objeto* mod = lat_cadena_nueva(vm, archivo);
-        if (!find_list(vm->modulos, (void*)mod))
+        if (!__lista_existe_dato(vm->modulos, (void*)mod))
         {
             //encontrar el modulo en la ruta actual
             char dir_actual[MAX_PATH_LENGTH];
             getcwd(dir_actual, sizeof(dir_actual));
             strcat(dir_actual, PATH_SEP);
             strcat(dir_actual, archivo);
-            if (!endsWith(dir_actual, ".lat"))
+            if (!__str_termina_con(dir_actual, ".lat"))
             {
                 strcat(dir_actual, ".lat");
             }
-            if (legible(dir_actual))
+            if (__io_es_legible(dir_actual))
             {
-                insert_list(vm->modulos, mod);
+                __lista_agregar(vm->modulos, mod);
                 pn(vm, lat_analizar_archivo(vm, dir_actual));
             }
             else
@@ -396,13 +396,13 @@ static int nodo_analizar(lat_vm *vm, ast *node, lat_bytecode *bcode, int i)
                 {
                     strcat(latino_lib, PATH_SEP);
                     strcat(latino_lib, archivo);
-                    if (!endsWith(latino_lib, ".lat"))
+                    if (!__str_termina_con(latino_lib, ".lat"))
                     {
                         strcat(latino_lib, ".lat");
                     }
-                    if (legible(latino_lib))
+                    if (__io_es_legible(latino_lib))
                     {
-                        insert_list(vm->modulos, mod);
+                        __lista_agregar(vm->modulos, mod);
                         pn(vm, lat_analizar_archivo(vm, latino_lib));
                     }
                 }
@@ -422,7 +422,7 @@ static int nodo_analizar(lat_vm *vm, ast *node, lat_bytecode *bcode, int i)
         }
     }
     break;
-    case NODO_IDENTIFICADOR: /*GET*/
+    case NODO_IDENTIFICADOR: /*GET: Obtiene el valor de la variable en la tabla de simbolos*/
     {
         dbc(OP_LOCALNS, 1, 0, NULL);
         lat_objeto *ret = lat_cadena_nueva(vm, node->valor->v.s);
@@ -430,22 +430,21 @@ static int nodo_analizar(lat_vm *vm, ast *node, lat_bytecode *bcode, int i)
         dbc(OP_GET, 2, 1, NULL);
         dbc(OP_MOV, 255, 2, NULL);
 #if DEPURAR_AST
-        //printf("INICIO NODO_IDENTIFICADOR\n");
         printf("LOCALNS R1\n");
         printf("STORESTR R2 %s\n", ret->data.str);
         printf("GET R2 R1\n");
         printf("MOV R255 R2\n");
-        //printf("FIN NODO_IDENTIFICADOR\n");
 #endif
     }
     break;
-    case NODO_ASIGNACION: /*SET*/
+    case NODO_ASIGNACION: /*SET: Asigna el valor de la variable en la tabla de simbolos*/
     {
         pn(vm, node->l);
         dbc(OP_PUSH, 255, 0, NULL);
-#if DEPURAR_AST
+#if DEPURAR_AST		
         printf("PUSH R255 R0\n");
 #endif
+		/*Nombre de la variable o funcion*/
         lat_objeto *ret = lat_cadena_nueva(vm, node->r->valor->v.s);
         if (ret->num_declared < 0)
         {
@@ -457,11 +456,29 @@ static int nodo_analizar(lat_vm *vm, ast *node, lat_bytecode *bcode, int i)
         {
             lat_error("Linea %d: %s", (node->r->valor->num_linea + 1),  "Intento de asignar un nuevo valor a una CONSTANTE ");
         }
+		//Si es una funcion contamos el numero de parametros que necesita
+		/*
+		int num_params = 0;
+		if (node->l->tipo == NODO_FUNCION_USUARIO){
+			ast* tmp;
+			if (node->l->l->tipo == NODO_LISTA_PARAMETROS){
+				tmp = node->l->l;
+				while (tmp->r != NULL && tmp->r->tipo == NODO_LISTA_PARAMETROS){
+					tmp = tmp->r;
+					num_params++;
+				}
+				if (tmp->l->tipo){
+					num_params++;
+				}
+			}
+		}
+		ret->num_param = num_params;
+		*/
         dbc(OP_LOCALNS, 1, 0, NULL);
         dbc(OP_POP, 255, 0, NULL);
         dbc(OP_SET, 255, 1, ret);
 #if DEPURAR_AST
-        printf("LOCALNS R1 R0\n");
+        printf("LOCALNS R1\n");
         printf("POP R255 R0\n");
         printf("SET R255 R1\n");
 #endif
@@ -592,14 +609,40 @@ static int nodo_analizar(lat_vm *vm, ast *node, lat_bytecode *bcode, int i)
     break;
     case NODO_FUNCION_LLAMADA:
     {
+		if (node->r)
+		{
+			pn(vm, node->r);
+		}
+		/*int num_args = 0;
         if (node->r)
         {
             pn(vm, node->r);
-        }
+			//contamos el numero de argumentos de la llamada a funcion
+			ast* tmp;
+			if (node->r->tipo == NODO_FUNCION_ARGUMENTOS){
+				tmp = node->r->r;
+				while (tmp != NULL && tmp->tipo == NODO_FUNCION_ARGUMENTOS){
+					tmp = tmp->r;
+					num_args++;
+				}
+				if (tmp != NULL && tmp->tipo){
+					num_args++;
+				}
+				if (node->r->l->tipo){
+					num_args++;
+				}
+			}
+        }*/
         pn(vm, node->l);
-        dbc(OP_CALL, 255, 0, NULL);
+		//dbc(OP_CALL, 255, (void*) num_args, NULL);
+		dbc(OP_CALL, 255, NULL, NULL);
+		/*if (node->r)
+		{
+			pn(vm, node->r);
+		}*/
 #if DEPURAR_AST
-        printf("CALL R255\n");
+        //printf("CALL R255 %i\n", num_args);
+		printf("CALL R255\n");
 #endif
     }
     break;
@@ -658,7 +701,7 @@ static int nodo_analizar(lat_vm *vm, ast *node, lat_bytecode *bcode, int i)
     break;
     case NODO_FUNCION_USUARIO:
     {
-        funcion_bcode = (lat_bytecode *)lat_asignar_memoria(sizeof(lat_bytecode) * MAX_BYTECODE_FUNCTION);
+        funcion_bcode = (lat_bytecode *)__memoria_asignar(sizeof(lat_bytecode) * MAX_BYTECODE_FUNCTION);
         fi = 0;
         if (node->l)
         {
@@ -867,7 +910,7 @@ static int nodo_analizar(lat_vm *vm, ast *node, lat_bytecode *bcode, int i)
 
 lat_objeto *nodo_analizar_arbol(lat_vm *vm, ast *tree)
 {
-    lat_bytecode *bcode = (lat_bytecode *)lat_asignar_memoria(sizeof(lat_bytecode) * MAX_BYTECODE_FUNCTION);
+    lat_bytecode *bcode = (lat_bytecode *)__memoria_asignar(sizeof(lat_bytecode) * MAX_BYTECODE_FUNCTION);
     int i = nodo_analizar(vm, tree, bcode, 0);
     dbc(OP_END, 0, 0, NULL);
     nodo_liberar(tree);

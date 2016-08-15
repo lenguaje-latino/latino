@@ -6,6 +6,7 @@
 #include <stdlib.h>
 #include <string.h>
 
+#ifndef _WIN32
 #include <arpa/inet.h>
 #include <netdb.h> /* getprotobyname */
 #include <netinet/in.h>
@@ -113,4 +114,6 @@ void lat_peticion(lat_vm* vm)
         lat_error("se requiere una cadena como parametro\n");
     }
 }
+
+#endif
 

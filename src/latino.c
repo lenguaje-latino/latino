@@ -33,8 +33,13 @@ THE SOFTWARE.
 #include "libmem.h"
 #include "libstring.h"
 
-/* 1 para debuguear analizador */
-int yydebug = 0;
+/*
+Para debuguear en visual studio:
+Menu propiedades del proyecto-> Debugging -> Command Arguments. Agregar
+$(SolutionDir)..\ejemplos\debug.lat
+*/
+
+int yydebug = 0; /* 1 para debuguear analizador */
 int parse_silent;
 static FILE *file;
 static char *buffer;
@@ -47,7 +52,7 @@ ast *lat_analizar_expresion(lat_vm* vm, char* expr, int* status)
     ast *ret = NULL;
     yyscan_t scanner;
     YY_BUFFER_STATE state;
-    lex_state scan_state = {.insert = 0};
+    lex_state scan_state = {.__str_insertar = 0};
     yylex_init_extra(&scan_state, &scanner);
     state = yy_scan_string(expr, scanner);
     *status = yyparse(&ret, scanner);
@@ -148,8 +153,8 @@ static int leer_linea(lat_vm *vm, char* buffer){
         return -1;
     }
     for(;;){
-        tmp = concat(tmp, "\n");
-        tmp = concat(tmp, input);
+        tmp = __str_concatenar(tmp, "\n");
+        tmp = __str_concatenar(tmp, input);
         int estatus;
         lat_analizar_expresion(vm, tmp, &estatus);
         if(estatus == 1){
@@ -163,110 +168,110 @@ static int leer_linea(lat_vm *vm, char* buffer){
 }
 
 static void completion(const char *buf, linenoiseCompletions *lc) {
-    if (startsWith(buf, "esc")) {
+    if (__str_empieza_con(buf, "esc")) {
         linenoiseAddCompletion(lc,"escribir");
     }
-    if (startsWith(buf, "imp")) {
+    if (__str_empieza_con(buf, "imp")) {
         linenoiseAddCompletion(lc,"imprimir");
     }
-    if (startsWith(buf, "eje")) {
+    if (__str_empieza_con(buf, "eje")) {
         linenoiseAddCompletion(lc,"ejecutar");
     }
-    if (startsWith(buf, "ejea")) {
+    if (__str_empieza_con(buf, "ejea")) {
         linenoiseAddCompletion(lc,"ejecutar_archivo");
     }
-    if (startsWith(buf, "fun")) {
+    if (__str_empieza_con(buf, "fun")) {
         linenoiseAddCompletion(lc,"funcion");
     }
-    if (startsWith(buf, "com")) {
+    if (__str_empieza_con(buf, "com")) {
         linenoiseAddCompletion(lc,"comparar");
     }
-    if (startsWith(buf, "con")) {
+    if (__str_empieza_con(buf, "con")) {
         linenoiseAddCompletion(lc,"concatenar");
     }
-    if (startsWith(buf, "cont")) {
+    if (__str_empieza_con(buf, "cont")) {
         linenoiseAddCompletion(lc,"contiene");
     }
-    if (startsWith(buf, "cop")) {
+    if (__str_empieza_con(buf, "cop")) {
         linenoiseAddCompletion(lc,"copiar");
     }
-    if (startsWith(buf, "ter")) {
+    if (__str_empieza_con(buf, "ter")) {
         linenoiseAddCompletion(lc,"termina_con");
     }
-    if (startsWith(buf, "es_")) {
+    if (__str_empieza_con(buf, "es_")) {
         linenoiseAddCompletion(lc,"es_igual");
     }
-    if (startsWith(buf, "ind")) {
+    if (__str_empieza_con(buf, "ind")) {
         linenoiseAddCompletion(lc,"indice");
     }
-    if (startsWith(buf, "ins")) {
+    if (__str_empieza_con(buf, "ins")) {
         linenoiseAddCompletion(lc,"insertar");
     }
-    if (startsWith(buf, "ult")) {
+    if (__str_empieza_con(buf, "ult")) {
         linenoiseAddCompletion(lc,"ultimo_indice");
     }
-    if (startsWith(buf, "reli")) {
+    if (__str_empieza_con(buf, "reli")) {
         linenoiseAddCompletion(lc,"rellenar_izquierda");
     }
-    if (startsWith(buf, "reld")) {
+    if (__str_empieza_con(buf, "reld")) {
         linenoiseAddCompletion(lc,"rellenar_derecha");
     }
-    if (startsWith(buf, "eli")) {
+    if (__str_empieza_con(buf, "eli")) {
         linenoiseAddCompletion(lc,"eliminar");
     }
-    if (startsWith(buf, "est")) {
+    if (__str_empieza_con(buf, "est")) {
         linenoiseAddCompletion(lc,"esta_vacia");
     }
-    if (startsWith(buf, "lon")) {
+    if (__str_empieza_con(buf, "lon")) {
         linenoiseAddCompletion(lc,"longitud");
     }
-    if (startsWith(buf, "ree")) {
+    if (__str_empieza_con(buf, "ree")) {
         linenoiseAddCompletion(lc,"reemplazar");
     }
-    if (startsWith(buf, "emp")) {
+    if (__str_empieza_con(buf, "emp")) {
         linenoiseAddCompletion(lc,"empieza_con");
     }
-    if (startsWith(buf, "sub")) {
+    if (__str_empieza_con(buf, "sub")) {
         linenoiseAddCompletion(lc,"subcadena");
     }
-    if (startsWith(buf, "min")) {
+    if (__str_empieza_con(buf, "min")) {
         linenoiseAddCompletion(lc,"minusculas");
     }
-    if (startsWith(buf, "may")) {
+    if (__str_empieza_con(buf, "may")) {
         linenoiseAddCompletion(lc,"mayusculas");
     }
-    if (startsWith(buf, "qui")) {
+    if (__str_empieza_con(buf, "qui")) {
         linenoiseAddCompletion(lc,"quitar_espacios");
     }
-    if (startsWith(buf, "lee")) {
+    if (__str_empieza_con(buf, "lee")) {
         linenoiseAddCompletion(lc,"leer");
     }
-    if (startsWith(buf, "esca")) {
+    if (__str_empieza_con(buf, "esca")) {
         linenoiseAddCompletion(lc,"escribir_archivo");
     }
-    if (startsWith(buf, "tip")) {
+    if (__str_empieza_con(buf, "tip")) {
         linenoiseAddCompletion(lc,"tipo");
     }
-    if (startsWith(buf, "log")) {
+    if (__str_empieza_con(buf, "log")) {
         linenoiseAddCompletion(lc,"logico");
     }
-    if (startsWith(buf, "ent")) {
+    if (__str_empieza_con(buf, "ent")) {
         linenoiseAddCompletion(lc,"entero");
     }
-    if (startsWith(buf, "dec")) {
+    if (__str_empieza_con(buf, "dec")) {
         linenoiseAddCompletion(lc,"decimal");
     }
-    if (startsWith(buf, "cad")) {
+    if (__str_empieza_con(buf, "cad")) {
         linenoiseAddCompletion(lc,"cadena");
     }
-    if (startsWith(buf, "sal")) {
+    if (__str_empieza_con(buf, "sal")) {
         linenoiseAddCompletion(lc,"salir");
     }
 }
 
 static void lat_repl(lat_vm *vm)
 {
-    char* buf = lat_asignar_memoria(MAX_STR_INTERN);
+    char* buf = __memoria_asignar(MAX_STR_INTERN);
     ast* tmp = NULL;
     int status;
     vm->REPL = true;
@@ -284,20 +289,15 @@ static void lat_repl(lat_vm *vm)
                 lat_apilar(vm, vm->registros[255]);
                 lat_imprimir(vm);
             }
-            linenoiseHistoryAdd(replace(buf, "\n", ""));
+            linenoiseHistoryAdd(__str_reemplazar(buf, "\n", ""));
             linenoiseHistorySave("history.txt");
         }
     }
-    lat_liberar_memoria(buf);
+    __memoria_liberar(buf);
 }
 
 int main(int argc, char *argv[])
 {
-    /*
-    Para debuguear en visual studio:
-    Menu propiedades del proyecto-> Debugging -> Command Arguments. Agregar
-    $(SolutionDir)..\ejemplos\debug.lat
-    */
     int i;
     char *infile = NULL;
     lat_vm *vm = lat_crear_maquina_virtual();

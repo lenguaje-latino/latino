@@ -1,5 +1,5 @@
 set(CMAKE_VERBOSE_MAKEFILE true)
-SET(CMAKE_C_OUTPUT_EXTENSION_REPLACE 1)
+SET(CMAKE_C_OUTPUT_EXTENSION___str_reemplazar 1)
 
 IF(UNIX)
     LINK_LIBRARIEs(m)
@@ -19,7 +19,7 @@ ENDIF(UNIX)
 ADD_DEFINITIONS(-D_DEBUG -D__STDC_CONSTANT_MACROS -D__STDC_FORMAT_MACROS -D__STDC_LIMIT_MACROS)
 ADD_SUBDIRECTORY(linenoise)
 
-SET(SOURCES khash.h
+SET(SOURCES k__dic_calcula_hash.h
     latino.h ast.h vm.h object.h libstring.h libmem.h liblist.h
     lex.h parse.h libmath.h libio.h linenoise/utf8.h linenoise/linenoise.h libnet.h libdict.h
     latino.c ast.c vm.c object.c libstring.c libmem.c liblist.c

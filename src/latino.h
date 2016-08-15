@@ -90,45 +90,12 @@ THE SOFTWARE.
 /** Afirmar (asset), sirve para testear una condicion */
 #define lat_afirmar(cond) ((void)(false && (cond)))
 
-#ifdef NDEBUG
-#define debug(M, ...)
-#else
-#define debug(M, ...) fprintf(stdout, "DEBUG %s:%d: " M "\n", __FILE__, __LINE__, ##__VA_ARGS__)
-
-#ifndef REGISTER_DEBUG
-#define regdebug(M, ...)
-#else
-#define regdebug(M, ...) fprintf(stdout, "REGDEBUG %s:%d: " M "\n", __FILE__, __LINE__, ##__VA_ARGS__)
-#endif
-
-#endif
-
-#define clean_errno() (errno == 0 ? "None" : strerror(errno))
+/* Envia un mensaje de error */
 #define lat_error(M, ...)                               \
   {                                                   \
     fprintf(stderr, "Error: " M "\n", ##__VA_ARGS__); \
   }
-#define log_warn(M, ...) fprintf(stderr, "[WARN] (%s:%d: errno: %s) " M "\n", __FILE__, __LINE__, clean_errno(), ##__VA_ARGS__)
-#define log_info(M, ...) fprintf(stderr, "[INFO] (%s:%d) " M "\n", __FILE__, __LINE__, ##__VA_ARGS__)
-#define check(A, M, ...)       \
-  if (!(A)) {                  \
-    lat_error(M, ##__VA_ARGS__); \
-    errno = 0;                 \
-    goto error;                \
-  }
-#define sentinel(M, ...)       \
-  {                            \
-    lat_error(M, ##__VA_ARGS__); \
-    errno = 0;                 \
-    goto error;                \
-  }
-#define check_mem(A) check((A), "Out of memory.")
-#define check_debug(A, M, ...) \
-  if (!(A)) {                  \
-    debug(M, ##__VA_ARGS__);   \
-    errno = 0;                 \
-    goto error;                \
-  }
+
 /** Indica si se desea debuguear el parser de bison */
 extern int debug;
 

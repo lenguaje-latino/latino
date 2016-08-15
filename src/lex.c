@@ -1009,12 +1009,12 @@ YY_RULE_SETUP
 case 23:
 YY_RULE_SETUP
 #line 75 "lex.l"
-{ return OP_CONCAT_IGUAL; }
+{ return OP___str_concatenar_IGUAL; }
 	YY_BREAK
 case 24:
 YY_RULE_SETUP
 #line 76 "lex.l"
-{ return OP_CONCAT; }
+{ return OP___str_concatenar; }
 	YY_BREAK
 case 25:
 YY_RULE_SETUP
@@ -1632,7 +1632,7 @@ static int yy_get_next_buffer (yyscan_t yyscanner)
 {
     struct yyguts_t * yyg = (struct yyguts_t*)yyscanner;
 
-	/* TODO. We should be able to replace this entire function body
+	/* TODO. We should be able to __str_reemplazar this entire function body
 	 * with
 	 *		yypop_buffer_state();
 	 *		yypush_buffer_state(new_buffer);
@@ -1799,7 +1799,7 @@ void yypush_buffer_state (YY_BUFFER_STATE new_buffer , yyscan_t yyscanner)
 		YY_CURRENT_BUFFER_LVALUE->yy_n_chars = yyg->yy_n_chars;
 		}
 
-	/* Only push if top exists. Otherwise, replace top. */
+	/* Only push if top exists. Otherwise, __str_reemplazar top. */
 	if (YY_CURRENT_BUFFER)
 		yyg->yy_buffer_stack_top++;
 	YY_CURRENT_BUFFER_LVALUE = new_buffer;

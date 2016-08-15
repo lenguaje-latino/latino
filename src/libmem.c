@@ -27,7 +27,7 @@ THE SOFTWARE.
 #include "latino.h"
 #include "libmem.h"
 
-void* lat_asignar_memoria(size_t size)
+void* __memoria_asignar(size_t size)
 {
     void* value = malloc(size);
     if (value == 0)
@@ -35,7 +35,7 @@ void* lat_asignar_memoria(size_t size)
     return value;
 }
 
-void* lat_reasignar_memoria(void* ptr, size_t size)
+void* __memoria_reasignar(void* ptr, size_t size)
 {
     void* value = realloc(ptr, size);
     if (value == 0)
@@ -43,7 +43,7 @@ void* lat_reasignar_memoria(void* ptr, size_t size)
     return value;
 }
 
-void lat_liberar_memoria(void* ptr)
+void __memoria_liberar(void* ptr)
 {
     if (ptr != NULL)
     {

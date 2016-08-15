@@ -39,7 +39,7 @@ THE SOFTWARE.
   *\param archivo: Nombre completo del archivo
   *\return bool: true si se puede leer
   */
-bool legible(const char *archivo);
+bool __io_es_legible(const char *archivo);
 
 /** Lee de la entrada estandar (teclado)
   *

@@ -2,9 +2,9 @@
 #include "libdict.h"
 #include "libmem.h"
 
-hash_map* make_hash_map()
+hash_map* __dic_nuevo()
 {
-    hash_map* ret = (hash_map*)lat_asignar_memoria(sizeof(hash_map));
+    hash_map* ret = (hash_map*)__memoria_asignar(sizeof(hash_map));
     int c;
     for (c = 0; c < 256; c++)
     {
@@ -13,7 +13,7 @@ hash_map* make_hash_map()
     return ret;
 }
 
-int hash(char* key)
+int __dic_hash(char* key)
 {
     int h = 5381;
 
@@ -24,9 +24,9 @@ int hash(char* key)
     return abs(h % 256);
 }
 
-void* get_hash(hash_map* m, char* key)
+void* ___dic_obtener(hash_map* m, char* key)
 {
-    list_node* cur = m->buckets[hash(key)];
+	list_node* cur = m->buckets[__dic_hash(key)];
     if (cur == NULL)
         return NULL;
     for (; cur->next != NULL; cur = cur->next)
@@ -42,15 +42,15 @@ void* get_hash(hash_map* m, char* key)
     return NULL;
 }
 
-void set_hash(hash_map *m, char *key, void *val)
+void __dic_asignar(hash_map *m, char *key, void *val)
 {
-    hash_val *hv = (hash_val *)lat_asignar_memoria(sizeof(hash_val));
+    hash_val *hv = (hash_val *)__memoria_asignar(sizeof(hash_val));
     strncpy(hv->key, key, (strlen(key) + 1));
     hv->val = val;
-    int hk = hash(key);
+	int hk = __dic_hash(key);
     if (m->buckets[hk] == NULL)
     {
-        m->buckets[hk] = lat_crear_lista();
+        m->buckets[hk] = __lista_nuevo();
     }
     else
     {
@@ -68,12 +68,12 @@ void set_hash(hash_map *m, char *key, void *val)
             }
         }
     }
-    insert_list(m->buckets[hk], (void *)hv);
+    __lista_agregar(m->buckets[hk], (void *)hv);
 }
 
-hash_map *copy_hash(hash_map *m)
+hash_map* __dic_clonar(hash_map *m)
 {
-    hash_map *ret = make_hash_map();
+    hash_map *ret = __dic_nuevo();
     int i;
     for (i = 0; i < 256; i++)
     {
@@ -84,7 +84,7 @@ hash_map *copy_hash(hash_map *m)
             {
                 if (c->data != NULL)
                 {
-                    set_hash(ret, ((hash_val *)c->data)->key, ((hash_val *)c->data)->val);
+					__dic_asignar(ret, ((hash_val *) c->data)->key, ((hash_val *) c->data)->val);
                 }
             }
         }

@@ -105,7 +105,7 @@ typedef enum {
   NODO_DESDE,   /**< Nodo desde */
   NODO_INCREMENTO,   /**< Nodo incremento */
   NODO_DECREMENTO,   /**< Nodo decremento */
-  NODO_CONCATENAR,   /**< Nodo concatenar */
+  NODO_CONCATENAR,   /**< Nodo __str_concatenar */
   NODO_LISTA,   /**< Nodo lista nueva */
   NODO_LISTA_ASIGNAR_ELEMENTO,   /**< Nodo asignar un nuevo valor a un elemento de la lista */
   NODO_LISTA_AGREGAR_ELEMENTO,   /**< Nodo agregar elemento a una lista */
@@ -130,7 +130,7 @@ typedef struct ast {
 } ast;
 
 /** \brief Estado del analizador lexico */
-typedef struct lex_state { int insert; } lex_state;
+typedef struct lex_state { int __str_insertar; } lex_state;
 
 /** \brief Tipo de dato que se envia al analizador lexico */
 typedef union YYSTYPE {
