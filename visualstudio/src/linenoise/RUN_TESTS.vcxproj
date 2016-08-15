@@ -75,7 +75,7 @@
     <PostBuildEvent>
       <Message></Message>
       <Command>setlocal
-C:\CMake\bin\ctest.exe --force-new-ctest-process -C $(Configuration)
+C:\bin\CMake\bin\ctest.exe --force-new-ctest-process -C $(Configuration)
 if %errorlevel% neq 0 goto :cmEnd
 :cmEnd
 endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
@@ -97,7 +97,7 @@ if %errorlevel% neq 0 goto :VCEnd</Command>
     <PostBuildEvent>
       <Message></Message>
       <Command>setlocal
-C:\CMake\bin\ctest.exe --force-new-ctest-process -C $(Configuration)
+C:\bin\CMake\bin\ctest.exe --force-new-ctest-process -C $(Configuration)
 if %errorlevel% neq 0 goto :cmEnd
 :cmEnd
 endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
@@ -119,7 +119,7 @@ if %errorlevel% neq 0 goto :VCEnd</Command>
     <PostBuildEvent>
       <Message></Message>
       <Command>setlocal
-C:\CMake\bin\ctest.exe --force-new-ctest-process -C $(Configuration)
+C:\bin\CMake\bin\ctest.exe --force-new-ctest-process -C $(Configuration)
 if %errorlevel% neq 0 goto :cmEnd
 :cmEnd
 endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
@@ -141,7 +141,7 @@ if %errorlevel% neq 0 goto :VCEnd</Command>
     <PostBuildEvent>
       <Message></Message>
       <Command>setlocal
-C:\CMake\bin\ctest.exe --force-new-ctest-process -C $(Configuration)
+C:\bin\CMake\bin\ctest.exe --force-new-ctest-process -C $(Configuration)
 if %errorlevel% neq 0 goto :cmEnd
 :cmEnd
 endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
@@ -208,6 +208,9 @@ if %errorlevel% neq 0 goto :VCEnd</Command>
     </CustomBuild>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="C:/src/latino/visualstudio/ZERO_CHECK.vcxproj">
+      <Project>5D4D3EC1-3B81-3E09-8F64-EC0419A6E928</Project>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

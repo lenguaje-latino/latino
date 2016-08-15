@@ -212,7 +212,7 @@
     <CustomBuild Include="C:\src\latino\src\linenoise\CMakeLists.txt">
       <Message Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Building Custom Rule C:/src/latino/src/linenoise/CMakeLists.txt</Message>
       <Command Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">setlocal
-C:\CMake\bin\cmake.exe -HC:/src/latino -BC:/src/latino/visualstudio --check-stamp-file C:\src\latino\visualstudio\src\linenoise\CMakeFiles\generate.stamp
+C:\bin\CMake\bin\cmake.exe -HC:/src/latino -BC:/src/latino/visualstudio --check-stamp-file C:\src\latino\visualstudio\src\linenoise\CMakeFiles\generate.stamp
 if %errorlevel% neq 0 goto :cmEnd
 :cmEnd
 endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
@@ -225,7 +225,7 @@ if %errorlevel% neq 0 goto :VCEnd</Command>
       <LinkObjects Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</LinkObjects>
       <Message Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Building Custom Rule C:/src/latino/src/linenoise/CMakeLists.txt</Message>
       <Command Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">setlocal
-C:\CMake\bin\cmake.exe -HC:/src/latino -BC:/src/latino/visualstudio --check-stamp-file C:\src\latino\visualstudio\src\linenoise\CMakeFiles\generate.stamp
+C:\bin\CMake\bin\cmake.exe -HC:/src/latino -BC:/src/latino/visualstudio --check-stamp-file C:\src\latino\visualstudio\src\linenoise\CMakeFiles\generate.stamp
 if %errorlevel% neq 0 goto :cmEnd
 :cmEnd
 endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
@@ -238,7 +238,7 @@ if %errorlevel% neq 0 goto :VCEnd</Command>
       <LinkObjects Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">false</LinkObjects>
       <Message Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|Win32'">Building Custom Rule C:/src/latino/src/linenoise/CMakeLists.txt</Message>
       <Command Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|Win32'">setlocal
-C:\CMake\bin\cmake.exe -HC:/src/latino -BC:/src/latino/visualstudio --check-stamp-file C:\src\latino\visualstudio\src\linenoise\CMakeFiles\generate.stamp
+C:\bin\CMake\bin\cmake.exe -HC:/src/latino -BC:/src/latino/visualstudio --check-stamp-file C:\src\latino\visualstudio\src\linenoise\CMakeFiles\generate.stamp
 if %errorlevel% neq 0 goto :cmEnd
 :cmEnd
 endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
@@ -251,7 +251,7 @@ if %errorlevel% neq 0 goto :VCEnd</Command>
       <LinkObjects Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|Win32'">false</LinkObjects>
       <Message Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|Win32'">Building Custom Rule C:/src/latino/src/linenoise/CMakeLists.txt</Message>
       <Command Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|Win32'">setlocal
-C:\CMake\bin\cmake.exe -HC:/src/latino -BC:/src/latino/visualstudio --check-stamp-file C:\src\latino\visualstudio\src\linenoise\CMakeFiles\generate.stamp
+C:\bin\CMake\bin\cmake.exe -HC:/src/latino -BC:/src/latino/visualstudio --check-stamp-file C:\src\latino\visualstudio\src\linenoise\CMakeFiles\generate.stamp
 if %errorlevel% neq 0 goto :cmEnd
 :cmEnd
 endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone

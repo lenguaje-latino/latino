@@ -79,7 +79,7 @@ cd C:\src\latino\visualstudio
 if %errorlevel% neq 0 goto :cmEnd
 C:
 if %errorlevel% neq 0 goto :cmEnd
-C:\CMake\bin\cpack.exe -C $(Configuration) --config ./CPackConfig.cmake
+C:\bin\CMake\bin\cpack.exe -C $(Configuration) --config ./CPackConfig.cmake
 if %errorlevel% neq 0 goto :cmEnd
 :cmEnd
 endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
@@ -105,7 +105,7 @@ cd C:\src\latino\visualstudio
 if %errorlevel% neq 0 goto :cmEnd
 C:
 if %errorlevel% neq 0 goto :cmEnd
-C:\CMake\bin\cpack.exe -C $(Configuration) --config ./CPackConfig.cmake
+C:\bin\CMake\bin\cpack.exe -C $(Configuration) --config ./CPackConfig.cmake
 if %errorlevel% neq 0 goto :cmEnd
 :cmEnd
 endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
@@ -131,7 +131,7 @@ cd C:\src\latino\visualstudio
 if %errorlevel% neq 0 goto :cmEnd
 C:
 if %errorlevel% neq 0 goto :cmEnd
-C:\CMake\bin\cpack.exe -C $(Configuration) --config ./CPackConfig.cmake
+C:\bin\CMake\bin\cpack.exe -C $(Configuration) --config ./CPackConfig.cmake
 if %errorlevel% neq 0 goto :cmEnd
 :cmEnd
 endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
@@ -157,7 +157,7 @@ cd C:\src\latino\visualstudio
 if %errorlevel% neq 0 goto :cmEnd
 C:
 if %errorlevel% neq 0 goto :cmEnd
-C:\CMake\bin\cpack.exe -C $(Configuration) --config ./CPackConfig.cmake
+C:\bin\CMake\bin\cpack.exe -C $(Configuration) --config ./CPackConfig.cmake
 if %errorlevel% neq 0 goto :cmEnd
 :cmEnd
 endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
@@ -224,6 +224,9 @@ if %errorlevel% neq 0 goto :VCEnd</Command>
     </CustomBuild>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="C:/src/latino/visualstudio/ZERO_CHECK.vcxproj">
+      <Project>5D4D3EC1-3B81-3E09-8F64-EC0419A6E928</Project>
+    </ProjectReference>
     <ProjectReference Include="C:/src/latino/visualstudio/ALL_BUILD.vcxproj">
       <Project>6F9B27EA-4811-3E3D-941D-4621E63083A4</Project>
     </ProjectReference>

@@ -46,14 +46,14 @@ typedef struct hash_map
   *
   *\return hash_map*: Apuntador a la tabla creada
   */
-hash_map* make_hash_map();
+hash_map* __dic_nuevo();
 
 /**\brief Crea un hash de una cadena
   *
   *\param key: Apuntador a cadena
   *\return int: Numero hash creado para la cadena
   */
-int hash(char* key);
+int __dic_hash(char* key);
 
 /**\brief Obtiene un elemento de la tabla hash
   *
@@ -61,7 +61,7 @@ int hash(char* key);
   *\param key: Llave buscada
   *\return void*: Apuntador al objeto buscado
   */
-void* get_hash(hash_map* m, char* key);
+void* __dic_obtener(hash_map* m, char* key);
 
 /**\brief Guarda un elemento en la tabla buscada
   *
@@ -69,11 +69,11 @@ void* get_hash(hash_map* m, char* key);
   *\param key: Llave
   *\param val: Valor
   */
-void set_hash(hash_map* m, char* key, void* val);
+void __dic_asignar(hash_map* m, char* key, void* val);
 
 /**\brief Copia una tabla hash con todos sus elementos
   *\param m: Apuntador a tabla hash
   */
-hash_map* copy_hash(hash_map* m);
+hash_map* __dic_clonar(hash_map* m);
 
 #endif /* !_LIB_DICT_H_ */

@@ -103,7 +103,7 @@ int yylex (YYSTYPE * yylval_param,YYLTYPE * yylloc_param ,yyscan_t yyscanner);
 # define YYERROR_VERBOSE 0
 #endif
 
-/* In a future release of Bison, this section will be replaced
+/* In a future release of Bison, this section will be __str_reemplazard
    by #include "parse.h".  */
 #ifndef YY_YY_PARSE_H_INCLUDED
 # define YY_YY_PARSE_H_INCLUDED
@@ -152,8 +152,8 @@ extern int yydebug;
     OP_OR = 287,
     OP_INCR = 288,
     OP_DECR = 289,
-    OP_CONCAT = 290,
-    OP_CONCAT_IGUAL = 291
+    OP___str_concatenar = 290,
+    OP___str_concatenar_IGUAL = 291
   };
 #endif
 /* Tokens.  */
@@ -189,8 +189,8 @@ extern int yydebug;
 #define OP_OR 287
 #define OP_INCR 288
 #define OP_DECR 289
-#define OP_CONCAT 290
-#define OP_CONCAT_IGUAL 291
+#define OP___str_concatenar 290
+#define OP___str_concatenar_IGUAL 291
 
 /* Value type.  */
 
@@ -543,13 +543,13 @@ static const char *const yytname[] =
   "KELSE", "KWHILE", "KDO", "KBREAK", "KCONTINUE", "KWHEN", "KFUNCTION",
   "KFROM", "KBOOL", "KRETURN", "KINCLUDE", "OP_GT", "OP_LT", "OP_GE",
   "OP_LE", "OP_EQ", "OP_NEQ", "OP_AND", "OP_OR", "OP_INCR", "OP_DECR",
-  "OP_CONCAT", "OP_CONCAT_IGUAL", "'='", "'+'", "'-'", "'*'", "'/'", "'%'",
+  "OP___str_concatenar", "OP___str_concatenar_IGUAL", "'='", "'+'", "'-'", "'*'", "'/'", "'%'",
   "'!'", "'?'", "':'", "'('", "')'", "'['", "']'", "'{'", "'}'", "';'",
   "','", "$accept", "primary_expression", "constant_expression",
   "unary_expression", "multiplicative_expression", "additive_expression",
   "relational_expression", "equality_expression", "logical_not_expression",
   "logical_and_expression", "logical_or_expression", "ternary_expression",
-  "concat_expression", "program", "statement_list", "statement",
+  "__str_concatenar_expression", "program", "statement_list", "statement",
   "include_declaration", "declaration", "selection_statement",
   "iteration_statement", "jump_statement", "function_definition",
   "expression", "function_call", "argument_expression_list",

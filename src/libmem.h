@@ -38,7 +38,7 @@ THE SOFTWARE.
   * \param size: Tamanio de memoria solicitado
   *
   */
-void* lat_asignar_memoria(size_t size);
+void* __memoria_asignar(size_t size);
 
 /** Reasigna memoria dinamicamente (realloc)
   *
@@ -46,13 +46,13 @@ void* lat_asignar_memoria(size_t size);
   * \param size: Tamanio nuevo de memoria solicitado
   *
   */
-void* lat_reasignar_memoria(void* ptr, size_t size);
+void* __memoria_reasignar(void* ptr, size_t size);
 
 /** Libera la memoria (free)
   *
   * \param ptr: Apuntador a la memoria a liberar
   *
   */
-void lat_liberar_memoria(void* ptr);
+void __memoria_liberar(void* ptr);
 
 #endif /* !_LIBMEM_H_ */

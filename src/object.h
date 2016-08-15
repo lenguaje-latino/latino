@@ -90,6 +90,7 @@ typedef struct lat_objeto
     size_t data_size;   /**< Tamanio de la informacion */
     bool es_constante;   /**< Valida si es una constante */
     int num_declared;   /**< Numero de veces declarado */
+	//int num_param;		/**<Numero de parametros de una funcion definida por el usuario */
     lat_datos_objeto data;   /**< Informacion del objeto */
 }lat_objeto;
 

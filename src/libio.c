@@ -29,7 +29,7 @@ THE SOFTWARE.
 #include "vm.h"
 #include "latino.h"
 
-bool legible(const char *archivo)
+bool __io_es_legible(const char *archivo)
 {
     FILE *f = fopen(archivo, "r");
     if(f == NULL)
@@ -58,7 +58,7 @@ void lat_leer(lat_vm *vm)
     }
     else
     {
-        vm->registros[255] = lat_cadena_nueva(vm, parse_string(str, strlen(str)));
+        vm->registros[255] = lat_cadena_nueva(vm, __str_analizar(str, strlen(str)));
     }
 }
 void lat_leer_archivo(lat_vm *vm)

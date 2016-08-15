@@ -148,7 +148,7 @@ enum {
     SPECIAL_DELETE = -24,
     SPECIAL_HOME = -25,
     SPECIAL_END = -26,
-    SPECIAL_INSERT = -27,
+    SPECIAL___str_insertar = -27,
     SPECIAL_PAGE_UP = -28,
     SPECIAL_PAGE_DOWN = -29
 };
@@ -576,7 +576,7 @@ static int check_special(int fd)
         if (c == '~') {
             switch (c2) {
                 case '2':
-                    return SPECIAL_INSERT;
+                    return SPECIAL___str_insertar;
                 case '3':
                     return SPECIAL_DELETE;
                 case '5':
@@ -723,7 +723,7 @@ static int fd_read(struct current *current)
                  case VK_DOWN:
                     return SPECIAL_DOWN;
                  case VK_INSERT:
-                    return SPECIAL_INSERT;
+                    return SPECIAL___str_insertar;
                  case VK_DELETE:
                     return SPECIAL_DELETE;
                  case VK_HOME:
@@ -953,12 +953,12 @@ static int remove_char(struct current *current, int pos)
 }
 
 /**
- * Insert 'ch' at position 'pos'
+ * __str_insertar 'ch' at position 'pos'
  *
  * Returns 1 if the line needs to be refreshed, 2 if not
- * and 0 if nothing was inserted (no room)
+ * and 0 if nothing was __str_insertared (no room)
  */
-static int insert_char(struct current *current, int pos, int ch)
+static int __str_insertar_char(struct current *current, int pos, int ch)
 {
     char buf[3];
     int n = utf8_getchars(buf, ch);
@@ -995,7 +995,7 @@ static int insert_char(struct current *current, int pos, int ch)
 /**
  * Captures up to 'n' characters starting at 'pos' for the cut buffer.
  *
- * This replaces any existing characters in the cut buffer.
+ * This __str_reemplazars any existing characters in the cut buffer.
  */
 static void capture_chars(struct current *current, int pos, int n)
 {
@@ -1031,25 +1031,25 @@ static int remove_chars(struct current *current, int pos, int n)
     return removed;
 }
 /**
- * Inserts the characters (string) 'chars' at the cursor position 'pos'.
+ * __str_insertars the characters (string) 'chars' at the cursor position 'pos'.
  *
- * Returns 0 if no chars were inserted or non-zero otherwise.
+ * Returns 0 if no chars were __str_insertared or non-zero otherwise.
  */
-static int insert_chars(struct current *current, int pos, const char *chars)
+static int __str_insertar_chars(struct current *current, int pos, const char *chars)
 {
-    int inserted = 0;
+    int __str_insertared = 0;
 
     while (*chars) {
         int ch;
         int n = utf8_tounicode(chars, &ch);
-        if (insert_char(current, pos, ch) == 0) {
+        if (__str_insertar_char(current, pos, ch) == 0) {
             break;
         }
-        inserted++;
+        __str_insertared++;
         pos++;
         chars += n;
     }
-    return inserted;
+    return __str_insertared;
 }
 
 #ifndef NO_COMPLETION
@@ -1200,9 +1200,9 @@ process_char:
                 refreshLine(current->prompt, current);
             }
             break;
-        case SPECIAL_INSERT:
+        case SPECIAL___str_insertar:
             /* Ignore. Expansion Hook.
-             * Future possibility: Toggle Insert/Overwrite Modes
+             * Future possibility: Toggle __str_insertar/Overwrite Modes
              */
             break;
         case ctrl('W'):    /* ctrl-w, delete word at left. save deleted chars */
@@ -1330,23 +1330,23 @@ process_char:
                 int fixer = (current->pos == current->chars);
                 c = get_char(current, current->pos - fixer);
                 remove_char(current, current->pos - fixer);
-                insert_char(current, current->pos - 1, c);
+                __str_insertar_char(current, current->pos - 1, c);
                 refreshLine(current->prompt, current);
             }
             break;
         case ctrl('V'):    /* ctrl-v */
             if (has_room(current, 3)) {
-                /* Insert the ^V first */
-                if (insert_char(current, current->pos, c)) {
+                /* __str_insertar the ^V first */
+                if (__str_insertar_char(current, current->pos, c)) {
                     refreshLine(current->prompt, current);
-                    /* Now wait for the next char. Can insert anything except \0 */
+                    /* Now wait for the next char. Can __str_insertar anything except \0 */
                     c = fd_read(current);
 
                     /* Remove the ^V first */
                     remove_char(current, current->pos - 1);
                     if (c != -1) {
-                        /* Insert the actual char */
-                        insert_char(current, current->pos, c);
+                        /* __str_insertar the actual char */
+                        __str_insertar_char(current, current->pos, c);
                     }
                     refreshLine(current->prompt, current);
                 }
@@ -1417,8 +1417,8 @@ history_navigation:
                 refreshLine(current->prompt, current);
             }
             break;
-        case ctrl('Y'): /* Ctrl+y, insert saved chars at current position */
-            if (current->capture && insert_chars(current, current->pos, current->capture)) {
+        case ctrl('Y'): /* Ctrl+y, __str_insertar saved chars at current position */
+            if (current->capture && __str_insertar_chars(current, current->pos, current->capture)) {
                 refreshLine(current->prompt, current);
             }
             break;
@@ -1431,7 +1431,7 @@ history_navigation:
         default:
             /* Only tab is allowed without ^V */
             if (c == '\t' || c >= ' ') {
-                if (insert_char(current, current->pos, c) == 1) {
+                if (__str_insertar_char(current, current->pos, c) == 1) {
                     refreshLine(current->prompt, current);
                 }
             }
@@ -1502,7 +1502,7 @@ int linenoiseHistoryAdd(const char *line) {
         memset(history,0,(sizeof(char*)*history_max_len));
     }
 
-    /* do not insert duplicate lines into history */
+    /* do not __str_insertar duplicate lines into history */
     if (history_len > 0 && strcmp(line, history[history_len - 1]) == 0) {
         return 0;
     }

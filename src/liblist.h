@@ -40,7 +40,7 @@ typedef struct list_node
   *
   *\return list_node: Apuntador al primer nodo de la lista
   */
-list_node* lat_crear_lista();
+list_node* __lista_nuevo();
 
 /**\brief Busca un elemento en la lista
   *
@@ -48,21 +48,21 @@ list_node* lat_crear_lista();
   *\param data: Apuntador a objeto buscado
   *\return int: Retorna 1 si se encontro el objeto 0 en caso contrario
   */
-int find_list(list_node* l, void* data);
+int __lista_existe_dato(list_node* l, void* data);
 
-/**\brief Inserta un elemento en la lista
+/**\brief __str_insertara un elemento en la lista
   *
   *\param l: Apuntador a la lista
   *\param data: Apuntador a objeto
   */
-void insert_list(list_node* l, void* data);
+void __lista_agregar(list_node* l, void* data);
 
 /**\brief Devuelve la longitud de la lista
   *
   *\param l: Apuntador a la lista
   *\return int: La longitud de la lista
   */
-int length_list(list_node* l);
+int __lista_longitud(list_node* l);
 
 /** Agrega un elemento al final de la lista
   * \param vm: Maquina virtual de latino

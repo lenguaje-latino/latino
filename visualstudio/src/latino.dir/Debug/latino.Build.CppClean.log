@@ -1,4 +1,6 @@
 c:\src\latino\visualstudio\src\latino.dir\debug\vc120.pdb
+c:\src\latino\visualstudio\src\latino.dir\debug\libdict.obj
+c:\src\latino\visualstudio\src\latino.dir\debug\libnet.obj
 c:\src\latino\visualstudio\src\latino.dir\debug\linenoise.obj
 c:\src\latino\visualstudio\src\latino.dir\debug\utf8.obj
 c:\src\latino\visualstudio\src\latino.dir\debug\libio.obj
@@ -10,7 +12,6 @@ c:\src\latino\visualstudio\src\latino.dir\debug\libmem.obj
 c:\src\latino\visualstudio\src\latino.dir\debug\libstring.obj
 c:\src\latino\visualstudio\src\latino.dir\debug\object.obj
 c:\src\latino\visualstudio\src\latino.dir\debug\vm.obj
-c:\src\latino\visualstudio\src\latino.dir\debug\utils.obj
 c:\src\latino\visualstudio\src\latino.dir\debug\ast.obj
 c:\src\latino\visualstudio\src\latino.dir\debug\latino.obj
 c:\src\latino\visualstudio\src\cmakefiles\generate.stamp
