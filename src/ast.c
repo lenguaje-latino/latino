@@ -310,8 +310,8 @@ ast *nodo_nuevo_desde(ast *dec, ast *cond, ast *inc, ast *stmts)
 {
     ast *a = (ast*)__memoria_asignar(sizeof(ast));
     a->tipo = NODO_BLOQUE;
-    a->l = nodo_nuevo_mientras(cond, nodo_nuevo(NODO_BLOQUE, inc, stmts));
-    a->r = dec;
+    a->l = dec;
+    a->r = nodo_nuevo_mientras(cond, nodo_nuevo(NODO_BLOQUE, stmts, inc));
     a->valor = NULL;
     return a;
 }
@@ -412,13 +412,13 @@ static int nodo_analizar(lat_vm *vm, ast *node, lat_bytecode *bcode, int i)
     break;
     case NODO_BLOQUE:
     {
-        if (node->r)
-        {
-            pn(vm, node->r);
-        }
         if (node->l)
         {
             pn(vm, node->l);
+        }
+        if (node->r)
+        {
+            pn(vm, node->r);
         }
     }
     break;
@@ -441,7 +441,7 @@ static int nodo_analizar(lat_vm *vm, ast *node, lat_bytecode *bcode, int i)
     {
         pn(vm, node->l);
         dbc(OP_PUSH, 255, 0, NULL);
-#if DEPURAR_AST		
+#if DEPURAR_AST
         printf("PUSH R255 R0\n");
 #endif
 		/*Nombre de la variable o funcion*/
@@ -546,7 +546,7 @@ static int nodo_analizar(lat_vm *vm, ast *node, lat_bytecode *bcode, int i)
 #endif
         pn(vm, nIf->th);
         bcode[temp[0]] = lat_bc(OP_JMPIF, i, 2, NULL);
-#if DEPURAR_AST                
+#if DEPURAR_AST
         printf("JMPIF R%i R2\n", i);
 #endif
         if (nIf->el)

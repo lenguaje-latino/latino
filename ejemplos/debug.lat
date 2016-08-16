@@ -9,5 +9,5 @@ funcion sumar(a,b)
   retorno a+b
 fin
 
-s = sumar(1) //parametro insuficientes
+s = sumar(1) //numero de argumentos insuficientes
 escribir(s)
