@@ -94,7 +94,7 @@ cad = "esto es una 'cadena'"
 escribir("comparador de negacion !")
 escribir("no falso: " . !falso)
 #escribir(" no falso: " . !falso)
-escribir(" no verdadero: " . !verdadero)
+escribir("no verdadero: " . !verdadero)
 #comparador de IGUAL_LOGICO ==
 escribir("comparador de IGUAL_LOGICO ==")
 escribir(l . " == falso: " . l == falso)
@@ -182,6 +182,17 @@ mientras i < 10
     i++     #esto es lo mismo que i = i + 1
 fin
 
+escribir("tablas de multiplicar")
+i=1
+mientras i<=10
+  j=1
+  mientras j<=10
+    escribir(i . " X " . j . " = " . i*j)
+    j++
+  fin
+  i++
+fin
+
 ####################################################################
 #test coverage para "hacer"
 ####################################################################
@@ -194,11 +205,14 @@ cuando i < 10
 ####################################################################
 #test coverage para "desde" y "decremento"
 ####################################################################
-escribir("10 a 1:")
-desde(i=10; i>0; i--)
+escribir("del 1 al 10:")
+desde(i=1; i<=10; i++)
     escribir(i)
 fin
-
+escribir("escribir de dos en dos:")
+desde(i=10; i>0; i=i-2)
+    escribir(i)
+fin
 
 ####################################################################
 #test coverage para "funciones"
@@ -223,13 +237,15 @@ funcion min(a,b)
     fin
 fin
 
-imprimir(promedio(3, 5)) #4
-imprimir(max(3, 5)) #5
-imprimir(min(3, 5)) #3
+escribir("test de funciones promedio, max y min")
+escribir(promedio(3, 5)) #4
+escribir(max(3, 5)) #5
+escribir(min(3, 5)) #3
 
 ####################################################################
 #test coverage para "escribir_archivo"
 ####################################################################
+escribir('test coverage para "escribir_archivo"')
 s = "funcion sumatoria(a, b)
   retorno (a + b)
 fin"

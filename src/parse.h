@@ -1,8 +1,8 @@
-/* A Bison parser, made by GNU Bison 3.0.2.  */
+/* A Bison parser, made by GNU Bison 3.0.4.  */
 
 /* Bison interface for Yacc-like parsers in C
 
-   Copyright (C) 1984, 1989-1990, 2000-2013 Free Software Foundation, Inc.
+   Copyright (C) 1984, 1989-1990, 2000-2015 Free Software Foundation, Inc.
 
    This program is free software: you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -77,8 +77,8 @@ extern int yydebug;
     OP_OR = 287,
     OP_INCR = 288,
     OP_DECR = 289,
-    OP___str_concatenar = 290,
-    OP___str_concatenar_IGUAL = 291
+    OP_CONCAT = 290,
+    OP_CONCAT_IGUAL = 291
   };
 #endif
 /* Tokens.  */
@@ -114,8 +114,8 @@ extern int yydebug;
 #define OP_OR 287
 #define OP_INCR 288
 #define OP_DECR 289
-#define OP___str_concatenar 290
-#define OP___str_concatenar_IGUAL 291
+#define OP_CONCAT 290
+#define OP_CONCAT_IGUAL 291
 
 /* Value type.  */
 

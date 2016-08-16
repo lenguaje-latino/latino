@@ -1,0 +1,3447 @@
+Terminales no usados en la gramática
+
+   TFUNC
+   KBREAK
+   KCONTINUE
+   KBOOL
+
+
+Gramática
+
+    0 $accept: program $end
+
+    1 constant_expression: TINT
+    2                    | TNUMBER
+    3                    | TLIT
+    4                    | TSTRING
+
+    5 primary_expression: TIDENTIFIER
+    6                   | TCONSTANT
+    7                   | TTRUE
+    8                   | TFALSE
+
+    9 unary_expression: '-' expression
+   10                 | '+' expression
+
+   11 multiplicative_expression: expression '*' expression
+   12                          | expression '/' expression
+   13                          | expression '%' expression
+
+   14 additive_expression: expression '-' expression
+   15                    | expression '+' expression
+
+   16 relational_expression: expression OP_GT expression
+   17                      | expression OP_LT expression
+   18                      | expression OP_GE expression
+   19                      | expression OP_LE expression
+
+   20 equality_expression: expression OP_NEQ expression
+   21                    | expression OP_EQ expression
+
+   22 logical_not_expression: '!' expression
+
+   23 logical_and_expression: expression OP_AND expression
+
+   24 logical_or_expression: expression OP_OR expression
+
+   25 ternary_expression: expression '?' expression ':' expression
+
+   26 concat_expression: expression OP_CONCAT expression
+
+   27 expression: '(' expression ')'
+   28           | constant_expression
+   29           | primary_expression
+   30           | unary_expression
+   31           | multiplicative_expression
+   32           | additive_expression
+   33           | relational_expression
+   34           | equality_expression
+   35           | logical_not_expression
+   36           | logical_and_expression
+   37           | logical_or_expression
+   38           | concat_expression
+   39           | function_call
+   40           | list_new
+   41           | list_get_item
+   42           | dict_new
+
+   43 program: %empty
+   44        | statement_list
+
+   45 statement_list: statement statement_list
+   46               | statement
+   47               | error statement_list
+
+   48 statement: include_declaration
+   49          | declaration
+   50          | selection_statement
+   51          | iteration_statement
+   52          | jump_statement
+   53          | function_definition
+   54          | function_call
+
+   55 incdec_statement: TIDENTIFIER OP_INCR
+   56                 | TIDENTIFIER OP_DECR
+
+   57 include_declaration: KINCLUDE '(' TSTRING ')'
+   58                    | KINCLUDE '(' TLIT ')'
+
+   59 declaration: TIDENTIFIER '=' expression
+   60            | TIDENTIFIER '=' ternary_expression
+   61            | TCONSTANT '=' expression
+   62            | TIDENTIFIER OP_CONCAT_IGUAL expression
+   63            | incdec_statement
+
+   64 selection_statement: KIF expression statement_list KEND
+   65                    | KIF expression statement_list KELSE statement_list KEND
+
+   66 iteration_statement: KWHILE expression statement_list KEND
+   67                    | KDO statement_list KWHEN expression
+   68                    | KFROM '(' declaration ';' expression ';' declaration ')' statement_list KEND
+
+   69 jump_statement: KRETURN expression
+
+   70 function_definition: KFUNCTION TIDENTIFIER '(' identifier_list ')' statement_list KEND
+
+   71 function_call: TIDENTIFIER '(' argument_expression_list ')'
+
+   72 argument_expression_list: %empty
+   73                         | expression ',' argument_expression_list
+   74                         | expression
+
+   75 identifier_list: %empty
+   76                | TIDENTIFIER
+   77                | identifier_list ',' TIDENTIFIER
+
+   78 list_new: '[' list_items ']'
+
+   79 list_items: %empty
+   80           | expression ',' list_items
+   81           | expression
+
+   82 dict_new: '{' dict_items '}'
+
+   83 dict_items: dict_item ',' dict_items
+   84           | dict_item
+
+   85 dict_item: %empty
+   86          | key ':' expression
+
+   87 key: TLIT
+   88    | TSTRING
+
+   89 list_get_item: TIDENTIFIER '[' TSTRING ']'
+   90              | TIDENTIFIER '[' TLIT ']'
+   91              | TIDENTIFIER '[' TINT ']'
+   92              | TIDENTIFIER '[' TIDENTIFIER ']'
+
+
+Terminales con las reglas donde aparecen
+
+$end (0) 0
+'!' (33) 22
+'%' (37) 13
+'(' (40) 27 57 58 68 70 71
+')' (41) 27 57 58 68 70 71
+'*' (42) 11
+'+' (43) 10 15
+',' (44) 73 77 80 83
+'-' (45) 9 14
+'/' (47) 12
+':' (58) 25 86
+';' (59) 68
+'=' (61) 59 60 61
+'?' (63) 25
+'[' (91) 78 89 90 91 92
+']' (93) 78 89 90 91 92
+'{' (123) 82
+'}' (125) 82
+error (256) 47
+TTRUE (258) 7
+TFALSE (259) 8
+TINT (260) 1 91
+TLIT (261) 3 58 87 90
+TNUMBER (262) 2
+TSTRING (263) 4 57 88 89
+TIDENTIFIER (264) 5 55 56 59 60 62 70 71 76 77 89 90 91 92
+TCONSTANT (265) 6 61
+TFUNC (266)
+KIF (267) 64 65
+KEND (268) 64 65 66 68 70
+KELSE (269) 65
+KWHILE (270) 66
+KDO (271) 67
+KBREAK (272)
+KCONTINUE (273)
+KWHEN (274) 67
+KFUNCTION (275) 70
+KFROM (276) 68
+KBOOL (277)
+KRETURN (278) 69
+KINCLUDE (279) 57 58
+OP_GT (280) 16
+OP_LT (281) 17
+OP_GE (282) 18
+OP_LE (283) 19
+OP_EQ (284) 21
+OP_NEQ (285) 20
+OP_AND (286) 23
+OP_OR (287) 24
+OP_INCR (288) 55
+OP_DECR (289) 56
+OP_CONCAT (290) 26
+OP_CONCAT_IGUAL (291) 62
+
+
+No terminales con las reglas donde aparecen
+
+$accept (54)
+    en la izquierda: 0
+constant_expression (55)
+    en la izquierda: 1 2 3 4, en la derecha: 28
+primary_expression (56)
+    en la izquierda: 5 6 7 8, en la derecha: 29
+unary_expression (57)
+    en la izquierda: 9 10, en la derecha: 30
+multiplicative_expression (58)
+    en la izquierda: 11 12 13, en la derecha: 31
+additive_expression (59)
+    en la izquierda: 14 15, en la derecha: 32
+relational_expression (60)
+    en la izquierda: 16 17 18 19, en la derecha: 33
+equality_expression (61)
+    en la izquierda: 20 21, en la derecha: 34
+logical_not_expression (62)
+    en la izquierda: 22, en la derecha: 35
+logical_and_expression (63)
+    en la izquierda: 23, en la derecha: 36
+logical_or_expression (64)
+    en la izquierda: 24, en la derecha: 37
+ternary_expression (65)
+    en la izquierda: 25, en la derecha: 60
+concat_expression (66)
+    en la izquierda: 26, en la derecha: 38
+expression (67)
+    en la izquierda: 27 28 29 30 31 32 33 34 35 36 37 38 39 40 41 42,
+    en la derecha: 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25
+    26 27 59 61 62 64 65 66 67 68 69 73 74 80 81 86
+program (68)
+    en la izquierda: 43 44, en la derecha: 0
+statement_list (69)
+    en la izquierda: 45 46 47, en la derecha: 44 45 47 64 65 66 67
+    68 70
+statement (70)
+    en la izquierda: 48 49 50 51 52 53 54, en la derecha: 45 46
+incdec_statement (71)
+    en la izquierda: 55 56, en la derecha: 63
+include_declaration (72)
+    en la izquierda: 57 58, en la derecha: 48
+declaration (73)
+    en la izquierda: 59 60 61 62 63, en la derecha: 49 68
+selection_statement (74)
+    en la izquierda: 64 65, en la derecha: 50
+iteration_statement (75)
+    en la izquierda: 66 67 68, en la derecha: 51
+jump_statement (76)
+    en la izquierda: 69, en la derecha: 52
+function_definition (77)
+    en la izquierda: 70, en la derecha: 53
+function_call (78)
+    en la izquierda: 71, en la derecha: 39 54
+argument_expression_list (79)
+    en la izquierda: 72 73 74, en la derecha: 71 73
+identifier_list (80)
+    en la izquierda: 75 76 77, en la derecha: 70 77
+list_new (81)
+    en la izquierda: 78, en la derecha: 40
+list_items (82)
+    en la izquierda: 79 80 81, en la derecha: 78 80
+dict_new (83)
+    en la izquierda: 82, en la derecha: 42
+dict_items (84)
+    en la izquierda: 83 84, en la derecha: 82 83
+dict_item (85)
+    en la izquierda: 85 86, en la derecha: 83 84
+key (86)
+    en la izquierda: 87 88, en la derecha: 86
+list_get_item (87)
+    en la izquierda: 89 90 91 92, en la derecha: 41
+
+
+Estado 0
+
+    0 $accept: . program $end
+
+    error        desplazar e ir al estado 1
+    TIDENTIFIER  desplazar e ir al estado 2
+    TCONSTANT    desplazar e ir al estado 3
+    KIF          desplazar e ir al estado 4
+    KWHILE       desplazar e ir al estado 5
+    KDO          desplazar e ir al estado 6
+    KFUNCTION    desplazar e ir al estado 7
+    KFROM        desplazar e ir al estado 8
+    KRETURN      desplazar e ir al estado 9
+    KINCLUDE     desplazar e ir al estado 10
+
+    $end  reduce usando la regla 43 (program)
+
+    program              ir al estado 11
+    statement_list       ir al estado 12
+    statement            ir al estado 13
+    incdec_statement     ir al estado 14
+    include_declaration  ir al estado 15
+    declaration          ir al estado 16
+    selection_statement  ir al estado 17
+    iteration_statement  ir al estado 18
+    jump_statement       ir al estado 19
+    function_definition  ir al estado 20
+    function_call        ir al estado 21
+
+
+Estado 1
+
+   47 statement_list: error . statement_list
+
+    error        desplazar e ir al estado 1
+    TIDENTIFIER  desplazar e ir al estado 2
+    TCONSTANT    desplazar e ir al estado 3
+    KIF          desplazar e ir al estado 4
+    KWHILE       desplazar e ir al estado 5
+    KDO          desplazar e ir al estado 6
+    KFUNCTION    desplazar e ir al estado 7
+    KFROM        desplazar e ir al estado 8
+    KRETURN      desplazar e ir al estado 9
+    KINCLUDE     desplazar e ir al estado 10
+
+    statement_list       ir al estado 22
+    statement            ir al estado 13
+    incdec_statement     ir al estado 14
+    include_declaration  ir al estado 15
+    declaration          ir al estado 16
+    selection_statement  ir al estado 17
+    iteration_statement  ir al estado 18
+    jump_statement       ir al estado 19
+    function_definition  ir al estado 20
+    function_call        ir al estado 21
+
+
+Estado 2
+
+   55 incdec_statement: TIDENTIFIER . OP_INCR
+   56                 | TIDENTIFIER . OP_DECR
+   59 declaration: TIDENTIFIER . '=' expression
+   60            | TIDENTIFIER . '=' ternary_expression
+   62            | TIDENTIFIER . OP_CONCAT_IGUAL expression
+   71 function_call: TIDENTIFIER . '(' argument_expression_list ')'
+
+    OP_INCR          desplazar e ir al estado 23
+    OP_DECR          desplazar e ir al estado 24
+    OP_CONCAT_IGUAL  desplazar e ir al estado 25
+    '='              desplazar e ir al estado 26
+    '('              desplazar e ir al estado 27
+
+
+Estado 3
+
+   61 declaration: TCONSTANT . '=' expression
+
+    '='  desplazar e ir al estado 28
+
+
+Estado 4
+
+   64 selection_statement: KIF . expression statement_list KEND
+   65                    | KIF . expression statement_list KELSE statement_list KEND
+
+    TTRUE        desplazar e ir al estado 29
+    TFALSE       desplazar e ir al estado 30
+    TINT         desplazar e ir al estado 31
+    TLIT         desplazar e ir al estado 32
+    TNUMBER      desplazar e ir al estado 33
+    TSTRING      desplazar e ir al estado 34
+    TIDENTIFIER  desplazar e ir al estado 35
+    TCONSTANT    desplazar e ir al estado 36
+    '+'          desplazar e ir al estado 37
+    '-'          desplazar e ir al estado 38
+    '!'          desplazar e ir al estado 39
+    '('          desplazar e ir al estado 40
+    '['          desplazar e ir al estado 41
+    '{'          desplazar e ir al estado 42
+
+    constant_expression        ir al estado 43
+    primary_expression         ir al estado 44
+    unary_expression           ir al estado 45
+    multiplicative_expression  ir al estado 46
+    additive_expression        ir al estado 47
+    relational_expression      ir al estado 48
+    equality_expression        ir al estado 49
+    logical_not_expression     ir al estado 50
+    logical_and_expression     ir al estado 51
+    logical_or_expression      ir al estado 52
+    concat_expression          ir al estado 53
+    expression                 ir al estado 54
+    function_call              ir al estado 55
+    list_new                   ir al estado 56
+    dict_new                   ir al estado 57
+    list_get_item              ir al estado 58
+
+
+Estado 5
+
+   66 iteration_statement: KWHILE . expression statement_list KEND
+
+    TTRUE        desplazar e ir al estado 29
+    TFALSE       desplazar e ir al estado 30
+    TINT         desplazar e ir al estado 31
+    TLIT         desplazar e ir al estado 32
+    TNUMBER      desplazar e ir al estado 33
+    TSTRING      desplazar e ir al estado 34
+    TIDENTIFIER  desplazar e ir al estado 35
+    TCONSTANT    desplazar e ir al estado 36
+    '+'          desplazar e ir al estado 37
+    '-'          desplazar e ir al estado 38
+    '!'          desplazar e ir al estado 39
+    '('          desplazar e ir al estado 40
+    '['          desplazar e ir al estado 41
+    '{'          desplazar e ir al estado 42
+
+    constant_expression        ir al estado 43
+    primary_expression         ir al estado 44
+    unary_expression           ir al estado 45
+    multiplicative_expression  ir al estado 46
+    additive_expression        ir al estado 47
+    relational_expression      ir al estado 48
+    equality_expression        ir al estado 49
+    logical_not_expression     ir al estado 50
+    logical_and_expression     ir al estado 51
+    logical_or_expression      ir al estado 52
+    concat_expression          ir al estado 53
+    expression                 ir al estado 59
+    function_call              ir al estado 55
+    list_new                   ir al estado 56
+    dict_new                   ir al estado 57
+    list_get_item              ir al estado 58
+
+
+Estado 6
+
+   67 iteration_statement: KDO . statement_list KWHEN expression
+
+    error        desplazar e ir al estado 1
+    TIDENTIFIER  desplazar e ir al estado 2
+    TCONSTANT    desplazar e ir al estado 3
+    KIF          desplazar e ir al estado 4
+    KWHILE       desplazar e ir al estado 5
+    KDO          desplazar e ir al estado 6
+    KFUNCTION    desplazar e ir al estado 7
+    KFROM        desplazar e ir al estado 8
+    KRETURN      desplazar e ir al estado 9
+    KINCLUDE     desplazar e ir al estado 10
+
+    statement_list       ir al estado 60
+    statement            ir al estado 13
+    incdec_statement     ir al estado 14
+    include_declaration  ir al estado 15
+    declaration          ir al estado 16
+    selection_statement  ir al estado 17
+    iteration_statement  ir al estado 18
+    jump_statement       ir al estado 19
+    function_definition  ir al estado 20
+    function_call        ir al estado 21
+
+
+Estado 7
+
+   70 function_definition: KFUNCTION . TIDENTIFIER '(' identifier_list ')' statement_list KEND
+
+    TIDENTIFIER  desplazar e ir al estado 61
+
+
+Estado 8
+
+   68 iteration_statement: KFROM . '(' declaration ';' expression ';' declaration ')' statement_list KEND
+
+    '('  desplazar e ir al estado 62
+
+
+Estado 9
+
+   69 jump_statement: KRETURN . expression
+
+    TTRUE        desplazar e ir al estado 29
+    TFALSE       desplazar e ir al estado 30
+    TINT         desplazar e ir al estado 31
+    TLIT         desplazar e ir al estado 32
+    TNUMBER      desplazar e ir al estado 33
+    TSTRING      desplazar e ir al estado 34
+    TIDENTIFIER  desplazar e ir al estado 35
+    TCONSTANT    desplazar e ir al estado 36
+    '+'          desplazar e ir al estado 37
+    '-'          desplazar e ir al estado 38
+    '!'          desplazar e ir al estado 39
+    '('          desplazar e ir al estado 40
+    '['          desplazar e ir al estado 41
+    '{'          desplazar e ir al estado 42
+
+    constant_expression        ir al estado 43
+    primary_expression         ir al estado 44
+    unary_expression           ir al estado 45
+    multiplicative_expression  ir al estado 46
+    additive_expression        ir al estado 47
+    relational_expression      ir al estado 48
+    equality_expression        ir al estado 49
+    logical_not_expression     ir al estado 50
+    logical_and_expression     ir al estado 51
+    logical_or_expression      ir al estado 52
+    concat_expression          ir al estado 53
+    expression                 ir al estado 63
+    function_call              ir al estado 55
+    list_new                   ir al estado 56
+    dict_new                   ir al estado 57
+    list_get_item              ir al estado 58
+
+
+Estado 10
+
+   57 include_declaration: KINCLUDE . '(' TSTRING ')'
+   58                    | KINCLUDE . '(' TLIT ')'
+
+    '('  desplazar e ir al estado 64
+
+
+Estado 11
+
+    0 $accept: program . $end
+
+    $end  desplazar e ir al estado 65
+
+
+Estado 12
+
+   44 program: statement_list .
+
+    $default  reduce usando la regla 44 (program)
+
+
+Estado 13
+
+   45 statement_list: statement . statement_list
+   46               | statement .
+
+    error        desplazar e ir al estado 1
+    TIDENTIFIER  desplazar e ir al estado 2
+    TCONSTANT    desplazar e ir al estado 3
+    KIF          desplazar e ir al estado 4
+    KWHILE       desplazar e ir al estado 5
+    KDO          desplazar e ir al estado 6
+    KFUNCTION    desplazar e ir al estado 7
+    KFROM        desplazar e ir al estado 8
+    KRETURN      desplazar e ir al estado 9
+    KINCLUDE     desplazar e ir al estado 10
+
+    $end   reduce usando la regla 46 (statement_list)
+    KEND   reduce usando la regla 46 (statement_list)
+    KELSE  reduce usando la regla 46 (statement_list)
+    KWHEN  reduce usando la regla 46 (statement_list)
+
+    statement_list       ir al estado 66
+    statement            ir al estado 13
+    incdec_statement     ir al estado 14
+    include_declaration  ir al estado 15
+    declaration          ir al estado 16
+    selection_statement  ir al estado 17
+    iteration_statement  ir al estado 18
+    jump_statement       ir al estado 19
+    function_definition  ir al estado 20
+    function_call        ir al estado 21
+
+
+Estado 14
+
+   63 declaration: incdec_statement .
+
+    $default  reduce usando la regla 63 (declaration)
+
+
+Estado 15
+
+   48 statement: include_declaration .
+
+    $default  reduce usando la regla 48 (statement)
+
+
+Estado 16
+
+   49 statement: declaration .
+
+    $default  reduce usando la regla 49 (statement)
+
+
+Estado 17
+
+   50 statement: selection_statement .
+
+    $default  reduce usando la regla 50 (statement)
+
+
+Estado 18
+
+   51 statement: iteration_statement .
+
+    $default  reduce usando la regla 51 (statement)
+
+
+Estado 19
+
+   52 statement: jump_statement .
+
+    $default  reduce usando la regla 52 (statement)
+
+
+Estado 20
+
+   53 statement: function_definition .
+
+    $default  reduce usando la regla 53 (statement)
+
+
+Estado 21
+
+   54 statement: function_call .
+
+    $default  reduce usando la regla 54 (statement)
+
+
+Estado 22
+
+   47 statement_list: error statement_list .
+
+    $default  reduce usando la regla 47 (statement_list)
+
+
+Estado 23
+
+   55 incdec_statement: TIDENTIFIER OP_INCR .
+
+    $default  reduce usando la regla 55 (incdec_statement)
+
+
+Estado 24
+
+   56 incdec_statement: TIDENTIFIER OP_DECR .
+
+    $default  reduce usando la regla 56 (incdec_statement)
+
+
+Estado 25
+
+   62 declaration: TIDENTIFIER OP_CONCAT_IGUAL . expression
+
+    TTRUE        desplazar e ir al estado 29
+    TFALSE       desplazar e ir al estado 30
+    TINT         desplazar e ir al estado 31
+    TLIT         desplazar e ir al estado 32
+    TNUMBER      desplazar e ir al estado 33
+    TSTRING      desplazar e ir al estado 34
+    TIDENTIFIER  desplazar e ir al estado 35
+    TCONSTANT    desplazar e ir al estado 36
+    '+'          desplazar e ir al estado 37
+    '-'          desplazar e ir al estado 38
+    '!'          desplazar e ir al estado 39
+    '('          desplazar e ir al estado 40
+    '['          desplazar e ir al estado 41
+    '{'          desplazar e ir al estado 42
+
+    constant_expression        ir al estado 43
+    primary_expression         ir al estado 44
+    unary_expression           ir al estado 45
+    multiplicative_expression  ir al estado 46
+    additive_expression        ir al estado 47
+    relational_expression      ir al estado 48
+    equality_expression        ir al estado 49
+    logical_not_expression     ir al estado 50
+    logical_and_expression     ir al estado 51
+    logical_or_expression      ir al estado 52
+    concat_expression          ir al estado 53
+    expression                 ir al estado 67
+    function_call              ir al estado 55
+    list_new                   ir al estado 56
+    dict_new                   ir al estado 57
+    list_get_item              ir al estado 58
+
+
+Estado 26
+
+   59 declaration: TIDENTIFIER '=' . expression
+   60            | TIDENTIFIER '=' . ternary_expression
+
+    TTRUE        desplazar e ir al estado 29
+    TFALSE       desplazar e ir al estado 30
+    TINT         desplazar e ir al estado 31
+    TLIT         desplazar e ir al estado 32
+    TNUMBER      desplazar e ir al estado 33
+    TSTRING      desplazar e ir al estado 34
+    TIDENTIFIER  desplazar e ir al estado 35
+    TCONSTANT    desplazar e ir al estado 36
+    '+'          desplazar e ir al estado 37
+    '-'          desplazar e ir al estado 38
+    '!'          desplazar e ir al estado 39
+    '('          desplazar e ir al estado 40
+    '['          desplazar e ir al estado 41
+    '{'          desplazar e ir al estado 42
+
+    constant_expression        ir al estado 43
+    primary_expression         ir al estado 44
+    unary_expression           ir al estado 45
+    multiplicative_expression  ir al estado 46
+    additive_expression        ir al estado 47
+    relational_expression      ir al estado 48
+    equality_expression        ir al estado 49
+    logical_not_expression     ir al estado 50
+    logical_and_expression     ir al estado 51
+    logical_or_expression      ir al estado 52
+    ternary_expression         ir al estado 68
+    concat_expression          ir al estado 53
+    expression                 ir al estado 69
+    function_call              ir al estado 55
+    list_new                   ir al estado 56
+    dict_new                   ir al estado 57
+    list_get_item              ir al estado 58
+
+
+Estado 27
+
+   71 function_call: TIDENTIFIER '(' . argument_expression_list ')'
+
+    TTRUE        desplazar e ir al estado 29
+    TFALSE       desplazar e ir al estado 30
+    TINT         desplazar e ir al estado 31
+    TLIT         desplazar e ir al estado 32
+    TNUMBER      desplazar e ir al estado 33
+    TSTRING      desplazar e ir al estado 34
+    TIDENTIFIER  desplazar e ir al estado 35
+    TCONSTANT    desplazar e ir al estado 36
+    '+'          desplazar e ir al estado 37
+    '-'          desplazar e ir al estado 38
+    '!'          desplazar e ir al estado 39
+    '('          desplazar e ir al estado 40
+    '['          desplazar e ir al estado 41
+    '{'          desplazar e ir al estado 42
+
+    $default  reduce usando la regla 72 (argument_expression_list)
+
+    constant_expression        ir al estado 43
+    primary_expression         ir al estado 44
+    unary_expression           ir al estado 45
+    multiplicative_expression  ir al estado 46
+    additive_expression        ir al estado 47
+    relational_expression      ir al estado 48
+    equality_expression        ir al estado 49
+    logical_not_expression     ir al estado 50
+    logical_and_expression     ir al estado 51
+    logical_or_expression      ir al estado 52
+    concat_expression          ir al estado 53
+    expression                 ir al estado 70
+    function_call              ir al estado 55
+    argument_expression_list   ir al estado 71
+    list_new                   ir al estado 56
+    dict_new                   ir al estado 57
+    list_get_item              ir al estado 58
+
+
+Estado 28
+
+   61 declaration: TCONSTANT '=' . expression
+
+    TTRUE        desplazar e ir al estado 29
+    TFALSE       desplazar e ir al estado 30
+    TINT         desplazar e ir al estado 31
+    TLIT         desplazar e ir al estado 32
+    TNUMBER      desplazar e ir al estado 33
+    TSTRING      desplazar e ir al estado 34
+    TIDENTIFIER  desplazar e ir al estado 35
+    TCONSTANT    desplazar e ir al estado 36
+    '+'          desplazar e ir al estado 37
+    '-'          desplazar e ir al estado 38
+    '!'          desplazar e ir al estado 39
+    '('          desplazar e ir al estado 40
+    '['          desplazar e ir al estado 41
+    '{'          desplazar e ir al estado 42
+
+    constant_expression        ir al estado 43
+    primary_expression         ir al estado 44
+    unary_expression           ir al estado 45
+    multiplicative_expression  ir al estado 46
+    additive_expression        ir al estado 47
+    relational_expression      ir al estado 48
+    equality_expression        ir al estado 49
+    logical_not_expression     ir al estado 50
+    logical_and_expression     ir al estado 51
+    logical_or_expression      ir al estado 52
+    concat_expression          ir al estado 53
+    expression                 ir al estado 72
+    function_call              ir al estado 55
+    list_new                   ir al estado 56
+    dict_new                   ir al estado 57
+    list_get_item              ir al estado 58
+
+
+Estado 29
+
+    7 primary_expression: TTRUE .
+
+    $default  reduce usando la regla 7 (primary_expression)
+
+
+Estado 30
+
+    8 primary_expression: TFALSE .
+
+    $default  reduce usando la regla 8 (primary_expression)
+
+
+Estado 31
+
+    1 constant_expression: TINT .
+
+    $default  reduce usando la regla 1 (constant_expression)
+
+
+Estado 32
+
+    3 constant_expression: TLIT .
+
+    $default  reduce usando la regla 3 (constant_expression)
+
+
+Estado 33
+
+    2 constant_expression: TNUMBER .
+
+    $default  reduce usando la regla 2 (constant_expression)
+
+
+Estado 34
+
+    4 constant_expression: TSTRING .
+
+    $default  reduce usando la regla 4 (constant_expression)
+
+
+Estado 35
+
+    5 primary_expression: TIDENTIFIER .
+   71 function_call: TIDENTIFIER . '(' argument_expression_list ')'
+   89 list_get_item: TIDENTIFIER . '[' TSTRING ']'
+   90              | TIDENTIFIER . '[' TLIT ']'
+   91              | TIDENTIFIER . '[' TINT ']'
+   92              | TIDENTIFIER . '[' TIDENTIFIER ']'
+
+    '('  desplazar e ir al estado 27
+    '['  desplazar e ir al estado 73
+
+    $default  reduce usando la regla 5 (primary_expression)
+
+
+Estado 36
+
+    6 primary_expression: TCONSTANT .
+
+    $default  reduce usando la regla 6 (primary_expression)
+
+
+Estado 37
+
+   10 unary_expression: '+' . expression
+
+    TTRUE        desplazar e ir al estado 29
+    TFALSE       desplazar e ir al estado 30
+    TINT         desplazar e ir al estado 31
+    TLIT         desplazar e ir al estado 32
+    TNUMBER      desplazar e ir al estado 33
+    TSTRING      desplazar e ir al estado 34
+    TIDENTIFIER  desplazar e ir al estado 35
+    TCONSTANT    desplazar e ir al estado 36
+    '+'          desplazar e ir al estado 37
+    '-'          desplazar e ir al estado 38
+    '!'          desplazar e ir al estado 39
+    '('          desplazar e ir al estado 40
+    '['          desplazar e ir al estado 41
+    '{'          desplazar e ir al estado 42
+
+    constant_expression        ir al estado 43
+    primary_expression         ir al estado 44
+    unary_expression           ir al estado 45
+    multiplicative_expression  ir al estado 46
+    additive_expression        ir al estado 47
+    relational_expression      ir al estado 48
+    equality_expression        ir al estado 49
+    logical_not_expression     ir al estado 50
+    logical_and_expression     ir al estado 51
+    logical_or_expression      ir al estado 52
+    concat_expression          ir al estado 53
+    expression                 ir al estado 74
+    function_call              ir al estado 55
+    list_new                   ir al estado 56
+    dict_new                   ir al estado 57
+    list_get_item              ir al estado 58
+
+
+Estado 38
+
+    9 unary_expression: '-' . expression
+
+    TTRUE        desplazar e ir al estado 29
+    TFALSE       desplazar e ir al estado 30
+    TINT         desplazar e ir al estado 31
+    TLIT         desplazar e ir al estado 32
+    TNUMBER      desplazar e ir al estado 33
+    TSTRING      desplazar e ir al estado 34
+    TIDENTIFIER  desplazar e ir al estado 35
+    TCONSTANT    desplazar e ir al estado 36
+    '+'          desplazar e ir al estado 37
+    '-'          desplazar e ir al estado 38
+    '!'          desplazar e ir al estado 39
+    '('          desplazar e ir al estado 40
+    '['          desplazar e ir al estado 41
+    '{'          desplazar e ir al estado 42
+
+    constant_expression        ir al estado 43
+    primary_expression         ir al estado 44
+    unary_expression           ir al estado 45
+    multiplicative_expression  ir al estado 46
+    additive_expression        ir al estado 47
+    relational_expression      ir al estado 48
+    equality_expression        ir al estado 49
+    logical_not_expression     ir al estado 50
+    logical_and_expression     ir al estado 51
+    logical_or_expression      ir al estado 52
+    concat_expression          ir al estado 53
+    expression                 ir al estado 75
+    function_call              ir al estado 55
+    list_new                   ir al estado 56
+    dict_new                   ir al estado 57
+    list_get_item              ir al estado 58
+
+
+Estado 39
+
+   22 logical_not_expression: '!' . expression
+
+    TTRUE        desplazar e ir al estado 29
+    TFALSE       desplazar e ir al estado 30
+    TINT         desplazar e ir al estado 31
+    TLIT         desplazar e ir al estado 32
+    TNUMBER      desplazar e ir al estado 33
+    TSTRING      desplazar e ir al estado 34
+    TIDENTIFIER  desplazar e ir al estado 35
+    TCONSTANT    desplazar e ir al estado 36
+    '+'          desplazar e ir al estado 37
+    '-'          desplazar e ir al estado 38
+    '!'          desplazar e ir al estado 39
+    '('          desplazar e ir al estado 40
+    '['          desplazar e ir al estado 41
+    '{'          desplazar e ir al estado 42
+
+    constant_expression        ir al estado 43
+    primary_expression         ir al estado 44
+    unary_expression           ir al estado 45
+    multiplicative_expression  ir al estado 46
+    additive_expression        ir al estado 47
+    relational_expression      ir al estado 48
+    equality_expression        ir al estado 49
+    logical_not_expression     ir al estado 50
+    logical_and_expression     ir al estado 51
+    logical_or_expression      ir al estado 52
+    concat_expression          ir al estado 53
+    expression                 ir al estado 76
+    function_call              ir al estado 55
+    list_new                   ir al estado 56
+    dict_new                   ir al estado 57
+    list_get_item              ir al estado 58
+
+
+Estado 40
+
+   27 expression: '(' . expression ')'
+
+    TTRUE        desplazar e ir al estado 29
+    TFALSE       desplazar e ir al estado 30
+    TINT         desplazar e ir al estado 31
+    TLIT         desplazar e ir al estado 32
+    TNUMBER      desplazar e ir al estado 33
+    TSTRING      desplazar e ir al estado 34
+    TIDENTIFIER  desplazar e ir al estado 35
+    TCONSTANT    desplazar e ir al estado 36
+    '+'          desplazar e ir al estado 37
+    '-'          desplazar e ir al estado 38
+    '!'          desplazar e ir al estado 39
+    '('          desplazar e ir al estado 40
+    '['          desplazar e ir al estado 41
+    '{'          desplazar e ir al estado 42
+
+    constant_expression        ir al estado 43
+    primary_expression         ir al estado 44
+    unary_expression           ir al estado 45
+    multiplicative_expression  ir al estado 46
+    additive_expression        ir al estado 47
+    relational_expression      ir al estado 48
+    equality_expression        ir al estado 49
+    logical_not_expression     ir al estado 50
+    logical_and_expression     ir al estado 51
+    logical_or_expression      ir al estado 52
+    concat_expression          ir al estado 53
+    expression                 ir al estado 77
+    function_call              ir al estado 55
+    list_new                   ir al estado 56
+    dict_new                   ir al estado 57
+    list_get_item              ir al estado 58
+
+
+Estado 41
+
+   78 list_new: '[' . list_items ']'
+
+    TTRUE        desplazar e ir al estado 29
+    TFALSE       desplazar e ir al estado 30
+    TINT         desplazar e ir al estado 31
+    TLIT         desplazar e ir al estado 32
+    TNUMBER      desplazar e ir al estado 33
+    TSTRING      desplazar e ir al estado 34
+    TIDENTIFIER  desplazar e ir al estado 35
+    TCONSTANT    desplazar e ir al estado 36
+    '+'          desplazar e ir al estado 37
+    '-'          desplazar e ir al estado 38
+    '!'          desplazar e ir al estado 39
+    '('          desplazar e ir al estado 40
+    '['          desplazar e ir al estado 41
+    '{'          desplazar e ir al estado 42
+
+    $default  reduce usando la regla 79 (list_items)
+
+    constant_expression        ir al estado 43
+    primary_expression         ir al estado 44
+    unary_expression           ir al estado 45
+    multiplicative_expression  ir al estado 46
+    additive_expression        ir al estado 47
+    relational_expression      ir al estado 48
+    equality_expression        ir al estado 49
+    logical_not_expression     ir al estado 50
+    logical_and_expression     ir al estado 51
+    logical_or_expression      ir al estado 52
+    concat_expression          ir al estado 53
+    expression                 ir al estado 78
+    function_call              ir al estado 55
+    list_new                   ir al estado 56
+    list_items                 ir al estado 79
+    dict_new                   ir al estado 57
+    list_get_item              ir al estado 58
+
+
+Estado 42
+
+   82 dict_new: '{' . dict_items '}'
+
+    TLIT     desplazar e ir al estado 80
+    TSTRING  desplazar e ir al estado 81
+
+    $default  reduce usando la regla 85 (dict_item)
+
+    dict_items  ir al estado 82
+    dict_item   ir al estado 83
+    key         ir al estado 84
+
+
+Estado 43
+
+   28 expression: constant_expression .
+
+    $default  reduce usando la regla 28 (expression)
+
+
+Estado 44
+
+   29 expression: primary_expression .
+
+    $default  reduce usando la regla 29 (expression)
+
+
+Estado 45
+
+   30 expression: unary_expression .
+
+    $default  reduce usando la regla 30 (expression)
+
+
+Estado 46
+
+   31 expression: multiplicative_expression .
+
+    $default  reduce usando la regla 31 (expression)
+
+
+Estado 47
+
+   32 expression: additive_expression .
+
+    $default  reduce usando la regla 32 (expression)
+
+
+Estado 48
+
+   33 expression: relational_expression .
+
+    $default  reduce usando la regla 33 (expression)
+
+
+Estado 49
+
+   34 expression: equality_expression .
+
+    $default  reduce usando la regla 34 (expression)
+
+
+Estado 50
+
+   35 expression: logical_not_expression .
+
+    $default  reduce usando la regla 35 (expression)
+
+
+Estado 51
+
+   36 expression: logical_and_expression .
+
+    $default  reduce usando la regla 36 (expression)
+
+
+Estado 52
+
+   37 expression: logical_or_expression .
+
+    $default  reduce usando la regla 37 (expression)
+
+
+Estado 53
+
+   38 expression: concat_expression .
+
+    $default  reduce usando la regla 38 (expression)
+
+
+Estado 54
+
+   11 multiplicative_expression: expression . '*' expression
+   12                          | expression . '/' expression
+   13                          | expression . '%' expression
+   14 additive_expression: expression . '-' expression
+   15                    | expression . '+' expression
+   16 relational_expression: expression . OP_GT expression
+   17                      | expression . OP_LT expression
+   18                      | expression . OP_GE expression
+   19                      | expression . OP_LE expression
+   20 equality_expression: expression . OP_NEQ expression
+   21                    | expression . OP_EQ expression
+   23 logical_and_expression: expression . OP_AND expression
+   24 logical_or_expression: expression . OP_OR expression
+   26 concat_expression: expression . OP_CONCAT expression
+   64 selection_statement: KIF expression . statement_list KEND
+   65                    | KIF expression . statement_list KELSE statement_list KEND
+
+    error        desplazar e ir al estado 1
+    TIDENTIFIER  desplazar e ir al estado 2
+    TCONSTANT    desplazar e ir al estado 3
+    KIF          desplazar e ir al estado 4
+    KWHILE       desplazar e ir al estado 5
+    KDO          desplazar e ir al estado 6
+    KFUNCTION    desplazar e ir al estado 7
+    KFROM        desplazar e ir al estado 8
+    KRETURN      desplazar e ir al estado 9
+    KINCLUDE     desplazar e ir al estado 10
+    OP_GT        desplazar e ir al estado 85
+    OP_LT        desplazar e ir al estado 86
+    OP_GE        desplazar e ir al estado 87
+    OP_LE        desplazar e ir al estado 88
+    OP_EQ        desplazar e ir al estado 89
+    OP_NEQ       desplazar e ir al estado 90
+    OP_AND       desplazar e ir al estado 91
+    OP_OR        desplazar e ir al estado 92
+    OP_CONCAT    desplazar e ir al estado 93
+    '+'          desplazar e ir al estado 94
+    '-'          desplazar e ir al estado 95
+    '*'          desplazar e ir al estado 96
+    '/'          desplazar e ir al estado 97
+    '%'          desplazar e ir al estado 98
+
+    statement_list       ir al estado 99
+    statement            ir al estado 13
+    incdec_statement     ir al estado 14
+    include_declaration  ir al estado 15
+    declaration          ir al estado 16
+    selection_statement  ir al estado 17
+    iteration_statement  ir al estado 18
+    jump_statement       ir al estado 19
+    function_definition  ir al estado 20
+    function_call        ir al estado 21
+
+
+Estado 55
+
+   39 expression: function_call .
+
+    $default  reduce usando la regla 39 (expression)
+
+
+Estado 56
+
+   40 expression: list_new .
+
+    $default  reduce usando la regla 40 (expression)
+
+
+Estado 57
+
+   42 expression: dict_new .
+
+    $default  reduce usando la regla 42 (expression)
+
+
+Estado 58
+
+   41 expression: list_get_item .
+
+    $default  reduce usando la regla 41 (expression)
+
+
+Estado 59
+
+   11 multiplicative_expression: expression . '*' expression
+   12                          | expression . '/' expression
+   13                          | expression . '%' expression
+   14 additive_expression: expression . '-' expression
+   15                    | expression . '+' expression
+   16 relational_expression: expression . OP_GT expression
+   17                      | expression . OP_LT expression
+   18                      | expression . OP_GE expression
+   19                      | expression . OP_LE expression
+   20 equality_expression: expression . OP_NEQ expression
+   21                    | expression . OP_EQ expression
+   23 logical_and_expression: expression . OP_AND expression
+   24 logical_or_expression: expression . OP_OR expression
+   26 concat_expression: expression . OP_CONCAT expression
+   66 iteration_statement: KWHILE expression . statement_list KEND
+
+    error        desplazar e ir al estado 1
+    TIDENTIFIER  desplazar e ir al estado 2
+    TCONSTANT    desplazar e ir al estado 3
+    KIF          desplazar e ir al estado 4
+    KWHILE       desplazar e ir al estado 5
+    KDO          desplazar e ir al estado 6
+    KFUNCTION    desplazar e ir al estado 7
+    KFROM        desplazar e ir al estado 8
+    KRETURN      desplazar e ir al estado 9
+    KINCLUDE     desplazar e ir al estado 10
+    OP_GT        desplazar e ir al estado 85
+    OP_LT        desplazar e ir al estado 86
+    OP_GE        desplazar e ir al estado 87
+    OP_LE        desplazar e ir al estado 88
+    OP_EQ        desplazar e ir al estado 89
+    OP_NEQ       desplazar e ir al estado 90
+    OP_AND       desplazar e ir al estado 91
+    OP_OR        desplazar e ir al estado 92
+    OP_CONCAT    desplazar e ir al estado 93
+    '+'          desplazar e ir al estado 94
+    '-'          desplazar e ir al estado 95
+    '*'          desplazar e ir al estado 96
+    '/'          desplazar e ir al estado 97
+    '%'          desplazar e ir al estado 98
+
+    statement_list       ir al estado 100
+    statement            ir al estado 13
+    incdec_statement     ir al estado 14
+    include_declaration  ir al estado 15
+    declaration          ir al estado 16
+    selection_statement  ir al estado 17
+    iteration_statement  ir al estado 18
+    jump_statement       ir al estado 19
+    function_definition  ir al estado 20
+    function_call        ir al estado 21
+
+
+Estado 60
+
+   67 iteration_statement: KDO statement_list . KWHEN expression
+
+    KWHEN  desplazar e ir al estado 101
+
+
+Estado 61
+
+   70 function_definition: KFUNCTION TIDENTIFIER . '(' identifier_list ')' statement_list KEND
+
+    '('  desplazar e ir al estado 102
+
+
+Estado 62
+
+   68 iteration_statement: KFROM '(' . declaration ';' expression ';' declaration ')' statement_list KEND
+
+    TIDENTIFIER  desplazar e ir al estado 103
+    TCONSTANT    desplazar e ir al estado 3
+
+    incdec_statement  ir al estado 14
+    declaration       ir al estado 104
+
+
+Estado 63
+
+   11 multiplicative_expression: expression . '*' expression
+   12                          | expression . '/' expression
+   13                          | expression . '%' expression
+   14 additive_expression: expression . '-' expression
+   15                    | expression . '+' expression
+   16 relational_expression: expression . OP_GT expression
+   17                      | expression . OP_LT expression
+   18                      | expression . OP_GE expression
+   19                      | expression . OP_LE expression
+   20 equality_expression: expression . OP_NEQ expression
+   21                    | expression . OP_EQ expression
+   23 logical_and_expression: expression . OP_AND expression
+   24 logical_or_expression: expression . OP_OR expression
+   26 concat_expression: expression . OP_CONCAT expression
+   69 jump_statement: KRETURN expression .
+
+    OP_GT      desplazar e ir al estado 85
+    OP_LT      desplazar e ir al estado 86
+    OP_GE      desplazar e ir al estado 87
+    OP_LE      desplazar e ir al estado 88
+    OP_EQ      desplazar e ir al estado 89
+    OP_NEQ     desplazar e ir al estado 90
+    OP_AND     desplazar e ir al estado 91
+    OP_OR      desplazar e ir al estado 92
+    OP_CONCAT  desplazar e ir al estado 93
+    '+'        desplazar e ir al estado 94
+    '-'        desplazar e ir al estado 95
+    '*'        desplazar e ir al estado 96
+    '/'        desplazar e ir al estado 97
+    '%'        desplazar e ir al estado 98
+
+    $default  reduce usando la regla 69 (jump_statement)
+
+
+Estado 64
+
+   57 include_declaration: KINCLUDE '(' . TSTRING ')'
+   58                    | KINCLUDE '(' . TLIT ')'
+
+    TLIT     desplazar e ir al estado 105
+    TSTRING  desplazar e ir al estado 106
+
+
+Estado 65
+
+    0 $accept: program $end .
+
+    $default  aceptar
+
+
+Estado 66
+
+   45 statement_list: statement statement_list .
+
+    $default  reduce usando la regla 45 (statement_list)
+
+
+Estado 67
+
+   11 multiplicative_expression: expression . '*' expression
+   12                          | expression . '/' expression
+   13                          | expression . '%' expression
+   14 additive_expression: expression . '-' expression
+   15                    | expression . '+' expression
+   16 relational_expression: expression . OP_GT expression
+   17                      | expression . OP_LT expression
+   18                      | expression . OP_GE expression
+   19                      | expression . OP_LE expression
+   20 equality_expression: expression . OP_NEQ expression
+   21                    | expression . OP_EQ expression
+   23 logical_and_expression: expression . OP_AND expression
+   24 logical_or_expression: expression . OP_OR expression
+   26 concat_expression: expression . OP_CONCAT expression
+   62 declaration: TIDENTIFIER OP_CONCAT_IGUAL expression .
+
+    OP_GT      desplazar e ir al estado 85
+    OP_LT      desplazar e ir al estado 86
+    OP_GE      desplazar e ir al estado 87
+    OP_LE      desplazar e ir al estado 88
+    OP_EQ      desplazar e ir al estado 89
+    OP_NEQ     desplazar e ir al estado 90
+    OP_AND     desplazar e ir al estado 91
+    OP_OR      desplazar e ir al estado 92
+    OP_CONCAT  desplazar e ir al estado 93
+    '+'        desplazar e ir al estado 94
+    '-'        desplazar e ir al estado 95
+    '*'        desplazar e ir al estado 96
+    '/'        desplazar e ir al estado 97
+    '%'        desplazar e ir al estado 98
+
+    $default  reduce usando la regla 62 (declaration)
+
+
+Estado 68
+
+   60 declaration: TIDENTIFIER '=' ternary_expression .
+
+    $default  reduce usando la regla 60 (declaration)
+
+
+Estado 69
+
+   11 multiplicative_expression: expression . '*' expression
+   12                          | expression . '/' expression
+   13                          | expression . '%' expression
+   14 additive_expression: expression . '-' expression
+   15                    | expression . '+' expression
+   16 relational_expression: expression . OP_GT expression
+   17                      | expression . OP_LT expression
+   18                      | expression . OP_GE expression
+   19                      | expression . OP_LE expression
+   20 equality_expression: expression . OP_NEQ expression
+   21                    | expression . OP_EQ expression
+   23 logical_and_expression: expression . OP_AND expression
+   24 logical_or_expression: expression . OP_OR expression
+   25 ternary_expression: expression . '?' expression ':' expression
+   26 concat_expression: expression . OP_CONCAT expression
+   59 declaration: TIDENTIFIER '=' expression .
+
+    OP_GT      desplazar e ir al estado 85
+    OP_LT      desplazar e ir al estado 86
+    OP_GE      desplazar e ir al estado 87
+    OP_LE      desplazar e ir al estado 88
+    OP_EQ      desplazar e ir al estado 89
+    OP_NEQ     desplazar e ir al estado 90
+    OP_AND     desplazar e ir al estado 91
+    OP_OR      desplazar e ir al estado 92
+    OP_CONCAT  desplazar e ir al estado 93
+    '+'        desplazar e ir al estado 94
+    '-'        desplazar e ir al estado 95
+    '*'        desplazar e ir al estado 96
+    '/'        desplazar e ir al estado 97
+    '%'        desplazar e ir al estado 98
+    '?'        desplazar e ir al estado 107
+
+    $default  reduce usando la regla 59 (declaration)
+
+
+Estado 70
+
+   11 multiplicative_expression: expression . '*' expression
+   12                          | expression . '/' expression
+   13                          | expression . '%' expression
+   14 additive_expression: expression . '-' expression
+   15                    | expression . '+' expression
+   16 relational_expression: expression . OP_GT expression
+   17                      | expression . OP_LT expression
+   18                      | expression . OP_GE expression
+   19                      | expression . OP_LE expression
+   20 equality_expression: expression . OP_NEQ expression
+   21                    | expression . OP_EQ expression
+   23 logical_and_expression: expression . OP_AND expression
+   24 logical_or_expression: expression . OP_OR expression
+   26 concat_expression: expression . OP_CONCAT expression
+   73 argument_expression_list: expression . ',' argument_expression_list
+   74                         | expression .
+
+    OP_GT      desplazar e ir al estado 85
+    OP_LT      desplazar e ir al estado 86
+    OP_GE      desplazar e ir al estado 87
+    OP_LE      desplazar e ir al estado 88
+    OP_EQ      desplazar e ir al estado 89
+    OP_NEQ     desplazar e ir al estado 90
+    OP_AND     desplazar e ir al estado 91
+    OP_OR      desplazar e ir al estado 92
+    OP_CONCAT  desplazar e ir al estado 93
+    '+'        desplazar e ir al estado 94
+    '-'        desplazar e ir al estado 95
+    '*'        desplazar e ir al estado 96
+    '/'        desplazar e ir al estado 97
+    '%'        desplazar e ir al estado 98
+    ','        desplazar e ir al estado 108
+
+    $default  reduce usando la regla 74 (argument_expression_list)
+
+
+Estado 71
+
+   71 function_call: TIDENTIFIER '(' argument_expression_list . ')'
+
+    ')'  desplazar e ir al estado 109
+
+
+Estado 72
+
+   11 multiplicative_expression: expression . '*' expression
+   12                          | expression . '/' expression
+   13                          | expression . '%' expression
+   14 additive_expression: expression . '-' expression
+   15                    | expression . '+' expression
+   16 relational_expression: expression . OP_GT expression
+   17                      | expression . OP_LT expression
+   18                      | expression . OP_GE expression
+   19                      | expression . OP_LE expression
+   20 equality_expression: expression . OP_NEQ expression
+   21                    | expression . OP_EQ expression
+   23 logical_and_expression: expression . OP_AND expression
+   24 logical_or_expression: expression . OP_OR expression
+   26 concat_expression: expression . OP_CONCAT expression
+   61 declaration: TCONSTANT '=' expression .
+
+    OP_GT      desplazar e ir al estado 85
+    OP_LT      desplazar e ir al estado 86
+    OP_GE      desplazar e ir al estado 87
+    OP_LE      desplazar e ir al estado 88
+    OP_EQ      desplazar e ir al estado 89
+    OP_NEQ     desplazar e ir al estado 90
+    OP_AND     desplazar e ir al estado 91
+    OP_OR      desplazar e ir al estado 92
+    OP_CONCAT  desplazar e ir al estado 93
+    '+'        desplazar e ir al estado 94
+    '-'        desplazar e ir al estado 95
+    '*'        desplazar e ir al estado 96
+    '/'        desplazar e ir al estado 97
+    '%'        desplazar e ir al estado 98
+
+    $default  reduce usando la regla 61 (declaration)
+
+
+Estado 73
+
+   89 list_get_item: TIDENTIFIER '[' . TSTRING ']'
+   90              | TIDENTIFIER '[' . TLIT ']'
+   91              | TIDENTIFIER '[' . TINT ']'
+   92              | TIDENTIFIER '[' . TIDENTIFIER ']'
+
+    TINT         desplazar e ir al estado 110
+    TLIT         desplazar e ir al estado 111
+    TSTRING      desplazar e ir al estado 112
+    TIDENTIFIER  desplazar e ir al estado 113
+
+
+Estado 74
+
+   10 unary_expression: '+' expression .
+   11 multiplicative_expression: expression . '*' expression
+   12                          | expression . '/' expression
+   13                          | expression . '%' expression
+   14 additive_expression: expression . '-' expression
+   15                    | expression . '+' expression
+   16 relational_expression: expression . OP_GT expression
+   17                      | expression . OP_LT expression
+   18                      | expression . OP_GE expression
+   19                      | expression . OP_LE expression
+   20 equality_expression: expression . OP_NEQ expression
+   21                    | expression . OP_EQ expression
+   23 logical_and_expression: expression . OP_AND expression
+   24 logical_or_expression: expression . OP_OR expression
+   26 concat_expression: expression . OP_CONCAT expression
+
+    OP_GT   desplazar e ir al estado 85
+    OP_LT   desplazar e ir al estado 86
+    OP_GE   desplazar e ir al estado 87
+    OP_LE   desplazar e ir al estado 88
+    OP_EQ   desplazar e ir al estado 89
+    OP_NEQ  desplazar e ir al estado 90
+    OP_AND  desplazar e ir al estado 91
+    OP_OR   desplazar e ir al estado 92
+
+    $default  reduce usando la regla 10 (unary_expression)
+
+
+Estado 75
+
+    9 unary_expression: '-' expression .
+   11 multiplicative_expression: expression . '*' expression
+   12                          | expression . '/' expression
+   13                          | expression . '%' expression
+   14 additive_expression: expression . '-' expression
+   15                    | expression . '+' expression
+   16 relational_expression: expression . OP_GT expression
+   17                      | expression . OP_LT expression
+   18                      | expression . OP_GE expression
+   19                      | expression . OP_LE expression
+   20 equality_expression: expression . OP_NEQ expression
+   21                    | expression . OP_EQ expression
+   23 logical_and_expression: expression . OP_AND expression
+   24 logical_or_expression: expression . OP_OR expression
+   26 concat_expression: expression . OP_CONCAT expression
+
+    OP_GT   desplazar e ir al estado 85
+    OP_LT   desplazar e ir al estado 86
+    OP_GE   desplazar e ir al estado 87
+    OP_LE   desplazar e ir al estado 88
+    OP_EQ   desplazar e ir al estado 89
+    OP_NEQ  desplazar e ir al estado 90
+    OP_AND  desplazar e ir al estado 91
+    OP_OR   desplazar e ir al estado 92
+
+    $default  reduce usando la regla 9 (unary_expression)
+
+
+Estado 76
+
+   11 multiplicative_expression: expression . '*' expression
+   12                          | expression . '/' expression
+   13                          | expression . '%' expression
+   14 additive_expression: expression . '-' expression
+   15                    | expression . '+' expression
+   16 relational_expression: expression . OP_GT expression
+   17                      | expression . OP_LT expression
+   18                      | expression . OP_GE expression
+   19                      | expression . OP_LE expression
+   20 equality_expression: expression . OP_NEQ expression
+   21                    | expression . OP_EQ expression
+   22 logical_not_expression: '!' expression .
+   23 logical_and_expression: expression . OP_AND expression
+   24 logical_or_expression: expression . OP_OR expression
+   26 concat_expression: expression . OP_CONCAT expression
+
+    OP_GT   desplazar e ir al estado 85
+    OP_LT   desplazar e ir al estado 86
+    OP_GE   desplazar e ir al estado 87
+    OP_LE   desplazar e ir al estado 88
+    OP_EQ   desplazar e ir al estado 89
+    OP_NEQ  desplazar e ir al estado 90
+    OP_AND  desplazar e ir al estado 91
+    OP_OR   desplazar e ir al estado 92
+
+    $default  reduce usando la regla 22 (logical_not_expression)
+
+
+Estado 77
+
+   11 multiplicative_expression: expression . '*' expression
+   12                          | expression . '/' expression
+   13                          | expression . '%' expression
+   14 additive_expression: expression . '-' expression
+   15                    | expression . '+' expression
+   16 relational_expression: expression . OP_GT expression
+   17                      | expression . OP_LT expression
+   18                      | expression . OP_GE expression
+   19                      | expression . OP_LE expression
+   20 equality_expression: expression . OP_NEQ expression
+   21                    | expression . OP_EQ expression
+   23 logical_and_expression: expression . OP_AND expression
+   24 logical_or_expression: expression . OP_OR expression
+   26 concat_expression: expression . OP_CONCAT expression
+   27 expression: '(' expression . ')'
+
+    OP_GT      desplazar e ir al estado 85
+    OP_LT      desplazar e ir al estado 86
+    OP_GE      desplazar e ir al estado 87
+    OP_LE      desplazar e ir al estado 88
+    OP_EQ      desplazar e ir al estado 89
+    OP_NEQ     desplazar e ir al estado 90
+    OP_AND     desplazar e ir al estado 91
+    OP_OR      desplazar e ir al estado 92
+    OP_CONCAT  desplazar e ir al estado 93
+    '+'        desplazar e ir al estado 94
+    '-'        desplazar e ir al estado 95
+    '*'        desplazar e ir al estado 96
+    '/'        desplazar e ir al estado 97
+    '%'        desplazar e ir al estado 98
+    ')'        desplazar e ir al estado 114
+
+
+Estado 78
+
+   11 multiplicative_expression: expression . '*' expression
+   12                          | expression . '/' expression
+   13                          | expression . '%' expression
+   14 additive_expression: expression . '-' expression
+   15                    | expression . '+' expression
+   16 relational_expression: expression . OP_GT expression
+   17                      | expression . OP_LT expression
+   18                      | expression . OP_GE expression
+   19                      | expression . OP_LE expression
+   20 equality_expression: expression . OP_NEQ expression
+   21                    | expression . OP_EQ expression
+   23 logical_and_expression: expression . OP_AND expression
+   24 logical_or_expression: expression . OP_OR expression
+   26 concat_expression: expression . OP_CONCAT expression
+   80 list_items: expression . ',' list_items
+   81           | expression .
+
+    OP_GT      desplazar e ir al estado 85
+    OP_LT      desplazar e ir al estado 86
+    OP_GE      desplazar e ir al estado 87
+    OP_LE      desplazar e ir al estado 88
+    OP_EQ      desplazar e ir al estado 89
+    OP_NEQ     desplazar e ir al estado 90
+    OP_AND     desplazar e ir al estado 91
+    OP_OR      desplazar e ir al estado 92
+    OP_CONCAT  desplazar e ir al estado 93
+    '+'        desplazar e ir al estado 94
+    '-'        desplazar e ir al estado 95
+    '*'        desplazar e ir al estado 96
+    '/'        desplazar e ir al estado 97
+    '%'        desplazar e ir al estado 98
+    ','        desplazar e ir al estado 115
+
+    $default  reduce usando la regla 81 (list_items)
+
+
+Estado 79
+
+   78 list_new: '[' list_items . ']'
+
+    ']'  desplazar e ir al estado 116
+
+
+Estado 80
+
+   87 key: TLIT .
+
+    $default  reduce usando la regla 87 (key)
+
+
+Estado 81
+
+   88 key: TSTRING .
+
+    $default  reduce usando la regla 88 (key)
+
+
+Estado 82
+
+   82 dict_new: '{' dict_items . '}'
+
+    '}'  desplazar e ir al estado 117
+
+
+Estado 83
+
+   83 dict_items: dict_item . ',' dict_items
+   84           | dict_item .
+
+    ','  desplazar e ir al estado 118
+
+    $default  reduce usando la regla 84 (dict_items)
+
+
+Estado 84
+
+   86 dict_item: key . ':' expression
+
+    ':'  desplazar e ir al estado 119
+
+
+Estado 85
+
+   16 relational_expression: expression OP_GT . expression
+
+    TTRUE        desplazar e ir al estado 29
+    TFALSE       desplazar e ir al estado 30
+    TINT         desplazar e ir al estado 31
+    TLIT         desplazar e ir al estado 32
+    TNUMBER      desplazar e ir al estado 33
+    TSTRING      desplazar e ir al estado 34
+    TIDENTIFIER  desplazar e ir al estado 35
+    TCONSTANT    desplazar e ir al estado 36
+    '+'          desplazar e ir al estado 37
+    '-'          desplazar e ir al estado 38
+    '!'          desplazar e ir al estado 39
+    '('          desplazar e ir al estado 40
+    '['          desplazar e ir al estado 41
+    '{'          desplazar e ir al estado 42
+
+    constant_expression        ir al estado 43
+    primary_expression         ir al estado 44
+    unary_expression           ir al estado 45
+    multiplicative_expression  ir al estado 46
+    additive_expression        ir al estado 47
+    relational_expression      ir al estado 48
+    equality_expression        ir al estado 49
+    logical_not_expression     ir al estado 50
+    logical_and_expression     ir al estado 51
+    logical_or_expression      ir al estado 52
+    concat_expression          ir al estado 53
+    expression                 ir al estado 120
+    function_call              ir al estado 55
+    list_new                   ir al estado 56
+    dict_new                   ir al estado 57
+    list_get_item              ir al estado 58
+
+
+Estado 86
+
+   17 relational_expression: expression OP_LT . expression
+
+    TTRUE        desplazar e ir al estado 29
+    TFALSE       desplazar e ir al estado 30
+    TINT         desplazar e ir al estado 31
+    TLIT         desplazar e ir al estado 32
+    TNUMBER      desplazar e ir al estado 33
+    TSTRING      desplazar e ir al estado 34
+    TIDENTIFIER  desplazar e ir al estado 35
+    TCONSTANT    desplazar e ir al estado 36
+    '+'          desplazar e ir al estado 37
+    '-'          desplazar e ir al estado 38
+    '!'          desplazar e ir al estado 39
+    '('          desplazar e ir al estado 40
+    '['          desplazar e ir al estado 41
+    '{'          desplazar e ir al estado 42
+
+    constant_expression        ir al estado 43
+    primary_expression         ir al estado 44
+    unary_expression           ir al estado 45
+    multiplicative_expression  ir al estado 46
+    additive_expression        ir al estado 47
+    relational_expression      ir al estado 48
+    equality_expression        ir al estado 49
+    logical_not_expression     ir al estado 50
+    logical_and_expression     ir al estado 51
+    logical_or_expression      ir al estado 52
+    concat_expression          ir al estado 53
+    expression                 ir al estado 121
+    function_call              ir al estado 55
+    list_new                   ir al estado 56
+    dict_new                   ir al estado 57
+    list_get_item              ir al estado 58
+
+
+Estado 87
+
+   18 relational_expression: expression OP_GE . expression
+
+    TTRUE        desplazar e ir al estado 29
+    TFALSE       desplazar e ir al estado 30
+    TINT         desplazar e ir al estado 31
+    TLIT         desplazar e ir al estado 32
+    TNUMBER      desplazar e ir al estado 33
+    TSTRING      desplazar e ir al estado 34
+    TIDENTIFIER  desplazar e ir al estado 35
+    TCONSTANT    desplazar e ir al estado 36
+    '+'          desplazar e ir al estado 37
+    '-'          desplazar e ir al estado 38
+    '!'          desplazar e ir al estado 39
+    '('          desplazar e ir al estado 40
+    '['          desplazar e ir al estado 41
+    '{'          desplazar e ir al estado 42
+
+    constant_expression        ir al estado 43
+    primary_expression         ir al estado 44
+    unary_expression           ir al estado 45
+    multiplicative_expression  ir al estado 46
+    additive_expression        ir al estado 47
+    relational_expression      ir al estado 48
+    equality_expression        ir al estado 49
+    logical_not_expression     ir al estado 50
+    logical_and_expression     ir al estado 51
+    logical_or_expression      ir al estado 52
+    concat_expression          ir al estado 53
+    expression                 ir al estado 122
+    function_call              ir al estado 55
+    list_new                   ir al estado 56
+    dict_new                   ir al estado 57
+    list_get_item              ir al estado 58
+
+
+Estado 88
+
+   19 relational_expression: expression OP_LE . expression
+
+    TTRUE        desplazar e ir al estado 29
+    TFALSE       desplazar e ir al estado 30
+    TINT         desplazar e ir al estado 31
+    TLIT         desplazar e ir al estado 32
+    TNUMBER      desplazar e ir al estado 33
+    TSTRING      desplazar e ir al estado 34
+    TIDENTIFIER  desplazar e ir al estado 35
+    TCONSTANT    desplazar e ir al estado 36
+    '+'          desplazar e ir al estado 37
+    '-'          desplazar e ir al estado 38
+    '!'          desplazar e ir al estado 39
+    '('          desplazar e ir al estado 40
+    '['          desplazar e ir al estado 41
+    '{'          desplazar e ir al estado 42
+
+    constant_expression        ir al estado 43
+    primary_expression         ir al estado 44
+    unary_expression           ir al estado 45
+    multiplicative_expression  ir al estado 46
+    additive_expression        ir al estado 47
+    relational_expression      ir al estado 48
+    equality_expression        ir al estado 49
+    logical_not_expression     ir al estado 50
+    logical_and_expression     ir al estado 51
+    logical_or_expression      ir al estado 52
+    concat_expression          ir al estado 53
+    expression                 ir al estado 123
+    function_call              ir al estado 55
+    list_new                   ir al estado 56
+    dict_new                   ir al estado 57
+    list_get_item              ir al estado 58
+
+
+Estado 89
+
+   21 equality_expression: expression OP_EQ . expression
+
+    TTRUE        desplazar e ir al estado 29
+    TFALSE       desplazar e ir al estado 30
+    TINT         desplazar e ir al estado 31
+    TLIT         desplazar e ir al estado 32
+    TNUMBER      desplazar e ir al estado 33
+    TSTRING      desplazar e ir al estado 34
+    TIDENTIFIER  desplazar e ir al estado 35
+    TCONSTANT    desplazar e ir al estado 36
+    '+'          desplazar e ir al estado 37
+    '-'          desplazar e ir al estado 38
+    '!'          desplazar e ir al estado 39
+    '('          desplazar e ir al estado 40
+    '['          desplazar e ir al estado 41
+    '{'          desplazar e ir al estado 42
+
+    constant_expression        ir al estado 43
+    primary_expression         ir al estado 44
+    unary_expression           ir al estado 45
+    multiplicative_expression  ir al estado 46
+    additive_expression        ir al estado 47
+    relational_expression      ir al estado 48
+    equality_expression        ir al estado 49
+    logical_not_expression     ir al estado 50
+    logical_and_expression     ir al estado 51
+    logical_or_expression      ir al estado 52
+    concat_expression          ir al estado 53
+    expression                 ir al estado 124
+    function_call              ir al estado 55
+    list_new                   ir al estado 56
+    dict_new                   ir al estado 57
+    list_get_item              ir al estado 58
+
+
+Estado 90
+
+   20 equality_expression: expression OP_NEQ . expression
+
+    TTRUE        desplazar e ir al estado 29
+    TFALSE       desplazar e ir al estado 30
+    TINT         desplazar e ir al estado 31
+    TLIT         desplazar e ir al estado 32
+    TNUMBER      desplazar e ir al estado 33
+    TSTRING      desplazar e ir al estado 34
+    TIDENTIFIER  desplazar e ir al estado 35
+    TCONSTANT    desplazar e ir al estado 36
+    '+'          desplazar e ir al estado 37
+    '-'          desplazar e ir al estado 38
+    '!'          desplazar e ir al estado 39
+    '('          desplazar e ir al estado 40
+    '['          desplazar e ir al estado 41
+    '{'          desplazar e ir al estado 42
+
+    constant_expression        ir al estado 43
+    primary_expression         ir al estado 44
+    unary_expression           ir al estado 45
+    multiplicative_expression  ir al estado 46
+    additive_expression        ir al estado 47
+    relational_expression      ir al estado 48
+    equality_expression        ir al estado 49
+    logical_not_expression     ir al estado 50
+    logical_and_expression     ir al estado 51
+    logical_or_expression      ir al estado 52
+    concat_expression          ir al estado 53
+    expression                 ir al estado 125
+    function_call              ir al estado 55
+    list_new                   ir al estado 56
+    dict_new                   ir al estado 57
+    list_get_item              ir al estado 58
+
+
+Estado 91
+
+   23 logical_and_expression: expression OP_AND . expression
+
+    TTRUE        desplazar e ir al estado 29
+    TFALSE       desplazar e ir al estado 30
+    TINT         desplazar e ir al estado 31
+    TLIT         desplazar e ir al estado 32
+    TNUMBER      desplazar e ir al estado 33
+    TSTRING      desplazar e ir al estado 34
+    TIDENTIFIER  desplazar e ir al estado 35
+    TCONSTANT    desplazar e ir al estado 36
+    '+'          desplazar e ir al estado 37
+    '-'          desplazar e ir al estado 38
+    '!'          desplazar e ir al estado 39
+    '('          desplazar e ir al estado 40
+    '['          desplazar e ir al estado 41
+    '{'          desplazar e ir al estado 42
+
+    constant_expression        ir al estado 43
+    primary_expression         ir al estado 44
+    unary_expression           ir al estado 45
+    multiplicative_expression  ir al estado 46
+    additive_expression        ir al estado 47
+    relational_expression      ir al estado 48
+    equality_expression        ir al estado 49
+    logical_not_expression     ir al estado 50
+    logical_and_expression     ir al estado 51
+    logical_or_expression      ir al estado 52
+    concat_expression          ir al estado 53
+    expression                 ir al estado 126
+    function_call              ir al estado 55
+    list_new                   ir al estado 56
+    dict_new                   ir al estado 57
+    list_get_item              ir al estado 58
+
+
+Estado 92
+
+   24 logical_or_expression: expression OP_OR . expression
+
+    TTRUE        desplazar e ir al estado 29
+    TFALSE       desplazar e ir al estado 30
+    TINT         desplazar e ir al estado 31
+    TLIT         desplazar e ir al estado 32
+    TNUMBER      desplazar e ir al estado 33
+    TSTRING      desplazar e ir al estado 34
+    TIDENTIFIER  desplazar e ir al estado 35
+    TCONSTANT    desplazar e ir al estado 36
+    '+'          desplazar e ir al estado 37
+    '-'          desplazar e ir al estado 38
+    '!'          desplazar e ir al estado 39
+    '('          desplazar e ir al estado 40
+    '['          desplazar e ir al estado 41
+    '{'          desplazar e ir al estado 42
+
+    constant_expression        ir al estado 43
+    primary_expression         ir al estado 44
+    unary_expression           ir al estado 45
+    multiplicative_expression  ir al estado 46
+    additive_expression        ir al estado 47
+    relational_expression      ir al estado 48
+    equality_expression        ir al estado 49
+    logical_not_expression     ir al estado 50
+    logical_and_expression     ir al estado 51
+    logical_or_expression      ir al estado 52
+    concat_expression          ir al estado 53
+    expression                 ir al estado 127
+    function_call              ir al estado 55
+    list_new                   ir al estado 56
+    dict_new                   ir al estado 57
+    list_get_item              ir al estado 58
+
+
+Estado 93
+
+   26 concat_expression: expression OP_CONCAT . expression
+
+    TTRUE        desplazar e ir al estado 29
+    TFALSE       desplazar e ir al estado 30
+    TINT         desplazar e ir al estado 31
+    TLIT         desplazar e ir al estado 32
+    TNUMBER      desplazar e ir al estado 33
+    TSTRING      desplazar e ir al estado 34
+    TIDENTIFIER  desplazar e ir al estado 35
+    TCONSTANT    desplazar e ir al estado 36
+    '+'          desplazar e ir al estado 37
+    '-'          desplazar e ir al estado 38
+    '!'          desplazar e ir al estado 39
+    '('          desplazar e ir al estado 40
+    '['          desplazar e ir al estado 41
+    '{'          desplazar e ir al estado 42
+
+    constant_expression        ir al estado 43
+    primary_expression         ir al estado 44
+    unary_expression           ir al estado 45
+    multiplicative_expression  ir al estado 46
+    additive_expression        ir al estado 47
+    relational_expression      ir al estado 48
+    equality_expression        ir al estado 49
+    logical_not_expression     ir al estado 50
+    logical_and_expression     ir al estado 51
+    logical_or_expression      ir al estado 52
+    concat_expression          ir al estado 53
+    expression                 ir al estado 128
+    function_call              ir al estado 55
+    list_new                   ir al estado 56
+    dict_new                   ir al estado 57
+    list_get_item              ir al estado 58
+
+
+Estado 94
+
+   15 additive_expression: expression '+' . expression
+
+    TTRUE        desplazar e ir al estado 29
+    TFALSE       desplazar e ir al estado 30
+    TINT         desplazar e ir al estado 31
+    TLIT         desplazar e ir al estado 32
+    TNUMBER      desplazar e ir al estado 33
+    TSTRING      desplazar e ir al estado 34
+    TIDENTIFIER  desplazar e ir al estado 35
+    TCONSTANT    desplazar e ir al estado 36
+    '+'          desplazar e ir al estado 37
+    '-'          desplazar e ir al estado 38
+    '!'          desplazar e ir al estado 39
+    '('          desplazar e ir al estado 40
+    '['          desplazar e ir al estado 41
+    '{'          desplazar e ir al estado 42
+
+    constant_expression        ir al estado 43
+    primary_expression         ir al estado 44
+    unary_expression           ir al estado 45
+    multiplicative_expression  ir al estado 46
+    additive_expression        ir al estado 47
+    relational_expression      ir al estado 48
+    equality_expression        ir al estado 49
+    logical_not_expression     ir al estado 50
+    logical_and_expression     ir al estado 51
+    logical_or_expression      ir al estado 52
+    concat_expression          ir al estado 53
+    expression                 ir al estado 129
+    function_call              ir al estado 55
+    list_new                   ir al estado 56
+    dict_new                   ir al estado 57
+    list_get_item              ir al estado 58
+
+
+Estado 95
+
+   14 additive_expression: expression '-' . expression
+
+    TTRUE        desplazar e ir al estado 29
+    TFALSE       desplazar e ir al estado 30
+    TINT         desplazar e ir al estado 31
+    TLIT         desplazar e ir al estado 32
+    TNUMBER      desplazar e ir al estado 33
+    TSTRING      desplazar e ir al estado 34
+    TIDENTIFIER  desplazar e ir al estado 35
+    TCONSTANT    desplazar e ir al estado 36
+    '+'          desplazar e ir al estado 37
+    '-'          desplazar e ir al estado 38
+    '!'          desplazar e ir al estado 39
+    '('          desplazar e ir al estado 40
+    '['          desplazar e ir al estado 41
+    '{'          desplazar e ir al estado 42
+
+    constant_expression        ir al estado 43
+    primary_expression         ir al estado 44
+    unary_expression           ir al estado 45
+    multiplicative_expression  ir al estado 46
+    additive_expression        ir al estado 47
+    relational_expression      ir al estado 48
+    equality_expression        ir al estado 49
+    logical_not_expression     ir al estado 50
+    logical_and_expression     ir al estado 51
+    logical_or_expression      ir al estado 52
+    concat_expression          ir al estado 53
+    expression                 ir al estado 130
+    function_call              ir al estado 55
+    list_new                   ir al estado 56
+    dict_new                   ir al estado 57
+    list_get_item              ir al estado 58
+
+
+Estado 96
+
+   11 multiplicative_expression: expression '*' . expression
+
+    TTRUE        desplazar e ir al estado 29
+    TFALSE       desplazar e ir al estado 30
+    TINT         desplazar e ir al estado 31
+    TLIT         desplazar e ir al estado 32
+    TNUMBER      desplazar e ir al estado 33
+    TSTRING      desplazar e ir al estado 34
+    TIDENTIFIER  desplazar e ir al estado 35
+    TCONSTANT    desplazar e ir al estado 36
+    '+'          desplazar e ir al estado 37
+    '-'          desplazar e ir al estado 38
+    '!'          desplazar e ir al estado 39
+    '('          desplazar e ir al estado 40
+    '['          desplazar e ir al estado 41
+    '{'          desplazar e ir al estado 42
+
+    constant_expression        ir al estado 43
+    primary_expression         ir al estado 44
+    unary_expression           ir al estado 45
+    multiplicative_expression  ir al estado 46
+    additive_expression        ir al estado 47
+    relational_expression      ir al estado 48
+    equality_expression        ir al estado 49
+    logical_not_expression     ir al estado 50
+    logical_and_expression     ir al estado 51
+    logical_or_expression      ir al estado 52
+    concat_expression          ir al estado 53
+    expression                 ir al estado 131
+    function_call              ir al estado 55
+    list_new                   ir al estado 56
+    dict_new                   ir al estado 57
+    list_get_item              ir al estado 58
+
+
+Estado 97
+
+   12 multiplicative_expression: expression '/' . expression
+
+    TTRUE        desplazar e ir al estado 29
+    TFALSE       desplazar e ir al estado 30
+    TINT         desplazar e ir al estado 31
+    TLIT         desplazar e ir al estado 32
+    TNUMBER      desplazar e ir al estado 33
+    TSTRING      desplazar e ir al estado 34
+    TIDENTIFIER  desplazar e ir al estado 35
+    TCONSTANT    desplazar e ir al estado 36
+    '+'          desplazar e ir al estado 37
+    '-'          desplazar e ir al estado 38
+    '!'          desplazar e ir al estado 39
+    '('          desplazar e ir al estado 40
+    '['          desplazar e ir al estado 41
+    '{'          desplazar e ir al estado 42
+
+    constant_expression        ir al estado 43
+    primary_expression         ir al estado 44
+    unary_expression           ir al estado 45
+    multiplicative_expression  ir al estado 46
+    additive_expression        ir al estado 47
+    relational_expression      ir al estado 48
+    equality_expression        ir al estado 49
+    logical_not_expression     ir al estado 50
+    logical_and_expression     ir al estado 51
+    logical_or_expression      ir al estado 52
+    concat_expression          ir al estado 53
+    expression                 ir al estado 132
+    function_call              ir al estado 55
+    list_new                   ir al estado 56
+    dict_new                   ir al estado 57
+    list_get_item              ir al estado 58
+
+
+Estado 98
+
+   13 multiplicative_expression: expression '%' . expression
+
+    TTRUE        desplazar e ir al estado 29
+    TFALSE       desplazar e ir al estado 30
+    TINT         desplazar e ir al estado 31
+    TLIT         desplazar e ir al estado 32
+    TNUMBER      desplazar e ir al estado 33
+    TSTRING      desplazar e ir al estado 34
+    TIDENTIFIER  desplazar e ir al estado 35
+    TCONSTANT    desplazar e ir al estado 36
+    '+'          desplazar e ir al estado 37
+    '-'          desplazar e ir al estado 38
+    '!'          desplazar e ir al estado 39
+    '('          desplazar e ir al estado 40
+    '['          desplazar e ir al estado 41
+    '{'          desplazar e ir al estado 42
+
+    constant_expression        ir al estado 43
+    primary_expression         ir al estado 44
+    unary_expression           ir al estado 45
+    multiplicative_expression  ir al estado 46
+    additive_expression        ir al estado 47
+    relational_expression      ir al estado 48
+    equality_expression        ir al estado 49
+    logical_not_expression     ir al estado 50
+    logical_and_expression     ir al estado 51
+    logical_or_expression      ir al estado 52
+    concat_expression          ir al estado 53
+    expression                 ir al estado 133
+    function_call              ir al estado 55
+    list_new                   ir al estado 56
+    dict_new                   ir al estado 57
+    list_get_item              ir al estado 58
+
+
+Estado 99
+
+   64 selection_statement: KIF expression statement_list . KEND
+   65                    | KIF expression statement_list . KELSE statement_list KEND
+
+    KEND   desplazar e ir al estado 134
+    KELSE  desplazar e ir al estado 135
+
+
+Estado 100
+
+   66 iteration_statement: KWHILE expression statement_list . KEND
+
+    KEND  desplazar e ir al estado 136
+
+
+Estado 101
+
+   67 iteration_statement: KDO statement_list KWHEN . expression
+
+    TTRUE        desplazar e ir al estado 29
+    TFALSE       desplazar e ir al estado 30
+    TINT         desplazar e ir al estado 31
+    TLIT         desplazar e ir al estado 32
+    TNUMBER      desplazar e ir al estado 33
+    TSTRING      desplazar e ir al estado 34
+    TIDENTIFIER  desplazar e ir al estado 35
+    TCONSTANT    desplazar e ir al estado 36
+    '+'          desplazar e ir al estado 37
+    '-'          desplazar e ir al estado 38
+    '!'          desplazar e ir al estado 39
+    '('          desplazar e ir al estado 40
+    '['          desplazar e ir al estado 41
+    '{'          desplazar e ir al estado 42
+
+    constant_expression        ir al estado 43
+    primary_expression         ir al estado 44
+    unary_expression           ir al estado 45
+    multiplicative_expression  ir al estado 46
+    additive_expression        ir al estado 47
+    relational_expression      ir al estado 48
+    equality_expression        ir al estado 49
+    logical_not_expression     ir al estado 50
+    logical_and_expression     ir al estado 51
+    logical_or_expression      ir al estado 52
+    concat_expression          ir al estado 53
+    expression                 ir al estado 137
+    function_call              ir al estado 55
+    list_new                   ir al estado 56
+    dict_new                   ir al estado 57
+    list_get_item              ir al estado 58
+
+
+Estado 102
+
+   70 function_definition: KFUNCTION TIDENTIFIER '(' . identifier_list ')' statement_list KEND
+
+    TIDENTIFIER  desplazar e ir al estado 138
+
+    $default  reduce usando la regla 75 (identifier_list)
+
+    identifier_list  ir al estado 139
+
+
+Estado 103
+
+   55 incdec_statement: TIDENTIFIER . OP_INCR
+   56                 | TIDENTIFIER . OP_DECR
+   59 declaration: TIDENTIFIER . '=' expression
+   60            | TIDENTIFIER . '=' ternary_expression
+   62            | TIDENTIFIER . OP_CONCAT_IGUAL expression
+
+    OP_INCR          desplazar e ir al estado 23
+    OP_DECR          desplazar e ir al estado 24
+    OP_CONCAT_IGUAL  desplazar e ir al estado 25
+    '='              desplazar e ir al estado 26
+
+
+Estado 104
+
+   68 iteration_statement: KFROM '(' declaration . ';' expression ';' declaration ')' statement_list KEND
+
+    ';'  desplazar e ir al estado 140
+
+
+Estado 105
+
+   58 include_declaration: KINCLUDE '(' TLIT . ')'
+
+    ')'  desplazar e ir al estado 141
+
+
+Estado 106
+
+   57 include_declaration: KINCLUDE '(' TSTRING . ')'
+
+    ')'  desplazar e ir al estado 142
+
+
+Estado 107
+
+   25 ternary_expression: expression '?' . expression ':' expression
+
+    TTRUE        desplazar e ir al estado 29
+    TFALSE       desplazar e ir al estado 30
+    TINT         desplazar e ir al estado 31
+    TLIT         desplazar e ir al estado 32
+    TNUMBER      desplazar e ir al estado 33
+    TSTRING      desplazar e ir al estado 34
+    TIDENTIFIER  desplazar e ir al estado 35
+    TCONSTANT    desplazar e ir al estado 36
+    '+'          desplazar e ir al estado 37
+    '-'          desplazar e ir al estado 38
+    '!'          desplazar e ir al estado 39
+    '('          desplazar e ir al estado 40
+    '['          desplazar e ir al estado 41
+    '{'          desplazar e ir al estado 42
+
+    constant_expression        ir al estado 43
+    primary_expression         ir al estado 44
+    unary_expression           ir al estado 45
+    multiplicative_expression  ir al estado 46
+    additive_expression        ir al estado 47
+    relational_expression      ir al estado 48
+    equality_expression        ir al estado 49
+    logical_not_expression     ir al estado 50
+    logical_and_expression     ir al estado 51
+    logical_or_expression      ir al estado 52
+    concat_expression          ir al estado 53
+    expression                 ir al estado 143
+    function_call              ir al estado 55
+    list_new                   ir al estado 56
+    dict_new                   ir al estado 57
+    list_get_item              ir al estado 58
+
+
+Estado 108
+
+   73 argument_expression_list: expression ',' . argument_expression_list
+
+    TTRUE        desplazar e ir al estado 29
+    TFALSE       desplazar e ir al estado 30
+    TINT         desplazar e ir al estado 31
+    TLIT         desplazar e ir al estado 32
+    TNUMBER      desplazar e ir al estado 33
+    TSTRING      desplazar e ir al estado 34
+    TIDENTIFIER  desplazar e ir al estado 35
+    TCONSTANT    desplazar e ir al estado 36
+    '+'          desplazar e ir al estado 37
+    '-'          desplazar e ir al estado 38
+    '!'          desplazar e ir al estado 39
+    '('          desplazar e ir al estado 40
+    '['          desplazar e ir al estado 41
+    '{'          desplazar e ir al estado 42
+
+    $default  reduce usando la regla 72 (argument_expression_list)
+
+    constant_expression        ir al estado 43
+    primary_expression         ir al estado 44
+    unary_expression           ir al estado 45
+    multiplicative_expression  ir al estado 46
+    additive_expression        ir al estado 47
+    relational_expression      ir al estado 48
+    equality_expression        ir al estado 49
+    logical_not_expression     ir al estado 50
+    logical_and_expression     ir al estado 51
+    logical_or_expression      ir al estado 52
+    concat_expression          ir al estado 53
+    expression                 ir al estado 70
+    function_call              ir al estado 55
+    argument_expression_list   ir al estado 144
+    list_new                   ir al estado 56
+    dict_new                   ir al estado 57
+    list_get_item              ir al estado 58
+
+
+Estado 109
+
+   71 function_call: TIDENTIFIER '(' argument_expression_list ')' .
+
+    $default  reduce usando la regla 71 (function_call)
+
+
+Estado 110
+
+   91 list_get_item: TIDENTIFIER '[' TINT . ']'
+
+    ']'  desplazar e ir al estado 145
+
+
+Estado 111
+
+   90 list_get_item: TIDENTIFIER '[' TLIT . ']'
+
+    ']'  desplazar e ir al estado 146
+
+
+Estado 112
+
+   89 list_get_item: TIDENTIFIER '[' TSTRING . ']'
+
+    ']'  desplazar e ir al estado 147
+
+
+Estado 113
+
+   92 list_get_item: TIDENTIFIER '[' TIDENTIFIER . ']'
+
+    ']'  desplazar e ir al estado 148
+
+
+Estado 114
+
+   27 expression: '(' expression ')' .
+
+    $default  reduce usando la regla 27 (expression)
+
+
+Estado 115
+
+   80 list_items: expression ',' . list_items
+
+    TTRUE        desplazar e ir al estado 29
+    TFALSE       desplazar e ir al estado 30
+    TINT         desplazar e ir al estado 31
+    TLIT         desplazar e ir al estado 32
+    TNUMBER      desplazar e ir al estado 33
+    TSTRING      desplazar e ir al estado 34
+    TIDENTIFIER  desplazar e ir al estado 35
+    TCONSTANT    desplazar e ir al estado 36
+    '+'          desplazar e ir al estado 37
+    '-'          desplazar e ir al estado 38
+    '!'          desplazar e ir al estado 39
+    '('          desplazar e ir al estado 40
+    '['          desplazar e ir al estado 41
+    '{'          desplazar e ir al estado 42
+
+    $default  reduce usando la regla 79 (list_items)
+
+    constant_expression        ir al estado 43
+    primary_expression         ir al estado 44
+    unary_expression           ir al estado 45
+    multiplicative_expression  ir al estado 46
+    additive_expression        ir al estado 47
+    relational_expression      ir al estado 48
+    equality_expression        ir al estado 49
+    logical_not_expression     ir al estado 50
+    logical_and_expression     ir al estado 51
+    logical_or_expression      ir al estado 52
+    concat_expression          ir al estado 53
+    expression                 ir al estado 78
+    function_call              ir al estado 55
+    list_new                   ir al estado 56
+    list_items                 ir al estado 149
+    dict_new                   ir al estado 57
+    list_get_item              ir al estado 58
+
+
+Estado 116
+
+   78 list_new: '[' list_items ']' .
+
+    $default  reduce usando la regla 78 (list_new)
+
+
+Estado 117
+
+   82 dict_new: '{' dict_items '}' .
+
+    $default  reduce usando la regla 82 (dict_new)
+
+
+Estado 118
+
+   83 dict_items: dict_item ',' . dict_items
+
+    TLIT     desplazar e ir al estado 80
+    TSTRING  desplazar e ir al estado 81
+
+    $default  reduce usando la regla 85 (dict_item)
+
+    dict_items  ir al estado 150
+    dict_item   ir al estado 83
+    key         ir al estado 84
+
+
+Estado 119
+
+   86 dict_item: key ':' . expression
+
+    TTRUE        desplazar e ir al estado 29
+    TFALSE       desplazar e ir al estado 30
+    TINT         desplazar e ir al estado 31
+    TLIT         desplazar e ir al estado 32
+    TNUMBER      desplazar e ir al estado 33
+    TSTRING      desplazar e ir al estado 34
+    TIDENTIFIER  desplazar e ir al estado 35
+    TCONSTANT    desplazar e ir al estado 36
+    '+'          desplazar e ir al estado 37
+    '-'          desplazar e ir al estado 38
+    '!'          desplazar e ir al estado 39
+    '('          desplazar e ir al estado 40
+    '['          desplazar e ir al estado 41
+    '{'          desplazar e ir al estado 42
+
+    constant_expression        ir al estado 43
+    primary_expression         ir al estado 44
+    unary_expression           ir al estado 45
+    multiplicative_expression  ir al estado 46
+    additive_expression        ir al estado 47
+    relational_expression      ir al estado 48
+    equality_expression        ir al estado 49
+    logical_not_expression     ir al estado 50
+    logical_and_expression     ir al estado 51
+    logical_or_expression      ir al estado 52
+    concat_expression          ir al estado 53
+    expression                 ir al estado 151
+    function_call              ir al estado 55
+    list_new                   ir al estado 56
+    dict_new                   ir al estado 57
+    list_get_item              ir al estado 58
+
+
+Estado 120
+
+   11 multiplicative_expression: expression . '*' expression
+   12                          | expression . '/' expression
+   13                          | expression . '%' expression
+   14 additive_expression: expression . '-' expression
+   15                    | expression . '+' expression
+   16 relational_expression: expression . OP_GT expression
+   16                      | expression OP_GT expression .
+   17                      | expression . OP_LT expression
+   18                      | expression . OP_GE expression
+   19                      | expression . OP_LE expression
+   20 equality_expression: expression . OP_NEQ expression
+   21                    | expression . OP_EQ expression
+   23 logical_and_expression: expression . OP_AND expression
+   24 logical_or_expression: expression . OP_OR expression
+   26 concat_expression: expression . OP_CONCAT expression
+
+    $default  reduce usando la regla 16 (relational_expression)
+
+
+Estado 121
+
+   11 multiplicative_expression: expression . '*' expression
+   12                          | expression . '/' expression
+   13                          | expression . '%' expression
+   14 additive_expression: expression . '-' expression
+   15                    | expression . '+' expression
+   16 relational_expression: expression . OP_GT expression
+   17                      | expression . OP_LT expression
+   17                      | expression OP_LT expression .
+   18                      | expression . OP_GE expression
+   19                      | expression . OP_LE expression
+   20 equality_expression: expression . OP_NEQ expression
+   21                    | expression . OP_EQ expression
+   23 logical_and_expression: expression . OP_AND expression
+   24 logical_or_expression: expression . OP_OR expression
+   26 concat_expression: expression . OP_CONCAT expression
+
+    $default  reduce usando la regla 17 (relational_expression)
+
+
+Estado 122
+
+   11 multiplicative_expression: expression . '*' expression
+   12                          | expression . '/' expression
+   13                          | expression . '%' expression
+   14 additive_expression: expression . '-' expression
+   15                    | expression . '+' expression
+   16 relational_expression: expression . OP_GT expression
+   17                      | expression . OP_LT expression
+   18                      | expression . OP_GE expression
+   18                      | expression OP_GE expression .
+   19                      | expression . OP_LE expression
+   20 equality_expression: expression . OP_NEQ expression
+   21                    | expression . OP_EQ expression
+   23 logical_and_expression: expression . OP_AND expression
+   24 logical_or_expression: expression . OP_OR expression
+   26 concat_expression: expression . OP_CONCAT expression
+
+    $default  reduce usando la regla 18 (relational_expression)
+
+
+Estado 123
+
+   11 multiplicative_expression: expression . '*' expression
+   12                          | expression . '/' expression
+   13                          | expression . '%' expression
+   14 additive_expression: expression . '-' expression
+   15                    | expression . '+' expression
+   16 relational_expression: expression . OP_GT expression
+   17                      | expression . OP_LT expression
+   18                      | expression . OP_GE expression
+   19                      | expression . OP_LE expression
+   19                      | expression OP_LE expression .
+   20 equality_expression: expression . OP_NEQ expression
+   21                    | expression . OP_EQ expression
+   23 logical_and_expression: expression . OP_AND expression
+   24 logical_or_expression: expression . OP_OR expression
+   26 concat_expression: expression . OP_CONCAT expression
+
+    $default  reduce usando la regla 19 (relational_expression)
+
+
+Estado 124
+
+   11 multiplicative_expression: expression . '*' expression
+   12                          | expression . '/' expression
+   13                          | expression . '%' expression
+   14 additive_expression: expression . '-' expression
+   15                    | expression . '+' expression
+   16 relational_expression: expression . OP_GT expression
+   17                      | expression . OP_LT expression
+   18                      | expression . OP_GE expression
+   19                      | expression . OP_LE expression
+   20 equality_expression: expression . OP_NEQ expression
+   21                    | expression . OP_EQ expression
+   21                    | expression OP_EQ expression .
+   23 logical_and_expression: expression . OP_AND expression
+   24 logical_or_expression: expression . OP_OR expression
+   26 concat_expression: expression . OP_CONCAT expression
+
+    $default  reduce usando la regla 21 (equality_expression)
+
+
+Estado 125
+
+   11 multiplicative_expression: expression . '*' expression
+   12                          | expression . '/' expression
+   13                          | expression . '%' expression
+   14 additive_expression: expression . '-' expression
+   15                    | expression . '+' expression
+   16 relational_expression: expression . OP_GT expression
+   17                      | expression . OP_LT expression
+   18                      | expression . OP_GE expression
+   19                      | expression . OP_LE expression
+   20 equality_expression: expression . OP_NEQ expression
+   20                    | expression OP_NEQ expression .
+   21                    | expression . OP_EQ expression
+   23 logical_and_expression: expression . OP_AND expression
+   24 logical_or_expression: expression . OP_OR expression
+   26 concat_expression: expression . OP_CONCAT expression
+
+    $default  reduce usando la regla 20 (equality_expression)
+
+
+Estado 126
+
+   11 multiplicative_expression: expression . '*' expression
+   12                          | expression . '/' expression
+   13                          | expression . '%' expression
+   14 additive_expression: expression . '-' expression
+   15                    | expression . '+' expression
+   16 relational_expression: expression . OP_GT expression
+   17                      | expression . OP_LT expression
+   18                      | expression . OP_GE expression
+   19                      | expression . OP_LE expression
+   20 equality_expression: expression . OP_NEQ expression
+   21                    | expression . OP_EQ expression
+   23 logical_and_expression: expression . OP_AND expression
+   23                       | expression OP_AND expression .
+   24 logical_or_expression: expression . OP_OR expression
+   26 concat_expression: expression . OP_CONCAT expression
+
+    OP_GT   desplazar e ir al estado 85
+    OP_LT   desplazar e ir al estado 86
+    OP_GE   desplazar e ir al estado 87
+    OP_LE   desplazar e ir al estado 88
+    OP_EQ   desplazar e ir al estado 89
+    OP_NEQ  desplazar e ir al estado 90
+
+    $default  reduce usando la regla 23 (logical_and_expression)
+
+
+Estado 127
+
+   11 multiplicative_expression: expression . '*' expression
+   12                          | expression . '/' expression
+   13                          | expression . '%' expression
+   14 additive_expression: expression . '-' expression
+   15                    | expression . '+' expression
+   16 relational_expression: expression . OP_GT expression
+   17                      | expression . OP_LT expression
+   18                      | expression . OP_GE expression
+   19                      | expression . OP_LE expression
+   20 equality_expression: expression . OP_NEQ expression
+   21                    | expression . OP_EQ expression
+   23 logical_and_expression: expression . OP_AND expression
+   24 logical_or_expression: expression . OP_OR expression
+   24                      | expression OP_OR expression .
+   26 concat_expression: expression . OP_CONCAT expression
+
+    OP_GT   desplazar e ir al estado 85
+    OP_LT   desplazar e ir al estado 86
+    OP_GE   desplazar e ir al estado 87
+    OP_LE   desplazar e ir al estado 88
+    OP_EQ   desplazar e ir al estado 89
+    OP_NEQ  desplazar e ir al estado 90
+
+    $default  reduce usando la regla 24 (logical_or_expression)
+
+
+Estado 128
+
+   11 multiplicative_expression: expression . '*' expression
+   12                          | expression . '/' expression
+   13                          | expression . '%' expression
+   14 additive_expression: expression . '-' expression
+   15                    | expression . '+' expression
+   16 relational_expression: expression . OP_GT expression
+   17                      | expression . OP_LT expression
+   18                      | expression . OP_GE expression
+   19                      | expression . OP_LE expression
+   20 equality_expression: expression . OP_NEQ expression
+   21                    | expression . OP_EQ expression
+   23 logical_and_expression: expression . OP_AND expression
+   24 logical_or_expression: expression . OP_OR expression
+   26 concat_expression: expression . OP_CONCAT expression
+   26                  | expression OP_CONCAT expression .
+
+    OP_GT   desplazar e ir al estado 85
+    OP_LT   desplazar e ir al estado 86
+    OP_GE   desplazar e ir al estado 87
+    OP_LE   desplazar e ir al estado 88
+    OP_EQ   desplazar e ir al estado 89
+    OP_NEQ  desplazar e ir al estado 90
+    OP_AND  desplazar e ir al estado 91
+    OP_OR   desplazar e ir al estado 92
+    '*'     desplazar e ir al estado 96
+    '/'     desplazar e ir al estado 97
+    '%'     desplazar e ir al estado 98
+
+    $default  reduce usando la regla 26 (concat_expression)
+
+
+Estado 129
+
+   11 multiplicative_expression: expression . '*' expression
+   12                          | expression . '/' expression
+   13                          | expression . '%' expression
+   14 additive_expression: expression . '-' expression
+   15                    | expression . '+' expression
+   15                    | expression '+' expression .
+   16 relational_expression: expression . OP_GT expression
+   17                      | expression . OP_LT expression
+   18                      | expression . OP_GE expression
+   19                      | expression . OP_LE expression
+   20 equality_expression: expression . OP_NEQ expression
+   21                    | expression . OP_EQ expression
+   23 logical_and_expression: expression . OP_AND expression
+   24 logical_or_expression: expression . OP_OR expression
+   26 concat_expression: expression . OP_CONCAT expression
+
+    OP_GT   desplazar e ir al estado 85
+    OP_LT   desplazar e ir al estado 86
+    OP_GE   desplazar e ir al estado 87
+    OP_LE   desplazar e ir al estado 88
+    OP_EQ   desplazar e ir al estado 89
+    OP_NEQ  desplazar e ir al estado 90
+    OP_AND  desplazar e ir al estado 91
+    OP_OR   desplazar e ir al estado 92
+    '*'     desplazar e ir al estado 96
+    '/'     desplazar e ir al estado 97
+    '%'     desplazar e ir al estado 98
+
+    $default  reduce usando la regla 15 (additive_expression)
+
+
+Estado 130
+
+   11 multiplicative_expression: expression . '*' expression
+   12                          | expression . '/' expression
+   13                          | expression . '%' expression
+   14 additive_expression: expression . '-' expression
+   14                    | expression '-' expression .
+   15                    | expression . '+' expression
+   16 relational_expression: expression . OP_GT expression
+   17                      | expression . OP_LT expression
+   18                      | expression . OP_GE expression
+   19                      | expression . OP_LE expression
+   20 equality_expression: expression . OP_NEQ expression
+   21                    | expression . OP_EQ expression
+   23 logical_and_expression: expression . OP_AND expression
+   24 logical_or_expression: expression . OP_OR expression
+   26 concat_expression: expression . OP_CONCAT expression
+
+    OP_GT   desplazar e ir al estado 85
+    OP_LT   desplazar e ir al estado 86
+    OP_GE   desplazar e ir al estado 87
+    OP_LE   desplazar e ir al estado 88
+    OP_EQ   desplazar e ir al estado 89
+    OP_NEQ  desplazar e ir al estado 90
+    OP_AND  desplazar e ir al estado 91
+    OP_OR   desplazar e ir al estado 92
+    '*'     desplazar e ir al estado 96
+    '/'     desplazar e ir al estado 97
+    '%'     desplazar e ir al estado 98
+
+    $default  reduce usando la regla 14 (additive_expression)
+
+
+Estado 131
+
+   11 multiplicative_expression: expression . '*' expression
+   11                          | expression '*' expression .
+   12                          | expression . '/' expression
+   13                          | expression . '%' expression
+   14 additive_expression: expression . '-' expression
+   15                    | expression . '+' expression
+   16 relational_expression: expression . OP_GT expression
+   17                      | expression . OP_LT expression
+   18                      | expression . OP_GE expression
+   19                      | expression . OP_LE expression
+   20 equality_expression: expression . OP_NEQ expression
+   21                    | expression . OP_EQ expression
+   23 logical_and_expression: expression . OP_AND expression
+   24 logical_or_expression: expression . OP_OR expression
+   26 concat_expression: expression . OP_CONCAT expression
+
+    OP_GT   desplazar e ir al estado 85
+    OP_LT   desplazar e ir al estado 86
+    OP_GE   desplazar e ir al estado 87
+    OP_LE   desplazar e ir al estado 88
+    OP_EQ   desplazar e ir al estado 89
+    OP_NEQ  desplazar e ir al estado 90
+    OP_AND  desplazar e ir al estado 91
+    OP_OR   desplazar e ir al estado 92
+
+    $default  reduce usando la regla 11 (multiplicative_expression)
+
+
+Estado 132
+
+   11 multiplicative_expression: expression . '*' expression
+   12                          | expression . '/' expression
+   12                          | expression '/' expression .
+   13                          | expression . '%' expression
+   14 additive_expression: expression . '-' expression
+   15                    | expression . '+' expression
+   16 relational_expression: expression . OP_GT expression
+   17                      | expression . OP_LT expression
+   18                      | expression . OP_GE expression
+   19                      | expression . OP_LE expression
+   20 equality_expression: expression . OP_NEQ expression
+   21                    | expression . OP_EQ expression
+   23 logical_and_expression: expression . OP_AND expression
+   24 logical_or_expression: expression . OP_OR expression
+   26 concat_expression: expression . OP_CONCAT expression
+
+    OP_GT   desplazar e ir al estado 85
+    OP_LT   desplazar e ir al estado 86
+    OP_GE   desplazar e ir al estado 87
+    OP_LE   desplazar e ir al estado 88
+    OP_EQ   desplazar e ir al estado 89
+    OP_NEQ  desplazar e ir al estado 90
+    OP_AND  desplazar e ir al estado 91
+    OP_OR   desplazar e ir al estado 92
+
+    $default  reduce usando la regla 12 (multiplicative_expression)
+
+
+Estado 133
+
+   11 multiplicative_expression: expression . '*' expression
+   12                          | expression . '/' expression
+   13                          | expression . '%' expression
+   13                          | expression '%' expression .
+   14 additive_expression: expression . '-' expression
+   15                    | expression . '+' expression
+   16 relational_expression: expression . OP_GT expression
+   17                      | expression . OP_LT expression
+   18                      | expression . OP_GE expression
+   19                      | expression . OP_LE expression
+   20 equality_expression: expression . OP_NEQ expression
+   21                    | expression . OP_EQ expression
+   23 logical_and_expression: expression . OP_AND expression
+   24 logical_or_expression: expression . OP_OR expression
+   26 concat_expression: expression . OP_CONCAT expression
+
+    OP_GT   desplazar e ir al estado 85
+    OP_LT   desplazar e ir al estado 86
+    OP_GE   desplazar e ir al estado 87
+    OP_LE   desplazar e ir al estado 88
+    OP_EQ   desplazar e ir al estado 89
+    OP_NEQ  desplazar e ir al estado 90
+    OP_AND  desplazar e ir al estado 91
+    OP_OR   desplazar e ir al estado 92
+
+    $default  reduce usando la regla 13 (multiplicative_expression)
+
+
+Estado 134
+
+   64 selection_statement: KIF expression statement_list KEND .
+
+    $default  reduce usando la regla 64 (selection_statement)
+
+
+Estado 135
+
+   65 selection_statement: KIF expression statement_list KELSE . statement_list KEND
+
+    error        desplazar e ir al estado 1
+    TIDENTIFIER  desplazar e ir al estado 2
+    TCONSTANT    desplazar e ir al estado 3
+    KIF          desplazar e ir al estado 4
+    KWHILE       desplazar e ir al estado 5
+    KDO          desplazar e ir al estado 6
+    KFUNCTION    desplazar e ir al estado 7
+    KFROM        desplazar e ir al estado 8
+    KRETURN      desplazar e ir al estado 9
+    KINCLUDE     desplazar e ir al estado 10
+
+    statement_list       ir al estado 152
+    statement            ir al estado 13
+    incdec_statement     ir al estado 14
+    include_declaration  ir al estado 15
+    declaration          ir al estado 16
+    selection_statement  ir al estado 17
+    iteration_statement  ir al estado 18
+    jump_statement       ir al estado 19
+    function_definition  ir al estado 20
+    function_call        ir al estado 21
+
+
+Estado 136
+
+   66 iteration_statement: KWHILE expression statement_list KEND .
+
+    $default  reduce usando la regla 66 (iteration_statement)
+
+
+Estado 137
+
+   11 multiplicative_expression: expression . '*' expression
+   12                          | expression . '/' expression
+   13                          | expression . '%' expression
+   14 additive_expression: expression . '-' expression
+   15                    | expression . '+' expression
+   16 relational_expression: expression . OP_GT expression
+   17                      | expression . OP_LT expression
+   18                      | expression . OP_GE expression
+   19                      | expression . OP_LE expression
+   20 equality_expression: expression . OP_NEQ expression
+   21                    | expression . OP_EQ expression
+   23 logical_and_expression: expression . OP_AND expression
+   24 logical_or_expression: expression . OP_OR expression
+   26 concat_expression: expression . OP_CONCAT expression
+   67 iteration_statement: KDO statement_list KWHEN expression .
+
+    OP_GT      desplazar e ir al estado 85
+    OP_LT      desplazar e ir al estado 86
+    OP_GE      desplazar e ir al estado 87
+    OP_LE      desplazar e ir al estado 88
+    OP_EQ      desplazar e ir al estado 89
+    OP_NEQ     desplazar e ir al estado 90
+    OP_AND     desplazar e ir al estado 91
+    OP_OR      desplazar e ir al estado 92
+    OP_CONCAT  desplazar e ir al estado 93
+    '+'        desplazar e ir al estado 94
+    '-'        desplazar e ir al estado 95
+    '*'        desplazar e ir al estado 96
+    '/'        desplazar e ir al estado 97
+    '%'        desplazar e ir al estado 98
+
+    $default  reduce usando la regla 67 (iteration_statement)
+
+
+Estado 138
+
+   76 identifier_list: TIDENTIFIER .
+
+    $default  reduce usando la regla 76 (identifier_list)
+
+
+Estado 139
+
+   70 function_definition: KFUNCTION TIDENTIFIER '(' identifier_list . ')' statement_list KEND
+   77 identifier_list: identifier_list . ',' TIDENTIFIER
+
+    ')'  desplazar e ir al estado 153
+    ','  desplazar e ir al estado 154
+
+
+Estado 140
+
+   68 iteration_statement: KFROM '(' declaration ';' . expression ';' declaration ')' statement_list KEND
+
+    TTRUE        desplazar e ir al estado 29
+    TFALSE       desplazar e ir al estado 30
+    TINT         desplazar e ir al estado 31
+    TLIT         desplazar e ir al estado 32
+    TNUMBER      desplazar e ir al estado 33
+    TSTRING      desplazar e ir al estado 34
+    TIDENTIFIER  desplazar e ir al estado 35
+    TCONSTANT    desplazar e ir al estado 36
+    '+'          desplazar e ir al estado 37
+    '-'          desplazar e ir al estado 38
+    '!'          desplazar e ir al estado 39
+    '('          desplazar e ir al estado 40
+    '['          desplazar e ir al estado 41
+    '{'          desplazar e ir al estado 42
+
+    constant_expression        ir al estado 43
+    primary_expression         ir al estado 44
+    unary_expression           ir al estado 45
+    multiplicative_expression  ir al estado 46
+    additive_expression        ir al estado 47
+    relational_expression      ir al estado 48
+    equality_expression        ir al estado 49
+    logical_not_expression     ir al estado 50
+    logical_and_expression     ir al estado 51
+    logical_or_expression      ir al estado 52
+    concat_expression          ir al estado 53
+    expression                 ir al estado 155
+    function_call              ir al estado 55
+    list_new                   ir al estado 56
+    dict_new                   ir al estado 57
+    list_get_item              ir al estado 58
+
+
+Estado 141
+
+   58 include_declaration: KINCLUDE '(' TLIT ')' .
+
+    $default  reduce usando la regla 58 (include_declaration)
+
+
+Estado 142
+
+   57 include_declaration: KINCLUDE '(' TSTRING ')' .
+
+    $default  reduce usando la regla 57 (include_declaration)
+
+
+Estado 143
+
+   11 multiplicative_expression: expression . '*' expression
+   12                          | expression . '/' expression
+   13                          | expression . '%' expression
+   14 additive_expression: expression . '-' expression
+   15                    | expression . '+' expression
+   16 relational_expression: expression . OP_GT expression
+   17                      | expression . OP_LT expression
+   18                      | expression . OP_GE expression
+   19                      | expression . OP_LE expression
+   20 equality_expression: expression . OP_NEQ expression
+   21                    | expression . OP_EQ expression
+   23 logical_and_expression: expression . OP_AND expression
+   24 logical_or_expression: expression . OP_OR expression
+   25 ternary_expression: expression '?' expression . ':' expression
+   26 concat_expression: expression . OP_CONCAT expression
+
+    OP_GT      desplazar e ir al estado 85
+    OP_LT      desplazar e ir al estado 86
+    OP_GE      desplazar e ir al estado 87
+    OP_LE      desplazar e ir al estado 88
+    OP_EQ      desplazar e ir al estado 89
+    OP_NEQ     desplazar e ir al estado 90
+    OP_AND     desplazar e ir al estado 91
+    OP_OR      desplazar e ir al estado 92
+    OP_CONCAT  desplazar e ir al estado 93
+    '+'        desplazar e ir al estado 94
+    '-'        desplazar e ir al estado 95
+    '*'        desplazar e ir al estado 96
+    '/'        desplazar e ir al estado 97
+    '%'        desplazar e ir al estado 98
+    ':'        desplazar e ir al estado 156
+
+
+Estado 144
+
+   73 argument_expression_list: expression ',' argument_expression_list .
+
+    $default  reduce usando la regla 73 (argument_expression_list)
+
+
+Estado 145
+
+   91 list_get_item: TIDENTIFIER '[' TINT ']' .
+
+    $default  reduce usando la regla 91 (list_get_item)
+
+
+Estado 146
+
+   90 list_get_item: TIDENTIFIER '[' TLIT ']' .
+
+    $default  reduce usando la regla 90 (list_get_item)
+
+
+Estado 147
+
+   89 list_get_item: TIDENTIFIER '[' TSTRING ']' .
+
+    $default  reduce usando la regla 89 (list_get_item)
+
+
+Estado 148
+
+   92 list_get_item: TIDENTIFIER '[' TIDENTIFIER ']' .
+
+    $default  reduce usando la regla 92 (list_get_item)
+
+
+Estado 149
+
+   80 list_items: expression ',' list_items .
+
+    $default  reduce usando la regla 80 (list_items)
+
+
+Estado 150
+
+   83 dict_items: dict_item ',' dict_items .
+
+    $default  reduce usando la regla 83 (dict_items)
+
+
+Estado 151
+
+   11 multiplicative_expression: expression . '*' expression
+   12                          | expression . '/' expression
+   13                          | expression . '%' expression
+   14 additive_expression: expression . '-' expression
+   15                    | expression . '+' expression
+   16 relational_expression: expression . OP_GT expression
+   17                      | expression . OP_LT expression
+   18                      | expression . OP_GE expression
+   19                      | expression . OP_LE expression
+   20 equality_expression: expression . OP_NEQ expression
+   21                    | expression . OP_EQ expression
+   23 logical_and_expression: expression . OP_AND expression
+   24 logical_or_expression: expression . OP_OR expression
+   26 concat_expression: expression . OP_CONCAT expression
+   86 dict_item: key ':' expression .
+
+    OP_GT      desplazar e ir al estado 85
+    OP_LT      desplazar e ir al estado 86
+    OP_GE      desplazar e ir al estado 87
+    OP_LE      desplazar e ir al estado 88
+    OP_EQ      desplazar e ir al estado 89
+    OP_NEQ     desplazar e ir al estado 90
+    OP_AND     desplazar e ir al estado 91
+    OP_OR      desplazar e ir al estado 92
+    OP_CONCAT  desplazar e ir al estado 93
+    '+'        desplazar e ir al estado 94
+    '-'        desplazar e ir al estado 95
+    '*'        desplazar e ir al estado 96
+    '/'        desplazar e ir al estado 97
+    '%'        desplazar e ir al estado 98
+
+    $default  reduce usando la regla 86 (dict_item)
+
+
+Estado 152
+
+   65 selection_statement: KIF expression statement_list KELSE statement_list . KEND
+
+    KEND  desplazar e ir al estado 157
+
+
+Estado 153
+
+   70 function_definition: KFUNCTION TIDENTIFIER '(' identifier_list ')' . statement_list KEND
+
+    error        desplazar e ir al estado 1
+    TIDENTIFIER  desplazar e ir al estado 2
+    TCONSTANT    desplazar e ir al estado 3
+    KIF          desplazar e ir al estado 4
+    KWHILE       desplazar e ir al estado 5
+    KDO          desplazar e ir al estado 6
+    KFUNCTION    desplazar e ir al estado 7
+    KFROM        desplazar e ir al estado 8
+    KRETURN      desplazar e ir al estado 9
+    KINCLUDE     desplazar e ir al estado 10
+
+    statement_list       ir al estado 158
+    statement            ir al estado 13
+    incdec_statement     ir al estado 14
+    include_declaration  ir al estado 15
+    declaration          ir al estado 16
+    selection_statement  ir al estado 17
+    iteration_statement  ir al estado 18
+    jump_statement       ir al estado 19
+    function_definition  ir al estado 20
+    function_call        ir al estado 21
+
+
+Estado 154
+
+   77 identifier_list: identifier_list ',' . TIDENTIFIER
+
+    TIDENTIFIER  desplazar e ir al estado 159
+
+
+Estado 155
+
+   11 multiplicative_expression: expression . '*' expression
+   12                          | expression . '/' expression
+   13                          | expression . '%' expression
+   14 additive_expression: expression . '-' expression
+   15                    | expression . '+' expression
+   16 relational_expression: expression . OP_GT expression
+   17                      | expression . OP_LT expression
+   18                      | expression . OP_GE expression
+   19                      | expression . OP_LE expression
+   20 equality_expression: expression . OP_NEQ expression
+   21                    | expression . OP_EQ expression
+   23 logical_and_expression: expression . OP_AND expression
+   24 logical_or_expression: expression . OP_OR expression
+   26 concat_expression: expression . OP_CONCAT expression
+   68 iteration_statement: KFROM '(' declaration ';' expression . ';' declaration ')' statement_list KEND
+
+    OP_GT      desplazar e ir al estado 85
+    OP_LT      desplazar e ir al estado 86
+    OP_GE      desplazar e ir al estado 87
+    OP_LE      desplazar e ir al estado 88
+    OP_EQ      desplazar e ir al estado 89
+    OP_NEQ     desplazar e ir al estado 90
+    OP_AND     desplazar e ir al estado 91
+    OP_OR      desplazar e ir al estado 92
+    OP_CONCAT  desplazar e ir al estado 93
+    '+'        desplazar e ir al estado 94
+    '-'        desplazar e ir al estado 95
+    '*'        desplazar e ir al estado 96
+    '/'        desplazar e ir al estado 97
+    '%'        desplazar e ir al estado 98
+    ';'        desplazar e ir al estado 160
+
+
+Estado 156
+
+   25 ternary_expression: expression '?' expression ':' . expression
+
+    TTRUE        desplazar e ir al estado 29
+    TFALSE       desplazar e ir al estado 30
+    TINT         desplazar e ir al estado 31
+    TLIT         desplazar e ir al estado 32
+    TNUMBER      desplazar e ir al estado 33
+    TSTRING      desplazar e ir al estado 34
+    TIDENTIFIER  desplazar e ir al estado 35
+    TCONSTANT    desplazar e ir al estado 36
+    '+'          desplazar e ir al estado 37
+    '-'          desplazar e ir al estado 38
+    '!'          desplazar e ir al estado 39
+    '('          desplazar e ir al estado 40
+    '['          desplazar e ir al estado 41
+    '{'          desplazar e ir al estado 42
+
+    constant_expression        ir al estado 43
+    primary_expression         ir al estado 44
+    unary_expression           ir al estado 45
+    multiplicative_expression  ir al estado 46
+    additive_expression        ir al estado 47
+    relational_expression      ir al estado 48
+    equality_expression        ir al estado 49
+    logical_not_expression     ir al estado 50
+    logical_and_expression     ir al estado 51
+    logical_or_expression      ir al estado 52
+    concat_expression          ir al estado 53
+    expression                 ir al estado 161
+    function_call              ir al estado 55
+    list_new                   ir al estado 56
+    dict_new                   ir al estado 57
+    list_get_item              ir al estado 58
+
+
+Estado 157
+
+   65 selection_statement: KIF expression statement_list KELSE statement_list KEND .
+
+    $default  reduce usando la regla 65 (selection_statement)
+
+
+Estado 158
+
+   70 function_definition: KFUNCTION TIDENTIFIER '(' identifier_list ')' statement_list . KEND
+
+    KEND  desplazar e ir al estado 162
+
+
+Estado 159
+
+   77 identifier_list: identifier_list ',' TIDENTIFIER .
+
+    $default  reduce usando la regla 77 (identifier_list)
+
+
+Estado 160
+
+   68 iteration_statement: KFROM '(' declaration ';' expression ';' . declaration ')' statement_list KEND
+
+    TIDENTIFIER  desplazar e ir al estado 103
+    TCONSTANT    desplazar e ir al estado 3
+
+    incdec_statement  ir al estado 14
+    declaration       ir al estado 163
+
+
+Estado 161
+
+   11 multiplicative_expression: expression . '*' expression
+   12                          | expression . '/' expression
+   13                          | expression . '%' expression
+   14 additive_expression: expression . '-' expression
+   15                    | expression . '+' expression
+   16 relational_expression: expression . OP_GT expression
+   17                      | expression . OP_LT expression
+   18                      | expression . OP_GE expression
+   19                      | expression . OP_LE expression
+   20 equality_expression: expression . OP_NEQ expression
+   21                    | expression . OP_EQ expression
+   23 logical_and_expression: expression . OP_AND expression
+   24 logical_or_expression: expression . OP_OR expression
+   25 ternary_expression: expression '?' expression ':' expression .
+   26 concat_expression: expression . OP_CONCAT expression
+
+    OP_GT      desplazar e ir al estado 85
+    OP_LT      desplazar e ir al estado 86
+    OP_GE      desplazar e ir al estado 87
+    OP_LE      desplazar e ir al estado 88
+    OP_EQ      desplazar e ir al estado 89
+    OP_NEQ     desplazar e ir al estado 90
+    OP_AND     desplazar e ir al estado 91
+    OP_OR      desplazar e ir al estado 92
+    OP_CONCAT  desplazar e ir al estado 93
+    '+'        desplazar e ir al estado 94
+    '-'        desplazar e ir al estado 95
+    '*'        desplazar e ir al estado 96
+    '/'        desplazar e ir al estado 97
+    '%'        desplazar e ir al estado 98
+
+    $default  reduce usando la regla 25 (ternary_expression)
+
+
+Estado 162
+
+   70 function_definition: KFUNCTION TIDENTIFIER '(' identifier_list ')' statement_list KEND .
+
+    $default  reduce usando la regla 70 (function_definition)
+
+
+Estado 163
+
+   68 iteration_statement: KFROM '(' declaration ';' expression ';' declaration . ')' statement_list KEND
+
+    ')'  desplazar e ir al estado 164
+
+
+Estado 164
+
+   68 iteration_statement: KFROM '(' declaration ';' expression ';' declaration ')' . statement_list KEND
+
+    error        desplazar e ir al estado 1
+    TIDENTIFIER  desplazar e ir al estado 2
+    TCONSTANT    desplazar e ir al estado 3
+    KIF          desplazar e ir al estado 4
+    KWHILE       desplazar e ir al estado 5
+    KDO          desplazar e ir al estado 6
+    KFUNCTION    desplazar e ir al estado 7
+    KFROM        desplazar e ir al estado 8
+    KRETURN      desplazar e ir al estado 9
+    KINCLUDE     desplazar e ir al estado 10
+
+    statement_list       ir al estado 165
+    statement            ir al estado 13
+    incdec_statement     ir al estado 14
+    include_declaration  ir al estado 15
+    declaration          ir al estado 16
+    selection_statement  ir al estado 17
+    iteration_statement  ir al estado 18
+    jump_statement       ir al estado 19
+    function_definition  ir al estado 20
+    function_call        ir al estado 21
+
+
+Estado 165
+
+   68 iteration_statement: KFROM '(' declaration ';' expression ';' declaration ')' statement_list . KEND
+
+    KEND  desplazar e ir al estado 166
+
+
+Estado 166
+
+   68 iteration_statement: KFROM '(' declaration ';' expression ';' declaration ')' statement_list KEND .
+
+    $default  reduce usando la regla 68 (iteration_statement)

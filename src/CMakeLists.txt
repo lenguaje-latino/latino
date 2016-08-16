@@ -19,7 +19,7 @@ ENDIF(UNIX)
 ADD_DEFINITIONS(-D_DEBUG -D__STDC_CONSTANT_MACROS -D__STDC_FORMAT_MACROS -D__STDC_LIMIT_MACROS)
 ADD_SUBDIRECTORY(linenoise)
 
-SET(SOURCES k__dic_calcula_hash.h
+SET(SOURCES khash.h
     latino.h ast.h vm.h object.h libstring.h libmem.h liblist.h
     lex.h parse.h libmath.h libio.h linenoise/utf8.h linenoise/linenoise.h libnet.h libdict.h
     latino.c ast.c vm.c object.c libstring.c libmem.c liblist.c
