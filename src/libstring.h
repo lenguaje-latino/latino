@@ -59,10 +59,10 @@ char* __str_duplicar(const char* s);
   */
 char* __str_analizar(const char* s, size_t n);
 
-/**\brief __str_concatenarena dos cadenas
+/**\brief concatena dos cadenas
   *
-  *\param s1: Cadena 1 a __str_concatenar
-  *\param s2: Cadena 2 a __str_concatenar
+  *\param s1: Cadena 1 a concatena
+  *\param s2: Cadena 2 a concatena
   *\return char*: Apuntador a cadena resultado de s1 + s2
   */
 char* __str_concatenar(char* s1, char* s2);
@@ -213,7 +213,7 @@ char *__str_quitar_espacios(const char* str);
   */
 void lat_comparar(lat_vm* vm);
 
-/** __str_concatenar: Une dos cadenas
+/** concatenar: Une dos cadenas
   *
   * \param vm: Maquina virtual de latino
   *

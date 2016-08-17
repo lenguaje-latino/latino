@@ -105,7 +105,7 @@ typedef enum {
   NODO_DESDE,   /**< Nodo desde */
   NODO_INCREMENTO,   /**< Nodo incremento */
   NODO_DECREMENTO,   /**< Nodo decremento */
-  NODO_CONCATENAR,   /**< Nodo __str_concatenar */
+  NODO_CONCATENAR,   /**< Nodo concatenar */
   NODO_LISTA,   /**< Nodo lista nueva */
   NODO_LISTA_ASIGNAR_ELEMENTO,   /**< Nodo asignar un nuevo valor a un elemento de la lista */
   NODO_LISTA_AGREGAR_ELEMENTO,   /**< Nodo agregar elemento a una lista */

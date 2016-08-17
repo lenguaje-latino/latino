@@ -110,14 +110,14 @@ lat_vm* lat_crear_maquina_virtual()
 
     /*30 funciones para cadenas (string)*/
     registrar_cfuncion(vm, "comparar", lat_comparar);
-    registrar_cfuncion(vm, "__str_concatenar", lat_concatenar);
+    registrar_cfuncion(vm, "concatenar", lat_concatenar);
     registrar_cfuncion(vm, ".", lat_concatenar);
     registrar_cfuncion(vm, "contiene", lat_contiene);
     registrar_cfuncion(vm, "copiar", lat_copiar);
     registrar_cfuncion(vm, "termina_con", lat_termina_con);
     registrar_cfuncion(vm, "es_igual", lat_es_igual);
     registrar_cfuncion(vm, "indice", lat_indice);
-    registrar_cfuncion(vm, "__str_insertarar", lat_insertar);
+    registrar_cfuncion(vm, "insertar", lat_insertar);
     registrar_cfuncion(vm, "ultimo_indice", lat_ultimo_indice);
     registrar_cfuncion(vm, "rellenar_izquierda", lat_rellenar_izquierda);
     registrar_cfuncion(vm, "rellenar_derecha", lat_rellenar_derecha);

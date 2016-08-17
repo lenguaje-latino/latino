@@ -407,7 +407,6 @@ char* __str_subcadena(const char* str, int beg, int n)
     char *ret = malloc(n + 1);
     strncpy(ret, (str + beg), n);
     *(ret + n) = 0;
-
     return ret;
 }
 
@@ -473,13 +472,8 @@ void lat_comparar(lat_vm* vm)
 
 void lat_concatenar(lat_vm* vm)
 {
-    //lat_imprimir_lista(vm, vm->pila);
-    //printf("%s\n", "antes de __str_concatenarenando\n");
     lat_objeto* b = lat_desapilar(vm);
-    //lat_imprimir_lista(vm, vm->pila);
     lat_objeto* a = lat_desapilar(vm);
-    //lat_imprimir_lista(vm, vm->pila);
-
     lat_objeto* x = NULL;
     lat_objeto* y = NULL;
     switch (a->type)
@@ -497,7 +491,6 @@ void lat_concatenar(lat_vm* vm)
         x = lat_cadena_nueva(vm, a->data.str);
         break;
     }
-
     switch (b->type)
     {
     case T_BOOL:
@@ -513,9 +506,7 @@ void lat_concatenar(lat_vm* vm)
         y = lat_cadena_nueva(vm, b->data.str);
         break;
     }
-    //lat_imprimir_lista(vm, vm->pila);
     vm->registros[255] = lat_cadena_nueva(vm, __str_concatenar(lat_obtener_cadena(x), lat_obtener_cadena(y)));
-    //printf("%s\n", "despues de __str_concatenarenando\n");
 }
 
 void lat_contiene(lat_vm* vm)
@@ -569,7 +560,6 @@ void lat_es_igual(lat_vm* vm)
 
 /*
 void lat_format(lat_vm* vm){
-
 }
 */
 
@@ -714,5 +704,5 @@ void lat_es_numero(lat_vm* vm)
         vm->registros[255] = vm->objeto_cierto;
     }else{
         vm->registros[255] = vm->objeto_falso;
-    }       
+    }
 }
