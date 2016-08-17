@@ -58,7 +58,7 @@ lat_objeto* lat_obtener_contexto_objeto(lat_objeto* ns, lat_objeto* name)
     else
     {
         hash_map* h = ns->data.nombre;
-		lat_objeto* ret = (lat_objeto*) ___dic_obtener(h, lat_obtener_cadena(name));
+		    lat_objeto* ret = (lat_objeto*) ___dic_obtener(h, lat_obtener_cadena(name));
         if (ret == NULL)
         {
             lat_error("Variable \"%s\" indefinida", lat_obtener_cadena(name));
@@ -209,6 +209,7 @@ lat_objeto* lat_clonar_objeto(lat_vm* vm, lat_objeto* obj)
         ret->marked = obj->marked;
         ret->data_size = obj->data_size;
         ret->data = obj->data;
+        ret->num_param = obj->num_param;
         break;
     }
     return ret;

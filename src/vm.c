@@ -33,6 +33,7 @@ THE SOFTWARE.
 #include "libio.h"
 #include "liblist.h"
 #include "libnet.h"
+#include "parse.h"
 
 static void registrar_cfuncion(lat_vm* vm, char *palabra_reservada, void (*function)(lat_vm* vm))
 {
@@ -451,7 +452,7 @@ void lat_clonar(lat_vm* vm)
 }
 
 void lat_sumar(lat_vm* vm)
-{    
+{
     lat_objeto* b = lat_desapilar(vm);
     lat_objeto* a = lat_desapilar(vm);
     if ((a->type != T_INT && a->type != T_DOUBLE) || (b->type != T_INT && b->type != T_DOUBLE))
@@ -818,14 +819,28 @@ void lat_llamar_funcion(lat_vm* vm, lat_objeto* func)
 #endif
                 break;
             case OP_GET:
-                vm->registros[cur.a] = lat_obtener_contexto_objeto(vm->registros[cur.b], vm->registros[cur.a]);
+            {
+                lat_objeto* contexto = vm->registros[cur.b];
+                lat_objeto* nombre = vm->registros[cur.a];
+                vm->registros[cur.a] = lat_obtener_contexto_objeto(contexto, nombre);
+                if(vm->registros[cur.a]->type == T_FUNC){
+                    if(__lista_longitud(vm->pila) != nombre->num_param){
+                        /*TODO: Agregar manejo de excepciones*/
+                        lat_fatal_error("Numero incorrecto de parametros en funcion '%s'\n", nombre->data.str);
+                    }
+                }
 #if DEPURAR_MV
             printf("GET ");
-            imprimir_objeto(vm->registros[cur.a]);
-            printf("\t");
             imprimir_objeto(vm->registros[cur.b]);
+            printf("\t");
+            imprimir_objeto(vm->registros[cur.a]);
             printf("\n");
+            /*printf("type %i\n", vm->registros[cur.a]->type);
+            printf("num_param %i\n", nombre->num_param );
+            lat_imprimir_lista(vm, vm->pila);
+            printf("\n");*/
 #endif
+            }
                 break;
             case OP_SET:
                 lat_asignar_contexto_objeto(vm->registros[cur.b], lat_clonar_objeto(vm, ((lat_objeto*)cur.meta)), vm->registros[cur.a]);
@@ -981,6 +996,11 @@ void lat_llamar_funcion(lat_vm* vm, lat_objeto* func)
             case OP_CALL:
 				if (vm->registros[cur.a] != NULL)
 				{
+#if DEPURAR_MV
+            printf("CALL ");
+            imprimir_objeto(vm->registros[cur.a]);
+            printf("...\n");
+#endif
 					lat_objeto* fun = (lat_objeto*) vm->registros[cur.a];
 					lat_llamar_funcion(vm, fun);
 					/*

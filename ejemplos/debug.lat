@@ -1,13 +1,117 @@
-/*######################################################################
-#Para debuguear en visual studio:
-#Menu propiedades del proyecto-> Debugging -> Command Arguments. Agregar
-#$(SolutionDir)..\ejemplos\debug.lat
-#######################################################################*/
+/*
+Para debuguear en visual studio:
+Menu propiedades del proyecto-> Debugging -> Command Arguments. Agregar
+$(SolutionDir)..\ejemplos\debug.lat
+*/
 
 #esta es una funcion que recibe 2 parametros
 funcion sumar(a,b)
-  retorno a+b
+  retorno a + b
 fin
-
 s = sumar(1) //numero de argumentos insuficientes
 escribir(s)
+
+/*
+>>INICIO NODO_LISTA_PARAMETROS
+LOCALNS R1
+POP R2
+SET R2 R1 b
+>>INICIO NODO_LISTA_PARAMETROS
+LOCALNS R1
+POP R2
+SET R2 R1 a
+<<FIN NODO_LISTA_PARAMETROS
+<<FIN NODO_LISTA_PARAMETROS
+>>INICIO NODO_FUNCION_ARGUMENTOS
+LOCALNS R1
+STORESTR R2 a
+GET R2 R1
+MOV R255 R2
+PUSH R255
+LOCALNS R1
+STORESTR R2 b
+GET R2 R1
+MOV R255 R2
+PUSH R255
+<<FIN NODO_FUNCION_ARGUMENTOS
+LOCALNS R1
+STORESTR R2 +
+GET R2 R1
+MOV R255 R2
+CALL R255
+END R255
+FN R255
+PUSH R255 R0
+LOCALNS R1
+POP R255 R0
+SET R255 R1
+num_param 2
+>>INICIO NODO_FUNCION_ARGUMENTOS
+STOREINT R255 1
+PUSH R255
+<<FIN NODO_FUNCION_ARGUMENTOS
+LOCALNS R1
+STORESTR R2 sumar
+GET R2 R1
+MOV R255 R2
+CALL R255
+PUSH R255 R0
+LOCALNS R1
+POP R255 R0
+SET R255 R1
+num_param 0
+>>INICIO NODO_FUNCION_ARGUMENTOS
+LOCALNS R1
+STORESTR R2 s
+GET R2 R1
+MOV R255 R2
+PUSH R255
+<<FIN NODO_FUNCION_ARGUMENTOS
+LOCALNS R1
+STORESTR R2 escribir
+GET R2 R1
+MOV R255 R2
+CALL R255
+Ejecutando...
+0	FN funcion
+1	PUSH funcion
+2	LOCALNS objeto
+3	POP funcion
+4	SET funcion	objeto
+5	STOREINT 1
+6	PUSH 1
+7	LOCALNS objeto
+8	STORESTR sumar
+9	GET objeto	funcion
+num_param 2
+10	MOV funcion	funcion
+11	Ejecutando...
+0	LOCALNS objeto
+1	POP 1
+2	SET 1	objeto
+3	LOCALNS objeto
+Error: Pila vacia
+4	POP nulo
+5	SET nulo	objeto
+6	LOCALNS objeto
+7	STORESTR a
+Error: Variable "a" indefinida
+8	GET objeto	nulo
+num_param 1180651332
+9	MOV nulo	nulo
+10	PUSH nulo
+11	LOCALNS objeto
+12	STORESTR b
+13	GET objeto	1
+num_param 1918987637
+14	MOV 1	1
+15	PUSH 1
+16	LOCALNS objeto
+17	STORESTR +
+18	GET objeto	c_funcion
+num_param 0
+19	MOV c_funcion	c_funcion
+Error: Pila vacia
+Error: Pila vacia
+Violación de segmento (`core' generado)
+*/
