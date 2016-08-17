@@ -472,7 +472,6 @@ static int nodo_analizar(lat_vm *vm, ast *node, lat_bytecode *bcode, int i)
     			}
     		}
     		ret->num_param = num_params;
-
         dbc(OP_LOCALNS, 1, 0, NULL);
         dbc(OP_POP, 255, 0, NULL);
         dbc(OP_SET, 255, 1, ret);
@@ -613,36 +612,10 @@ static int nodo_analizar(lat_vm *vm, ast *node, lat_bytecode *bcode, int i)
         {
                 pn(vm, node->r);
         }
-        /*int num_args = 0;
-        if (node->r)
-        {
-            pn(vm, node->r);
-			//contamos el numero de argumentos de la llamada a funcion
-			ast* tmp;
-			if (node->r->tipo == NODO_FUNCION_ARGUMENTOS){
-				tmp = node->r->r;
-				while (tmp != NULL && tmp->tipo == NODO_FUNCION_ARGUMENTOS){
-					tmp = tmp->r;
-					num_args++;
-				}
-				if (tmp != NULL && tmp->tipo){
-					num_args++;
-				}
-				if (node->r->l->tipo){
-					num_args++;
-				}
-			}
-        }*/
         pn(vm, node->l);
-        //dbc(OP_CALL, 255, (void*) num_args, NULL);
         dbc(OP_CALL, 255, NULL, NULL);
-        /*if (node->r)
-        {
-                pn(vm, node->r);
-        }*/
 #if DEPURAR_AST
-        //printf("CALL R255 %i\n", num_args);
-		printf("CALL R255\n");
+        printf("CALL R255\n");
 #endif
     }
     break;
