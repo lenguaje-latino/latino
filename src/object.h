@@ -76,7 +76,7 @@ typedef union lat_datos_objeto
     list_node* lista;  /**< valor de la lista */
     hash_map* dict;  /**< valor del diccionario */
     void* func;  /**< valor funcion */
-    void (*cfunc)(lat_vm*);  /**< valor funcion C */    
+    void (*cfunc)(lat_vm*);  /**< valor funcion C */
 } lat_datos_objeto;
 
 /** \brief Objeto
@@ -90,7 +90,7 @@ typedef struct lat_objeto
     size_t data_size;   /**< Tamanio de la informacion */
     bool es_constante;   /**< Valida si es una constante */
     int num_declared;   /**< Numero de veces declarado */
-	//int num_param;		/**<Numero de parametros de una funcion definida por el usuario */
+    int num_param;		/**<Numero de parametros de una funcion definida por el usuario */
     lat_datos_objeto data;   /**< Informacion del objeto */
 }lat_objeto;
 

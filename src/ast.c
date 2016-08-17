@@ -444,7 +444,7 @@ static int nodo_analizar(lat_vm *vm, ast *node, lat_bytecode *bcode, int i)
 #if DEPURAR_AST
         printf("PUSH R255 R0\n");
 #endif
-		/*Nombre de la variable o funcion*/
+		    /*Nombre de la variable o funcion*/
         lat_objeto *ret = lat_cadena_nueva(vm, node->r->valor->v.s);
         if (ret->num_declared < 0)
         {
@@ -456,24 +456,23 @@ static int nodo_analizar(lat_vm *vm, ast *node, lat_bytecode *bcode, int i)
         {
             lat_error("Linea %d: %s", (node->r->valor->num_linea + 1),  "Intento de asignar un nuevo valor a una CONSTANTE ");
         }
-		//Si es una funcion contamos el numero de parametros que necesita
-		/*
-		int num_params = 0;
-		if (node->l->tipo == NODO_FUNCION_USUARIO){
-			ast* tmp;
-			if (node->l->l->tipo == NODO_LISTA_PARAMETROS){
-				tmp = node->l->l;
-				while (tmp->r != NULL && tmp->r->tipo == NODO_LISTA_PARAMETROS){
-					tmp = tmp->r;
-					num_params++;
-				}
-				if (tmp->l->tipo){
-					num_params++;
-				}
-			}
-		}
-		ret->num_param = num_params;
-		*/
+    		//Si es una funcion contamos el numero de parametros que necesita
+    		int num_params = 0;
+    		if (node->l->tipo == NODO_FUNCION_USUARIO){
+    			ast* tmp;
+    			if (node->l->l->tipo == NODO_LISTA_PARAMETROS){
+    				tmp = node->l->l;
+    				while (tmp->r != NULL && tmp->r->tipo == NODO_LISTA_PARAMETROS){
+    					tmp = tmp->r;
+    					num_params++;
+    				}
+    				if (tmp->l->tipo){
+    					num_params++;
+    				}
+    			}
+    		}
+    		ret->num_param = num_params;
+
         dbc(OP_LOCALNS, 1, 0, NULL);
         dbc(OP_POP, 255, 0, NULL);
         dbc(OP_SET, 255, 1, ret);
@@ -481,6 +480,7 @@ static int nodo_analizar(lat_vm *vm, ast *node, lat_bytecode *bcode, int i)
         printf("LOCALNS R1\n");
         printf("POP R255 R0\n");
         printf("SET R255 R1\n");
+        printf("num_param %i\n", ret->num_param );
 #endif
     }
     break;
@@ -609,11 +609,11 @@ static int nodo_analizar(lat_vm *vm, ast *node, lat_bytecode *bcode, int i)
     break;
     case NODO_FUNCION_LLAMADA:
     {
-		if (node->r)
-		{
-			pn(vm, node->r);
-		}
-		/*int num_args = 0;
+        if (node->r)
+        {
+                pn(vm, node->r);
+        }
+        /*int num_args = 0;
         if (node->r)
         {
             pn(vm, node->r);
@@ -634,12 +634,12 @@ static int nodo_analizar(lat_vm *vm, ast *node, lat_bytecode *bcode, int i)
 			}
         }*/
         pn(vm, node->l);
-		//dbc(OP_CALL, 255, (void*) num_args, NULL);
-		dbc(OP_CALL, 255, NULL, NULL);
-		/*if (node->r)
-		{
-			pn(vm, node->r);
-		}*/
+        //dbc(OP_CALL, 255, (void*) num_args, NULL);
+        dbc(OP_CALL, 255, NULL, NULL);
+        /*if (node->r)
+        {
+                pn(vm, node->r);
+        }*/
 #if DEPURAR_AST
         //printf("CALL R255 %i\n", num_args);
 		printf("CALL R255\n");
@@ -657,6 +657,9 @@ static int nodo_analizar(lat_vm *vm, ast *node, lat_bytecode *bcode, int i)
     break;
     case NODO_FUNCION_ARGUMENTOS:
     {
+#if DEPURAR_AST
+            printf(">>INICIO NODO_FUNCION_ARGUMENTOS\n");
+#endif
         if (node->l)
         {
             pn(vm, node->l);
@@ -677,10 +680,16 @@ static int nodo_analizar(lat_vm *vm, ast *node, lat_bytecode *bcode, int i)
 #endif
             }
         }
+#if DEPURAR_AST
+            printf("<<FIN NODO_FUNCION_ARGUMENTOS\n");
+#endif
     }
     break;
     case NODO_LISTA_PARAMETROS:
     {
+#if DEPURAR_AST
+            printf(">>INICIO NODO_LISTA_PARAMETROS\n");
+#endif
         if (node->l)
         {
             dbc(OP_LOCALNS, 1, 0, NULL);
@@ -697,16 +706,21 @@ static int nodo_analizar(lat_vm *vm, ast *node, lat_bytecode *bcode, int i)
         {
             pn(vm, node->r);
         }
+#if DEPURAR_AST
+            printf("<<FIN NODO_LISTA_PARAMETROS\n");
+#endif
     }
     break;
     case NODO_FUNCION_USUARIO:
     {
         funcion_bcode = (lat_bytecode *)__memoria_asignar(sizeof(lat_bytecode) * MAX_BYTECODE_FUNCTION);
         fi = 0;
+        /* procesar lista de argumentos */
         if (node->l)
         {
             fpn(vm, node->l);
         }
+        /* procesar instrucciones */
         fpn(vm, node->r);
         dbc(OP_FN, 255, 0, funcion_bcode);
 #if DEPURAR_AST

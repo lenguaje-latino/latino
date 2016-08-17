@@ -96,6 +96,13 @@ THE SOFTWARE.
     fprintf(stderr, "Error: " M "\n", ##__VA_ARGS__); \
   }
 
+/* Envia un mensaje de error */
+#define lat_fatal_error(M, ...)                               \
+  {                                                   \
+    fprintf(stderr, "Error: " M "\n", ##__VA_ARGS__); \
+    exit(1);  \
+  }
+
 /** Indica si se desea debuguear el parser de bison */
 extern int debug;
 
