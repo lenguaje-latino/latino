@@ -46,7 +46,7 @@ static char *buffer;
 
 int yyparse(ast **root, yyscan_t scanner);
 
-ast *lat_analizar_expresion(lat_vm* vm, char* expr, int* status)
+ast *lat_analizar_expresion(char* expr, int* status)
 {
     setlocale (LC_ALL, "");
     ast *ret = NULL;
@@ -61,7 +61,7 @@ ast *lat_analizar_expresion(lat_vm* vm, char* expr, int* status)
     return ret;
 }
 
-ast *lat_analizar_archivo(lat_vm* vm, char *infile)
+ast *lat_analizar_archivo(char *infile)
 {
     if (infile == NULL)
     {
@@ -101,7 +101,7 @@ ast *lat_analizar_archivo(lat_vm* vm, char *infile)
     }
     buffer[newSize] = '\0';
     int status;
-    return lat_analizar_expresion(vm, buffer, &status);
+    return lat_analizar_expresion(buffer, &status);
 }
 /**
  * Muestra la version de latino en la consola
@@ -142,9 +142,8 @@ void lat_ayuda()
     printf("%s%s\n", "HOME         : ", getenv("HOME"));
 }
 
-static int leer_linea(lat_vm *vm, char* buffer){
+static int leer_linea(char* buffer){
     parse_silent = 1;
-    int resultado;
     char *input;
     char *tmp = "";
     REPETIR:
@@ -156,7 +155,7 @@ static int leer_linea(lat_vm *vm, char* buffer){
         tmp = __str_concatenar(tmp, "\n");
         tmp = __str_concatenar(tmp, input);
         int estatus;
-        lat_analizar_expresion(vm, tmp, &estatus);
+        lat_analizar_expresion(tmp, &estatus);
         if(estatus == 1){
             goto REPETIR;
         }else{
@@ -164,7 +163,6 @@ static int leer_linea(lat_vm *vm, char* buffer){
             return 0;
         }
     }
-    return resultado;
 }
 
 static void completion(const char *buf, linenoiseCompletions *lc) {
@@ -277,10 +275,10 @@ static void lat_repl(lat_vm *vm)
     vm->REPL = true;
     linenoiseHistoryLoad("history.txt");
     linenoiseSetCompletionCallback(completion);
-    while (leer_linea(vm, buf) != -1)
+    while (leer_linea(buf) != -1)
     {
         parse_silent = 0;
-        tmp = lat_analizar_expresion(vm, buf, &status);
+        tmp = lat_analizar_expresion(buf, &status);
         if(tmp != NULL)
         {
             lat_objeto *curexpr = nodo_analizar_arbol(vm, tmp);
@@ -328,7 +326,7 @@ int main(int argc, char *argv[])
     if(argc > 1 && infile != NULL)
     {
         vm->REPL = false;
-        ast *tree = lat_analizar_archivo(vm, infile);
+        ast *tree = lat_analizar_archivo(infile);
         if (!tree)
         {
             return EXIT_FAILURE;

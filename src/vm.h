@@ -102,7 +102,7 @@ typedef struct lat_vm
     list_node* basurero_objetos;     /**< objetos listos para liberar por el colector de basura */
     lat_objeto* registros[256];    /**< Registros de la MV */
     lat_objeto* contexto_pila[256];   /**< Tabla hash para el contexto actual */
-    lat_objeto* objeto_cierto;   /**< Valor logico verdadero */
+    lat_objeto* objeto_verdadero;   /**< Valor logico verdadero */
     lat_objeto* objeto_falso;   /**< Valor logico falso */
     size_t memoria_usada;      /**< Tamanio de memoria creado dinamicamente */
     int apuntador_pila;      /**< Apuntador de la pila */

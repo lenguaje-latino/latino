@@ -22,6 +22,8 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 */
 
+#include <string.h>
+
 #include "khash.h"
 #include "latino.h"
 #include "object.h"
@@ -181,7 +183,7 @@ save:
 
 char* __str_concatenar(char* s1, char* s2)
 {
-    char* s3 = malloc(strlen(s1) + strlen(s2) + 1);
+	char* s3 = __memoria_asignar(strlen(s1) + strlen(s2) + 1);
     strcpy(s3, s1);
     strcat(s3, s2);
     return s3;
@@ -190,7 +192,7 @@ char* __str_concatenar(char* s1, char* s2)
 char* __str_entero_a_cadena(long i)
 {
     char s[255];
-    char* r = malloc(strlen(s) + 1);
+	char* r = __memoria_asignar(strlen(s) + 1);
     snprintf(s, 255, "%ld", i);
     strcpy(r, s);
     return r;
@@ -199,7 +201,7 @@ char* __str_entero_a_cadena(long i)
 char* __str_numerico_a_cadena(double d)
 {
     char s[64];
-    char* r = malloc(strlen(s) + 1);
+	char* r = __memoria_asignar(strlen(s) + 1);
     snprintf(s, 64, "%g", (float)d);
     strcpy(r, s);
     return r;
@@ -208,7 +210,7 @@ char* __str_numerico_a_cadena(double d)
 char* __str_caracter_a_cadena(char c)
 {
     char s[2];
-    char* r = malloc(2);
+	char* r = __memoria_asignar(2);
     snprintf(s, 2, "%c", c);
     strcpy(r, s);
     return r;
@@ -217,7 +219,7 @@ char* __str_caracter_a_cadena(char c)
 char* __str_logico_a_cadena(int i)
 {
     char s[10];
-    char* r = malloc(11);
+	char* r = __memoria_asignar(11);
     if (i)
     {
         snprintf(s, 10, "%s", "verdadero");
@@ -335,7 +337,7 @@ char* __str_insertar(char *dest, char* src, int pos)
     {
         pos = dstlen;
     }
-    char *m = malloc(srclen + dstlen + 1);
+	char *m = __memoria_asignar(srclen + dstlen + 1);
     memcpy(m, dest, pos);
     memcpy(m + pos, src, srclen);
     memcpy(m + pos + srclen, dest + pos, dstlen - pos + 1);
@@ -348,11 +350,11 @@ char* __str_rellenar_izquierda(char* base, int n, char* c)
     char *ret = NULL;
     if (n <= len)
     {
-        ret = malloc(len + 1);
+		ret = __memoria_asignar(len + 1);
         strcpy(ret, base);
         return ret;
     }
-    ret = malloc(n + 1);
+	ret = __memoria_asignar(n + 1);
     ret = "";
     int i = 0;
     for (i = 0; i < (n - len); i++)
@@ -369,11 +371,11 @@ char* __str_rellenar_derecha(char *base, int n, char* c)
     char *ret = NULL;
     if (len >= n)
     {
-        ret = malloc(len + 1);
+		ret = __memoria_asignar(len + 1);
         strcpy(ret, base);
         return ret;
     }
-    ret = malloc(n + 1);
+	ret = __memoria_asignar(n + 1);
     ret = base;
     int i;
     for (i = 0; i < (n - len); i++)
@@ -404,7 +406,7 @@ char* __str_reemplazar(char *str, char *orig, char *rep)
 
 char* __str_subcadena(const char* str, int beg, int n)
 {
-    char *ret = malloc(n + 1);
+	char *ret = __memoria_asignar(n + 1);
     strncpy(ret, (str + beg), n);
     *(ret + n) = 0;
     return ret;
@@ -414,10 +416,10 @@ char* __str_minusculas(const char* str)
 {
     int i = 0;
     int len = strlen(str);
-    char *ret = (char*)malloc(len + 1);
+	char *ret = (char*) __memoria_asignar(len + 1);
     for (i = 0; i < len; i++)
     {
-        ret[i] = __str_minusculas(str[i]);
+		ret[i] = tolower(str[i]);
     }
     ret[len] = 0;
     return ret;
@@ -427,10 +429,10 @@ char* __str_mayusculas(const char* str)
 {
     int i = 0;
     int len = strlen(str);
-    char *ret = malloc(len + 1);
+	char *ret = __memoria_asignar(len + 1);
     for (i = 0; i < len; i++)
     {
-        ret[i] = __str_mayusculas(str[i]);
+		ret[i] = toupper(str[i]);
     }
     ret[len] = 0;
     return ret;
@@ -450,11 +452,11 @@ char* __str_quitar_espacios(const char *str)
         if (!isspace((unsigned char)end[-1]))
             break;
     }
-    char *ret = malloc((end - start) + 1);
+	char *ret = __memoria_asignar((end - start) + 1);
     *end = 0;
     if (start > str)
     {
-        memcpy(ret, start, (end - start) + 1);
+        memcpy(ret, start, (end - start) + 1);		
     }
     else
     {
@@ -463,6 +465,7 @@ char* __str_quitar_espacios(const char *str)
     return ret;
 }
 
+/* Funciones publicas de cadena para Latino */
 void lat_comparar(lat_vm* vm)
 {
     lat_objeto* b = lat_desapilar(vm);
@@ -516,7 +519,7 @@ void lat_contiene(lat_vm* vm)
     char *result = strstr(lat_obtener_cadena(a), lat_obtener_cadena(b));
     if (result != NULL)
     {
-        vm->registros[255] = vm->objeto_cierto;
+        vm->registros[255] = vm->objeto_verdadero;
     }
     else
     {
@@ -536,7 +539,7 @@ void lat_termina_con(lat_vm* vm)
     lat_objeto* a = lat_desapilar(vm);
     if (__str_termina_con(lat_obtener_cadena(a), lat_obtener_cadena(b)))
     {
-        vm->registros[255] = vm->objeto_cierto;
+        vm->registros[255] = vm->objeto_verdadero;
     }
     else
     {
@@ -550,7 +553,7 @@ void lat_es_igual(lat_vm* vm)
     lat_objeto* a = lat_desapilar(vm);
     if (strcmp(lat_obtener_cadena(a), lat_obtener_cadena(b)) == 0)
     {
-        vm->registros[255] = vm->objeto_cierto;
+        vm->registros[255] = vm->objeto_verdadero;
     }
     else
     {
@@ -620,7 +623,7 @@ void lat_esta_vacia(lat_vm* vm)
     lat_objeto* a = lat_desapilar(vm);
     if (strcmp(lat_obtener_cadena(a), "") == 0)
     {
-        vm->registros[255] = vm->objeto_cierto;
+        vm->registros[255] = vm->objeto_verdadero;
     }
     else
     {
@@ -654,7 +657,7 @@ void lat_empieza_con(lat_vm* vm)
     lat_objeto* a = lat_desapilar(vm);
     if (__str_empieza_con(lat_obtener_cadena(a), lat_obtener_cadena(b)))
     {
-        vm->registros[255] = vm->objeto_cierto;
+        vm->registros[255] = vm->objeto_verdadero;
     }
     else
     {
@@ -692,7 +695,7 @@ void lat_es_numero(lat_vm* vm)
 {
     lat_objeto* a = lat_desapilar(vm);
     if(a->type == T_INT || a->type == T_DOUBLE){
-        vm->registros[255] = vm->objeto_cierto;
+        vm->registros[255] = vm->objeto_verdadero;
         return;
     }
     if(a->type != T_STR && a->type != T_LIT){
@@ -701,8 +704,34 @@ void lat_es_numero(lat_vm* vm)
     }
     char* cad = lat_obtener_cadena(a);
     if(atoi(cad)){
-        vm->registros[255] = vm->objeto_cierto;
+        vm->registros[255] = vm->objeto_verdadero;
     }else{
         vm->registros[255] = vm->objeto_falso;
     }
+}
+
+void lat_es_alfanumerico(lat_vm* vm)
+{
+	lat_objeto* a = lat_desapilar(vm);
+	if (a->type != T_STR && a->type != T_LIT)
+	{
+		vm->registros[255] = vm->objeto_falso;
+		return;
+	}
+	char* cad = lat_obtener_cadena(a);
+	bool res = true;
+
+	for (int i = 0; i < strlen(cad); i++)
+	{
+		if (!isalnum(cad[i])){
+			res = false;
+			break;
+		}
+	}
+	if (res){
+		vm->registros[255] = vm->objeto_verdadero;
+	}
+	else{
+		vm->registros[255] = vm->objeto_falso;
+	}
 }

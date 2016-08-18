@@ -24,7 +24,7 @@ int __dic_hash(char* key)
     return abs(h % 256);
 }
 
-void* ___dic_obtener(hash_map* m, char* key)
+void* __dic_obtener(hash_map* m, char* key)
 {
 	  list_node* cur = m->buckets[__dic_hash(key)];
     if (cur == NULL)

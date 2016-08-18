@@ -16,3 +16,12 @@
 #include <unistd.h>
 #include <stdbool.h>
 #endif
+
+/** Determina el compilador*/
+#if defined(__GNUC__)
+#define lat_noret		void __attribute__((noreturn))
+#elif defined(_MSC_VER) 
+#define lat_noret		void __declspec(noreturn)
+#else
+#define lat_noret		void
+#endif

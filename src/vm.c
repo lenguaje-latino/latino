@@ -25,6 +25,7 @@ THE SOFTWARE.
 #include <stddef.h>
 #include <stdio.h>
 
+#include "compat.h"
 #include "latino.h"
 #include "vm.h"
 #include "libmem.h"
@@ -50,7 +51,7 @@ lat_vm* lat_crear_maquina_virtual()
     vm->basurero_objetos = __lista_nuevo();
     vm->modulos = __lista_nuevo();
     vm->memoria_usada = 0;
-    vm->objeto_cierto = lat_logico_nuevo(vm, true);
+    vm->objeto_verdadero = lat_logico_nuevo(vm, true);
     vm->objeto_falso = lat_logico_nuevo(vm, false);
     memset(vm->registros, 0, 256);
     memset(vm->contexto_pila, 0, 256);
@@ -131,6 +132,7 @@ lat_vm* lat_crear_maquina_virtual()
     registrar_cfuncion(vm, "mayusculas", lat_mayusculas);
     registrar_cfuncion(vm, "quitar_espacios", lat_quitar_espacios);
     registrar_cfuncion(vm, "es_numero", lat_es_numero);
+	registrar_cfuncion(vm, "es_alfanumerico", lat_es_alfanumerico);
 
     registrar_cfuncion(vm, "ejecutar", lat_ejecutar);
     registrar_cfuncion(vm, "ejecutar_archivo", lat_ejecutar_archivo);
@@ -414,7 +416,7 @@ void lat_imprimir_diccionario(lat_vm* vm, hash_map* d)
 void lat_ejecutar(lat_vm *vm)
 {
     int status;
-    lat_objeto *func = nodo_analizar_arbol(vm, lat_analizar_expresion(vm, lat_obtener_cadena(lat_desapilar(vm)), &status));
+    lat_objeto *func = nodo_analizar_arbol(vm, lat_analizar_expresion(lat_obtener_cadena(lat_desapilar(vm)), &status));
     lat_llamar_funcion(vm, func);
     lat_apilar(vm, vm->registros[255]);
 }
@@ -434,7 +436,7 @@ void lat_ejecutar_archivo(lat_vm *vm)
     }
     if (strcmp(extension, "lat") == 0)
     {
-        ast *tree = lat_analizar_archivo(vm, input);
+        ast *tree = lat_analizar_archivo(input);
         if (!tree)
         {
             lat_error("error al leer el archivo: %s", input);
@@ -552,22 +554,22 @@ void lat_diferente(lat_vm* vm)
     lat_objeto* a = lat_desapilar(vm);
     if (a->type == T_BOOL && b->type == T_BOOL)
     {
-        vm->registros[255] = lat_obtener_logico(a) != lat_obtener_logico(b) ? vm->objeto_cierto : vm->objeto_falso;
+        vm->registros[255] = lat_obtener_logico(a) != lat_obtener_logico(b) ? vm->objeto_verdadero : vm->objeto_falso;
         return;
     }
     if ((a->type == T_INT || a->type == T_DOUBLE) && (b->type == T_INT || b->type == T_DOUBLE))
     {
-        vm->registros[255] = (lat_obtener_decimal(a) != lat_obtener_decimal(b)) ? vm->objeto_cierto : vm->objeto_falso;
+        vm->registros[255] = (lat_obtener_decimal(a) != lat_obtener_decimal(b)) ? vm->objeto_verdadero : vm->objeto_falso;
         return;
     }
     if (a->type == T_STR && b->type == T_STR)
     {
-        vm->registros[255] = strcmp(lat_obtener_cadena(a), lat_obtener_cadena(b)) != 0 ? vm->objeto_cierto : vm->objeto_falso;
+        vm->registros[255] = strcmp(lat_obtener_cadena(a), lat_obtener_cadena(b)) != 0 ? vm->objeto_verdadero : vm->objeto_falso;
         return;
     }
     if (a->type == T_LIT && b->type == T_LIT)
     {
-        vm->registros[255] = strcmp(lat_obtener_literal(a), lat_obtener_literal(b)) != 0 ? vm->objeto_cierto : vm->objeto_falso;
+        vm->registros[255] = strcmp(lat_obtener_literal(a), lat_obtener_literal(b)) != 0 ? vm->objeto_verdadero : vm->objeto_falso;
         return;
     }
     vm->registros[255] = vm->objeto_falso;
@@ -579,22 +581,22 @@ void lat_igualdad(lat_vm* vm)
     lat_objeto* a = lat_desapilar(vm);
     if (a->type == T_BOOL && b->type == T_BOOL)
     {
-        vm->registros[255] = lat_obtener_logico(a) == lat_obtener_logico(b) ? vm->objeto_cierto : vm->objeto_falso;
+        vm->registros[255] = lat_obtener_logico(a) == lat_obtener_logico(b) ? vm->objeto_verdadero : vm->objeto_falso;
         return;
     }
     if ((a->type == T_INT || a->type == T_DOUBLE) && (b->type == T_INT || b->type == T_DOUBLE))
     {
-        vm->registros[255] = (lat_obtener_decimal(a) == lat_obtener_decimal(b)) ? vm->objeto_cierto : vm->objeto_falso;
+        vm->registros[255] = (lat_obtener_decimal(a) == lat_obtener_decimal(b)) ? vm->objeto_verdadero : vm->objeto_falso;
         return;
     }
     if (a->type == T_STR && b->type == T_STR)
     {
-        vm->registros[255] = strcmp(lat_obtener_cadena(a), lat_obtener_cadena(b)) == 0 ? vm->objeto_cierto : vm->objeto_falso;
+        vm->registros[255] = strcmp(lat_obtener_cadena(a), lat_obtener_cadena(b)) == 0 ? vm->objeto_verdadero : vm->objeto_falso;
         return;
     }
     if (a->type == T_LIT && b->type == T_LIT)
     {
-        vm->registros[255] = strcmp(lat_obtener_literal(a), lat_obtener_literal(b)) == 0 ? vm->objeto_cierto : vm->objeto_falso;
+        vm->registros[255] = strcmp(lat_obtener_literal(a), lat_obtener_literal(b)) == 0 ? vm->objeto_verdadero : vm->objeto_falso;
         return;
     }
     vm->registros[255] = vm->objeto_falso;
@@ -606,17 +608,17 @@ void lat_menor_que(lat_vm* vm)
     lat_objeto* a = lat_desapilar(vm);
     if ((a->type == T_INT || a->type == T_DOUBLE) && (b->type == T_INT || b->type == T_DOUBLE))
     {
-        vm->registros[255] = (lat_obtener_decimal(a) < lat_obtener_decimal(b)) ? vm->objeto_cierto : vm->objeto_falso;
+        vm->registros[255] = (lat_obtener_decimal(a) < lat_obtener_decimal(b)) ? vm->objeto_verdadero : vm->objeto_falso;
         return;
     }
     if (a->type == T_STR && b->type == T_STR)
     {
-        vm->registros[255] = strcmp(lat_obtener_cadena(a), lat_obtener_cadena(b)) < 0 ? vm->objeto_cierto : vm->objeto_falso;
+        vm->registros[255] = strcmp(lat_obtener_cadena(a), lat_obtener_cadena(b)) < 0 ? vm->objeto_verdadero : vm->objeto_falso;
         return;
     }
     if (a->type == T_LIT && b->type == T_LIT)
     {
-        vm->registros[255] = strcmp(lat_obtener_literal(a), lat_obtener_literal(b)) < 0 ? vm->objeto_cierto : vm->objeto_falso;
+        vm->registros[255] = strcmp(lat_obtener_literal(a), lat_obtener_literal(b)) < 0 ? vm->objeto_verdadero : vm->objeto_falso;
         return;
     }
     lat_error("Intento de aplicar operador \"<\" en tipos invalidos");
@@ -628,17 +630,17 @@ void lat_menor_igual(lat_vm* vm)
     lat_objeto* a = lat_desapilar(vm);
     if ((a->type == T_INT || a->type == T_DOUBLE) && (b->type == T_INT || b->type == T_DOUBLE))
     {
-        vm->registros[255] = (lat_obtener_decimal(a) <= lat_obtener_decimal(b)) ? vm->objeto_cierto : vm->objeto_falso;
+        vm->registros[255] = (lat_obtener_decimal(a) <= lat_obtener_decimal(b)) ? vm->objeto_verdadero : vm->objeto_falso;
         return;
     }
     if (a->type == T_STR && b->type == T_STR)
     {
-        vm->registros[255] = strcmp(lat_obtener_cadena(a), lat_obtener_cadena(b)) <= 0 ? vm->objeto_cierto : vm->objeto_falso;
+        vm->registros[255] = strcmp(lat_obtener_cadena(a), lat_obtener_cadena(b)) <= 0 ? vm->objeto_verdadero : vm->objeto_falso;
         return;
     }
     if (a->type == T_LIT && b->type == T_LIT)
     {
-        vm->registros[255] = strcmp(lat_obtener_literal(a), lat_obtener_literal(b)) <= 0 ? vm->objeto_cierto : vm->objeto_falso;
+        vm->registros[255] = strcmp(lat_obtener_literal(a), lat_obtener_literal(b)) <= 0 ? vm->objeto_verdadero : vm->objeto_falso;
         return;
     }
     lat_error("Intento de aplicar operador \"<=\" en tipos invalidos");
@@ -650,17 +652,17 @@ void lat_mayor_que(lat_vm* vm)
     lat_objeto* a = lat_desapilar(vm);
     if ((a->type == T_INT || a->type == T_DOUBLE) && (b->type == T_INT || b->type == T_DOUBLE))
     {
-        vm->registros[255] = (lat_obtener_decimal(a) > lat_obtener_decimal(b)) ? vm->objeto_cierto : vm->objeto_falso;
+        vm->registros[255] = (lat_obtener_decimal(a) > lat_obtener_decimal(b)) ? vm->objeto_verdadero : vm->objeto_falso;
         return;
     }
     if (a->type == T_STR && b->type == T_STR)
     {
-        vm->registros[255] = strcmp(lat_obtener_cadena(a), lat_obtener_cadena(b)) > 0 ? vm->objeto_cierto : vm->objeto_falso;
+        vm->registros[255] = strcmp(lat_obtener_cadena(a), lat_obtener_cadena(b)) > 0 ? vm->objeto_verdadero : vm->objeto_falso;
         return;
     }
     if (a->type == T_LIT && b->type == T_LIT)
     {
-        vm->registros[255] = strcmp(lat_obtener_literal(a), lat_obtener_literal(b)) > 0 ? vm->objeto_cierto : vm->objeto_falso;
+        vm->registros[255] = strcmp(lat_obtener_literal(a), lat_obtener_literal(b)) > 0 ? vm->objeto_verdadero : vm->objeto_falso;
         return;
     }
     lat_error("Intento de aplicar operador \">\" en tipos invalidos");
@@ -672,17 +674,17 @@ void lat_mayor_igual(lat_vm* vm)
     lat_objeto* a = lat_desapilar(vm);
     if ((a->type == T_INT || a->type == T_DOUBLE) && (b->type == T_INT || b->type == T_DOUBLE))
     {
-        vm->registros[255] = (lat_obtener_decimal(a) >= lat_obtener_decimal(b)) ? vm->objeto_cierto : vm->objeto_falso;
+        vm->registros[255] = (lat_obtener_decimal(a) >= lat_obtener_decimal(b)) ? vm->objeto_verdadero : vm->objeto_falso;
         return;
     }
     if (a->type == T_STR && b->type == T_STR)
     {
-        vm->registros[255] = strcmp(lat_obtener_cadena(a), lat_obtener_cadena(b)) >= 0 ? vm->objeto_cierto : vm->objeto_falso;
+        vm->registros[255] = strcmp(lat_obtener_cadena(a), lat_obtener_cadena(b)) >= 0 ? vm->objeto_verdadero : vm->objeto_falso;
         return;
     }
     if (a->type == T_LIT && b->type == T_LIT)
     {
-        vm->registros[255] = strcmp(lat_obtener_literal(a), lat_obtener_literal(b)) >= 0 ? vm->objeto_cierto : vm->objeto_falso;
+        vm->registros[255] = strcmp(lat_obtener_literal(a), lat_obtener_literal(b)) >= 0 ? vm->objeto_verdadero : vm->objeto_falso;
         return;
     }
     lat_error("Intento de aplicar operador \">=\" en tipos invalidos");
@@ -696,7 +698,7 @@ void lat_y(lat_vm* vm)
     {
         lat_error("Intento de aplicar operador \"y\" en tipos invalidos");
     }
-    vm->registros[255] =  (lat_obtener_logico(a) && lat_obtener_logico(b)) == true ? vm->objeto_cierto : vm->objeto_falso;
+    vm->registros[255] =  (lat_obtener_logico(a) && lat_obtener_logico(b)) == true ? vm->objeto_verdadero : vm->objeto_falso;
 }
 
 void lat_o(lat_vm* vm)
@@ -707,7 +709,7 @@ void lat_o(lat_vm* vm)
     {
         lat_error("Intento de aplicar operador \"y\" en tipos invalidos");
     }
-    vm->registros[255] =  (lat_obtener_logico(a) || lat_obtener_logico(b)) == true ? vm->objeto_cierto : vm->objeto_falso;
+    vm->registros[255] =  (lat_obtener_logico(a) || lat_obtener_logico(b)) == true ? vm->objeto_verdadero : vm->objeto_falso;
 }
 
 void lat_negacion(lat_vm* vm)
@@ -718,7 +720,7 @@ void lat_negacion(lat_vm* vm)
     {
         lat_error("Intento de negar tipo invalido");
     }
-    vm->registros[255] =  (lat_obtener_logico(o) == false) ? vm->objeto_cierto : vm->objeto_falso;
+    vm->registros[255] =  (lat_obtener_logico(o) == false) ? vm->objeto_verdadero : vm->objeto_falso;
 }
 
 lat_bytecode lat_bc(lat_ins i, int a, int b, void* meta)
@@ -824,7 +826,7 @@ void lat_llamar_funcion(lat_vm* vm, lat_objeto* func)
                 lat_objeto* nombre = vm->registros[cur.a];
                 vm->registros[cur.a] = lat_obtener_contexto_objeto(contexto, nombre);
                 if(vm->registros[cur.a]->type == T_FUNC){
-                    if(__lista_longitud(vm->pila) != nombre->num_param){
+                    if(__lista_longitud(vm->pila) < nombre->num_param){
                         /*TODO: Agregar manejo de excepciones*/
                         lat_fatal_error("Numero incorrecto de parametros en funcion '%s'\n", nombre->data.str);
                     }
@@ -835,10 +837,6 @@ void lat_llamar_funcion(lat_vm* vm, lat_objeto* func)
             printf("\t");
             imprimir_objeto(vm->registros[cur.a]);
             printf("\n");
-            /*printf("type %i\n", vm->registros[cur.a]->type);
-            printf("num_param %i\n", nombre->num_param );
-            lat_imprimir_lista(vm, vm->pila);
-            printf("\n");*/
 #endif
             }
                 break;
@@ -1021,7 +1019,7 @@ void lat_llamar_funcion(lat_vm* vm, lat_objeto* func)
                 }
                 break;
             case OP_NOT:
-                vm->registros[cur.a] = lat_obtener_logico(vm->registros[cur.a]) == true ? vm->objeto_falso : vm->objeto_cierto;
+                vm->registros[cur.a] = lat_obtener_logico(vm->registros[cur.a]) == true ? vm->objeto_falso : vm->objeto_verdadero;
 #if DEPURAR_MV
             printf("NOT ");
             imprimir_objeto(vm->registros[cur.a]);
@@ -1043,7 +1041,7 @@ void lat_llamar_funcion(lat_vm* vm, lat_objeto* func)
     }
     else if (func->type == T_CFUNC)
     {
-        ((void (*)(lat_vm*))(func->data.func))(vm);
+		((void (*)(lat_vm*))(func->data.func))(vm);		
     }
     else
     {
@@ -1064,7 +1062,7 @@ void lat_logico(lat_vm* vm)
         }
         else
         {
-            vm->registros[255] = vm->objeto_cierto;
+            vm->registros[255] = vm->objeto_verdadero;
         }
         break;
     case T_LIT:
@@ -1074,7 +1072,7 @@ void lat_logico(lat_vm* vm)
         }
         else
         {
-            vm->registros[255] = vm->objeto_cierto;
+            vm->registros[255] = vm->objeto_verdadero;
         }
         break;
     case T_DOUBLE:
@@ -1084,7 +1082,7 @@ void lat_logico(lat_vm* vm)
         }
         else
         {
-            vm->registros[255] = vm->objeto_cierto;
+            vm->registros[255] = vm->objeto_verdadero;
         }
         break;
     case T_STR:
@@ -1094,7 +1092,7 @@ void lat_logico(lat_vm* vm)
         }
         else
         {
-            vm->registros[255] = vm->objeto_cierto;
+            vm->registros[255] = vm->objeto_verdadero;
         }
         break;
     default:
