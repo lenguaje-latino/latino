@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
+﻿<?xml version="1.0" encoding="UTF-8"?>
 <Project DefaultTargets="Build" ToolsVersion="12.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup Label="ProjectConfigurations">
     <ProjectConfiguration Include="Debug|Win32">
@@ -318,6 +318,7 @@ if %errorlevel% neq 0 goto :VCEnd</Command>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="C:\src\latino\src\khash.h" />
+    <ClInclude Include="C:\src\latino\src\compat.h" />
     <ClInclude Include="C:\src\latino\src\latino.h" />
     <ClInclude Include="C:\src\latino\src\ast.h" />
     <ClInclude Include="C:\src\latino\src\vm.h" />

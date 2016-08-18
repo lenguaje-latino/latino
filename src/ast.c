@@ -386,7 +386,7 @@ static int nodo_analizar(lat_vm *vm, ast *node, lat_bytecode *bcode, int i)
             if (__io_es_legible(dir_actual))
             {
                 __lista_agregar(vm->modulos, mod);
-                pn(vm, lat_analizar_archivo(vm, dir_actual));
+                pn(vm, lat_analizar_archivo(dir_actual));
             }
             else
             {
@@ -403,7 +403,7 @@ static int nodo_analizar(lat_vm *vm, ast *node, lat_bytecode *bcode, int i)
                     if (__io_es_legible(latino_lib))
                     {
                         __lista_agregar(vm->modulos, mod);
-                        pn(vm, lat_analizar_archivo(vm, latino_lib));
+                        pn(vm, lat_analizar_archivo(latino_lib));
                     }
                 }
             }
@@ -521,7 +521,7 @@ static int nodo_analizar(lat_vm *vm, ast *node, lat_bytecode *bcode, int i)
     break;
     case NODO_LOGICO:
     {
-        lat_objeto *ret = (node->valor->v.b == true) ? vm->objeto_cierto : vm->objeto_falso;
+        lat_objeto *ret = (node->valor->v.b == true) ? vm->objeto_verdadero : vm->objeto_falso;
         dbc(OP_STOREBOOL, 255, 0, ret);
 #if DEPURAR_AST
         printf("STOREBOOL R255 %i\n", ret->data.b);
@@ -613,7 +613,7 @@ static int nodo_analizar(lat_vm *vm, ast *node, lat_bytecode *bcode, int i)
                 pn(vm, node->r);
         }
         pn(vm, node->l);
-        dbc(OP_CALL, 255, NULL, NULL);
+        dbc(OP_CALL, 255, 0, NULL);
 #if DEPURAR_AST
         printf("CALL R255\n");
 #endif

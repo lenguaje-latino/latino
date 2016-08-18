@@ -38,6 +38,7 @@ THE SOFTWARE.
 #include <stdbool.h>
 #include <errno.h>
 
+#include "compat.h"
 #include "ast.h"
 #include "vm.h"
 
@@ -47,38 +48,21 @@ THE SOFTWARE.
 *
 */
 
-/** Determina si el sistema es GNU */
-#ifdef _WIN32
-#define PATH_SEP "\\"
-/* Visual Leak Detector for Visual C++ */
-//#include <vld.h>
-#define LAT_FUNC extern
-#define snprintf(s, l, f, i) _snprintf(s, l, f, i)
-#include <windows.h>
-#include <limits.h>
-#define getcwd(ruta, tamanio) GetCurrentDirectory (MAX_PATH, ruta);
-#else
-#define PATH_SEP "/"
-#define LAT_FUNC __attribute__((visibility("hidden"))) extern
-#include <dlfcn.h>
-#include <unistd.h>
-#endif
-
-/** Define el manejo de excepciones en Latino */
-#define LAT_THROW(L,c)		longjmp((c)->b, 1)
-#define LAT_TRY(L,c,a)		if (setjmp((c)->b) == 0) { a }
-#define lat_jmpbuf		jmp_buf
-
 /** Version mayor de Latino */
 #define LAT_VERSION_MAYOR "0"
 /** Version menor de Latino */
 #define LAT_VERSION_MENOR "5"
 /** Version de correcion de errores */
-#define LAT_VERSION_PARCHE "0"
+#define LAT_VERSION_PARCHE "1"
 /** Version de Latino */
 #define LAT_VERSION "Latino " LAT_VERSION_MAYOR "." LAT_VERSION_MENOR "." LAT_VERSION_PARCHE
 /** Derechos de Latino */
 #define LAT_DERECHOS LAT_VERSION "\nTodos los derechos reservados (C) 2015-2016. Latinoamerica"
+
+/** Define el manejo de excepciones en Latino */
+#define LAT_THROW(L,c)		longjmp((c)->b, 1)
+#define LAT_TRY(L,c,a)		if (setjmp((c)->b) == 0) { a }
+#define lat_jmpbuf		jmp_buf
 
 // generado en
 // http://www.patorjk.com/software/taag/#p=display&f=Graffiti&t=latino
@@ -106,6 +90,7 @@ THE SOFTWARE.
 /** Indica si se desea debuguear el parser de bison */
 extern int debug;
 
+/** Indica que el parser no debe de devolver errores, se usa para REPL */
 extern int parse_silent;
 
 /** Maximo numero de size_t */
@@ -115,14 +100,14 @@ extern int parse_silent;
 #define LAT_SIZE_MAX ((size_t)-1)
 #endif
 
-/** Tamanio maximo de instrucciones bytecode de una funcion */
+/** Tamanio maximo de instrucciones bytecode de una funcion 10MB */
 #define MAX_BYTECODE_FUNCTION (1024 * 10)
-/** Tamanio maximo de memoria virtual permitida */
+/** Tamanio maximo de memoria virtual permitida 10MB */
 #define MAX_VIRTUAL_MEMORY (1024 * 10)
 /** Tamanio maximo de una cadena para ser almacenada en HASH TABLE */
 #define MAX_STR_INTERN 64
-/** Tamanio maximo de una cadena almacenada dinamicamente */
-#define MAX_STR_LENGTH (1024*2)
+/** Tamanio maximo de una cadena almacenada dinamicamente 4MB*/
+#define MAX_STR_LENGTH (1024*4)
 /** Tamanio maximo de la pila de la maquina virtual */
 #define MAX_STACK_SIZE 255
 
@@ -153,7 +138,7 @@ typedef struct YYLTYPE
   * \return ast: Nodo AST
   *
   */
-ast* lat_analizar_expresion(lat_vm* vm, char* expr, int* status);
+ast* lat_analizar_expresion(char* expr, int* status);
 
 /** Analiza un archivo
   *
@@ -161,6 +146,6 @@ ast* lat_analizar_expresion(lat_vm* vm, char* expr, int* status);
   * \return ast: Nodo AST
   *
   */
-ast* lat_analizar_archivo(lat_vm* vm, char* ruta);
+ast* lat_analizar_archivo(char* ruta);
 
 #endif /* _LATINO_H_ */

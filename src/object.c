@@ -39,7 +39,7 @@ void lat_asignar_contexto_objeto(lat_objeto* ns, lat_objeto* name, lat_objeto* o
     if (ns->type != T_INSTANCE)
     {
         //debug("ns->type: %d", ns->type);
-        lat_error("Namespace no es una instancia");
+        lat_fatal_error("Namespace no es una instancia");
     }
     else
     {
@@ -53,15 +53,15 @@ lat_objeto* lat_obtener_contexto_objeto(lat_objeto* ns, lat_objeto* name)
     if (ns->type != T_INSTANCE)
     {
         //debug("ns->type: %d", ns->type);
-        lat_error("Namespace is not an nombre");
+		lat_fatal_error("Namespace is not an nombre");
     }
     else
     {
         hash_map* h = ns->data.nombre;
-		    lat_objeto* ret = (lat_objeto*) ___dic_obtener(h, lat_obtener_cadena(name));
+		    lat_objeto* ret = (lat_objeto*) __dic_obtener(h, lat_obtener_cadena(name));
         if (ret == NULL)
         {
-            lat_error("Variable \"%s\" indefinida", lat_obtener_cadena(name));
+			lat_fatal_error("Variable \"%s\" indefinida", lat_obtener_cadena(name));
         }
         return ret;
     }
@@ -72,7 +72,7 @@ lat_objeto* lat_crear_objeto(lat_vm* vm)
 {
     lat_objeto* ret = (lat_objeto*)__memoria_asignar(sizeof(lat_objeto));
     ret->type = T_NULO;
-    ret->data_size = 0;
+    ret->data_size = 0;	
     return ret;
 }
 

@@ -18,6 +18,7 @@ Testing/
 *.deb
 *.exe
 *.msi
+Makefile
 CMakeCache.txt
 CPackConfig.cmake
 CPackSourceConfig.cmake

@@ -356,4 +356,11 @@ void lat_quitar_espacios(lat_vm* vm);
   */
 void lat_es_numero(lat_vm* vm);
 
+/** Es alfa numerico: Valida si una cadena es un alfa numerico [a-Z0-9]
+*
+* \param vm: Maquina virtual de latino
+*
+*/
+void lat_es_alfanumerico(lat_vm* vm);
+
 #endif // !_LIBSTRING_H_
