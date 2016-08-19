@@ -148,7 +148,7 @@ enum {
     SPECIAL_DELETE = -24,
     SPECIAL_HOME = -25,
     SPECIAL_END = -26,
-    SPECIAL___str_insertar = -27,
+    SPECIAL_INSERT = -27,
     SPECIAL_PAGE_UP = -28,
     SPECIAL_PAGE_DOWN = -29
 };
@@ -576,7 +576,7 @@ static int check_special(int fd)
         if (c == '~') {
             switch (c2) {
                 case '2':
-                    return SPECIAL___str_insertar;
+                    return SPECIAL_INSERT;
                 case '3':
                     return SPECIAL_DELETE;
                 case '5':
@@ -723,7 +723,7 @@ static int fd_read(struct current *current)
                  case VK_DOWN:
                     return SPECIAL_DOWN;
                  case VK_INSERT:
-                    return SPECIAL___str_insertar;
+                    return SPECIAL_INSERT;
                  case VK_DELETE:
                     return SPECIAL_DELETE;
                  case VK_HOME:
@@ -953,12 +953,12 @@ static int remove_char(struct current *current, int pos)
 }
 
 /**
- * __str_insertar 'ch' at position 'pos'
+ * insert 'ch' at position 'pos'
  *
  * Returns 1 if the line needs to be refreshed, 2 if not
- * and 0 if nothing was __str_insertared (no room)
+ * and 0 if nothing was inserted (no room)
  */
-static int __str_insertar_char(struct current *current, int pos, int ch)
+static int insert_char(struct current *current, int pos, int ch)
 {
     char buf[3];
     int n = utf8_getchars(buf, ch);
@@ -1031,25 +1031,25 @@ static int remove_chars(struct current *current, int pos, int n)
     return removed;
 }
 /**
- * __str_insertars the characters (string) 'chars' at the cursor position 'pos'.
+ * inserts the characters (string) 'chars' at the cursor position 'pos'.
  *
- * Returns 0 if no chars were __str_insertared or non-zero otherwise.
+ * Returns 0 if no chars were inserted or non-zero otherwise.
  */
-static int __str_insertar_chars(struct current *current, int pos, const char *chars)
+static int insert_chars(struct current *current, int pos, const char *chars)
 {
-    int __str_insertared = 0;
+    int inserted = 0;
 
     while (*chars) {
         int ch;
         int n = utf8_tounicode(chars, &ch);
-        if (__str_insertar_char(current, pos, ch) == 0) {
+        if (insert_char(current, pos, ch) == 0) {
             break;
         }
-        __str_insertared++;
+        inserted++;
         pos++;
         chars += n;
     }
-    return __str_insertared;
+    return inserted;
 }
 
 #ifndef NO_COMPLETION
@@ -1200,9 +1200,9 @@ process_char:
                 refreshLine(current->prompt, current);
             }
             break;
-        case SPECIAL___str_insertar:
+        case SPECIAL_INSERT:
             /* Ignore. Expansion Hook.
-             * Future possibility: Toggle __str_insertar/Overwrite Modes
+             * Future possibility: Toggle insert/Overwrite Modes
              */
             break;
         case ctrl('W'):    /* ctrl-w, delete word at left. save deleted chars */
@@ -1330,23 +1330,23 @@ process_char:
                 int fixer = (current->pos == current->chars);
                 c = get_char(current, current->pos - fixer);
                 remove_char(current, current->pos - fixer);
-                __str_insertar_char(current, current->pos - 1, c);
+                insert_char(current, current->pos - 1, c);
                 refreshLine(current->prompt, current);
             }
             break;
         case ctrl('V'):    /* ctrl-v */
             if (has_room(current, 3)) {
-                /* __str_insertar the ^V first */
-                if (__str_insertar_char(current, current->pos, c)) {
+                /* insert the ^V first */
+                if (insert_char(current, current->pos, c)) {
                     refreshLine(current->prompt, current);
-                    /* Now wait for the next char. Can __str_insertar anything except \0 */
+                    /* Now wait for the next char. Can insert anything except \0 */
                     c = fd_read(current);
 
                     /* Remove the ^V first */
                     remove_char(current, current->pos - 1);
                     if (c != -1) {
-                        /* __str_insertar the actual char */
-                        __str_insertar_char(current, current->pos, c);
+                        /* insert the actual char */
+                        insert_char(current, current->pos, c);
                     }
                     refreshLine(current->prompt, current);
                 }
@@ -1417,8 +1417,8 @@ history_navigation:
                 refreshLine(current->prompt, current);
             }
             break;
-        case ctrl('Y'): /* Ctrl+y, __str_insertar saved chars at current position */
-            if (current->capture && __str_insertar_chars(current, current->pos, current->capture)) {
+        case ctrl('Y'): /* Ctrl+y, insert saved chars at current position */
+            if (current->capture && insert_chars(current, current->pos, current->capture)) {
                 refreshLine(current->prompt, current);
             }
             break;
@@ -1431,7 +1431,7 @@ history_navigation:
         default:
             /* Only tab is allowed without ^V */
             if (c == '\t' || c >= ' ') {
-                if (__str_insertar_char(current, current->pos, c) == 1) {
+                if (insert_char(current, current->pos, c) == 1) {
                     refreshLine(current->prompt, current);
                 }
             }
@@ -1502,7 +1502,7 @@ int linenoiseHistoryAdd(const char *line) {
         memset(history,0,(sizeof(char*)*history_max_len));
     }
 
-    /* do not __str_insertar duplicate lines into history */
+    /* do not insert duplicate lines into history */
     if (history_len > 0 && strcmp(line, history[history_len - 1]) == 0) {
         return 0;
     }

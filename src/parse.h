@@ -45,77 +45,81 @@ extern int yydebug;
 # define YYTOKENTYPE
   enum yytokentype
   {
-    TTRUE = 258,
-    TFALSE = 259,
-    TINT = 260,
-    TLIT = 261,
-    TNUMBER = 262,
-    TSTRING = 263,
-    TIDENTIFIER = 264,
-    TCONSTANT = 265,
-    TFUNC = 266,
-    KIF = 267,
-    KEND = 268,
-    KELSE = 269,
-    KWHILE = 270,
-    KDO = 271,
-    KBREAK = 272,
-    KCONTINUE = 273,
-    KWHEN = 274,
-    KFUNCTION = 275,
-    KFROM = 276,
-    KBOOL = 277,
-    KRETURN = 278,
-    KINCLUDE = 279,
-    OP_GT = 280,
-    OP_LT = 281,
-    OP_GE = 282,
-    OP_LE = 283,
-    OP_EQ = 284,
-    OP_NEQ = 285,
-    OP_AND = 286,
-    OP_OR = 287,
-    OP_INCR = 288,
-    OP_DECR = 289,
-    OP_CONCAT = 290,
-    OP_CONCAT_IGUAL = 291
+    VERDADERO = 258,
+    FALSO = 259,
+    ENTERO = 260,
+    LITERAL = 261,
+    _DECIMAL = 262,
+    CADENA = 263,
+    IDENTIFICADOR = 264,
+    CONSTANTE = 265,
+    SI = 266,
+    FIN = 267,
+    SINO = 268,
+    MIENTRAS = 269,
+    HACER = 270,
+    ROMPER = 271,
+    CONTINUAR = 272,
+    CUANDO = 273,
+    FUNCION = 274,
+    DESDE = 275,
+    KBOOL = 276,
+    RETORNO = 277,
+    INCLUIR = 278,
+    ELEGIR = 279,
+    CASO = 280,
+    DEFECTO = 281,
+    MAYOR_QUE = 282,
+    MENOR_QUE = 283,
+    MAYOR_IGUAL = 284,
+    MENOR_IGUAL = 285,
+    IGUAL_LOGICO = 286,
+    DIFERENTE = 287,
+    Y_LOGICO = 288,
+    O_LOGICO = 289,
+    INCREMENTO = 290,
+    DECREMENTO = 291,
+    CONCATENAR = 292,
+    CONCATENAR_IGUAL = 293
   };
 #endif
 /* Tokens.  */
-#define TTRUE 258
-#define TFALSE 259
-#define TINT 260
-#define TLIT 261
-#define TNUMBER 262
-#define TSTRING 263
-#define TIDENTIFIER 264
-#define TCONSTANT 265
-#define TFUNC 266
-#define KIF 267
-#define KEND 268
-#define KELSE 269
-#define KWHILE 270
-#define KDO 271
-#define KBREAK 272
-#define KCONTINUE 273
-#define KWHEN 274
-#define KFUNCTION 275
-#define KFROM 276
-#define KBOOL 277
-#define KRETURN 278
-#define KINCLUDE 279
-#define OP_GT 280
-#define OP_LT 281
-#define OP_GE 282
-#define OP_LE 283
-#define OP_EQ 284
-#define OP_NEQ 285
-#define OP_AND 286
-#define OP_OR 287
-#define OP_INCR 288
-#define OP_DECR 289
-#define OP_CONCAT 290
-#define OP_CONCAT_IGUAL 291
+#define VERDADERO 258
+#define FALSO 259
+#define ENTERO 260
+#define LITERAL 261
+#define _DECIMAL 262
+#define CADENA 263
+#define IDENTIFICADOR 264
+#define CONSTANTE 265
+#define SI 266
+#define FIN 267
+#define SINO 268
+#define MIENTRAS 269
+#define HACER 270
+#define ROMPER 271
+#define CONTINUAR 272
+#define CUANDO 273
+#define FUNCION 274
+#define DESDE 275
+#define KBOOL 276
+#define RETORNO 277
+#define INCLUIR 278
+#define ELEGIR 279
+#define CASO 280
+#define DEFECTO 281
+#define MAYOR_QUE 282
+#define MENOR_QUE 283
+#define MAYOR_IGUAL 284
+#define MENOR_IGUAL 285
+#define IGUAL_LOGICO 286
+#define DIFERENTE 287
+#define Y_LOGICO 288
+#define O_LOGICO 289
+#define INCREMENTO 290
+#define DECREMENTO 291
+#define CONCATENAR 292
+#define CONCATENAR_IGUAL 293
 
 /* Value type.  */
 

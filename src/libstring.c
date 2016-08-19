@@ -456,7 +456,7 @@ char* __str_quitar_espacios(const char *str)
     *end = 0;
     if (start > str)
     {
-        memcpy(ret, start, (end - start) + 1);		
+        memcpy(ret, start, (end - start) + 1);
     }
     else
     {

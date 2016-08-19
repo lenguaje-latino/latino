@@ -3,26 +3,4 @@ Para debuguear en visual studio:
 Menu propiedades del proyecto-> Debugging -> Command Arguments. Agregar
 $(SolutionDir)..\ejemplos\debug.lat
 */
-
-#esta es una funcion que recibe 2 parametros
-/*
-funcion sumar(a,b)
-  retorno a + b
-fin
-s = sumar(1) //numero de argumentos insuficientes
-escribir(s)
-*/
-
-escribir("------------------------------------------------------")
-escribir("es_numerico:")
-#quitar espacios
-numero = "1234.134"
-escribir(numero)
-escribir("es numerico: " . es_numero(numero))
-
-escribir("------------------------------------------------------")
-escribir("es_alfanumerico:")
-#quitar espacios
-alfa = "variable1"
-escribir(alfa)
-escribir("es numerico: " . es_alfanumerico(alfa))
+escribir("hola latinos")

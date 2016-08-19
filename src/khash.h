@@ -498,7 +498,7 @@ static kh_inline khint_t khash_ac_Wang_hash(khint_t key)
 #define kh_resize(name, h, s) kh_resize_##name(h, s)
 
 /*! @function
-  @abstract     __str_insertar a key to the hash table.
+  @abstract     insertar a key to the hash table.
   @param  name  Name of the hash table [symbol]
   @param  h     Pointer to the hash table [khash_t(name)*]
   @param  k     Key [type of keys]
@@ -506,7 +506,7 @@ static kh_inline khint_t khash_ac_Wang_hash(khint_t key)
                 0 if the key is present in the hash table;
                 1 if the bucket is empty (never used); 2 if the element in
 				the bucket has been deleted [int*]
-  @return       Iterator to the __str_insertared element [khint_t]
+  @return       Iterator to the inserted element [khint_t]
  */
 #define kh_put(name, h, k, r) kh_put_##name(h, k, r)
 

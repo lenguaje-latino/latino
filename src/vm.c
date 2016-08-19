@@ -1041,7 +1041,7 @@ void lat_llamar_funcion(lat_vm* vm, lat_objeto* func)
     }
     else if (func->type == T_CFUNC)
     {
-		((void (*)(lat_vm*))(func->data.func))(vm);		
+		((void (*)(lat_vm*))(func->data.func))(vm);
     }
     else
     {

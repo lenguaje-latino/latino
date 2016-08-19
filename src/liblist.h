@@ -50,7 +50,7 @@ list_node* __lista_nuevo();
   */
 int __lista_existe_dato(list_node* l, void* data);
 
-/**\brief __str_insertara un elemento en la lista
+/**\brief inserta un elemento en la lista
   *
   *\param l: Apuntador a la lista
   *\param data: Apuntador a objeto

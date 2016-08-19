@@ -98,7 +98,7 @@ typedef enum {
   NODO_Y,   /**< Nodo y (and) logico */
   NODO_O,   /**< Nodo o (or) logico */
   NODO_NEGACION,    /**< Nodo no (!) negacion logico */
-  NODO_SELECCION,   /**< Nodo seleccion */
+  NODO_ELEGIR,   /**< Nodo seleccion */
   NODO_CASO,   /**< Nodo caso */
   NODO_DEFECTO,   /**< Nodo defecto */
   NODO_CASOS,   /**< Nodo casos */
@@ -130,7 +130,7 @@ typedef struct ast {
 } ast;
 
 /** \brief Estado del analizador lexico */
-typedef struct lex_state { int __str_insertar; } lex_state;
+typedef struct lex_state { int insert; } lex_state;
 
 /** \brief Tipo de dato que se envia al analizador lexico */
 typedef union YYSTYPE {

@@ -7,21 +7,21 @@ list_node* __lista_nuevo()
     list_node* nodo = (list_node*)__memoria_asignar(sizeof(list_node));
     nodo->prev = NULL;
     nodo->next = NULL;
-    nodo->data = NULL;    
+    nodo->data = NULL;
     return nodo;
 }
 
 void __lista_agregar(list_node* l, void* data)
 {
     list_node *curr = l;
-    /*__str_insertara al final de la lista*/
+    /*inserta al final de la lista*/
     while (curr->next != NULL){
         curr = curr->next;
     }
     curr->data = data;
     curr->next = (list_node*)__memoria_asignar(sizeof(list_node));
     curr->next->prev = curr;
-    curr->next->next = NULL;    
+    curr->next->next = NULL;
     curr->next->data = NULL;
 }
 
@@ -54,6 +54,6 @@ int __lista_existe_dato(list_node* l, void* data)
 
 void lat_agregar(lat_vm *vm){
     lat_objeto *elem = lat_desapilar(vm);
-    lat_objeto *lst = lat_desapilar(vm);    
+    lat_objeto *lst = lat_desapilar(vm);
     __lista_agregar(lst->data.lista, elem);
 }
