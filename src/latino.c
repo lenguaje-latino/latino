@@ -52,7 +52,7 @@ ast *lat_analizar_expresion(char* expr, int* status)
     ast *ret = NULL;
     yyscan_t scanner;
     YY_BUFFER_STATE state;
-    lex_state scan_state = {.__str_insertar = 0};
+    lex_state scan_state = {.insert = 0};
     yylex_init_extra(&scan_state, &scanner);
     state = yy_scan_string(expr, scanner);
     *status = yyparse(&ret, scanner);

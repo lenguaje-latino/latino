@@ -1,6 +1,8 @@
 #ignora directorios
 bin/
+build/
 CMakeFiles/
+dist/
 Release/
 codeblocks/doxygen/
 Testing/

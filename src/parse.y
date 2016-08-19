@@ -31,48 +31,45 @@ int yylex (YYSTYPE * yylval_param,YYLTYPE * yylloc_param ,yyscan_t yyscanner);
 %parse-param {void *scanner}
 
 /* declare tokens */
-%token <node> TTRUE
-%token <node> TFALSE
-%token <node> TINT
-%token <node> TLIT
-%token <node> TNUMBER
-%token <node> TSTRING
-%token <node> TIDENTIFIER
-%token <node> TCONSTANT
-%token <token> TFUNC
+%token <node> VERDADERO
+%token <node> FALSO
+%token <node> ENTERO
+%token <node> LITERAL
+%token <node> _DECIMAL
+%token <node> CADENA
+%token <node> IDENTIFICADOR
+%token <node> CONSTANTE
 %token
-    KIF
-    KEND
-    KELSE
-    KWHILE
-    KDO
-    KBREAK
-    KCONTINUE
-    KWHEN
-    KFUNCTION
-    KFROM
+    SI
+    FIN
+    SINO
+    MIENTRAS
+    HACER
+    ROMPER
+    CONTINUAR
+    CUANDO
+    FUNCION
+    DESDE
     KBOOL
-    KRETURN
-    KINCLUDE
-    /*
-    KSWITCH
-    KCASE
-    KDEFAULT
-    */
+    RETORNO
+    INCLUIR
+    ELEGIR
+    CASO
+    DEFECTO
 
 %token
-    OP_GT
-    OP_LT
-    OP_GE
-    OP_LE
-    OP_EQ
-    OP_NEQ
-    OP_AND
-    OP_OR
-    OP_INCR
-    OP_DECR
-    OP_CONCAT
-    OP_CONCAT_IGUAL
+    MAYOR_QUE
+    MENOR_QUE
+    MAYOR_IGUAL
+    MENOR_IGUAL
+    IGUAL_LOGICO
+    DIFERENTE
+    Y_LOGICO
+    O_LOGICO
+    INCREMENTO
+    DECREMENTO
+    CONCATENAR
+    CONCATENAR_IGUAL
 
 %type <node> include_declaration
 %type <node> expression relational_expression
@@ -84,6 +81,7 @@ int yylex (YYSTYPE * yylval_param,YYLTYPE * yylloc_param ,yyscan_t yyscanner);
 %type <node> constant_expression function_call selection_statement identifier_list
 %type <node> list_new list_items list_get_item
 %type <node> dict_new dict_items dict_item key
+%type <node> labeled_statements labeled_statement_case labeled_statement_default
 
 /*
  * precedencia de operadores
@@ -93,27 +91,27 @@ int yylex (YYSTYPE * yylval_param,YYLTYPE * yylloc_param ,yyscan_t yyscanner);
  *
  */
 %right '='
-%left '+' '-' OP_CONCAT OP_CONCAT_IGUAL
+%left '+' '-' CONCATENAR CONCATENAR_IGUAL
 %left '*' '/' '%' '!'
-%left OP_AND OP_OR
-%left OP_EQ OP_GE OP_GT OP_LE OP_LT OP_NEQ
+%left Y_LOGICO O_LOGICO
+%left IGUAL_LOGICO MAYOR_IGUAL MAYOR_QUE MENOR_IGUAL MENOR_QUE DIFERENTE
 
 %start program
 
 %%
 
 constant_expression
-    : TINT
-    | TNUMBER
-    | TLIT
-    | TSTRING
+    : ENTERO
+    | _DECIMAL
+    | LITERAL
+    | CADENA
     ;
 
 primary_expression
-    : TIDENTIFIER
-    | TCONSTANT
-    | TTRUE
-    | TFALSE
+    : IDENTIFICADOR
+    | CONSTANTE
+    | VERDADERO
+    | FALSO
     ;
 
 unary_expression
@@ -133,15 +131,15 @@ additive_expression
     ;
 
 relational_expression
-    : expression OP_GT expression { $$ = nodo_nuevo_operador(NODO_MAYOR_QUE, $1, $3); }
-    | expression OP_LT expression { $$ = nodo_nuevo_operador(NODO_MENOR_QUE, $1, $3); }
-    | expression OP_GE expression { $$ = nodo_nuevo_operador(NODO_MAYOR_IGUAL, $1, $3); }
-    | expression OP_LE expression { $$ = nodo_nuevo_operador(NODO_MENOR_IGUAL, $1, $3); }
+    : expression MAYOR_QUE expression { $$ = nodo_nuevo_operador(NODO_MAYOR_QUE, $1, $3); }
+    | expression MENOR_QUE expression { $$ = nodo_nuevo_operador(NODO_MENOR_QUE, $1, $3); }
+    | expression MAYOR_IGUAL expression { $$ = nodo_nuevo_operador(NODO_MAYOR_IGUAL, $1, $3); }
+    | expression MENOR_IGUAL expression { $$ = nodo_nuevo_operador(NODO_MENOR_IGUAL, $1, $3); }
     ;
 
 equality_expression
-    : expression OP_NEQ expression { $$ = nodo_nuevo_operador(NODO_DESIGUALDAD, $1, $3); }
-    | expression OP_EQ expression { $$ = nodo_nuevo_operador(NODO_IGUALDAD, $1, $3); }
+    : expression DIFERENTE expression { $$ = nodo_nuevo_operador(NODO_DESIGUALDAD, $1, $3); }
+    | expression IGUAL_LOGICO expression { $$ = nodo_nuevo_operador(NODO_IGUALDAD, $1, $3); }
     ;
 
 logical_not_expression
@@ -149,11 +147,11 @@ logical_not_expression
     ;
 
 logical_and_expression
-    : expression OP_AND expression { $$ = nodo_nuevo_operador(NODO_Y, $1, $3); }
+    : expression Y_LOGICO expression { $$ = nodo_nuevo_operador(NODO_Y, $1, $3); }
 	  ;
 
 logical_or_expression
-	  : expression OP_OR expression { $$ = nodo_nuevo_operador(NODO_O, $1, $3); }
+	  : expression O_LOGICO expression { $$ = nodo_nuevo_operador(NODO_O, $1, $3); }
 	  ;
 
 ternary_expression
@@ -161,7 +159,7 @@ ternary_expression
     ;
 
 concat_expression
-    : expression OP_CONCAT expression { $$ = nodo_nuevo_operador(NODO_CONCATENAR, $1, $3); }
+    : expression CONCATENAR expression { $$ = nodo_nuevo_operador(NODO_CONCATENAR, $1, $3); }
     ;
 
 expression
@@ -204,8 +202,6 @@ statement_list
     | error statement_list { yyerrok; yyclearin; }
     ;
 
-    /*| labeled_statement { $$ = $1; }*/
-
 statement
     : include_declaration
     | declaration
@@ -217,63 +213,80 @@ statement
     ;
 
 incdec_statement
-: TIDENTIFIER OP_INCR { $$ = nodo_nuevo_asignacion(nodo_nuevo_operador(NODO_SUMA, $1, nodo_nuevo_entero(1, @1.first_line, @1.first_column)), $1); }
-| TIDENTIFIER OP_DECR { $$ = nodo_nuevo_asignacion(nodo_nuevo_operador(NODO_RESTA, $1, nodo_nuevo_entero(1, @1.first_line, @1.first_column)), $1); }
+: IDENTIFICADOR INCREMENTO { $$ = nodo_nuevo_asignacion(nodo_nuevo_operador(NODO_SUMA, $1, nodo_nuevo_entero(1, @1.first_line, @1.first_column)), $1); }
+| IDENTIFICADOR DECREMENTO { $$ = nodo_nuevo_asignacion(nodo_nuevo_operador(NODO_RESTA, $1, nodo_nuevo_entero(1, @1.first_line, @1.first_column)), $1); }
 
 include_declaration
-    : KINCLUDE '(' TSTRING ')' { $$ = nodo_nuevo_incluir($3); }
-    | KINCLUDE '(' TLIT ')' { $$ = nodo_nuevo_incluir($3); }
+    : INCLUIR '(' CADENA ')' { $$ = nodo_nuevo_incluir($3); }
+    | INCLUIR '(' LITERAL ')' { $$ = nodo_nuevo_incluir($3); }
     ;
 
 declaration
-    : TIDENTIFIER '=' expression { $$ = nodo_nuevo_asignacion($3, $1); }
-    | TIDENTIFIER '=' ternary_expression { $$ = nodo_nuevo_asignacion($3, $1); }
-    | TCONSTANT '=' expression { $$ = nodo_nuevo_asignacion($3, $1); }
-    | TIDENTIFIER OP_CONCAT_IGUAL expression { $$ = nodo_nuevo_asignacion((nodo_nuevo_operador(NODO_CONCATENAR, $1, $3)), $1); }
+    : IDENTIFICADOR '=' expression { $$ = nodo_nuevo_asignacion($3, $1); }
+    | IDENTIFICADOR '=' ternary_expression { $$ = nodo_nuevo_asignacion($3, $1); }
+    | CONSTANTE '=' expression { $$ = nodo_nuevo_asignacion($3, $1); }
+    | IDENTIFICADOR CONCATENAR_IGUAL expression { $$ = nodo_nuevo_asignacion((nodo_nuevo_operador(NODO_CONCATENAR, $1, $3)), $1); }
     | incdec_statement
     ;
 
-/*labeled_statement:
-    KCASE constant_expression ':' statement_list {
+labeled_statements
+    : labeled_statement_case labeled_statements {
+        $$ = nodo_nuevo(NODO_CASOS, $1, $2);
+    }
+    | labeled_statement_case {
+        $$ = nodo_nuevo(NODO_CASOS, $1, NULL);
+    }
+    | labeled_statement_default {
+        $$ = nodo_nuevo(NODO_CASOS, $1, NULL);
+    }
+    ;
+
+labeled_statement_case
+    :
+    CASO constant_expression ':' statement_list {
         $$ = nodo_nuevo(NODO_CASO, $2, $4);
     }
-    | KDEFAULT ':' statement_list {
+    ;
+
+labeled_statement_default
+    :
+    DEFECTO ':' statement_list {
         $$ = nodo_nuevo(NODO_DEFECTO, NULL, $3);
     }
     ;
-*/
 
 selection_statement:
-    KIF expression statement_list KEND {
+    SI expression statement_list FIN {
         $$ = nodo_nuevo_si($2, $3, NULL); }
-    | KIF expression statement_list KELSE statement_list KEND {
+    | SI expression statement_list SINO statement_list FIN {
         $$ = nodo_nuevo_si($2, $3, $5); }
-    /*| KSWITCH '(' TIDENTIFIER ')' labeled_statement KEND {
-        $$ = nodo_nuevo(NODO_SELECCION, $3, $5); }*/
+    | ELEGIR expression labeled_statements FIN {
+        $$ = nodo_nuevo(NODO_ELEGIR, $2, $3);
+    }
     ;
 
 iteration_statement
-    : KWHILE expression statement_list KEND {
+    : MIENTRAS expression statement_list FIN {
         $$ = nodo_nuevo_mientras($2, $3); }
-    | KDO statement_list KWHEN expression {
+    | HACER statement_list CUANDO expression {
         $$ = nodo_nuevo_hacer($4, $2); }
-    | KFROM '(' declaration ';' expression ';' declaration ')'
-        statement_list  KEND {
+    | DESDE '(' declaration ';' expression ';' declaration ')'
+        statement_list  FIN {
         $$ = nodo_nuevo_desde($3, $5, $7, $9); }
     ;
 
 jump_statement
-    : KRETURN expression { $$ = nodo_nuevo(NODO_RETORNO, $2, NULL); }
+    : RETORNO expression { $$ = nodo_nuevo(NODO_RETORNO, $2, NULL); }
     ;
 
 function_definition
-    : KFUNCTION TIDENTIFIER '(' identifier_list ')' statement_list KEND {
+    : FUNCION IDENTIFICADOR '(' identifier_list ')' statement_list FIN {
         $$ = nodo_nuevo_funcion($2, $4, $6);
     }
     ;
 
 function_call
-    : TIDENTIFIER '(' argument_expression_list ')' { $$ = nodo_nuevo(NODO_FUNCION_LLAMADA, $1, $3); }
+    : IDENTIFICADOR '(' argument_expression_list ')' { $$ = nodo_nuevo(NODO_FUNCION_LLAMADA, $1, $3); }
     ;
 
 argument_expression_list: /* empty */ { $$ = NULL; }
@@ -283,8 +296,8 @@ argument_expression_list: /* empty */ { $$ = NULL; }
 
 identifier_list
     : /* empty */ { $$ = NULL; }
-    | TIDENTIFIER { $$ = nodo_nuevo(NODO_LISTA_PARAMETROS, $1, NULL); }
-    | identifier_list ',' TIDENTIFIER { $$ = nodo_nuevo(NODO_LISTA_PARAMETROS, $3, $1); }
+    | IDENTIFICADOR { $$ = nodo_nuevo(NODO_LISTA_PARAMETROS, $1, NULL); }
+    | identifier_list ',' IDENTIFICADOR { $$ = nodo_nuevo(NODO_LISTA_PARAMETROS, $3, $1); }
     ;
 
 list_new
@@ -315,15 +328,15 @@ dict_item
 
 key
     :
-    TLIT
-    | TSTRING
+    LITERAL
+    | CADENA
     ;
 
 list_get_item:
-      TIDENTIFIER '[' TSTRING ']' { $$ = nodo_nuevo(NODO_DICC_OBTENER_ELEMENTO, $3, $1); }
-    | TIDENTIFIER '[' TLIT ']' { $$ = nodo_nuevo(NODO_DICC_OBTENER_ELEMENTO, $3, $1); }
-    | TIDENTIFIER '[' TINT ']' { $$ = nodo_nuevo(NODO_LISTA_OBTENER_ELEMENTO, $3, $1); }
-    | TIDENTIFIER '[' TIDENTIFIER ']' { $$ = nodo_nuevo(NODO_LISTA_OBTENER_ELEMENTO, $3, $1); }
+      IDENTIFICADOR '[' CADENA ']' { $$ = nodo_nuevo(NODO_DICC_OBTENER_ELEMENTO, $3, $1); }
+    | IDENTIFICADOR '[' LITERAL ']' { $$ = nodo_nuevo(NODO_DICC_OBTENER_ELEMENTO, $3, $1); }
+    | IDENTIFICADOR '[' ENTERO ']' { $$ = nodo_nuevo(NODO_LISTA_OBTENER_ELEMENTO, $3, $1); }
+    | IDENTIFICADOR '[' IDENTIFICADOR ']' { $$ = nodo_nuevo(NODO_LISTA_OBTENER_ELEMENTO, $3, $1); }
     ;
 
 %%

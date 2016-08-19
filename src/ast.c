@@ -358,8 +358,31 @@ void nodo_liberar(ast *a)
     }
 }
 
-int nested = -1;
+ast* transformar_casos(ast* casos, ast* cond_izq){    
+    if(casos == NULL){        
+        return NULL;
+    }        
+    ast* caso = casos->l;        
+    ast* cond = NULL;    
+    if(caso->tipo == NODO_CASO){ 
+        cond = nodo_nuevo_operador(NODO_IGUALDAD, cond_izq, caso->l);
+    }    
+    if(caso->tipo == NODO_DEFECTO){        
+        cond = nodo_nuevo_operador(NODO_IGUALDAD, cond_izq, cond_izq);
+    }       
+    ast* nSi = nodo_nuevo_si(cond, caso->r, ((ast*)transformar_casos(casos->r, cond_izq)));    
+    return nSi;
+}
 
+ast* transformar_elegir(ast* nodo_elegir){
+    ast* cond_izq = nodo_elegir->l;
+    ast* casos = nodo_elegir->r;
+    ast* nSi = NULL;
+    nSi = transformar_casos(casos, cond_izq);
+    return nSi;
+}
+
+int nested = -1;
 static int nodo_analizar(lat_vm *vm, ast *node, lat_bytecode *bcode, int i)
 {
     int temp[8] = {0};
@@ -414,10 +437,12 @@ static int nodo_analizar(lat_vm *vm, ast *node, lat_bytecode *bcode, int i)
     {
         if (node->l)
         {
+            //printf("procesando nodo_bloque->l\n");
             pn(vm, node->l);
         }
         if (node->r)
         {
+            //printf("procesando nodo_bloque->r\n");
             pn(vm, node->r);
         }
     }
@@ -478,8 +503,7 @@ static int nodo_analizar(lat_vm *vm, ast *node, lat_bytecode *bcode, int i)
 #if DEPURAR_AST
         printf("LOCALNS R1\n");
         printf("POP R255 R0\n");
-        printf("SET R255 R1\n");
-        printf("num_param %i\n", ret->num_param );
+        printf("SET R255 R1\n");        
 #endif
     }
     break;
@@ -561,6 +585,13 @@ static int nodo_analizar(lat_vm *vm, ast *node, lat_bytecode *bcode, int i)
         }
     }
     break;
+    case NODO_ELEGIR:
+    {        
+        /*transformar nodo elegir en nodos si*/
+        ast* nSi = transformar_elegir(node);
+        pn(vm, nSi);
+    }
+    break;
     case NODO_MIENTRAS:
     {
         temp[0] = i;
@@ -630,9 +661,9 @@ static int nodo_analizar(lat_vm *vm, ast *node, lat_bytecode *bcode, int i)
     break;
     case NODO_FUNCION_ARGUMENTOS:
     {
-#if DEPURAR_AST
+/*#if DEPURAR_AST
             printf(">>INICIO NODO_FUNCION_ARGUMENTOS\n");
-#endif
+#endif*/
         if (node->l)
         {
             pn(vm, node->l);
@@ -653,16 +684,16 @@ static int nodo_analizar(lat_vm *vm, ast *node, lat_bytecode *bcode, int i)
 #endif
             }
         }
-#if DEPURAR_AST
+/*#if DEPURAR_AST
             printf("<<FIN NODO_FUNCION_ARGUMENTOS\n");
-#endif
+#endif*/
     }
     break;
     case NODO_LISTA_PARAMETROS:
     {
-#if DEPURAR_AST
+/*#if DEPURAR_AST
             printf(">>INICIO NODO_LISTA_PARAMETROS\n");
-#endif
+#endif*/
         if (node->l)
         {
             dbc(OP_LOCALNS, 1, 0, NULL);
@@ -679,9 +710,9 @@ static int nodo_analizar(lat_vm *vm, ast *node, lat_bytecode *bcode, int i)
         {
             pn(vm, node->r);
         }
-#if DEPURAR_AST
+/*#if DEPURAR_AST
             printf("<<FIN NODO_LISTA_PARAMETROS\n");
-#endif
+#endif*/
     }
     break;
     case NODO_FUNCION_USUARIO:
@@ -886,7 +917,7 @@ static int nodo_analizar(lat_vm *vm, ast *node, lat_bytecode *bcode, int i)
 #endif
         }
     }
-    break;
+    break;    
     default:
         printf("nodo_tipo:%i\n", node->tipo);
         return 0;

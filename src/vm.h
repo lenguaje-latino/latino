@@ -46,7 +46,7 @@ typedef enum lat_ins
 {
     OP_END,    /**< Fin de la maquina virtual */
     OP_NOP,    /**< Indica No operaci�n */
-    OP_PUSH,    /**< __str_insertara en la pila */
+    OP_PUSH,    /**< inserta en la pila */
     OP_POP,    /**< Extrae de la pila */
     OP_GET,    /**< Obtiene un valor */
     OP_SET,    /**< Establece un valor */
@@ -56,7 +56,7 @@ typedef enum lat_ins
     OP_STORESTR,    /**< Almacena una cadena */
     OP_STOREBOOL,    /**< Almacena un valor logico */
     OP_STORELIST,    /**< Almacena una lista */
-    OP_PUSHLIST,    /**< __str_insertara la lista en la pila */
+    OP_PUSHLIST,    /**< inserta la lista en la pila */
     OP_POPLIST,    /**< Extrae la lista de la pila */
     OP_LISTGETITEM,    /**< Obtiene un valor de la lista */
     OP_LISTSETITEM,    /**< Asigna un valor de la lista */
@@ -69,7 +69,7 @@ typedef enum lat_ins
     OP_CALL,    /**< Llamada a una funcion */
     OP_NOT,    /**< Negacion de un valor logico */
     OP_STOREDICT,    /**< Almacena un objeto diccionario */
-    OP_PUSHDICT,    /**< __str_insertara un objeto diccionario en la pila */
+    OP_PUSHDICT,    /**< inserta un objeto diccionario en la pila */
     OP_POPDICT,    /**< Extrae un objeto diccionario de la pila */
     OP_PUSHDICTELEM, /**< Crea un objeto par (llave-valor) y lo agrega al diccionario de la pila */
     OP_DICTGETITEM,    /**< Obtiene un valor del diccionario */
@@ -129,7 +129,7 @@ void lat_ejecutar(lat_vm* vm);
   */
 void lat_ejecutar_archivo(lat_vm* vm);
 
-/**\brief __str_insertara un objeto en la pila de la MV
+/**\brief inserta un objeto en la pila de la MV
   *
   *\param vm: Apuntador a la MV
   *\param o: Apuntador a objeto
@@ -143,7 +143,7 @@ void lat_apilar(lat_vm* vm, lat_objeto* o);
   */
 lat_objeto* lat_desapilar(lat_vm* vm);
 
-/**\brief __str_insertara un objeto al final de la lista
+/**\brief inserta un objeto al final de la lista
   *
   *\param lista: Apuntador a la lista
   *\param o: Apuntador a objeto
@@ -157,7 +157,7 @@ void lat_apilar_lista(lat_objeto* lista, lat_objeto* o);
   */
 lat_objeto* lat_desapilar_lista(lat_objeto* lista);
 
-/**\brief __str_insertara un contexto en la pila de la MV
+/**\brief inserta un contexto en la pila de la MV
   *
   *\param vm: Apuntador a la MV
   */
@@ -169,7 +169,7 @@ void lat_apilar_contexto(lat_vm* vm);
   */
 void lat_desapilar_contexto(lat_vm* vm);
 
-/**\brief __str_insertara el contexto principal en la pila de la MV
+/**\brief inserta el contexto principal en la pila de la MV
   *
   *\param vm: Apuntador a la MV
   *\param ctx: Apuntador al contexto

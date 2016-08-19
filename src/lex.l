@@ -66,50 +66,50 @@ EXP ([Ee][-+]?[0-9]+)
 "="     { return yytext[0]; }
 
  /* operadores de comparacion */
-">="    { return OP_GE; }
-"<="    { return OP_LE; }
-"!="    { return OP_NEQ; }
-"=="    { return OP_EQ; }
-"&&"    { return OP_AND; }
-"||"    { return OP_OR; }
-".="    { return OP_CONCAT_IGUAL; }
-"."     { return OP_CONCAT; }
-">"     { return OP_GT; }
-"<"     { return OP_LT; }
-"++"	  { return OP_INCR; }
-"--"	  { return OP_DECR; }
+">="    { return MAYOR_IGUAL; }
+"<="    { return MENOR_IGUAL; }
+"!="    { return DIFERENTE; }
+"=="    { return IGUAL_LOGICO; }
+"&&"    { return Y_LOGICO; }
+"||"    { return O_LOGICO; }
+".="    { return CONCATENAR_IGUAL; }
+"."     { return CONCATENAR; }
+">"     { return MAYOR_QUE; }
+"<"     { return MENOR_QUE; }
+"++"	  { return INCREMENTO; }
+"--"	  { return DECREMENTO; }
 "!"     { return yytext[0]; }
 
  /* palabras reservadas */
-"si"        { return KIF; }
-"fin"       { return KEND; }
-"sino"      { return KELSE; }
-"romper"    { return KBREAK; }
-"continuar" { return KCONTINUE; }
-"mientras"  { return KWHILE; }
-"hacer"     { return KDO; }
-"cuando"    { return KWHEN; }
-"funcion"   { return KFUNCTION; }
-"desde"     { return KFROM; }
-"verdadero" { yylval->node = nodo_nuevo_logico(1, yylloc->first_line, yylloc->first_column); return TTRUE; }
-"cierto"    { yylval->node = nodo_nuevo_logico(1, yylloc->first_line, yylloc->first_column); return TTRUE; }
-"falso"     { yylval->node = nodo_nuevo_logico(0, yylloc->first_line, yylloc->first_column); return TFALSE; }
-"retorno"   { return KRETURN; }
-"incluir"   { return KINCLUDE; }
-
- /*"elegir"    { return KSWITCH; }
- "caso"      { return KCASE; }
- "defecto"   { return KDEFAULT; }*/
+"si"        { return SI; }
+"fin"       { return FIN; }
+"sino"      { return SINO; }
+"romper"    { return ROMPER; }
+"continuar" { return CONTINUAR; }
+"mientras"  { return MIENTRAS; }
+"hacer"     { return HACER; }
+"cuando"    { return CUANDO; }
+"funcion"   { return FUNCION; }
+"desde"     { return DESDE; }
+"verdadero" { yylval->node = nodo_nuevo_logico(1, yylloc->first_line, yylloc->first_column); return VERDADERO; }
+"cierto"    { yylval->node = nodo_nuevo_logico(1, yylloc->first_line, yylloc->first_column); return VERDADERO; }
+"falso"     { yylval->node = nodo_nuevo_logico(0, yylloc->first_line, yylloc->first_column); return FALSO; }
+"retorno"   { return RETORNO; }
+"incluir"   { return INCLUIR; }
+"elegir"    { return ELEGIR; }
+"caso"      { return CASO; }
+"defecto"   { return DEFECTO; }
+ /*"clase"     { return CLASE; }*/
 
  /* names */
-[_A-Z][_A-Z0-9]*       { yylval->node = nodo_nuevo_constante(yytext, yylloc->first_line, yylloc->first_column); return TCONSTANT; }
-[_a-zA-Z][_a-zA-Z0-9]* { yylval->node = nodo_nuevo_identificador(yytext, yylloc->first_line, yylloc->first_column); return TIDENTIFIER; }
-[0-9]+"."+[0-9]*{EXP}?|"."+[0-9]+{EXP}?       { yylval->node = nodo_nuevo_decimal(strtod(yytext, NULL), yylloc->first_line, yylloc->first_column); return TNUMBER; }
-[0-9]+                 { yylval->node = nodo_nuevo_entero(strtol(yytext, NULL, 0), yylloc->first_line, yylloc->first_column); return TINT; }
-\"([^\\\"]|\\.)*\"     { yytext[strlen(yytext) - 1] = '\0'; yylval->node = nodo_nuevo_cadena(yytext+1, yylloc->first_line, yylloc->first_column); return TSTRING; }
-'([^\\\']|\\.)*'       { yytext[strlen(yytext) - 1] = '\0'; yylval->node = nodo_nuevo_literal(yytext+1, yylloc->first_line, yylloc->first_column); return TLIT; }
+[_A-Z][_A-Z0-9]*       { yylval->node = nodo_nuevo_constante(yytext, yylloc->first_line, yylloc->first_column); return CONSTANTE; }
+[_a-zA-Z][_a-zA-Z0-9]* { yylval->node = nodo_nuevo_identificador(yytext, yylloc->first_line, yylloc->first_column); return IDENTIFICADOR; }
+[0-9]+"."+[0-9]*{EXP}?|"."+[0-9]+{EXP}?       { yylval->node = nodo_nuevo_decimal(strtod(yytext, NULL), yylloc->first_line, yylloc->first_column); return _DECIMAL; }
+[0-9]+                 { yylval->node = nodo_nuevo_entero(strtol(yytext, NULL, 0), yylloc->first_line, yylloc->first_column); return ENTERO; }
+\"([^\\\"]|\\.)*\"     { yytext[strlen(yytext) - 1] = '\0'; yylval->node = nodo_nuevo_cadena(yytext+1, yylloc->first_line, yylloc->first_column); return CADENA; }
+'([^\\\']|\\.)*'       { yytext[strlen(yytext) - 1] = '\0'; yylval->node = nodo_nuevo_literal(yytext+1, yylloc->first_line, yylloc->first_column); return LITERAL; }
 "#".*                  { ; }  /* ignora comments */
-"//".*                  { ; }  /* ignora comments */
+"//".*                 { ; }  /* ignora comments */
 "/*"([^*]|(\*+[^*/]))*\*+\/ { ; } /* comentarios multilinea como en c/c++ */
 [\n\r]                 { ; }
 [ \t]+                 { ; } /* ignora espacios en blanco y tabuladores */

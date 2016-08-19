@@ -136,7 +136,7 @@ int __str_intercambiar_posicion(char* base, char* str, int startIndex);
   */
 int __str_ultima_posicion(char* base, char* str);
 
-/**\brief __str_insertara una subcadena dentro de una cadena a partir de una posicion
+/**\brief inserta una subcadena dentro de una cadena a partir de una posicion
   *
   *\param dest: Cadena destino
   *\param src: Cadena a insertarar
