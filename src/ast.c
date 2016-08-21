@@ -358,23 +358,28 @@ void nodo_liberar(ast *a)
     }
 }
 
-ast* transformar_casos(ast* casos, ast* cond_izq){    
-    if(casos == NULL){        
+ast* transformar_casos(ast* casos, ast* cond_izq)
+{
+    if(casos == NULL)
+    {
         return NULL;
-    }        
-    ast* caso = casos->l;        
-    ast* cond = NULL;    
-    if(caso->tipo == NODO_CASO){ 
+    }
+    ast* caso = casos->l;
+    ast* cond = NULL;
+    if(caso->tipo == NODO_CASO)
+    {
         cond = nodo_nuevo_operador(NODO_IGUALDAD, cond_izq, caso->l);
-    }    
-    if(caso->tipo == NODO_DEFECTO){        
+    }
+    if(caso->tipo == NODO_DEFECTO)
+    {
         cond = nodo_nuevo_operador(NODO_IGUALDAD, cond_izq, cond_izq);
-    }       
-    ast* nSi = nodo_nuevo_si(cond, caso->r, ((ast*)transformar_casos(casos->r, cond_izq)));    
+    }
+    ast* nSi = nodo_nuevo_si(cond, caso->r, ((ast*)transformar_casos(casos->r, cond_izq)));
     return nSi;
 }
 
-ast* transformar_elegir(ast* nodo_elegir){
+ast* transformar_elegir(ast* nodo_elegir)
+{
     ast* cond_izq = nodo_elegir->l;
     ast* casos = nodo_elegir->r;
     ast* nSi = NULL;
@@ -437,12 +442,10 @@ static int nodo_analizar(lat_vm *vm, ast *node, lat_bytecode *bcode, int i)
     {
         if (node->l)
         {
-            //printf("procesando nodo_bloque->l\n");
             pn(vm, node->l);
         }
         if (node->r)
         {
-            //printf("procesando nodo_bloque->r\n");
             pn(vm, node->r);
         }
     }
@@ -451,13 +454,15 @@ static int nodo_analizar(lat_vm *vm, ast *node, lat_bytecode *bcode, int i)
     {
         dbc(OP_LOCALNS, 1, 0, NULL);
         lat_objeto *ret = lat_cadena_nueva(vm, node->valor->v.s);
+        ret->num_linea = node->valor->num_linea;
+        ret->num_columna = node->valor->num_columna;
         dbc(OP_STORESTR, 2, 0, ret);
-        dbc(OP_GET, 2, 1, NULL);
+        dbc(OP_GET, 1, 2, NULL);
         dbc(OP_MOV, 255, 2, NULL);
 #if DEPURAR_AST
         printf("LOCALNS R1\n");
         printf("STORESTR R2 %s\n", ret->data.str);
-        printf("GET R2 R1\n");
+        printf("GET R1 R2\n");
         printf("MOV R255 R2\n");
 #endif
     }
@@ -467,10 +472,12 @@ static int nodo_analizar(lat_vm *vm, ast *node, lat_bytecode *bcode, int i)
         pn(vm, node->l);
         dbc(OP_PUSH, 255, 0, NULL);
 #if DEPURAR_AST
-        printf("PUSH R255 R0\n");
+        printf("PUSH R255\n");
 #endif
-		    /*Nombre de la variable o funcion*/
+        /*Nombre de la variable o funcion*/
         lat_objeto *ret = lat_cadena_nueva(vm, node->r->valor->v.s);
+        ret->num_linea = node->r->valor->num_linea;
+        ret->num_columna = node->r->valor->num_columna;
         if (ret->num_declared < 0)
         {
             ret->num_declared = 0;
@@ -479,37 +486,43 @@ static int nodo_analizar(lat_vm *vm, ast *node, lat_bytecode *bcode, int i)
         ret->num_declared++;
         if (ret->es_constante && ret->num_declared > 1)
         {
-            lat_error("Linea %d: %s", (node->r->valor->num_linea + 1),  "Intento de asignar un nuevo valor a una CONSTANTE ");
+            lat_fatal_error("Linea %d: %s", (node->r->valor->num_linea + 1),  "Intento de asignar un nuevo valor a una CONSTANTE ");
         }
-    		//Si es una funcion contamos el numero de parametros que necesita
-    		int num_params = 0;
-    		if (node->l->tipo == NODO_FUNCION_USUARIO){
-    			ast* tmp;
-    			if (node->l->l->tipo == NODO_LISTA_PARAMETROS){
-    				tmp = node->l->l;
-    				while (tmp->r != NULL && tmp->r->tipo == NODO_LISTA_PARAMETROS){
-    					tmp = tmp->r;
-    					num_params++;
-    				}
-    				if (tmp->l->tipo){
-    					num_params++;
-    				}
-    			}
-    		}
-    		ret->num_param = num_params;
+        //Si es una funcion contamos el numero de parametros que necesita
+        int num_params = 0;
+        if (node->l->tipo == NODO_FUNCION_USUARIO)
+        {
+            ast* tmp;
+            if (node->l->l->tipo == NODO_LISTA_PARAMETROS)
+            {
+                tmp = node->l->l;
+                while (tmp->r != NULL && tmp->r->tipo == NODO_LISTA_PARAMETROS)
+                {
+                    tmp = tmp->r;
+                    num_params++;
+                }
+                if (tmp->l->tipo)
+                {
+                    num_params++;
+                }
+            }
+        }
+        ret->num_param = num_params;
         dbc(OP_LOCALNS, 1, 0, NULL);
         dbc(OP_POP, 255, 0, NULL);
-        dbc(OP_SET, 255, 1, ret);
+        dbc(OP_SET, 1, 255, ret);
 #if DEPURAR_AST
         printf("LOCALNS R1\n");
-        printf("POP R255 R0\n");
-        printf("SET R255 R1\n");        
+        printf("POP R255\n");
+        printf("SET R1 R255\n");
 #endif
     }
     break;
     case NODO_LITERAL:
     {
         lat_objeto *ret = lat_literal_nuevo(vm, node->valor->v.c);
+        ret->num_linea = node->valor->num_linea;
+        ret->num_columna = node->valor->num_columna;
         dbc(OP_STORELIT, 255, 0, ret);
 #if DEPURAR_AST
         printf("STORELIT R255 %s\n", ret->data.str);
@@ -519,6 +532,8 @@ static int nodo_analizar(lat_vm *vm, ast *node, lat_bytecode *bcode, int i)
     case NODO_ENTERO:
     {
         lat_objeto *ret = lat_entero_nuevo(vm, node->valor->v.i);
+        ret->num_linea = node->valor->num_linea;
+        ret->num_columna = node->valor->num_columna;
         dbc(OP_STOREINT, 255, 0, ret);
 #if DEPURAR_AST
         printf("STOREINT R255 %ld\n", ret->data.i);
@@ -528,6 +543,8 @@ static int nodo_analizar(lat_vm *vm, ast *node, lat_bytecode *bcode, int i)
     case NODO_DECIMAL:
     {
         lat_objeto *ret = lat_decimal_nuevo(vm, node->valor->v.d);
+        ret->num_linea = node->valor->num_linea;
+        ret->num_columna = node->valor->num_columna;
         dbc(OP_STOREDOUBLE, 255, 0, ret);
 #if DEPURAR_AST
         printf("OP_STOREDOUBLE R255 %.14g\n", ret->data.d);
@@ -537,6 +554,8 @@ static int nodo_analizar(lat_vm *vm, ast *node, lat_bytecode *bcode, int i)
     case NODO_CADENA:
     {
         lat_objeto *ret = lat_cadena_nueva(vm, node->valor->v.s);
+        ret->num_linea = node->valor->num_linea;
+        ret->num_columna = node->valor->num_columna;
         dbc(OP_STORESTR, 255, 0, ret);
 #if DEPURAR_AST
         printf("STORESTR R255 %s\n", ret->data.str);
@@ -546,6 +565,8 @@ static int nodo_analizar(lat_vm *vm, ast *node, lat_bytecode *bcode, int i)
     case NODO_LOGICO:
     {
         lat_objeto *ret = (node->valor->v.b == true) ? vm->objeto_verdadero : vm->objeto_falso;
+        ret->num_linea = node->valor->num_linea;
+        ret->num_columna = node->valor->num_columna;
         dbc(OP_STOREBOOL, 255, 0, ret);
 #if DEPURAR_AST
         printf("STOREBOOL R255 %i\n", ret->data.b);
@@ -586,7 +607,7 @@ static int nodo_analizar(lat_vm *vm, ast *node, lat_bytecode *bcode, int i)
     }
     break;
     case NODO_ELEGIR:
-    {        
+    {
         /*transformar nodo elegir en nodos si*/
         ast* nSi = transformar_elegir(node);
         pn(vm, nSi);
@@ -641,7 +662,7 @@ static int nodo_analizar(lat_vm *vm, ast *node, lat_bytecode *bcode, int i)
     {
         if (node->r)
         {
-                pn(vm, node->r);
+            pn(vm, node->r);
         }
         pn(vm, node->l);
         dbc(OP_CALL, 255, 0, NULL);
@@ -661,9 +682,6 @@ static int nodo_analizar(lat_vm *vm, ast *node, lat_bytecode *bcode, int i)
     break;
     case NODO_FUNCION_ARGUMENTOS:
     {
-/*#if DEPURAR_AST
-            printf(">>INICIO NODO_FUNCION_ARGUMENTOS\n");
-#endif*/
         if (node->l)
         {
             pn(vm, node->l);
@@ -683,36 +701,27 @@ static int nodo_analizar(lat_vm *vm, ast *node, lat_bytecode *bcode, int i)
                 printf("PUSH R255\n");
 #endif
             }
-        }
-/*#if DEPURAR_AST
-            printf("<<FIN NODO_FUNCION_ARGUMENTOS\n");
-#endif*/
+        }     
     }
     break;
     case NODO_LISTA_PARAMETROS:
-    {
-/*#if DEPURAR_AST
-            printf(">>INICIO NODO_LISTA_PARAMETROS\n");
-#endif*/
+    {        
         if (node->l)
         {
             dbc(OP_LOCALNS, 1, 0, NULL);
             dbc(OP_POP, 2, 0, NULL);
             lat_objeto *ret = lat_clonar_objeto(vm, lat_cadena_nueva(vm, node->l->valor->v.s));
-            dbc(OP_SET, 2, 1, ret);
+            dbc(OP_SET, 1, 2, ret);
 #if DEPURAR_AST
             printf("LOCALNS R1\n");
             printf("POP R2\n");
-            printf("SET R2 R1 %s\n", ret->data.str);
+            printf("SET R1 R2 %s\n", ret->data.str);
 #endif
         }
         if (node->r)
         {
             pn(vm, node->r);
         }
-/*#if DEPURAR_AST
-            printf("<<FIN NODO_LISTA_PARAMETROS\n");
-#endif*/
     }
     break;
     case NODO_FUNCION_USUARIO:
@@ -917,7 +926,7 @@ static int nodo_analizar(lat_vm *vm, ast *node, lat_bytecode *bcode, int i)
 #endif
         }
     }
-    break;    
+    break;
     default:
         printf("nodo_tipo:%i\n", node->tipo);
         return 0;

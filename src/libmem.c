@@ -31,7 +31,7 @@ void* __memoria_asignar(size_t size)
 {
     void* value = malloc(size);
     if (value == 0)
-        lat_error("Memoria virtual agotada\n");
+        lat_fatal_error("Memoria virtual agotada\n");
     return value;
 }
 
@@ -39,7 +39,7 @@ void* __memoria_reasignar(void* ptr, size_t size)
 {
     void* value = realloc(ptr, size);
     if (value == 0)
-        lat_error("Memoria virtual agotada\n");
+        lat_fatal_error("Memoria virtual agotada\n");
     return value;
 }
 

@@ -91,8 +91,10 @@ typedef struct lat_objeto
     bool es_constante;   /**< Valida si es una constante */
     int num_declared;   /**< Numero de veces declarado */
     int num_param;		/**<Numero de parametros de una funcion definida por el usuario */
+    int num_linea;
+    int num_columna;
     lat_datos_objeto data;   /**< Informacion del objeto */
-}lat_objeto;
+} lat_objeto;
 
 struct lat_llave_valor
 {

@@ -1,339 +1,306 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
 <CodeBlocks_project_file>
-	<FileVersion major="1" minor="6" />
-	<Project>
-		<Option title="latino" />
-		<Option makefile_is_custom="1" />
-		<Option default_target="latino" />
-		<Option compiler="gcc" />
-		<Option virtualFolders="CMake Files/;CMake Files/src/;CMake Files/src/linenoise/;CMake Files/cmake/;CMake Files/cmake/Modules/;" />
-		<Build>
-			<Target title="all">
-				<Option type="4" />
-				<Option compiler="gcc" />
-				<MakeCommands>
-					<Build command='/usr/bin/make -f &quot;/home/primi/src/latino/codeblocks/Makefile&quot;  VERBOSE=1 all' />
-					<CompileFile command='/usr/bin/make -f &quot;/home/primi/src/latino/codeblocks/Makefile&quot;  VERBOSE=1 &quot;$file&quot;' />
-					<Clean command='/usr/bin/make -f &quot;/home/primi/src/latino/codeblocks/Makefile&quot;  VERBOSE=1 clean' />
-					<DistClean command='/usr/bin/make -f &quot;/home/primi/src/latino/codeblocks/Makefile&quot;  VERBOSE=1 clean' />
-					<AskRebuildNeeded command="$make -q -f $makefile $target" />
-					<SilentBuild command="$make -f $makefile $target &gt; $(CMD_NULL)" />
-				</MakeCommands>
-			</Target>
-			<Target title="coverage">
-				<Option type="4" />
-				<Option compiler="gcc" />
-				<MakeCommands>
-					<Build command='/usr/bin/make -f &quot;/home/primi/src/latino/codeblocks/Makefile&quot;  VERBOSE=1 coverage' />
-					<CompileFile command='/usr/bin/make -f &quot;/home/primi/src/latino/codeblocks/Makefile&quot;  VERBOSE=1 &quot;$file&quot;' />
-					<Clean command='/usr/bin/make -f &quot;/home/primi/src/latino/codeblocks/Makefile&quot;  VERBOSE=1 clean' />
-					<DistClean command='/usr/bin/make -f &quot;/home/primi/src/latino/codeblocks/Makefile&quot;  VERBOSE=1 clean' />
-					<AskRebuildNeeded command="$make -q -f $makefile $target" />
-					<SilentBuild command="$make -f $makefile $target &gt; $(CMD_NULL)" />
-				</MakeCommands>
-			</Target>
-			<Target title="edit_cache">
-				<Option type="4" />
-				<Option compiler="gcc" />
-				<MakeCommands>
-					<Build command='/usr/bin/make -f &quot;/home/primi/src/latino/codeblocks/Makefile&quot;  VERBOSE=1 edit_cache' />
-					<CompileFile command='/usr/bin/make -f &quot;/home/primi/src/latino/codeblocks/Makefile&quot;  VERBOSE=1 &quot;$file&quot;' />
-					<Clean command='/usr/bin/make -f &quot;/home/primi/src/latino/codeblocks/Makefile&quot;  VERBOSE=1 clean' />
-					<DistClean command='/usr/bin/make -f &quot;/home/primi/src/latino/codeblocks/Makefile&quot;  VERBOSE=1 clean' />
-					<AskRebuildNeeded command="$make -q -f $makefile $target" />
-					<SilentBuild command="$make -f $makefile $target &gt; $(CMD_NULL)" />
-				</MakeCommands>
-			</Target>
-			<Target title="install">
-				<Option type="4" />
-				<Option compiler="gcc" />
-				<MakeCommands>
-					<Build command='/usr/bin/make -f &quot;/home/primi/src/latino/codeblocks/Makefile&quot;  VERBOSE=1 install' />
-					<CompileFile command='/usr/bin/make -f &quot;/home/primi/src/latino/codeblocks/Makefile&quot;  VERBOSE=1 &quot;$file&quot;' />
-					<Clean command='/usr/bin/make -f &quot;/home/primi/src/latino/codeblocks/Makefile&quot;  VERBOSE=1 clean' />
-					<DistClean command='/usr/bin/make -f &quot;/home/primi/src/latino/codeblocks/Makefile&quot;  VERBOSE=1 clean' />
-					<AskRebuildNeeded command="$make -q -f $makefile $target" />
-					<SilentBuild command="$make -f $makefile $target &gt; $(CMD_NULL)" />
-				</MakeCommands>
-			</Target>
-			<Target title="install/local">
-				<Option type="4" />
-				<Option compiler="gcc" />
-				<MakeCommands>
-					<Build command='/usr/bin/make -f &quot;/home/primi/src/latino/codeblocks/Makefile&quot;  VERBOSE=1 install/local' />
-					<CompileFile command='/usr/bin/make -f &quot;/home/primi/src/latino/codeblocks/Makefile&quot;  VERBOSE=1 &quot;$file&quot;' />
-					<Clean command='/usr/bin/make -f &quot;/home/primi/src/latino/codeblocks/Makefile&quot;  VERBOSE=1 clean' />
-					<DistClean command='/usr/bin/make -f &quot;/home/primi/src/latino/codeblocks/Makefile&quot;  VERBOSE=1 clean' />
-					<AskRebuildNeeded command="$make -q -f $makefile $target" />
-					<SilentBuild command="$make -f $makefile $target &gt; $(CMD_NULL)" />
-				</MakeCommands>
-			</Target>
-			<Target title="install/strip">
-				<Option type="4" />
-				<Option compiler="gcc" />
-				<MakeCommands>
-					<Build command='/usr/bin/make -f &quot;/home/primi/src/latino/codeblocks/Makefile&quot;  VERBOSE=1 install/strip' />
-					<CompileFile command='/usr/bin/make -f &quot;/home/primi/src/latino/codeblocks/Makefile&quot;  VERBOSE=1 &quot;$file&quot;' />
-					<Clean command='/usr/bin/make -f &quot;/home/primi/src/latino/codeblocks/Makefile&quot;  VERBOSE=1 clean' />
-					<DistClean command='/usr/bin/make -f &quot;/home/primi/src/latino/codeblocks/Makefile&quot;  VERBOSE=1 clean' />
-					<AskRebuildNeeded command="$make -q -f $makefile $target" />
-					<SilentBuild command="$make -f $makefile $target &gt; $(CMD_NULL)" />
-				</MakeCommands>
-			</Target>
-			<Target title="list_install_components">
-				<Option type="4" />
-				<Option compiler="gcc" />
-				<MakeCommands>
-					<Build command='/usr/bin/make -f &quot;/home/primi/src/latino/codeblocks/Makefile&quot;  VERBOSE=1 list_install_components' />
-					<CompileFile command='/usr/bin/make -f &quot;/home/primi/src/latino/codeblocks/Makefile&quot;  VERBOSE=1 &quot;$file&quot;' />
-					<Clean command='/usr/bin/make -f &quot;/home/primi/src/latino/codeblocks/Makefile&quot;  VERBOSE=1 clean' />
-					<DistClean command='/usr/bin/make -f &quot;/home/primi/src/latino/codeblocks/Makefile&quot;  VERBOSE=1 clean' />
-					<AskRebuildNeeded command="$make -q -f $makefile $target" />
-					<SilentBuild command="$make -f $makefile $target &gt; $(CMD_NULL)" />
-				</MakeCommands>
-			</Target>
-			<Target title="package">
-				<Option type="4" />
-				<Option compiler="gcc" />
-				<MakeCommands>
-					<Build command='/usr/bin/make -f &quot;/home/primi/src/latino/codeblocks/Makefile&quot;  VERBOSE=1 package' />
-					<CompileFile command='/usr/bin/make -f &quot;/home/primi/src/latino/codeblocks/Makefile&quot;  VERBOSE=1 &quot;$file&quot;' />
-					<Clean command='/usr/bin/make -f &quot;/home/primi/src/latino/codeblocks/Makefile&quot;  VERBOSE=1 clean' />
-					<DistClean command='/usr/bin/make -f &quot;/home/primi/src/latino/codeblocks/Makefile&quot;  VERBOSE=1 clean' />
-					<AskRebuildNeeded command="$make -q -f $makefile $target" />
-					<SilentBuild command="$make -f $makefile $target &gt; $(CMD_NULL)" />
-				</MakeCommands>
-			</Target>
-			<Target title="package_source">
-				<Option type="4" />
-				<Option compiler="gcc" />
-				<MakeCommands>
-					<Build command='/usr/bin/make -f &quot;/home/primi/src/latino/codeblocks/Makefile&quot;  VERBOSE=1 package_source' />
-					<CompileFile command='/usr/bin/make -f &quot;/home/primi/src/latino/codeblocks/Makefile&quot;  VERBOSE=1 &quot;$file&quot;' />
-					<Clean command='/usr/bin/make -f &quot;/home/primi/src/latino/codeblocks/Makefile&quot;  VERBOSE=1 clean' />
-					<DistClean command='/usr/bin/make -f &quot;/home/primi/src/latino/codeblocks/Makefile&quot;  VERBOSE=1 clean' />
-					<AskRebuildNeeded command="$make -q -f $makefile $target" />
-					<SilentBuild command="$make -f $makefile $target &gt; $(CMD_NULL)" />
-				</MakeCommands>
-			</Target>
-			<Target title="rebuild_cache">
-				<Option type="4" />
-				<Option compiler="gcc" />
-				<MakeCommands>
-					<Build command='/usr/bin/make -f &quot;/home/primi/src/latino/codeblocks/Makefile&quot;  VERBOSE=1 rebuild_cache' />
-					<CompileFile command='/usr/bin/make -f &quot;/home/primi/src/latino/codeblocks/Makefile&quot;  VERBOSE=1 &quot;$file&quot;' />
-					<Clean command='/usr/bin/make -f &quot;/home/primi/src/latino/codeblocks/Makefile&quot;  VERBOSE=1 clean' />
-					<DistClean command='/usr/bin/make -f &quot;/home/primi/src/latino/codeblocks/Makefile&quot;  VERBOSE=1 clean' />
-					<AskRebuildNeeded command="$make -q -f $makefile $target" />
-					<SilentBuild command="$make -f $makefile $target &gt; $(CMD_NULL)" />
-				</MakeCommands>
-			</Target>
-			<Target title="test">
-				<Option type="4" />
-				<Option compiler="gcc" />
-				<MakeCommands>
-					<Build command='/usr/bin/make -f &quot;/home/primi/src/latino/codeblocks/Makefile&quot;  VERBOSE=1 test' />
-					<CompileFile command='/usr/bin/make -f &quot;/home/primi/src/latino/codeblocks/Makefile&quot;  VERBOSE=1 &quot;$file&quot;' />
-					<Clean command='/usr/bin/make -f &quot;/home/primi/src/latino/codeblocks/Makefile&quot;  VERBOSE=1 clean' />
-					<DistClean command='/usr/bin/make -f &quot;/home/primi/src/latino/codeblocks/Makefile&quot;  VERBOSE=1 clean' />
-					<AskRebuildNeeded command="$make -q -f $makefile $target" />
-					<SilentBuild command="$make -f $makefile $target &gt; $(CMD_NULL)" />
-				</MakeCommands>
-			</Target>
-			<Target title="latino">
-				<Option output="/home/primi/src/latino/codeblocks/bin/latino" prefix_auto="0" extension_auto="0" />
-				<Option working_dir="/home/primi/src/latino/codeblocks/bin" />
-				<Option object_output="./" />
-				<Option type="1" />
-				<Option compiler="gcc" />
-				<Option parameters="../../ejemplos/debug.lat" />
-				<Compiler>
-					<Add option="-D_DEBUG" />
-					<Add option="-D__STDC_CONSTANT_MACROS" />
-					<Add option="-D__STDC_FORMAT_MACROS" />
-					<Add option="-D__STDC_LIMIT_MACROS" />
-					<Add directory="/usr/include" />
-					<Add directory="/usr/include/c++/4.8" />
-					<Add directory="/usr/include/c++/4.8/backward" />
-					<Add directory="/usr/include/x86_64-linux-gnu" />
-					<Add directory="/usr/include/x86_64-linux-gnu/c++/4.8" />
-					<Add directory="/usr/lib/gcc/x86_64-linux-gnu/4.8/include" />
-					<Add directory="/usr/lib/gcc/x86_64-linux-gnu/4.8/include-fixed" />
-					<Add directory="/usr/local/include" />
-				</Compiler>
-				<MakeCommands>
-					<Build command='/usr/bin/make -f &quot;/home/primi/src/latino/codeblocks/src/Makefile&quot;  VERBOSE=1 latino' />
-					<CompileFile command='/usr/bin/make -f &quot;/home/primi/src/latino/codeblocks/src/Makefile&quot;  VERBOSE=1 &quot;$file&quot;' />
-					<Clean command='/usr/bin/make -f &quot;/home/primi/src/latino/codeblocks/src/Makefile&quot;  VERBOSE=1 clean' />
-					<DistClean command='/usr/bin/make -f &quot;/home/primi/src/latino/codeblocks/src/Makefile&quot;  VERBOSE=1 clean' />
-					<AskRebuildNeeded command="$make -q -f $makefile $target" />
-					<SilentBuild command="$make -f $makefile $target &gt; $(CMD_NULL)" />
-				</MakeCommands>
-			</Target>
-			<Target title="latino/fast">
-				<Option output="/home/primi/src/latino/codeblocks/bin/latino" prefix_auto="0" extension_auto="0" />
-				<Option working_dir="/home/primi/src/latino/codeblocks/bin" />
-				<Option object_output="./" />
-				<Option type="1" />
-				<Option compiler="gcc" />
-				<Compiler>
-					<Add option="-D_DEBUG" />
-					<Add option="-D__STDC_CONSTANT_MACROS" />
-					<Add option="-D__STDC_FORMAT_MACROS" />
-					<Add option="-D__STDC_LIMIT_MACROS" />
-					<Add directory="/usr/include" />
-					<Add directory="/usr/include/c++/4.8" />
-					<Add directory="/usr/include/c++/4.8/backward" />
-					<Add directory="/usr/include/x86_64-linux-gnu" />
-					<Add directory="/usr/include/x86_64-linux-gnu/c++/4.8" />
-					<Add directory="/usr/lib/gcc/x86_64-linux-gnu/4.8/include" />
-					<Add directory="/usr/lib/gcc/x86_64-linux-gnu/4.8/include-fixed" />
-					<Add directory="/usr/local/include" />
-				</Compiler>
-				<MakeCommands>
-					<Build command='/usr/bin/make -f &quot;/home/primi/src/latino/codeblocks/src/Makefile&quot;  VERBOSE=1 latino/fast' />
-					<CompileFile command='/usr/bin/make -f &quot;/home/primi/src/latino/codeblocks/src/Makefile&quot;  VERBOSE=1 &quot;$file&quot;' />
-					<Clean command='/usr/bin/make -f &quot;/home/primi/src/latino/codeblocks/src/Makefile&quot;  VERBOSE=1 clean' />
-					<DistClean command='/usr/bin/make -f &quot;/home/primi/src/latino/codeblocks/src/Makefile&quot;  VERBOSE=1 clean' />
-					<AskRebuildNeeded command="$make -q -f $makefile $target" />
-					<SilentBuild command="$make -f $makefile $target &gt; $(CMD_NULL)" />
-				</MakeCommands>
-			</Target>
-			<Target title="linenoise">
-				<Option output="/home/primi/src/latino/codeblocks/src/linenoise/liblinenoise.a" prefix_auto="0" extension_auto="0" />
-				<Option working_dir="" />
-				<Option object_output="./" />
-				<Option type="2" />
-				<Option compiler="gcc" />
-				<Compiler>
-					<Add option="-D_DEBUG" />
-					<Add option="-D__STDC_CONSTANT_MACROS" />
-					<Add option="-D__STDC_FORMAT_MACROS" />
-					<Add option="-D__STDC_LIMIT_MACROS" />
-					<Add directory="/usr/include" />
-					<Add directory="/usr/include/c++/4.8" />
-					<Add directory="/usr/include/c++/4.8/backward" />
-					<Add directory="/usr/include/x86_64-linux-gnu" />
-					<Add directory="/usr/include/x86_64-linux-gnu/c++/4.8" />
-					<Add directory="/usr/lib/gcc/x86_64-linux-gnu/4.8/include" />
-					<Add directory="/usr/lib/gcc/x86_64-linux-gnu/4.8/include-fixed" />
-					<Add directory="/usr/local/include" />
-				</Compiler>
-				<MakeCommands>
-					<Build command='/usr/bin/make -f &quot;/home/primi/src/latino/codeblocks/src/linenoise/Makefile&quot;  VERBOSE=1 linenoise' />
-					<CompileFile command='/usr/bin/make -f &quot;/home/primi/src/latino/codeblocks/src/linenoise/Makefile&quot;  VERBOSE=1 &quot;$file&quot;' />
-					<Clean command='/usr/bin/make -f &quot;/home/primi/src/latino/codeblocks/src/linenoise/Makefile&quot;  VERBOSE=1 clean' />
-					<DistClean command='/usr/bin/make -f &quot;/home/primi/src/latino/codeblocks/src/linenoise/Makefile&quot;  VERBOSE=1 clean' />
-					<AskRebuildNeeded command="$make -q -f $makefile $target" />
-					<SilentBuild command="$make -f $makefile $target &gt; $(CMD_NULL)" />
-				</MakeCommands>
-			</Target>
-			<Target title="linenoise/fast">
-				<Option output="/home/primi/src/latino/codeblocks/src/linenoise/liblinenoise.a" prefix_auto="0" extension_auto="0" />
-				<Option working_dir="" />
-				<Option object_output="./" />
-				<Option type="2" />
-				<Option compiler="gcc" />
-				<Compiler>
-					<Add option="-D_DEBUG" />
-					<Add option="-D__STDC_CONSTANT_MACROS" />
-					<Add option="-D__STDC_FORMAT_MACROS" />
-					<Add option="-D__STDC_LIMIT_MACROS" />
-					<Add directory="/usr/include" />
-					<Add directory="/usr/include/c++/4.8" />
-					<Add directory="/usr/include/c++/4.8/backward" />
-					<Add directory="/usr/include/x86_64-linux-gnu" />
-					<Add directory="/usr/include/x86_64-linux-gnu/c++/4.8" />
-					<Add directory="/usr/lib/gcc/x86_64-linux-gnu/4.8/include" />
-					<Add directory="/usr/lib/gcc/x86_64-linux-gnu/4.8/include-fixed" />
-					<Add directory="/usr/local/include" />
-				</Compiler>
-				<MakeCommands>
-					<Build command='/usr/bin/make -f &quot;/home/primi/src/latino/codeblocks/src/linenoise/Makefile&quot;  VERBOSE=1 linenoise/fast' />
-					<CompileFile command='/usr/bin/make -f &quot;/home/primi/src/latino/codeblocks/src/linenoise/Makefile&quot;  VERBOSE=1 &quot;$file&quot;' />
-					<Clean command='/usr/bin/make -f &quot;/home/primi/src/latino/codeblocks/src/linenoise/Makefile&quot;  VERBOSE=1 clean' />
-					<DistClean command='/usr/bin/make -f &quot;/home/primi/src/latino/codeblocks/src/linenoise/Makefile&quot;  VERBOSE=1 clean' />
-					<AskRebuildNeeded command="$make -q -f $makefile $target" />
-					<SilentBuild command="$make -f $makefile $target &gt; $(CMD_NULL)" />
-				</MakeCommands>
-			</Target>
-		</Build>
-		<Unit filename="../CMakeLists.txt">
-			<Option virtualFolder="CMake Files/" />
-		</Unit>
-		<Unit filename="../cmake/Modules/CPack.cmake">
-			<Option virtualFolder="CMake Files/cmake/Modules/" />
-		</Unit>
-		<Unit filename="../src/CMakeLists.txt">
-			<Option virtualFolder="CMake Files/src/" />
-		</Unit>
-		<Unit filename="../src/ast.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="../src/ast.h" />
-		<Unit filename="../src/khash.h" />
-		<Unit filename="../src/latino.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="../src/latino.h" />
-		<Unit filename="../src/lex.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="../src/lex.h" />
-		<Unit filename="../src/libdict.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="../src/libdict.h" />
-		<Unit filename="../src/libio.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="../src/libio.h" />
-		<Unit filename="../src/liblist.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="../src/liblist.h" />
-		<Unit filename="../src/libmath.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="../src/libmath.h" />
-		<Unit filename="../src/libmem.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="../src/libmem.h" />
-		<Unit filename="../src/libnet.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="../src/libnet.h" />
-		<Unit filename="../src/libstring.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="../src/libstring.h" />
-		<Unit filename="../src/linenoise/CMakeLists.txt">
-			<Option virtualFolder="CMake Files/src/linenoise/" />
-		</Unit>
-		<Unit filename="../src/linenoise/linenoise.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="../src/linenoise/linenoise.h" />
-		<Unit filename="../src/linenoise/utf8.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="../src/linenoise/utf8.h" />
-		<Unit filename="../src/object.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="../src/object.h" />
-		<Unit filename="../src/parse.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="../src/parse.h" />
-		<Unit filename="../src/vm.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="../src/vm.h" />
-		<Extensions>
-			<code_completion />
-			<debugger />
-		</Extensions>
-	</Project>
+   <FileVersion major="1" minor="6" />
+   <Project>
+      <Option title="latino" />
+      <Option makefile_is_custom="1" />
+      <Option compiler="gcc" />
+      <Option virtualFolders="CMake Files\;CMake Files\src\;CMake Files\src\linenoise\;CMake Files\cmake\;CMake Files\cmake\Modules\;" />
+      <Build>
+      <Target title="all">
+         <Option working_dir="/home/primi/src/latino/codeblocks" />
+         <Option type="4" />
+         <MakeCommands>
+            <Build command="/usr/bin/make -f &quot;/home/primi/src/latino/codeblocks/Makefile&quot;  VERBOSE=1 all" />
+            <CompileFile command="/usr/bin/make -f &quot;/home/primi/src/latino/codeblocks/Makefile&quot;  VERBOSE=1 &quot;$file&quot;" />
+            <Clean command="/usr/bin/make -f &quot;/home/primi/src/latino/codeblocks/Makefile&quot;  VERBOSE=1 clean" />
+            <DistClean command="/usr/bin/make -f &quot;/home/primi/src/latino/codeblocks/Makefile&quot;  VERBOSE=1 clean" />
+         </MakeCommands>
+      </Target>
+      <Target title="coverage">
+         <Option working_dir="/home/primi/src/latino/codeblocks" />
+         <Option type="4" />
+         <MakeCommands>
+            <Build command="/usr/bin/make -f &quot;/home/primi/src/latino/codeblocks/Makefile&quot;  VERBOSE=1 coverage" />
+            <CompileFile command="/usr/bin/make -f &quot;/home/primi/src/latino/codeblocks/Makefile&quot;  VERBOSE=1 &quot;$file&quot;" />
+            <Clean command="/usr/bin/make -f &quot;/home/primi/src/latino/codeblocks/Makefile&quot;  VERBOSE=1 clean" />
+            <DistClean command="/usr/bin/make -f &quot;/home/primi/src/latino/codeblocks/Makefile&quot;  VERBOSE=1 clean" />
+         </MakeCommands>
+      </Target>
+      <Target title="edit_cache">
+         <Option working_dir="/home/primi/src/latino/codeblocks" />
+         <Option type="4" />
+         <MakeCommands>
+            <Build command="/usr/bin/make -f &quot;/home/primi/src/latino/codeblocks/Makefile&quot;  VERBOSE=1 edit_cache" />
+            <CompileFile command="/usr/bin/make -f &quot;/home/primi/src/latino/codeblocks/Makefile&quot;  VERBOSE=1 &quot;$file&quot;" />
+            <Clean command="/usr/bin/make -f &quot;/home/primi/src/latino/codeblocks/Makefile&quot;  VERBOSE=1 clean" />
+            <DistClean command="/usr/bin/make -f &quot;/home/primi/src/latino/codeblocks/Makefile&quot;  VERBOSE=1 clean" />
+         </MakeCommands>
+      </Target>
+      <Target title="install">
+         <Option working_dir="/home/primi/src/latino/codeblocks" />
+         <Option type="4" />
+         <MakeCommands>
+            <Build command="/usr/bin/make -f &quot;/home/primi/src/latino/codeblocks/Makefile&quot;  VERBOSE=1 install" />
+            <CompileFile command="/usr/bin/make -f &quot;/home/primi/src/latino/codeblocks/Makefile&quot;  VERBOSE=1 &quot;$file&quot;" />
+            <Clean command="/usr/bin/make -f &quot;/home/primi/src/latino/codeblocks/Makefile&quot;  VERBOSE=1 clean" />
+            <DistClean command="/usr/bin/make -f &quot;/home/primi/src/latino/codeblocks/Makefile&quot;  VERBOSE=1 clean" />
+         </MakeCommands>
+      </Target>
+      <Target title="install/local">
+         <Option working_dir="/home/primi/src/latino/codeblocks" />
+         <Option type="4" />
+         <MakeCommands>
+            <Build command="/usr/bin/make -f &quot;/home/primi/src/latino/codeblocks/Makefile&quot;  VERBOSE=1 install/local" />
+            <CompileFile command="/usr/bin/make -f &quot;/home/primi/src/latino/codeblocks/Makefile&quot;  VERBOSE=1 &quot;$file&quot;" />
+            <Clean command="/usr/bin/make -f &quot;/home/primi/src/latino/codeblocks/Makefile&quot;  VERBOSE=1 clean" />
+            <DistClean command="/usr/bin/make -f &quot;/home/primi/src/latino/codeblocks/Makefile&quot;  VERBOSE=1 clean" />
+         </MakeCommands>
+      </Target>
+      <Target title="install/strip">
+         <Option working_dir="/home/primi/src/latino/codeblocks" />
+         <Option type="4" />
+         <MakeCommands>
+            <Build command="/usr/bin/make -f &quot;/home/primi/src/latino/codeblocks/Makefile&quot;  VERBOSE=1 install/strip" />
+            <CompileFile command="/usr/bin/make -f &quot;/home/primi/src/latino/codeblocks/Makefile&quot;  VERBOSE=1 &quot;$file&quot;" />
+            <Clean command="/usr/bin/make -f &quot;/home/primi/src/latino/codeblocks/Makefile&quot;  VERBOSE=1 clean" />
+            <DistClean command="/usr/bin/make -f &quot;/home/primi/src/latino/codeblocks/Makefile&quot;  VERBOSE=1 clean" />
+         </MakeCommands>
+      </Target>
+      <Target title="list_install_components">
+         <Option working_dir="/home/primi/src/latino/codeblocks" />
+         <Option type="4" />
+         <MakeCommands>
+            <Build command="/usr/bin/make -f &quot;/home/primi/src/latino/codeblocks/Makefile&quot;  VERBOSE=1 list_install_components" />
+            <CompileFile command="/usr/bin/make -f &quot;/home/primi/src/latino/codeblocks/Makefile&quot;  VERBOSE=1 &quot;$file&quot;" />
+            <Clean command="/usr/bin/make -f &quot;/home/primi/src/latino/codeblocks/Makefile&quot;  VERBOSE=1 clean" />
+            <DistClean command="/usr/bin/make -f &quot;/home/primi/src/latino/codeblocks/Makefile&quot;  VERBOSE=1 clean" />
+         </MakeCommands>
+      </Target>
+      <Target title="package">
+         <Option working_dir="/home/primi/src/latino/codeblocks" />
+         <Option type="4" />
+         <MakeCommands>
+            <Build command="/usr/bin/make -f &quot;/home/primi/src/latino/codeblocks/Makefile&quot;  VERBOSE=1 package" />
+            <CompileFile command="/usr/bin/make -f &quot;/home/primi/src/latino/codeblocks/Makefile&quot;  VERBOSE=1 &quot;$file&quot;" />
+            <Clean command="/usr/bin/make -f &quot;/home/primi/src/latino/codeblocks/Makefile&quot;  VERBOSE=1 clean" />
+            <DistClean command="/usr/bin/make -f &quot;/home/primi/src/latino/codeblocks/Makefile&quot;  VERBOSE=1 clean" />
+         </MakeCommands>
+      </Target>
+      <Target title="package_source">
+         <Option working_dir="/home/primi/src/latino/codeblocks" />
+         <Option type="4" />
+         <MakeCommands>
+            <Build command="/usr/bin/make -f &quot;/home/primi/src/latino/codeblocks/Makefile&quot;  VERBOSE=1 package_source" />
+            <CompileFile command="/usr/bin/make -f &quot;/home/primi/src/latino/codeblocks/Makefile&quot;  VERBOSE=1 &quot;$file&quot;" />
+            <Clean command="/usr/bin/make -f &quot;/home/primi/src/latino/codeblocks/Makefile&quot;  VERBOSE=1 clean" />
+            <DistClean command="/usr/bin/make -f &quot;/home/primi/src/latino/codeblocks/Makefile&quot;  VERBOSE=1 clean" />
+         </MakeCommands>
+      </Target>
+      <Target title="rebuild_cache">
+         <Option working_dir="/home/primi/src/latino/codeblocks" />
+         <Option type="4" />
+         <MakeCommands>
+            <Build command="/usr/bin/make -f &quot;/home/primi/src/latino/codeblocks/Makefile&quot;  VERBOSE=1 rebuild_cache" />
+            <CompileFile command="/usr/bin/make -f &quot;/home/primi/src/latino/codeblocks/Makefile&quot;  VERBOSE=1 &quot;$file&quot;" />
+            <Clean command="/usr/bin/make -f &quot;/home/primi/src/latino/codeblocks/Makefile&quot;  VERBOSE=1 clean" />
+            <DistClean command="/usr/bin/make -f &quot;/home/primi/src/latino/codeblocks/Makefile&quot;  VERBOSE=1 clean" />
+         </MakeCommands>
+      </Target>
+      <Target title="test">
+         <Option working_dir="/home/primi/src/latino/codeblocks" />
+         <Option type="4" />
+         <MakeCommands>
+            <Build command="/usr/bin/make -f &quot;/home/primi/src/latino/codeblocks/Makefile&quot;  VERBOSE=1 test" />
+            <CompileFile command="/usr/bin/make -f &quot;/home/primi/src/latino/codeblocks/Makefile&quot;  VERBOSE=1 &quot;$file&quot;" />
+            <Clean command="/usr/bin/make -f &quot;/home/primi/src/latino/codeblocks/Makefile&quot;  VERBOSE=1 clean" />
+            <DistClean command="/usr/bin/make -f &quot;/home/primi/src/latino/codeblocks/Makefile&quot;  VERBOSE=1 clean" />
+         </MakeCommands>
+      </Target>
+      <Target title="latino">
+         <Option output="/home/primi/src/latino/codeblocks/bin/latino" prefix_auto="0" extension_auto="0" />
+         <Option working_dir="/home/primi/src/latino/codeblocks/bin" />
+         <Option object_output="./" />
+         <Option type="1" />
+         <Option compiler="gcc" />
+         <Compiler>
+            <Add option="-D_DEBUG" />
+            <Add option="-D__STDC_CONSTANT_MACROS" />
+            <Add option="-D__STDC_FORMAT_MACROS" />
+            <Add option="-D__STDC_LIMIT_MACROS" />
+            <Add directory="/usr/include" />
+            <Add directory="/usr/include/c++/4.8" />
+            <Add directory="/usr/include/c++/4.8/backward" />
+            <Add directory="/usr/include/x86_64-linux-gnu" />
+            <Add directory="/usr/include/x86_64-linux-gnu/c++/4.8" />
+            <Add directory="/usr/lib/gcc/x86_64-linux-gnu/4.8/include" />
+            <Add directory="/usr/lib/gcc/x86_64-linux-gnu/4.8/include-fixed" />
+            <Add directory="/usr/local/include" />
+         </Compiler>
+         <MakeCommands>
+            <Build command="/usr/bin/make -f &quot;/home/primi/src/latino/codeblocks/src/Makefile&quot;  VERBOSE=1 latino" />
+            <CompileFile command="/usr/bin/make -f &quot;/home/primi/src/latino/codeblocks/src/Makefile&quot;  VERBOSE=1 &quot;$file&quot;" />
+            <Clean command="/usr/bin/make -f &quot;/home/primi/src/latino/codeblocks/src/Makefile&quot;  VERBOSE=1 clean" />
+            <DistClean command="/usr/bin/make -f &quot;/home/primi/src/latino/codeblocks/src/Makefile&quot;  VERBOSE=1 clean" />
+         </MakeCommands>
+      </Target>
+      <Target title="latino/fast">
+         <Option output="/home/primi/src/latino/codeblocks/bin/latino" prefix_auto="0" extension_auto="0" />
+         <Option working_dir="/home/primi/src/latino/codeblocks/bin" />
+         <Option object_output="./" />
+         <Option type="1" />
+         <Option compiler="gcc" />
+         <Compiler>
+            <Add option="-D_DEBUG" />
+            <Add option="-D__STDC_CONSTANT_MACROS" />
+            <Add option="-D__STDC_FORMAT_MACROS" />
+            <Add option="-D__STDC_LIMIT_MACROS" />
+            <Add directory="/usr/include" />
+            <Add directory="/usr/include/c++/4.8" />
+            <Add directory="/usr/include/c++/4.8/backward" />
+            <Add directory="/usr/include/x86_64-linux-gnu" />
+            <Add directory="/usr/include/x86_64-linux-gnu/c++/4.8" />
+            <Add directory="/usr/lib/gcc/x86_64-linux-gnu/4.8/include" />
+            <Add directory="/usr/lib/gcc/x86_64-linux-gnu/4.8/include-fixed" />
+            <Add directory="/usr/local/include" />
+         </Compiler>
+         <MakeCommands>
+            <Build command="/usr/bin/make -f &quot;/home/primi/src/latino/codeblocks/src/Makefile&quot;  VERBOSE=1 latino/fast" />
+            <CompileFile command="/usr/bin/make -f &quot;/home/primi/src/latino/codeblocks/src/Makefile&quot;  VERBOSE=1 &quot;$file&quot;" />
+            <Clean command="/usr/bin/make -f &quot;/home/primi/src/latino/codeblocks/src/Makefile&quot;  VERBOSE=1 clean" />
+            <DistClean command="/usr/bin/make -f &quot;/home/primi/src/latino/codeblocks/src/Makefile&quot;  VERBOSE=1 clean" />
+         </MakeCommands>
+      </Target>
+      <Target title="linenoise">
+         <Option output="/home/primi/src/latino/codeblocks/src/linenoise/liblinenoise.a" prefix_auto="0" extension_auto="0" />
+         <Option working_dir="/home/primi/src/latino/codeblocks/src/linenoise" />
+         <Option object_output="./" />
+         <Option type="2" />
+         <Option compiler="gcc" />
+         <Compiler>
+            <Add option="-D_DEBUG" />
+            <Add option="-D__STDC_CONSTANT_MACROS" />
+            <Add option="-D__STDC_FORMAT_MACROS" />
+            <Add option="-D__STDC_LIMIT_MACROS" />
+            <Add directory="/usr/include" />
+            <Add directory="/usr/include/c++/4.8" />
+            <Add directory="/usr/include/c++/4.8/backward" />
+            <Add directory="/usr/include/x86_64-linux-gnu" />
+            <Add directory="/usr/include/x86_64-linux-gnu/c++/4.8" />
+            <Add directory="/usr/lib/gcc/x86_64-linux-gnu/4.8/include" />
+            <Add directory="/usr/lib/gcc/x86_64-linux-gnu/4.8/include-fixed" />
+            <Add directory="/usr/local/include" />
+         </Compiler>
+         <MakeCommands>
+            <Build command="/usr/bin/make -f &quot;/home/primi/src/latino/codeblocks/src/linenoise/Makefile&quot;  VERBOSE=1 linenoise" />
+            <CompileFile command="/usr/bin/make -f &quot;/home/primi/src/latino/codeblocks/src/linenoise/Makefile&quot;  VERBOSE=1 &quot;$file&quot;" />
+            <Clean command="/usr/bin/make -f &quot;/home/primi/src/latino/codeblocks/src/linenoise/Makefile&quot;  VERBOSE=1 clean" />
+            <DistClean command="/usr/bin/make -f &quot;/home/primi/src/latino/codeblocks/src/linenoise/Makefile&quot;  VERBOSE=1 clean" />
+         </MakeCommands>
+      </Target>
+      <Target title="linenoise/fast">
+         <Option output="/home/primi/src/latino/codeblocks/src/linenoise/liblinenoise.a" prefix_auto="0" extension_auto="0" />
+         <Option working_dir="/home/primi/src/latino/codeblocks/src/linenoise" />
+         <Option object_output="./" />
+         <Option type="2" />
+         <Option compiler="gcc" />
+         <Compiler>
+            <Add option="-D_DEBUG" />
+            <Add option="-D__STDC_CONSTANT_MACROS" />
+            <Add option="-D__STDC_FORMAT_MACROS" />
+            <Add option="-D__STDC_LIMIT_MACROS" />
+            <Add directory="/usr/include" />
+            <Add directory="/usr/include/c++/4.8" />
+            <Add directory="/usr/include/c++/4.8/backward" />
+            <Add directory="/usr/include/x86_64-linux-gnu" />
+            <Add directory="/usr/include/x86_64-linux-gnu/c++/4.8" />
+            <Add directory="/usr/lib/gcc/x86_64-linux-gnu/4.8/include" />
+            <Add directory="/usr/lib/gcc/x86_64-linux-gnu/4.8/include-fixed" />
+            <Add directory="/usr/local/include" />
+         </Compiler>
+         <MakeCommands>
+            <Build command="/usr/bin/make -f &quot;/home/primi/src/latino/codeblocks/src/linenoise/Makefile&quot;  VERBOSE=1 linenoise/fast" />
+            <CompileFile command="/usr/bin/make -f &quot;/home/primi/src/latino/codeblocks/src/linenoise/Makefile&quot;  VERBOSE=1 &quot;$file&quot;" />
+            <Clean command="/usr/bin/make -f &quot;/home/primi/src/latino/codeblocks/src/linenoise/Makefile&quot;  VERBOSE=1 clean" />
+            <DistClean command="/usr/bin/make -f &quot;/home/primi/src/latino/codeblocks/src/linenoise/Makefile&quot;  VERBOSE=1 clean" />
+         </MakeCommands>
+      </Target>
+      </Build>
+      <Unit filename="/home/primi/src/latino/src/ast.c">
+      </Unit>
+      <Unit filename="/home/primi/src/latino/src/latino.c">
+      </Unit>
+      <Unit filename="/home/primi/src/latino/src/lex.c">
+      </Unit>
+      <Unit filename="/home/primi/src/latino/src/libdict.c">
+      </Unit>
+      <Unit filename="/home/primi/src/latino/src/libio.c">
+      </Unit>
+      <Unit filename="/home/primi/src/latino/src/liblist.c">
+      </Unit>
+      <Unit filename="/home/primi/src/latino/src/libmath.c">
+      </Unit>
+      <Unit filename="/home/primi/src/latino/src/libmem.c">
+      </Unit>
+      <Unit filename="/home/primi/src/latino/src/libnet.c">
+      </Unit>
+      <Unit filename="/home/primi/src/latino/src/libstring.c">
+      </Unit>
+      <Unit filename="/home/primi/src/latino/src/linenoise/linenoise.c">
+      </Unit>
+      <Unit filename="/home/primi/src/latino/src/linenoise/utf8.c">
+      </Unit>
+      <Unit filename="/home/primi/src/latino/src/object.c">
+      </Unit>
+      <Unit filename="/home/primi/src/latino/src/parse.c">
+      </Unit>
+      <Unit filename="/home/primi/src/latino/src/vm.c">
+      </Unit>
+      <Unit filename="/home/primi/src/latino/src/ast.h">
+      </Unit>
+      <Unit filename="/home/primi/src/latino/src/compat.h">
+      </Unit>
+      <Unit filename="/home/primi/src/latino/src/khash.h">
+      </Unit>
+      <Unit filename="/home/primi/src/latino/src/latino.h">
+      </Unit>
+      <Unit filename="/home/primi/src/latino/src/lex.h">
+      </Unit>
+      <Unit filename="/home/primi/src/latino/src/libdict.h">
+      </Unit>
+      <Unit filename="/home/primi/src/latino/src/libio.h">
+      </Unit>
+      <Unit filename="/home/primi/src/latino/src/liblist.h">
+      </Unit>
+      <Unit filename="/home/primi/src/latino/src/libmath.h">
+      </Unit>
+      <Unit filename="/home/primi/src/latino/src/libmem.h">
+      </Unit>
+      <Unit filename="/home/primi/src/latino/src/libnet.h">
+      </Unit>
+      <Unit filename="/home/primi/src/latino/src/libstring.h">
+      </Unit>
+      <Unit filename="/home/primi/src/latino/src/linenoise/linenoise.h">
+      </Unit>
+      <Unit filename="/home/primi/src/latino/src/linenoise/utf8.h">
+      </Unit>
+      <Unit filename="/home/primi/src/latino/src/object.h">
+      </Unit>
+      <Unit filename="/home/primi/src/latino/src/parse.h">
+      </Unit>
+      <Unit filename="/home/primi/src/latino/src/vm.h">
+      </Unit>
+      <Unit filename="/home/primi/src/latino/CMakeLists.txt">
+          <Option virtualFolder="CMake Files\" />
+      </Unit>
+      <Unit filename="/home/primi/src/latino/src/CMakeLists.txt">
+          <Option virtualFolder="CMake Files\src\" />
+      </Unit>
+      <Unit filename="/home/primi/src/latino/src/linenoise/CMakeLists.txt">
+          <Option virtualFolder="CMake Files\src\linenoise\" />
+      </Unit>
+      <Unit filename="/home/primi/src/latino/cmake/Modules/CPack.cmake">
+          <Option virtualFolder="CMake Files\cmake\Modules\" />
+      </Unit>
+   </Project>
 </CodeBlocks_project_file>

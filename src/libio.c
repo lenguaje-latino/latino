@@ -42,8 +42,8 @@ bool __io_es_legible(const char *archivo)
 
 void lat_leer(lat_vm *vm)
 {
-    char str[254];
-    fgets(str, 254, stdin);
+    char str[MAX_INPUT_SIZE];
+    fgets(str, MAX_INPUT_SIZE, stdin);
     int i = strlen(str) - 1;
     if (str[i] == '\n')
         str[i] = '\0';
@@ -72,7 +72,7 @@ void lat_leer_archivo(lat_vm *vm)
         fp = fopen(lat_obtener_cadena(o), "r");
         if (fp == NULL)
         {
-            lat_error("No se pudo abrir el archivo\n");
+            lat_fatal_error("Linea %d, %d: %s", o->num_linea, o->num_columna,  "No se pudo abrir el archivo\n");
         }
         fseek(fp, 0, SEEK_END);
         int fsize = ftell(fp);
@@ -89,7 +89,7 @@ void lat_leer_archivo(lat_vm *vm)
     }
     else
     {
-        lat_error("No se pudo abrir el archivo\n");
+        lat_fatal_error("Linea %d, %d: %s", o->num_linea, o->num_columna,  "No se pudo abrir el archivo\n");
     }
 }
 
@@ -108,19 +108,12 @@ void lat_escribir_archivo(lat_vm *vm)
     }
     else
     {
-        lat_error("No se pudo escribir en el archivo\n");
+        lat_fatal_error("Linea %d, %d: %s", o->num_linea, o->num_columna,  "No se pudo escribir en el archivo\n");
     }
 }
 
 void lat_sistema(lat_vm *vm)
 {
     lat_objeto* o = lat_desapilar(vm);
-    if(o->type == T_STR || o->type == T_LIT)
-    {
-        system(lat_obtener_cadena(o));
-    }
-    else
-    {
-        lat_error("El argumento esperado debe de ser una cadena\n");
-    }
+    system(lat_obtener_cadena(o));    
 }

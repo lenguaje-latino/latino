@@ -3,4 +3,10 @@ Para debuguear en visual studio:
 Menu propiedades del proyecto-> Debugging -> Command Arguments. Agregar
 $(SolutionDir)..\ejemplos\debug.lat
 */
-escribir("hola latinos")
+
+funcion sumar (a, b)
+  retorno a+b
+fin
+
+x=sumar(1, 1)
+escribir("x vale: " . x)
