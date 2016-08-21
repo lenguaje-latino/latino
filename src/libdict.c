@@ -26,7 +26,7 @@ int __dic_hash(char* key)
 
 void* __dic_obtener(hash_map* m, char* key)
 {
-	  list_node* cur = m->buckets[__dic_hash(key)];
+    list_node* cur = m->buckets[__dic_hash(key)];
     if (cur == NULL)
         return NULL;
     for (; cur->next != NULL; cur = cur->next)
@@ -47,7 +47,7 @@ void __dic_asignar(hash_map *m, char *key, void *val)
     hash_val *hv = (hash_val *)__memoria_asignar(sizeof(hash_val));
     strncpy(hv->key, key, (strlen(key) + 1));
     hv->val = val;
-	int hk = __dic_hash(key);
+    int hk = __dic_hash(key);
     if (m->buckets[hk] == NULL)
     {
         m->buckets[hk] = __lista_nuevo();
@@ -84,7 +84,7 @@ hash_map* __dic_clonar(hash_map *m)
             {
                 if (c->data != NULL)
                 {
-					__dic_asignar(ret, ((hash_val *) c->data)->key, ((hash_val *) c->data)->val);
+                    __dic_asignar(ret, ((hash_val *) c->data)->key, ((hash_val *) c->data)->val);
                 }
             }
         }

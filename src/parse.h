@@ -43,8 +43,8 @@ extern int yydebug;
 /* Token type.  */
 #ifndef YYTOKENTYPE
 # define YYTOKENTYPE
-  enum yytokentype
-  {
+enum yytokentype
+{
     VERDADERO = 258,
     FALSO = 259,
     ENTERO = 260,
@@ -81,7 +81,7 @@ extern int yydebug;
     DECREMENTO = 291,
     CONCATENAR = 292,
     CONCATENAR_IGUAL = 293
-  };
+};
 #endif
 /* Tokens.  */
 #define VERDADERO 258
@@ -128,10 +128,10 @@ extern int yydebug;
 typedef struct YYLTYPE YYLTYPE;
 struct YYLTYPE
 {
-  int first_line;
-  int first_column;
-  int last_line;
-  int last_column;
+    int first_line;
+    int first_column;
+    int last_line;
+    int last_column;
 };
 # define YYLTYPE_IS_DECLARED 1
 # define YYLTYPE_IS_TRIVIAL 1

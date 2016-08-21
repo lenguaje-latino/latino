@@ -38,130 +38,142 @@ THE SOFTWARE.
 #define DEPURAR_AST 0
 
 /** \brief Tipos de dato */
-typedef enum {
-  VALOR_NULO, /**< Valor nulo */
-  VALOR_LOGICO, /**< Valor logico */
-  VALOR_ENTERO, /**< Valor entero */
-  VALOR_LITERAL, /**< Valor literal */
-  VALOR_DECIMAL, /**< Valor decimal */
-  VALOR_CADENA /**< Valor cadena */
+typedef enum
+{
+    VALOR_NULO, /**< Valor nulo */
+    VALOR_LOGICO, /**< Valor logico */
+    VALOR_ENTERO, /**< Valor entero */
+    VALOR_LITERAL, /**< Valor literal */
+    VALOR_DECIMAL, /**< Valor decimal */
+    VALOR_CADENA /**< Valor cadena */
 } nodo_tipo_valor;
 
 /** \brief Valores del dato */
-typedef struct {
-  nodo_tipo_valor t; /**< Nodo tipo valor */
-  bool es_constante; /**< Para validar si es constante */
-  int num_linea; /**< Numero de linea */
-  int num_columna; /**< Numero de columna */
-  /** Contiene los valores del dato*/
-  union val {
-    int b;  /**< Logico */
-    long i; /**< Entero */
-    double d;   /**< Decimal */
-    char *c;    /**< Literal */
-    char *s;    /**< Cadena */
-    void *f;    /**< Funcion */
-  } v;
+typedef struct
+{
+    nodo_tipo_valor t; /**< Nodo tipo valor */
+    bool es_constante; /**< Para validar si es constante */
+    int num_linea; /**< Numero de linea */
+    int num_columna; /**< Numero de columna */
+    /** Contiene los valores del dato*/
+    union val
+    {
+        int b;  /**< Logico */
+        long i; /**< Entero */
+        double d;   /**< Decimal */
+        char *c;    /**< Literal */
+        char *s;    /**< Cadena */
+        void *f;    /**< Funcion */
+    } v;
 } nodo_valor;
 
 /** \brief Tipos de nodos en arbol abstracto de sintaxis (abstract syntax tree) */
-typedef enum {
-  NODO_SUMA,    /**< Nodo suma */
-  NODO_RESTA,    /**< Nodo resta */
-  NODO_MULTIPLICACION,    /**< Nodo multiplicacion */
-  NODO_DIVISION,    /**< Nodo division */
-  NODO_MODULO,  /**< Nodo modulo */
-  NODO_ASIGNACION,  /**< Nodo asignacion */
-  NODO_MAS_UNARIO,  /**< Nodo mas unario */
-  NODO_MENOS_UNARIO,  /**< Nodo menos unario */
-  NODO_IGUALDAD,  /**< Nodo igualdad */
-  NODO_DESIGUALDAD,  /**< Nodo desigualdad */
-  NODO_MAYOR_QUE,  /**< Nodo mayor que */
-  NODO_MENOR_QUE,  /**< Nodo menor que */
-  NODO_MAYOR_IGUAL,  /**< Nodo mayor o igual */
-  NODO_MENOR_IGUAL,  /**< Nodo menor o igual */
-  NODO_BLOQUE,  /**< Nodo bloque */
-  NODO_SI,  /**< Nodo si */
-  NODO_MIENTRAS,  /**< Nodo mientras */
-  NODO_HACER,  /**< Nodo hacer */
-  NODO_IDENTIFICADOR,  /**< Nodo identificador */
-  NODO_LISTA_PARAMETROS,  /**< Nodo parametros */
-  NODO_FUNCION_ARGUMENTOS,  /**< Nodo argumentos de una funcion */
-  NODO_FUNCION_LLAMADA,  /**< Nodo llamada a una funcion */
-  NODO_FUNCION_USUARIO,  /**< Nodo definicion de una funcion de usuario*/
-  NODO_RETORNO,  /**< Nodo retorno */
-  NODO_ENTERO,  /**< Nodo entero */
-  NODO_DECIMAL,  /**< Nodo decimal */
-  NODO_CADENA,  /**< Nodo cadena */
-  NODO_LITERAL,  /**< Nodo literal */
-  NODO_LOGICO,  /**< Nodo logico */
-  NODO_Y,   /**< Nodo y (and) logico */
-  NODO_O,   /**< Nodo o (or) logico */
-  NODO_NEGACION,    /**< Nodo no (!) negacion logico */
-  NODO_ELEGIR,   /**< Nodo seleccion */
-  NODO_CASO,   /**< Nodo caso */
-  NODO_DEFECTO,   /**< Nodo defecto */
-  NODO_CASOS,   /**< Nodo casos */
-  NODO_DESDE,   /**< Nodo desde */
-  NODO_INCREMENTO,   /**< Nodo incremento */
-  NODO_DECREMENTO,   /**< Nodo decremento */
-  NODO_CONCATENAR,   /**< Nodo concatenar */
-  NODO_LISTA,   /**< Nodo lista nueva */
-  NODO_LISTA_ASIGNAR_ELEMENTO,   /**< Nodo asignar un nuevo valor a un elemento de la lista */
-  NODO_LISTA_AGREGAR_ELEMENTO,   /**< Nodo agregar elemento a una lista */
-  NODO_LISTA_OBTENER_ELEMENTO,   /**< Nodo obtener un elemento de una lista */
-  NODO_DICCIONARIO,   /**< Nodo diccionario nuevo */
-  NODO_DICC_ASIGNAR_ELEMENTO,   /**< Nodo un nuevo valor a un elemento del diccionario */
-  NODO_DICC_AGREGAR_ELEMENTO,   /**< Nodo agregar un elemento al diccionario */
-  NODO_DICC_OBTENER_ELEMENTO,   /**< Nodo obtener un elemento del diccionario */
-  NODO_DICC_ELEMENTO,   /**< Nodo par de llave valor del diccionario (key : value) */
-  NODO_INCLUIR  /**< Nodo para incluir codigo de otro archivo */
+typedef enum
+{
+    NODO_SUMA,    /**< Nodo suma */
+    NODO_RESTA,    /**< Nodo resta */
+    NODO_MULTIPLICACION,    /**< Nodo multiplicacion */
+    NODO_DIVISION,    /**< Nodo division */
+    NODO_MODULO,  /**< Nodo modulo */
+    NODO_ASIGNACION,  /**< Nodo asignacion */
+    NODO_MAS_UNARIO,  /**< Nodo mas unario */
+    NODO_MENOS_UNARIO,  /**< Nodo menos unario */
+    NODO_IGUALDAD,  /**< Nodo igualdad */
+    NODO_DESIGUALDAD,  /**< Nodo desigualdad */
+    NODO_MAYOR_QUE,  /**< Nodo mayor que */
+    NODO_MENOR_QUE,  /**< Nodo menor que */
+    NODO_MAYOR_IGUAL,  /**< Nodo mayor o igual */
+    NODO_MENOR_IGUAL,  /**< Nodo menor o igual */
+    NODO_BLOQUE,  /**< Nodo bloque */
+    NODO_SI,  /**< Nodo si */
+    NODO_MIENTRAS,  /**< Nodo mientras */
+    NODO_HACER,  /**< Nodo hacer */
+    NODO_IDENTIFICADOR,  /**< Nodo identificador */
+    NODO_LISTA_PARAMETROS,  /**< Nodo parametros */
+    NODO_FUNCION_ARGUMENTOS,  /**< Nodo argumentos de una funcion */
+    NODO_FUNCION_LLAMADA,  /**< Nodo llamada a una funcion */
+    NODO_FUNCION_USUARIO,  /**< Nodo definicion de una funcion de usuario*/
+    NODO_RETORNO,  /**< Nodo retorno */
+    NODO_ENTERO,  /**< Nodo entero */
+    NODO_DECIMAL,  /**< Nodo decimal */
+    NODO_CADENA,  /**< Nodo cadena */
+    NODO_LITERAL,  /**< Nodo literal */
+    NODO_LOGICO,  /**< Nodo logico */
+    NODO_Y,   /**< Nodo y (and) logico */
+    NODO_O,   /**< Nodo o (or) logico */
+    NODO_NEGACION,    /**< Nodo no (!) negacion logico */
+    NODO_ELEGIR,   /**< Nodo seleccion */
+    NODO_CASO,   /**< Nodo caso */
+    NODO_DEFECTO,   /**< Nodo defecto */
+    NODO_CASOS,   /**< Nodo casos */
+    NODO_DESDE,   /**< Nodo desde */
+    NODO_INCREMENTO,   /**< Nodo incremento */
+    NODO_DECREMENTO,   /**< Nodo decremento */
+    NODO_CONCATENAR,   /**< Nodo concatenar */
+    NODO_LISTA,   /**< Nodo lista nueva */
+    NODO_LISTA_ASIGNAR_ELEMENTO,   /**< Nodo asignar un nuevo valor a un elemento de la lista */
+    NODO_LISTA_AGREGAR_ELEMENTO,   /**< Nodo agregar elemento a una lista */
+    NODO_LISTA_OBTENER_ELEMENTO,   /**< Nodo obtener un elemento de una lista */
+    NODO_DICCIONARIO,   /**< Nodo diccionario nuevo */
+    NODO_DICC_ASIGNAR_ELEMENTO,   /**< Nodo un nuevo valor a un elemento del diccionario */
+    NODO_DICC_AGREGAR_ELEMENTO,   /**< Nodo agregar un elemento al diccionario */
+    NODO_DICC_OBTENER_ELEMENTO,   /**< Nodo obtener un elemento del diccionario */
+    NODO_DICC_ELEMENTO,   /**< Nodo par de llave valor del diccionario (key : value) */
+    NODO_INCLUIR  /**< Nodo para incluir codigo de otro archivo */
 } nodo_tipo;
 
 /** \brief Nodos en arbol abstacto de sintaxis (abstract syntax tree).
   *
   * Todos los nodos son inicializados con un tipo de nodo */
-typedef struct ast {
-  nodo_tipo tipo;   /**< Tipo de nodo */
-  nodo_valor *valor; /**< Valor del nodo */
-  struct ast *l; /**< Nodo izquierdo */
-  struct ast *r; /**< Nodo derecho */
-  lat_vm *vm;
+typedef struct ast
+{
+    nodo_tipo tipo;   /**< Tipo de nodo */
+    nodo_valor *valor; /**< Valor del nodo */
+    struct ast *l; /**< Nodo izquierdo */
+    struct ast *r; /**< Nodo derecho */
+    lat_vm *vm;
 } ast;
 
 /** \brief Estado del analizador lexico */
-typedef struct lex_state { int insert; } lex_state;
+typedef struct lex_state
+{
+    int insert;
+} lex_state;
 
 /** \brief Tipo de dato que se envia al analizador lexico */
-typedef union YYSTYPE {
-  int token;
-  ast *node;
+typedef union YYSTYPE
+{
+    int token;
+    ast *node;
 } YYSTYPE;
 
 /** \brief nodo para representar un ast SI (if).
   *
   * si (condicion) [sentencias] sino [sentencias] fin */
-typedef struct {
-  nodo_tipo tipo;
-  struct ast *cond; /**< Condicion */
-  struct ast *th;   /**< Instrucciones que se ejecutan si la condicion es verdadera */
-  struct ast *el;   /**< Instrucciones que se ejecutan si la condicion es falsa */
+typedef struct
+{
+    nodo_tipo tipo;
+    struct ast *cond; /**< Condicion */
+    struct ast *th;   /**< Instrucciones que se ejecutan si la condicion es verdadera */
+    struct ast *el;   /**< Instrucciones que se ejecutan si la condicion es falsa */
 } nodo_si;
 
 /** \brief Nodo para el elemento de una lista */
-typedef struct {
-  nodo_tipo tipo;
-  struct ast *exp;  /**< Expresion */
-  struct ast *id;   /**< Identificador */
-  struct ast *pos;  /**< Posicion de la lista */
+typedef struct
+{
+    nodo_tipo tipo;
+    struct ast *exp;  /**< Expresion */
+    struct ast *id;   /**< Identificador */
+    struct ast *pos;  /**< Posicion de la lista */
 } nodo_lista_elem;
 
 /** \brief Nodo para el elemento de un diccionario */
-typedef struct {
-  nodo_tipo tipo;
-  struct ast *exp;  /**< Expresion */
-  struct ast *id;   /**< Identificador */
-  struct ast *llave;  /**< Llave del diccionario */
+typedef struct
+{
+    nodo_tipo tipo;
+    struct ast *exp;  /**< Expresion */
+    struct ast *id;   /**< Identificador */
+    struct ast *llave;  /**< Llave del diccionario */
 } nodo_dicc_elem;
 
 

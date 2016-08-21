@@ -101,7 +101,7 @@ typedef struct lat_vm
     list_node* todos_objetos;     /**< objetos creados dinamicamente en la MV */
     list_node* basurero_objetos;     /**< objetos listos para liberar por el colector de basura */
     lat_objeto* registros[256];    /**< Registros de la MV */
-    lat_objeto* contexto_pila[256];   /**< Tabla hash para el contexto actual */
+    lat_objeto* contexto_pila[256];   /**< Arreglo para el contexto actual */
     lat_objeto* objeto_verdadero;   /**< Valor logico verdadero */
     lat_objeto* objeto_falso;   /**< Valor logico falso */
     size_t memoria_usada;      /**< Tamanio de memoria creado dinamicamente */
@@ -109,7 +109,7 @@ typedef struct lat_vm
     int apuntador_base;   /**< Apuntador de marco o frame */
     int apuntador_instruccion;   /**< Apuntador a la siguiente instruccion */
     bool REPL;  /**< Indica si esta corriendo REPL */
-}lat_vm;
+} lat_vm;
 
 /**\brief Crea la maquina virtual (MV)
   *

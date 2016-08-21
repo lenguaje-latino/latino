@@ -38,8 +38,7 @@ void lat_asignar_contexto_objeto(lat_objeto* ns, lat_objeto* name, lat_objeto* o
 {
     if (ns->type != T_INSTANCE)
     {
-        //debug("ns->type: %d", ns->type);
-        lat_fatal_error("Namespace no es una instancia");
+        lat_fatal_error("Objeto no es una instancia");
     }
     else
     {
@@ -52,16 +51,15 @@ lat_objeto* lat_obtener_contexto_objeto(lat_objeto* ns, lat_objeto* name)
 {
     if (ns->type != T_INSTANCE)
     {
-        //debug("ns->type: %d", ns->type);
-		lat_fatal_error("Namespace is not an nombre");
+        lat_fatal_error("Objeto no es un nombre");
     }
     else
     {
         hash_map* h = ns->data.nombre;
-		    lat_objeto* ret = (lat_objeto*) __dic_obtener(h, lat_obtener_cadena(name));
+        lat_objeto* ret = (lat_objeto*) __dic_obtener(h, lat_obtener_cadena(name));
         if (ret == NULL)
         {
-			lat_fatal_error("Variable \"%s\" indefinida", lat_obtener_cadena(name));
+            lat_fatal_error("Linea %d, %d: Variable \"%s\" indefinida", name->num_linea, name->num_columna, lat_obtener_cadena(name));
         }
         return ret;
     }
@@ -72,7 +70,7 @@ lat_objeto* lat_crear_objeto(lat_vm* vm)
 {
     lat_objeto* ret = (lat_objeto*)__memoria_asignar(sizeof(lat_objeto));
     ret->type = T_NULO;
-    ret->data_size = 0;	
+    ret->data_size = 0;
     return ret;
 }
 
@@ -193,7 +191,9 @@ lat_objeto* lat_clonar_objeto(lat_vm* vm, lat_objeto* obj)
         ret->data_size = sizeof(hash_map*);
         //ret->data.nombre = lat_clonar_hash(vm, obj->data.nombre);
         ret->data.nombre = __dic_clonar(obj->data.nombre);
-        //ret->data.nombre = obj->data.nombre;
+        //ret->data.nombre = obj->data.nombre;        
+        ret->num_linea = obj->num_linea;
+        ret->num_columna = obj->num_columna;
         break;
     case T_LIST:
         ret = lat_lista_nueva(vm, lat_clonar_lista(vm, obj->data.lista));
@@ -210,6 +210,8 @@ lat_objeto* lat_clonar_objeto(lat_vm* vm, lat_objeto* obj)
         ret->data_size = obj->data_size;
         ret->data = obj->data;
         ret->num_param = obj->num_param;
+        ret->num_linea = obj->num_linea;
+        ret->num_columna = obj->num_columna;
         break;
     }
     return ret;
@@ -238,7 +240,7 @@ char* lat_obtener_literal(lat_objeto* o)
     {
         return o->data.c;
     }
-    lat_error("Objeto no es un tipo caracter");
+    lat_fatal_error("Linea %d, %d: %s", o->num_linea, o->num_columna,  "El parametro debe de ser una literal");
     return 0;
 }
 
@@ -252,7 +254,7 @@ long lat_obtener_entero(lat_objeto* o)
     {
         return (long)o->data.d;
     }
-    lat_error("Objeto no es un tipo entero");
+    lat_fatal_error("Linea %d, %d: %s", o->num_linea, o->num_columna,  "El parametro debe de ser un entero");
     return 0;
 }
 
@@ -266,7 +268,7 @@ double lat_obtener_decimal(lat_objeto* o)
     {
         return (double)o->data.i;
     }
-    lat_error("Objeto no es un tipo numerico");
+    lat_fatal_error("Linea %d, %d: %s", o->num_linea, o->num_columna,  "El parametro debe de ser un decimal");
     return 0;
 }
 
@@ -276,7 +278,7 @@ char* lat_obtener_cadena(lat_objeto* o)
     {
         return o->data.str;
     }
-    lat_error("Objeto no es un tipo cadena");
+    lat_fatal_error("Linea %d, %d: %s", o->num_linea, o->num_columna,  "El parametro debe de ser una cadena");
     return 0;
 }
 
@@ -286,7 +288,7 @@ bool lat_obtener_logico(lat_objeto* o)
     {
         return o->data.b;
     }
-    lat_error("Objeto no es un tipo logico");
+    lat_fatal_error("Linea %d, %d: %s", o->num_linea, o->num_columna,  "El parametro debe de ser un valor logico (verdadero o falso)");
     return false;
 }
 
@@ -296,6 +298,6 @@ list_node* lat_obtener_lista(lat_objeto* o)
     {
         return o->data.lista;
     }
-    lat_error("Objeto no es un tipo lista");
+    lat_fatal_error("Linea %d, %d: %s", o->num_linea, o->num_columna,  "El parametro debe de ser una lista");
     return NULL;
 }

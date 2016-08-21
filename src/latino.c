@@ -142,127 +142,167 @@ void lat_ayuda()
     printf("%s%s\n", "HOME         : ", getenv("HOME"));
 }
 
-static int leer_linea(char* buffer){
+static int leer_linea(char* buffer)
+{
     parse_silent = 1;
     char *input;
     char *tmp = "";
-    REPETIR:
+REPETIR:
     input = linenoise("latino> ");
-    if(input == NULL){
+    if(input == NULL)
+    {
         return -1;
     }
-    for(;;){
+    for(;;)
+    {
         tmp = __str_concatenar(tmp, "\n");
         tmp = __str_concatenar(tmp, input);
         int estatus;
         lat_analizar_expresion(tmp, &estatus);
-        if(estatus == 1){
+        if(estatus == 1)
+        {
             goto REPETIR;
-        }else{
+        }
+        else
+        {
             strcpy(buffer, tmp);
             return 0;
         }
     }
 }
 
-static void completion(const char *buf, linenoiseCompletions *lc) {
-    if (__str_empieza_con(buf, "esc")) {
+static void completion(const char *buf, linenoiseCompletions *lc)
+{
+    if (__str_empieza_con(buf, "esc"))
+    {
         linenoiseAddCompletion(lc,"escribir");
     }
-    if (__str_empieza_con(buf, "imp")) {
+    if (__str_empieza_con(buf, "imp"))
+    {
         linenoiseAddCompletion(lc,"imprimir");
     }
-    if (__str_empieza_con(buf, "eje")) {
+    if (__str_empieza_con(buf, "eje"))
+    {
         linenoiseAddCompletion(lc,"ejecutar");
     }
-    if (__str_empieza_con(buf, "ejea")) {
+    if (__str_empieza_con(buf, "ejea"))
+    {
         linenoiseAddCompletion(lc,"ejecutar_archivo");
     }
-    if (__str_empieza_con(buf, "fun")) {
+    if (__str_empieza_con(buf, "fun"))
+    {
         linenoiseAddCompletion(lc,"funcion");
     }
-    if (__str_empieza_con(buf, "com")) {
+    if (__str_empieza_con(buf, "com"))
+    {
         linenoiseAddCompletion(lc,"comparar");
     }
-    if (__str_empieza_con(buf, "con")) {
+    if (__str_empieza_con(buf, "con"))
+    {
         linenoiseAddCompletion(lc,"concatenar");
     }
-    if (__str_empieza_con(buf, "cont")) {
+    if (__str_empieza_con(buf, "cont"))
+    {
         linenoiseAddCompletion(lc,"contiene");
     }
-    if (__str_empieza_con(buf, "cop")) {
+    if (__str_empieza_con(buf, "cop"))
+    {
         linenoiseAddCompletion(lc,"copiar");
     }
-    if (__str_empieza_con(buf, "ter")) {
+    if (__str_empieza_con(buf, "ter"))
+    {
         linenoiseAddCompletion(lc,"termina_con");
     }
-    if (__str_empieza_con(buf, "es_")) {
+    if (__str_empieza_con(buf, "es_"))
+    {
         linenoiseAddCompletion(lc,"es_igual");
     }
-    if (__str_empieza_con(buf, "ind")) {
+    if (__str_empieza_con(buf, "ind"))
+    {
         linenoiseAddCompletion(lc,"indice");
     }
-    if (__str_empieza_con(buf, "ins")) {
+    if (__str_empieza_con(buf, "ins"))
+    {
         linenoiseAddCompletion(lc,"insertar");
     }
-    if (__str_empieza_con(buf, "ult")) {
+    if (__str_empieza_con(buf, "ult"))
+    {
         linenoiseAddCompletion(lc,"ultimo_indice");
     }
-    if (__str_empieza_con(buf, "reli")) {
+    if (__str_empieza_con(buf, "reli"))
+    {
         linenoiseAddCompletion(lc,"rellenar_izquierda");
     }
-    if (__str_empieza_con(buf, "reld")) {
+    if (__str_empieza_con(buf, "reld"))
+    {
         linenoiseAddCompletion(lc,"rellenar_derecha");
     }
-    if (__str_empieza_con(buf, "eli")) {
+    if (__str_empieza_con(buf, "eli"))
+    {
         linenoiseAddCompletion(lc,"eliminar");
     }
-    if (__str_empieza_con(buf, "est")) {
+    if (__str_empieza_con(buf, "est"))
+    {
         linenoiseAddCompletion(lc,"esta_vacia");
     }
-    if (__str_empieza_con(buf, "lon")) {
+    if (__str_empieza_con(buf, "lon"))
+    {
         linenoiseAddCompletion(lc,"longitud");
     }
-    if (__str_empieza_con(buf, "ree")) {
+    if (__str_empieza_con(buf, "ree"))
+    {
         linenoiseAddCompletion(lc,"reemplazar");
     }
-    if (__str_empieza_con(buf, "emp")) {
+    if (__str_empieza_con(buf, "emp"))
+    {
         linenoiseAddCompletion(lc,"empieza_con");
     }
-    if (__str_empieza_con(buf, "sub")) {
+    if (__str_empieza_con(buf, "sub"))
+    {
         linenoiseAddCompletion(lc,"subcadena");
     }
-    if (__str_empieza_con(buf, "min")) {
+    if (__str_empieza_con(buf, "min"))
+    {
         linenoiseAddCompletion(lc,"minusculas");
     }
-    if (__str_empieza_con(buf, "may")) {
+    if (__str_empieza_con(buf, "may"))
+    {
         linenoiseAddCompletion(lc,"mayusculas");
     }
-    if (__str_empieza_con(buf, "qui")) {
+    if (__str_empieza_con(buf, "qui"))
+    {
         linenoiseAddCompletion(lc,"quitar_espacios");
     }
-    if (__str_empieza_con(buf, "lee")) {
+    if (__str_empieza_con(buf, "lee"))
+    {
         linenoiseAddCompletion(lc,"leer");
     }
-    if (__str_empieza_con(buf, "esca")) {
+    if (__str_empieza_con(buf, "esca"))
+    {
         linenoiseAddCompletion(lc,"escribir_archivo");
     }
-    if (__str_empieza_con(buf, "tip")) {
+    if (__str_empieza_con(buf, "tip"))
+    {
         linenoiseAddCompletion(lc,"tipo");
     }
-    if (__str_empieza_con(buf, "log")) {
+    if (__str_empieza_con(buf, "log"))
+    {
         linenoiseAddCompletion(lc,"logico");
     }
-    if (__str_empieza_con(buf, "ent")) {
+    if (__str_empieza_con(buf, "ent"))
+    {
         linenoiseAddCompletion(lc,"entero");
     }
-    if (__str_empieza_con(buf, "dec")) {
+    if (__str_empieza_con(buf, "dec"))
+    {
         linenoiseAddCompletion(lc,"decimal");
     }
-    if (__str_empieza_con(buf, "cad")) {
+    if (__str_empieza_con(buf, "cad"))
+    {
         linenoiseAddCompletion(lc,"cadena");
     }
-    if (__str_empieza_con(buf, "sal")) {
+    if (__str_empieza_con(buf, "sal"))
+    {
         linenoiseAddCompletion(lc,"salir");
     }
 }
@@ -283,7 +323,8 @@ static void lat_repl(lat_vm *vm)
         {
             lat_objeto *curexpr = nodo_analizar_arbol(vm, tmp);
             lat_llamar_funcion(vm, curexpr);
-            if(vm->registros[255] != NULL && (strstr(buf, "escribir") == NULL && strstr(buf, "imprimir") == NULL)){
+            if(vm->registros[255] != NULL && (strstr(buf, "escribir") == NULL && strstr(buf, "imprimir") == NULL))
+            {
                 lat_apilar(vm, vm->registros[255]);
                 lat_imprimir(vm);
             }

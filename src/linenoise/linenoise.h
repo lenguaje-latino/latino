@@ -43,9 +43,10 @@
 #define snprintf(s, l, f, i) _snprintf(s, l, f, i)
 #endif
 
-typedef struct linenoiseCompletions {
-  size_t len;
-  char **cvec;
+typedef struct linenoiseCompletions
+{
+    size_t len;
+    char **cvec;
 } linenoiseCompletions;
 
 /*

@@ -15,7 +15,8 @@ void __lista_agregar(list_node* l, void* data)
 {
     list_node *curr = l;
     /*inserta al final de la lista*/
-    while (curr->next != NULL){
+    while (curr->next != NULL)
+    {
         curr = curr->next;
     }
     curr->data = data;
@@ -52,7 +53,8 @@ int __lista_existe_dato(list_node* l, void* data)
     return 0;
 }
 
-void lat_agregar(lat_vm *vm){
+void lat_agregar(lat_vm *vm)
+{
     lat_objeto *elem = lat_desapilar(vm);
     lat_objeto *lst = lat_desapilar(vm);
     __lista_agregar(lst->data.lista, elem);

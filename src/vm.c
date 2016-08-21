@@ -132,7 +132,7 @@ lat_vm* lat_crear_maquina_virtual()
     registrar_cfuncion(vm, "mayusculas", lat_mayusculas);
     registrar_cfuncion(vm, "quitar_espacios", lat_quitar_espacios);
     registrar_cfuncion(vm, "es_numero", lat_es_numero);
-	registrar_cfuncion(vm, "es_alfanumerico", lat_es_alfanumerico);
+    registrar_cfuncion(vm, "es_alfanumerico", lat_es_alfanumerico);
 
     registrar_cfuncion(vm, "ejecutar", lat_ejecutar);
     registrar_cfuncion(vm, "ejecutar_archivo", lat_ejecutar_archivo);
@@ -174,13 +174,14 @@ lat_objeto* lat_desapilar(lat_vm* vm)
     list_node* n = vm->pila;
     if (n->data == NULL)
     {
-        lat_error("Pila vacia");
+        lat_fatal_error("Pila vacia");
     }
     else
     {
         list_node *curr = n;
         lat_objeto *ret;
-        if(curr->next->data == NULL){
+        if(curr->next->data == NULL)
+        {
             //primer nodo
             ret = (lat_objeto*)curr->data;
             curr = curr->next;
@@ -211,7 +212,7 @@ lat_objeto* lat_desapilar_lista(lat_objeto* lista)
     list_node* n = ((list_node*)lista)->next;
     if (n->data == NULL)
     {
-        lat_error("Lista vacia");
+        lat_fatal_error("Lista vacia");
     }
     else
     {
@@ -227,7 +228,7 @@ void lat_apilar_contexto(lat_vm* vm)
 {
     if (vm->apuntador_pila >= MAX_STACK_SIZE)
     {
-        lat_error("Namespace desborde de la pila");
+        lat_fatal_error("Namespace desborde de la pila");
     }
     vm->contexto_pila[vm->apuntador_pila + 1] = lat_clonar_objeto(vm, vm->contexto_pila[vm->apuntador_pila]);
     vm->apuntador_pila++;
@@ -237,7 +238,7 @@ void lat_desapilar_contexto(lat_vm* vm)
 {
     if (vm->apuntador_pila == 0)
     {
-        lat_error("Namespace pila vacia");
+        lat_fatal_error("Namespace pila vacia");
     }
     lat_eliminar_objeto(vm, vm->contexto_pila[vm->apuntador_pila--]);
 }
@@ -439,7 +440,7 @@ void lat_ejecutar_archivo(lat_vm *vm)
         ast *tree = lat_analizar_archivo(input);
         if (!tree)
         {
-            lat_error("error al leer el archivo: %s", input);
+            lat_fatal_error("Error al leer el archivo: %s", input);
         }
         lat_objeto *func = nodo_analizar_arbol(vm, tree);
         lat_llamar_funcion(vm, func);
@@ -457,10 +458,10 @@ void lat_sumar(lat_vm* vm)
 {
     lat_objeto* b = lat_desapilar(vm);
     lat_objeto* a = lat_desapilar(vm);
-    if ((a->type != T_INT && a->type != T_DOUBLE) || (b->type != T_INT && b->type != T_DOUBLE))
+    /*if ((a->type != T_INT && a->type != T_DOUBLE) || (b->type != T_INT && b->type != T_DOUBLE))
     {
-        lat_error("Intento de aplicar operador \"+\" en tipos invalidos");
-    }
+        lat_fatal_error("Linea %d, %d: %s", a->num_linea, a->num_columna, "Intento de aplicar operador \"+\" en tipos invalidos");
+    }*/
     if (a->type == T_DOUBLE || b->type == T_DOUBLE)
     {
         vm->registros[255] = lat_decimal_nuevo(vm, lat_obtener_decimal(a) + lat_obtener_decimal(b));
@@ -475,10 +476,6 @@ void lat_restar(lat_vm* vm)
 {
     lat_objeto* b = lat_desapilar(vm);
     lat_objeto* a = lat_desapilar(vm);
-    if ((a->type != T_INT && a->type != T_DOUBLE) || (b->type != T_INT && b->type != T_DOUBLE))
-    {
-        lat_error("Intento de aplicar operador \"-\" en tipos invalidos");
-    }
     if (a->type == T_DOUBLE || b->type == T_DOUBLE)
     {
         vm->registros[255] = lat_decimal_nuevo(vm, lat_obtener_decimal(a) - lat_obtener_decimal(b));
@@ -493,10 +490,6 @@ void lat_multiplicar(lat_vm* vm)
 {
     lat_objeto* b = lat_desapilar(vm);
     lat_objeto* a = lat_desapilar(vm);
-    if ((a->type != T_INT && a->type != T_DOUBLE) || (b->type != T_INT && b->type != T_DOUBLE))
-    {
-        lat_error("Intento de aplicar operador \"*\" en tipos invalidos");
-    }
     if (a->type == T_DOUBLE || b->type == T_DOUBLE)
     {
         vm->registros[255] = lat_decimal_nuevo(vm, lat_obtener_decimal(a) * lat_obtener_decimal(b));
@@ -511,16 +504,12 @@ void lat_dividir(lat_vm* vm)
 {
     lat_objeto* b = lat_desapilar(vm);
     lat_objeto* a = lat_desapilar(vm);
-    if ((a->type != T_INT && a->type != T_DOUBLE) || (b->type != T_INT && b->type != T_DOUBLE))
-    {
-        lat_error("Intento de aplicar operador \"/\" en tipos invalidos");
-    }
     if ((a->type == T_DOUBLE && b->type == T_DOUBLE) || (a->type == T_INT && b->type == T_DOUBLE))
     {
         double tmp = lat_obtener_decimal(b);
         if (tmp == 0)
-        {
-            lat_error("Division por cero");
+        {            
+            lat_fatal_error("Linea %d, %d: %s", b->num_linea, b->num_columna,  "Division entre cero");
         }
         else
         {
@@ -532,7 +521,7 @@ void lat_dividir(lat_vm* vm)
         int tmp = lat_obtener_entero(b);
         if (tmp == 0)
         {
-            lat_error("Division por cero");
+            lat_fatal_error("Linea %d, %d: %s", b->num_linea, b->num_columna,  "Division entre cero");
         }
         else
         {
@@ -620,8 +609,8 @@ void lat_menor_que(lat_vm* vm)
     {
         vm->registros[255] = strcmp(lat_obtener_literal(a), lat_obtener_literal(b)) < 0 ? vm->objeto_verdadero : vm->objeto_falso;
         return;
-    }
-    lat_error("Intento de aplicar operador \"<\" en tipos invalidos");
+    }    
+    lat_fatal_error("Linea %d, %d: %s", a->num_linea, a->num_columna,  "Intento de aplicar operador \"<\" en tipos invalidos");
 }
 
 void lat_menor_igual(lat_vm* vm)
@@ -642,8 +631,8 @@ void lat_menor_igual(lat_vm* vm)
     {
         vm->registros[255] = strcmp(lat_obtener_literal(a), lat_obtener_literal(b)) <= 0 ? vm->objeto_verdadero : vm->objeto_falso;
         return;
-    }
-    lat_error("Intento de aplicar operador \"<=\" en tipos invalidos");
+    }    
+    lat_fatal_error("Linea %d, %d: %s", a->num_linea, a->num_columna,  "Intento de aplicar operador \"<=\" en tipos invalidos");
 }
 
 void lat_mayor_que(lat_vm* vm)
@@ -665,7 +654,7 @@ void lat_mayor_que(lat_vm* vm)
         vm->registros[255] = strcmp(lat_obtener_literal(a), lat_obtener_literal(b)) > 0 ? vm->objeto_verdadero : vm->objeto_falso;
         return;
     }
-    lat_error("Intento de aplicar operador \">\" en tipos invalidos");
+    lat_fatal_error("Linea %d, %d: %s", a->num_linea, a->num_columna,  "Intento de aplicar operador \">\" en tipos invalidos");
 }
 
 void lat_mayor_igual(lat_vm* vm)
@@ -687,17 +676,13 @@ void lat_mayor_igual(lat_vm* vm)
         vm->registros[255] = strcmp(lat_obtener_literal(a), lat_obtener_literal(b)) >= 0 ? vm->objeto_verdadero : vm->objeto_falso;
         return;
     }
-    lat_error("Intento de aplicar operador \">=\" en tipos invalidos");
+    lat_fatal_error("Linea %d, %d: %s", a->num_linea, a->num_columna,  "Intento de aplicar operador \">=\" en tipos invalidos");
 }
 
 void lat_y(lat_vm* vm)
 {
     lat_objeto* b = lat_desapilar(vm);
     lat_objeto* a = lat_desapilar(vm);
-    if ((b->type != T_BOOL && b->type != T_INT) || (a->type != T_BOOL && a->type != T_INT))
-    {
-        lat_error("Intento de aplicar operador \"y\" en tipos invalidos");
-    }
     vm->registros[255] =  (lat_obtener_logico(a) && lat_obtener_logico(b)) == true ? vm->objeto_verdadero : vm->objeto_falso;
 }
 
@@ -705,21 +690,12 @@ void lat_o(lat_vm* vm)
 {
     lat_objeto* b = lat_desapilar(vm);
     lat_objeto* a = lat_desapilar(vm);
-    if ((b->type != T_BOOL && b->type != T_INT) || (a->type != T_BOOL && a->type != T_INT))
-    {
-        lat_error("Intento de aplicar operador \"y\" en tipos invalidos");
-    }
     vm->registros[255] =  (lat_obtener_logico(a) || lat_obtener_logico(b)) == true ? vm->objeto_verdadero : vm->objeto_falso;
 }
 
 void lat_negacion(lat_vm* vm)
-{
-    //printf("%s\n", "dentro de lat_negacion");
+{    
     lat_objeto* o = lat_desapilar(vm);
-    if (o->type != T_BOOL)
-    {
-        lat_error("Intento de negar tipo invalido");
-    }
     vm->registros[255] =  (lat_obtener_logico(o) == false) ? vm->objeto_verdadero : vm->objeto_falso;
 }
 
@@ -739,7 +715,7 @@ void lista_modificar_elemento(list_node* l, void* data, int pos)
     int i = -1;
     if (pos < 0 || pos >= __lista_longitud(l))
     {
-        lat_error("Indice fuera de rango");
+        lat_fatal_error("Indice fuera de rango");
     }
     for (c = l; c->next != NULL; c = c->next)
     {
@@ -758,7 +734,7 @@ lat_objeto* lista_obtener_elemento(list_node* l, int pos)
     int i = -1;
     if (pos < 0 || pos >= __lista_longitud(l))
     {
-        lat_error("Indice fuera de rango");
+        lat_fatal_error("Indice fuera de rango");
     }
     for (c = l; c->next != NULL; c = c->next)
     {
@@ -776,7 +752,7 @@ void lat_llamar_funcion(lat_vm* vm, lat_objeto* func)
     if (func->type == T_FUNC)
     {
 #if DEPURAR_MV
-            printf("Ejecutando...\n");
+        printf("Ejecutando...\n");
 #endif
         if (!vm->REPL)
         {
@@ -795,115 +771,118 @@ void lat_llamar_funcion(lat_vm* vm, lat_objeto* func)
             {
             case OP_END:
 #if DEPURAR_MV
-            printf("END\n");
+                printf("END\n");
 #endif
                 return;
                 break;
             case OP_NOP:
 #if DEPURAR_MV
-            printf("NOP\n");
+                printf("NOP\n");
 #endif
                 break;
             case OP_PUSH:
                 lat_apilar(vm, vm->registros[cur.a]);
 #if DEPURAR_MV
-            printf("PUSH ");
-            imprimir_objeto(vm->registros[cur.a]);
-            printf("\n");
+                printf("PUSH ");
+                imprimir_objeto(vm->registros[cur.a]);
+                printf("\n");
 #endif
                 break;
             case OP_POP:
                 vm->registros[cur.a] = lat_desapilar(vm);
 #if DEPURAR_MV
-            printf("POP ");
-            imprimir_objeto(vm->registros[cur.a]);
-            printf("\n");
+                printf("POP ");
+                imprimir_objeto(vm->registros[cur.a]);
+                printf("\n");
 #endif
                 break;
             case OP_GET:
             {
-                lat_objeto* contexto = vm->registros[cur.b];
-                lat_objeto* nombre = vm->registros[cur.a];
-                vm->registros[cur.a] = lat_obtener_contexto_objeto(contexto, nombre);
-                if(vm->registros[cur.a]->type == T_FUNC){
-                    if(__lista_longitud(vm->pila) < nombre->num_param){
-                        /*TODO: Agregar manejo de excepciones*/
-                        lat_fatal_error("Numero incorrecto de parametros en funcion '%s'\n", nombre->data.str);
+                lat_objeto* contexto = vm->registros[cur.a];
+                lat_objeto* nombre = vm->registros[cur.b];
+                vm->registros[cur.b] = lat_obtener_contexto_objeto(contexto, nombre);
+                if(vm->registros[cur.b]->type == T_FUNC)
+                {
+                    if(__lista_longitud(vm->pila) < nombre->num_param)
+                    {
+                        //TODO: Agregar manejo de excepciones
+                        //lat_fatal_error("Numero incorrecto de parametros en funcion '%s'\n", nombre->data.str);
+                        lat_fatal_error("Linea %d, %d: %s '%s'", nombre->num_linea, nombre->num_columna,  "Numero incorrecto de parametros en funcion\n", nombre->data.str);
                     }
                 }
 #if DEPURAR_MV
-            printf("GET ");
-            imprimir_objeto(vm->registros[cur.b]);
-            printf("\t");
-            imprimir_objeto(vm->registros[cur.a]);
-            printf("\n");
+                printf("GET ");
+                imprimir_objeto(vm->registros[cur.a]);
+                printf("\t");
+                imprimir_objeto(vm->registros[cur.b]);
+                printf("\n");
 #endif
             }
-                break;
+            break;
             case OP_SET:
-                lat_asignar_contexto_objeto(vm->registros[cur.b], lat_clonar_objeto(vm, ((lat_objeto*)cur.meta)), vm->registros[cur.a]);
+                lat_asignar_contexto_objeto(vm->registros[cur.a], lat_clonar_objeto(vm, ((lat_objeto*)cur.meta)), vm->registros[cur.b]);
 #if DEPURAR_MV
-            printf("SET ");
-            imprimir_objeto(vm->registros[cur.a]);
-            printf("\t");
-            imprimir_objeto(vm->registros[cur.b]);
-            printf("\n");
+                printf("SET ");
+                imprimir_objeto(vm->registros[cur.a]);
+                printf("\t");
+                imprimir_objeto(vm->registros[cur.b]);
+                printf("\n");
 #endif
                 break;
             case OP_STORELIT:
                 vm->registros[cur.a] = ((lat_objeto*)cur.meta);
 #if DEPURAR_MV
-            printf("STORELIT ");
-            imprimir_objeto(vm->registros[cur.a]);
-            printf("\n");
+                printf("STORELIT ");
+                imprimir_objeto(vm->registros[cur.a]);
+                printf("\n");
 #endif
                 break;
             case OP_STOREINT:
                 vm->registros[cur.a] = ((lat_objeto*)cur.meta);
 #if DEPURAR_MV
-            printf("STOREINT ");
-            imprimir_objeto(vm->registros[cur.a]);
-            printf("\n");
+                printf("STOREINT ");
+                imprimir_objeto(vm->registros[cur.a]);
+                printf("\n");
 #endif
                 break;
             case OP_STOREDOUBLE:
                 vm->registros[cur.a] = ((lat_objeto*)cur.meta);
 #if DEPURAR_MV
-            printf("STOREDOUBLE ");
-            imprimir_objeto(vm->registros[cur.a]);
-            printf("\n");
+                printf("STOREDOUBLE ");
+                imprimir_objeto(vm->registros[cur.a]);
+                printf("\n");
 #endif
                 break;
             case OP_STORESTR:
                 vm->registros[cur.a] = ((lat_objeto*)cur.meta);
 #if DEPURAR_MV
-            printf("STORESTR ");
-            imprimir_objeto(vm->registros[cur.a]);
-            printf("\n");
+                printf("STORESTR ");
+                imprimir_objeto(vm->registros[cur.a]);
+                printf("\n");
 #endif
                 break;
             case OP_STOREBOOL:
                 vm->registros[cur.a] = ((lat_objeto*)cur.meta);
 #if DEPURAR_MV
-            printf("STOREBOOL ");
-            imprimir_objeto(vm->registros[cur.a]);
-            printf("\n");
+                printf("STOREBOOL ");
+                imprimir_objeto(vm->registros[cur.a]);
+                printf("\n");
 #endif
                 break;
             case OP_STORELIST:
                 vm->registros[cur.a] = lat_lista_nueva(vm, __lista_nuevo());
 #if DEPURAR_MV
-            printf("STORELIST ");
-            imprimir_objeto(vm->registros[cur.a]);
-            printf("\n");
+                printf("STORELIST ");
+                imprimir_objeto(vm->registros[cur.a]);
+                printf("\n");
 #endif
                 break;
             case OP_PUSHLIST:
                 lat_apilar_lista(vm->registros[cur.a], vm->registros[cur.b]);
 #if DEPURAR_MV
-            printf("PUSHLIST ");
-            imprimir_objeto(vm->registros[cur.a]);
-            printf("\n");
+                printf("PUSHLIST ");
+                imprimir_objeto(vm->registros[cur.a]);
+                printf("\n");
 #endif
                 break;
             case OP_POPLIST:
@@ -923,7 +902,7 @@ void lat_llamar_funcion(lat_vm* vm, lat_objeto* func)
                 lat_objeto *pos = vm->registros[(long) cur.meta];
                 if (pos->type != T_INT)
                 {
-                    lat_error("%s", "la posicion de la lista no es un entero");
+                    lat_fatal_error("%s", "la posicion de la lista no es un entero");
                 }
                 lista_modificar_elemento(l->data.lista, (lat_objeto*)vm->registros[cur.b], pos->data.i);
             }
@@ -943,42 +922,42 @@ void lat_llamar_funcion(lat_vm* vm, lat_objeto* func)
             case OP_MOV:
                 vm->registros[cur.a] = vm->registros[cur.b];
 #if DEPURAR_MV
-            printf("MOV ");
-            imprimir_objeto(vm->registros[cur.a]);
-            printf("\t");
-            imprimir_objeto(vm->registros[cur.b]);
-            printf("\n");
+                printf("MOV ");
+                imprimir_objeto(vm->registros[cur.a]);
+                printf("\t");
+                imprimir_objeto(vm->registros[cur.b]);
+                printf("\n");
 #endif
                 break;
             case OP_GLOBALNS:
                 vm->registros[cur.a] = vm->contexto_pila[0];
 #if DEPURAR_MV
-            printf("GLOBALNS ");
-            imprimir_objeto(vm->registros[cur.a]);
-            printf("\n");
+                printf("GLOBALNS ");
+                imprimir_objeto(vm->registros[cur.a]);
+                printf("\n");
 #endif
                 break;
             case OP_LOCALNS:
                 vm->registros[cur.a] = lat_obtener_contexto(vm);
 #if DEPURAR_MV
-            printf("LOCALNS ");
-            imprimir_objeto(vm->registros[cur.a]);
-            printf("\n");
+                printf("LOCALNS ");
+                imprimir_objeto(vm->registros[cur.a]);
+                printf("\n");
 #endif
                 break;
             case OP_FN:
                 vm->registros[cur.a] = lat_definir_funcion(vm, (lat_bytecode*)cur.meta);
 #if DEPURAR_MV
-            printf("FN ");
-            imprimir_objeto(vm->registros[cur.a]);
-            printf("\n");
+                printf("FN ");
+                imprimir_objeto(vm->registros[cur.a]);
+                printf("\n");
 #endif
                 break;
             case OP_JMP:
                 pos = cur.a - 1;
 #if DEPURAR_MV
-            printf("JMP %i", pos);
-            printf("\n");
+                printf("JMP %i", pos);
+                printf("\n");
 #endif
                 break;
             case OP_JMPIF:
@@ -986,44 +965,34 @@ void lat_llamar_funcion(lat_vm* vm, lat_objeto* func)
                 {
                     pos = cur.a - 1;
 #if DEPURAR_MV
-            printf("JMPIF %i", pos);
-            printf("\n");
+                    printf("JMPIF %i", pos);
+                    printf("\n");
 #endif
                 }
                 break;
             case OP_CALL:
-				if (vm->registros[cur.a] != NULL)
-				{
+                if (vm->registros[cur.a] != NULL)
+                {
 #if DEPURAR_MV
-            printf("CALL ");
-            imprimir_objeto(vm->registros[cur.a]);
-            printf("...\n");
+                    printf("CALL ");
+                    imprimir_objeto(vm->registros[cur.a]);
+                    printf("...\n");
 #endif
-					lat_objeto* fun = (lat_objeto*) vm->registros[cur.a];
-					lat_llamar_funcion(vm, fun);
-					/*
-					lat_objeto* fun_name = (lat_objeto*) vm->registros[1];	//nombre de la funcion
-					int num_args = (int) cur.b;
-					lat_imprimir_lista(vm, vm->pila);
-					printf("\n");
-					if(num_args == __lista_longitud(vm->pila)){
-						lat_llamar_funcion(vm, fun);
-					}else{
-						lat_error("Numero ivalido de argumentos en funcion: %s\n", fun_name->data.str);
-					}*/
+                    lat_objeto* fun = (lat_objeto*) vm->registros[cur.a];
+                    lat_llamar_funcion(vm, fun);
 #if DEPURAR_MV
-            /*printf("CALL ");
-            imprimir_objeto(vm->registros[cur.a]);
-            printf("\n");*/
+                /*printf("CALL ");
+                imprimir_objeto(vm->registros[cur.a]);
+                printf("\n");*/
 #endif
                 }
                 break;
             case OP_NOT:
                 vm->registros[cur.a] = lat_obtener_logico(vm->registros[cur.a]) == true ? vm->objeto_falso : vm->objeto_verdadero;
 #if DEPURAR_MV
-            printf("NOT ");
-            imprimir_objeto(vm->registros[cur.a]);
-            printf("\n");
+                printf("NOT ");
+                imprimir_objeto(vm->registros[cur.a]);
+                printf("\n");
 #endif
                 break;
             case OP_PUSHDICTELEM:
@@ -1041,12 +1010,11 @@ void lat_llamar_funcion(lat_vm* vm, lat_objeto* func)
     }
     else if (func->type == T_CFUNC)
     {
-		((void (*)(lat_vm*))(func->data.func))(vm);
+        ((void (*)(lat_vm*))(func->data.func))(vm);
     }
     else
     {
-        //debug("func->type: %d", func->type);
-        lat_error("El objeto no es una funcion");
+        lat_fatal_error("Linea %d, %d: %s", func->num_linea, func->num_columna,  "El objeto no es una funcion");        
     }
 }
 
@@ -1095,8 +1063,8 @@ void lat_logico(lat_vm* vm)
             vm->registros[255] = vm->objeto_verdadero;
         }
         break;
-    default:
-        lat_error("conversion incompatible");
+    default:        
+        lat_fatal_error("Linea %d, %d: %s", a->num_linea, a->num_columna,  "Conversion de tipo de dato incompatible");
         break;
     }
 }
@@ -1126,7 +1094,7 @@ void lat_entero(lat_vm* vm)
         }
         else
         {
-            lat_error("conversion incompatible");
+            lat_fatal_error("Linea %d, %d: %s", a->num_linea, a->num_columna,  "Conversion de tipo de dato incompatible");
         }
     }
     break;
@@ -1144,12 +1112,12 @@ void lat_entero(lat_vm* vm)
         }
         else
         {
-            lat_error("conversion incompatible");
+            lat_fatal_error("Linea %d, %d: %s", a->num_linea, a->num_columna,  "Conversion de tipo de dato incompatible");
         }
     }
     break;
     default:
-        lat_error("conversion incompatible");
+        lat_fatal_error("Linea %d, %d: %s", a->num_linea, a->num_columna,  "Conversion de tipo de dato incompatible");
         break;
     }
 }
@@ -1205,12 +1173,12 @@ void lat_decimal(lat_vm* vm)
         }
         else
         {
-            lat_error("conversion incompatible");
+            lat_fatal_error("Linea %d, %d: %s", a->num_linea, a->num_columna,  "Conversion de tipo de dato incompatible");
         }
     }
     break;
     default:
-        lat_error("conversion incompatible");
+       lat_fatal_error("Linea %d, %d: %s", a->num_linea, a->num_columna,  "Conversion de tipo de dato incompatible");
         break;
     }
 }
