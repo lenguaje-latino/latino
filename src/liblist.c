@@ -28,7 +28,7 @@ void __lista_agregar(list_node* l, void* data)
 
 int __lista_longitud(list_node* l)
 {
-    int a = 0;
+    int a = 0;    
     list_node* c;
     for (c = l; c->next != NULL; c = c->next)
     {
@@ -51,6 +51,31 @@ int __lista_existe_dato(list_node* l, void* data)
         }
     }
     return 0;
+}
+
+char* __lista_a_cadena(list_node* l)
+{
+    char* valor = __memoria_asignar(MAX_STR_LENGTH);    
+    strcat(valor, "[");
+    if (l != NULL && __lista_longitud(l) > 0)
+    {
+        list_node* c;
+        for (c = l; c != NULL; c = c->next)
+        {
+            if (c->data != NULL)
+            {
+                lat_objeto* o = ((lat_objeto*)c->data);
+                strcat(valor, __objeto_a_cadena(o));
+                if (c->next && c->next->data != NULL)
+                {
+                    //fprintf(stdout, "%s", ", ");
+                    strcat(valor, ",");
+                }                
+            }
+        }
+    }    
+    strcat(valor, "]");
+    return valor;
 }
 
 void lat_agregar(lat_vm *vm)

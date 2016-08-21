@@ -536,7 +536,7 @@ static int nodo_analizar(lat_vm *vm, ast *node, lat_bytecode *bcode, int i)
         ret->num_columna = node->valor->num_columna;
         dbc(OP_STOREINT, 255, 0, ret);
 #if DEPURAR_AST
-        printf("STOREINT R255 %ld\n", ret->data.i);
+        printf("STOREINT R255\t%ld\n", ret->data.i);
 #endif
     }
     break;
@@ -701,11 +701,11 @@ static int nodo_analizar(lat_vm *vm, ast *node, lat_bytecode *bcode, int i)
                 printf("PUSH R255\n");
 #endif
             }
-        }     
+        }
     }
     break;
     case NODO_LISTA_PARAMETROS:
-    {        
+    {
         if (node->l)
         {
             dbc(OP_LOCALNS, 1, 0, NULL);
@@ -745,35 +745,36 @@ static int nodo_analizar(lat_vm *vm, ast *node, lat_bytecode *bcode, int i)
     break;
     case NODO_LISTA:
     {
-        nested++;
-        dbc(OP_STORELIST, nested, 0, NULL);
+        lat_objeto* ret = lat_entero_nuevo(vm, 0);
+        dbc(OP_STOREINT, 0, 0, ret);
 #if DEPURAR_AST
-        printf("STORELIST R%i\n", nested);
+            printf("STOREINT R0\t%ld\n", ret->data.i );
 #endif
         if (node->l)
         {
             pn(vm, node->l);
-            dbc(OP_MOV, 255, nested, NULL);
-#if DEPURAR_AST
-            printf("MOV R255 R%i\n", nested);
-#endif
         }
-        nested--;
+        dbc(OP_STORELIST, 255, 0, NULL);
+#if DEPURAR_AST
+            printf("STORELIST R255\n");
+#endif
     }
     break;
     case NODO_LISTA_AGREGAR_ELEMENTO:
     {
-        if (node->l)
-        {
-            pn(vm, node->l);
-            dbc(OP_PUSHLIST, nested, 255, NULL);
-#if DEPURAR_AST
-            printf("PUSHLIST R%i R255\n", nested);
-#endif
-        }
         if (node->r)
         {
             pn(vm, node->r);
+        }
+        if (node->l)
+        {
+            pn(vm, node->l);
+            dbc(OP_PUSH, 255, 0, NULL);
+            dbc(OP_INC, 0, 0, NULL);
+#if DEPURAR_AST
+            printf("PUSH R255\n");
+            printf("INC R0\n");
+#endif
         }
     }
     break;
