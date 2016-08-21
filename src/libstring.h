@@ -79,7 +79,7 @@ char* __str_entero_a_cadena(long i);
   *\param d: Valor decimal
   *\return char*: Apuntador a cadena
   */
-char* __str_numerico_a_cadena(double d);
+char* __str_decimal_a_cadena(double d);
 
 /**\brief Convierte un caracter a cadena
   *

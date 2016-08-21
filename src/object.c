@@ -27,12 +27,68 @@ THE SOFTWARE.
 #include <stdlib.h>
 #include <stddef.h>
 #include <stdio.h>
+#include <string.h>
 
 #include "latino.h"
 #include "libstring.h"
 #include "liblist.h"
 #include "libmem.h"
 #include "libdict.h"
+
+
+char* __objeto_a_cadena(lat_objeto* in)
+{
+    char* valor = __memoria_asignar(MAX_STR_LENGTH);
+    if (in == NULL || in->type == T_NULO)
+    {
+        strcpy(valor, "nulo");
+    }
+    else if (in->type == T_BOOL)
+    {
+        strcpy(valor, __str_logico_a_cadena(lat_obtener_logico(in)));
+    }
+    else if (in->type == T_INSTANCE)
+    {
+        strcpy(valor, "objeto");
+    }
+    else if (in->type == T_LIT)
+    {
+        strcpy(valor, lat_obtener_literal(in));
+    }
+    else if (in->type == T_INT)
+    {
+        strcpy(valor, __str_entero_a_cadena(lat_obtener_entero(in)));
+    }
+    else if (in->type == T_DOUBLE)
+    {
+        strcpy(valor, __str_decimal_a_cadena(lat_obtener_decimal(in)));
+    }
+    else if (in->type == T_STR)
+    {
+        strcpy(valor, lat_obtener_cadena(in));
+    }
+    else if (in->type == T_FUNC)
+    {
+        strcpy(valor, "funcion");
+    }
+    else if (in->type == T_CFUNC)
+    {
+        strcpy(valor, "cfuncion");
+    }
+    else if (in->type == T_CLASS)
+    {
+        strcpy(valor, "clase");
+    }
+    if (in->type == T_LIST)
+    {
+        strcpy(valor, __lista_a_cadena(in->data.lista));
+    }
+    else if (in->type == T_DICT)
+    {
+        //__imprimir_diccionario(vm, in->data.dict);
+    }
+    return valor;
+}
 
 void lat_asignar_contexto_objeto(lat_objeto* ns, lat_objeto* name, lat_objeto* o)
 {
@@ -189,15 +245,12 @@ lat_objeto* lat_clonar_objeto(lat_vm* vm, lat_objeto* obj)
         ret = lat_crear_objeto(vm);
         ret->type = T_INSTANCE;
         ret->data_size = sizeof(hash_map*);
-        //ret->data.nombre = lat_clonar_hash(vm, obj->data.nombre);
         ret->data.nombre = __dic_clonar(obj->data.nombre);
-        //ret->data.nombre = obj->data.nombre;        
         ret->num_linea = obj->num_linea;
         ret->num_columna = obj->num_columna;
         break;
     case T_LIST:
-        ret = lat_lista_nueva(vm, lat_clonar_lista(vm, obj->data.lista));
-        //ret = lat_lista_nueva(vm, obj->data.lista);
+        ret = lat_lista_nueva(vm, lat_clonar_lista(vm, obj->data.lista));        
         break;
     case T_FUNC:
     case T_CFUNC:

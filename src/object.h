@@ -101,6 +101,12 @@ struct lat_llave_valor
     lat_type type;
 };
 
+/** \brief Convierte un objeto a su representacion en cadena
+  *
+  * \param o: objeto a convertir
+  */
+char* __objeto_a_cadena(lat_objeto* o);
+
 /** \brief Asigna el objeto a un contexto (local / publico)
   *
   * \param ns: Contexto en el que se encuentra el objeto
