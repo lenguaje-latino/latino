@@ -198,7 +198,7 @@ char* __str_entero_a_cadena(long i)
     return r;
 }
 
-char* __str_numerico_a_cadena(double d)
+char* __str_decimal_a_cadena(double d)
 {
     char s[64];
     char* r = __memoria_asignar(strlen(s) + 1);
@@ -477,39 +477,7 @@ void lat_concatenar(lat_vm* vm)
 {
     lat_objeto* b = lat_desapilar(vm);
     lat_objeto* a = lat_desapilar(vm);
-    lat_objeto* x = NULL;
-    lat_objeto* y = NULL;
-    switch (a->type)
-    {
-    case T_BOOL:
-        x = lat_cadena_nueva(vm, __str_logico_a_cadena(a->data.b));
-        break;
-    case T_INT:
-        x = lat_cadena_nueva(vm, __str_entero_a_cadena(a->data.i));
-        break;
-    case T_DOUBLE:
-        x = lat_cadena_nueva(vm, __str_numerico_a_cadena(a->data.d));
-        break;
-    default:
-        x = lat_cadena_nueva(vm, a->data.str);
-        break;
-    }
-    switch (b->type)
-    {
-    case T_BOOL:
-        y = lat_cadena_nueva(vm, __str_logico_a_cadena(b->data.b));
-        break;
-    case T_INT:
-        y = lat_cadena_nueva(vm, __str_entero_a_cadena(b->data.i));
-        break;
-    case T_DOUBLE:
-        y = lat_cadena_nueva(vm, __str_numerico_a_cadena(b->data.d));
-        break;
-    default:
-        y = lat_cadena_nueva(vm, b->data.str);
-        break;
-    }
-    vm->registros[255] = lat_cadena_nueva(vm, __str_concatenar(lat_obtener_cadena(x), lat_obtener_cadena(y)));
+    vm->registros[255] = lat_cadena_nueva(vm, __str_concatenar(__objeto_a_cadena(a), __objeto_a_cadena(b)));
 }
 
 void lat_contiene(lat_vm* vm)

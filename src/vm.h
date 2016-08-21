@@ -56,8 +56,6 @@ typedef enum lat_ins
     OP_STORESTR,    /**< Almacena una cadena */
     OP_STOREBOOL,    /**< Almacena un valor logico */
     OP_STORELIST,    /**< Almacena una lista */
-    OP_PUSHLIST,    /**< inserta la lista en la pila */
-    OP_POPLIST,    /**< Extrae la lista de la pila */
     OP_LISTGETITEM,    /**< Obtiene un valor de la lista */
     OP_LISTSETITEM,    /**< Asigna un valor de la lista */
     OP_MOV,    /**< Mueve valores a los registros de la MV */
@@ -68,6 +66,7 @@ typedef enum lat_ins
     OP_JMPIF,    /**< Saltar a otra instruccion SI la condicion se cumple */
     OP_CALL,    /**< Llamada a una funcion */
     OP_NOT,    /**< Negacion de un valor logico */
+    OP_INC,
     OP_STOREDICT,    /**< Almacena un objeto diccionario */
     OP_PUSHDICT,    /**< inserta un objeto diccionario en la pila */
     OP_POPDICT,    /**< Extrae un objeto diccionario de la pila */
@@ -169,39 +168,12 @@ void lat_apilar_contexto(lat_vm* vm);
   */
 void lat_desapilar_contexto(lat_vm* vm);
 
-/**\brief inserta el contexto principal en la pila de la MV
-  *
-  *\param vm: Apuntador a la MV
-  *\param ctx: Apuntador al contexto
-  */
-//void lat_apilar_contexto_predefinido(lat_vm* vm, lat_objeto* ctx);
-
-/**\brief Extrae el contexto principal de la pila de la MV
-  *
-  *\param vm: Apuntador a la MV
-  *\return lat_objeto: Apuntador al contexto
-  */
-//lat_objeto* lat_desapilar_contexto_predefinido(lat_vm* vm);
-
 /**\brief Extrae el contexto de la pila de la MV
   *
   *\param vm: Apuntador a la MV
   *\return lat_objeto: Apuntador al contexto
   */
 lat_objeto* lat_obtener_contexto(lat_vm* vm);
-
-/**\brief Agrega un objeto al basurero para ser destruido
-  *
-  *\param vm: Apuntador a la MV
-  *\param o: Apuntador a objeto
-  */
-//void lat_basurero_agregar(lat_vm* vm, lat_objeto* o);
-
-/**\brief Crea un objeto basurero
-  *
-  *\param vm: Apuntador a la MV
-  */
-//void lat_basurero(lat_vm* vm);
 
 /**\brief Define una funcion creada por el usuario
   *
@@ -219,25 +191,19 @@ lat_objeto* lat_definir_funcion(lat_vm* vm, lat_bytecode* inslist);
   */
 lat_objeto* lat_definir_cfuncion(lat_vm* vm, void (*function)(lat_vm* vm));
 
-/**\brief Regresa el numero en que se encuentra un elemento
-  *
-  *\param vm: Apuntador a la MV
-  */
-//void lat_numero_lista(lat_vm* vm);
-
 /**\brief Envia a consola el contenido de la lista
   *
   *\param vm: Apuntador a la MV
   *\param l: Apuntador a la lista
   */
-void lat_imprimir_lista(lat_vm* vm, list_node* l);
+void __imprimir_lista(lat_vm* vm, list_node* l);
 
 /**\brief Envia a consola el contenido del diccionario
   *
   *\param vm: Apuntador a la MV
   *\param d: Apuntador al diccionario
   */
-void lat_imprimir_diccionario(lat_vm* vm, hash_map* d);
+void __imprimir_diccionario(lat_vm* vm, hash_map* d);
 
 /**\brief Envia a consola el valor del objeto
   *
@@ -250,12 +216,6 @@ void lat_imprimir(lat_vm* vm);
   *\param vm: Apuntador a la MV
   */
 void lat_clonar(lat_vm* vm);
-
-/**\brief Agrega un elemento a la lista
-  *
-  *\param vm: Apuntador a la MV
-  */
-//void lat_cons(lat_vm* vm);
 
 /**\brief Operador +
   *
