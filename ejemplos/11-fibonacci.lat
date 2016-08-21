@@ -43,13 +43,13 @@ fin
 
 #imprimir la serie de 45 provoca desborde de la pila (stack overflow)
 imprimir ("version recursiva")
-desde (i=0; i < 10; i++)
-    imprimir(fibonacci(i))
+desde (i=0; i < 15; i++)
+    imprimir(i . ": " . fibonacci(i))
 fin
 
 imprimir("version iterativa")
 desde (i=0; i <= 45; i++)
-    imprimir(fibo(i))
+    imprimir(i . ": " . fibo(i))
 fin
 
 #ejemplo salida:

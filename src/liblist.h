@@ -64,6 +64,13 @@ void __lista_agregar(list_node* l, void* data);
   */
 int __lista_longitud(list_node* l);
 
+/**\brief Devuelve la representacion en cadena de una lista
+  *
+  *\param l: Apuntador a la lista
+  *\return int: La cadena de la lista
+  */
+char* __lista_a_cadena(list_node* l);
+
 /** Agrega un elemento al final de la lista
   * \param vm: Maquina virtual de latino
  * */
