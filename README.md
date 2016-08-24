@@ -1,4 +1,5 @@
 #Latino
+
 [![Join the chat at https://gitter.im/primitivorm/latino](https://badges.gitter.im/primitivorm/latino.svg)](https://gitter.im/primitivorm/latino?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 [![https://telegram.me/joinchat/EBHu7z6l6_o0_qtHlnbdOw](https://img.shields.io/badge/Soporte-Telegram-green.svg?style=plastic)](https://telegram.me/joinchat/EBHu7z6l6_o0_qtHlnbdOw)
 [![Build Status](https://travis-ci.org/primitivorm/latino.svg?branch=master)](https://travis-ci.org/primitivorm/latino)
@@ -124,4 +125,4 @@ Pirmero debes saber donde esta instalado
  
  Listo!
 
-####Cualquier aportación o sugerencia es bienvenida.
+####Cualquier aportación o sugerencia es bienvenida, gracias
