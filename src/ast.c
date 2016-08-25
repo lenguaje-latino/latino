@@ -736,6 +736,7 @@ static int nodo_analizar(lat_vm *vm, ast *node, lat_bytecode *bcode, int i)
         }
         /* procesar instrucciones */
         fpn(vm, node->r);
+        funcion_bcode = __memoria_reasignar(funcion_bcode, sizeof(lat_bytecode) * (fi+1));    
         dbc(OP_FN, 255, 0, funcion_bcode);
 #if DEPURAR_AST
         printf("FN R255\n");
@@ -944,6 +945,7 @@ lat_objeto *nodo_analizar_arbol(lat_vm *vm, ast *tree)
     lat_bytecode *bcode = (lat_bytecode *)__memoria_asignar(sizeof(lat_bytecode) * MAX_BYTECODE_FUNCTION);
     int i = nodo_analizar(vm, tree, bcode, 0);
     dbc(OP_END, 0, 0, NULL);
-    nodo_liberar(tree);
-    return lat_definir_funcion(vm, bcode);
+    nodo_liberar(tree);    
+    __memoria_reasignar(bcode, sizeof(lat_bytecode) * (i+1));    
+    return lat_definir_funcion(vm, bcode);    
 }
