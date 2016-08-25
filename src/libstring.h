@@ -227,13 +227,6 @@ void lat_concatenar(lat_vm* vm);
   */
 void lat_contiene(lat_vm* vm);
 
-/** Copiar: Copia el contenido de una cadena
-  *
-  * \param vm: Maquina virtual de latino
-  *
-  */
-void lat_copiar(lat_vm* vm);
-
 /** Termina con: Valida si una cadena termina con una subcadena determinada
   *
   * \param vm: Maquina virtual de latino

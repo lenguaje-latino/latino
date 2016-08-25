@@ -132,21 +132,24 @@ lat_objeto* lat_crear_objeto(lat_vm* vm)
 
 lat_objeto* lat_instancia(lat_vm* vm)
 {
+    //printf("instancia nueva\n");
     lat_objeto* ret = lat_crear_objeto(vm);
     ret->type = T_INSTANCE;
     ret->data_size = sizeof(hash_map*);
-    ret->data.nombre = __dic_nuevo();
+    ret->data.nombre = __dic_crear();
     return ret;
 }
 
 lat_objeto* lat_literal_nuevo(lat_vm* vm, const char* p)
 {
+    //printf("literal nueva: %s\n", p);
     lat_objeto* ret = __str_cadena_hash(p, strlen(p));
     return ret;
 }
 
 lat_objeto* lat_entero_nuevo(lat_vm* vm, long val)
 {
+    //printf("entero nuevo: %ld\n", val);
     lat_objeto* ret = lat_crear_objeto(vm);
     ret->type = T_INT;
     ret->data_size = sizeof(long);
@@ -156,6 +159,7 @@ lat_objeto* lat_entero_nuevo(lat_vm* vm, long val)
 
 lat_objeto* lat_decimal_nuevo(lat_vm* vm, double val)
 {
+    //printf("decimal nuevo: %.14g\n", val);
     lat_objeto* ret = lat_crear_objeto(vm);
     ret->type = T_DOUBLE;
     ret->data_size = sizeof(double);
@@ -165,6 +169,7 @@ lat_objeto* lat_decimal_nuevo(lat_vm* vm, double val)
 
 lat_objeto* lat_logico_nuevo(lat_vm* vm, bool val)
 {
+    //printf("logico nuevo: %i\n", val);
     lat_objeto* ret = lat_crear_objeto(vm);
     ret->type = T_BOOL;
     ret->data_size = sizeof(bool);
@@ -174,21 +179,24 @@ lat_objeto* lat_logico_nuevo(lat_vm* vm, bool val)
 
 lat_objeto* lat_cadena_nueva(lat_vm* vm, const char* p)
 {
+    //printf("cadena nueva: %s\n", p);
     lat_objeto* ret = __str_cadena_hash(p, strlen(p));
     return ret;
 }
 
-lat_objeto* lat_lista_nueva(lat_vm* vm, list_node* l)
+lat_objeto* lat_lista_nueva(lat_vm* vm, lista* l)
 {
+    //printf("lista nueva\n");
     lat_objeto* ret = lat_crear_objeto(vm);
     ret->type = T_LIST;
-    ret->data_size = sizeof(list_node*);
+    ret->data_size = sizeof(lista);
     ret->data.lista = l;
     return ret;
 }
 
 lat_objeto* lat_funcion_nueva(lat_vm* vm)
 {
+    //printf("funcion nueva\n");
     lat_objeto* ret = lat_crear_objeto(vm);
     ret->type = T_FUNC;
     ret->data_size = 0;
@@ -197,6 +205,7 @@ lat_objeto* lat_funcion_nueva(lat_vm* vm)
 
 lat_objeto* lat_cfuncion_nueva(lat_vm* vm)
 {
+    //printf("cfuncion nueva\n");
     lat_objeto* ret = lat_crear_objeto(vm);
     ret->type = T_CFUNC;
     return ret;
@@ -238,6 +247,7 @@ void lat_eliminar_objeto(lat_vm* vm, lat_objeto* o)
 
 lat_objeto* lat_clonar_objeto(lat_vm* vm, lat_objeto* obj)
 {
+    //printf("clonando objeto...\n");
     lat_objeto* ret;
     switch (obj->type)
     {
@@ -270,20 +280,12 @@ lat_objeto* lat_clonar_objeto(lat_vm* vm, lat_objeto* obj)
     return ret;
 }
 
-list_node* lat_clonar_lista(lat_vm* vm, list_node* l)
+lista* lat_clonar_lista(lat_vm* vm, lista* list)
 {
-    list_node* ret = __lista_nuevo();
-    if (l != NULL)
-    {
-        list_node* c;
-        for (c = l; c->next != NULL; c = c->next)
-        {
-            if (c->data != NULL)
-            {
-                __lista_agregar(ret, lat_clonar_objeto(vm, (lat_objeto*)c->data));
-            }
-        }
-    }
+    lista* ret = __lista_crear();
+    LIST_FOREACH(list, primero, siguiente, cur) {
+        __lista_apilar(ret, cur->valor);
+    }    
     return ret;
 }
 
@@ -345,7 +347,7 @@ bool lat_obtener_logico(lat_objeto* o)
     return false;
 }
 
-list_node* lat_obtener_lista(lat_objeto* o)
+lista* lat_obtener_lista(lat_objeto* o)
 {
     if (o->type == T_LIST)
     {

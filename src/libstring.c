@@ -495,12 +495,6 @@ void lat_contiene(lat_vm* vm)
     }
 }
 
-void lat_copiar(lat_vm* vm)
-{
-    lat_objeto* b = lat_desapilar(vm);
-    vm->registros[255] = lat_clonar_objeto(vm, b);
-}
-
 void lat_termina_con(lat_vm* vm)
 {
     lat_objeto* b = lat_desapilar(vm);
@@ -609,6 +603,7 @@ void lat_longitud(lat_vm* vm)
     if (a->type == T_LIST)
     {
         vm->registros[255] = lat_entero_nuevo(vm, __lista_longitud(lat_obtener_lista(a)));
+        //vm->registros[255] = lat_entero_nuevo(vm, __lista_longitud(lat_obtener_lista(a)));
     }
 
 }

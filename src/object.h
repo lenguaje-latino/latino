@@ -67,16 +67,16 @@ typedef enum lat_type
 */
 typedef union lat_datos_objeto
 {
-    hash_map* nombre;   /**< nombre del objeto */
-    char* c;            /**< valor literal */
-    long i;             /**< valor entero */
-    double d;           /**< valor decimal */
-    char* str;          /**< valor cadena */
-    bool b;  /**< valor logico */
-    list_node* lista;  /**< valor de la lista */
-    hash_map* dict;  /**< valor del diccionario */
-    void* func;  /**< valor funcion */
-    void (*cfunc)(lat_vm*);  /**< valor funcion C */
+    hash_map* nombre;   //< nombre del objeto
+    char* c;            //< valor literal
+    long i;             //< valor entero
+    double d;           //< valor decimal
+    char* str;          //< valor cadena
+    bool b;             //< valor logico
+    lista* lista;        //< valor de la lista
+    hash_map* dict;     //< valor del diccionario
+    void* func;         //< valor funcion
+    void (*cfunc)(lat_vm*);  //< valor funcion C
 } lat_datos_objeto;
 
 /** \brief Objeto
@@ -182,7 +182,8 @@ lat_objeto* lat_logico_nuevo(lat_vm* vm, bool val);
   * \param l: Apuntador a un nodo de la lista
   * \return lat_objeto: Apuntador al objeto creado
   */
-lat_objeto* lat_lista_nueva(lat_vm* vm, list_node* l);
+lat_objeto* lat_lista_nueva(lat_vm* vm, lista* l);
+//lat_objeto* lat_lista_nueva(lat_vm* vm, list_node* l);
 
 /** \brief Crea un objeto funcion
   *
@@ -217,7 +218,8 @@ lat_objeto* lat_clonar_objeto(lat_vm* vm, lat_objeto* o);
   * \param vm: Intancia de la maquina virtual
   * \param l: Apuntador al nodo de la lista
   */
-list_node* lat_clonar_lista(lat_vm* vm, list_node* l);
+lista* lat_clonar_lista(lat_vm* vm, lista* l);
+//list_node* lat_clonar_lista(lat_vm* vm, list_node* l);
 
 /** \brief Clona (copia) una tabla hash
   *
@@ -266,6 +268,6 @@ bool lat_obtener_logico(lat_objeto* o);
   * \param o: Apuntador al objeto
   * \return list_node: Apuntador al nodo de la lista
   */
-list_node* lat_obtener_lista(lat_objeto* o);
+lista* lat_obtener_lista(lat_objeto* o);
 
 #endif // !_OBJECT_H_

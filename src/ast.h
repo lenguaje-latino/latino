@@ -60,10 +60,8 @@ typedef struct
     {
         int b;  /**< Logico */
         long i; /**< Entero */
-        double d;   /**< Decimal */
-        char *c;    /**< Literal */
-        char *s;    /**< Cadena */
-        void *f;    /**< Funcion */
+        double d;   /**< Decimal */        
+        char *s;    /**< Cadena */        
     } v;
 } nodo_valor;
 

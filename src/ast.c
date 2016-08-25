@@ -197,7 +197,7 @@ ast *nodo_nuevo_literal(char *c, int num_linea, int num_columna)
     nodo_valor *val = (nodo_valor*)__memoria_asignar(sizeof(nodo_valor));
     val->t = VALOR_LITERAL;
     a->valor = val;
-    a->valor->v.c = __str_analizar(c, strlen(c));
+    a->valor->v.s = __str_analizar(c, strlen(c));
     a->valor->es_constante = false;
     a->valor->num_linea = num_linea;
     a->valor->num_columna = num_columna;
@@ -400,7 +400,7 @@ static int nodo_analizar(lat_vm *vm, ast *node, lat_bytecode *bcode, int i)
         //TODO: Incluir rutas con punto ej. incluir "lib.modulos.myModulo"
         char* archivo = node->l->valor->v.s;
         lat_objeto* mod = lat_cadena_nueva(vm, archivo);
-        if (!__lista_existe_dato(vm->modulos, (void*)mod))
+        if (!__lista_contiene_valor(vm->modulos, (void*)mod))
         {
             //encontrar el modulo en la ruta actual
             char dir_actual[MAX_PATH_LENGTH];
@@ -413,7 +413,7 @@ static int nodo_analizar(lat_vm *vm, ast *node, lat_bytecode *bcode, int i)
             }
             if (__io_es_legible(dir_actual))
             {
-                __lista_agregar(vm->modulos, mod);
+                __lista_apilar(vm->modulos, mod);
                 pn(vm, lat_analizar_archivo(dir_actual));
             }
             else
@@ -430,7 +430,7 @@ static int nodo_analizar(lat_vm *vm, ast *node, lat_bytecode *bcode, int i)
                     }
                     if (__io_es_legible(latino_lib))
                     {
-                        __lista_agregar(vm->modulos, mod);
+                        __lista_apilar(vm->modulos, mod);
                         pn(vm, lat_analizar_archivo(latino_lib));
                     }
                 }
@@ -520,7 +520,7 @@ static int nodo_analizar(lat_vm *vm, ast *node, lat_bytecode *bcode, int i)
     break;
     case NODO_LITERAL:
     {
-        lat_objeto *ret = lat_literal_nuevo(vm, node->valor->v.c);
+        lat_objeto *ret = lat_literal_nuevo(vm, node->valor->v.s);
         ret->num_linea = node->valor->num_linea;
         ret->num_columna = node->valor->num_columna;
         dbc(OP_STORELIT, 255, 0, ret);
@@ -710,7 +710,8 @@ static int nodo_analizar(lat_vm *vm, ast *node, lat_bytecode *bcode, int i)
         {
             dbc(OP_LOCALNS, 1, 0, NULL);
             dbc(OP_POP, 2, 0, NULL);
-            lat_objeto *ret = lat_clonar_objeto(vm, lat_cadena_nueva(vm, node->l->valor->v.s));
+            //lat_objeto *ret = lat_clonar_objeto(vm, lat_cadena_nueva(vm, node->l->valor->v.s));
+            lat_objeto *ret = lat_cadena_nueva(vm, node->l->valor->v.s);
             dbc(OP_SET, 1, 2, ret);
 #if DEPURAR_AST
             printf("LOCALNS R1\n");
@@ -818,8 +819,10 @@ static int nodo_analizar(lat_vm *vm, ast *node, lat_bytecode *bcode, int i)
         {
             pn(vm, node->r);
             dbc(OP_LISTGETITEM, 255, 3, NULL);
+            dbc(OP_PUSH, 255, 0, NULL);
 #if DEPURAR_AST
             printf("LISTGETITEM R55 R3\n");
+            printf("PUSH R55\n");
 #endif
         }
     }
