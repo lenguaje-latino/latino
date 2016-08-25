@@ -45,8 +45,8 @@ void __lista_apilar(lista *list, void *value)
         list->ultimo = node;
     }
     list->longitud++;
-error:
-    return;
+//error:
+//    return;
 }
 
 void *__lista_desapilar(lista *list)
@@ -69,8 +69,8 @@ void __lista_insertar_inicio(lista *list, void *value)
         list->primero = node;
     }
     list->longitud++;
-error:
-    return;
+//error:
+//    return;
 }
 
 void *__lista_extraer_inicio(lista *list)
@@ -101,7 +101,7 @@ void *__lista_eliminar_elemento(lista *list, lista_nodo *node)
     result = node->valor;
     free(node);
 
-error:
+//error:
     return result;
 }
 
@@ -128,6 +128,7 @@ char* __lista_a_cadena(lista* list)
         }
     }
     strcat(valor, "]");
+    __memoria_reasignar(valor, strlen(valor));
     return valor;
 }
 

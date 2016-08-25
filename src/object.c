@@ -87,6 +87,7 @@ char* __objeto_a_cadena(lat_objeto* in)
     {
         //__imprimir_diccionario(vm, in->data.dict);
     }
+    __memoria_reasignar(valor, strlen(valor));
     return valor;
 }
 
