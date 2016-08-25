@@ -1,27 +1,26 @@
-####################################################################
-#test coverage para variables
-####################################################################
+escribir("--------------------------------------------------------")
+escribir("test coverage para variables")
+escribir("--------------------------------------------------------")
 l=cierto
 escribir(l)
 e=10
 escribir(e)
 d=1.5
 escribir(d)
-c='a'
-escribir(c)
 s="hola latino"
 escribir(s)
 s='ahora esta es una literal "hola latino"'
 escribir(s)
 PI=3.1416
+escribir(PI)
 
-####################################################################
-#test coverage para expresiones
-####################################################################
+escribir("--------------------------------------------------------")
+escribir("test coverage para expresiones")
+escribir("--------------------------------------------------------")
 i = 1
 d = 10.05
 
-escribir("############## suma ###############")
+escribir("sumar---------------------------------------------------")
 #entero + entero
 escribir(i + i)  #a 1 se le suma 1 da como resultado 2
 
@@ -34,7 +33,7 @@ escribir(d + i) #da como resultado el decimal 11.05
 #decimal + decimal
 escribir(d + d) #da como resultado el decimal 20.1
 
-escribir("############## resta ###############")
+escribir("restar--------------------------------------------------")
 #entero - entero
 escribir(i - (-1))  #a 1 se le resta -1 da como resultado 2
 
@@ -47,7 +46,7 @@ escribir(d - i) #da como resultado el decimal 9.05
 #decimal - decimal
 escribir(d - 0.05) #da como resultado el decimal 10
 
-escribir("############## multiplicacion ###############")
+escribir("multiplicar---------------------------------------------")
 #entero * entero
 escribir(i * i) #da como resultado el decimal 1
 
@@ -60,7 +59,7 @@ escribir(d * i) #da como resultado el decimal 10.05
 #decimal * decimal
 escribir(d * 0.5) #da como resultado el decimal 5.025
 
-escribir("############## division ###############")
+escribir("dividir-------------------------------------------------")
 #entero / entero
 escribir(i / i) #da como resultado el entero 1
 
@@ -73,7 +72,7 @@ escribir(d / i) #da como resultado el entero 10
 #decimal / decimal
 escribir(d / 0.5) #da como resultado el decimal 20.1
 
-escribir("############## modulo ###############")
+escribir("modulo--------------------------------------------------")
 #entero % entero
 escribir(i % i) #da como resultado el entero 0
 
@@ -81,10 +80,9 @@ i = 21
 #entero % decimal
 escribir(i % d) #da como resultado el entero 1
 
-
-####################################################################
-#test coverage para "operadores de comparacion en latino"
-####################################################################
+escribir("--------------------------------------------------------")
+escribir("test coverage para operadores de comparacion")
+escribir("--------------------------------------------------------")
 l = verdadero
 e = 10
 d = 3.14
@@ -95,16 +93,16 @@ escribir("comparador de negacion !")
 escribir("no falso: " . !falso)
 #escribir(" no falso: " . !falso)
 escribir("no verdadero: " . !verdadero)
-#comparador de IGUAL_LOGICO ==
-escribir("comparador de IGUAL_LOGICO ==")
+#comparador de igualdad ==
+escribir("comparador de igualdad ==")
 escribir(l . " == falso: " . l == falso)
 escribir(e . " == 10: " . e == 10)
 escribir(d . " == 3.0: " . d == 3.0)
 escribir(lit . " == 'hola': " . lit == 'hola')
 escribir(cad . " == esto es una 'cadena': " . cad == "esto es una 'cadena'")
 escribir("----------------------------------------------------------------")
-#comparador de desIGUAL_LOGICO !=
-escribir("comparador de desIGUAL_LOGICO !=")
+#comparador de desigualdad !=
+escribir("comparador de desigualdad !=")
 escribir(l . " != falso: " . l != falso)
 escribir(e . " != 10: " . e != 10)
 escribir(d . " != 3.0: " . d != 3.0)
@@ -139,9 +137,9 @@ escribir(d . " >= 3.0: " . d >= 3.0)
 escribir(lit . " >= 'hola': " . lit >= 'hola')
 escribir(cad . " >= esto es una 'cadena': " . cad >= "esto es una 'cadena'")
 
-####################################################################
-#test coverage para "operadores logicos en Latino"
-####################################################################
+escribir("--------------------------------------------------------")
+escribir("test coverage para operadores logicos")
+escribir("--------------------------------------------------------")
 v = verdadero
 f = falso
 #&& y (and) logico
@@ -159,10 +157,9 @@ escribir("verdadero o falso: " . v || f)
 escribir("falso o verdadero: " . f || v)
 escribir("verdadero o verdadero: " . v || v)
 
-
-####################################################################
-#test coverage para "si"
-####################################################################
+escribir("--------------------------------------------------------")
+escribir("test coverage para sentencia si")
+escribir("--------------------------------------------------------")
 num = 10
 si num < 0
     escribir("es negativo")
@@ -170,12 +167,25 @@ sino
     escribir("es positivo")
 fin
 
-####################################################################
-#test coverage para "mientras"
-####################################################################
-escribir("------------------------------")
-escribir("---condicion sin parentesis---")
-escribir("------------------------------")
+escribir("--------------------------------------------------------")
+escribir("test coverage para sentencia elegir")
+escribir("--------------------------------------------------------")
+c = 'a'
+## multiples casos con opcion defecto
+elegir(c)
+caso 'x':
+    escribir("c vale x")
+caso 'a':
+    escribir("c vale a")
+caso 'z':
+    escribir("c vale z")
+defecto:
+    escribir("default")
+fin
+
+escribir("--------------------------------------------------------")
+escribir("test coverage para sentencia mientras")
+escribir("--------------------------------------------------------")
 i = 0
 mientras i < 10
     escribir(i)
@@ -193,30 +203,30 @@ mientras i<=10
   i++
 fin
 
-####################################################################
-#test coverage para "hacer"
-####################################################################
+escribir("--------------------------------------------------------")
+escribir("test coverage para sentencia hacer")
+escribir("--------------------------------------------------------")
 i = 0
 hacer
     escribir(i)
     i++
 cuando i < 10
 
-####################################################################
-#test coverage para "desde" y "decremento"
-####################################################################
+escribir("--------------------------------------------------------")
+escribir("test coverage para sentencia desde")
+escribir("--------------------------------------------------------")
 escribir("del 1 al 10:")
 desde(i=1; i<=10; i++)
     escribir(i)
 fin
-escribir("escribir de dos en dos:")
+escribir("escribir de dos en dos descendente")
 desde(i=10; i>0; i=i-2)
     escribir(i)
 fin
 
-####################################################################
-#test coverage para "funciones"
-####################################################################
+escribir("--------------------------------------------------------")
+escribir("test coverage para funciones")
+escribir("--------------------------------------------------------")
 funcion promedio(a,b)
     retorno (a+b)/2
 fin
@@ -237,24 +247,25 @@ funcion min(a,b)
     fin
 fin
 
-escribir("test de funciones promedio, max y min")
-escribir(promedio(3, 5)) #4
-escribir(max(3, 5)) #5
-escribir(min(3, 5)) #3
+escribir("promedio de 3 y 5: " . promedio(3, 5)) #4
+escribir("maximo de 3 y 5: " . max(3, 5)) #5
+escribir("minimo de 3 y 5: " . min(3, 5)) #3
 
-####################################################################
-#test coverage para "escribir_archivo"
-####################################################################
-escribir('test coverage para "escribir_archivo"')
+escribir("--------------------------------------------------------")
+escribir("test coverage para escritura / lectura de archivos")
+escribir("--------------------------------------------------------")
+
 s = "funcion sumatoria(a, b)
   retorno (a + b)
 fin"
-
 escribir_archivo("modulo.lat", s)
+
+s = leer_archivo("modulo.lat")
+escribir(s)
 
 ####################################################################
 #test coverage para "incluir"
 ####################################################################
-#incluir "modulo"
-#r = sumatoria(2, 3)
-#escribir(r)
+incluir("modulo")
+r = sumatoria(2, 3)
+escribir(r)

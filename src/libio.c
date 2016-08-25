@@ -77,7 +77,8 @@ void lat_leer_archivo(lat_vm *vm)
         fseek(fp, 0, SEEK_END);
         int fsize = ftell(fp);
         fseek(fp, 0, SEEK_SET);
-        buf = calloc(fsize, 1);
+        //buf = calloc(fsize, 1);
+        buf = calloc(1, fsize);
         size_t newSize = fread(buf, sizeof(char), fsize, fp);
         if (buf == NULL)
         {
