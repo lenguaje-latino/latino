@@ -1,3 +1,2 @@
 contenido = leer_archivo("prueba.txt")
-
 escribir(contenido)

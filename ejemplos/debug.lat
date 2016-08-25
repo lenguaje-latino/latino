@@ -4,6 +4,10 @@ Menu propiedades del proyecto-> Debugging -> Command Arguments. Agregar
 $(SolutionDir)..\ejemplos\debug.lat
 */
 
-l1 = [1,2,3]
-escribir("salida:")
-escribir("l1 " . l1)
+funcion sumar(a, b)
+  retorno a+b
+fin
+x=sumar(1,2)
+y=sumar(3,4)
+z=x+y
+escribir("z:" . z)

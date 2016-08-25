@@ -1079,7 +1079,7 @@ static int insert_char(struct current *current, int pos, int ch)
 /**
  * Captures up to 'n' characters starting at 'pos' for the cut buffer.
  *
- * This __str_reemplazars any existing characters in the cut buffer.
+ * This replace any existing characters in the cut buffer.
  */
 static void capture_chars(struct current *current, int pos, int n)
 {

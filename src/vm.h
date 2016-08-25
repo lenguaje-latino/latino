@@ -34,8 +34,8 @@ THE SOFTWARE.
 typedef struct lat_vm lat_vm;
 
 #include "object.h"
-#include "liblist.h"
 #include "libdict.h"
+#include "liblist.h"
 #include "libstring.h"
 
 /**\brief Bandera para debuguear las instrucciones que se generan con el AST */
@@ -95,19 +95,20 @@ typedef struct lat_function
 /**\brief Define la maquina virtual (MV) */
 typedef struct lat_vm
 {
-    list_node* pila;     /**< pila de la maquina virtual */
-    list_node* modulos;     /**< modulos importados en la MV */
-    list_node* todos_objetos;     /**< objetos creados dinamicamente en la MV */
-    list_node* basurero_objetos;     /**< objetos listos para liberar por el colector de basura */
-    lat_objeto* registros[256];    /**< Registros de la MV */
-    lat_objeto* contexto_pila[256];   /**< Arreglo para el contexto actual */
-    lat_objeto* objeto_verdadero;   /**< Valor logico verdadero */
-    lat_objeto* objeto_falso;   /**< Valor logico falso */
-    size_t memoria_usada;      /**< Tamanio de memoria creado dinamicamente */
-    int apuntador_pila;      /**< Apuntador de la pila */
-    int apuntador_base;   /**< Apuntador de marco o frame */
-    int apuntador_instruccion;   /**< Apuntador a la siguiente instruccion */
-    bool REPL;  /**< Indica si esta corriendo REPL */
+    lista* pila;     //< pila de la maquina virtual
+    lista* modulos;     //< modulos importados en la MV
+    lista* todos_objetos;     //< objetos creados dinamicamente en la MV
+    lista* basurero_objetos;     //< objetos listos para liberar por el colector de basura
+    lat_objeto* registros[256];    //< Registros de la MV
+    lat_objeto* contexto_pila[256];   //< Arreglo para el contexto actual
+    lat_objeto* objeto_verdadero;   //< Valor logico verdadero
+    lat_objeto* objeto_falso;   //< Valor logico falso
+    size_t memoria_usada;      //< Tamanio de memoria creado dinamicamente
+    int apuntador_pila;      //< Apuntador de la pila
+    int apuntador_base;   //< Apuntador de marco o frame
+    int apuntador_instruccion;   //< Apuntador a la siguiente instruccion    
+    bool REPL;  //< Indica si esta corriendo REPL
+    int num_callf;
 } lat_vm;
 
 /**\brief Crea la maquina virtual (MV)
@@ -196,7 +197,8 @@ lat_objeto* lat_definir_cfuncion(lat_vm* vm, void (*function)(lat_vm* vm));
   *\param vm: Apuntador a la MV
   *\param l: Apuntador a la lista
   */
-void __imprimir_lista(lat_vm* vm, list_node* l);
+void __imprimir_lista(lat_vm* vm, lista* l);
+//void __imprimir_lista(lat_vm* vm, list_node* l);
 
 /**\brief Envia a consola el contenido del diccionario
   *
@@ -210,12 +212,6 @@ void __imprimir_diccionario(lat_vm* vm, hash_map* d);
   *\param vm: Apuntador a la MV
   */
 void lat_imprimir(lat_vm* vm);
-
-/**\brief Clona un objeto
-  *
-  *\param vm: Apuntador a la MV
-  */
-void lat_clonar(lat_vm* vm);
 
 /**\brief Operador +
   *
@@ -384,4 +380,7 @@ lat_bytecode lat_bc(lat_ins i, int a, int b, void* meta);
   */
 void lat_llamar_funcion(lat_vm* vm, lat_objeto* func);
 
+lat_objeto* __lista_obtener_elemento(lista* list, int pos);
+
+void lat_agregar(lat_vm *vm);
 #endif //_VM_H_
