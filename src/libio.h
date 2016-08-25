@@ -62,6 +62,11 @@ void lat_leer_archivo(lat_vm *vm);
   */
 void lat_escribir_archivo(lat_vm *vm);
 
+/** Ejecuta un comando en el sistema actual ej. "cat file.lat"
+  *
+  * \param vm: Máquina virtual de latino
+  *
+  */
 void lat_sistema(lat_vm *vm);
 
 #endif /* !_LIBIO_H_ */

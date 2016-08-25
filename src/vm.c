@@ -47,10 +47,10 @@ static void registrar_cfuncion(lat_vm* vm, char *palabra_reservada, void (*funct
 lat_vm* lat_crear_maquina_virtual()
 {
     lat_vm* vm = (lat_vm*)__memoria_asignar(sizeof(lat_vm));
-    vm->pila = __lista_nuevo();
-    vm->todos_objetos = __lista_nuevo();
-    vm->basurero_objetos = __lista_nuevo();
-    vm->modulos = __lista_nuevo();
+    vm->pila = __lista_crear();
+    vm->todos_objetos = __lista_crear();
+    vm->basurero_objetos = __lista_crear();
+    vm->modulos = __lista_crear();
     vm->memoria_usada = 0;
     vm->objeto_verdadero = lat_logico_nuevo(vm, true);
     vm->objeto_falso = lat_logico_nuevo(vm, false);
@@ -67,7 +67,7 @@ lat_vm* lat_crear_maquina_virtual()
      * 50 conversion de tipos de dato
      * 60
      * 70
-     * 9999 otras funciones // a crear una categoria para ellas
+     * 99 otras funciones // a crear una categoria para ellas
      *
      */
 
@@ -114,8 +114,7 @@ lat_vm* lat_crear_maquina_virtual()
     registrar_cfuncion(vm, "comparar", lat_comparar);
     registrar_cfuncion(vm, "concatenar", lat_concatenar);
     registrar_cfuncion(vm, ".", lat_concatenar);
-    registrar_cfuncion(vm, "contiene", lat_contiene);
-    registrar_cfuncion(vm, "copiar", lat_copiar);
+    registrar_cfuncion(vm, "contiene", lat_contiene);    
     registrar_cfuncion(vm, "termina_con", lat_termina_con);
     registrar_cfuncion(vm, "es_igual", lat_es_igual);
     registrar_cfuncion(vm, "indice", lat_indice);
@@ -138,7 +137,7 @@ lat_vm* lat_crear_maquina_virtual()
     registrar_cfuncion(vm, "ejecutar", lat_ejecutar);
     registrar_cfuncion(vm, "ejecutar_archivo", lat_ejecutar_archivo);
 
-    /* 40 entrada / salida */
+    /*40 entrada / salida */
     registrar_cfuncion(vm, "leer", lat_leer);
     registrar_cfuncion(vm, "escribir", lat_imprimir);
     registrar_cfuncion(vm, "leer_archivo", lat_leer_archivo);
@@ -151,6 +150,9 @@ lat_vm* lat_crear_maquina_virtual()
     registrar_cfuncion(vm, "entero", lat_entero);
     registrar_cfuncion(vm, "decimal", lat_decimal);
     registrar_cfuncion(vm, "cadena", lat_cadena);
+
+    /*60 funciones para listas*/
+    registrar_cfuncion(vm, "agregar", lat_agregar);
 
     /*99 otras funciones */
     registrar_cfuncion(vm, "cadena", lat_cadena);
@@ -165,60 +167,17 @@ lat_vm* lat_crear_maquina_virtual()
 
 void lat_apilar(lat_vm* vm, lat_objeto* o)
 {
-    __lista_agregar(vm->pila, (void*)o);
+    __lista_apilar(vm->pila, (void*)o);
 }
 
 lat_objeto* lat_desapilar(lat_vm* vm)
 {
-    list_node* n = vm->pila;
-    if (n->data == NULL)
-    {
-        lat_fatal_error("Pila vacia");
-    }
-    else
-    {
-        list_node *curr = n;
-        lat_objeto *ret;
-        if(curr->next->data == NULL)
-        {
-            //primer nodo
-            ret = (lat_objeto*)curr->data;
-            curr = curr->next;
-            vm->pila = curr;
-            return ret;
-        }
-        while (curr->next != NULL && curr->next->data != NULL)
-        {
-            curr = curr->next;
-        }
-        ret = (lat_objeto*)curr->data;
-        curr->prev->next = curr->next;
-        curr->next->prev = curr->prev;
-        return ret;
-    }
-    return NULL;
+    return (lat_objeto*)__lista_desapilar(vm->pila);    
 }
 
 void lat_apilar_lista(lat_objeto* lista, lat_objeto* o)
 {
-    __lista_agregar(lista->data.lista, (void*)o);
-}
-
-lat_objeto* lat_desapilar_lista(lat_objeto* lista)
-{
-    list_node* n = ((list_node*)lista)->next;
-    if (n->data == NULL)
-    {
-        lat_fatal_error("Lista vacia");
-    }
-    else
-    {
-        n->prev->next = n->next;
-        n->next->prev = n->prev;
-        lat_objeto* ret = (lat_objeto*)n->data;
-        return ret;
-    }
-    return NULL;
+    __lista_apilar(lista->data.lista, (void*)o);    
 }
 
 void lat_apilar_contexto(lat_vm* vm)
@@ -274,53 +233,9 @@ void lat_imprimir(lat_vm* vm)
     vm->registros[255] = in;
 }
 
-void __imprimir_lista(lat_vm* vm, list_node* l)
+void __imprimir_lista(lat_vm* vm, lista* l)
 {
     fprintf(stdout, "%s", __lista_a_cadena(l));
-}
-
-void __imprimir_diccionario(lat_vm* vm, hash_map* d)
-{
-    fprintf(stdout, "%s", "{ ");
-    if (d != NULL)
-    {
-        list_node* c;
-        for (c = (list_node*) d->buckets; c != NULL; c = c->next)
-        {
-            if (c->data != NULL)
-            {
-                lat_objeto* o = ((lat_objeto*)c->data);
-                if (o->type == T_LIST)
-                {
-                    __imprimir_lista(vm, o->data.lista);
-                    if (c->next->data)
-                    {
-                        fprintf(stdout, "%s", ", ");
-                    }
-                }
-                if (o->type == T_DICT)
-                {
-                    __imprimir_diccionario(vm, o->data.dict);
-                    if (c->next->data)
-                    {
-                        fprintf(stdout, "%s", ", ");
-                    }
-                }
-                else
-                {
-                    if (o->type)
-                    {
-                        __imprimir_objeto(vm, o);
-                        if (c->next->data)
-                        {
-                            fprintf(stdout, "%s", ", ");
-                        }
-                    }
-                }
-            }
-        }
-    }
-    fprintf(stdout, "%s", " }");
 }
 
 void lat_ejecutar(lat_vm *vm)
@@ -355,12 +270,6 @@ void lat_ejecutar_archivo(lat_vm *vm)
         lat_llamar_funcion(vm, func);
         lat_apilar(vm, vm->registros[255]);
     }
-}
-
-void lat_clonar(lat_vm* vm)
-{
-    lat_objeto* ns = lat_desapilar(vm);
-    vm->registros[255] = lat_clonar_objeto(vm, ns);
 }
 
 void lat_sumar(lat_vm* vm)
@@ -614,44 +523,6 @@ lat_bytecode lat_bc(lat_ins i, int a, int b, void* meta)
     return ret;
 }
 
-void lista_modificar_elemento(list_node* l, void* data, int pos)
-{
-    list_node* c;
-    int i = -1;
-    if (pos < 0 || pos >= __lista_longitud(l))
-    {
-        lat_fatal_error("Indice fuera de rango");
-    }
-    for (c = l; c->next != NULL; c = c->next)
-    {
-        if (i == pos)
-        {
-            c->data = data;
-            return;
-        }
-        i++;
-    }
-}
-
-lat_objeto* lista_obtener_elemento(list_node* l, int pos)
-{
-    list_node* c;
-    int i = -1;
-    if (pos < 0 || pos >= __lista_longitud(l))
-    {
-        lat_fatal_error("Indice fuera de rango");
-    }
-    for (c = l; c->next != NULL; c = c->next)
-    {
-        if (i == pos)
-        {
-            return (lat_objeto *)c->data;
-        }
-        i++;
-    }
-    return NULL;
-}
-
 void lat_llamar_funcion(lat_vm* vm, lat_objeto* func)
 {
     if (func->type == T_FUNC)
@@ -721,7 +592,8 @@ void lat_llamar_funcion(lat_vm* vm, lat_objeto* func)
                 vm->registros[cur.b] = lat_obtener_contexto_objeto(contexto, nombre);
                 if(vm->registros[cur.b]->type == T_FUNC)
                 {
-                    if(__lista_longitud(vm->pila) < nombre->num_param)
+                    //if(__lista_longitud(vm->pila) < nombre->num_param)
+                    if(__lista_longitud(vm->pila) < nombre->num_param)                    
                     {
                         //TODO: Agregar manejo de excepciones
                         lat_fatal_error("Linea %d, %d: %s '%s'", nombre->num_linea, nombre->num_columna,  "Numero incorrecto de parametros en funcion\n", nombre->data.str);
@@ -739,7 +611,8 @@ void lat_llamar_funcion(lat_vm* vm, lat_objeto* func)
             }
             break;
             case OP_SET:
-                lat_asignar_contexto_objeto(vm->registros[cur.a], lat_clonar_objeto(vm, ((lat_objeto*)cur.meta)), vm->registros[cur.b]);
+                //lat_asignar_contexto_objeto(vm->registros[cur.a], lat_clonar_objeto(vm, ((lat_objeto*)cur.meta)), vm->registros[cur.b]);
+                lat_asignar_contexto_objeto(vm->registros[cur.a], (lat_objeto*)cur.meta, vm->registros[cur.b]);
 #if DEPURAR_MV
                 printf("SET ");
                 __imprimir_objeto(vm, vm->registros[cur.a]);
@@ -802,13 +675,14 @@ void lat_llamar_funcion(lat_vm* vm, lat_objeto* func)
                 break;
             case OP_STORELIST:
             {
-                lat_objeto* lst = lat_lista_nueva(vm, __lista_nuevo());
+                lat_objeto* lst = lat_lista_nueva(vm, __lista_crear());
+                //lat_objeto* lst = lat_lista_nueva(vm, __lista_nuevo());
                 long num_elementos = vm->registros[0]->data.i;
-                lat_objeto* tmp = NULL;
-                int i=0;
-                for(i; i < num_elementos;i++){
+                lat_objeto* tmp = NULL;                
+                for(int c=0; c < num_elementos;c++){
                     tmp = lat_desapilar(vm);
-                    __lista_agregar(lst->data.lista, tmp);
+                    __lista_apilar(lst->data.lista, tmp);
+                    //__lista_agregar(lst->data.lista, tmp);
                 }
                 vm->registros[cur.a] = lst;
 #if DEPURAR_MV
@@ -824,7 +698,14 @@ void lat_llamar_funcion(lat_vm* vm, lat_objeto* func)
             {
                 lat_objeto *l = vm->registros[cur.a];
                 lat_objeto *pos = vm->registros[cur.b];
-                vm->registros[cur.a] = lista_obtener_elemento(l->data.lista, pos->data.i);
+                vm->registros[cur.a] = __lista_obtener_elemento(l->data.lista, pos->data.i);                
+#if DEPURAR_MV
+                printf("LISTGETITEM ");
+                __imprimir_objeto(vm, vm->registros[cur.a]);
+                printf("\t%ld\n", pos->data.i);
+                __imprimir_lista(vm, vm->pila);
+                printf("\n");
+#endif
             }
             break;
             case OP_LISTSETITEM:
@@ -835,7 +716,7 @@ void lat_llamar_funcion(lat_vm* vm, lat_objeto* func)
                 {
                     lat_fatal_error("%s", "la posicion de la lista no es un entero");
                 }
-                lista_modificar_elemento(l->data.lista, (lat_objeto*)vm->registros[cur.b], pos->data.i);
+                __lista_modificar_elemento(l->data.lista, (lat_objeto*)vm->registros[cur.b], pos->data.i);
             }
             break;
             case OP_STOREDICT:
@@ -923,8 +804,15 @@ void lat_llamar_funcion(lat_vm* vm, lat_objeto* func)
                     __imprimir_lista(vm, vm->pila);
                     printf("\n");
 #endif
-                    lat_objeto* fun = (lat_objeto*) vm->registros[cur.a];
+                    lat_objeto* fun = (lat_objeto*) vm->registros[cur.a];                    
+                    vm->num_callf++;
+                    if(vm->num_callf >= MAX_CALL_FUNCTION){
+                        lat_fatal_error("Maximo numero de llamadas recursivas a funcion");
+                    }
+                    //printf("num llamadas a funcion: %i\n", vm->num_callf);
                     lat_llamar_funcion(vm, fun);
+                    vm->num_callf--;
+                    //printf("num llamadas a funcion: %i\n", vm->num_callf);
                 }
                 break;
             case OP_NOT:
@@ -1209,4 +1097,28 @@ void lat_salir(lat_vm* vm)
 {
     vm->registros[255] = lat_entero_nuevo(vm, 0L);
     exit(0);
+}
+
+lat_objeto* __lista_obtener_elemento(lista* list, int pos)
+{
+    if (pos < 0 || pos >= __lista_longitud(list))
+    {
+        lat_fatal_error("Indice fuera de rango");
+    }
+    int i = 0;
+    LIST_FOREACH(list, primero, siguiente, cur) {
+        if (i == pos)
+        {
+            return (lat_objeto *)cur->valor;
+        }
+        i++;
+    }
+    return NULL;
+}
+
+void lat_agregar(lat_vm *vm)
+{
+    lat_objeto *elem = lat_desapilar(vm);
+    lat_objeto *lst = lat_desapilar(vm);
+    __lista_apilar(lst->data.lista, elem);    
 }

@@ -117,6 +117,9 @@ extern int parse_silent;
 /** Tamanio maximo de la entrada por teclado */
 #define MAX_INPUT_SIZE 512
 
+/** Maximo numero de llamadas a funcion */
+#define MAX_CALL_FUNCTION 16
+
 /** Interface con flex */
 typedef struct YYLTYPE
 {

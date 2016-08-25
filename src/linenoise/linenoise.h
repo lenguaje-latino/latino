@@ -83,7 +83,7 @@ int linenoiseHistoryAdd(const char *line);
 
 /*
  * Sets the maximum length of the command history, in lines.
- * If the history is currently longer, it will be __str_quitar_espaciosmed,
+ * If the history is currently longer, it will be trimmed,
  * retaining only the most recent entries. If len is 0 or less
  * then this function does nothing.
  */
@@ -101,7 +101,7 @@ int linenoiseHistoryGetMaxLen(void);
 int linenoiseHistorySave(const char *filename);
 
 /*
- * __str_reemplazars the current history with the contents
+ * replce the current history with the contents
  * of the given file.  Returns 0 on success.
  */
 int linenoiseHistoryLoad(const char *filename);
