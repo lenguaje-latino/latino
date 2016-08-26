@@ -6,7 +6,7 @@
 # 5! = 1 * 2 * 3 * 4 * 5
 # 5! = 120
 # De manera fundamental, el factorial de n representa el número de formas
-# disENTEROas de ordenar n objetos disENTEROos (elementos sin repetición)
+# distintas de ordenar n objetos distintos (elementos sin repetición)
 ###########################################################################
 
 #define la funcion para calcular el factorial de un numero

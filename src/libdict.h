@@ -24,8 +24,6 @@ THE SOFTWARE.
 #ifndef _LIB_DICT_H_
 #define _LIB_DICT_H_
 
-typedef struct list_node list_node;
-
 #include "liblist.h"
 
 /**\brief Valor hash */
@@ -35,10 +33,10 @@ typedef struct hash_val
     void* val;    /**< Valor */
 } hash_val;
 
-/**\brief Tabla hash */
+/**\brief Mapa de valores hash */
 typedef struct hash_map
 {
-    list_node* buckets[256];  /**< Arreglo de valores hash */
+    lista* buckets[256];  //< Arreglo de listas
 } hash_map;
 
 /**
@@ -46,7 +44,7 @@ typedef struct hash_map
   *
   *\return hash_map*: Apuntador a la tabla creada
   */
-hash_map* __dic_nuevo();
+hash_map* __dic_crear();
 
 /**\brief Crea un hash de una cadena
   *
