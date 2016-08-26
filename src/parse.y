@@ -225,6 +225,8 @@ declaration
     : IDENTIFICADOR '=' expression { $$ = nodo_nuevo_asignacion($3, $1); }
     | IDENTIFICADOR '=' ternary_expression { $$ = nodo_nuevo_asignacion($3, $1); }
     | CONSTANTE '=' expression { $$ = nodo_nuevo_asignacion($3, $1); }
+    | IDENTIFICADOR '[' ENTERO ']' '=' expression { $$ = nodo_nuevo_asignacion_lista_elem($6, $1, $3); }
+    | IDENTIFICADOR '[' IDENTIFICADOR ']' '=' expression { $$ = nodo_nuevo_asignacion_lista_elem($6, $1, $3); }
     | IDENTIFICADOR CONCATENAR_IGUAL expression { $$ = nodo_nuevo_asignacion((nodo_nuevo_operador(NODO_CONCATENAR, $1, $3)), $1); }
     | incdec_statement
     ;
@@ -336,6 +338,8 @@ list_get_item:
       IDENTIFICADOR '[' CADENA ']' { $$ = nodo_nuevo(NODO_DICC_OBTENER_ELEMENTO, $3, $1); }
     | IDENTIFICADOR '[' LITERAL ']' { $$ = nodo_nuevo(NODO_DICC_OBTENER_ELEMENTO, $3, $1); }
     | IDENTIFICADOR '[' ENTERO ']' { $$ = nodo_nuevo(NODO_LISTA_OBTENER_ELEMENTO, $3, $1); }
+    | IDENTIFICADOR '[' LITERAL ']' '=' expression { $$ = nodo_nuevo_asignacion_dicc_elem($6, $1, $3); }
+    | IDENTIFICADOR '[' CADENA ']' '=' expression { $$ = nodo_nuevo_asignacion_dicc_elem($6, $1, $3); }
     | IDENTIFICADOR '[' IDENTIFICADOR ']' { $$ = nodo_nuevo(NODO_LISTA_OBTENER_ELEMENTO, $3, $1); }
     ;
 

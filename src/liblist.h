@@ -25,55 +25,139 @@ THE SOFTWARE.
 #ifndef _LIBLIST_H_
 #define _LIBLIST_H_
 
-#include "latino.h"
-#include "vm.h"
+/**\brief Almacena el valor del objeto */
+typedef struct lista_nodo {
+    struct lista_nodo *siguiente;
+    struct lista_nodo *anterior;
+    void *valor;
+} lista_nodo;
 
-/** \brief Nodo de una lista */
-typedef struct list_node
-{
-    struct list_node* prev;   /**< Nodo previo*/
-    struct list_node* next;   /**< Nodo siguiente*/
-    void* data;   /**< Informacion del nodo*/
-} list_node;
+/**\brief Lista de objetos */
+typedef struct lista {
+    int longitud;
+    lista_nodo *primero;
+    lista_nodo *ultimo;
+} lista;
 
-/**\brief Crear una lista vacia
+/**
+  *\brief Crea una lista
   *
-  *\return list_node: Apuntador al primer nodo de la lista
+  *\return lista*: Apuntador a la lista nueva
   */
-list_node* __lista_nuevo();
+lista *__lista_crear();
+
+/**
+  *\brief Destruye una lista 
+  * 
+  *\param list: Apuntador a la lista
+  */
+void __lista_destruir(lista *list);
+
+/**
+  *\brief Limpia una lista, libera la memoria de los elementos
+  * 
+  *\param list: Apuntador a la lista
+  */
+void __lista_limpiar(lista *list);
+
+/**
+  *\brief Limpia una lista, libera la memoria de los elementos y elimina la lista de memoria
+  * 
+  *\param list: Apuntador a la lista
+  */
+void __lista_limpiar_destruir(lista *list);
+
+/**
+  *\brief Devuelve el numero de elementos de la lista
+  * 
+  *\param list: Apuntador a la lista
+  */
+#define __lista_longitud(A) ((A)->longitud)
+
+/**
+  *\brief Devuelve el primer elemento de la lista
+  * 
+  *\param list: Apuntador a la lista
+  */
+#define __lista_primero(A) ((A)->primero != NULL ? (A)->primero->value : NULL)
+
+/**
+  *\brief Devuelve el ultimo elemento de la lista
+  * 
+  *\param list: Apuntador a la lista
+  */
+#define __lista_ultimo(A) ((A)->last != NULL ? (A)->last->value : NULL)
+
+/**
+  *\brief Inserta un elemento al final de la lista
+  *  
+  *\param list: Apuntador a la lista
+  *\param value: Objeto a insertar
+  */
+void __lista_apilar(lista *list, void *value);
+
+/**
+  *\brief Extrae el ultimo elemento de la lista
+  * 
+  *\param list: Apuntador a la lista
+  *\return void*: Apuntador al Objeto eliminado
+  */
+void *__lista_desapilar(lista *list);
+
+/**
+  *\brief Inserta un elemento al inicio de la lista
+  * 
+  *\param list: Apuntador a la lista
+  *\param value: Objeto a insertar
+  */
+void __lista_insertar_inicio(lista *list, void *value);
+
+/**
+  *\brief Extrae el primer elemento de la lista
+  * 
+  *\param list: Apuntador a la lista
+  *\return void*: Apuntador al Objeto eliminado
+  */
+void *__lista_extraer_inicio(lista *list);
+
+/**
+  *\brief Elimina un nodo de la lista
+  * 
+  *\param list: Apuntador a la lista
+  *\param node: Apuntador al nodo de la lista
+  *\return void*: Apuntador al Objeto eliminado
+  */
+void *__lista_eliminar_elemento(lista *list, lista_nodo *node);
+
+/**
+  *\brief Recorre la lista por cada elemento  
+  */
+#define LIST_FOREACH(L, S, M, V) \
+    lista_nodo *_node = NULL;\
+    lista_nodo *V = NULL;\
+    for(V = _node = L->S; _node != NULL; V = _node = _node->M)
 
 /**\brief Busca un elemento en la lista
-  *
+  * 
   *\param l: Apuntador a la lista
   *\param data: Apuntador a objeto buscado
   *\return int: Retorna 1 si se encontro el objeto 0 en caso contrario
   */
-int __lista_existe_dato(list_node* l, void* data);
+int __lista_contiene_valor(lista* l, void* data);
 
-/**\brief inserta un elemento en la lista
-  *
-  *\param l: Apuntador a la lista
-  *\param data: Apuntador a objeto
+/**\brief Devuelve la representacion en cadena de la lista
+  * 
+  *\param l: Apuntador a la lista  
+  *\return char*: La cadena que representa la lista
   */
-void __lista_agregar(list_node* l, void* data);
+char* __lista_a_cadena(lista* list);
 
-/**\brief Devuelve la longitud de la lista
-  *
+/**\brief Modifica el valor de un elemento en la lista
+  * 
   *\param l: Apuntador a la lista
-  *\return int: La longitud de la lista
+  *\param data: Apuntador a objeto a modificar
+  *\param pos: Posicion del elemento a modificar
   */
-int __lista_longitud(list_node* l);
-
-/**\brief Devuelve la representacion en cadena de una lista
-  *
-  *\param l: Apuntador a la lista
-  *\return int: La cadena de la lista
-  */
-char* __lista_a_cadena(list_node* l);
-
-/** Agrega un elemento al final de la lista
-  * \param vm: Maquina virtual de latino
- * */
-void lat_agregar(lat_vm *vm);
+void __lista_modificar_elemento(lista* list, void* data, int pos);
 
 #endif /* !_LIBLIST_H_ */

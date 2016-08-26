@@ -29,6 +29,7 @@ THE SOFTWARE.
 
 void* __memoria_asignar(size_t size)
 {
+    //printf("memoria : %zu\n", size);
     void* value = malloc(size);
     if (value == 0)
         lat_fatal_error("Memoria virtual agotada\n");
