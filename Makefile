@@ -264,6 +264,6 @@ uninstall:
 	@echo "Desinstalando latino..."
 	@echo "Localizando paquete latino..."
 	@echo -n 'Localizado en ' && whereis latino | cut -d " " -f2-
-	@cd / && find -type f -iname "latino" -exec rm -f {} \;&>/dev/null
+	@cd /usr && sudo find -type f -iname "latino" -exec rm -f {} \;&>/dev/null
 	@rm -rf $(DESTDIR)/usr/bin/latinoc
-	@echo "Done!"
+	@echo "Terminado!"
