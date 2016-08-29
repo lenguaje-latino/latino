@@ -251,3 +251,19 @@ cmake_check_build_system:
 	$(CMAKE_COMMAND) -H$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR) --check-build-system CMakeFiles/Makefile.cmake 0
 .PHONY : cmake_check_build_system
 
+tools:
+	# Bash instalacion
+	@echo -e 'Instalando latinoc...'
+	@install -d $(DESTDIR)/usr/share/latinoc
+	@install -d $(DESTDIR)/usr/bin
+	@install -v -m 777 latinoc $(DESTDIR)/usr/bin/
+	@echo -e '\e[0;32mTerminado!\e[0m'
+
+uninstall:
+	# Limpieza
+	@echo "Desinstalando latino..."
+	@echo "Localizando paquete latino..."
+	@echo -n 'Localizado en ' && whereis latino | cut -d " " -f2-
+	@cd /usr && sudo find -type f -iname "latino" -exec rm -f {} \;&>/dev/null
+	@rm -rf $(DESTDIR)/usr/bin/latinoc
+	@echo "Terminado!"
