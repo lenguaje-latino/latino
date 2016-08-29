@@ -56,6 +56,23 @@ typedef enum lat_ins
     OP_STORESTR,    /**< Almacena una cadena */
     OP_STOREBOOL,    /**< Almacena un valor logico */
     OP_STORELIST,    /**< Almacena una lista */
+    OP_UMIN,
+    OP_ADD,
+    OP_SUB,
+    OP_MUL,
+    OP_DIV,
+    OP_MOD,
+    OP_GT,
+    OP_GE,
+    OP_LT,
+    OP_LE,
+    OP_EQ,
+    OP_NEQ,
+    OP_AND,
+    OP_OR,
+    OP_NEG,
+    OP_INC,
+    OP_DEC,
     OP_LISTGETITEM,    /**< Obtiene un valor de la lista */
     OP_LISTSETITEM,    /**< Asigna un valor de la lista */
     OP_MOV,    /**< Mueve valores a los registros de la MV */
@@ -65,8 +82,7 @@ typedef enum lat_ins
     OP_JMP,    /**< Saltar a otra instruccion */
     OP_JMPIF,    /**< Saltar a otra instruccion SI la condicion se cumple */
     OP_CALL,    /**< Llamada a una funcion */
-    OP_NOT,    /**< Negacion de un valor logico */
-    OP_INC,
+    OP_NOT,    /**< Negacion de un valor logico */    
     OP_STOREDICT,    /**< Almacena un objeto diccionario */
     OP_PUSHDICT,    /**< inserta un objeto diccionario en la pila */
     OP_POPDICT,    /**< Extrae un objeto diccionario de la pila */
@@ -142,13 +158,6 @@ void lat_apilar(lat_vm* vm, lat_objeto* o);
   *\return lat_objeto: Apuntador a objeto
   */
 lat_objeto* lat_desapilar(lat_vm* vm);
-
-/**\brief inserta un objeto al final de la lista
-  *
-  *\param lista: Apuntador a la lista
-  *\param o: Apuntador a objeto
-  */
-void lat_apilar_lista(lat_objeto* lista, lat_objeto* o);
 
 /**\brief Extrae el ultimo elemento de la lista
   *

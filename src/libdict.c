@@ -41,13 +41,14 @@ void* __dic_obtener(hash_map* m, char* key)
 
 void __dic_asignar(hash_map *m, char *key, void *val)
 {
+    //printf("__dic_asignar\n");
     hash_val *hv = (hash_val *)__memoria_asignar(sizeof(hash_val));
     strncpy(hv->key, key, (strlen(key) + 1));
-    hv->val = val;
+    hv->val = val;    
     int hk = __dic_hash(key);
     if (m->buckets[hk] == NULL)
-    {
-        m->buckets[hk] = __lista_crear();
+    {        
+        m->buckets[hk] = __lista_crear();                
     }
     else
     {
@@ -55,13 +56,13 @@ void __dic_asignar(hash_map *m, char *key, void *val)
         LIST_FOREACH(list, primero, siguiente, cur) {
             if (strcmp(((hash_val *)cur->valor)->key, key) == 0)
             {
-                free(cur->valor);
+                __memoria_liberar(cur->valor);
                 cur->valor = (void *)hv;
                 return;
             }
-        }        
-    }
-    __lista_apilar(m->buckets[hk], (void *)hv);    
+        }
+    }    
+    __lista_apilar(m->buckets[hk], (void *)hv);
 }
 
 hash_map* __dic_clonar(hash_map *m)

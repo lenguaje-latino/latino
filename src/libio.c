@@ -28,6 +28,7 @@ THE SOFTWARE.
 #include "libstring.h"
 #include "vm.h"
 #include "latino.h"
+#include "libmem.h"
 
 bool __io_es_legible(const char *archivo)
 {
@@ -76,9 +77,9 @@ void lat_leer_archivo(lat_vm *vm)
         }
         fseek(fp, 0, SEEK_END);
         int fsize = ftell(fp);
-        fseek(fp, 0, SEEK_SET);
-        //buf = calloc(fsize, 1);
-        buf = calloc(1, fsize);
+        fseek(fp, 0, SEEK_SET);        
+        //buf = calloc(1, fsize);
+        buf = __memoria_asignar(fsize+1);
         size_t newSize = fread(buf, sizeof(char), fsize, fp);
         if (buf == NULL)
         {
