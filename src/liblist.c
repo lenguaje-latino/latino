@@ -4,24 +4,25 @@
 
 lista *__lista_crear()
 {
-    return calloc(1, sizeof(lista));
+    //return calloc(1, sizeof(lista));
+    return __memoria_asignar(sizeof(lista));
 }
 
 void __lista_destruir(lista *list)
 {
     LIST_FOREACH(list, primero, siguiente, cur) {
         if(cur->anterior) {
-            free(cur->anterior);
+            __memoria_liberar(cur->anterior);
         }
     }
-    free(list->ultimo);
-    free(list);
+    __memoria_liberar(list->ultimo);
+    __memoria_liberar(list);
 }
 
 void __lista_limpiar(lista *list)
 {
     LIST_FOREACH(list, primero, siguiente, cur) {
-        free(cur->valor);
+        __memoria_liberar(cur->valor);
     }
 }
 
@@ -33,8 +34,8 @@ void __lista_limpiar_destruir(lista *list)
 
 void __lista_apilar(lista *list, void *value)
 {
-    lista_nodo *node = calloc(1, sizeof(lista_nodo));
-    //check_mem(node);
+    //lista_nodo *node = calloc(1, sizeof(lista_nodo));
+    lista_nodo *node = __memoria_asignar(sizeof(lista_nodo));
     node->valor = value;
     if(list->ultimo == NULL) {
         list->primero = node;
@@ -45,8 +46,6 @@ void __lista_apilar(lista *list, void *value)
         list->ultimo = node;
     }
     list->longitud++;
-//error:
-//    return;
 }
 
 void *__lista_desapilar(lista *list)
@@ -57,8 +56,8 @@ void *__lista_desapilar(lista *list)
 
 void __lista_insertar_inicio(lista *list, void *value)
 {
-    lista_nodo *node = calloc(1, sizeof(lista_nodo));
-    //check_mem(node);
+    //lista_nodo *node = calloc(1, sizeof(lista_nodo));
+    lista_nodo *node = __memoria_asignar(sizeof(lista_nodo));
     node->valor = value;
     if(list->primero == NULL) {
         list->primero = node;
@@ -99,7 +98,7 @@ void *__lista_eliminar_elemento(lista *list, lista_nodo *node)
     }
     list->longitud--;
     result = node->valor;
-    free(node);
+    __memoria_liberar(node);
 
 //error:
     return result;

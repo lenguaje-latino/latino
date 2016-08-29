@@ -36,6 +36,7 @@ THE SOFTWARE.
 #define fdbc(I, A, B, M) funcion_bcode[fi++] = lat_bc(I, A, B, M)
 #define fpn(vm, N) fi = nodo_analizar(vm, N, funcion_bcode, fi)
 
+/*
 ast *nodo_nuevo_operador(nodo_tipo nt, ast *l, ast *r)
 {
     ast *a = (ast*)__memoria_asignar(sizeof(ast));
@@ -137,6 +138,7 @@ ast *nodo_nuevo_operador(nodo_tipo nt, ast *l, ast *r)
     a->valor = NULL;
     return a;
 }
+*/
 
 ast *nodo_nuevo(nodo_tipo nt, ast *l, ast *r)
 {
@@ -368,11 +370,13 @@ ast* transformar_casos(ast* casos, ast* cond_izq)
     ast* cond = NULL;
     if(caso->tipo == NODO_CASO)
     {
-        cond = nodo_nuevo_operador(NODO_IGUALDAD, cond_izq, caso->l);
+        cond = nodo_nuevo(NODO_IGUALDAD, cond_izq, caso->l);
+        //cond = nodo_nuevo_operador(NODO_IGUALDAD, cond_izq, caso->l);
     }
     if(caso->tipo == NODO_DEFECTO)
     {
-        cond = nodo_nuevo_operador(NODO_IGUALDAD, cond_izq, cond_izq);
+        cond = nodo_nuevo(NODO_IGUALDAD, cond_izq, cond_izq);
+        //cond = nodo_nuevo_operador(NODO_IGUALDAD, cond_izq, cond_izq);
     }
     ast* nSi = nodo_nuevo_si(cond, caso->r, ((ast*)transformar_casos(casos->r, cond_izq)));
     return nSi;
@@ -474,7 +478,7 @@ static int nodo_analizar(lat_vm *vm, ast *node, lat_bytecode *bcode, int i)
 #if DEPURAR_AST
         printf("PUSH R255\n");
 #endif
-        /*Nombre de la variable o funcion*/
+        //Nombre de la variable o funcion
         lat_objeto *ret = lat_cadena_nueva(vm, node->r->valor->v.s);
         ret->num_linea = node->r->valor->num_linea;
         ret->num_columna = node->r->valor->num_columna;
@@ -570,6 +574,210 @@ static int nodo_analizar(lat_vm *vm, ast *node, lat_bytecode *bcode, int i)
         dbc(OP_STOREBOOL, 255, 0, ret);
 #if DEPURAR_AST
         printf("STOREBOOL R255 %i\n", ret->data.b);
+#endif
+    }
+    break;
+    case NODO_INCREMENTO:
+    {
+        pn(vm, node->l);
+        dbc(OP_INC, 255, 0, NULL);
+        dbc(OP_PUSH, 255, 0, NULL);
+#if DEPURAR_AST
+        printf("OP_INC\n");
+        printf("OP_PUSH R255\n");
+#endif
+    }
+    break;
+    case NODO_DECREMENTO:
+    {
+        pn(vm, node->l);
+        dbc(OP_DEC, 255, 0, NULL);
+        dbc(OP_PUSH, 255, 0, NULL);
+#if DEPURAR_AST
+        printf("OP_DEC\n");
+        printf("OP_PUSH R255\n");
+#endif
+    }
+    break;
+    case NODO_MAS_UNARIO:
+    {
+        pn(vm, node->l);
+    }
+    break;
+    case NODO_MENOS_UNARIO:
+    {
+        pn(vm, node->l);        
+        dbc(OP_PUSH, 255, 0, NULL);
+        dbc(OP_UMIN, 0, 0, NULL);
+#if DEPURAR_AST
+        printf("OP_UMIN\n");
+        printf("OP_PUSH R255\n");
+#endif
+    }
+    break;
+    case NODO_NEGACION:
+    {
+        pn(vm, node->l);
+        dbc(OP_PUSH, 255, 0, NULL);        
+        dbc(OP_NEG, 0, 0, NULL);
+#if DEPURAR_AST
+        printf("OP_NEG\n");
+#endif
+    }    
+    break;
+    case NODO_SUMA:
+    {
+        pn(vm, node->l);
+        dbc(OP_PUSH, 255, 0, NULL);        
+        pn(vm, node->r);
+        dbc(OP_PUSH, 255, 0, NULL);
+        dbc(OP_ADD, 0, 0, NULL);
+#if DEPURAR_AST
+        printf("OP_ADD\n");
+#endif
+    }    
+    break;
+    case NODO_RESTA:
+    {        
+        pn(vm, node->l);
+        dbc(OP_PUSH, 255, 0, NULL);        
+        pn(vm, node->r);
+        dbc(OP_PUSH, 255, 0, NULL);
+        dbc(OP_SUB, 0, 0, NULL);
+#if DEPURAR_AST
+        printf("OP_SUB\n");
+#endif
+    }    
+    break;
+    case NODO_MULTIPLICACION:
+    {
+        pn(vm, node->l);
+        dbc(OP_PUSH, 255, 0, NULL);
+        pn(vm, node->r);
+        dbc(OP_PUSH, 255, 0, NULL);        
+        dbc(OP_MUL, 0, 0, NULL);
+#if DEPURAR_AST
+        printf("OP_MUL\n");
+#endif
+    }    
+    break;
+    case NODO_DIVISION:
+    {
+        pn(vm, node->r);
+        dbc(OP_PUSH, 255, 0, NULL);
+        pn(vm, node->l);
+        dbc(OP_PUSH, 255, 0, NULL);        
+        dbc(OP_DIV, 0, 0, NULL);
+#if DEPURAR_AST
+        printf("OP_DIV\n");
+#endif
+    }    
+    break;
+    case NODO_MODULO:
+    {
+        pn(vm, node->r);
+        dbc(OP_PUSH, 255, 0, NULL);
+        pn(vm, node->l);
+        dbc(OP_PUSH, 255, 0, NULL);        
+        dbc(OP_MOD, 0, 0, NULL);
+#if DEPURAR_AST
+        printf("OP_MOD\n");
+#endif
+    }    
+    break;
+    case NODO_MAYOR_QUE:
+    {
+        pn(vm, node->r);
+        dbc(OP_PUSH, 255, 0, NULL);
+        pn(vm, node->l);
+        dbc(OP_PUSH, 255, 0, NULL);        
+        dbc(OP_GT, 0, 0, NULL);
+#if DEPURAR_AST
+        printf("OP_GT\n");
+#endif
+    }
+    break;
+    case NODO_MAYOR_IGUAL:
+    {
+        pn(vm, node->r);
+        dbc(OP_PUSH, 255, 0, NULL);
+        pn(vm, node->l);
+        dbc(OP_PUSH, 255, 0, NULL);        
+        dbc(OP_GE, 0, 0, NULL);
+#if DEPURAR_AST
+        printf("OP_GE\n");
+#endif
+    }
+    break;
+    case NODO_MENOR_QUE:
+    {
+        pn(vm, node->r);
+        dbc(OP_PUSH, 255, 0, NULL);
+        pn(vm, node->l);
+        dbc(OP_PUSH, 255, 0, NULL);
+        dbc(OP_LT, 0, 0, NULL);
+#if DEPURAR_AST
+        printf("OP_LE\n");
+#endif
+    }
+    break;
+    case NODO_MENOR_IGUAL:
+    {
+        pn(vm, node->r);
+        dbc(OP_PUSH, 255, 0, NULL);
+        pn(vm, node->l);
+        dbc(OP_PUSH, 255, 0, NULL);        
+        dbc(OP_LE, 0, 0, NULL);
+#if DEPURAR_AST
+        printf("OP_LE\n");
+#endif
+    }
+    break;
+    case NODO_IGUALDAD:
+    {
+        pn(vm, node->r);
+        dbc(OP_PUSH, 255, 0, NULL);
+        pn(vm, node->l);
+        dbc(OP_PUSH, 255, 0, NULL);        
+        dbc(OP_EQ, 0, 0, NULL);
+#if DEPURAR_AST
+        printf("OP_EQ\n");
+#endif
+    }
+    break;
+    case NODO_DESIGUALDAD:
+    {
+        pn(vm, node->r);
+        dbc(OP_PUSH, 255, 0, NULL);
+        pn(vm, node->l);
+        dbc(OP_PUSH, 255, 0, NULL);        
+        dbc(OP_NEQ, 0, 0, NULL);
+#if DEPURAR_AST
+        printf("OP_NEQ\n");
+#endif
+    }
+    break;
+    case NODO_Y:
+    {
+        pn(vm, node->r);
+        dbc(OP_PUSH, 255, 0, NULL);
+        pn(vm, node->l);
+        dbc(OP_PUSH, 255, 0, NULL);        
+        dbc(OP_AND, 0, 0, NULL);
+#if DEPURAR_AST
+        printf("OP_AND\n");
+#endif
+    }
+    break;
+    case NODO_O:
+    {
+        pn(vm, node->r);
+        dbc(OP_PUSH, 255, 0, NULL);
+        pn(vm, node->l);
+        dbc(OP_PUSH, 255, 0, NULL);        
+        dbc(OP_OR, 0, 0, NULL);
+#if DEPURAR_AST
+        printf("OP_OR\n");
 #endif
     }
     break;
@@ -736,7 +944,7 @@ static int nodo_analizar(lat_vm *vm, ast *node, lat_bytecode *bcode, int i)
         }
         /* procesar instrucciones */
         fpn(vm, node->r);
-        funcion_bcode = __memoria_reasignar(funcion_bcode, sizeof(lat_bytecode) * (fi+1));    
+        funcion_bcode = __memoria_reasignar(funcion_bcode, sizeof(lat_bytecode) * (fi+1));
         dbc(OP_FN, 255, 0, funcion_bcode);
 #if DEPURAR_AST
         printf("FN R255\n");
@@ -945,7 +1153,7 @@ lat_objeto *nodo_analizar_arbol(lat_vm *vm, ast *tree)
     lat_bytecode *bcode = (lat_bytecode *)__memoria_asignar(sizeof(lat_bytecode) * MAX_BYTECODE_FUNCTION);
     int i = nodo_analizar(vm, tree, bcode, 0);
     dbc(OP_END, 0, 0, NULL);
-    nodo_liberar(tree);    
-    __memoria_reasignar(bcode, sizeof(lat_bytecode) * (i+1));    
-    return lat_definir_funcion(vm, bcode);    
+    nodo_liberar(tree);
+    __memoria_reasignar(bcode, sizeof(lat_bytecode) * (i+1));
+    return lat_definir_funcion(vm, bcode);
 }

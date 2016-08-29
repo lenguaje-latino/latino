@@ -38,61 +38,62 @@ THE SOFTWARE.
 
 char* __objeto_a_cadena(lat_objeto* in)
 {
-    char* valor = __memoria_asignar(MAX_STR_LENGTH);
+    //char* valor = __memoria_asignar(MAX_STR_LENGTH);
     if (in == NULL || in->type == T_NULO)
     {
-        strcpy(valor, "nulo");
+        return "nulo";
     }
     else if (in->type == T_BOOL)
     {
-        strcpy(valor, __str_logico_a_cadena(lat_obtener_logico(in)));
+        return __str_logico_a_cadena(lat_obtener_logico(in));
     }
     else if (in->type == T_INSTANCE)
     {
-        strcpy(valor, "objeto");
+        return "objeto";
     }
     else if (in->type == T_LIT)
     {
-        strcpy(valor, lat_obtener_literal(in));
+        return lat_obtener_literal(in);
     }
     else if (in->type == T_INT)
     {
-        strcpy(valor, __str_entero_a_cadena(lat_obtener_entero(in)));
+        return __str_entero_a_cadena(lat_obtener_entero(in));
     }
     else if (in->type == T_DOUBLE)
     {
-        strcpy(valor, __str_decimal_a_cadena(lat_obtener_decimal(in)));
+        return __str_decimal_a_cadena(lat_obtener_decimal(in));
     }
     else if (in->type == T_STR)
     {
-        strcpy(valor, lat_obtener_cadena(in));
+        return lat_obtener_cadena(in);
     }
     else if (in->type == T_FUNC)
     {
-        strcpy(valor, "funcion");
+        return "funcion";
     }
     else if (in->type == T_CFUNC)
     {
-        strcpy(valor, "cfuncion");
+        return "cfuncion";
     }
     else if (in->type == T_CLASS)
     {
-        strcpy(valor, "clase");
+        return "clase";
     }
     if (in->type == T_LIST)
     {
-        strcpy(valor, __lista_a_cadena(in->data.lista));
+        return __lista_a_cadena(in->data.lista);
     }
     else if (in->type == T_DICT)
     {
         //__imprimir_diccionario(vm, in->data.dict);
     }
-    __memoria_reasignar(valor, strlen(valor));
-    return valor;
+    //__memoria_reasignar(valor, strlen(valor));
+    return "";
 }
 
 void lat_asignar_contexto_objeto(lat_objeto* ns, lat_objeto* name, lat_objeto* o)
 {
+    //printf("lat_asignar_contexto_objeto\n");
     if (ns->type != T_INSTANCE)
     {
         lat_fatal_error("Objeto no es una instancia");
@@ -248,7 +249,7 @@ void lat_eliminar_objeto(lat_vm* vm, lat_objeto* o)
 
 lat_objeto* lat_clonar_objeto(lat_vm* vm, lat_objeto* obj)
 {
-    //printf("clonando objeto...\n");
+    //printf("lat_clonar_objeto\n");
     lat_objeto* ret;
     switch (obj->type)
     {
@@ -256,9 +257,9 @@ lat_objeto* lat_clonar_objeto(lat_vm* vm, lat_objeto* obj)
         ret = lat_crear_objeto(vm);
         ret->type = T_INSTANCE;
         ret->data_size = sizeof(hash_map*);
-        ret->data.nombre = __dic_clonar(obj->data.nombre);
-        ret->num_linea = obj->num_linea;
-        ret->num_columna = obj->num_columna;
+        ret->data.nombre = obj->data.nombre;
+        //TODO: Test
+        //ret->data.nombre = __dic_clonar(obj->data.nombre);
         break;
     case T_LIST:
         ret = lat_lista_nueva(vm, lat_clonar_lista(vm, obj->data.lista));        

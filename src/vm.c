@@ -114,7 +114,7 @@ lat_vm* lat_crear_maquina_virtual()
     registrar_cfuncion(vm, "comparar", lat_comparar);
     registrar_cfuncion(vm, "concatenar", lat_concatenar);
     registrar_cfuncion(vm, ".", lat_concatenar);
-    registrar_cfuncion(vm, "contiene", lat_contiene);    
+    registrar_cfuncion(vm, "contiene", lat_contiene);
     registrar_cfuncion(vm, "termina_con", lat_termina_con);
     registrar_cfuncion(vm, "es_igual", lat_es_igual);
     registrar_cfuncion(vm, "indice", lat_indice);
@@ -172,12 +172,7 @@ void lat_apilar(lat_vm* vm, lat_objeto* o)
 
 lat_objeto* lat_desapilar(lat_vm* vm)
 {
-    return (lat_objeto*)__lista_desapilar(vm->pila);    
-}
-
-void lat_apilar_lista(lat_objeto* lista, lat_objeto* o)
-{
-    __lista_apilar(lista->data.lista, (void*)o);    
+    return (lat_objeto*)__lista_desapilar(vm->pila);
 }
 
 void lat_apilar_contexto(lat_vm* vm)
@@ -591,9 +586,8 @@ void lat_llamar_funcion(lat_vm* vm, lat_objeto* func)
                 lat_objeto* nombre = vm->registros[cur.b];
                 vm->registros[cur.b] = lat_obtener_contexto_objeto(contexto, nombre);
                 if(vm->registros[cur.b]->type == T_FUNC)
-                {
-                    //if(__lista_longitud(vm->pila) < nombre->num_param)
-                    if(__lista_longitud(vm->pila) < nombre->num_param)                    
+                {                    
+                    if(__lista_longitud(vm->pila) < nombre->num_param)
                     {
                         //TODO: Agregar manejo de excepciones
                         lat_fatal_error("Linea %d, %d: %s '%s'", nombre->num_linea, nombre->num_columna,  "Numero incorrecto de parametros en funcion\n", nombre->data.str);
@@ -673,12 +667,64 @@ void lat_llamar_funcion(lat_vm* vm, lat_objeto* func)
                 printf("\n");
 #endif
                 break;
+            case OP_UMIN:
+            {
+                lat_objeto *tmp = lat_desapilar(vm);
+                if(tmp->type == T_INT)
+                    tmp->data.i = (-1) * tmp->data.i;
+                else
+                    tmp->data.d = (-1) * tmp->data.d;
+                lat_apilar(vm, tmp);
+            }
+            break;
+            case OP_ADD:
+                lat_sumar(vm);
+                break;
+            case OP_SUB:
+                lat_restar(vm);
+                break;
+            case OP_MUL:
+                lat_multiplicar(vm);
+                break;
+            case OP_DIV:
+                lat_dividir(vm);
+                break;
+            case OP_MOD:
+                lat_modulo_decimal(vm);
+                break;
+            case OP_GT:
+                lat_mayor_que(vm);
+                break;
+            case OP_GE:
+                lat_mayor_igual(vm);
+                break;
+            case OP_LT:
+                lat_menor_que(vm);
+                break;
+            case OP_LE:
+                lat_menor_igual(vm);
+                break;
+            case OP_EQ:
+                lat_igualdad(vm);
+                break;
+            case OP_NEQ:
+                lat_diferente(vm);
+                break;
+            case OP_AND:
+                lat_y(vm);
+                break;
+            case OP_OR:
+                lat_o(vm);
+                break;
+            case OP_NEG:
+                lat_negacion(vm);
+                break;
             case OP_STORELIST:
             {
                 lat_objeto* lst = lat_lista_nueva(vm, __lista_crear());
                 //lat_objeto* lst = lat_lista_nueva(vm, __lista_nuevo());
                 long num_elementos = vm->registros[0]->data.i;
-                lat_objeto* tmp = NULL;                
+                lat_objeto* tmp = NULL;
                 for(int c=0; c < num_elementos;c++){
                     tmp = lat_desapilar(vm);
                     __lista_apilar(lst->data.lista, tmp);
@@ -698,7 +744,7 @@ void lat_llamar_funcion(lat_vm* vm, lat_objeto* func)
             {
                 lat_objeto *l = vm->registros[cur.a];
                 lat_objeto *pos = vm->registros[cur.b];
-                vm->registros[cur.a] = __lista_obtener_elemento(l->data.lista, pos->data.i);                
+                vm->registros[cur.a] = __lista_obtener_elemento(l->data.lista, pos->data.i);
 #if DEPURAR_MV
                 printf("LISTGETITEM ");
                 __imprimir_objeto(vm, vm->registros[cur.a]);
@@ -804,7 +850,7 @@ void lat_llamar_funcion(lat_vm* vm, lat_objeto* func)
                     __imprimir_lista(vm, vm->pila);
                     printf("\n");
 #endif
-                    lat_objeto* fun = (lat_objeto*) vm->registros[cur.a];                    
+                    lat_objeto* fun = (lat_objeto*) vm->registros[cur.a];
                     vm->num_callf++;
                     if(vm->num_callf >= MAX_CALL_FUNCTION){
                         lat_fatal_error("Maximo numero de llamadas recursivas a funcion");
@@ -1120,5 +1166,5 @@ void lat_agregar(lat_vm *vm)
 {
     lat_objeto *elem = lat_desapilar(vm);
     lat_objeto *lst = lat_desapilar(vm);
-    __lista_apilar(lst->data.lista, elem);    
+    __lista_apilar(lst->data.lista, elem);
 }
