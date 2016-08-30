@@ -41,9 +41,10 @@ Leer LICENSE.txt
 
 Cualquier versión/distribución de linux
 
-```
+```bash
  git clone https://github.com/primitivorm/latino
  cd latino
+ sudo make tools # instalará las herramientas al escribir "latinoc"
  cmake .
  make
  sudo make install
@@ -101,6 +102,16 @@ https://www.microsoft.com/en-us/download/details.aspx?id=49984
 
 #Como desinstalar 'Latino' en Linux
 
+#### 1- Opción
+```bash
+# Obtener makefile para desinstalarlo
+wget https://raw.githubusercontent.com/primitivorm/latino/master/Makefile
+# Desinstalar sus binarios
+sudo make uninstall
+```
+
+#### 2- Opción
+
 Puedes ver un video de como proceder aca https://youtu.be/Q5xGm_Bp22k
 
 Pirmero debes saber donde esta instalado
@@ -120,6 +131,16 @@ Pirmero debes saber donde esta instalado
  ```
  sudo rm /usr/local/bin/latino
 
+ ```
+ 
+#### 3- Opción
+ 
+ LEER:
+ **Solo debian/ubuntu. con paquete deb instalado**
+ ```bash
+ sudo apt remove latino # Ubuntu 16.x.x en adelante
+ # Ó de esta manera
+ sudo apt-get remove latino # Ubuntu 14.x.x hacía atrás
  ```
  
  Listo!
