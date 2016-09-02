@@ -26,7 +26,6 @@ THE SOFTWARE.
 #include <stdio.h>
 #include <string.h>
 #include <math.h>
-#include <bits/stdio2.h>
 
 #include "compat.h"
 #include "latino.h"

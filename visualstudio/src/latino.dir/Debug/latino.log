@@ -1,4 +1,4 @@
-﻿Build started 18/08/2016 01:38:11 p.m..
+﻿Build started 02/09/2016 08:11:26 a.m..
      1>Project "C:\src\latino\visualstudio\src\latino.vcxproj" on node 2 (Rebuild target(s)).
      1>CustomBuild:
          Building Custom Rule C:/src/latino/src/CMakeLists.txt
@@ -13,69 +13,87 @@
          latino.c
          ast.c
          vm.c
-     1>C:\src\latino\src\vm.c(1044): warning C4055: 'type cast' : from data pointer 'void *' to function pointer 'void (__cdecl *)(lat_vm *)'
+     1>C:\src\latino\src\vm.c(218): warning C4100: 'vm' : unreferenced formal parameter
+     1>C:\src\latino\src\vm.c(231): warning C4100: 'vm' : unreferenced formal parameter
+     1>C:\src\latino\src\vm.c(889): warning C4055: 'type cast' : from data pointer 'void *' to function pointer 'void (__cdecl *)(lat_vm *)'
          object.c
-     1>C:\src\latino\src\object.c(71): warning C4100: 'vm' : unreferenced formal parameter
-     1>C:\src\latino\src\object.c(88): warning C4100: 'vm' : unreferenced formal parameter
-     1>C:\src\latino\src\object.c(121): warning C4100: 'vm' : unreferenced formal parameter
-     1>C:\src\latino\src\object.c(151): warning C4100: 'vm' : unreferenced formal parameter
+     1>C:\src\latino\src\object.c(127): warning C4100: 'vm' : unreferenced formal parameter
+     1>C:\src\latino\src\object.c(145): warning C4100: 'vm' : unreferenced formal parameter
+     1>C:\src\latino\src\object.c(182): warning C4100: 'vm' : unreferenced formal parameter
+     1>C:\src\latino\src\object.c(216): warning C4100: 'vm' : unreferenced formal parameter
+     1>C:\src\latino\src\object.c(285): warning C4100: 'vm' : unreferenced formal parameter
          libstring.c
      1>C:\src\latino\src\libstring.c(34): warning C4127: conditional expression is constant
      1>C:\src\latino\src\libstring.c(68): warning C4127: conditional expression is constant
      1>C:\src\latino\src\libstring.c(177): warning C4244: '=' : conversion from 'int' to 'char', possible loss of data
-     1>C:\src\latino\src\libstring.c(422): warning C4244: '=' : conversion from 'int' to 'char', possible loss of data
-     1>C:\src\latino\src\libstring.c(435): warning C4244: '=' : conversion from 'int' to 'char', possible loss of data
-     1>C:\src\latino\src\libstring.c(724): warning C4018: '<' : signed/unsigned mismatch
+     1>C:\src\latino\src\libstring.c(423): warning C4244: '=' : conversion from 'int' to 'char', possible loss of data
+     1>C:\src\latino\src\libstring.c(436): warning C4244: '=' : conversion from 'int' to 'char', possible loss of data
+     1>C:\src\latino\src\libstring.c(690): warning C4018: '<' : signed/unsigned mismatch
          libmem.c
          liblist.c
          lex.c
-     1>lex.c(899): warning C4127: conditional expression is constant
-     1>lex.c(947): warning C4127: conditional expression is constant
-     1>lex.c(1291): warning C4127: conditional expression is constant
+     1>lex.c(888): warning C4127: conditional expression is constant
+     1>lex.c(904): warning C4244: 'initializing' : conversion from 'flex_int32_t' to 'YY_CHAR', possible loss of data
+     1>lex.c(914): warning C4244: '=' : conversion from 'flex_int32_t' to 'YY_CHAR', possible loss of data
+     1>lex.c(936): warning C4127: conditional expression is constant
+     1>lex.c(1293): warning C4127: conditional expression is constant
+     1>lex.c(1500): warning C4244: 'initializing' : conversion from 'int' to 'YY_CHAR', possible loss of data
+     1>lex.c(1510): warning C4244: '=' : conversion from 'flex_int32_t' to 'YY_CHAR', possible loss of data
+     1>lex.c(1539): warning C4244: '=' : conversion from 'flex_int32_t' to 'YY_CHAR', possible loss of data
+     1>lex.c(1991): warning C4100: 'yyscanner' : unreferenced formal parameter
+     1>lex.c(2335): warning C4100: 'yyscanner' : unreferenced formal parameter
+     1>lex.c(2340): warning C4100: 'yyscanner' : unreferenced formal parameter
+     1>lex.c(2352): warning C4100: 'yyscanner' : unreferenced formal parameter
          parse.c
-     1>parse.c(1273): warning C4127: conditional expression is constant
-     1>parse.c(1370): warning C4127: conditional expression is constant
-     1>parse.c(1388): warning C4244: '=' : conversion from 'int' to 'yytype_int16', possible loss of data
-     1>parse.c(1435): warning C4127: conditional expression is constant
-     1>parse.c(1436): warning C4127: conditional expression is constant
-     1>parse.c(1437): warning C4127: conditional expression is constant
-     1>parse.c(1450): warning C4127: conditional expression is constant
-     1>parse.c(1456): warning C4127: conditional expression is constant
-     1>parse.c(1481): warning C4127: conditional expression is constant
+     1>parse.c(1305): warning C4127: conditional expression is constant
+     1>parse.c(1402): warning C4127: conditional expression is constant
+     1>parse.c(1420): warning C4244: '=' : conversion from 'int' to 'yytype_int16', possible loss of data
+     1>parse.c(1467): warning C4127: conditional expression is constant
+     1>parse.c(1468): warning C4127: conditional expression is constant
+     1>parse.c(1469): warning C4127: conditional expression is constant
+     1>parse.c(1482): warning C4127: conditional expression is constant
      1>parse.c(1488): warning C4127: conditional expression is constant
-     1>parse.c(1493): warning C4127: conditional expression is constant
-     1>parse.c(1504): warning C4127: conditional expression is constant
-     1>parse.c(1516): warning C4127: conditional expression is constant
-     1>parse.c(1557): warning C4127: conditional expression is constant
-     1>parse.c(1558): warning C4127: conditional expression is constant
-     1>parse.c(1949): warning C4127: conditional expression is constant
-     1>parse.c(1953): warning C4127: conditional expression is constant
-     1>parse.c(2055): warning C4127: conditional expression is constant
-     1>parse.c(2063): warning C4127: conditional expression is constant
-     1>parse.c(2097): warning C4127: conditional expression is constant
-     1>parse.c(2107): warning C4127: conditional expression is constant
-     1>parse.c(2111): warning C4127: conditional expression is constant
-     1>parse.c(2153): warning C4127: conditional expression is constant
-     1>parse.y(332): warning C4100: 'root' : unreferenced formal parameter
-     1>parse.y(332): warning C4100: 'scanner' : unreferenced formal parameter
+     1>parse.c(1513): warning C4127: conditional expression is constant
+     1>parse.c(1520): warning C4127: conditional expression is constant
+     1>parse.c(1525): warning C4127: conditional expression is constant
+     1>parse.c(1536): warning C4127: conditional expression is constant
+     1>parse.c(1548): warning C4127: conditional expression is constant
+     1>parse.c(1589): warning C4127: conditional expression is constant
+     1>parse.c(1590): warning C4127: conditional expression is constant
+     1>parse.c(2053): warning C4127: conditional expression is constant
+     1>parse.c(2057): warning C4127: conditional expression is constant
+     1>parse.c(2159): warning C4127: conditional expression is constant
+     1>parse.c(2167): warning C4127: conditional expression is constant
+     1>parse.c(2201): warning C4127: conditional expression is constant
+     1>parse.c(2211): warning C4127: conditional expression is constant
+     1>parse.c(2215): warning C4127: conditional expression is constant
+     1>parse.c(2257): warning C4127: conditional expression is constant
+     1>parse.y(349): warning C4100: 'root' : unreferenced formal parameter
+     1>parse.y(349): warning C4100: 'scanner' : unreferenced formal parameter
          libmath.c
          libio.c
          utf8.c
          linenoise.c
-     1>C:\src\latino\src\linenoise\linenoise.c(704): warning C4127: conditional expression is constant
-     1>C:\src\latino\src\linenoise\linenoise.c(754): warning C4100: 'prompt' : unreferenced formal parameter
-     1>C:\src\latino\src\linenoise\linenoise.c(785): warning C4244: '=' : conversion from 'int' to 'char', possible loss of data
-     1>C:\src\latino\src\linenoise\linenoise.c(889): warning C4244: 'function' : conversion from 'int' to 'char', possible loss of data
-     1>C:\src\latino\src\linenoise\linenoise.c(1152): warning C4127: conditional expression is constant
-     1>C:\src\latino\src\linenoise\linenoise.c(1236): warning C4127: conditional expression is constant
+     1>C:\src\latino\src\linenoise\linenoise.c(759): warning C4127: conditional expression is constant
+     1>C:\src\latino\src\linenoise\linenoise.c(816): warning C4100: 'prompt' : unreferenced formal parameter
+     1>C:\src\latino\src\linenoise\linenoise.c(849): warning C4244: '=' : conversion from 'int' to 'char', possible loss of data
+     1>C:\src\latino\src\linenoise\linenoise.c(963): warning C4244: 'function' : conversion from 'int' to 'char', possible loss of data
+     1>C:\src\latino\src\linenoise\linenoise.c(1258): warning C4127: conditional expression is constant
+     1>C:\src\latino\src\linenoise\linenoise.c(1352): warning C4127: conditional expression is constant
          libnet.c
          libdict.c
          Generating Code...
-     1>c:\src\latino\visualstudio\src\parse.c(2058): warning C4702: unreachable code
-     1>c:\src\latino\visualstudio\src\parse.c(2063): warning C4702: unreachable code
-     1>c:\src\latino\visualstudio\src\parse.c(2064): warning C4702: unreachable code
+     1>c:\src\latino\visualstudio\src\parse.c(2162): warning C4702: unreachable code
+     1>c:\src\latino\visualstudio\src\parse.c(2167): warning C4702: unreachable code
+     1>c:\src\latino\visualstudio\src\parse.c(2168): warning C4702: unreachable code
      1>c:\src\latino\src\libstring.c(392): warning C4706: assignment within conditional expression
-     1>c:\src\latino\src\object.c(68): warning C4702: unreachable code
+     1>c:\src\latino\src\object.c(124): warning C4702: unreachable code
+     1>c:\src\latino\src\object.c(301): warning C4702: unreachable code
+     1>c:\src\latino\src\object.c(339): warning C4702: unreachable code
+     1>c:\src\latino\src\object.c(349): warning C4702: unreachable code
+     1>c:\src\latino\src\object.c(315): warning C4702: unreachable code
+     1>c:\src\latino\src\object.c(359): warning C4702: unreachable code
+     1>c:\src\latino\src\object.c(329): warning C4702: unreachable code
        Link:
          C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"C:\src\latino\visualstudio\bin\Debug\latino.exe" /INCREMENTAL /NOLOGO kernel32.lib user32.lib gdi32.lib winspool.lib shell32.lib ole32.lib oleaut32.lib uuid.lib comdlg32.lib advapi32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"C:/src/latino/visualstudio/bin/Debug/latino.pdb" /SUBSYSTEM:CONSOLE /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"C:/src/latino/visualstudio/bin/Debug/latino.lib" /MACHINE:X86 /SAFESEH  /machine:X86 latino.dir\Debug\latino.obj
          latino.dir\Debug\ast.obj
@@ -97,4 +115,4 @@
 
 Build succeeded.
 
-Time Elapsed 00:00:06.23
+Time Elapsed 00:00:05.09
