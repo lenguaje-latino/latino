@@ -118,7 +118,7 @@ extern int parse_silent;
 #define MAX_INPUT_SIZE 512
 
 /** Maximo numero de llamadas a funcion */
-#define MAX_CALL_FUNCTION 16
+#define MAX_CALL_FUNCTION 32
 
 /** Interface con flex */
 typedef struct YYLTYPE
@@ -149,6 +149,5 @@ ast* lat_analizar_expresion(char* expr, int* status);
   * \return ast: Nodo AST
   *
   */
-ast* lat_analizar_archivo(char* ruta);
-
+ast* lat_analizar_archivo(char* ruta, int* status);
 #endif /* _LATINO_H_ */

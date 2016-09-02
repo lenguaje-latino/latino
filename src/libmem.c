@@ -27,6 +27,7 @@ THE SOFTWARE.
 #include <malloc.h>
 #include "latino.h"
 #include "libmem.h"
+#include "compat.h"
 
 void* __memoria_asignar(size_t size)
 {    
@@ -38,7 +39,7 @@ void* __memoria_asignar(size_t size)
 }
 
 size_t __memoria_tamanio(void* ptr){
-    return malloc_usable_size(ptr);
+    return malloc_size(ptr);
 }
 
 void* __memoria_reasignar(void* ptr, size_t size)

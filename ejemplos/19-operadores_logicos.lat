@@ -16,3 +16,9 @@ escribir("falso o falso: " . f || f)
 escribir("verdadero o falso: " . v || f)
 escribir("falso o verdadero: " . f || v)
 escribir("verdadero o verdadero: " . v || v)
+
+#! negacion
+escribir("=============================")
+escribir("! negacion")
+escribir("no falso: " . !f)
+escribir("no verdadero: " . !v)

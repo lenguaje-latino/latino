@@ -46,11 +46,8 @@ typedef struct lat_objeto lat_objeto;
 * Tipo de dato que maneja la maquina virtual
 */
 typedef enum lat_type
-{
-    T_NULO,    /**< nulo */
-    T_INSTANCE,    /**< instancia */
-    T_LIT,    /**< literal */
-    T_INT,    /**< entero */
+{    
+    T_INSTANCE,    /**< instancia */    
     T_DOUBLE,    /**< decimal */
     T_STR,    /**< cadena */
     T_BOOL,    /**< logico */
@@ -67,9 +64,7 @@ typedef enum lat_type
 */
 typedef union lat_datos_objeto
 {
-    hash_map* nombre;   //< nombre del objeto
-    char* c;            //< valor literal
-    long i;             //< valor entero
+    hash_map* nombre;   //< nombre del objeto    
     double d;           //< valor decimal
     char* str;          //< valor cadena
     bool b;             //< valor logico
@@ -135,22 +130,6 @@ lat_objeto* lat_crear_objeto(lat_vm* vm);
   * \return lat_objeto: Apuntador al contexto creado
   */
 lat_objeto* lat_instancia(lat_vm* vm);
-
-/** \brief Crea un objeto literal
-  *
-  * \param vm: Intancia de la maquina virtual
-  * \param val: Apuntador a la cadena de caracteres
-  * \return lat_objeto: Apuntador al objeto creado
-  */
-lat_objeto* lat_literal_nuevo(lat_vm* vm, const char* val);
-
-/** \brief Crea un objeto entero
-  *
-  * \param vm: Intancia de la maquina virtual
-  * \param val: valor entero
-  * \return lat_objeto: Apuntador al objeto creado
-  */
-lat_objeto* lat_entero_nuevo(lat_vm* vm, long val);
 
 /** \brief Crea un objeto decimal
   *
@@ -227,20 +206,6 @@ lista* lat_clonar_lista(lat_vm* vm, lista* l);
   * \param l: Apuntador al nodo de la tabla hash
   */
 hash_map* lat_clonar_hash(lat_vm* vm, hash_map* l);
-
-/** \brief Obtiene el valor de la literal de un objeto
-  *
-  * \param o: Apuntador al objeto
-  * \return char*: Apuntador a una cadena de caracteres
-  */
-char* lat_obtener_literal(lat_objeto* o);
-
-/** \brief Obtiene el valor entero de un objeto
-  *
-  * \param o: Apuntador al objeto
-  * \return long: Valor entero
-  */
-long lat_obtener_entero(lat_objeto* o);
 
 /** \brief Obtiene el valor decimal de un objeto
   *

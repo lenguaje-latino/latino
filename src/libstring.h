@@ -67,26 +67,12 @@ char* __str_analizar(const char* s, size_t n);
   */
 char* __str_concatenar(char* s1, char* s2);
 
-/**\brief Convierte un entero a cadena
-  *
-  *\param i: Valor entero largo
-  *\return char*: Apuntador a cadena
-  */
-char* __str_entero_a_cadena(long i);
-
 /**\brief Convierte un decimal a cadena
   *
   *\param d: Valor decimal
   *\return char*: Apuntador a cadena
   */
 char* __str_decimal_a_cadena(double d);
-
-/**\brief Convierte un caracter a cadena
-  *
-  *\param c: Valor del caracter
-  *\return char*: Apuntador a cadena
-  */
-char* __str_caracter_a_cadena(char c);
 
 /**\brief Convierte un valor logico
   *

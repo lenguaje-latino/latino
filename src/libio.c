@@ -30,6 +30,7 @@ THE SOFTWARE.
 #include "latino.h"
 #include "libmem.h"
 
+/*
 bool __io_es_legible(const char *archivo)
 {
     FILE *f = fopen(archivo, "r");
@@ -119,3 +120,4 @@ void lat_sistema(lat_vm *vm)
     lat_objeto* o = lat_desapilar(vm);
     system(lat_obtener_cadena(o));    
 }
+*/
