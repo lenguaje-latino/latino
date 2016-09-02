@@ -4,37 +4,17 @@ Menu propiedades del proyecto-> Debugging -> Command Arguments. Agregar
 $(SolutionDir)..\ejemplos\debug.lat
 */
 
-#Crear una lista es tan sencillo como indicar entre corchetes y separados por comas
-#los valores que queremos incluir en la lista.
-numeros = [1, 2, 3, 4, 5]
-vacia = []
+i = 1
+d = 10.05
 
-#Podemos acceder a cada uno de los elementos de la lista escribiendo el nombre de
-#la lista e indicando el índice del elemento entre corchetes.
-#Ten en cuenta que el índice del primer elemento de la lista es 0:
-escribir(numeros[1])
-#salida: 2
+#entero - entero
+escribir(-i)    #a 1 se le resta -1 da como resultado 2
 
-#También podemos utilizar este operador para modificar un elemento de la lista si lo
-#colocamos en la parte izquierda de una asignación:
-numeros[0] = 99
-escribir(numeros)
-#salida:  [99, 2, 3, 4, 5]
+#entero - decimal
+escribir(i - d) #a 1 se le suma 10.05 da como resultado -9.05
 
-#agrega un elemento a la lista
-agregar(numeros, 6)
-escribir(numeros)
-#salida:  [99, 2, 3, 4, 5, 6]
+#decimal - entero
+escribir(d - i) #da como resultado el decimal 9.05
 
-#se valida que el valor este en el rango del numero de elementos
-#escribir(numeros[-1])
-#salida: Indice fuera de rango
-#escribir(numeros[5])
-#salida: Indice fuera de rango
-
-#listas multiples
-m = [[1,2,3],
-     ['a', 'b', 'c'],
-     ['alpha', 'beta', 'gamma']]
-
-escribir(m)
+#decimal - decimal
+escribir(d - 0.05) #da como resultado el decimal 10

@@ -9,6 +9,8 @@ if(CMAKE_COMPILER_IS_GNUCXX)
     target_link_libraries(${PROJECT_TEST_NAME} gcov)
 endif()
 
+find_path(GLIB_INCLUDE_DIR NAMES glib.h PATH_SUFFIXES glib-2.0)
+
 PROJECT(latino)
 
 ADD_SUBDIRECTORY(src)
