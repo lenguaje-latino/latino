@@ -1,8 +1,8 @@
-/* A Bison parser, made by GNU Bison 3.0.2.  */
+/* A Bison parser, made by GNU Bison 3.0.4.  */
 
 /* Bison interface for Yacc-like parsers in C
 
-   Copyright (C) 1984, 1989-1990, 2000-2013 Free Software Foundation, Inc.
+   Copyright (C) 1984, 1989-1990, 2000-2015 Free Software Foundation, Inc.
 
    This program is free software: you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -48,78 +48,74 @@ extern int yydebug;
     VERDADERO = 258,
     FALSO = 259,
     ENTERO = 260,
-    LITERAL = 261,
-    _DECIMAL = 262,
-    CADENA = 263,
-    IDENTIFICADOR = 264,
-    CONSTANTE = 265,
-    SI = 266,
-    FIN = 267,
-    SINO = 268,
-    MIENTRAS = 269,
-    HACER = 270,
-    ROMPER = 271,
-    CONTINUAR = 272,
-    CUANDO = 273,
-    FUNCION = 274,
-    DESDE = 275,
-    KBOOL = 276,
-    RETORNO = 277,
-    INCLUIR = 278,
-    ELEGIR = 279,
-    CASO = 280,
-    DEFECTO = 281,
-    MAYOR_QUE = 282,
-    MENOR_QUE = 283,
-    MAYOR_IGUAL = 284,
-    MENOR_IGUAL = 285,
-    IGUAL_LOGICO = 286,
-    DIFERENTE = 287,
-    Y_LOGICO = 288,
-    O_LOGICO = 289,
-    INCREMENTO = 290,
-    DECREMENTO = 291,
-    CONCATENAR = 292,
-    CONCATENAR_IGUAL = 293
+    NUMERICO = 261,
+    CADENA = 262,
+    IDENTIFICADOR = 263,
+    SI = 264,
+    FIN = 265,
+    SINO = 266,
+    MIENTRAS = 267,
+    HACER = 268,
+    ROMPER = 269,
+    CONTINUAR = 270,
+    CUANDO = 271,
+    FUNCION = 272,
+    DESDE = 273,
+    KBOOL = 274,
+    RETORNO = 275,
+    INCLUIR = 276,
+    ELEGIR = 277,
+    CASO = 278,
+    DEFECTO = 279,
+    MAYOR_QUE = 280,
+    MENOR_QUE = 281,
+    MAYOR_IGUAL = 282,
+    MENOR_IGUAL = 283,
+    IGUAL_LOGICO = 284,
+    DIFERENTE = 285,
+    Y_LOGICO = 286,
+    O_LOGICO = 287,
+    INCREMENTO = 288,
+    DECREMENTO = 289,
+    CONCATENAR = 290,
+    CONCATENAR_IGUAL = 291
   };
 #endif
 /* Tokens.  */
 #define VERDADERO 258
 #define FALSO 259
 #define ENTERO 260
-#define LITERAL 261
-#define _DECIMAL 262
-#define CADENA 263
-#define IDENTIFICADOR 264
-#define CONSTANTE 265
-#define SI 266
-#define FIN 267
-#define SINO 268
-#define MIENTRAS 269
-#define HACER 270
-#define ROMPER 271
-#define CONTINUAR 272
-#define CUANDO 273
-#define FUNCION 274
-#define DESDE 275
-#define KBOOL 276
-#define RETORNO 277
-#define INCLUIR 278
-#define ELEGIR 279
-#define CASO 280
-#define DEFECTO 281
-#define MAYOR_QUE 282
-#define MENOR_QUE 283
-#define MAYOR_IGUAL 284
-#define MENOR_IGUAL 285
-#define IGUAL_LOGICO 286
-#define DIFERENTE 287
-#define Y_LOGICO 288
-#define O_LOGICO 289
-#define INCREMENTO 290
-#define DECREMENTO 291
-#define CONCATENAR 292
-#define CONCATENAR_IGUAL 293
+#define NUMERICO 261
+#define CADENA 262
+#define IDENTIFICADOR 263
+#define SI 264
+#define FIN 265
+#define SINO 266
+#define MIENTRAS 267
+#define HACER 268
+#define ROMPER 269
+#define CONTINUAR 270
+#define CUANDO 271
+#define FUNCION 272
+#define DESDE 273
+#define KBOOL 274
+#define RETORNO 275
+#define INCLUIR 276
+#define ELEGIR 277
+#define CASO 278
+#define DEFECTO 279
+#define MAYOR_QUE 280
+#define MENOR_QUE 281
+#define MAYOR_IGUAL 282
+#define MENOR_IGUAL 283
+#define IGUAL_LOGICO 284
+#define DIFERENTE 285
+#define Y_LOGICO 286
+#define O_LOGICO 287
+#define INCREMENTO 288
+#define DECREMENTO 289
+#define CONCATENAR 290
+#define CONCATENAR_IGUAL 291
 
 /* Value type.  */
 

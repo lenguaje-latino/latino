@@ -160,11 +160,4 @@ void lat_valor_absoluto(lat_vm* vm);
   */
 void lat_redondear_abajo(lat_vm* vm);
 
-/** Modulo de un decimal (fmod) 5.3 / 2 es 1.300000
-  *
-  * \param vm: Maquina virtual de latino
-  *
-  */
-void lat_modulo_decimal(lat_vm* vm);
-
 #endif /* !_LIBMATH_H_ */

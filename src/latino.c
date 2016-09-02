@@ -34,19 +34,22 @@ THE SOFTWARE.
 #include "libstring.h"
 
 /*
-Para debuguear en visual studio:
+Para depurar en visual studio:
 Menu propiedades del proyecto-> Debugging -> Command Arguments. Agregar
 $(SolutionDir)..\ejemplos\debug.lat
+----------------------------------
+Para depurar en Netbeans ir a propiedades del proyecto -> Run command y Agregar
+"${OUTPUT_PATH}" ejemplos/debug.lat
 */
 
 int yydebug = 0; /* 1 para debuguear analizador */
 int parse_silent;
-static FILE *file;
-static char *buffer;
+//static FILE *file;
+//static char *buffer;
 
 int yyparse(ast **root, yyscan_t scanner);
 
-ast *lat_analizar_expresion(char* expr, int* status)
+ast *lat_analizar_expresion(char* expr, int *status)
 {
     setlocale (LC_ALL, "");
     ast *ret = NULL;
@@ -58,10 +61,11 @@ ast *lat_analizar_expresion(char* expr, int* status)
     *status = yyparse(&ret, scanner);
     yy_delete_buffer(state, scanner);
     yylex_destroy(scanner);
+    //__memoria_liberar(expr);
     return ret;
 }
 
-ast *lat_analizar_archivo(char *infile)
+ast *lat_analizar_archivo(char *infile, int* status)
 {
     if (infile == NULL)
     {
@@ -83,7 +87,7 @@ ast *lat_analizar_archivo(char *infile)
         printf("El archivo no contiene la extension .lat\n");
         return NULL;
     }
-    file = fopen(infile, "r");
+    FILE *file = fopen(infile, "r");
     if (file == NULL)
     {
         printf("No se pudo abrir el archivo\n");
@@ -91,18 +95,20 @@ ast *lat_analizar_archivo(char *infile)
     }
     fseek(file, 0, SEEK_END);
     int fsize = ftell(file);
-    fseek(file, 0, SEEK_SET);    
-    //buffer = calloc(1, fsize+1);
-    buffer = __memoria_asignar(fsize+1);
+    fseek(file, 0, SEEK_SET);
+    char *buffer = __memoria_asignar(fsize+1);
     size_t newSize = fread(buffer, sizeof(char), fsize, file);
     if (buffer == NULL)
     {
         printf("No se pudo asignar %d bytes de memoria\n", fsize);
         return NULL;
     }
-    buffer[newSize] = '\0';
-    int status;
-    return lat_analizar_expresion(buffer, &status);
+    if(file != NULL)
+    {
+        fclose(file);            
+    }
+    buffer[newSize] = '\0';    
+    return lat_analizar_expresion(buffer, status);
 }
 /**
  * Muestra la version de latino en la consola
@@ -289,11 +295,7 @@ static void completion(const char *buf, linenoiseCompletions *lc)
     if (__str_empieza_con(buf, "log"))
     {
         linenoiseAddCompletion(lc,"logico");
-    }
-    if (__str_empieza_con(buf, "ent"))
-    {
-        linenoiseAddCompletion(lc,"entero");
-    }
+    }    
     if (__str_empieza_con(buf, "dec"))
     {
         linenoiseAddCompletion(lc,"decimal");
@@ -324,9 +326,10 @@ static void lat_repl(lat_vm *vm)
         {
             lat_objeto *curexpr = nodo_analizar_arbol(vm, tmp);
             lat_llamar_funcion(vm, curexpr);
-            if(vm->registros[255] != NULL && (strstr(buf, "escribir") == NULL && strstr(buf, "imprimir") == NULL))
+            lat_objeto *t = lat_desapilar(vm);
+            if(t != NULL && (strstr(buf, "escribir") == NULL && strstr(buf, "imprimir") == NULL))
             {
-                lat_apilar(vm, vm->registros[255]);
+                lat_apilar(vm, t);
                 lat_imprimir(vm);
             }
             linenoiseHistoryAdd(__str_reemplazar(buf, "\n", ""));
@@ -340,7 +343,7 @@ int main(int argc, char *argv[])
 {
     int i;
     char *infile = NULL;
-    lat_vm *vm = lat_crear_maquina_virtual();
+    lat_vm *vm = lat_crear_mv();
     for (i = 1; i < argc; i++)
     {
         if (strcmp(argv[i], "-v") == 0)
@@ -368,29 +371,20 @@ int main(int argc, char *argv[])
     if(argc > 1 && infile != NULL)
     {
         vm->REPL = false;
-        ast *tree = lat_analizar_archivo(infile);
-        if (!tree)
+        int status;
+        ast *nodo = lat_analizar_archivo(infile, &status);
+        if (status || !nodo)
         {
             return EXIT_FAILURE;
-        }
-        lat_objeto *mainFunc = nodo_analizar_arbol(vm, tree);
-        lat_llamar_funcion(vm, mainFunc);
-        lat_apilar(vm, vm->registros[255]);
-        if(file != NULL)
-        {
-            fclose(file);
-        }
+        }        
+        lat_objeto *mainFunc = nodo_analizar_arbol(vm, nodo);
+        lat_llamar_funcion(vm, mainFunc);        
+        //nodo_liberar(nodo);
     }
     else
     {
-#ifdef _WIN32
-        system("cmd");
-        //lat_version();
-        //lat_repl(vm);
-#else
         lat_version();
         lat_repl(vm);
-#endif
     }
     return EXIT_SUCCESS;
 }

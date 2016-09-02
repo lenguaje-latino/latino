@@ -37,27 +37,14 @@ THE SOFTWARE.
 
 
 char* __objeto_a_cadena(lat_objeto* in)
-{
-    //char* valor = __memoria_asignar(MAX_STR_LENGTH);
-    if (in == NULL || in->type == T_NULO)
-    {
-        return "nulo";
-    }
-    else if (in->type == T_BOOL)
+{    
+    if (in->type == T_BOOL)
     {
         return __str_logico_a_cadena(lat_obtener_logico(in));
     }
     else if (in->type == T_INSTANCE)
     {
         return "objeto";
-    }
-    else if (in->type == T_LIT)
-    {
-        return lat_obtener_literal(in);
-    }
-    else if (in->type == T_INT)
-    {
-        return __str_entero_a_cadena(lat_obtener_entero(in));
     }
     else if (in->type == T_DOUBLE)
     {
@@ -86,8 +73,7 @@ char* __objeto_a_cadena(lat_objeto* in)
     else if (in->type == T_DICT)
     {
         //__imprimir_diccionario(vm, in->data.dict);
-    }
-    //__memoria_reasignar(valor, strlen(valor));
+    }    
     return "";
 }
 
@@ -127,7 +113,7 @@ lat_objeto* lat_obtener_contexto_objeto(lat_objeto* ns, lat_objeto* name)
 lat_objeto* lat_crear_objeto(lat_vm* vm)
 {
     lat_objeto* ret = (lat_objeto*)__memoria_asignar(sizeof(lat_objeto));
-    ret->type = T_NULO;
+    ret->type = T_INSTANCE;
     ret->data_size = 0;
     return ret;
 }
@@ -139,23 +125,6 @@ lat_objeto* lat_instancia(lat_vm* vm)
     ret->type = T_INSTANCE;
     ret->data_size = sizeof(hash_map*);
     ret->data.nombre = __dic_crear();
-    return ret;
-}
-
-lat_objeto* lat_literal_nuevo(lat_vm* vm, const char* p)
-{
-    //printf("literal nueva: %s\n", p);
-    lat_objeto* ret = __str_cadena_hash(p, strlen(p));
-    return ret;
-}
-
-lat_objeto* lat_entero_nuevo(lat_vm* vm, long val)
-{
-    //printf("entero nuevo: %ld\n", val);
-    lat_objeto* ret = lat_crear_objeto(vm);
-    ret->type = T_INT;
-    ret->data_size = sizeof(long);
-    ret->data.i = val;
     return ret;
 }
 
@@ -217,9 +186,6 @@ void lat_eliminar_objeto(lat_vm* vm, lat_objeto* o)
 {
     switch (o->type)
     {
-    case T_NULO:
-        return;
-        break;
     case T_INSTANCE:
         return;
         break;
@@ -229,8 +195,6 @@ void lat_eliminar_objeto(lat_vm* vm, lat_objeto* o)
     case T_DICT:
         //lat_eliminar_lista(vm, o->data.lista);
         break;
-    case T_LIT:
-    case T_INT:
     case T_DOUBLE:
     case T_BOOL:
         break;
@@ -291,39 +255,11 @@ lista* lat_clonar_lista(lat_vm* vm, lista* list)
     return ret;
 }
 
-char* lat_obtener_literal(lat_objeto* o)
-{
-    if (o->type == T_LIT || o->type == T_STR)
-    {
-        return o->data.c;
-    }
-    lat_fatal_error("Linea %d, %d: %s", o->num_linea, o->num_columna,  "El parametro debe de ser una literal");
-    return 0;
-}
-
-long lat_obtener_entero(lat_objeto* o)
-{
-    if (o->type == T_INT)
-    {
-        return o->data.i;
-    }
-    if (o->type == T_DOUBLE)
-    {
-        return (long)o->data.d;
-    }
-    lat_fatal_error("Linea %d, %d: %s", o->num_linea, o->num_columna,  "El parametro debe de ser un entero");
-    return 0;
-}
-
 double lat_obtener_decimal(lat_objeto* o)
 {
     if (o->type == T_DOUBLE)
     {
         return o->data.d;
-    }
-    else if (o->type == T_INT)
-    {
-        return (double)o->data.i;
     }
     lat_fatal_error("Linea %d, %d: %s", o->num_linea, o->num_columna,  "El parametro debe de ser un decimal");
     return 0;

@@ -40,6 +40,13 @@ THE SOFTWARE.
   */
 void* __memoria_asignar(size_t size);
 
+/** Regresa el tamanio de la memoria ocupada por un apuntador void
+  *
+  * \param ptr: Apuntador a la memoria
+  *
+  */
+size_t __memoria_tamanio(void* ptr);
+
 /** Reasigna memoria dinamicamente (realloc)
   *
   * \param ptr: Apuntador a la memoria actual
