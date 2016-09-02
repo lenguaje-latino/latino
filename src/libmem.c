@@ -30,8 +30,8 @@ THE SOFTWARE.
 #include "compat.h"
 
 void* __memoria_asignar(size_t size)
-{    
-    //printf("memoria asignada: %zu\n", size);    
+{
+    //printf("memoria asignada: %zu\n", size);
     void* value = calloc(1, size);
     if (value == 0)
         lat_fatal_error("Memoria virtual agotada\n");
@@ -43,7 +43,7 @@ size_t __memoria_tamanio(void* ptr){
 }
 
 void* __memoria_reasignar(void* ptr, size_t size)
-{    
+{
     //size_t mem_ini = __memoria_tamanio(ptr);
     void* value = realloc(ptr, size);
     if (value == 0)
@@ -55,7 +55,7 @@ void* __memoria_reasignar(void* ptr, size_t size)
 void __memoria_liberar(void* ptr)
 {
     if (ptr != NULL)
-    {   
+    {
         //printf("memoria liberada: %zu\n", __memoria_tamanio(ptr));
         free(ptr);
     }
