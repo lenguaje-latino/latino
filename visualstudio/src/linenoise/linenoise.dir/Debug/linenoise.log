@@ -1,4 +1,4 @@
-﻿Build started 18/08/2016 01:38:11 p.m..
+﻿Build started 02/09/2016 08:11:26 a.m..
      1>Project "C:\src\latino\visualstudio\src\linenoise\linenoise.vcxproj" on node 3 (Rebuild target(s)).
      1>CustomBuild:
          Building Custom Rule C:/src/latino/src/linenoise/CMakeLists.txt
@@ -11,12 +11,12 @@
          cl /c /Zi /W4 /WX- /Od /Ob0 /Oy- /D WIN32 /D _WINDOWS /D _DEBUG /D _CRT_SECURE_NO_WARNINGS /D _DEBUG /D __STDC_CONSTANT_MACROS /D __STDC_FORMAT_MACROS /D __STDC_LIMIT_MACROS /D "CMAKE_INTDIR=\"Debug\"" /D _MBCS /Gm- /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"linenoise.dir\Debug\\" /Fd"linenoise.dir\Debug\vc120.pdb" /Gd /TC /analyze- /errorReport:prompt C:\src\latino\src\linenoise\linenoise.c
          
          linenoise.c
-     1>C:\src\latino\src\linenoise\linenoise.c(704): warning C4127: conditional expression is constant
-     1>C:\src\latino\src\linenoise\linenoise.c(754): warning C4100: 'prompt' : unreferenced formal parameter
-     1>C:\src\latino\src\linenoise\linenoise.c(785): warning C4244: '=' : conversion from 'int' to 'char', possible loss of data
-     1>C:\src\latino\src\linenoise\linenoise.c(889): warning C4244: 'function' : conversion from 'int' to 'char', possible loss of data
-     1>C:\src\latino\src\linenoise\linenoise.c(1152): warning C4127: conditional expression is constant
-     1>C:\src\latino\src\linenoise\linenoise.c(1236): warning C4127: conditional expression is constant
+     1>C:\src\latino\src\linenoise\linenoise.c(759): warning C4127: conditional expression is constant
+     1>C:\src\latino\src\linenoise\linenoise.c(816): warning C4100: 'prompt' : unreferenced formal parameter
+     1>C:\src\latino\src\linenoise\linenoise.c(849): warning C4244: '=' : conversion from 'int' to 'char', possible loss of data
+     1>C:\src\latino\src\linenoise\linenoise.c(963): warning C4244: 'function' : conversion from 'int' to 'char', possible loss of data
+     1>C:\src\latino\src\linenoise\linenoise.c(1258): warning C4127: conditional expression is constant
+     1>C:\src\latino\src\linenoise\linenoise.c(1352): warning C4127: conditional expression is constant
        Lib:
          C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\Lib.exe /OUT:"C:\src\latino\visualstudio\src\linenoise\Debug\linenoise.lib" /NOLOGO  /machine:X86 linenoise.dir\Debug\linenoise.obj
          linenoise.vcxproj -> C:\src\latino\visualstudio\src\linenoise\Debug\linenoise.lib
@@ -24,4 +24,4 @@
 
 Build succeeded.
 
-Time Elapsed 00:00:00.92
+Time Elapsed 00:00:00.79
