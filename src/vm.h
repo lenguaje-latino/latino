@@ -96,8 +96,7 @@ typedef struct lat_function
 typedef struct lat_vm
 {
     lista* pila;     //< pila de la maquina virtual
-    lista* modulos;     //< modulos importados en la MV    
-    //lat_objeto* registros[256];    //< Registros de la MV
+    lista* modulos;     //< modulos importados en la MV        
     lat_objeto* contexto_pila[256];   //< Arreglo para el contexto actual
     lat_objeto* objeto_verdadero;   //< Valor logico verdadero
     lat_objeto* objeto_falso;   //< Valor logico falso
@@ -304,7 +303,7 @@ void lat_o(lat_vm* vm);
   *
   *\param vm: Apuntador a la MV
   */
-void lat_negacion(lat_vm* vm);
+void lat_no(lat_vm* vm);
 
 /**\brief Obtiene el tipo de dato en cadena
   *

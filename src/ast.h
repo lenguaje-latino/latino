@@ -106,7 +106,7 @@ typedef struct
     /** Contiene los valores del dato*/
     union val
     {
-        int logico;  /**< Logico */
+        bool logico;  /**< Logico */
         double numerico;   /**< Decimal */
         char *cadena;    /**< Cadena */
     } val;

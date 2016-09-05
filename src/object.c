@@ -151,8 +151,11 @@ lat_objeto* lat_logico_nuevo(lat_vm* vm, bool val)
 lat_objeto* lat_cadena_nueva(lat_vm* vm, const char* p)
 {
     //printf("cadena nueva: %s\n", p);
-    lat_objeto* ret = __str_cadena_hash(p, strlen(p));
-    return ret;
+    lat_objeto* str = (lat_objeto*)__memoria_asignar(sizeof(lat_objeto));
+    str->type = T_STR;
+    str->data_size = strlen(p);
+    str->data.str = (char *)p;    
+    return str;
 }
 
 lat_objeto* lat_lista_nueva(lat_vm* vm, lista* l)
@@ -186,14 +189,14 @@ void lat_eliminar_objeto(lat_vm* vm, lat_objeto* o)
 {
     switch (o->type)
     {
-    case T_INSTANCE:
-        return;
+    case T_INSTANCE:        
+        //TODO:Eliminar objeto
         break;
-    case T_LIST:
-        //lat_eliminar_lista(vm, o->data.lista);
+    case T_LIST:        
+        //TODO:Eliminar objeto lista
         break;
-    case T_DICT:
-        //lat_eliminar_lista(vm, o->data.lista);
+    case T_DICT:        
+        //TODO:Eliminar objeto dic
         break;
     case T_DOUBLE:
     case T_BOOL:
@@ -221,9 +224,7 @@ lat_objeto* lat_clonar_objeto(lat_vm* vm, lat_objeto* obj)
         ret = lat_crear_objeto(vm);
         ret->type = T_INSTANCE;
         ret->data_size = sizeof(hash_map*);
-        ret->data.nombre = obj->data.nombre;
-        //TODO: Test
-        //ret->data.nombre = __dic_clonar(obj->data.nombre);
+        ret->data.nombre = __dic_clonar(obj->data.nombre);
         break;
     case T_LIST:
         ret = lat_lista_nueva(vm, lat_clonar_lista(vm, obj->data.lista));        

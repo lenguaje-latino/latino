@@ -110,15 +110,12 @@ extern int parse_silent;
 #define MAX_STR_LENGTH (1024*4)
 /** Tamanio maximo de la pila de la maquina virtual */
 #define MAX_STACK_SIZE 255
-
 /** Tamanio maximo de una ruta de derectorio */
 #define MAX_PATH_LENGTH 1024
-
 /** Tamanio maximo de la entrada por teclado */
 #define MAX_INPUT_SIZE 512
-
-/** Maximo numero de llamadas a funcion */
-#define MAX_CALL_FUNCTION 32
+/** Maximo numero de llamadas recursivas a funcion */
+#define MAX_CALL_FUNCTION 27
 
 /** Interface con flex */
 typedef struct YYLTYPE

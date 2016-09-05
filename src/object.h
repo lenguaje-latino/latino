@@ -198,14 +198,6 @@ lat_objeto* lat_clonar_objeto(lat_vm* vm, lat_objeto* o);
   * \param l: Apuntador al nodo de la lista
   */
 lista* lat_clonar_lista(lat_vm* vm, lista* l);
-//list_node* lat_clonar_lista(lat_vm* vm, list_node* l);
-
-/** \brief Clona (copia) una tabla hash
-  *
-  * \param vm: Intancia de la maquina virtual
-  * \param l: Apuntador al nodo de la tabla hash
-  */
-hash_map* lat_clonar_hash(lat_vm* vm, hash_map* l);
 
 /** \brief Obtiene el valor decimal de un objeto
   *

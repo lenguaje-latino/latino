@@ -16,7 +16,7 @@
 #include "libnet.h"
 #include "vm.h"
 
-void lat_peticion(lat_vm* vm)
+/*void lat_peticion(lat_vm* vm)
 {
     lat_objeto* o = lat_desapilar(vm);
     char buffer[BUFSIZ];
@@ -42,7 +42,7 @@ void lat_peticion(lat_vm* vm)
         exit(EXIT_FAILURE);
     }
 
-    /* Build the socket. */
+    // Build the socket.
     protoent = getprotobyname("tcp");
     if (protoent == NULL)
     {
@@ -56,7 +56,7 @@ void lat_peticion(lat_vm* vm)
         exit(EXIT_FAILURE);
     }
 
-    /* Build the address. */
+    // Build the address
     hostent = gethostbyname(hostname);
     if (hostent == NULL)
     {
@@ -73,14 +73,14 @@ void lat_peticion(lat_vm* vm)
     sockaddr_in.sin_family = AF_INET;
     sockaddr_in.sin_port = htons(server_port);
 
-    /* Actually connect. */
+    // Actually connect
     if (connect(socket_file_descriptor, (struct sockaddr*)&sockaddr_in, sizeof(sockaddr_in)) == -1)
     {
         perror("connect");
         exit(EXIT_FAILURE);
     }
 
-    /* Send HTTP request. */
+    // Send HTTP request.
     nbytes_total = 0;
     while (nbytes_total < request_len)
     {
@@ -106,6 +106,6 @@ void lat_peticion(lat_vm* vm)
     close(socket_file_descriptor);
     exit(EXIT_SUCCESS);    
 }
+*/
 
 #endif
-
