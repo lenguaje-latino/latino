@@ -69,7 +69,7 @@ static const char *const bycode_nombre[] = {
     "POP_BLOCK",
     "CALL_FUNCTION",
     "RETURN_VALUE",
-    "MAKE_FUNCTION",
+    "MAKE_FUNCTION",    
 };
 
 static void __registrar_cfuncion(lat_vm* vm, char *palabra_reservada, void (*function)(lat_vm* vm))
@@ -104,13 +104,10 @@ lat_vm* lat_crear_mv()
 {
     lat_vm* vm = (lat_vm*)__memoria_asignar(sizeof(lat_vm));
     vm->pila = __lista_crear();
-    //vm->todos_objetos = __lista_crear();
-    //vm->basurero_objetos = __lista_crear();
     vm->modulos = __lista_crear();
     vm->memoria_usada = 0;
     vm->objeto_verdadero = lat_logico_nuevo(vm, true);
     vm->objeto_falso = lat_logico_nuevo(vm, false);
-    //memset(vm->registros, 0, 256);
     memset(vm->contexto_pila, 0, 256);
     vm->contexto_pila[0] = lat_instancia(vm);
     vm->apuntador_pila = 0;
@@ -177,8 +174,7 @@ lat_vm* lat_crear_mv()
     __registrar_cfuncion(vm, "ejecutar", lat_ejecutar);
     __registrar_cfuncion(vm, "ejecutar_archivo", lat_ejecutar_archivo);*/
 
-    /*40 entrada / salida */
-    __registrar_cfuncion(vm, "concatenar", lat_concatenar);
+    /*40 entrada / salida */    
     __registrar_cfuncion(vm, "imprimir", lat_imprimir);
     __registrar_cfuncion(vm, "escribir", lat_imprimir);
     /*__registrar_cfuncion(vm, "leer", lat_leer);
@@ -222,6 +218,7 @@ lat_objeto* lat_tope(lat_vm* vm)
 
 void lat_apilar_contexto(lat_vm* vm)
 {
+    //printf("apilando contexto...\n");
     if (vm->apuntador_pila >= MAX_STACK_SIZE)
     {
         lat_fatal_error("Namespace desborde de la pila");
@@ -232,6 +229,7 @@ void lat_apilar_contexto(lat_vm* vm)
 
 void lat_desapilar_contexto(lat_vm* vm)
 {
+    //printf("...desapilando contexto\n");
     if (vm->apuntador_pila == 0)
     {
         lat_fatal_error("Namespace pila vacia");
@@ -269,8 +267,7 @@ void lat_imprimir(lat_vm* vm)
 {
     lat_objeto* in = lat_desapilar(vm);
     __imprimir_objeto(vm, in);
-    printf("\n");
-    //vm->registros[255] = in;
+    printf("\n");    
 }
 
 void __imprimir_lista(lat_vm* vm, lista* l)
@@ -509,7 +506,7 @@ void lat_o(lat_vm* vm)
     lat_apilar(vm, r);
 }
 
-void lat_negacion(lat_vm* vm)
+void lat_no(lat_vm* vm)
 {
     lat_objeto* o = lat_desapilar(vm);
     lat_objeto* r = (lat_obtener_logico(o) == false) ? vm->objeto_verdadero : vm->objeto_falso;
@@ -533,10 +530,6 @@ void lat_llamar_funcion(lat_vm* vm, lat_objeto* func)
 #if DEPURAR_MV
         printf("\n.::Ejecutando funcion::.\n");
 #endif
-        if (!vm->REPL)
-        {
-            lat_apilar_contexto(vm);
-        }
         lat_asignar_contexto_objeto(lat_obtener_contexto(vm), lat_cadena_nueva(vm, "$"), func);
         lat_bytecode* inslist = ((lat_function*)func->data.func)->bcode;
         lat_bytecode cur;
@@ -611,7 +604,7 @@ void lat_llamar_funcion(lat_vm* vm, lat_objeto* func)
             }
             break;
             case OP_NOT:{
-                lat_negacion(vm);
+                lat_no(vm);
             }
             break;
             case CONCAT:{
@@ -672,13 +665,22 @@ void lat_llamar_funcion(lat_vm* vm, lat_objeto* func)
                 break;
             case POP_BLOCK:
                 break;
-            case CALL_FUNCTION: {
+            case CALL_FUNCTION: {          
+#if DEPURAR_MV
+                printf("\n=> ");
+#endif
                 lat_objeto *fun = lat_desapilar(vm);
+                lat_apilar_contexto(vm);
+                vm->num_callf++;                
+                if(vm->num_callf >= MAX_CALL_FUNCTION){
+                    lat_fatal_error("Numero maximo de llamadas a funciones recursivas excedido\n");
+                }
                 lat_llamar_funcion(vm, fun);
+                vm->num_callf--;
+                lat_desapilar_contexto(vm);
             }
             break;
             case RETURN_VALUE: {
-                //lat_desapilar(vm);
                 return;                
             }
             break;
@@ -686,21 +688,16 @@ void lat_llamar_funcion(lat_vm* vm, lat_objeto* func)
                 lat_objeto *fun = lat_definir_funcion(vm, (lat_bytecode*)cur.meta);
                 lat_apilar(vm, fun);
             }
-            break;
+            break;                        
 
-            } //fin de switch
+            }   //fin de switch
             
 #if DEPURAR_MV            
             __imprimir_lista(vm, vm->pila);
             printf("\n");
-#endif
-            
-        }
-        if (!vm->REPL)
-        {
-            lat_desapilar_contexto(vm);
-        }
-    }
+#endif            
+        }   //fin for
+    }   //fin if (T_FUNC)
     else if (func->type == T_CFUNC)
     {
         ((void (*)(lat_vm*))(func->data.func))(vm);

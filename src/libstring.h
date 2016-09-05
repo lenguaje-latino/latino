@@ -42,7 +42,7 @@ THE SOFTWARE.
   * \return lat_objeto: Un objeto tipo cadena
   *
   */
-lat_objeto* __str_cadena_hash(const char* p, size_t len);
+//lat_objeto* __str_cadena_hash(const char* p, size_t len);
 
 /**\brief Duplica una cadena
   *

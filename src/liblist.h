@@ -79,14 +79,14 @@ void __lista_limpiar_destruir(lista *list);
   * 
   *\param list: Apuntador a la lista
   */
-#define __lista_primero(A) ((A)->primero != NULL ? (A)->primero->value : NULL)
+#define __lista_primero(A) ((A)->primero != NULL ? (A)->primero->valor : NULL)
 
 /**
   *\brief Devuelve el ultimo elemento de la lista
   * 
   *\param list: Apuntador a la lista
   */
-#define __lista_ultimo(A) ((A)->last != NULL ? (A)->last->value : NULL)
+#define __lista_ultimo(A) ((A)->ultimo != NULL ? (A)->ultimo->valor : NULL)
 
 /**
   *\brief Inserta un elemento al final de la lista

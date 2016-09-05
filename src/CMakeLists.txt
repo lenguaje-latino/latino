@@ -4,9 +4,7 @@ SET(CMAKE_C_OUTPUT_EXTENSION_REPLACE 1)
 IF(UNIX)
     LINK_LIBRARIEs(m)
     SET(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -D_GNU_SOURCE -Wall -std=c11")
-    SET(CMAKE_C_FLAGS_DEBUG "${CMAKE_C_FLAGS} -D_GNU_SOURCE -coverage -g -O0 -Wall -std=c11")
-    #SET(CMAKE_C_FLAGS " -D_GNU_SOURCE -O2 -std=c11")
-    #SET(CMAKE_C_FLAGS_DEBUG " -D_GNU_SOURCE -O2 -std=c11")
+    SET(CMAKE_C_FLAGS_DEBUG "${CMAKE_C_FLAGS} -D_GNU_SOURCE -coverage -g -O0 -Wall -std=c11")    
 ELSE(UNIX)
     IF(MSVC)
         SET(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} /W4")
@@ -21,7 +19,7 @@ ENDIF(UNIX)
 ADD_DEFINITIONS(-D_DEBUG -D__STDC_CONSTANT_MACROS -D__STDC_FORMAT_MACROS -D__STDC_LIMIT_MACROS)
 ADD_SUBDIRECTORY(linenoise)
 
-SET(SOURCES khash.h compat.h
+SET(SOURCES compat.h
     latino.h ast.h vm.h object.h libstring.h libmem.h liblist.h
     lex.h parse.h libmath.h libio.h linenoise/utf8.h linenoise/linenoise.h libnet.h libdict.h
     latino.c ast.c vm.c object.c libstring.c libmem.c liblist.c

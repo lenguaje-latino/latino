@@ -42,10 +42,8 @@ Para depurar en Netbeans ir a propiedades del proyecto -> Run command y Agregar
 "${OUTPUT_PATH}" ejemplos/debug.lat
 */
 
-int yydebug = 0; /* 1 para debuguear analizador */
+int yydebug = 0; /* 1 para debuguear analizador lexico/sintactico */
 int parse_silent;
-//static FILE *file;
-//static char *buffer;
 
 int yyparse(ast **root, yyscan_t scanner);
 
