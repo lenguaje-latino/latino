@@ -46,9 +46,10 @@ typedef struct lat_objeto lat_objeto;
 * Tipo de dato que maneja la maquina virtual
 */
 typedef enum lat_type
-{    
-    T_INSTANCE,    /**< instancia */    
-    T_DOUBLE,    /**< decimal */
+{  
+    T_NULO,     /**< Nulo, valor inicial */
+    T_CONTEXT,    /**< Contexto o contexto de variables */    
+    T_NUMERIC,    /**< decimal */
     T_STR,    /**< cadena */
     T_BOOL,    /**< logico */
     T_LIST,    /**< lista */
@@ -64,14 +65,14 @@ typedef enum lat_type
 */
 typedef union lat_datos_objeto
 {
-    hash_map* nombre;   //< nombre del objeto    
-    double d;           //< valor decimal
-    char* str;          //< valor cadena
-    bool b;             //< valor logico
+    hash_map* contexto;   //< nombre del objeto    
+    double numerico;           //< valor decimal
+    char* cadena;          //< valor cadena
+    bool logico;             //< valor logico
     lista* lista;        //< valor de la lista
-    hash_map* dict;     //< valor del diccionario
-    void* func;         //< valor funcion
-    void (*cfunc)(lat_vm*);  //< valor funcion C
+    hash_map* dic;     //< valor del diccionario
+    void* fun_usuario;         //< valor funcion
+    void (*c_funcion)(lat_mv*);  //< valor funcion C
 } lat_datos_objeto;
 
 /** \brief Objeto
@@ -80,15 +81,16 @@ typedef union lat_datos_objeto
 */
 typedef struct lat_objeto
 {
-    lat_type type;    /**< Tipo de objeto */
-    int marked;    /**< para marcar el objeto Colector de basura */
-    size_t data_size;   /**< Tamanio de la informacion */
+    lat_type tipo;    /**< Tipo de objeto */
+    int marca;    /**< para marcar el objeto Colector de basura */
+    size_t tamanio;   /**< Tamanio de la informacion */
     bool es_constante;   /**< Valida si es una constante */
-    int num_declared;   /**< Numero de veces declarado */
-    int num_param;		/**<Numero de parametros de una funcion definida por el usuario */
+    int num_declared;   /**< Numero de veces declarado */    
     int num_linea;
     int num_columna;
-    lat_datos_objeto data;   /**< Informacion del objeto */
+    int num_params;	/**<Numero de parametros de una funcion definida por el usuario */
+    char* nombre_cfun;
+    lat_datos_objeto datos;   /**< Informacion del objeto */
 } lat_objeto;
 
 struct lat_llave_valor
@@ -122,14 +124,14 @@ lat_objeto* lat_obtener_contexto_objeto(lat_objeto* ns, lat_objeto* name);
   * \param vm: Intancia de la maquina virtual
   * \return lat_objeto: Apuntador al objeto creado
   */
-lat_objeto* lat_crear_objeto(lat_vm* vm);
+lat_objeto* lat_crear_objeto(lat_mv* vm);
 
 /** \brief Crea un contexto determinado
   *
   * \param vm: Intancia de la maquina virtual
   * \return lat_objeto: Apuntador al contexto creado
   */
-lat_objeto* lat_instancia(lat_vm* vm);
+lat_objeto* lat_contexto_nuevo(lat_mv* vm);
 
 /** \brief Crea un objeto decimal
   *
@@ -137,7 +139,7 @@ lat_objeto* lat_instancia(lat_vm* vm);
   * \param val: valor decimal
   * \return lat_objeto: Apuntador al objeto creado
   */
-lat_objeto* lat_decimal_nuevo(lat_vm* vm, double val);
+lat_objeto* lat_decimal_nuevo(lat_mv* vm, double val);
 
 /** \brief Crea un objeto cadena
   *
@@ -145,7 +147,7 @@ lat_objeto* lat_decimal_nuevo(lat_vm* vm, double val);
   * \param val: valor cadena
   * \return lat_objeto: Apuntador al objeto creado
   */
-lat_objeto* lat_cadena_nueva(lat_vm* vm, const char* val);
+lat_objeto* lat_cadena_nueva(lat_mv* vm, const char* val);
 
 /** \brief Crea un objeto logico
   *
@@ -153,7 +155,7 @@ lat_objeto* lat_cadena_nueva(lat_vm* vm, const char* val);
   * \param val: valor logico
   * \return lat_objeto: Apuntador al objeto creado
   */
-lat_objeto* lat_logico_nuevo(lat_vm* vm, bool val);
+lat_objeto* lat_logico_nuevo(lat_mv* vm, bool val);
 
 /** \brief Crea un objeto lista
   *
@@ -161,43 +163,42 @@ lat_objeto* lat_logico_nuevo(lat_vm* vm, bool val);
   * \param l: Apuntador a un nodo de la lista
   * \return lat_objeto: Apuntador al objeto creado
   */
-lat_objeto* lat_lista_nueva(lat_vm* vm, lista* l);
-//lat_objeto* lat_lista_nueva(lat_vm* vm, list_node* l);
+lat_objeto* lat_lista_nueva(lat_mv* vm, lista* l);
 
 /** \brief Crea un objeto funcion
   *
   * \param vm: Intancia de la maquina virtual
   * \return lat_objeto: Apuntador al objeto creado
   */
-lat_objeto* lat_funcion_nueva(lat_vm* vm);
+lat_objeto* lat_funcion_nueva(lat_mv* vm);
 
 /** \brief Crea un objeto funcion C
   *
   * \param vm: Intancia de la maquina virtual
   * \return lat_objeto: Apuntador al objeto creado
   */
-lat_objeto* lat_cfuncion_nueva(lat_vm* vm);
+lat_objeto* lat_cfuncion_nueva(lat_mv* vm);
 
 /** \brief Elimina un objeto de la lista de objetos creados dinamicamente
   *
   * \param vm: Intancia de la maquina virtual
   * \param o: Apuntador al objeto
   */
-void lat_eliminar_objeto(lat_vm* vm, lat_objeto* o);
+void lat_eliminar_objeto(lat_mv* vm, lat_objeto* o);
 
 /** \brief Clona (copia) un objeto
   *
   * \param vm: Intancia de la maquina virtual
   * \param o: Apuntador al objeto
   */
-lat_objeto* lat_clonar_objeto(lat_vm* vm, lat_objeto* o);
+lat_objeto* lat_clonar_objeto(lat_mv* vm, lat_objeto* o);
 
 /** \brief Clona (copia) una lista
   *
   * \param vm: Intancia de la maquina virtual
   * \param l: Apuntador al nodo de la lista
   */
-lista* lat_clonar_lista(lat_vm* vm, lista* l);
+lista* lat_clonar_lista(lat_mv* vm, lista* l);
 
 /** \brief Obtiene el valor decimal de un objeto
   *

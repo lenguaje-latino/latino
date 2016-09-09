@@ -207,19 +207,6 @@ latino/preinstall:
 	$(MAKE) -f src/CMakeFiles/latino.dir/build.make src/CMakeFiles/latino.dir/preinstall
 .PHONY : latino/preinstall
 
-#=============================================================================
-# Target rules for targets named linenoise
-
-# Build rule for target.
-linenoise: cmake_check_build_system
-	$(MAKE) -f CMakeFiles/Makefile2 linenoise
-.PHONY : linenoise
-
-# fast build rule for target.
-linenoise/fast:
-	$(MAKE) -f src/linenoise/CMakeFiles/linenoise.dir/build.make src/linenoise/CMakeFiles/linenoise.dir/build
-.PHONY : linenoise/fast
-
 # Help Target
 help:
 	@echo "The following are some of the valid targets for this Makefile:"
@@ -236,7 +223,6 @@ help:
 	@echo "... list_install_components"
 	@echo "... install"
 	@echo "... latino"
-	@echo "... linenoise"
 .PHONY : help
 
 

@@ -40,9 +40,12 @@ THE SOFTWARE.
 /** \brief Tipos de nodos en arbol abstracto de sintaxis (abstract syntax tree) */
 typedef enum
 {
+    NODO_NULO,      /**< No se usa pero se reserva para agregar nulo */
     NODO_VALOR,     /**< El nodo contiene valores (logico | numerico | cadena) */
     NODO_MAS_UNARIO,  /**< Nodo mas unario */
     NODO_MENOS_UNARIO,  /**< Nodo menos unario */
+    NODO_INC,
+    NODO_DEC,
     NODO_SUMA,    /**< Nodo suma */
     NODO_RESTA,    /**< Nodo resta */
     NODO_MULTIPLICACION,    /**< Nodo multiplicacion */
@@ -67,8 +70,8 @@ typedef enum
     NODO_CASOS,   /**< Nodo casos */
     NODO_MIENTRAS,  /**< Nodo mientras */
     NODO_HACER,  /**< Nodo hacer */
-    NODO_DESDE,   /**< Nodo desde */    
-    NODO_LISTA_PARAMETROS,  /**< Nodo parametros */
+    NODO_DESDE,   /**< Nodo desde */
+    NODO_FUNCION_PARAMETROS,  /**< Nodo parametros */
     NODO_FUNCION_ARGUMENTOS,  /**< Nodo argumentos de una funcion */
     NODO_FUNCION_LLAMADA,  /**< Nodo llamada a una funcion */
     NODO_FUNCION_USUARIO,  /**< Nodo definicion de una funcion de usuario*/
@@ -83,7 +86,8 @@ typedef enum
     NODO_DICC_AGREGAR_ELEMENTO,   /**< Nodo agregar un elemento al diccionario */
     NODO_DICC_OBTENER_ELEMENTO,   /**< Nodo obtener un elemento del diccionario */
     NODO_DICC_ELEMENTO,   /**< Nodo par de llave valor del diccionario (key : value) */
-    NODO_INCLUIR  /**< Nodo para incluir codigo de otro archivo */
+    NODO_INCLUIR,  /**< Nodo para incluir codigo de otro archivo */
+    NODO_ATRIBUTO,
 } nodo_tipo;
 
 /** \brief Tipos de dato */
@@ -103,6 +107,7 @@ typedef enum
 typedef struct
 {
     nodo_tipo_valor tipo; /**< Nodo tipo valor */
+    bool es_constante;  /**< para validar si un identificador es constante */
     /** Contiene los valores del dato*/
     union val
     {
@@ -121,7 +126,7 @@ typedef struct ast
     nodo_valor *valor; /**< Valor del nodo */
     struct ast *izq; /**< Nodo izquierdo */
     struct ast *der; /**< Nodo derecho */
-    lat_vm *vm;
+    lat_mv *vm;
 } ast;
 
 /** \brief Estado del analizador lexico */
@@ -147,6 +152,17 @@ typedef struct
     struct ast *entonces;   /**< Instrucciones que se ejecutan si la condicion es verdadera */
     struct ast *_sino;   /**< Instrucciones que se ejecutan si la condicion es falsa */
 } nodo_si;
+
+/** \brief nodo para representar una funcion.
+  *
+  * funcion nombre (parametros) [sentencias] fin */
+typedef struct
+{
+    AST_COMUN
+    struct ast *nombre; /**< Nombre de la funcion */
+    struct ast *parametros;   /**< Parametros de la funcion */
+    struct ast *sentencias;   /**< Instrucciones que se ejecutan si se llama a la funcion */
+} nodo_funcion;
 
 /** \brief Nodo para el elemento de una lista */
 typedef struct
@@ -183,7 +199,7 @@ ast *nodo_nuevo(nodo_tipo tipo, ast *l, ast *r);
   * \return ast: Un nodo AST
   *
   */
-ast *nodo_nuevo_identificador(const char *s, int num_linea, int num_columna);
+ast *nodo_nuevo_identificador(const char *s, int num_linea, int num_columna, bool es_constante);
 
 /** Nuevo nodo tipo Logico (verdadero/falso)
   *
@@ -226,7 +242,7 @@ ast *nodo_nuevo_operador(nodo_tipo nt, ast *l, ast *r);
   * \return ast: Un nodo AST
   *
   */
-ast *nodo_nuevo_asignacion(ast *s, ast *v);
+ast *nodo_nuevo_asignacion(ast *val, ast *sim);
 
 /** Nuevo nodo tipo Asignacion Lista (lista[pos] = exp)
   *
@@ -289,13 +305,13 @@ ast *nodo_nuevo_desde(ast *dec, ast *cond, ast *inc, ast *stmts);
 
 /** Nuevo nodo tipo funcion
   *
-  * \param name: Nodo nombre de la funcion
-  * \param syms: Nodo parametros de la funcion
-  * \param stmts: Nodo lista de sentencias de la funcion
+  * \param nombre: Nodo nombre de la funcion
+  * \param parametros: Nodo parametros de la funcion
+  * \param sentencias: Nodo lista de sentencias de la funcion
   * \return ast: Un nodo AST
   *
   */
-ast *nodo_nuevo_funcion(ast *name, ast *syms, ast *stmts);
+ast *nodo_nuevo_funcion(ast *nombre, ast *parametros, ast *sentencias);
 
 /** Nuevo nodo que incluye un modulo
   *
@@ -329,6 +345,6 @@ void nodo_liberar(ast *a);
   * \return lat_object: objeto generico
   *
   */
-lat_objeto *nodo_analizar_arbol(lat_vm *vm, ast *tree);
+lat_objeto *nodo_analizar_arbol(lat_mv *vm, ast *tree);
 
 #endif /*_AST_H_*/

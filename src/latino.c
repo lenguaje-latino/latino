@@ -23,7 +23,6 @@ THE SOFTWARE.
 #include <string.h>
 #include <locale.h>
 
-#include "linenoise/linenoise.h"
 #include "latino.h"
 #include "object.h"
 #include "vm.h"
@@ -59,7 +58,7 @@ ast *lat_analizar_expresion(char* expr, int *status)
     *status = yyparse(&ret, scanner);
     yy_delete_buffer(state, scanner);
     yylex_destroy(scanner);
-    //__memoria_liberar(expr);
+    __memoria_liberar(expr);
     return ret;
 }
 
@@ -134,7 +133,7 @@ void lat_ayuda()
     printf("\n");
     printf("%s\n", "Opciones:");
     printf("%s\n", "-a           : Muestra la ayuda de Latino");
-    printf("%s\n", "-i           : Inicia el interprete de Latino (Modo interactivo)");
+    //printf("%s\n", "-i           : Inicia el interprete de Latino (Modo interactivo)");
     printf("%s\n", "-v           : Muestra la version de Latino");
     printf("%s\n", "archivo      : Nombre del archivo con extension .lat");
     printf("%s\n", "Ctrl-C       : Para cerrar");
@@ -147,201 +146,10 @@ void lat_ayuda()
     printf("%s%s\n", "HOME         : ", getenv("HOME"));
 }
 
-static int leer_linea(char* buffer)
-{
-    parse_silent = 1;
-    char *input;
-    char *tmp = "";
-REPETIR:
-    input = linenoise("latino> ");
-    if(input == NULL)
-    {
-        return -1;
-    }
-    for(;;)
-    {
-        tmp = __str_concatenar(tmp, "\n");
-        tmp = __str_concatenar(tmp, input);
-        int estatus;
-        lat_analizar_expresion(tmp, &estatus);
-        if(estatus == 1)
-        {
-            goto REPETIR;
-        }
-        else
-        {
-            strcpy(buffer, tmp);
-            return 0;
-        }
-    }
-}
-
-static void completion(const char *buf, linenoiseCompletions *lc)
-{
-    if (__str_empieza_con(buf, "esc"))
-    {
-        linenoiseAddCompletion(lc,"escribir");
-    }
-    if (__str_empieza_con(buf, "imp"))
-    {
-        linenoiseAddCompletion(lc,"imprimir");
-    }
-    if (__str_empieza_con(buf, "eje"))
-    {
-        linenoiseAddCompletion(lc,"ejecutar");
-    }
-    if (__str_empieza_con(buf, "ejea"))
-    {
-        linenoiseAddCompletion(lc,"ejecutar_archivo");
-    }
-    if (__str_empieza_con(buf, "fun"))
-    {
-        linenoiseAddCompletion(lc,"funcion");
-    }
-    if (__str_empieza_con(buf, "com"))
-    {
-        linenoiseAddCompletion(lc,"comparar");
-    }
-    if (__str_empieza_con(buf, "con"))
-    {
-        linenoiseAddCompletion(lc,"concatenar");
-    }
-    if (__str_empieza_con(buf, "cont"))
-    {
-        linenoiseAddCompletion(lc,"contiene");
-    }
-    if (__str_empieza_con(buf, "cop"))
-    {
-        linenoiseAddCompletion(lc,"copiar");
-    }
-    if (__str_empieza_con(buf, "ter"))
-    {
-        linenoiseAddCompletion(lc,"termina_con");
-    }
-    if (__str_empieza_con(buf, "es_"))
-    {
-        linenoiseAddCompletion(lc,"es_igual");
-    }
-    if (__str_empieza_con(buf, "ind"))
-    {
-        linenoiseAddCompletion(lc,"indice");
-    }
-    if (__str_empieza_con(buf, "ins"))
-    {
-        linenoiseAddCompletion(lc,"insertar");
-    }
-    if (__str_empieza_con(buf, "ult"))
-    {
-        linenoiseAddCompletion(lc,"ultimo_indice");
-    }
-    if (__str_empieza_con(buf, "reli"))
-    {
-        linenoiseAddCompletion(lc,"rellenar_izquierda");
-    }
-    if (__str_empieza_con(buf, "reld"))
-    {
-        linenoiseAddCompletion(lc,"rellenar_derecha");
-    }
-    if (__str_empieza_con(buf, "eli"))
-    {
-        linenoiseAddCompletion(lc,"eliminar");
-    }
-    if (__str_empieza_con(buf, "est"))
-    {
-        linenoiseAddCompletion(lc,"esta_vacia");
-    }
-    if (__str_empieza_con(buf, "lon"))
-    {
-        linenoiseAddCompletion(lc,"longitud");
-    }
-    if (__str_empieza_con(buf, "ree"))
-    {
-        linenoiseAddCompletion(lc,"reemplazar");
-    }
-    if (__str_empieza_con(buf, "emp"))
-    {
-        linenoiseAddCompletion(lc,"empieza_con");
-    }
-    if (__str_empieza_con(buf, "sub"))
-    {
-        linenoiseAddCompletion(lc,"subcadena");
-    }
-    if (__str_empieza_con(buf, "min"))
-    {
-        linenoiseAddCompletion(lc,"minusculas");
-    }
-    if (__str_empieza_con(buf, "may"))
-    {
-        linenoiseAddCompletion(lc,"mayusculas");
-    }
-    if (__str_empieza_con(buf, "qui"))
-    {
-        linenoiseAddCompletion(lc,"quitar_espacios");
-    }
-    if (__str_empieza_con(buf, "lee"))
-    {
-        linenoiseAddCompletion(lc,"leer");
-    }
-    if (__str_empieza_con(buf, "esca"))
-    {
-        linenoiseAddCompletion(lc,"escribir_archivo");
-    }
-    if (__str_empieza_con(buf, "tip"))
-    {
-        linenoiseAddCompletion(lc,"tipo");
-    }
-    if (__str_empieza_con(buf, "log"))
-    {
-        linenoiseAddCompletion(lc,"logico");
-    }    
-    if (__str_empieza_con(buf, "dec"))
-    {
-        linenoiseAddCompletion(lc,"decimal");
-    }
-    if (__str_empieza_con(buf, "cad"))
-    {
-        linenoiseAddCompletion(lc,"cadena");
-    }
-    if (__str_empieza_con(buf, "sal"))
-    {
-        linenoiseAddCompletion(lc,"salir");
-    }
-}
-
-static void lat_repl(lat_vm *vm)
-{
-    char* buf = __memoria_asignar(MAX_STR_INTERN);
-    ast* tmp = NULL;
-    int status;
-    vm->REPL = true;
-    linenoiseHistoryLoad("history.txt");
-    linenoiseSetCompletionCallback(completion);
-    while (leer_linea(buf) != -1)
-    {
-        parse_silent = 0;
-        tmp = lat_analizar_expresion(buf, &status);
-        if(tmp != NULL)
-        {
-            lat_objeto *curexpr = nodo_analizar_arbol(vm, tmp);
-            lat_llamar_funcion(vm, curexpr);
-            lat_objeto *t = lat_desapilar(vm);
-            if(t != NULL && (strstr(buf, "escribir") == NULL && strstr(buf, "imprimir") == NULL))
-            {
-                lat_apilar(vm, t);
-                lat_imprimir(vm);
-            }
-            linenoiseHistoryAdd(__str_reemplazar(buf, "\n", ""));
-            linenoiseHistorySave("history.txt");
-        }
-    }
-    __memoria_liberar(buf);
-}
-
 int main(int argc, char *argv[])
 {
     int i;
-    char *infile = NULL;
-    lat_vm *vm = lat_crear_mv();
+    char *infile = NULL;    
     for (i = 1; i < argc; i++)
     {
         if (strcmp(argv[i], "-v") == 0)
@@ -356,8 +164,7 @@ int main(int argc, char *argv[])
         }
         else if (strcmp(argv[i], "-i") == 0)
         {
-            lat_version();
-            lat_repl(vm);
+            lat_version();            
             return EXIT_SUCCESS;
         }
         else
@@ -368,21 +175,25 @@ int main(int argc, char *argv[])
     }
     if(argc > 1 && infile != NULL)
     {
-        vm->REPL = false;
+        lat_mv *mv = lat_mv_crear();
+        //mv->nombre_archivo = infile;
+        //mv->REPL = false;
         int status;
         ast *nodo = lat_analizar_archivo(infile, &status);
         if (status || !nodo)
         {
+            nodo_liberar(nodo);
+            lat_destruir_mv(mv);
             return EXIT_FAILURE;
-        }        
-        lat_objeto *mainFunc = nodo_analizar_arbol(vm, nodo);
-        lat_llamar_funcion(vm, mainFunc);        
-        //nodo_liberar(nodo);
+        }
+        lat_objeto *mainFunc = nodo_analizar_arbol(mv, nodo);
+        lat_llamar_funcion(mv, mainFunc);        
+        nodo_liberar(nodo);
+        lat_destruir_mv(mv);
     }
     else
     {
-        lat_version();
-        lat_repl(vm);
+        lat_version();        
     }
     return EXIT_SUCCESS;
 }

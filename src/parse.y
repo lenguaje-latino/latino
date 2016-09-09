@@ -37,6 +37,7 @@ int yylex (YYSTYPE * yylval_param,YYLTYPE * yylloc_param ,yyscan_t yyscanner);
 %token <node> NUMERICO
 %token <node> CADENA
 %token <node> IDENTIFICADOR
+
 %token
     SI
     FIN
@@ -54,6 +55,7 @@ int yylex (YYSTYPE * yylval_param,YYLTYPE * yylloc_param ,yyscan_t yyscanner);
     ELEGIR
     CASO
     DEFECTO
+    ATRIBUTO
 
 %token
     MAYOR_QUE
@@ -76,10 +78,11 @@ int yylex (YYSTYPE * yylval_param,YYLTYPE * yylloc_param ,yyscan_t yyscanner);
 %type <node> statement statement_list unary_expression ternary_expression incdec_statement
 %type <node> iteration_statement jump_statement function_definition
 %type <node> argument_expression_list declaration primary_expression
-%type <node> constant_expression function_call selection_statement identifier_list
+%type <node> constant_expression function_call selection_statement parameter_list
 %type <node> list_new list_items list_get_item
-%type <node> dict_new dict_items dict_item key
+%type <node> dict_new dict_items dict_item
 %type <node> labeled_statements labeled_statement_case labeled_statement_default
+%type <node> variable_access field_designator
 
 /*
  * precedencia de operadores
@@ -230,19 +233,28 @@ statement
     ;
 
 incdec_statement
-: IDENTIFICADOR INCREMENTO { $$ = nodo_nuevo_asignacion(nodo_nuevo(NODO_SUMA, $1, nodo_nuevo_decimal(1, 0, 0)), $1); }
-| IDENTIFICADOR DECREMENTO { $$ = nodo_nuevo_asignacion(nodo_nuevo(NODO_RESTA, $1, nodo_nuevo_decimal(1, 0, 0)), $1); }
+: variable_access INCREMENTO { $$ = nodo_nuevo(NODO_INC, $1, NULL); }
+| variable_access DECREMENTO { $$ = nodo_nuevo(NODO_DEC, $1, NULL); }
 
 include_declaration
     : INCLUIR '(' CADENA ')' { $$ = nodo_nuevo_incluir($3); }
     ;
 
+variable_access
+: IDENTIFICADOR
+| field_designator
+;
+
+field_designator
+: variable_access ATRIBUTO IDENTIFICADOR { $$ = nodo_nuevo(NODO_ATRIBUTO, $1, $3); }
+;
+
 declaration
-    : IDENTIFICADOR '=' expression { $$ = nodo_nuevo_asignacion($3, $1); }
-    | IDENTIFICADOR '=' ternary_expression { $$ = nodo_nuevo_asignacion($3, $1); }
-    | IDENTIFICADOR '[' ENTERO ']' '=' expression { $$ = nodo_nuevo_asignacion_lista_elem($6, $1, $3); }
-    | IDENTIFICADOR '[' IDENTIFICADOR ']' '=' expression { $$ = nodo_nuevo_asignacion_lista_elem($6, $1, $3); }
-    | IDENTIFICADOR CONCATENAR_IGUAL expression { $$ = nodo_nuevo_asignacion((nodo_nuevo(NODO_CONCATENAR, $1, $3)), $1); }
+    : variable_access '=' expression { $$ = nodo_nuevo_asignacion($3, $1); }
+    | variable_access '=' ternary_expression { $$ = nodo_nuevo_asignacion($3, $1); }
+    | variable_access '[' ENTERO ']' '=' expression { $$ = nodo_nuevo_asignacion_lista_elem($6, $1, $3); }
+    | variable_access '[' IDENTIFICADOR ']' '=' expression { $$ = nodo_nuevo_asignacion_lista_elem($6, $1, $3); }
+    | variable_access CONCATENAR_IGUAL expression { $$ = nodo_nuevo_asignacion((nodo_nuevo(NODO_CONCATENAR, $1, $3)), $1); }
     | incdec_statement
     ;
 
@@ -297,7 +309,7 @@ jump_statement
     ;
 
 function_definition
-    : FUNCION IDENTIFICADOR '(' identifier_list ')' statement_list FIN {
+    : FUNCION IDENTIFICADOR '(' parameter_list ')' statement_list FIN {
         $$ = nodo_nuevo_funcion($2, $4, $6);
     }
     ;
@@ -306,15 +318,16 @@ function_call
     : IDENTIFICADOR '(' argument_expression_list ')' { $$ = nodo_nuevo(NODO_FUNCION_LLAMADA, $1, $3); }
     ;
 
-argument_expression_list: /* empty */ { $$ = NULL; }
-    | expression ',' argument_expression_list { $$ = nodo_nuevo(NODO_FUNCION_ARGUMENTOS, $1, $3); }
+argument_expression_list
+    : /* empty */ { $$ = NULL; }
     | expression { $$ = nodo_nuevo(NODO_FUNCION_ARGUMENTOS, $1, NULL); }
+    | argument_expression_list ',' expression { $$ = nodo_nuevo(NODO_FUNCION_ARGUMENTOS, $3, $1); }
     ;
 
-identifier_list
+parameter_list
     : /* empty */ { $$ = NULL; }
-    | IDENTIFICADOR { $$ = nodo_nuevo(NODO_LISTA_PARAMETROS, $1, NULL); }
-    | identifier_list ',' IDENTIFICADOR { $$ = nodo_nuevo(NODO_LISTA_PARAMETROS, $3, $1); }
+    | IDENTIFICADOR { $$ = nodo_nuevo(NODO_FUNCION_PARAMETROS, $1, NULL); }
+    | parameter_list ',' IDENTIFICADOR { $$ = nodo_nuevo(NODO_FUNCION_PARAMETROS, $3, $1); }
     ;
 
 list_new
@@ -323,8 +336,8 @@ list_new
 
 list_items
     : /* empty */ { $$ = NULL; }
-    | expression ',' list_items { $$ = nodo_nuevo(NODO_LISTA_AGREGAR_ELEMENTO, $1, $3); }
     | expression { $$ = nodo_nuevo(NODO_LISTA_AGREGAR_ELEMENTO, $1, NULL); }
+    | expression ',' list_items { $$ = nodo_nuevo(NODO_LISTA_AGREGAR_ELEMENTO, $3, $1); }
     ;
 
 dict_new
@@ -340,12 +353,7 @@ dict_item
     : { /* empty */
         $$ = NULL;
     }
-    | key ':' expression { $$ = nodo_nuevo(NODO_DICC_ELEMENTO, $1, $3); }
-    ;
-
-key
-    :
-    CADENA
+    | CADENA ':' expression { $$ = nodo_nuevo(NODO_DICC_ELEMENTO, $1, $3); }
     ;
 
 list_get_item
