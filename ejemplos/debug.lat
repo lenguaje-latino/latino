@@ -3,10 +3,8 @@ Para debuguear en visual studio:
 Menu propiedades del proyecto-> Debugging -> Command Arguments. Agregar
 $(SolutionDir)..\ejemplos\debug.lat
 */
-funcion fibo_rec(n)
-    si ( n < 2 )
-        retorno n
-    fin
-    retorno fibo_rec(n-1) + fibo_rec(n-2)
+i=1
+mientras i < 10000000
+  //escribir(i)
+  i++
 fin
-escribir(fibo_rec(10))

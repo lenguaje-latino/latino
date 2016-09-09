@@ -31,7 +31,7 @@ THE SOFTWARE.
 
 void* __memoria_asignar(size_t size)
 {
-    //printf("memoria asignada: %zu\n", size);
+    //printf("+++ memoria asignada: %zu\n", size);
     void* value = calloc(1, size);
     if (value == 0)
         lat_fatal_error("Memoria virtual agotada\n");
@@ -53,10 +53,10 @@ void* __memoria_reasignar(void* ptr, size_t size)
 }
 
 void __memoria_liberar(void* ptr)
-{
+{    
     if (ptr != NULL)
-    {
-        //printf("memoria liberada: %zu\n", __memoria_tamanio(ptr));
+    {        
+        //printf("--- memoria liberada: %zu\n", __memoria_tamanio(ptr));
         free(ptr);
     }
 }

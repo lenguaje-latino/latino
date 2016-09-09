@@ -215,6 +215,21 @@ ast.s:
 .PHONY : ast.s
 
 # target to build an object file
+gc.o:
+	cd /home/primi/src/latino && $(MAKE) -f src/CMakeFiles/latino.dir/build.make src/CMakeFiles/latino.dir/gc.o
+.PHONY : gc.o
+
+# target to preprocess a source file
+gc.i:
+	cd /home/primi/src/latino && $(MAKE) -f src/CMakeFiles/latino.dir/build.make src/CMakeFiles/latino.dir/gc.i
+.PHONY : gc.i
+
+# target to generate assembly for a file
+gc.s:
+	cd /home/primi/src/latino && $(MAKE) -f src/CMakeFiles/latino.dir/build.make src/CMakeFiles/latino.dir/gc.s
+.PHONY : gc.s
+
+# target to build an object file
 latino.o:
 	cd /home/primi/src/latino && $(MAKE) -f src/CMakeFiles/latino.dir/build.make src/CMakeFiles/latino.dir/latino.o
 .PHONY : latino.o
@@ -350,36 +365,6 @@ libstring.s:
 .PHONY : libstring.s
 
 # target to build an object file
-linenoise/linenoise.o:
-	cd /home/primi/src/latino && $(MAKE) -f src/CMakeFiles/latino.dir/build.make src/CMakeFiles/latino.dir/linenoise/linenoise.o
-.PHONY : linenoise/linenoise.o
-
-# target to preprocess a source file
-linenoise/linenoise.i:
-	cd /home/primi/src/latino && $(MAKE) -f src/CMakeFiles/latino.dir/build.make src/CMakeFiles/latino.dir/linenoise/linenoise.i
-.PHONY : linenoise/linenoise.i
-
-# target to generate assembly for a file
-linenoise/linenoise.s:
-	cd /home/primi/src/latino && $(MAKE) -f src/CMakeFiles/latino.dir/build.make src/CMakeFiles/latino.dir/linenoise/linenoise.s
-.PHONY : linenoise/linenoise.s
-
-# target to build an object file
-linenoise/utf8.o:
-	cd /home/primi/src/latino && $(MAKE) -f src/CMakeFiles/latino.dir/build.make src/CMakeFiles/latino.dir/linenoise/utf8.o
-.PHONY : linenoise/utf8.o
-
-# target to preprocess a source file
-linenoise/utf8.i:
-	cd /home/primi/src/latino && $(MAKE) -f src/CMakeFiles/latino.dir/build.make src/CMakeFiles/latino.dir/linenoise/utf8.i
-.PHONY : linenoise/utf8.i
-
-# target to generate assembly for a file
-linenoise/utf8.s:
-	cd /home/primi/src/latino && $(MAKE) -f src/CMakeFiles/latino.dir/build.make src/CMakeFiles/latino.dir/linenoise/utf8.s
-.PHONY : linenoise/utf8.s
-
-# target to build an object file
 object.o:
 	cd /home/primi/src/latino && $(MAKE) -f src/CMakeFiles/latino.dir/build.make src/CMakeFiles/latino.dir/object.o
 .PHONY : object.o
@@ -442,6 +427,9 @@ help:
 	@echo "... ast.o"
 	@echo "... ast.i"
 	@echo "... ast.s"
+	@echo "... gc.o"
+	@echo "... gc.i"
+	@echo "... gc.s"
 	@echo "... latino.o"
 	@echo "... latino.i"
 	@echo "... latino.s"
@@ -469,12 +457,6 @@ help:
 	@echo "... libstring.o"
 	@echo "... libstring.i"
 	@echo "... libstring.s"
-	@echo "... linenoise/linenoise.o"
-	@echo "... linenoise/linenoise.i"
-	@echo "... linenoise/linenoise.s"
-	@echo "... linenoise/utf8.o"
-	@echo "... linenoise/utf8.i"
-	@echo "... linenoise/utf8.s"
 	@echo "... object.o"
 	@echo "... object.i"
 	@echo "... object.s"

@@ -33,7 +33,7 @@ THE SOFTWARE.
 #include <math.h>
 
 /**\brief Objeto tipo maquina virtual */
-typedef struct lat_vm lat_vm;
+typedef struct lat_mv lat_mv;
 
 #include "object.h"
 #include "libdict.h"
@@ -75,6 +75,9 @@ typedef struct lat_vm lat_vm;
 #define CALL_FUNCTION      28
 #define RETURN_VALUE       29
 #define MAKE_FUNCTION      30
+#define INC                31
+#define DEC                32
+#define LOAD_ATTR          33
 
 /**\brief Estructura que almacena las instrucciones bytecode de la MV */
 typedef struct lat_bytecode
@@ -93,20 +96,19 @@ typedef struct lat_function
 } lat_function;
 
 /**\brief Define la maquina virtual (MV) */
-typedef struct lat_vm
+typedef struct lat_mv
 {
-    lista* pila;     //< pila de la maquina virtual
-    lista* modulos;     //< modulos importados en la MV        
+    lat_objeto* gc_objetos;
+    lat_objeto* pila;     //< pila de la maquina virtual
     lat_objeto* contexto_pila[256];   //< Arreglo para el contexto actual
     lat_objeto* objeto_verdadero;   //< Valor logico verdadero
-    lat_objeto* objeto_falso;   //< Valor logico falso
-    size_t memoria_usada;      //< Tamanio de memoria creado dinamicamente
-    int apuntador_pila;      //< Apuntador de la pila
-    int apuntador_base;   //< Apuntador de marco o frame
-    int apuntador_instruccion;   //< Apuntador a la siguiente instruccion    
+    lat_objeto* objeto_falso;   //< Valor logico falso    
+    int apuntador_ctx;      //< Apuntador para el contexto de la pila        
     bool REPL;  //< Indica si esta corriendo REPL
-    int num_callf;
-} lat_vm;
+    int num_callf;  //< Numero de llamadas a funcion recursivas
+    size_t memoria_usada;   //< Tamanio de memoria creado dinamicamente
+    char *nombre_archivo;
+} lat_mv;
 
 /**\brief Obtiene el nombre del bytecode
   *
@@ -118,14 +120,14 @@ const char* __obtener_bytecode_nombre(int inst);
   *
   *\param vm: Apuntador a la MV
   */
-void __imprimir_objeto(lat_vm* vm, lat_objeto* in);
+void __imprimir_objeto(lat_mv* vm, lat_objeto* in);
 
 /**\brief Envia a consola el contenido de la lista
   *
   *\param vm: Apuntador a la MV
   *\param l: Apuntador a la lista
   */
-void __imprimir_lista(lat_vm* vm, lista* l);
+void __imprimir_lista(lat_mv* vm, lista* l);
 
 /**\brief Obtiene un elemento de la lista en la posicion indicada
   *
@@ -134,63 +136,59 @@ void __imprimir_lista(lat_vm* vm, lista* l);
   */
 lat_objeto* __lista_obtener_elemento(lista* list, int pos);
 
+lista_nodo* __lista_obtener_nodo(lista* list, int pos);
+
 /**\brief Envia a consola el contenido del diccionario
   *
   *\param vm: Apuntador a la MV
   *\param d: Apuntador al diccionario
   */
-void __imprimir_diccionario(lat_vm* vm, hash_map* d);
+void __imprimir_diccionario(lat_mv* vm, hash_map* d);
 
 /**\brief Crea la maquina virtual (MV)
   *
   *\return lat_vm: Apuntador a la MV
   */
-lat_vm* lat_crear_mv();
+lat_mv* lat_mv_crear();
 
-/**\brief Ejecuta una cadena de instrucciones en la MV
+/**\brief Destruye la memoria asignada por la maquina virtual (MV)
   *
-  *\param vm: Apuntador a la MV
+  *\param lat_vm: Apuntador a la MV
   */
-void lat_ejecutar(lat_vm* vm);
-
-/**\brief Ejecuta un archivo en la MV
-  *
-  *\param vm: Apuntador a la MV
-  */
-void lat_ejecutar_archivo(lat_vm* vm);
+void lat_destruir_mv(lat_mv* mv);
 
 /**\brief inserta un objeto en la pila de la MV
   *
   *\param vm: Apuntador a la MV
   *\param o: Apuntador a objeto
   */
-void lat_apilar(lat_vm* vm, lat_objeto* o);
+void lat_apilar(lat_mv* vm, lat_objeto* o);
 
 /**\brief Extrae un objeto de la pila de la MV
   *
   *\param vm: Apuntador a la MV
   *\return lat_objeto: Apuntador a objeto
   */
-lat_objeto* lat_desapilar(lat_vm* vm);
+lat_objeto* lat_desapilar(lat_mv* vm);
 
 /**\brief inserta un contexto en la pila de la MV
   *
   *\param vm: Apuntador a la MV
   */
-void lat_apilar_contexto(lat_vm* vm);
+void lat_apilar_contexto(lat_mv* vm);
 
 /**\brief Extrae un contexto de la pila de la MV
   *
   *\param vm: Apuntador a la MV
   */
-void lat_desapilar_contexto(lat_vm* vm);
+void lat_desapilar_contexto(lat_mv* vm);
 
 /**\brief Extrae el contexto de la pila de la MV
   *
   *\param vm: Apuntador a la MV
   *\return lat_objeto: Apuntador al contexto
   */
-lat_objeto* lat_obtener_contexto(lat_vm* vm);
+lat_objeto* lat_obtener_contexto(lat_mv* vm);
 
 /**\brief Define una funcion creada por el usuario
   *
@@ -198,7 +196,7 @@ lat_objeto* lat_obtener_contexto(lat_vm* vm);
   *\param inslist: Lista de instrucciones de la funcion
   *\return lat_objeto: Apuntador a un objeto tipo funcion
   */
-lat_objeto* lat_definir_funcion(lat_vm* vm, lat_bytecode* inslist);
+lat_objeto* lat_definir_funcion(lat_mv* vm, lat_bytecode* inslist);
 
 /**\brief Define una funcion creada en C
   *
@@ -206,158 +204,158 @@ lat_objeto* lat_definir_funcion(lat_vm* vm, lat_bytecode* inslist);
   *\param *function: Apuntador a la funcion definida en C
   *\return lat_objeto: Apuntador a un objeto tipo cfuncion
   */
-lat_objeto* lat_definir_cfuncion(lat_vm* vm, void (*function)(lat_vm* vm));
+lat_objeto* lat_definir_cfuncion(lat_mv* vm, void (*function)(lat_mv* vm));
 
 /**\brief Envia a consola el valor del objeto
   *
   *\param vm: Apuntador a la MV
   */
-void lat_imprimir(lat_vm* vm);
+void lat_imprimir(lat_mv* vm);
 
 /**\brief Operador - unario
   *
   *\param vm: Apuntador a la MV
   */
-void lat_menos_unario(lat_vm* vm);
+void lat_menos_unario(lat_mv* vm);
 
 /**\brief Operador +
   *
   *\param vm: Apuntador a la MV
   */
-void lat_sumar(lat_vm* vm);
+void lat_sumar(lat_mv* vm);
 
 /**\brief Operador -
   *
   *\param vm: Apuntador a la MV
   */
-void lat_restar(lat_vm* vm);
+void lat_restar(lat_mv* vm);
 
 /**\brief Operador *
   *
   *\param vm: Apuntador a la MV
   */
-void lat_multiplicar(lat_vm* vm);
+void lat_multiplicar(lat_mv* vm);
 
 /**\brief Operador /
   *
   *\param vm: Apuntador a la MV
   */
-void lat_dividir(lat_vm* vm);
+void lat_dividir(lat_mv* vm);
 
 /** Modulo de un decimal (fmod) 5.3 / 2 es 1.300000
   *
   * \param vm: Maquina virtual de latino
   *
   */
-void lat_modulo_decimal(lat_vm* vm);
+void lat_modulo_decimal(lat_mv* vm);
 
 /**\brief Operador !=
   *
   *\param vm: Apuntador a la MV
   */
-void lat_diferente(lat_vm* vm);
+void lat_diferente(lat_mv* vm);
 
 /**\brief Operador ==
   *
   *\param vm: Apuntador a la MV
   */
-void lat_igualdad(lat_vm* vm);
+void lat_igualdad(lat_mv* vm);
 
 /**\brief Operador <
   *
   *\param vm: Apuntador a la MV
   */
-void lat_menor_que(lat_vm* vm);
+void lat_menor_que(lat_mv* vm);
 
 /**\brief Operador <=
   *
   *\param vm: Apuntador a la MV
   */
-void lat_menor_igual(lat_vm* vm);
+void lat_menor_igual(lat_mv* vm);
 
 /**\brief Operador <
   *
   *\param vm: Apuntador a la MV
   */
-void lat_mayor_que(lat_vm* vm);
+void lat_mayor_que(lat_mv* vm);
 
 /**\brief Operador >=
   *
   *\param vm: Apuntador a la MV
   */
-void lat_mayor_igual(lat_vm* vm);
+void lat_mayor_igual(lat_mv* vm);
 
 /**\brief Operador &&
   *
   *\param vm: Apuntador a la MV
   */
-void lat_y(lat_vm* vm);
+void lat_y(lat_mv* vm);
 
 /**\brief Operador ||
   *
   *\param vm: Apuntador a la MV
   */
-void lat_o(lat_vm* vm);
+void lat_o(lat_mv* vm);
 
 /**\brief Operador !
   *
   *\param vm: Apuntador a la MV
   */
-void lat_no(lat_vm* vm);
+void lat_no(lat_mv* vm);
 
 /**\brief Obtiene el tipo de dato en cadena
   *
   *\param vm: Apuntador a la MV
   */
-void lat_tipo(lat_vm* vm);
+void lat_tipo(lat_mv* vm);
 
 /**\brief Convierte un valor a logico
   *
   *\param vm: Apuntador a la MV
   */
-void lat_logico(lat_vm* vm);
+void lat_logico(lat_mv* vm);
 
 /**\brief Convierte un valor a decimal
   *
   *\param vm: Apuntador a la MV
   */
-void lat_decimal(lat_vm* vm);
+void lat_decimal(lat_mv* vm);
 
 /**\brief Convierte un valor a cadena
   *
   *\param vm: Apuntador a la MV
   */
-void lat_cadena(lat_vm* vm);
+void lat_cadena(lat_mv* vm);
 
 /**\brief Obtiene el maximo de dos numeros
   *
   *\param vm: Apuntador a la MV
   */
-void lat_maximo(lat_vm* vm);
+void lat_maximo(lat_mv* vm);
 
 /**\brief Obtiene el minimo de dos numeros
   *
   *\param vm: Apuntador a la MV
   */
-void lat_minimo(lat_vm* vm);
+void lat_minimo(lat_mv* vm);
 
 /**\brief Determina si una cadena es decimal
   *
   *\param vm: Apuntador a la MV
   */
-void lat_es_decimal(lat_vm* vm);
+void lat_es_decimal(lat_mv* vm);
 
 /**\brief Formatea un decimal con el numero de caracteres decimales que se especifique
   *
   *\param vm: Apuntador a la MV
   */
-void lat_formato_numero(lat_vm* vm);
+void lat_formato_numero(lat_mv* vm);
 
 /**\brief Sale del sistema de Latino REPL
   *
   *\param vm: Apuntador a la MV
   */
-void lat_salir(lat_vm* vm);
+void lat_salir(lat_mv* vm);
 
 /**\brief Crea un objeto bytecode
   *
@@ -374,7 +372,7 @@ lat_bytecode lat_bc(int i, int a, int b, void* meta);
   *\param vm: Apuntador a la MV
   *\param func: Apuntador a funcion a ejecutar
   */
-void lat_llamar_funcion(lat_vm* vm, lat_objeto* func);
+void lat_llamar_funcion(lat_mv* vm, lat_objeto* func);
 
-void lat_agregar(lat_vm *vm);
+void lat_agregar(lat_mv *vm);
 #endif //_VM_H_

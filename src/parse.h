@@ -67,18 +67,19 @@ extern int yydebug;
     ELEGIR = 277,
     CASO = 278,
     DEFECTO = 279,
-    MAYOR_QUE = 280,
-    MENOR_QUE = 281,
-    MAYOR_IGUAL = 282,
-    MENOR_IGUAL = 283,
-    IGUAL_LOGICO = 284,
-    DIFERENTE = 285,
-    Y_LOGICO = 286,
-    O_LOGICO = 287,
-    INCREMENTO = 288,
-    DECREMENTO = 289,
-    CONCATENAR = 290,
-    CONCATENAR_IGUAL = 291
+    ATRIBUTO = 280,
+    MAYOR_QUE = 281,
+    MENOR_QUE = 282,
+    MAYOR_IGUAL = 283,
+    MENOR_IGUAL = 284,
+    IGUAL_LOGICO = 285,
+    DIFERENTE = 286,
+    Y_LOGICO = 287,
+    O_LOGICO = 288,
+    INCREMENTO = 289,
+    DECREMENTO = 290,
+    CONCATENAR = 291,
+    CONCATENAR_IGUAL = 292
   };
 #endif
 /* Tokens.  */
@@ -104,18 +105,19 @@ extern int yydebug;
 #define ELEGIR 277
 #define CASO 278
 #define DEFECTO 279
-#define MAYOR_QUE 280
-#define MENOR_QUE 281
-#define MAYOR_IGUAL 282
-#define MENOR_IGUAL 283
-#define IGUAL_LOGICO 284
-#define DIFERENTE 285
-#define Y_LOGICO 286
-#define O_LOGICO 287
-#define INCREMENTO 288
-#define DECREMENTO 289
-#define CONCATENAR 290
-#define CONCATENAR_IGUAL 291
+#define ATRIBUTO 280
+#define MAYOR_QUE 281
+#define MENOR_QUE 282
+#define MAYOR_IGUAL 283
+#define MENOR_IGUAL 284
+#define IGUAL_LOGICO 285
+#define DIFERENTE 286
+#define Y_LOGICO 287
+#define O_LOGICO 288
+#define INCREMENTO 289
+#define DECREMENTO 290
+#define CONCATENAR 291
+#define CONCATENAR_IGUAL 292
 
 /* Value type.  */
 
