@@ -1,3 +1,5 @@
+#incluirse a si mismo
+incluir("modulo") #no se incluiye a si mismo OK    
 funcion sumatoria(a, b)
   retorno (a + b)
 fin

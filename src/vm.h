@@ -78,6 +78,7 @@ typedef struct lat_mv lat_mv;
 #define INC                31
 #define DEC                32
 #define LOAD_ATTR          33
+#define BUILD_LIST         34
 
 /**\brief Estructura que almacena las instrucciones bytecode de la MV */
 typedef struct lat_bytecode
@@ -98,7 +99,8 @@ typedef struct lat_function
 /**\brief Define la maquina virtual (MV) */
 typedef struct lat_mv
 {
-    lat_objeto* gc_objetos;
+    lat_objeto* modulos;
+    lat_objeto* gc_objetos;    
     lat_objeto* pila;     //< pila de la maquina virtual
     lat_objeto* contexto_pila[256];   //< Arreglo para el contexto actual
     lat_objeto* objeto_verdadero;   //< Valor logico verdadero
@@ -211,6 +213,10 @@ lat_objeto* lat_definir_cfuncion(lat_mv* vm, void (*function)(lat_mv* vm));
   *\param vm: Apuntador a la MV
   */
 void lat_imprimir(lat_mv* vm);
+
+void lat_ejecutar(lat_mv *vm);
+
+void lat_ejecutar_archivo(lat_mv *vm);
 
 /**\brief Operador - unario
   *

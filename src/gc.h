@@ -11,8 +11,8 @@
  * Created on 8 de septiembre de 2016, 09:03 AM
  */
 
-#ifndef GC_H
-#define GC_H
+#ifndef _GC_H_
+#define _GC_H_
 
 #include <time.h>
 
@@ -20,7 +20,7 @@
 #include "object.h"
 #include "vm.h"
 
-#define HABILITAR_GC 1
+#define HABILITAR_GC 0
 
 #define TIME_THIS(X)                                         \
   {                                                          \
@@ -36,5 +36,5 @@
 void __colector_agregar(lat_mv* vm, lat_objeto* o);
 void __colector_limpiar(lat_mv* vm);
 
-#endif /* GC_H */
+#endif /* _GC_H_ */
 

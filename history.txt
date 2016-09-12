@@ -9,3 +9,21 @@ sistema("echo 'hola ingrata'")\r\r
 salir\r
 escribir("hola")
 i=10
+i=0
+escribir(i)
+x=10
+escribir(x)
+seno(0.65)
+z = seno(0.65)
+escribir(z)
+i=10
+iiescribir(i)
+escribir(i)
+funcion x(a,b)retorno a+bfin
+x(1,2)
+i=10
+escribir(i)
+funcion s(a,b)retorno a+bfin
+s(3,5)
+funcion s()escribir("hola")fin
+s()

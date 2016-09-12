@@ -25,3 +25,137 @@ THE SOFTWARE.
 #include <math.h>
 #include "libmath.h"
 #include "vm.h"
+
+void lat_arco_coseno(lat_mv *vm)
+{
+    lat_objeto *a = lat_desapilar(vm);
+    lat_apilar(vm, lat_decimal_nuevo(vm, acos(lat_obtener_decimal(a))));
+}
+
+void lat_arco_seno(lat_mv *vm)
+{
+    lat_objeto *a = lat_desapilar(vm);
+    lat_apilar(vm, lat_decimal_nuevo(vm, asin(lat_obtener_decimal(a))));
+}
+
+void lat_arco_tangente(lat_mv *vm)
+{
+    lat_objeto *a = lat_desapilar(vm);
+    lat_apilar(vm, lat_decimal_nuevo(vm, atan(lat_obtener_decimal(a))));
+}
+
+void lat_arco_tangente2(lat_mv *vm)
+{
+    lat_objeto *a = lat_desapilar(vm);
+    lat_objeto *b = lat_desapilar(vm);
+    lat_apilar(vm, lat_decimal_nuevo(vm, atan2(lat_obtener_decimal(a), lat_obtener_decimal(b))));
+}
+
+void lat_coseno(lat_mv *vm)
+{
+    lat_objeto *a = lat_desapilar(vm);
+    lat_apilar(vm, lat_decimal_nuevo(vm, cos(lat_obtener_decimal(a))));
+}
+
+void lat_coseno_hiperbolico(lat_mv *vm)
+{
+    lat_objeto *a = lat_desapilar(vm);
+    lat_apilar(vm, lat_decimal_nuevo(vm, cosh(lat_obtener_decimal(a))));
+}
+
+void lat_seno(lat_mv *vm)
+{
+    lat_objeto *a = lat_desapilar(vm);
+    lat_apilar(vm, lat_decimal_nuevo(vm, sin(lat_obtener_decimal(a))));
+}
+
+void lat_seno_hiperbolico(lat_mv *vm)
+{
+    lat_objeto *a = lat_desapilar(vm);
+    lat_apilar(vm, lat_decimal_nuevo(vm, sinh(lat_obtener_decimal(a))));
+}
+
+void lat_tangente(lat_mv *vm)
+{
+    lat_objeto *a = lat_desapilar(vm);
+    lat_apilar(vm, lat_decimal_nuevo(vm, tan(lat_obtener_decimal(a))));
+}
+
+void lat_tangente_hiperbolica(lat_mv *vm)
+{
+    lat_objeto *a = lat_desapilar(vm);
+    lat_apilar(vm, lat_decimal_nuevo(vm, tanh(lat_obtener_decimal(a))));
+}
+
+void lat_exponente(lat_mv *vm)
+{
+    lat_objeto *a = lat_desapilar(vm);
+    lat_apilar(vm, lat_decimal_nuevo(vm, exp(lat_obtener_decimal(a))));
+}
+
+/*
+void lat_frexp(lat_mv *vm){
+  lat_objeto *a = lat_desapilar(vm);
+  lat_apilar(vm, lat_decimal_nuevo(vm, frexp(lat_obtener_decimal(a)));
+}
+*/
+
+/*
+void lat_ldexp(lat_mv* vm)
+{
+  lat_objeto* a = lat_desapilar(vm);
+  lat_objeto* b = lat_desapilar(vm);
+  lat_apilar(vm, lat_decimal_nuevo(vm, ldexp(lat_obtener_decimal(a),
+lat_obtener_entero(b)));
+}
+*/
+
+void lat_logaritmo_natural(lat_mv *vm)
+{
+    lat_objeto *a = lat_desapilar(vm);
+    lat_apilar(vm, lat_decimal_nuevo(vm, log(lat_obtener_decimal(a))));
+}
+
+void lat_logaritmo_base10(lat_mv *vm)
+{
+    lat_objeto *a = lat_desapilar(vm);
+    lat_apilar(vm, lat_decimal_nuevo(vm, log10(lat_obtener_decimal(a))));
+}
+
+/*
+void lat_modf(lat_mv *vm){
+  lat_objeto *a = lat_desapilar(vm);
+  lat_apilar(vm, lat_decimal_nuevo(vm, modf(lat_obtener_decimal(a)));
+}
+*/
+
+void lat_potencia(lat_mv *vm)
+{
+    lat_objeto *b = lat_desapilar(vm);
+    lat_objeto *a = lat_desapilar(vm);
+    lat_apilar(vm, lat_decimal_nuevo(vm, pow(lat_obtener_decimal(a), lat_obtener_decimal(b))));
+}
+
+void lat_raiz_cuadrada(lat_mv *vm)
+{
+    lat_objeto *a = lat_desapilar(vm);
+    lat_apilar(vm, lat_decimal_nuevo(vm, sqrt(lat_obtener_decimal(a))));
+}
+
+void lat_redondear_arriba(lat_mv *vm)
+{
+    lat_objeto *a = lat_desapilar(vm);
+    lat_apilar(vm, lat_decimal_nuevo(vm, ceil(lat_obtener_decimal(a))));
+}
+
+void lat_valor_absoluto(lat_mv *vm)
+{
+    lat_objeto *a = lat_desapilar(vm);
+    lat_apilar(vm, lat_decimal_nuevo(vm, fabs(lat_obtener_decimal(a))));
+}
+
+void lat_redondear_abajo(lat_mv *vm)
+{
+    lat_objeto *a = lat_desapilar(vm);
+    lat_apilar(vm, lat_decimal_nuevo(vm, floor(lat_obtener_decimal(a))));
+}

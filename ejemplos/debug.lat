@@ -3,8 +3,3 @@ Para debuguear en visual studio:
 Menu propiedades del proyecto-> Debugging -> Command Arguments. Agregar
 $(SolutionDir)..\ejemplos\debug.lat
 */
-i=1
-mientras i < 10000000
-  //escribir(i)
-  i++
-fin
