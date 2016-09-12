@@ -1,4 +1,4 @@
-TOKEN='186576226:AAGeKBmWV8KyG3rwX2mbjxI0X4aAoBmmB8g'   #token de bot @HolaIngrataBot
+TOKEN='229849153:AAGH8mIvfGoTAMM5HWjrsONXDn2zjJ5opLg'   #token de bot @HolaIngrataBot
 escribir('Vamos a enviar un mensaje')
 chatId = '-1001051061242' #chat latino
 escribir('Escribe un texto')

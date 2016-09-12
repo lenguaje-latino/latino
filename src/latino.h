@@ -51,9 +51,9 @@ THE SOFTWARE.
 /** Version mayor de Latino */
 #define LAT_VERSION_MAYOR "0"
 /** Version menor de Latino */
-#define LAT_VERSION_MENOR "5"
+#define LAT_VERSION_MENOR "6"
 /** Version de correcion de errores */
-#define LAT_VERSION_PARCHE "1"
+#define LAT_VERSION_PARCHE "0"
 /** Version de Latino */
 #define LAT_VERSION "Latino " LAT_VERSION_MAYOR "." LAT_VERSION_MENOR "." LAT_VERSION_PARCHE
 /** Derechos de Latino */
@@ -100,25 +100,25 @@ extern int parse_silent;
 #define LAT_SIZE_MAX ((size_t)-1)
 #endif
 
-/** Tamanio maximo de instrucciones bytecode de una funcion 10MB */
-#define MAX_BYTECODE_FUNCTION (1024 * 10)
-/** Tamanio maximo de memoria virtual permitida 10MB */
-#define MAX_VIRTUAL_MEMORY (1024 * 10)
+/** Tamanio maximo de instrucciones bytecode de una funcion */
+#define MAX_BYTECODE_FUNCTION (1024*10)
+/** Tamanio maximo de memoria virtual permitida*/
+#define MAX_VIRTUAL_MEMORY (1024*10)
 /** Tamanio maximo de una cadena para ser almacenada en HASH TABLE */
 #define MAX_STR_INTERN 64
-/** Tamanio maximo de una cadena almacenada dinamicamente 4MB*/
-#define MAX_STR_LENGTH (1024*4)
+/** Tamanio maximo de una cadena almacenada dinamicamente*/
+//#define MAX_STR_LENGTH (1024*100)
+#define MAX_STR_LENGTH (1024*1024)
 /** Tamanio maximo de la pila de la maquina virtual */
 #define MAX_STACK_SIZE 255
-
 /** Tamanio maximo de una ruta de derectorio */
 #define MAX_PATH_LENGTH 1024
-
 /** Tamanio maximo de la entrada por teclado */
 #define MAX_INPUT_SIZE 512
+/** Maximo numero de llamadas recursivas a funcion */
+#define MAX_CALL_FUNCTION 27
 
-/** Maximo numero de llamadas a funcion */
-#define MAX_CALL_FUNCTION 16
+#define MAX_ID_LENGTH 32
 
 /** Interface con flex */
 typedef struct YYLTYPE
@@ -149,6 +149,5 @@ ast* lat_analizar_expresion(char* expr, int* status);
   * \return ast: Nodo AST
   *
   */
-ast* lat_analizar_archivo(char* ruta);
-
+ast* lat_analizar_archivo(char* ruta, int* status);
 #endif /* _LATINO_H_ */
