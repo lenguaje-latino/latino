@@ -34,247 +34,245 @@ THE SOFTWARE.
 #include "liblist.h"
 #include "libmem.h"
 #include "libdict.h"
-
+#include "gc.h"
 
 char* __objeto_a_cadena(lat_objeto* in)
-{
-    //char* valor = __memoria_asignar(MAX_STR_LENGTH);
-    if (in == NULL || in->type == T_NULO)
-    {
+{ 
+    if(in == NULL){
         return "nulo";
     }
-    else if (in->type == T_BOOL)
+    if (in->tipo == T_BOOL)
     {
         return __str_logico_a_cadena(lat_obtener_logico(in));
     }
-    else if (in->type == T_INSTANCE)
+    else if (in->tipo == T_CONTEXT)
     {
         return "objeto";
     }
-    else if (in->type == T_LIT)
-    {
-        return lat_obtener_literal(in);
-    }
-    else if (in->type == T_INT)
-    {
-        return __str_entero_a_cadena(lat_obtener_entero(in));
-    }
-    else if (in->type == T_DOUBLE)
-    {
+    else if (in->tipo == T_NUMERIC)
+    {        
         return __str_decimal_a_cadena(lat_obtener_decimal(in));
     }
-    else if (in->type == T_STR)
+    else if (in->tipo == T_STR)
     {
         return lat_obtener_cadena(in);
     }
-    else if (in->type == T_FUNC)
+    else if (in->tipo == T_FUNC)
     {
         return "funcion";
     }
-    else if (in->type == T_CFUNC)
+    else if (in->tipo == T_CFUNC)
     {
         return "cfuncion";
     }
-    else if (in->type == T_CLASS)
+    else if (in->tipo == T_CLASS)
     {
         return "clase";
     }
-    if (in->type == T_LIST)
+    if (in->tipo == T_LIST)
     {
-        return __lista_a_cadena(in->data.lista);
+        return __lista_a_cadena(in->datos.lista);
     }
-    else if (in->type == T_DICT)
+    else if (in->tipo == T_DICT)
     {
         //__imprimir_diccionario(vm, in->data.dict);
-    }
-    //__memoria_reasignar(valor, strlen(valor));
+    }    
     return "";
 }
 
 void lat_asignar_contexto_objeto(lat_objeto* ns, lat_objeto* name, lat_objeto* o)
 {
-    //printf("lat_asignar_contexto_objeto\n");
-    if (ns->type != T_INSTANCE)
+    //printf("lat_asignar_contexto_objeto: %s\n", lat_obtener_cadena(name));
+    if (ns->tipo != T_CONTEXT)
     {
-        lat_fatal_error("Objeto no es una instancia");
+        lat_fatal_error("Objeto no es un contexto");
     }
     else
     {
-        hash_map* h = ns->data.nombre;
+        hash_map* h = ns->datos.contexto;        
+        if(strlen(lat_obtener_cadena(name)) > MAX_ID_LENGTH){
+            lat_fatal_error("Linea %d, %d: Longitud maxima de (%i) excedida para un identificador", name->num_linea, name->num_columna, MAX_ID_LENGTH);
+        }
         __dic_asignar(h, lat_obtener_cadena(name), (void*)o);
     }
 }
 
 lat_objeto* lat_obtener_contexto_objeto(lat_objeto* ns, lat_objeto* name)
 {
-    if (ns->type != T_INSTANCE)
+    if (ns->tipo != T_CONTEXT)
     {
-        lat_fatal_error("Objeto no es un nombre");
+        lat_fatal_error("Objeto no es un contexto");
     }
     else
     {
-        hash_map* h = ns->data.nombre;
-        lat_objeto* ret = (lat_objeto*) __dic_obtener(h, lat_obtener_cadena(name));
-        if (ret == NULL)
-        {
-            lat_fatal_error("Linea %d, %d: Variable \"%s\" indefinida", name->num_linea, name->num_columna, lat_obtener_cadena(name));
-        }
+        hash_map* h = ns->datos.contexto;
+        lat_objeto* ret = (lat_objeto*) __dic_obtener(h, lat_obtener_cadena(name));        
         return ret;
     }
     return NULL;
 }
 
-lat_objeto* lat_crear_objeto(lat_vm* vm)
-{
+lat_objeto* lat_crear_objeto(lat_mv* vm)
+{    
+    //printf("lat_crear_objeto\n");
     lat_objeto* ret = (lat_objeto*)__memoria_asignar(sizeof(lat_objeto));
-    ret->type = T_NULO;
-    ret->data_size = 0;
+    ret->tipo = T_NULO;
+    ret->tamanio = sizeof(lat_objeto);        
     return ret;
 }
 
-lat_objeto* lat_instancia(lat_vm* vm)
+lat_objeto* lat_contexto_nuevo(lat_mv* vm)
 {
-    //printf("instancia nueva\n");
+    //printf("lat_contexto_nuevo\n");
     lat_objeto* ret = lat_crear_objeto(vm);
-    ret->type = T_INSTANCE;
-    ret->data_size = sizeof(hash_map*);
-    ret->data.nombre = __dic_crear();
+    ret->tipo = T_CONTEXT;
+    ret->tamanio += sizeof(hash_map);
+    ret->datos.contexto = __dic_crear();    
+    vm->memoria_usada += ret->tamanio;
     return ret;
 }
 
-lat_objeto* lat_literal_nuevo(lat_vm* vm, const char* p)
+lat_objeto* lat_decimal_nuevo(lat_mv* vm, double val)
 {
-    //printf("literal nueva: %s\n", p);
-    lat_objeto* ret = __str_cadena_hash(p, strlen(p));
-    return ret;
-}
-
-lat_objeto* lat_entero_nuevo(lat_vm* vm, long val)
-{
-    //printf("entero nuevo: %ld\n", val);
+    //printf("lat_decimal_nuevo: %.14g\n", val);
     lat_objeto* ret = lat_crear_objeto(vm);
-    ret->type = T_INT;
-    ret->data_size = sizeof(long);
-    ret->data.i = val;
+    ret->tipo = T_NUMERIC;
+    ret->tamanio += sizeof(double);
+    ret->datos.numerico = val;
+    vm->memoria_usada += ret->tamanio;
     return ret;
 }
 
-lat_objeto* lat_decimal_nuevo(lat_vm* vm, double val)
+lat_objeto* lat_logico_nuevo(lat_mv* vm, bool val)
 {
-    //printf("decimal nuevo: %.14g\n", val);
+    //printf("lat_logico_nuevo: %i\n", val);
     lat_objeto* ret = lat_crear_objeto(vm);
-    ret->type = T_DOUBLE;
-    ret->data_size = sizeof(double);
-    ret->data.d = val;
+    ret->tipo = T_BOOL;
+    ret->tamanio += sizeof(bool);
+    ret->datos.logico = val;
+    vm->memoria_usada += ret->tamanio;
     return ret;
 }
 
-lat_objeto* lat_logico_nuevo(lat_vm* vm, bool val)
+lat_objeto* lat_cadena_nueva(lat_mv* vm, const char* p)
 {
-    //printf("logico nuevo: %i\n", val);
+    //printf("lat_cadena_nueva: %s\n", p);
     lat_objeto* ret = lat_crear_objeto(vm);
-    ret->type = T_BOOL;
-    ret->data_size = sizeof(bool);
-    ret->data.b = val;
+    ret->tipo = T_STR;
+    ret->tamanio += strlen(p);
+    ret->datos.cadena = (char *)p;  
+    vm->memoria_usada += ret->tamanio;
     return ret;
 }
 
-lat_objeto* lat_cadena_nueva(lat_vm* vm, const char* p)
+lat_objeto* lat_lista_nueva(lat_mv* vm, lista* l)
 {
-    //printf("cadena nueva: %s\n", p);
-    lat_objeto* ret = __str_cadena_hash(p, strlen(p));
-    return ret;
-}
-
-lat_objeto* lat_lista_nueva(lat_vm* vm, lista* l)
-{
-    //printf("lista nueva\n");
+    //printf("lat_lista_nueva\n");
     lat_objeto* ret = lat_crear_objeto(vm);
-    ret->type = T_LIST;
-    ret->data_size = sizeof(lista);
-    ret->data.lista = l;
+    ret->tipo = T_LIST;
+    ret->tamanio += sizeof(lista);
+    ret->datos.lista = l;
+    vm->memoria_usada += ret->tamanio;
     return ret;
 }
 
-lat_objeto* lat_funcion_nueva(lat_vm* vm)
+lat_objeto* lat_funcion_nueva(lat_mv* vm)
 {
-    //printf("funcion nueva\n");
+    //printf("lat_funcion_nueva\n");
     lat_objeto* ret = lat_crear_objeto(vm);
-    ret->type = T_FUNC;
-    ret->data_size = 0;
+    ret->tipo = T_FUNC;
+    //ret->tamanio = ret->tamanio;
+    vm->memoria_usada += ret->tamanio;
     return ret; //We don't do anything here: all bytecode will be added later
 }
 
-lat_objeto* lat_cfuncion_nueva(lat_vm* vm)
+lat_objeto* lat_cfuncion_nueva(lat_mv* mv)
 {
-    //printf("cfuncion nueva\n");
-    lat_objeto* ret = lat_crear_objeto(vm);
-    ret->type = T_CFUNC;
+    //printf("lat_cfuncion_nueva\n");
+    lat_objeto* ret = lat_crear_objeto(mv);
+    ret->tipo = T_CFUNC;
+    //ret->tamanio = ret->tamanio;
+    mv->memoria_usada += ret->tamanio;
     return ret;
 }
 
-void lat_eliminar_objeto(lat_vm* vm, lat_objeto* o)
+void lat_eliminar_objeto(lat_mv* vm, lat_objeto* o)
 {
-    switch (o->type)
+    //printf("eliminando objeto %p\n", &o);
+    switch (o->tipo)
     {
-    case T_NULO:
-        return;
+    case T_CONTEXT:
+        __dic_destruir(o->datos.contexto);
         break;
-    case T_INSTANCE:
-        return;
-        break;
-    case T_LIST:
-        //lat_eliminar_lista(vm, o->data.lista);
+    case T_LIST:                
+        __lista_limpiar_destruir(o->datos.lista);
         break;
     case T_DICT:
-        //lat_eliminar_lista(vm, o->data.lista);
-        break;
-    case T_LIT:
-    case T_INT:
-    case T_DOUBLE:
-    case T_BOOL:
+        __dic_destruir(o->datos.dic);
         break;
     case T_STR:
-        return;
+        __memoria_liberar(o->datos.cadena);        
         break;
-    case T_FUNC:
-    case T_CFUNC:
-        return;
-    case T_CLASS:
-        return;
+    case T_FUNC: {
+        lat_function* fun = (lat_function*)o->datos.fun_usuario;
+        __memoria_liberar(fun->bcode); 
+        __memoria_liberar(fun);
+    }
+    break;    
+    case T_CFUNC: {
+        __memoria_liberar(o->datos.c_funcion);
+        __memoria_liberar(o->nombre_cfun);
+    }
+    break;
+    default:
         break;
     }
     __memoria_liberar(o);
 }
 
-lat_objeto* lat_clonar_objeto(lat_vm* vm, lat_objeto* obj)
-{
+lat_objeto* lat_clonar_objeto(lat_mv* vm, lat_objeto* obj)
+{    
     //printf("lat_clonar_objeto\n");
-    lat_objeto* ret;
-    switch (obj->type)
+    lat_objeto* ret = NULL;
+    switch (obj->tipo)
     {
-    case T_INSTANCE:
+    case T_CONTEXT:
         ret = lat_crear_objeto(vm);
-        ret->type = T_INSTANCE;
-        ret->data_size = sizeof(hash_map*);
-        ret->data.nombre = obj->data.nombre;
-        //TODO: Test
-        //ret->data.nombre = __dic_clonar(obj->data.nombre);
+        ret->tipo = T_CONTEXT;
+        ret->tamanio = sizeof(hash_map*);
+        ret->datos.contexto = __dic_clonar(obj->datos.contexto);
         break;
     case T_LIST:
-        ret = lat_lista_nueva(vm, lat_clonar_lista(vm, obj->data.lista));        
+        ret = lat_lista_nueva(vm, lat_clonar_lista(vm, obj->datos.lista));        
         break;
     case T_FUNC:
-    case T_CFUNC:
-        ret = obj;
-        break;
-    default:
         ret = lat_crear_objeto(vm);
-        ret->type = obj->type;
-        ret->marked = obj->marked;
-        ret->data_size = obj->data_size;
-        ret->data = obj->data;
-        ret->num_param = obj->num_param;
+        ret->tipo = obj->tipo;
+        ret->datos.fun_usuario = obj->datos.fun_usuario;
+        ret->num_params = obj->num_params;
+        break;
+    case T_CFUNC:
+        ret = lat_crear_objeto(vm);
+        ret->tipo = obj->tipo;
+        ret->datos.c_funcion = obj->datos.c_funcion;
+        ret->num_params = obj->num_params;
+        break;
+    case T_NUMERIC:        
+        ret = lat_crear_objeto(vm);
+        ret->tipo = obj->tipo;
+        ret->datos.numerico = obj->datos.numerico;        
+        ret->tamanio = obj->tamanio;
+        ret->num_linea = obj->num_linea;
+        ret->num_columna = obj->num_columna;
+        vm->memoria_usada += obj->tamanio;
+    break;
+    default:        
+        ret = lat_crear_objeto(vm);
+        ret->tipo = obj->tipo;
+        ret->marca = obj->marca;
+        ret->tamanio = obj->tamanio;
+        ret->datos = obj->datos;
+        ret->num_params = obj->num_params;
         ret->num_linea = obj->num_linea;
         ret->num_columna = obj->num_columna;
         break;
@@ -282,7 +280,7 @@ lat_objeto* lat_clonar_objeto(lat_vm* vm, lat_objeto* obj)
     return ret;
 }
 
-lista* lat_clonar_lista(lat_vm* vm, lista* list)
+lista* lat_clonar_lista(lat_mv* vm, lista* list)
 {
     lista* ret = __lista_crear();
     LIST_FOREACH(list, primero, siguiente, cur) {
@@ -291,39 +289,11 @@ lista* lat_clonar_lista(lat_vm* vm, lista* list)
     return ret;
 }
 
-char* lat_obtener_literal(lat_objeto* o)
-{
-    if (o->type == T_LIT || o->type == T_STR)
-    {
-        return o->data.c;
-    }
-    lat_fatal_error("Linea %d, %d: %s", o->num_linea, o->num_columna,  "El parametro debe de ser una literal");
-    return 0;
-}
-
-long lat_obtener_entero(lat_objeto* o)
-{
-    if (o->type == T_INT)
-    {
-        return o->data.i;
-    }
-    if (o->type == T_DOUBLE)
-    {
-        return (long)o->data.d;
-    }
-    lat_fatal_error("Linea %d, %d: %s", o->num_linea, o->num_columna,  "El parametro debe de ser un entero");
-    return 0;
-}
-
 double lat_obtener_decimal(lat_objeto* o)
 {
-    if (o->type == T_DOUBLE)
+    if (o->tipo == T_NUMERIC)
     {
-        return o->data.d;
-    }
-    else if (o->type == T_INT)
-    {
-        return (double)o->data.i;
+        return o->datos.numerico;
     }
     lat_fatal_error("Linea %d, %d: %s", o->num_linea, o->num_columna,  "El parametro debe de ser un decimal");
     return 0;
@@ -331,9 +301,9 @@ double lat_obtener_decimal(lat_objeto* o)
 
 char* lat_obtener_cadena(lat_objeto* o)
 {
-    if (o->type == T_STR)
+    if (o->tipo == T_STR)
     {
-        return o->data.str;
+        return o->datos.cadena;
     }
     lat_fatal_error("Linea %d, %d: %s", o->num_linea, o->num_columna,  "El parametro debe de ser una cadena");
     return 0;
@@ -341,9 +311,9 @@ char* lat_obtener_cadena(lat_objeto* o)
 
 bool lat_obtener_logico(lat_objeto* o)
 {
-    if (o->type == T_BOOL)
+    if (o->tipo == T_BOOL)
     {
-        return o->data.b;
+        return o->datos.logico;
     }
     lat_fatal_error("Linea %d, %d: %s", o->num_linea, o->num_columna,  "El parametro debe de ser un valor logico (verdadero o falso)");
     return false;
@@ -351,9 +321,9 @@ bool lat_obtener_logico(lat_objeto* o)
 
 lista* lat_obtener_lista(lat_objeto* o)
 {
-    if (o->type == T_LIST)
+    if (o->tipo == T_LIST)
     {
-        return o->data.lista;
+        return o->datos.lista;
     }
     lat_fatal_error("Linea %d, %d: %s", o->num_linea, o->num_columna,  "El parametro debe de ser una lista");
     return NULL;

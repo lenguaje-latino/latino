@@ -1,9 +1,9 @@
 #ignora directorios
-bin/
 build/
 CMakeFiles/
 dist/
 Release/
+Debug/
 codeblocks/doxygen/
 Testing/
 test/
@@ -16,6 +16,7 @@ Testing/
 *.o
 *.a
 *.gch
+*.gcov
 *.deb
 *.exe
 *.msi

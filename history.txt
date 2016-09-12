@@ -1,9 +1,29 @@
-escribir("hola latino")\r
-1+6\r
-3.1416*2*10\r
-sistema("echo 'hola mundo'")\r
-sistema("echo 'hola ingrata'")\r
-1*3+4\r
-2*3+4\r
-1+5
-salir
+escribir("hola latino")\r\r
+1+6\r\r
+3.1416*2*10\r\r
+sistema("echo 'hola mundo'")\r\r
+sistema("echo 'hola ingrata'")\r\r
+1*3+4\r\r
+2*3+4\r\r
+1+5\r
+salir\r
+escribir("hola")
+i=10
+i=0
+escribir(i)
+x=10
+escribir(x)
+seno(0.65)
+z = seno(0.65)
+escribir(z)
+i=10
+iiescribir(i)
+escribir(i)
+funcion x(a,b)retorno a+bfin
+x(1,2)
+i=10
+escribir(i)
+funcion s(a,b)retorno a+bfin
+s(3,5)
+funcion s()escribir("hola")fin
+s()

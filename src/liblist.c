@@ -3,8 +3,8 @@
 #include "libmem.h"
 
 lista *__lista_crear()
-{
-    //return calloc(1, sizeof(lista));
+{ 
+    //printf("__lista_crear\n");
     return __memoria_asignar(sizeof(lista));
 }
 
@@ -33,8 +33,7 @@ void __lista_limpiar_destruir(lista *list)
 }
 
 void __lista_apilar(lista *list, void *value)
-{
-    //lista_nodo *node = calloc(1, sizeof(lista_nodo));
+{    
     lista_nodo *node = __memoria_asignar(sizeof(lista_nodo));
     node->valor = value;
     if(list->ultimo == NULL) {
@@ -56,7 +55,6 @@ void *__lista_desapilar(lista *list)
 
 void __lista_insertar_inicio(lista *list, void *value)
 {
-    //lista_nodo *node = calloc(1, sizeof(lista_nodo));
     lista_nodo *node = __memoria_asignar(sizeof(lista_nodo));
     node->valor = value;
     if(list->primero == NULL) {
@@ -68,8 +66,6 @@ void __lista_insertar_inicio(lista *list, void *value)
         list->primero = node;
     }
     list->longitud++;
-//error:
-//    return;
 }
 
 void *__lista_extraer_inicio(lista *list)
@@ -80,7 +76,7 @@ void *__lista_extraer_inicio(lista *list)
 
 void *__lista_eliminar_elemento(lista *list, lista_nodo *node)
 {
-    void *result = NULL;
+    void *result = NULL;    
     if(node == list->primero && node == list->ultimo) {
         list->primero = NULL;
         list->ultimo = NULL;
@@ -99,15 +95,13 @@ void *__lista_eliminar_elemento(lista *list, lista_nodo *node)
     list->longitud--;
     result = node->valor;
     __memoria_liberar(node);
-
-//error:
     return result;
 }
 
 int __lista_contiene_valor(lista* list, void* data)
 {
     LIST_FOREACH(list, primero, siguiente, cur) {
-        if (memcmp(cur->valor, data, sizeof(data)) == 0)
+        if (memcmp(cur->valor, data, sizeof(*data)) == 0)
         {
             return 1;
         }
@@ -144,5 +138,5 @@ void __lista_modificar_elemento(lista* list, void* data, int pos)
             cur->valor = data;
         }
         i++;
-    }    
+    }
 }

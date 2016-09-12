@@ -23,6 +23,7 @@ THE SOFTWARE.
 */
 
 #include <stdio.h>
+#include <stdlib.h>
 #include <string.h>
 #include "libio.h"
 #include "libstring.h"
@@ -41,7 +42,7 @@ bool __io_es_legible(const char *archivo)
     return true;
 }
 
-void lat_leer(lat_vm *vm)
+void lat_leer(lat_mv *vm)
 {
     char str[MAX_INPUT_SIZE];
     fgets(str, MAX_INPUT_SIZE, stdin);
@@ -55,18 +56,18 @@ void lat_leer(lat_vm *vm)
     ret =strtod(str, &ptr);
     if(strcmp(ptr, "") == 0)
     {
-        vm->registros[255] = lat_decimal_nuevo(vm, ret);
+        lat_apilar(vm, lat_decimal_nuevo(vm, ret));
     }
     else
     {
-        vm->registros[255] = lat_cadena_nueva(vm, __str_analizar(str, strlen(str)));
+        lat_apilar(vm, lat_cadena_nueva(vm, __str_analizar(str, strlen(str))));
     }
 }
-void lat_leer_archivo(lat_vm *vm)
+void lat_leer_archivo(lat_mv *vm)
 {
     lat_objeto* o = lat_desapilar(vm);
 
-    if(o->type == T_STR || o->type == T_LIT)
+    if(o->tipo == T_STR)
     {
         FILE *fp;
         char *buf;
@@ -87,7 +88,7 @@ void lat_leer_archivo(lat_vm *vm)
         }
         buf[newSize] = '\0';
         fclose(fp);
-        vm->registros[255] = lat_cadena_nueva(vm, buf);
+        lat_apilar(vm, lat_cadena_nueva(vm, buf));
     }
     else
     {
@@ -95,11 +96,11 @@ void lat_leer_archivo(lat_vm *vm)
     }
 }
 
-void lat_escribir_archivo(lat_vm *vm)
+void lat_escribir_archivo(lat_mv *vm)
 {
     lat_objeto* s = lat_desapilar(vm);
     lat_objeto* o = lat_desapilar(vm);
-    if(o->type == T_STR || o->type == T_LIT)
+    if(o->tipo == T_STR)
     {
         FILE* fp;
         fp = fopen(lat_obtener_cadena(o), "w");
@@ -114,8 +115,8 @@ void lat_escribir_archivo(lat_vm *vm)
     }
 }
 
-void lat_sistema(lat_vm *vm)
+void lat_sistema(lat_mv *vm)
 {
     lat_objeto* o = lat_desapilar(vm);
-    system(lat_obtener_cadena(o));    
+    system(lat_obtener_cadena(o));
 }

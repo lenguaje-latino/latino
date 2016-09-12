@@ -29,8 +29,8 @@ THE SOFTWARE.
 /**\brief Valor hash */
 typedef struct hash_val
 {
-    char key[256];    /**< Llave */
-    void* val;    /**< Valor */
+    char llave[32];    /**< Llave */
+    void* valor;    /**< Valor */
 } hash_val;
 
 /**\brief Mapa de valores hash */
@@ -45,6 +45,13 @@ typedef struct hash_map
   *\return hash_map*: Apuntador a la tabla creada
   */
 hash_map* __dic_crear();
+
+/**
+  *\brief Libera la informacion de una tabla hash
+  *
+  *\param dic*: Apuntador a la tabla creada
+  */
+void __dic_destruir(hash_map *dic);
 
 /**\brief Crea un hash de una cadena
   *

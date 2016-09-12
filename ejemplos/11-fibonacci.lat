@@ -9,25 +9,18 @@
 ################################################
 
 #mala implementacion (recursiva)
-funcion fibonacci(n)
-    si ( n == 0 )
-        retorno 0
+funcion fibo_rec(n)
+    si ( n < 2 )
+        retorno n
     fin
-    si ( n == 1 )
-        retorno 1
-    fin
-    retorno fibonacci(n-1) + fibonacci(n-2)
+    retorno fibo_rec(n-1) + fibo_rec(n-2)
 fin
 
 #mejor implementacion (iterativa)
-funcion fibo(n)
-    si(n == 0)
-        retorno 0
+funcion fibo_iter(n)
+    si ( n < 2 )
+        retorno n
     fin
-    si(n == 1)
-        retorno 1
-    fin
-
     prevPrev = 0
     prev = 1
     res = 0
@@ -44,12 +37,12 @@ fin
 #imprimir la serie de 45 provoca desborde de la pila (stack overflow)
 imprimir ("version recursiva")
 desde (i=0; i < 15; i++)
-    imprimir(i . ": " . fibonacci(i))
+    imprimir(i . ": " . fibo_rec(i))
 fin
 
 imprimir("version iterativa")
 desde (i=0; i <= 45; i++)
-    imprimir(i . ": " . fibo(i))
+    imprimir(i . ": " . fibo_iter(i))
 fin
 
 #ejemplo salida:

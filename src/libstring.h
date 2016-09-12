@@ -35,15 +35,6 @@ THE SOFTWARE.
 *
 */
 
-/** Guarda un cadena en hashtable
-  *
-  * \param p: Apuntador a la cadena a guardar
-  * \param len: Longitud de la cadena
-  * \return lat_objeto: Un objeto tipo cadena
-  *
-  */
-lat_objeto* __str_cadena_hash(const char* p, size_t len);
-
 /**\brief Duplica una cadena
   *
   * \param s: Apuntador a una cadena de caracteres
@@ -66,34 +57,6 @@ char* __str_analizar(const char* s, size_t n);
   *\return char*: Apuntador a cadena resultado de s1 + s2
   */
 char* __str_concatenar(char* s1, char* s2);
-
-/**\brief Convierte un entero a cadena
-  *
-  *\param i: Valor entero largo
-  *\return char*: Apuntador a cadena
-  */
-char* __str_entero_a_cadena(long i);
-
-/**\brief Convierte un decimal a cadena
-  *
-  *\param d: Valor decimal
-  *\return char*: Apuntador a cadena
-  */
-char* __str_decimal_a_cadena(double d);
-
-/**\brief Convierte un caracter a cadena
-  *
-  *\param c: Valor del caracter
-  *\return char*: Apuntador a cadena
-  */
-char* __str_caracter_a_cadena(char c);
-
-/**\brief Convierte un valor logico
-  *
-  *\param i: Valor logico 0, 1
-  *\return char*: Apuntador a cadena
-  */
-char* __str_logico_a_cadena(int i);
 
 /**\brief Valida si una cadena inicia con
   *
@@ -201,6 +164,30 @@ char *__str_mayusculas(const char* str);
   *\return char*: Apuntador a la cadena resultante
   */
 char *__str_quitar_espacios(const char* str);
+
+/**\brief Convierte un decimal a cadena
+  *
+  *\param d: Valor decimal
+  *\return char*: Apuntador a cadena
+  */
+char* __str_decimal_a_cadena(double d);
+
+/**\brief Convierte un valor logico
+  *
+  *\param i: Valor logico 0, 1
+  *\return char*: Apuntador a cadena
+  */
+char* __str_logico_a_cadena(int i);
+
+char* __str_concatenar(char* s1, char* s2);
+
+/** concatenar: Une dos cadenas
+  *
+  * \param vm: Maquina virtual de latino
+  *
+  */
+void lat_concatenar(lat_mv* vm);
+
 /** Comparar: compara dos cadenas
   * valor de retorno	indica
   * -------------------------------
@@ -211,149 +198,140 @@ char *__str_quitar_espacios(const char* str);
   * \param vm: Maquina virtual de latino
   *
   */
-void lat_comparar(lat_vm* vm);
-
-/** concatenar: Une dos cadenas
-  *
-  * \param vm: Maquina virtual de latino
-  *
-  */
-void lat_concatenar(lat_vm* vm);
+void lat_comparar(lat_mv* vm);
 
 /** Contiene: Valida si una cadena contiene una subcadena determinada
   *
   * \param vm: Maquina virtual de latino
   *
   */
-void lat_contiene(lat_vm* vm);
+void lat_contiene(lat_mv* vm);
 
 /** Termina con: Valida si una cadena termina con una subcadena determinada
   *
   * \param vm: Maquina virtual de latino
   *
   */
-void lat_termina_con(lat_vm* vm);
+void lat_termina_con(lat_mv* vm);
 
 /** Es igual a: Valida si dos cadenas son iguales
   *
   * \param vm: Maquina virtual de latino
   *
   */
-void lat_es_igual(lat_vm* vm);
-//void lat_format(lat_vm* vm);
+void lat_es_igual(lat_mv* vm);
 
 /** Indice: Regresa el indice de una subcadena determinada
   *
   * \param vm: Maquina virtual de latino
   *
   */
-void lat_indice(lat_vm* vm);
+void lat_indice(lat_mv* vm);
 
 /** lat_insertar: inserta una subcadena en una cadena en el indice indicado
   *
   * \param vm: Maquina virtual de latino
   *
   */
-void lat_insertar(lat_vm* vm);
+void lat_insertar(lat_mv* vm);
 
 /** Ultimo indice: Regresa la ultima posicion en la que se encontro una subcadena
   *
   * \param vm: Maquina virtual de latino
   *
   */
-void lat_ultimo_indice(lat_vm* vm);
+void lat_ultimo_indice(lat_mv* vm);
 
 /** Rellenar izquierda: Rellena una cadena con caracteres a la izquierda
   *
   * \param vm: Maquina virtual de latino
   *
   */
-void lat_rellenar_izquierda(lat_vm* vm);
+void lat_rellenar_izquierda(lat_mv* vm);
 
 /** Rellenar derecha: Rellena una cadena con caracteres a la derecha
   *
   * \param vm: Maquina virtual de latino
   *
   */
-void lat_rellenar_derecha(lat_vm* vm);
+void lat_rellenar_derecha(lat_mv* vm);
 
 /** Eliminar: Elimina una subacadena determinada
   *
   * \param vm: Maquina virtual de latino
   *
   */
-void lat_eliminar(lat_vm* vm);
+void lat_eliminar(lat_mv* vm);
 
 /** Esta vacia: Valida si una cadena esta vacia
   *
   * \param vm: Maquina virtual de latino
   *
   */
-void lat_esta_vacia(lat_vm* vm);
+void lat_esta_vacia(lat_mv* vm);
 
 /** Longitud: Regresa la longitud de una cadena
   *
   * \param vm: Maquina virtual de latino
   *
   */
-void lat_longitud(lat_vm* vm);
+void lat_longitud(lat_mv* vm);
 
 /** Reemplazar: Reemplaza una subcadena por otra subcadena
   *
   * \param vm: Maquina virtual de latino
   *
   */
-void lat_reemplazar(lat_vm* vm);
-//void lat_split(lat_vm* vm);
+void lat_reemplazar(lat_mv* vm);
+//void lat_split(lat_mv* vm);
 
 /** Empieza con: Valida si una cadena inicia con una subcadena determinada
   *
   * \param vm: Maquina virtual de latino
   *
   */
-void lat_empieza_con(lat_vm* vm);
+void lat_empieza_con(lat_mv* vm);
 
 /** Subcadena: Crea una subcadena
   *
   * \param vm: Maquina virtual de latino
   *
   */
-void lat_subcadena(lat_vm* vm);
+void lat_subcadena(lat_mv* vm);
 
 /** Minusculas: Convierte a minusculas toda la cadena
   *
   * \param vm: Maquina virtual de latino
   *
   */
-void lat_minusculas(lat_vm* vm);
+void lat_minusculas(lat_mv* vm);
 
 /** Mayusculas: Convierte a mayusculas toda la cadena
   *
   * \param vm: Maquina virtual de latino
   *
   */
-void lat_mayusculas(lat_vm* vm);
+void lat_mayusculas(lat_mv* vm);
 
 /** Quitar espacios: Quita los espacios vacios al inicio y fin de la cadena
   *
   * \param vm: Maquina virtual de latino
   *
   */
-void lat_quitar_espacios(lat_vm* vm);
-//void lat_valueOf(lat_vm* vm);
+void lat_quitar_espacios(lat_mv* vm);
+//void lat_valueOf(lat_mv* vm);
 
 /** Es numero: Valida si una cadena es un numero
   *
   * \param vm: Maquina virtual de latino
   *
   */
-void lat_es_numero(lat_vm* vm);
+void lat_es_numerico(lat_mv* vm);
 
 /** Es alfa numerico: Valida si una cadena es un alfa numerico [a-Z0-9]
 *
 * \param vm: Maquina virtual de latino
 *
 */
-void lat_es_alfanumerico(lat_vm* vm);
-
+void lat_es_alfanumerico(lat_mv* vm);
 #endif // !_LIBSTRING_H_

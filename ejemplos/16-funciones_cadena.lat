@@ -29,12 +29,7 @@ escribir("contiene:")
 #contiene, regresa verdadero o falso
 escribir("lorem contiene 'ipsum'? " . contiene(lorem, "ipsum"))
 
-#copia una cadena es igual que el aginar ipsum = lorem
-escribir("------------------------------------------------------")
-escribir("copiar:")
-ipsum = copiar(lorem)
-escribir(ipsum)
-
+ipsum = lorem
 escribir("------------------------------------------------------")
 escribir("termina con:")
 #termina_con regresa verdadero si una cadena termina con la palabra enviada
