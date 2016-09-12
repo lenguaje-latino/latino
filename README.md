@@ -44,11 +44,9 @@ Cualquier versión/distribución de linux
 ```bash
  git clone https://github.com/primitivorm/latino
  cd latino
- sudo make tools # instalará las herramientas al escribir "latinoc"
  cmake .
  make
  sudo make install
- 
 ```
 
 #####Instalar en Windows
@@ -58,11 +56,7 @@ Cualquier versión/distribución de linux
 
 #####Nota:
 Puede requerir el framework de C++, descarguelo desde la pagina oficial de Microsoft:
-Si tu sistema operativo esta en español:
-https://www.microsoft.com/es-ES/download/details.aspx?id=49984
-Si tu sistema operativo esta en ingles:
-https://www.microsoft.com/en-us/download/details.aspx?id=49984
-
+https://www.microsoft.com/es-ES/download/details.aspx?id=48145
 
 ### COMPILAR
 
@@ -81,33 +75,13 @@ https://www.microsoft.com/en-us/download/details.aspx?id=49984
 | CodeLite | * |
 --
 
-
-#####Compilar en Visual Studio https://www.visualstudio.com/en-us/products/visual-studio-community-vs.aspx
-1. Abra la solución visualstudio/latino.sln
-2. Compile
-
---
-
-#####Compilar en CodeBlocks http://www.codeblocks.org/
-1. Abra el proyecto codeblocks/latino.cbp
-2. Compile
-
---
-
-#####Compilar en CodeLite http://codelite.org//
-1. Abra el proyecto codelite/latino.workspace
-2. Compile
-
-
-
 #Como desinstalar 'Latino' en Linux
 
 #### 1- Opción
 ```bash
-# Obtener makefile para desinstalarlo
-wget https://raw.githubusercontent.com/primitivorm/latino/master/Makefile
-# Desinstalar sus binarios
-sudo make uninstall
+# Si instalaste con `sudo make install` realiza lo siguiente:
+
+sudo ./uninstall.sh
 ```
 
 #### 2- Opción
@@ -115,26 +89,26 @@ sudo make uninstall
 Puedes ver un video de como proceder aca https://youtu.be/Q5xGm_Bp22k
 
 Pirmero debes saber donde esta instalado
- 
+
  ```
  whereis latino
  ```
- 
+
  te dara algo parecido a esto
 
  ```
  latino: /usr/local/bin/latino
 
  ```
- 
- ahora que sabemos donde esta solamente lo borramos 
+
+ ahora que sabemos donde esta solamente lo borramos
  ```
  sudo rm /usr/local/bin/latino
 
  ```
- 
+
 #### 3- Opción
- 
+
  LEER:
  **Solo debian/ubuntu. con paquete deb instalado**
  ```bash
@@ -142,7 +116,7 @@ Pirmero debes saber donde esta instalado
  # Ó de esta manera
  sudo apt-get remove latino # Ubuntu 14.x.x hacía atrás
  ```
- 
+
  Listo!
 
 ####Cualquier aportación o sugerencia es bienvenida.

@@ -1,2 +1,0 @@
-^C:\USERS\CIBER\DOCUMENTS\LATINO\SRC\CMAKELISTS.TXT
-setlocalC:\CMake\bin\cmake.exe -HC:/Users/ciber/Documents/latino -BC:/Users/ciber/Documents/latino/visualstudio --check-stamp-file C:\Users\ciber\Documents\latino\visualstudio\src\CMakeFiles\generate.stampif %errorlevel% neq 0 goto :cmEnd:cmEndendlocal & call :cmErrorLevel %errorlevel% & goto :cmDone:cmErrorLevelexit /b %1:cmDoneif %errorlevel% neq 0 goto :VCEnd

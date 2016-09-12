@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<CodeLite_Workspace Name="latino" >
-  <Project Name="latino" Path="latino.project" Active="No"/>
-  <BuildMatrix>
-    <WorkspaceConfiguration Name="NoConfig" Selected="yes">
-      <Project Name="latino" ConfigName="NoConfig"/>
-    </WorkspaceConfiguration>
-  </BuildMatrix>
-</CodeLite_Workspace>

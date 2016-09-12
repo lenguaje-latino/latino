@@ -1,10 +1,11 @@
-set(CMAKE_VERBOSE_MAKEFILE true)
+SET(CMAKE_VERBOSE_MAKEFILE true)
 SET(CMAKE_C_OUTPUT_EXTENSION_REPLACE 1)
+SET(CMAKE_INSTALL_PREFIX /usr/bin )
 
 IF(UNIX)
     LINK_LIBRARIEs(m)
     SET(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -D_GNU_SOURCE -Wall -std=c11")
-    SET(CMAKE_C_FLAGS_DEBUG "${CMAKE_C_FLAGS} -D_GNU_SOURCE -coverage -g -O0 -Wall -std=c11")    
+    SET(CMAKE_C_FLAGS_DEBUG "${CMAKE_C_FLAGS} -D_GNU_SOURCE -coverage -g -O0 -Wall -std=c11")
 ELSE(UNIX)
     IF(MSVC)
         SET(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} /W4")
@@ -21,7 +22,7 @@ ADD_SUBDIRECTORY(linenoise)
 
 SET(SOURCES compat.h
     latino.h ast.h vm.h object.h libstring.h libmem.h liblist.h
-    lex.h parse.h libmath.h libio.h  libnet.h libdict.h gc.h 
+    lex.h parse.h libmath.h libio.h  libnet.h libdict.h gc.h
     linenoise/utf8.h linenoise/linenoise.h
     latino.c ast.c vm.c object.c libstring.c libmem.c liblist.c
     lex.c parse.c libmath.c libio.c libnet.c libdict.c gc.c
@@ -35,7 +36,7 @@ TARGET_LINK_LIBRARIES(latino LINK_PUBLIC
     ${BISON_LIBRARIES} ${CMAKE_DL_LIBS})
 
 IF(UNIX)
-  INSTALL(TARGETS latino DESTINATION /usr/bin)
+  INSTALL(TARGETS latino DESTINATION ${CMAKE_INSTALL_PREFIX})
 ENDIF(UNIX)
 
 #crear paquete .deb https://cmake.org/Wiki/CMake/CPack/Examples/Linux/DEB
