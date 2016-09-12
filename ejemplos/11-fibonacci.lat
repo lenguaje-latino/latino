@@ -41,7 +41,7 @@ desde (i=0; i < 15; i++)
 fin
 
 imprimir("version iterativa")
-desde (i=0; i <= 100; i++)
+desde (i=0; i <= 45; i++)
     imprimir(i . ": " . fibo_iter(i))
 fin
 

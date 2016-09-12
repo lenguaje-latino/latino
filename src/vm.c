@@ -28,7 +28,6 @@ THE SOFTWARE.
 #include <math.h>
 
 #include "compat.h"
-//#include "latino.h"
 #include "vm.h"
 #include "libmem.h"
 #include "libmath.h"
@@ -74,6 +73,7 @@ static const char *const bycode_nombre[] = {
     "INC",    
     "DEC", 
     "LOAD_ATTR",
+    "BUILD_LIST",
 };
 
 
@@ -133,6 +133,7 @@ lat_mv* lat_mv_crear()
     //printf("creando mv\n");
     lat_mv* mv = (lat_mv*)__memoria_asignar(sizeof(lat_mv));
     mv->memoria_usada = sizeof(lat_mv);
+    mv->modulos = lat_lista_nueva(mv, __lista_crear());    
     mv->gc_objetos = lat_lista_nueva(mv, __lista_crear());    
     mv->pila = lat_lista_nueva(mv, __lista_crear());
     mv->objeto_verdadero = lat_logico_nuevo(mv, true);
@@ -155,77 +156,73 @@ lat_mv* lat_mv_crear()
 
     /*10 Operadores */
 
-    /*20 funciones matematicas */
-    /*__registrar_cfuncion(vm, "arco_coseno", lat_arco_coseno);
-    __registrar_cfuncion(vm, "arco_seno", lat_arco_seno);
-    __registrar_cfuncion(vm, "arco_tangente", lat_arco_tangente);
-    __registrar_cfuncion(vm, "arco_tangente2", lat_arco_tangente2);
-    __registrar_cfuncion(vm, "coseno", lat_coseno);
-    __registrar_cfuncion(vm, "coseno_hiperbolico", lat_coseno_hiperbolico);
-    __registrar_cfuncion(vm, "seno", lat_seno);
-    __registrar_cfuncion(vm, "seno_hiperbolico", lat_seno_hiperbolico);
-    __registrar_cfuncion(vm, "tangente", lat_tangente);
-    __registrar_cfuncion(vm, "tangente_hiperbolica", lat_tangente_hiperbolica);
-    __registrar_cfuncion(vm, "exponente", lat_exponente);
-    __registrar_cfuncion(vm, "logaritmo_natural", lat_logaritmo_natural);
-    __registrar_cfuncion(vm, "logaritmo_base10", lat_logaritmo_base10);
-    __registrar_cfuncion(vm, "potencia", lat_potencia);
-    __registrar_cfuncion(vm, "raiz_cuadrada", lat_raiz_cuadrada);
-    __registrar_cfuncion(vm, "redondear_arriba", lat_redondear_arriba);
-    __registrar_cfuncion(vm, "valor_absoluto", lat_valor_absoluto);
-    __registrar_cfuncion(vm, "redondear_abajo", lat_redondear_abajo);
-    __registrar_cfuncion(vm, "ejecutar_archivo", lat_ejecutar_archivo);
-    __registrar_cfuncion(vm, "modulo", lat_modulo_decimal);*/
+    /*20 funciones matematicas */    
+    __registrar_cfuncion(mv, "arco_coseno", lat_arco_coseno, 1);
+    __registrar_cfuncion(mv, "arco_seno", lat_arco_seno, 1);
+    __registrar_cfuncion(mv, "arco_tangente", lat_arco_tangente, 1);
+    __registrar_cfuncion(mv, "arco_tangente2", lat_arco_tangente2, 2);
+    __registrar_cfuncion(mv, "coseno", lat_coseno, 1);
+    __registrar_cfuncion(mv, "coseno_hiperbolico", lat_coseno_hiperbolico, 1);
+    __registrar_cfuncion(mv, "seno", lat_seno, 1);
+    __registrar_cfuncion(mv, "seno_hiperbolico", lat_seno_hiperbolico, 1);
+    __registrar_cfuncion(mv, "tangente", lat_tangente, 1);
+    __registrar_cfuncion(mv, "tangente_hiperbolica", lat_tangente_hiperbolica, 1);
+    __registrar_cfuncion(mv, "exponente", lat_exponente, 1);
+    __registrar_cfuncion(mv, "logaritmo_natural", lat_logaritmo_natural, 1);
+    __registrar_cfuncion(mv, "logaritmo_base10", lat_logaritmo_base10, 1);
+    __registrar_cfuncion(mv, "potencia", lat_potencia, 2);
+    __registrar_cfuncion(mv, "raiz_cuadrada", lat_raiz_cuadrada, 1);
+    __registrar_cfuncion(mv, "redondear_arriba", lat_redondear_arriba, 1);
+    __registrar_cfuncion(mv, "valor_absoluto", lat_valor_absoluto, 1);
+    __registrar_cfuncion(mv, "redondear_abajo", lat_redondear_abajo, 1);    
+    __registrar_cfuncion(mv, "modulo", lat_modulo_decimal, 1);    
 
     /*30 funciones para cadenas (string)*/
-    /*__registrar_cfuncion(vm, "comparar", lat_comparar);
-    __registrar_cfuncion(vm, "concatenar", lat_concatenar);
-    __registrar_cfuncion(vm, ".", lat_concatenar);
-    __registrar_cfuncion(vm, "contiene", lat_contiene);
-    __registrar_cfuncion(vm, "termina_con", lat_termina_con);
-    __registrar_cfuncion(vm, "es_igual", lat_es_igual);
-    __registrar_cfuncion(vm, "indice", lat_indice);
-    __registrar_cfuncion(vm, "insertar", lat_insertar);
-    __registrar_cfuncion(vm, "ultimo_indice", lat_ultimo_indice);
-    __registrar_cfuncion(vm, "rellenar_izquierda", lat_rellenar_izquierda);
-    __registrar_cfuncion(vm, "rellenar_derecha", lat_rellenar_derecha);
-    __registrar_cfuncion(vm, "eliminar", lat_eliminar);
-    __registrar_cfuncion(vm, "esta_vacia", lat_esta_vacia);
-    __registrar_cfuncion(vm, "longitud", lat_longitud);
-    __registrar_cfuncion(vm, "reemplazar", lat_reemplazar);
-    __registrar_cfuncion(vm, "empieza_con", lat_empieza_con);
-    __registrar_cfuncion(vm, "subcadena", lat_subcadena);
-    __registrar_cfuncion(vm, "minusculas", lat_minusculas);
-    __registrar_cfuncion(vm, "mayusculas", lat_mayusculas);
-    __registrar_cfuncion(vm, "quitar_espacios", lat_quitar_espacios);
-    __registrar_cfuncion(vm, "es_numero", lat_es_numero);
-    __registrar_cfuncion(vm, "es_alfanumerico", lat_es_alfanumerico);
-    __registrar_cfuncion(vm, "ejecutar", lat_ejecutar);
-    __registrar_cfuncion(vm, "ejecutar_archivo", lat_ejecutar_archivo);*/
+    __registrar_cfuncion(mv, "comparar", lat_comparar, 2);
+    __registrar_cfuncion(mv, "concatenar", lat_concatenar, 2);
+    __registrar_cfuncion(mv, ".", lat_concatenar, 2);
+    __registrar_cfuncion(mv, "contiene", lat_contiene, 2);
+    __registrar_cfuncion(mv, "termina_con", lat_termina_con, 2);
+    __registrar_cfuncion(mv, "es_igual", lat_es_igual, 2);
+    __registrar_cfuncion(mv, "indice", lat_indice, 2);
+    __registrar_cfuncion(mv, "insertar", lat_insertar, 3);
+    __registrar_cfuncion(mv, "ultimo_indice", lat_ultimo_indice, 2);
+    __registrar_cfuncion(mv, "rellenar_izquierda", lat_rellenar_izquierda, 3);
+    __registrar_cfuncion(mv, "rellenar_derecha", lat_rellenar_derecha, 3);
+    __registrar_cfuncion(mv, "eliminar", lat_eliminar, 2);
+    __registrar_cfuncion(mv, "esta_vacia", lat_esta_vacia, 1);
+    __registrar_cfuncion(mv, "longitud", lat_longitud, 1);
+    __registrar_cfuncion(mv, "reemplazar", lat_reemplazar, 3);
+    __registrar_cfuncion(mv, "empieza_con", lat_empieza_con, 2);
+    __registrar_cfuncion(mv, "subcadena", lat_subcadena, 3);
+    __registrar_cfuncion(mv, "minusculas", lat_minusculas, 1);
+    __registrar_cfuncion(mv, "mayusculas", lat_mayusculas, 1);
+    __registrar_cfuncion(mv, "quitar_espacios", lat_quitar_espacios, 1);
+    __registrar_cfuncion(mv, "es_numerico", lat_es_numerico, 1);
+    __registrar_cfuncion(mv, "es_alfanumerico", lat_es_alfanumerico, 1);
+    __registrar_cfuncion(mv, "ejecutar", lat_ejecutar, 1);
+    __registrar_cfuncion(mv, "ejecutar_archivo", lat_ejecutar_archivo, 1);
 
-    /*40 entrada / salida */   
-    
+    /*40 entrada / salida */       
     __registrar_cfuncion(mv, "imprimir", lat_imprimir, 1);
-    __registrar_cfuncion(mv, "escribir", lat_imprimir, 1);
-        
-    /*__registrar_cfuncion(vm, "leer", lat_leer);
-    __registrar_cfuncion(vm, "leer_archivo", lat_leer_archivo);
-    __registrar_cfuncion(vm, "salir", lat_salir);*/
+    __registrar_cfuncion(mv, "escribir", lat_imprimir, 1);        
+    __registrar_cfuncion(mv, "leer", lat_leer, 0);
+    __registrar_cfuncion(mv, "leer_archivo", lat_leer_archivo, 1);
+    __registrar_cfuncion(mv, "escribir_archivo", lat_escribir_archivo, 2);
+    __registrar_cfuncion(mv, "salir", lat_salir, 0);
 
     /*50 conversion de tipos de dato*/
-    /*__registrar_cfuncion(vm, "tipo", lat_tipo);
-    __registrar_cfuncion(vm, "logico", lat_logico);
-    __registrar_cfuncion(vm, "decimal", lat_decimal);
-    __registrar_cfuncion(vm, "cadena", lat_cadena);*/
+    __registrar_cfuncion(mv, "tipo", lat_tipo, 1);
+    __registrar_cfuncion(mv, "logico", lat_logico, 1);
+    __registrar_cfuncion(mv, "decimal", lat_decimal, 1);
+    __registrar_cfuncion(mv, "cadena", lat_cadena, 1);
 
     /*60 funciones para listas*/
     //__registrar_cfuncion(vm, "agregar", lat_agregar);
 
-    /*99 otras funciones */
-    /*__registrar_cfuncion(vm, "cadena", lat_cadena);
-    __registrar_cfuncion(vm, "maximo", lat_maximo);
-    __registrar_cfuncion(vm, "minimo", lat_minimo);
-    __registrar_cfuncion(vm, "sistema", lat_sistema);*/
+    /*99 otras funciones */        
+    __registrar_cfuncion(mv, "sistema", lat_sistema, 1);
+    
 #ifdef __linux__
     //__registrar_cfuncion(vm, "peticion", lat_peticion);
 #endif
@@ -326,6 +323,39 @@ void lat_imprimir(lat_mv* vm)
 void __imprimir_lista(lat_mv* vm, lista* l)
 {
     fprintf(stdout, "%s", __lista_a_cadena(l));
+}
+
+void lat_ejecutar(lat_mv *vm)
+{
+    int status;
+    lat_objeto *func = nodo_analizar_arbol(vm, lat_analizar_expresion(lat_obtener_cadena(lat_desapilar(vm)), &status));
+    lat_llamar_funcion(vm, func);    
+}
+
+void lat_ejecutar_archivo(lat_mv *vm)
+{
+    char *input = lat_obtener_cadena(lat_desapilar(vm));
+    char *dot = strrchr(input, '.');
+    char *extension;
+    if (!dot || dot == input)
+    {
+        extension = "";
+    }
+    else
+    {
+        extension = dot + 1;
+    }
+    if (strcmp(extension, "lat") == 0)
+    {
+        int status;
+        ast *tree = lat_analizar_archivo(input, &status);
+        if (!tree)
+        {
+            lat_fatal_error("Error al leer el archivo: %s", input);
+        }
+        lat_objeto *func = nodo_analizar_arbol(vm, tree);
+        lat_llamar_funcion(vm, func);        
+    }
 }
 
 void lat_menos_unario(lat_mv* vm)
@@ -541,6 +571,125 @@ void lat_no(lat_mv* vm)
     __colector_agregar(vm, r);
 }
 
+void lat_logico(lat_mv* vm)
+{
+    lat_objeto* a = lat_desapilar(vm);
+    switch (a->tipo)
+    {
+    case T_NUMERIC:
+        if ((int)a->datos.numerico == 0)
+        {
+            lat_apilar(vm, vm->objeto_falso);
+        }
+        else
+        {
+            lat_apilar(vm, vm->objeto_verdadero);
+        }
+        break;
+    case T_STR:
+        if (strcmp(a->datos.cadena, "") == 0)
+        {
+            lat_apilar(vm, vm->objeto_falso);
+        }
+        else
+        {
+            lat_apilar(vm, vm->objeto_verdadero);
+        }
+        break;
+    default:
+        lat_fatal_error("Linea %d, %d: %s", a->num_linea, a->num_columna,  "Conversion de tipo de dato incompatible");
+        break;
+    }
+}
+
+void lat_decimal(lat_mv* vm)
+{
+    lat_objeto* a = lat_desapilar(vm);
+    switch (a->tipo)
+    {
+    case T_BOOL:
+        if (a->datos.logico == false)
+        {
+            lat_apilar(vm, lat_decimal_nuevo(vm, 0));
+        }
+        else
+        {
+            lat_apilar(vm, lat_decimal_nuevo(vm, 1));
+        }
+        break;    
+    case T_NUMERIC:
+        lat_apilar(vm, lat_decimal_nuevo(vm, a->datos.numerico));
+        break;
+    case T_STR:
+    {
+        char *ptr;
+        double ret;
+        ret = strtod(a->datos.cadena, &ptr);
+        if (strcmp(ptr, "") == 0)
+        {
+            lat_apilar(vm, lat_decimal_nuevo(vm, ret));
+        }
+        else
+        {
+            lat_fatal_error("Linea %d, %d: %s", a->num_linea, a->num_columna,  "Conversion de tipo de dato incompatible");
+        }
+    }
+    break;
+    default:
+       lat_fatal_error("Linea %d, %d: %s", a->num_linea, a->num_columna,  "Conversion de tipo de dato incompatible");
+        break;
+    }
+}
+
+void lat_cadena(lat_mv* vm)
+{
+    lat_objeto* a = lat_desapilar(vm);
+    switch (a->tipo)
+    {
+    case T_BOOL:
+        lat_apilar(vm, lat_cadena_nueva(vm, __str_logico_a_cadena(a->datos.logico)));
+        break;    
+    case T_NUMERIC:
+        lat_apilar(vm, lat_cadena_nueva(vm, __str_decimal_a_cadena(a->datos.numerico)));
+        break;
+    default:
+        lat_apilar(vm, a);
+        break;
+    }
+}
+
+void lat_tipo(lat_mv* vm)
+{
+    lat_objeto* a = lat_desapilar(vm);
+    switch (a->tipo)
+    {
+    case T_BOOL:
+        lat_apilar(vm, lat_cadena_nueva(vm, "logico"));
+        break;    
+    case T_NUMERIC:
+        lat_apilar(vm, lat_cadena_nueva(vm, "decimal"));
+        break;
+    case T_STR:
+        lat_apilar(vm, lat_cadena_nueva(vm, "cadena"));
+        break;    
+    case T_LIST:
+        lat_apilar(vm, lat_cadena_nueva(vm, "lista"));
+        break;
+    case T_DICT:
+        lat_apilar(vm, lat_cadena_nueva(vm, "diccionario"));
+        break;
+    default:
+        lat_apilar(vm, lat_cadena_nueva(vm, "nulo"));
+        break;
+    }
+}
+
+void lat_salir(lat_mv* vm)
+{
+    //lat_apilar(vm, lat_entero_nuevo(vm, 0L));
+    exit(0);
+}
+
 lat_bytecode lat_bc(int i, int a, int b, void* meta)
 {
     lat_bytecode ret;
@@ -612,7 +761,7 @@ void lat_llamar_funcion(lat_mv* vm, lat_objeto* func)
             }
             break;
             case BINARY_DIV:{
-                lat_multiplicar(vm);
+                lat_dividir(vm);
             }
             break;
             case BINARY_MOD:{
@@ -752,8 +901,12 @@ void lat_llamar_funcion(lat_mv* vm, lat_objeto* func)
                 lat_apilar(vm, fun);
             }
             break; 
-            case SETUP_LOOP: lat_apilar_contexto(vm); break; 
-            case POP_BLOCK: lat_desapilar_contexto(vm); break; 
+            case SETUP_LOOP: 
+            //lat_apilar_contexto(vm); 
+                break; 
+            case POP_BLOCK: 
+                //lat_desapilar_contexto(vm); 
+                break; 
             
 
             }   //fin de switch

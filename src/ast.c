@@ -355,29 +355,6 @@ static int __contar_num_parargs(ast* node, nodo_tipo nt){
     return num_params;
 }
 
-/*
-static int __contar_num_args(ast* node){
-    ast* tmp;
-    int num_args = 0;
-    if(node){        
-        if (node->tipo == NODO_FUNCION_ARGUMENTOS)
-        {    
-            tmp = node;
-            while (tmp->der != NULL && tmp->der->tipo == NODO_FUNCION_ARGUMENTOS)
-            {
-                tmp = tmp->der;
-                num_args++;
-            }
-            if (tmp->izq->tipo)
-            {
-                num_args++;
-            }
-        }
-    }
-    return num_args;
-}
-*/
-
 static int nodo_analizar(lat_mv *vm, ast *node, lat_bytecode *bcode, int i)
 {
     int temp[4] = {0};
@@ -387,6 +364,47 @@ static int nodo_analizar(lat_mv *vm, ast *node, lat_bytecode *bcode, int i)
     {
     case NODO_INCLUIR:
     {
+        //TODO: Incluir rutas con punto ej. incluir "lib.modulos.myModulo"
+        char* archivo = node->izq->valor->val.cadena;
+        lat_objeto* mod = lat_cadena_nueva(vm, archivo);
+        lista *modulos = lat_obtener_lista(vm->modulos);
+        int status;
+        if (!__lista_contiene_valor(modulos, (void*)mod))
+        {
+            //encontrar el modulo en la ruta actual
+            char dir_actual[MAX_PATH_LENGTH];
+            getcwd(dir_actual, sizeof(dir_actual));
+            strcat(dir_actual, PATH_SEP);
+            strcat(dir_actual, archivo);
+            if (!__str_termina_con(dir_actual, ".lat"))
+            {
+                strcat(dir_actual, ".lat");
+            }
+            if (__io_es_legible(dir_actual))
+            {
+                __lista_apilar(modulos, mod);
+                pn(vm, lat_analizar_archivo(dir_actual, &status));
+            }
+            else
+            {
+                //sino existe buscar en el path_home de latino/lib
+                char* latino_lib = getenv("LATINO_LIB");
+                if (latino_lib != NULL)
+                {
+                    strcat(latino_lib, PATH_SEP);
+                    strcat(latino_lib, archivo);
+                    if (!__str_termina_con(latino_lib, ".lat"))
+                    {
+                        strcat(latino_lib, ".lat");
+                    }
+                    if (__io_es_legible(latino_lib))
+                    {
+                        __lista_apilar(modulos, mod);
+                        pn(vm, lat_analizar_archivo(latino_lib, &status));
+                    }
+                }
+            }
+        }
     }
     break;
     case NODO_BLOQUE:
@@ -445,7 +463,6 @@ static int nodo_analizar(lat_mv *vm, ast *node, lat_bytecode *bcode, int i)
     break;
     case NODO_INC:
     {
-        //pn(vm, node->izq);
         lat_objeto *o = lat_cadena_nueva(vm, node->izq->valor->val.cadena);
         o->num_linea = node->num_linea;
         o->num_columna = node->num_columna;
@@ -454,8 +471,7 @@ static int nodo_analizar(lat_mv *vm, ast *node, lat_bytecode *bcode, int i)
     }
     break;
     case NODO_DEC:
-    {
-        //pn(vm, node->izq);
+    {        
         lat_objeto *o = lat_cadena_nueva(vm, node->izq->valor->val.cadena);
         o->num_linea = node->num_linea;
         o->num_columna = node->num_columna;
@@ -638,10 +654,6 @@ static int nodo_analizar(lat_mv *vm, ast *node, lat_bytecode *bcode, int i)
     break;
     case NODO_FUNCION_ARGUMENTOS:
     {
-        if (node->izq)
-        {
-            pn(vm, node->izq);
-        }
         if (node->der)
         {
             pn(vm, node->der);
@@ -651,6 +663,10 @@ static int nodo_analizar(lat_mv *vm, ast *node, lat_bytecode *bcode, int i)
                 int num_args = __contar_num_parargs(node->der->izq, NODO_FUNCION_ARGUMENTOS);
                 dbc(CALL_FUNCTION, num_args, 0, NULL);
             }
+        }
+        if (node->izq)
+        {
+            pn(vm, node->izq);
         }
     }
     break;
@@ -815,6 +831,9 @@ static void __mostrar_bytecode(lat_bytecode *bcode){
                 printf("-------------------------------\n");
                 __mostrar_bytecode(cur.meta);
                 printf("-------------------------------\n");
+            }break;
+            case BUILD_LIST: {
+                printf("BUILD_LIST %i\n", cur.a);
             }break;
         }
     }

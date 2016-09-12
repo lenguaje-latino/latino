@@ -28,5 +28,45 @@ THE SOFTWARE.
 #include <stdio.h>
 #include "vm.h"
 
+/** \file libio.h
+*
+* Contiene las funciones para el manejo de entradas y salidas
+*
+*/
+
+/**\brief Valida si un archivo se puede leer
+  *
+  *\param archivo: Nombre completo del archivo
+  *\return bool: true si se puede leer
+  */
+bool __io_es_legible(const char *archivo);
+
+/** Lee de la entrada estandar (teclado)
+  *
+  * \param vm: Máquina virtual de latino
+  *
+  */
+void lat_leer(lat_mv *vm);
+
+/** Lee un archivo
+  *
+  * \param vm: Maquina virtual de latino
+  *
+  */
+void lat_leer_archivo(lat_mv *vm);
+
+/** Escribir en un archivo
+  *
+  * \param vm: Máquina virtual de latino
+  *
+  */
+void lat_escribir_archivo(lat_mv *vm);
+
+/** Ejecuta un comando en el sistema actual ej. "cat file.lat"
+  *
+  * \param vm: Máquina virtual de latino
+  *
+  */
+void lat_sistema(lat_mv *vm);
 
 #endif /* !_LIBIO_H_ */

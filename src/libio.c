@@ -23,6 +23,7 @@ THE SOFTWARE.
 */
 
 #include <stdio.h>
+#include <stdlib.h>
 #include <string.h>
 #include "libio.h"
 #include "libstring.h"
@@ -30,3 +31,92 @@ THE SOFTWARE.
 #include "latino.h"
 #include "libmem.h"
 
+bool __io_es_legible(const char *archivo)
+{
+    FILE *f = fopen(archivo, "r");
+    if(f == NULL)
+    {
+        return false;
+    }
+    fclose(f);
+    return true;
+}
+
+void lat_leer(lat_mv *vm)
+{
+    char str[MAX_INPUT_SIZE];
+    fgets(str, MAX_INPUT_SIZE, stdin);
+    int i = strlen(str) - 1;
+    if (str[i] == '\n')
+        str[i] = '\0';
+
+    //obtiene decimal
+    char *ptr;
+    double ret;
+    ret =strtod(str, &ptr);
+    if(strcmp(ptr, "") == 0)
+    {
+        lat_apilar(vm, lat_decimal_nuevo(vm, ret));
+    }
+    else
+    {
+        lat_apilar(vm, lat_cadena_nueva(vm, __str_analizar(str, strlen(str))));
+    }
+}
+void lat_leer_archivo(lat_mv *vm)
+{
+    lat_objeto* o = lat_desapilar(vm);
+
+    if(o->tipo == T_STR)
+    {
+        FILE *fp;
+        char *buf;
+        fp = fopen(lat_obtener_cadena(o), "r");
+        if (fp == NULL)
+        {
+            lat_fatal_error("Linea %d, %d: %s", o->num_linea, o->num_columna,  "No se pudo abrir el archivo\n");
+        }
+        fseek(fp, 0, SEEK_END);
+        int fsize = ftell(fp);
+        fseek(fp, 0, SEEK_SET);        
+        //buf = calloc(1, fsize);
+        buf = __memoria_asignar(fsize+1);
+        size_t newSize = fread(buf, sizeof(char), fsize, fp);
+        if (buf == NULL)
+        {
+            printf("No se pudo asignar %d bytes de memoria\n", fsize);
+        }
+        buf[newSize] = '\0';
+        fclose(fp);
+        lat_apilar(vm, lat_cadena_nueva(vm, buf));
+    }
+    else
+    {
+        lat_fatal_error("Linea %d, %d: %s", o->num_linea, o->num_columna,  "No se pudo abrir el archivo\n");
+    }
+}
+
+void lat_escribir_archivo(lat_mv *vm)
+{
+    lat_objeto* s = lat_desapilar(vm);
+    lat_objeto* o = lat_desapilar(vm);
+    if(o->tipo == T_STR)
+    {
+        FILE* fp;
+        fp = fopen(lat_obtener_cadena(o), "w");
+        const char* cad = lat_obtener_cadena(s);
+        size_t lon = strlen(cad);
+        fwrite(cad, 1 , lon , fp);
+        fclose(fp);
+    }
+    else
+    {
+        lat_fatal_error("Linea %d, %d: %s", o->num_linea, o->num_columna,  "No se pudo escribir en el archivo\n");
+    }
+}
+
+void lat_sistema(lat_mv *vm)
+{
+    lat_objeto* o = lat_desapilar(vm);
+    system(lat_obtener_cadena(o));
+}
