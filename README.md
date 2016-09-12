@@ -62,22 +62,22 @@ https://www.microsoft.com/es-ES/download/details.aspx?id=48145
 
 ---
 
-|Requiere | Versión |
-| :---    |    ---: |
-| bison   |    3.04 |
-| flex    |  2.5.39 |
-| cmake   |   3.3.1 |
-| gcc (Linux)|4.9.3 |
-|jsoncpp| Solo para Fedora|
-|yum install make automake gcc gcc-c++ kernel-devel| Solo para Fedora|
+|Requiere | Versión | SO |
+| :---    |    ---: |:---|
+| bison   |    3.04 |Linux|
+| flex    |  2.5.39 |Linux|
+| cmake   |   3.3.1 |Linux|
+| gcc     |   4.9.3 |Linux|
+| g++     |   4.9.3 |Linux|
+| kernel-devel| |Solo Fedora|
+| jsoncpp| |Solo Fedora|
 --
 
-#Como desinstalar 'Latino' en Linux
+###DESINSTALAR
 
 #### 1- Opción
 ```bash
-# Si instalaste con `sudo make install` realiza lo siguiente:
-
+# Si instalaste con `sudo make install`:
 sudo ./uninstall.sh
 ```
 
@@ -87,33 +87,31 @@ Puedes ver un video de como proceder aca https://youtu.be/Q5xGm_Bp22k
 
 Pirmero debes saber donde esta instalado
 
- ```
+ ```bash
  whereis latino
  ```
 
  te dara algo parecido a esto
 
- ```
+ ```bash
  latino: /usr/local/bin/latino
 
  ```
 
  ahora que sabemos donde esta solamente lo borramos
- ```
+ ```bash
  sudo rm /usr/local/bin/latino
 
  ```
 
 #### 3- Opción
 
- LEER:
- **Solo debian/ubuntu. con paquete deb instalado**
+ **Solo debian/ubuntu. si instalaste paquete deb
  ```bash
- sudo apt remove latino # Ubuntu 16.x.x en adelante
- # Ó de esta manera
- sudo apt-get remove latino # Ubuntu 14.x.x hacía atrás
+ # Ubuntu 16.x.x en adelante
+ sudo apt remove latino
+ # Ubuntu 14.x.x hacía atrás
+ sudo apt-get remove latino
  ```
-
- Listo!
 
 ####Cualquier aportación o sugerencia es bienvenida.
