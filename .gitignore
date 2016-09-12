@@ -11,6 +11,11 @@ _CPack_Packages/
 nbproject/
 test/
 Testing/
+visualstudio/
+codeblocks/
+codelite/
+mingw/
+.vagrant/
 
 #ignora archivo objeto
 *.o
