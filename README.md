@@ -68,8 +68,8 @@ https://www.microsoft.com/es-ES/download/details.aspx?id=48145
 | flex    |  2.5.39 |
 | cmake   |   3.3.1 |
 | gcc (Linux)|4.9.3 |
-|jsoncpp| Fedora|
-|yum install make automake gcc gcc-c++ kernel-devel|Fedora|
+|jsoncpp| Solo para Fedora|
+|yum install make automake gcc gcc-c++ kernel-devel| Solo para Fedora|
 --
 
 #Como desinstalar 'Latino' en Linux
