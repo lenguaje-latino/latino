@@ -70,9 +70,6 @@ https://www.microsoft.com/es-ES/download/details.aspx?id=48145
 | gcc (Linux)|4.9.3 |
 |jsoncpp| Fedora|
 |yum install make automake gcc gcc-c++ kernel-devel|Fedora|
-| CodeBlocks | * |
-| Visual Studio Community Edition| * |
-| CodeLite | * |
 --
 
 #Como desinstalar 'Latino' en Linux
