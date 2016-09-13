@@ -3,3 +3,13 @@ Para debuguear en visual studio:
 Menu propiedades del proyecto-> Debugging -> Command Arguments. Agregar
 $(SolutionDir)..\ejemplos\debug.lat
 */
+
+funcion restar(a,b)
+    retorno a-b
+fin
+
+escribir(restar(2,4))
+formateado = rellenar_derecha("35", 10, "0")
+escribir(formateado)
+formateado = rellenar_izquierda("35", 10, "0")
+escribir(formateado)
