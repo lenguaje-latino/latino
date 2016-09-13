@@ -1,24 +1,24 @@
-La presente licencia es la traducción del texto en inglés abajo mencionado la puede ver en
+La presente licencia es la traduccion del texto en ingles abajo mencionado la puede ver en
 https://opensource.org/licenses/MIT
 
 La licencia MIT
 
 Se concede permiso, de forma gratuita, a cualquier persona que obtenga una copia
-de este software y archivos de documentación asociados (el "Software"), para hacer frente
-el Software sin restricción, incluyendo sin limitación, los derechos
+de este software y archivos de documentacion asociados (el "Software"), para hacer frente
+el Software sin restriccion, incluyendo sin limitacion, los derechos
 para usar, copiar, modificar, fusionar, publicar, distribuir, sublicenciar y / o vender
 las copias del Software y permitir a las personas a las que el Software es
-amueblado para hacerlo, con sujeción a las siguientes condiciones:
+amueblado para hacerlo, con sujecion a las siguientes condiciones:
 
-El aviso de copyright anterior y este aviso de permiso se incluirán en
+El aviso de copyright anterior y este aviso de permiso se incluiran en
 todas las copias o partes sustanciales del Software.
 
-EL SOFTWARE SE PROPORCIONA "TAL CUAL", SIN GARANTÍA DE NINGÚN TIPO, EXPRESA O
-IMPLÍCITAS, INCLUYENDO PERO NO LIMITADO A LAS GARANTÍAS DE COMERCIALIZACIÓN,
-IDONEIDAD PARA UN PROPÓSITO PARTICULAR Y NO INFRACCIÓN. EN NINGÚN CASO EL
-AUTORES O TITULARES DEL COPYRIGHT SERÁN RESPONSABLES POR NINGÚN RECLAMO, DAÑO U OTRA
-RESPONSABILIDAD, YA SEA EN UNA ACCIÓN DE CONTRATO, AGRAVIO O CUALQUIER OTRA FORMA, DERIVADOS DE,
-DE O EN RELACIÓN CON EL SOFTWARE O EL USO U OTROS TRATOS EN
+EL SOFTWARE SE PROPORCIONA "TAL CUAL", SIN GARANTIA DE NINGUN TIPO, EXPRESA O
+IMPLICITAS, INCLUYENDO PERO NO LIMITADO A LAS GARANTIAS DE COMERCIALIZACION,
+IDONEIDAD PARA UN PROPOSITO PARTICULAR Y NO INFRACCION. EN NINGUN CASO EL
+AUTORES O TITULARES DEL COPYRIGHT SERAN RESPONSABLES POR NINGUN RECLAMO, DAÑO U OTRA
+RESPONSABILIDAD, YA SEA EN UNA ACCION DE CONTRATO, AGRAVIO O CUALQUIER OTRA FORMA, DERIVADOS DE,
+DE O EN RELACION CON EL SOFTWARE O EL USO U OTROS TRATOS EN
 EL SOFTWARE.
 
 -------------------------- INGLES ----------------------------------------------
