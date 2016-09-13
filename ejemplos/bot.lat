@@ -1,0 +1,43 @@
+incluir ('ajustes')
+
+funcion obtener_actualizacion(decode)
+  cURL = "curl  -s 'https://api.telegram.org/bot" . api_key . "/getUpdates?offset=" . offset . "&timeout=20' | jq -r '" . decode . "'"
+  c = sistema(cURL)
+  escribir(c)
+fin
+
+funcion enviarMensaje(chatId, texto)
+  texto = reemplazar(texto, " ", "%20")
+    cURL = "curl  -s 'https://api.telegram.org/bot" . api_key . "/sendMessage?chat_id=" . chatId . "&text=" . texto . "' &>/dev/null"
+  sistema(cURL)
+fin
+
+
+funcion enviarMensaje_markdown(chatId, texto)
+  texto = reemplazar(texto, " ", "%20")
+    cURL = "curl  -s 'https://api.telegram.org/bot" . api_key . "/sendMessage?chat_id=" . chatId . "&text=" . texto . "&parse_mode=markdown' &>/dev/null"
+  sistema(cURL)
+fin
+
+funcion enviarAccion(chatId, accion)
+  accion = reemplazar(accion, "escribiendo", "typing")
+  accion = reemplazar(accion, "subiendo_foto", "upload_photo")
+  accion = reemplazar(accion, "subiendo_video", "upload_video")
+  accion = reemplazar(accion, "subiendo_audio", "upload_audio")
+  accion = reemplazar(accion, "subiendo_documento", "upload_document")
+  accion = reemplazar(accion, "grabando_video", "record_video")
+  accion = reemplazar(accion, "grabando_audio", "record_audio")
+  accion = reemplazar(accion, "buscar_localizacion", "find_location")
+  cURL = "curl  -s 'https://api.telegram.org/bot" . api_key . "/sendChatAction?chat_id=" . chatId . "&action=" . accion . "' &>/dev/null"
+  sistema(cURL)
+fin
+
+funcion enviarMensaje_html(chatId, texto)
+  texto = reemplazar(texto, " ", "%20")
+    cURL = "curl  -s 'https://api.telegram.org/bot" . api_key . "/sendMessage?chat_id=" . chatId . "&text=" . texto . "&parse_mode=html' &>/dev/null"
+  sistema(cURL)
+fin
+
+
+enviarAccion(189041244, "subiendo_documento")
+# Podemos entrar a telegram.me/userinfobot y poner nuestra id para verificar
