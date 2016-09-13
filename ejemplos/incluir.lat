@@ -1,5 +1,4 @@
 #se puede utilizar cadena o literal
-#:wa
 #incluir ("modulo")
 incluir('modulo')
 
