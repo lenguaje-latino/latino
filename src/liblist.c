@@ -101,7 +101,7 @@ void *__lista_eliminar_elemento(lista *list, lista_nodo *node)
 int __lista_contiene_valor(lista* list, void* data)
 {
     LIST_FOREACH(list, primero, siguiente, cur) {
-        if (memcmp(cur->valor, data, sizeof(*data)) == 0)
+        if (memcmp(cur->valor, data, sizeof(cur->valor)) == 0)
         {
             return 1;
         }
