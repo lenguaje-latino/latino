@@ -654,6 +654,10 @@ static int nodo_analizar(lat_mv *vm, ast *node, lat_bytecode *bcode, int i)
     break;
     case NODO_FUNCION_ARGUMENTOS:
     {
+        if (node->izq)
+        {
+            pn(vm, node->izq);
+        }
         if (node->der)
         {
             pn(vm, node->der);
@@ -663,11 +667,7 @@ static int nodo_analizar(lat_mv *vm, ast *node, lat_bytecode *bcode, int i)
                 int num_args = __contar_num_parargs(node->der->izq, NODO_FUNCION_ARGUMENTOS);
                 dbc(CALL_FUNCTION, num_args, 0, NULL);
             }
-        }
-        if (node->izq)
-        {
-            pn(vm, node->izq);
-        }
+        }        
     }
     break;
     case NODO_ATRIBUTO:{
@@ -675,15 +675,15 @@ static int nodo_analizar(lat_mv *vm, ast *node, lat_bytecode *bcode, int i)
     }
     break;
     case NODO_FUNCION_PARAMETROS:
-    {
-        if (node->der)
-        {
-            pn(vm, node->der);
-        }
+    {           
         if (node->izq)
         {
             lat_objeto *o = lat_cadena_nueva(vm, node->izq->valor->val.cadena);
             dbc(STORE_NAME, 0, 0, o);
+        }        
+        if (node->der)
+        {
+            pn(vm, node->der);
         }
     }
     break;

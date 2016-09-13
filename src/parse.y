@@ -321,7 +321,7 @@ function_call
 argument_expression_list
     : /* empty */ { $$ = NULL; }
     | expression { $$ = nodo_nuevo(NODO_FUNCION_ARGUMENTOS, $1, NULL); }
-    | argument_expression_list ',' expression { $$ = nodo_nuevo(NODO_FUNCION_ARGUMENTOS, $3, $1); }
+    | expression ',' argument_expression_list { $$ = nodo_nuevo(NODO_FUNCION_ARGUMENTOS, $1, $3); }
     ;
 
 parameter_list
