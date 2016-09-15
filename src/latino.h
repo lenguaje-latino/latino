@@ -51,7 +51,7 @@ THE SOFTWARE.
 /** Version mayor de Latino */
 #define LAT_VERSION_MAYOR "0"
 /** Version menor de Latino */
-#define LAT_VERSION_MENOR "6"
+#define LAT_VERSION_MENOR "7"
 /** Version de correcion de errores */
 #define LAT_VERSION_PARCHE "0"
 /** Version de Latino */
