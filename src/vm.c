@@ -1043,15 +1043,15 @@ void lat_agregar(lat_mv *vm){
 }
 
 void lat_extender(lat_mv *vm){    
-    lat_objeto* lst2 = lat_desapilar(vm);
+    lat_objeto* l2 = lat_desapilar(vm);
     lat_objeto* lst = lat_desapilar(vm);    
     if(lst->tipo != T_LIST){
         lat_fatal_error("Linea %d, %d: %s", lst->num_linea, lst->num_columna,  "El objeto no es una lista");
     }    
-    if(lst2->tipo != T_LIST){
-        lat_fatal_error("Linea %d, %d: %s", lst2->num_linea, lst2->num_columna,  "El objeto no es una lista");
+	if (l2->tipo != T_LIST){
+		lat_fatal_error("Linea %d, %d: %s", l2->num_linea, l2->num_columna, "El objeto no es una lista");
     }    
-    lista* _lst2 = lat_obtener_lista(lst2);
+	lista* _lst2 = lat_obtener_lista(l2);
     lista* _lst = lat_obtener_lista(lst);
     __lista_extender(_lst, _lst2);    
 }
