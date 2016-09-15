@@ -160,4 +160,10 @@ char* __lista_a_cadena(lista* list);
   */
 void __lista_modificar_elemento(lista* list, void* data, int pos);
 
+int __lista_comparar(lista* lhs, lista*rhs);
+
+void __lista_extender(lista* list1, lista* list2);
+
+void __lista_insertar_elemento(lista* list, void* data, int pos);
+
 #endif /* !_LIBLIST_H_ */

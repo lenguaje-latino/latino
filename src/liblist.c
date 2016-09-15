@@ -101,7 +101,8 @@ void *__lista_eliminar_elemento(lista *list, lista_nodo *node)
 int __lista_contiene_valor(lista* list, void* data)
 {
     LIST_FOREACH(list, primero, siguiente, cur) {
-        if (memcmp(cur->valor, data, sizeof(cur->valor)) == 0)
+        //if (memcmp(cur->valor, data, sizeof(cur->valor)) == 0)
+        if (memcmp(cur->valor, data, __memoria_tamanio(cur->valor)) == 0)
         {
             return 1;
         }
@@ -115,7 +116,11 @@ char* __lista_a_cadena(lista* list)
     strcat(valor, "[");
     LIST_FOREACH(list, primero, siguiente, cur) {
         lat_objeto* o = ((lat_objeto*)cur->valor);
-        strcat(valor, __objeto_a_cadena(o));
+        char* str = __objeto_a_cadena(o);
+        if(o->tipo == T_LIST && !__str_termina_con(valor, "[")){
+            strcat(valor, "\n");
+        }            
+        strcat(valor, str);
         if(cur != list->ultimo){
             strcat(valor, ",");
         }
@@ -139,4 +144,67 @@ void __lista_modificar_elemento(lista* list, void* data, int pos)
         }
         i++;
     }
+}
+
+int __objeto_comparar(lat_objeto* lhs, lat_objeto* rhs){
+    int res = 1;
+    if(lhs->tipo != rhs->tipo){
+        res = strcmp(__objeto_a_cadena(lhs), __objeto_a_cadena(rhs));
+        goto RESPUESTA;
+    }
+    if(lhs->tipo == T_BOOL){
+        res = lat_obtener_logico(lhs) - lat_obtener_logico(rhs);
+        goto RESPUESTA;
+    }
+    if(lhs->tipo == T_NUMERIC){
+        res = lat_obtener_decimal(lhs) - lat_obtener_decimal(rhs);
+        goto RESPUESTA;
+    }
+    if(lhs->tipo == T_STR){
+        res = strcmp(lat_obtener_cadena(lhs), lat_obtener_cadena(rhs));
+        goto RESPUESTA;
+    }
+    if(lhs->tipo == T_LIST){
+        res = __lista_comparar(lat_obtener_lista(lhs), lat_obtener_lista(rhs));
+        goto RESPUESTA;
+    }   
+RESPUESTA:    
+    if(res < 0){
+        return -1;
+    }
+    if(res > 0){
+        return 1;
+    }
+    return res;
+}
+
+int __lista_comparar(lista* lhs, lista*rhs){
+    int res = 0;
+    int len1 = __lista_longitud(lhs);
+    int len2 = __lista_longitud(rhs);
+    if(len1 < len2){
+        return -1;
+    }
+    if(len1 > len2){
+        return 1;
+    }
+    int i;    
+    for(i=0; i < len1; i++){
+        lat_objeto* tmp1 =  __lista_obtener_elemento(lhs, i);
+        lat_objeto* tmp2 =  __lista_obtener_elemento(rhs, i);
+        res = __objeto_comparar(tmp1, tmp2);
+        if(res < 0){
+            return -1;
+        }
+        if(res > 0){
+            return 1;
+        }
+    }
+    return res;
+}
+
+void __lista_extender(lista* list1, lista* list2){
+    LIST_FOREACH(list2, primero, siguiente, cur) {
+        __lista_apilar(list1, cur->valor);
+    } 
 }

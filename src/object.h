@@ -228,4 +228,6 @@ bool lat_obtener_logico(lat_objeto* o);
   */
 lista* lat_obtener_lista(lat_objeto* o);
 
+bool __es_igual(lat_objeto* lhs, lat_objeto* rhs);
+
 #endif // !_OBJECT_H_

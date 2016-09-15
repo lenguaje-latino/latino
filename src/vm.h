@@ -79,6 +79,8 @@ typedef struct lat_mv lat_mv;
 #define DEC                32
 #define LOAD_ATTR          33
 #define BUILD_LIST         34
+#define STORE_SUBSCR       35
+#define BINARY_SUBSCR      36
 
 /**\brief Estructura que almacena las instrucciones bytecode de la MV */
 typedef struct lat_bytecode
@@ -146,6 +148,8 @@ lista_nodo* __lista_obtener_nodo(lista* list, int pos);
   *\param d: Apuntador al diccionario
   */
 void __imprimir_diccionario(lat_mv* vm, hash_map* d);
+
+char* __tipo(int tipo);
 
 /**\brief Crea la maquina virtual (MV)
   *
@@ -380,5 +384,18 @@ lat_bytecode lat_bc(int i, int a, int b, void* meta);
   */
 void lat_llamar_funcion(lat_mv* vm, lat_objeto* func);
 
+/**\brief Agrega un elemento a la lista
+  *
+  *\param vm: Apuntador a la MV
+  */
 void lat_agregar(lat_mv *vm);
+
+void lat_extender(lat_mv *vm);
+
+int __lista_obtener_indice(lista* list, void* data);
+
+void lat_eliminar_indice(lat_mv* vm);
+
+void lat_invertir(lat_mv* vm);
+
 #endif //_VM_H_

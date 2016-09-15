@@ -328,3 +328,19 @@ lista* lat_obtener_lista(lat_objeto* o)
     lat_fatal_error("Linea %d, %d: %s", o->num_linea, o->num_columna,  "El parametro debe de ser una lista");
     return NULL;
 }
+
+bool __es_igual(lat_objeto* lhs, lat_objeto* rhs){
+    if(lhs->tipo != rhs->tipo){
+        return false;
+    }    
+    if(lhs->tipo == T_NUMERIC){
+        return lat_obtener_decimal(lhs) == lat_obtener_decimal(rhs);
+    }    
+    if(lhs->tipo == T_STR){
+        return strcmp(lat_obtener_cadena(lhs), lat_obtener_cadena(rhs)) == 0 ? true : false;
+    }
+    if(lhs->tipo == T_LIST){
+        return __lista_comparar(lat_obtener_lista(lhs), lat_obtener_lista(rhs)) == 0 ? true : false;
+    }
+    return false;
+}

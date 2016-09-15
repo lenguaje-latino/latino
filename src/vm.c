@@ -74,6 +74,8 @@ static const char *const bycode_nombre[] = {
     "DEC", 
     "LOAD_ATTR",
     "BUILD_LIST",
+    "STORE_SUBSCR",
+    "BINARY_SUBSCR",
 };
 
 
@@ -216,9 +218,12 @@ lat_mv* lat_mv_crear()
     __registrar_cfuncion(mv, "logico", lat_logico, 1);
     __registrar_cfuncion(mv, "decimal", lat_decimal, 1);
     __registrar_cfuncion(mv, "cadena", lat_cadena, 1);
-
+    
     /*60 funciones para listas*/
-    //__registrar_cfuncion(vm, "agregar", lat_agregar);
+    __registrar_cfuncion(mv, "agregar", lat_agregar, 2);
+    __registrar_cfuncion(mv, "extender", lat_extender, 2);
+    __registrar_cfuncion(mv, "eliminar_indice", lat_eliminar_indice, 2);    
+    __registrar_cfuncion(mv, "invertir", lat_invertir, 1);
 
     /*99 otras funciones */        
     __registrar_cfuncion(mv, "sistema", lat_sistema, 1);
@@ -597,7 +602,8 @@ void lat_logico(lat_mv* vm)
         }
         break;
     default:
-        lat_fatal_error("Linea %d, %d: %s", a->num_linea, a->num_columna,  "Conversion de tipo de dato incompatible");
+        lat_fatal_error("Linea %d, %d: %s", a->num_linea, a->num_columna,  
+                "Conversion de tipo de dato incompatible");
         break;
     }
 }
@@ -631,12 +637,14 @@ void lat_decimal(lat_mv* vm)
         }
         else
         {
-            lat_fatal_error("Linea %d, %d: %s", a->num_linea, a->num_columna,  "Conversion de tipo de dato incompatible");
+            lat_fatal_error("Linea %d, %d: %s", a->num_linea, a->num_columna,  
+                    "Conversion de tipo de dato incompatible");
         }
     }
     break;
     default:
-       lat_fatal_error("Linea %d, %d: %s", a->num_linea, a->num_columna,  "Conversion de tipo de dato incompatible");
+       lat_fatal_error("Linea %d, %d: %s", a->num_linea, a->num_columna,  
+               "Conversion de tipo de dato incompatible");
         break;
     }
 }
@@ -658,30 +666,34 @@ void lat_cadena(lat_mv* vm)
     }
 }
 
+char* __tipo(int tipo){
+    switch (tipo)
+    {
+    case T_BOOL:
+        return "logico";
+        break;    
+    case T_NUMERIC:
+        return "decimal";
+        break;
+    case T_STR:
+        return "cadena";
+        break;    
+    case T_LIST:
+        return "lista";
+        break;
+    case T_DICT:
+        return "diccionario";
+        break;
+    default:
+        return "nulo";
+        break;
+    }
+}
+
 void lat_tipo(lat_mv* vm)
 {
     lat_objeto* a = lat_desapilar(vm);
-    switch (a->tipo)
-    {
-    case T_BOOL:
-        lat_apilar(vm, lat_cadena_nueva(vm, "logico"));
-        break;    
-    case T_NUMERIC:
-        lat_apilar(vm, lat_cadena_nueva(vm, "decimal"));
-        break;
-    case T_STR:
-        lat_apilar(vm, lat_cadena_nueva(vm, "cadena"));
-        break;    
-    case T_LIST:
-        lat_apilar(vm, lat_cadena_nueva(vm, "lista"));
-        break;
-    case T_DICT:
-        lat_apilar(vm, lat_cadena_nueva(vm, "diccionario"));
-        break;
-    default:
-        lat_apilar(vm, lat_cadena_nueva(vm, "nulo"));
-        break;
-    }
+    lat_apilar(vm, lat_cadena_nueva(vm, __tipo(a->tipo)));
 }
 
 void lat_salir(lat_mv* vm)
@@ -829,7 +841,8 @@ void lat_llamar_funcion(lat_mv* vm, lat_objeto* func)
                 if(name->es_constante){
                     lat_objeto *tmp = lat_obtener_contexto_objeto(ctx, name);
                     if(tmp != NULL){
-                        lat_fatal_error("Linea %d, %d: Intento de reasignar valor a constante '%s'", name->num_linea, name->num_columna, lat_obtener_cadena(name));
+                        lat_fatal_error("Linea %d, %d: Intento de reasignar valor a constante '%s'", 
+                                name->num_linea, name->num_columna, lat_obtener_cadena(name));
                     }
                 }
                 //asigna el numero de parametros
@@ -849,7 +862,8 @@ void lat_llamar_funcion(lat_mv* vm, lat_objeto* func)
 #endif
                 lat_objeto *val = lat_obtener_contexto_objeto(ctx, name);
                 if(val == NULL){
-                    lat_fatal_error("Linea %d, %d: Variable \"%s\" indefinida", name->num_linea, name->num_columna, lat_obtener_cadena(name));                        
+                    lat_fatal_error("Linea %d, %d: Variable \"%s\" indefinida", 
+                            name->num_linea, name->num_columna, lat_obtener_cadena(name));                        
                 }
                 val->num_linea = name->num_linea;
                 val->num_columna = name->num_columna;
@@ -880,12 +894,14 @@ void lat_llamar_funcion(lat_mv* vm, lat_objeto* func)
                 int num_args = cur.a;
                 lat_objeto *fun = lat_desapilar(vm);                
                 if(num_args != fun->num_params ){
-                    lat_fatal_error("Linea %d, %d: Numero invalido de argumentos en funcion '%s'. se esperaban %i valores.\n", fun->num_linea, fun->num_columna, fun->nombre_cfun, fun->num_params);
+                    lat_fatal_error("Linea %d, %d: Numero invalido de argumentos en funcion '%s'. se esperaban %i valores.\n", 
+                            fun->num_linea, fun->num_columna, fun->nombre_cfun, fun->num_params);
                 }                
                 lat_apilar_contexto(vm);
                 vm->num_callf++;                
                 if(vm->num_callf >= MAX_CALL_FUNCTION){
-                    lat_fatal_error("Linea %d, %d: Numero maximo de llamadas a funciones recursivas excedido en '%s'\n", fun->num_linea, fun->num_columna, fun->nombre_cfun);
+                    lat_fatal_error("Linea %d, %d: Numero maximo de llamadas a funciones recursivas excedido en '%s'\n", 
+                            fun->num_linea, fun->num_columna, fun->nombre_cfun);
                 }
                 lat_llamar_funcion(vm, fun);
                 vm->num_callf--;
@@ -902,17 +918,108 @@ void lat_llamar_funcion(lat_mv* vm, lat_objeto* func)
             }
             break; 
             case SETUP_LOOP: 
-            //lat_apilar_contexto(vm); 
+                //lat_apilar_contexto(vm); 
                 break; 
             case POP_BLOCK: 
                 //lat_desapilar_contexto(vm); 
-                break; 
+                break;                
+            case BUILD_LIST: {
+                int num_elem = cur.a;
+                int i;
+                lista* l = __lista_crear();                
+                for(i=0; i < num_elem; i++){
+                    lat_objeto* tmp = lat_desapilar(vm);
+                    __lista_apilar(l, tmp);
+                }
+                lat_objeto* obj = lat_lista_nueva(vm, l);
+                lat_apilar(vm, obj);
+            }
+            break; 
+            case LOAD_ATTR: {                
+                lat_objeto *attr = lat_desapilar(vm);
+                lat_objeto *name =  (lat_objeto*)cur.meta;
+                lat_objeto *ctx =  lat_obtener_contexto(vm);
+#if DEPURAR_MV
+                __imprimir_objeto(vm, name);
+                printf("\t");
+#endif
+                lat_objeto *val = lat_obtener_contexto_objeto(ctx, name);
+                if(val == NULL){
+                    lat_fatal_error("Linea %d, %d: Objeto \"%s\" no tiene un atributo \"%s\" definido. ", 
+                            name->num_linea, name->num_columna, __tipo(attr->tipo), lat_obtener_cadena(name));
+                }
+                val->num_linea = name->num_linea;
+                val->num_columna = name->num_columna;                 
+                lista* list = __lista_crear();
+                int i;
+                for(i=0; i < val->num_params-1; i++){
+                    __lista_insertar_inicio(list, (void*)lat_desapilar(vm));
+                }                
+                lat_apilar(vm, attr);
+                LIST_FOREACH(list, primero, siguiente, cur){
+                    lat_apilar(vm, (lat_objeto*)cur->valor);                    
+                }
+                lat_apilar(vm, val);
+                __memoria_liberar(list);
+            }
+            break;
+            case STORE_SUBSCR:{
+                lat_objeto* pos = lat_desapilar(vm);                
+                lat_objeto* lst = lat_desapilar(vm);
+                lat_objeto* exp = lat_desapilar(vm);
+                int ipos = lat_obtener_decimal(pos);
+                if(lst->tipo == T_STR){
+                    char* slst = lat_obtener_cadena(lst);
+                    if(ipos < 0 || ipos >= strlen(slst)){
+                        lat_fatal_error("Linea %d, %d: Indice fuera de rango.", 
+                                pos->num_linea, pos->num_columna);
+                    }   
+                    char* sexp = __str_duplicar(lat_obtener_cadena(exp));
+                    if(strlen(sexp) == 0){
+                        sexp = " ";
+                    }
+                    slst[ipos] = sexp[0];
+                    lst->datos.cadena = slst;
+                }
+                if(lst->tipo == T_LIST){
+                    if(ipos < 0 || ipos >= __lista_longitud(lat_obtener_lista(lst))){
+                        lat_fatal_error("Linea %d, %d: Indice fuera de rango.", 
+                                pos->num_linea, pos->num_columna);
+                    }
+                    __lista_modificar_elemento(lat_obtener_lista(lst), exp, ipos);
+                }
+            }
+            break;            
+            case BINARY_SUBSCR:{                
+                lat_objeto* lst = lat_desapilar(vm);
+                lat_objeto* pos = lat_desapilar(vm);
+                int ipos = lat_obtener_decimal(pos);
+                lat_objeto* o = NULL;
+                if(lst->tipo == T_STR){
+                    char* slst = lat_obtener_cadena(lst);
+                    if(ipos < 0 || ipos >= strlen(slst)){
+                        lat_fatal_error("Linea %d, %d: Indice fuera de rango.", 
+                                pos->num_linea, pos->num_columna);
+                    }
+                    char c[2] = {slst[ipos], '\0' };
+                    o = lat_cadena_nueva(vm, c);
+                }
+                if(lst->tipo == T_LIST){
+                    if(ipos < 0 || ipos >= __lista_longitud(lat_obtener_lista(lst))){
+                        lat_fatal_error("Linea %d, %d: Indice fuera de rango.", 
+                                pos->num_linea, pos->num_columna);
+                    }
+                    o = __lista_obtener_elemento(lat_obtener_lista(lst), lat_obtener_decimal(pos));
+                }
+                lat_apilar(vm, o);
+            }
+            break;                    
             
 
             }   //fin de switch
             
 #if DEPURAR_MV            
-            __imprimir_lista(vm, vm->pila);
+            __imprimir_lista(vm, lat_obtener_lista(vm->pila));
             printf("\n");
 #endif            
         }   //fin for
@@ -925,4 +1032,107 @@ void lat_llamar_funcion(lat_mv* vm, lat_objeto* func)
     {
         lat_fatal_error("Linea %d, %d: %s", func->num_linea, func->num_columna,  "El objeto no es una funcion");
     }
+}
+
+
+/* funciones para listas */
+void lat_agregar(lat_mv *vm){    
+    lat_objeto* elem = lat_desapilar(vm);
+    lat_objeto* lst = lat_desapilar(vm);
+    __lista_apilar(lat_obtener_lista(lst), elem);
+}
+
+void lat_extender(lat_mv *vm){    
+    lat_objeto* lst2 = lat_desapilar(vm);
+    lat_objeto* lst = lat_desapilar(vm);    
+    if(lst->tipo != T_LIST){
+        lat_fatal_error("Linea %d, %d: %s", lst->num_linea, lst->num_columna,  "El objeto no es una lista");
+    }    
+    if(lst2->tipo != T_LIST){
+        lat_fatal_error("Linea %d, %d: %s", lst2->num_linea, lst2->num_columna,  "El objeto no es una lista");
+    }    
+    lista* _lst2 = lat_obtener_lista(lst2);
+    lista* _lst = lat_obtener_lista(lst);
+    __lista_extender(_lst, _lst2);    
+}
+
+int __lista_obtener_indice(lista* list, void* data){
+    int i=0;
+    lat_objeto* find = (lat_objeto*) data;
+    LIST_FOREACH(list, primero, siguiente, cur) {
+        //if (memcmp(cur->valor, data, sizeof(cur->valor)) == 0)
+        lat_objeto* tmp = (lat_objeto*)cur->valor;
+        if (__es_igual(find, tmp))
+        {
+            return i;
+        }
+        i++;
+    }
+    return -1;
+}
+
+void __lista_insertar_elemento(lista* list, void* data, int pos){
+    int len = __lista_longitud(list);
+    if (pos < 0 || pos > len)   //permite insertar al ultimo
+    {
+        lat_fatal_error("Indice fuera de rango");
+    }
+    if(pos == 0){
+        __lista_insertar_inicio(list, data);        
+        return;
+    }
+    if(pos == len){
+        __lista_apilar(list, data);        
+        return;
+    }
+    //FIX: For performance
+    lista* tmp1 = __lista_crear();
+    lista* tmp2 = __lista_crear();
+    int i=0;
+    LIST_FOREACH(list, primero, siguiente, cur) {
+        if (i < pos)
+        {
+            __lista_apilar(tmp1, cur->valor);
+        }else{
+            __lista_apilar(tmp2, cur->valor);
+        }
+        i++;
+    }    
+    lista* new = __lista_crear();
+    __lista_extender(new, tmp1);
+    __lista_apilar(new, data);
+    __lista_extender(new, tmp2);
+    *list = *new;
+    __memoria_liberar(tmp1);
+    __memoria_liberar(tmp2);    
+}
+
+void lat_eliminar_indice(lat_mv* vm)
+{
+    lat_objeto* b = lat_desapilar(vm);
+    lat_objeto* a = lat_desapilar(vm);
+    lista* lst = lat_obtener_lista(a);
+    int pos = lat_obtener_decimal(b);
+    if (pos < 0 || pos >= __lista_longitud(lst))
+    {
+        lat_fatal_error("Linea %d, %d: %s", a->num_linea, a->num_columna,  "Indice fuera de rango");        
+    }
+    if(pos >= 0){
+        lista_nodo *nt = __lista_obtener_nodo(lst, pos);
+        __lista_eliminar_elemento(lst, nt);
+    }    
+}
+
+void lat_invertir(lat_mv* vm){
+    lat_objeto* a = lat_desapilar(vm);
+    lista* lst = lat_obtener_lista(a);
+    lista* new = __lista_crear();
+    //FIX: For performance
+    int i;
+    int len = __lista_longitud(lst)-1;
+    for(i=len; i >= 0; i--){
+        __lista_apilar(new, __lista_obtener_elemento(lst, i));
+    }
+    lat_apilar(vm, lat_lista_nueva(vm, new));
+    
 }
