@@ -125,3 +125,9 @@ escribir("es_alfanumerico:")
 #quitar espacios
 alfa = "variable1"
 escribir("es numerico: " . es_numerico(alfa))
+
+#se puede acceder a un elemento de la cadena ya que es un arreglo de caracteres
+str = "hola mundo"
+escribir(str[0])
+str[4] = "-"
+escribir(str)

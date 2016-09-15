@@ -641,8 +641,11 @@ static int nodo_analizar(lat_mv *vm, ast *node, lat_bytecode *bcode, int i)
             pn(vm, node->der);
         }
         //nombre funcion
-        pn(vm, node->izq);
+        pn(vm, node->izq);        
         int num_args = __contar_num_parargs(node->der, NODO_FUNCION_ARGUMENTOS);
+        if(node->izq->tipo == NODO_ATRIBUTO){
+            num_args++;
+        }
         dbc(CALL_FUNCTION, num_args, 0, NULL);
     }
     break;
@@ -671,7 +674,13 @@ static int nodo_analizar(lat_mv *vm, ast *node, lat_bytecode *bcode, int i)
     }
     break;
     case NODO_ATRIBUTO:{
-
+        //pn(vm, node->der);        
+        pn(vm, node->izq);
+        lat_objeto *o = lat_cadena_nueva(vm, node->der->valor->val.cadena);
+        o->num_linea = node->der->num_linea;
+        o->num_columna = node->der->num_columna;
+        o->es_constante = node->der->valor->es_constante;
+        dbc(LOAD_ATTR, 0, 0, o);
     }
     break;
     case NODO_FUNCION_PARAMETROS:
@@ -713,19 +722,42 @@ static int nodo_analizar(lat_mv *vm, ast *node, lat_bytecode *bcode, int i)
     }
     break;
     case NODO_LISTA:
-    {
+    {   
+        int num_params = 0;
+        if (node->izq)
+        {
+            pn(vm, node->izq);           
+            num_params = __contar_num_parargs(node->izq, NODO_LISTA_AGREGAR_ELEMENTO);            
+        }        
+        dbc(BUILD_LIST, num_params, 0, NULL);
     }
     break;
     case NODO_LISTA_AGREGAR_ELEMENTO:
-    {
+    {    
+        if (node->izq)
+        {
+            pn(vm, node->izq);
+        } 
+        if (node->der)
+        {
+            pn(vm, node->der);
+        }        
     }
     break;
     case NODO_LISTA_ASIGNAR_ELEMENTO:
     {
+        nodo_lista_elem* nl = (nodo_lista_elem*)node; 
+        pn(vm, nl->expresion);
+        pn(vm, nl->identificador);        
+        pn(vm, nl->posicion);
+        dbc(STORE_SUBSCR, 0, 0, NULL);
     }
     break;
     case NODO_LISTA_OBTENER_ELEMENTO:
     {
+        pn(vm, node->izq);
+        pn(vm, node->der);
+        dbc(BINARY_SUBSCR, 0, 0, NULL);
     }
     break;
     case NODO_DICCIONARIO:
@@ -791,11 +823,20 @@ static void __mostrar_bytecode(lat_bytecode *bcode){
             case OP_DEC:
             case CONCAT:
             case SETUP_LOOP:
-            case POP_BLOCK:
-            case CALL_FUNCTION:
+            case POP_BLOCK:            
             case RETURN_VALUE:            
-            case LOAD_ATTR:
+            case STORE_SUBSCR:
+            case BINARY_SUBSCR:
                 printf("%s\n", __obtener_bytecode_nombre(cur.ins));
+            break;
+            case CALL_FUNCTION:{                
+                printf("CALL_FUNCTION\t%i\n", cur.a);
+            }
+            break;
+            case LOAD_ATTR: {
+                o = (lat_objeto*)cur.meta;
+                printf("LOAD_ATTR\t(%s)\n", __objeto_a_cadena(o));
+            }
             break;
             case LOAD_CONST:{
                 o = (lat_objeto*)cur.meta;
@@ -833,7 +874,7 @@ static void __mostrar_bytecode(lat_bytecode *bcode){
                 printf("-------------------------------\n");
             }break;
             case BUILD_LIST: {
-                printf("BUILD_LIST %i\n", cur.a);
+                printf("BUILD_LIST\t%i\n", cur.a);
             }break;
         }
     }
