@@ -35,9 +35,9 @@ http://opensource.org/licenses/MIT
 Leer LICENSE.txt
 
 
-###INSTALAR
+## INSTALAR
 
-#####Instalar en Linux
+### Instalar en Linux
 
 Cualquier versión/distribución de linux
 
@@ -49,12 +49,24 @@ Cualquier versión/distribución de linux
  sudo make install
 ```
 
-#####Instalar en Windows
+Instalación en dibs: Ubuntu, DEBIAN ó Mint
+
+```bash
+  # Obtenemos paquete (podremos de ejemplo la última versión que es 0.6.0)
+  wget https://github.com/primitivorm/latino/releases/download/v0.6.0/latino-0.6.0-Linux.deb
+  # Instalamos
+  dpkg -i latino-0.6.0-Linux.deb
+```
+
+Puedes comprobar las versiones anteriores si deseas en [RELEASES](https://github.com/primitivorm/latino/releases)
+
+
+### Instalar en Windows
 1. Descargue el instalador de la última version de https://github.com/primitivorm/latino/releases
 2. Descompima el archivo zip
 3. Ejecute el instalador
 
-#####Nota:
+#### Nota:
 Puede requerir el framework de C++, descarguelo desde la pagina oficial de Microsoft:
 https://www.microsoft.com/es-ES/download/details.aspx?id=48145
 
@@ -73,7 +85,7 @@ https://www.microsoft.com/es-ES/download/details.aspx?id=48145
 | jsoncpp| |Solo Fedora|
 --
 
-###DESINSTALAR
+### DESINSTALAR
 
 #### 1- Opción
 ```bash
