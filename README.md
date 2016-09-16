@@ -52,10 +52,10 @@ Cualquier versión/distribución de linux
 Instalación en dibs: Ubuntu, DEBIAN ó Mint
 
 ```bash
-  # Obtenemos paquete (podremos de ejemplo la última versión que es 0.6.0)
-  wget https://github.com/primitivorm/latino/releases/download/v0.6.0/latino-0.6.0-Linux.deb
+  # Obtenemos paquete (podremos de ejemplo la última versión que es 0.7.0)
+  wget https://github.com/primitivorm/latino/releases/download/v0.7.0/latino-0.7.0-Linux.deb
   # Instalamos
-  dpkg -i latino-0.6.0-Linux.deb
+  dpkg -i latino-0.7.0-Linux.deb
 ```
 
 Puedes comprobar las versiones anteriores si deseas en [RELEASES](https://github.com/primitivorm/latino/releases)
