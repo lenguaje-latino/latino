@@ -69,4 +69,6 @@ void lat_escribir_archivo(lat_mv *vm);
   */
 void lat_sistema(lat_mv *vm);
 
+void lat_ejecutar_pipe(lat_mv *vm);
+
 #endif /* !_LIBIO_H_ */

@@ -34,9 +34,10 @@ THE SOFTWARE.
 #include <stdarg.h>
 #include <float.h>
 #include <setjmp.h>
-#include <stddef.h>
 #include <stdbool.h>
 #include <errno.h>
+#include <limits.h>
+#include <stddef.h>
 
 #include "compat.h"
 #include "ast.h"
@@ -119,6 +120,8 @@ extern int parse_silent;
 #define MAX_CALL_FUNCTION 27
 
 #define MAX_ID_LENGTH 32
+
+#define MAX_BUFFERSIZE		BUFSIZ
 
 /** Interface con flex */
 typedef struct YYLTYPE

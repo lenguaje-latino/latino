@@ -37,6 +37,8 @@ THE SOFTWARE.
 #define getcwd(ruta, tamanio) GetCurrentDirectory (MAX_PATH, ruta);
 #include "stdbool.h"
 #define malloc_size(ptr) _msize(ptr)
+#define __lat_popen(L,c,m)		((void)L, _popen(c,m))
+#define __lat_pclose(L,file)		((void)L, _pclose(file))
 #endif
 #ifdef __linux__
 #include <dlfcn.h>
@@ -45,6 +47,8 @@ THE SOFTWARE.
 #define PATH_SEP "/"
 #define LAT_FUNC __attribute__((visibility("hidden"))) extern
 #define malloc_size(ptr) malloc_usable_size(ptr)
+#define __lat_popen(L,c,m)	((void)L, fflush(NULL), popen(c,m))
+#define __lat_pclose(L,file)	((void)L, pclose(file))
 #endif
 
 /** Determina el compilador*/
