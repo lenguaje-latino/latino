@@ -227,6 +227,7 @@ lat_mv* lat_mv_crear()
 
     /*99 otras funciones */        
     __registrar_cfuncion(mv, "sistema", lat_sistema, 1);
+    __registrar_cfuncion(mv, "ejecutar_pipe", lat_ejecutar_pipe, 1);
     
 #ifdef __linux__
     //__registrar_cfuncion(vm, "peticion", lat_peticion);

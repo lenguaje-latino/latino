@@ -117,6 +117,17 @@ void lat_escribir_archivo(lat_mv *vm)
 
 void lat_sistema(lat_mv *vm)
 {
-    lat_objeto* o = lat_desapilar(vm);
-    system(lat_obtener_cadena(o));
+    lat_objeto* cmd = lat_desapilar(vm);
+    system(lat_obtener_cadena(cmd));
+}
+
+void lat_ejecutar_pipe(lat_mv *vm){
+    lat_objeto* cmd = lat_desapilar(vm);
+    FILE* fp = __lat_popen(vm, lat_obtener_cadena(cmd), "r");
+    size_t rlen = MAX_BUFFERSIZE;
+    char *p = __memoria_asignar(rlen);
+    fread(p, sizeof(char), rlen, fp);
+    lat_objeto* res = lat_cadena_nueva(vm, p);
+    lat_apilar(vm, res);
+    __lat_pclose(vm, fp);
 }
