@@ -208,10 +208,6 @@ ast* nodo_reducir_constantes(nodo_tipo nt, ast* lhs, ast* rhs){
         }
     }
     /*operadores binarios*/
-    if(lhs->tipo == NODO_VALOR  && rhs->valor->tipo != VALOR_NUMERICO){
-        lat_error("Linea %d, %d: %s", rhs->num_linea, rhs->num_columna, "Valor numerico requerido");
-        return NULL;
-    }
     if(lhs->tipo == NODO_VALOR && rhs->tipo == NODO_VALOR){
         switch(nt){
             case NODO_SUMA:

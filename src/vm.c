@@ -366,8 +366,10 @@ void lat_ejecutar_archivo(lat_mv *vm)
 
 void lat_menos_unario(lat_mv* vm)
 {
-    lat_objeto* o = lat_tope(vm);
-    o->datos.numerico = (-1) * lat_obtener_decimal(o);
+    lat_objeto* o = lat_desapilar(vm);
+    lat_objeto* r = lat_decimal_nuevo(vm, (-1) * lat_obtener_decimal(o));
+    lat_apilar(vm, r);
+    __colector_agregar(vm, r);
 }
 
 void lat_sumar(lat_mv* vm)
