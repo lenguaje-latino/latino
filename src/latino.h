@@ -54,7 +54,7 @@ THE SOFTWARE.
 /** Version menor de Latino */
 #define LAT_VERSION_MENOR "7"
 /** Version de correcion de errores */
-#define LAT_VERSION_PARCHE "2"
+#define LAT_VERSION_PARCHE "3"
 /** Version de Latino */
 #define LAT_VERSION "Latino " LAT_VERSION_MAYOR "." LAT_VERSION_MENOR "." LAT_VERSION_PARCHE
 /** Derechos de Latino */
@@ -118,10 +118,10 @@ extern int parse_silent;
 #define MAX_INPUT_SIZE 512
 /** Maximo numero de llamadas recursivas a funcion */
 #define MAX_CALL_FUNCTION 27
-
+/** Maximo numero de caracteres para un identificador */
 #define MAX_ID_LENGTH 32
-
-#define MAX_BUFFERSIZE		BUFSIZ
+/** Maximo numero de bits para un buffer */
+#define MAX_BUFFERSIZE BUFSIZ
 
 /** Interface con flex */
 typedef struct YYLTYPE

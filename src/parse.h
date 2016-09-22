@@ -79,7 +79,12 @@ extern int yydebug;
     INCREMENTO = 289,
     DECREMENTO = 290,
     CONCATENAR = 291,
-    CONCATENAR_IGUAL = 292
+    CONCATENAR_IGUAL = 292,
+    MAS_IGUAL = 293,
+    MENOS_IGUAL = 294,
+    POR_IGUAL = 295,
+    ENTRE_IGUAL = 296,
+    MODULO_IGUAL = 297
   };
 #endif
 /* Tokens.  */
@@ -118,6 +123,11 @@ extern int yydebug;
 #define DECREMENTO 290
 #define CONCATENAR 291
 #define CONCATENAR_IGUAL 292
+#define MAS_IGUAL 293
+#define MENOS_IGUAL 294
+#define POR_IGUAL 295
+#define ENTRE_IGUAL 296
+#define MODULO_IGUAL 297
 
 /* Value type.  */
 

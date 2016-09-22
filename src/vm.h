@@ -43,7 +43,7 @@ typedef struct lat_mv lat_mv;
 /**\brief Bandera para debuguear las instrucciones que se generan con el AST */
 #define DEPURAR_MV 0
 
-/*nuevos op_codes*/
+/**\brief op_codes de la maquina virtual */
 #define NOP                 0
 #define HALT                1
 #define UNARY_MINUS         2
@@ -103,6 +103,7 @@ typedef struct lat_mv
 {
     lat_objeto* modulos;
     lat_objeto* gc_objetos;    
+    lat_objeto* otros_objetos;    
     lat_objeto* pila;     //< pila de la maquina virtual
     lat_objeto* contexto_pila[256];   //< Arreglo para el contexto actual
     lat_objeto* objeto_verdadero;   //< Valor logico verdadero
@@ -140,6 +141,12 @@ void __imprimir_lista(lat_mv* vm, lista* l);
   */
 lat_objeto* __lista_obtener_elemento(lista* list, int pos);
 
+/**\brief Obtiene un nodo de la lista en la posicion indicada
+  *
+  *\param lista: Apuntador a la lista
+  *\param pos: Posicion en la lista
+  *\return lista_nodo: Apuntador al nodo de la lista
+  */
 lista_nodo* __lista_obtener_nodo(lista* list, int pos);
 
 /**\brief Envia a consola el contenido del diccionario
@@ -149,6 +156,11 @@ lista_nodo* __lista_obtener_nodo(lista* list, int pos);
   */
 void __imprimir_diccionario(lat_mv* vm, hash_map* d);
 
+/**\brief Regresa el nombre del tipo de dato
+  *
+  *\param tipo: Tipo de dato Latino
+  *\return char: Apuntador al nombre del tipo
+  */
 char* __tipo(int tipo);
 
 /**\brief Crea la maquina virtual (MV)
@@ -218,100 +230,108 @@ lat_objeto* lat_definir_cfuncion(lat_mv* vm, void (*function)(lat_mv* vm));
   */
 void lat_imprimir(lat_mv* vm);
 
+/**\brief Ejecuta una cadena de codigo Latino
+  *
+  *\param vm: Apuntador a la MV
+  */
 void lat_ejecutar(lat_mv *vm);
 
+/**\brief Ejecuta un archivo con codigo Latino
+  *
+  *\param vm: Apuntador a la MV
+  */
 void lat_ejecutar_archivo(lat_mv *vm);
 
 /**\brief Operador - unario
   *
   *\param vm: Apuntador a la MV
   */
-void lat_menos_unario(lat_mv* vm);
+void __menos_unario(lat_mv* vm);
 
 /**\brief Operador +
   *
   *\param vm: Apuntador a la MV
   */
-void lat_sumar(lat_mv* vm);
+void __sumar(lat_mv* vm);
 
 /**\brief Operador -
   *
   *\param vm: Apuntador a la MV
   */
-void lat_restar(lat_mv* vm);
+void __restar(lat_mv* vm);
 
 /**\brief Operador *
   *
   *\param vm: Apuntador a la MV
   */
-void lat_multiplicar(lat_mv* vm);
+void __multiplicar(lat_mv* vm);
 
 /**\brief Operador /
   *
   *\param vm: Apuntador a la MV
   */
-void lat_dividir(lat_mv* vm);
+void __dividir(lat_mv* vm);
 
 /** Modulo de un decimal (fmod) 5.3 / 2 es 1.300000
   *
   * \param vm: Maquina virtual de latino
   *
   */
-void lat_modulo_decimal(lat_mv* vm);
+void __modulo(lat_mv* vm);
 
 /**\brief Operador !=
   *
   *\param vm: Apuntador a la MV
   */
-void lat_diferente(lat_mv* vm);
+void __diferente(lat_mv* vm);
 
 /**\brief Operador ==
   *
   *\param vm: Apuntador a la MV
   */
-void lat_igualdad(lat_mv* vm);
+void __igualdad(lat_mv* vm);
 
 /**\brief Operador <
   *
   *\param vm: Apuntador a la MV
   */
-void lat_menor_que(lat_mv* vm);
+void __menor_que(lat_mv* vm);
 
 /**\brief Operador <=
   *
   *\param vm: Apuntador a la MV
   */
-void lat_menor_igual(lat_mv* vm);
+void __menor_igual(lat_mv* vm);
 
 /**\brief Operador <
   *
   *\param vm: Apuntador a la MV
   */
-void lat_mayor_que(lat_mv* vm);
+void __mayor_que(lat_mv* vm);
 
 /**\brief Operador >=
   *
   *\param vm: Apuntador a la MV
   */
-void lat_mayor_igual(lat_mv* vm);
+void __mayor_igual(lat_mv* vm);
 
 /**\brief Operador &&
   *
   *\param vm: Apuntador a la MV
   */
-void lat_y(lat_mv* vm);
+void __y_logico(lat_mv* vm);
 
 /**\brief Operador ||
   *
   *\param vm: Apuntador a la MV
   */
-void lat_o(lat_mv* vm);
+void __o_logico(lat_mv* vm);
 
 /**\brief Operador !
   *
   *\param vm: Apuntador a la MV
   */
-void lat_no(lat_mv* vm);
+void __no_logico(lat_mv* vm);
 
 /**\brief Obtiene el tipo de dato en cadena
   *
@@ -329,25 +349,13 @@ void lat_logico(lat_mv* vm);
   *
   *\param vm: Apuntador a la MV
   */
-void lat_decimal(lat_mv* vm);
+void lat_numerico(lat_mv* vm);
 
 /**\brief Convierte un valor a cadena
   *
   *\param vm: Apuntador a la MV
   */
 void lat_cadena(lat_mv* vm);
-
-/**\brief Obtiene el maximo de dos numeros
-  *
-  *\param vm: Apuntador a la MV
-  */
-void lat_maximo(lat_mv* vm);
-
-/**\brief Obtiene el minimo de dos numeros
-  *
-  *\param vm: Apuntador a la MV
-  */
-void lat_minimo(lat_mv* vm);
 
 /**\brief Determina si una cadena es decimal
   *
@@ -390,12 +398,29 @@ void lat_llamar_funcion(lat_mv* vm, lat_objeto* func);
   */
 void lat_agregar(lat_mv *vm);
 
+/**\brief Agrega los elementos de una lista al final de la lista
+  *
+  *\param vm: Apuntador a la MV
+  */
 void lat_extender(lat_mv *vm);
 
+/**\brief Regresa el indice en que se encuentra el objeto enviado
+  *
+  *\param lista: Apuntador a la lista
+  *\param lista: Apuntador al objeto buscado
+  */
 int __lista_obtener_indice(lista* list, void* data);
 
+/**\brief Elimina un elemento en el indice indicado
+  *
+  *\param vm: Apuntador a la MV
+  */
 void lat_eliminar_indice(lat_mv* vm);
 
+/**\brief Invierte los elementos de una lista
+  *
+  *\param vm: Apuntador a la MV
+  */
 void lat_invertir(lat_mv* vm);
 
 #endif //_VM_H_

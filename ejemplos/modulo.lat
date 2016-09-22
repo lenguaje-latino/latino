@@ -1,5 +1,5 @@
 #incluirse a si mismo
-incluir("modulo") #no se incluiye a si mismo OK    
+incluir("modulo") #no se incluiye a si mismo 
 funcion sumatoria(a, b)
   retorno (a + b)
 fin

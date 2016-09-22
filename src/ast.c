@@ -61,7 +61,7 @@ ast *nodo_nuevo_logico(int b, int num_linea, int num_columna)
     return a;
 }
 
-ast *nodo_nuevo_decimal(double d, int num_linea, int num_columna)
+ast *nodo_nuevo_numerico(double d, int num_linea, int num_columna)
 {
     ast *a = (ast*)__memoria_asignar(sizeof(ast));
     a->tipo = NODO_VALOR;
@@ -80,7 +80,8 @@ ast *nodo_nuevo_cadena(const char *s, int num_linea, int num_columna)
     a->tipo = NODO_VALOR;
     nodo_valor *val = (nodo_valor*)__memoria_asignar(sizeof(nodo_valor));
     val->tipo = VALOR_CADENA;
-    val->val.cadena = __str_analizar(s, strlen(s));
+    //val->val.cadena = __str_analizar(s, strlen(s));
+    val->val.cadena = __str_duplicar(s);
     a->valor = val;
     a->num_linea = num_linea;
     a->num_columna = num_columna;
@@ -193,56 +194,7 @@ ast* nodo_nuevo_incluir(ast* ruta)
 }
 
 ast* nodo_reducir_constantes(nodo_tipo nt, ast* lhs, ast* rhs){
-    double tmp = 0;
-    //operadores unarios
-    if(lhs->tipo == NODO_VALOR  && lhs->valor->tipo != VALOR_NUMERICO){
-        lat_error("Linea %d, %d: %s", lhs->num_linea, lhs->num_columna, "Valor numerico requerido");
-        return NULL;
-    }
-    if(rhs == NULL){
-        if(nt == NODO_MAS_UNARIO){
-            return nodo_nuevo(NODO_MAS_UNARIO, lhs, NULL);
-        }
-        if(nt == NODO_MENOS_UNARIO){
-            return nodo_nuevo(NODO_MENOS_UNARIO, lhs, NULL);
-        }
-    }
-    /*operadores binarios*/
-    if(lhs->tipo == NODO_VALOR && rhs->tipo == NODO_VALOR){
-        switch(nt){
-            case NODO_SUMA:
-                tmp = lhs->valor->val.numerico + rhs->valor->val.numerico;
-                break;
-            case NODO_RESTA:
-                tmp = lhs->valor->val.numerico - rhs->valor->val.numerico;
-                break;
-            case NODO_MULTIPLICACION:
-                tmp = lhs->valor->val.numerico * rhs->valor->val.numerico;
-                break;
-            case NODO_DIVISION:{
-                if(rhs->valor->val.numerico == 0){
-                    lat_error("Linea %d, %d: %s", rhs->num_linea, rhs->num_columna, "Division entre cero");
-                    return NULL;
-                }
-                tmp = lhs->valor->val.numerico / rhs->valor->val.numerico;
-            }
-                break;
-            case NODO_MODULO:{
-                if(rhs->valor->val.numerico == 0){
-                    lat_error("Linea %d, %d: %s", rhs->num_linea, rhs->num_columna, "Modulo entre cero");
-                    return NULL;
-                }
-                tmp = fmod(lhs->valor->val.numerico, rhs->valor->val.numerico);
-            }
-                break;
-            default:
-                if(!parse_silent){
-                    lat_error("Linea %d, %d: %s", lhs->num_linea, lhs->num_columna, "Operador invalido");
-                    return NULL;
-                }
-        }
-        return nodo_nuevo_decimal(tmp, lhs->num_linea, lhs->num_columna);
-    }
+    //le dejamos el trabajo a la maquina virtual :)
     return nodo_nuevo(nt, lhs, rhs);
 }
 
@@ -363,7 +315,7 @@ static int nodo_analizar(lat_mv *vm, ast *node, lat_bytecode *bcode, int i)
         //TODO: Incluir rutas con punto ej. incluir "lib.modulos.myModulo"
         char* archivo = node->izq->valor->val.cadena;
         lat_objeto* mod = lat_cadena_nueva(vm, archivo);
-        lista *modulos = lat_obtener_lista(vm->modulos);
+        lista *modulos = __lista(vm->modulos);
         int status;
         if (!__lista_contiene_valor(modulos, (void*)mod))
         {
@@ -438,7 +390,7 @@ static int nodo_analizar(lat_mv *vm, ast *node, lat_bytecode *bcode, int i)
         if(node->valor->tipo == VALOR_LOGICO)
             o = (node->valor->val.logico == true) ? vm->objeto_verdadero : vm->objeto_falso;
         if(node->valor->tipo == VALOR_NUMERICO)
-            o = lat_decimal_nuevo(vm, node->valor->val.numerico);
+            o = lat_numerico_nuevo(vm, node->valor->val.numerico);
         if(node->valor->tipo == VALOR_CADENA)
             o = lat_cadena_nueva(vm, node->valor->val.cadena);
         o->num_linea = node->num_linea;

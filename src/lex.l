@@ -66,20 +66,25 @@ EXP ([Ee][-+]?[0-9]+)
 "!" |
 "="     { return yytext[0]; }
 
- /* operadores de comparacion */
+ /* operadores de comparacion y demas*/
 ">="    { return MAYOR_IGUAL; }
 "<="    { return MENOR_IGUAL; }
 "!="    { return DIFERENTE; }
 "=="    { return IGUAL_LOGICO; }
 "&&"    { return Y_LOGICO; }
 "||"    { return O_LOGICO; }
-".="    { return CONCATENAR_IGUAL; }
 "."     { return CONCATENAR; }
+".="    { return CONCATENAR_IGUAL; }
+"+="    { return MAS_IGUAL; }
+"-="    { return MENOS_IGUAL; }
+"*="    { return POR_IGUAL; }
+"/="    { return ENTRE_IGUAL; }
+"%="    { return MODULO_IGUAL; }
 ">"     { return MAYOR_QUE; }
 "<"     { return MENOR_QUE; }
-"++"	{ return INCREMENTO; }
-"--"	{ return DECREMENTO; }
-"->"	{ return ATRIBUTO; }
+"++"	  { return INCREMENTO; }
+"--"	  { return DECREMENTO; }
+"->"	  { return ATRIBUTO; }
 
  /* palabras reservadas */
 "si"        { return SI; }
@@ -105,8 +110,8 @@ EXP ([Ee][-+]?[0-9]+)
  /* names */
 [_A-Z]*             { yylval->node = nodo_nuevo_identificador(yytext, yylloc->first_line, yylloc->first_column, 1); return IDENTIFICADOR; }
 [_a-zA-Z][_a-zA-Z0-9]* { yylval->node = nodo_nuevo_identificador(yytext, yylloc->first_line, yylloc->first_column, 0); return IDENTIFICADOR; }
-[0-9]+"."+[0-9]*{EXP}?|"."+[0-9]+{EXP}?       { yylval->node = nodo_nuevo_decimal(strtod(yytext, NULL), yylloc->first_line, yylloc->first_column); return NUMERICO; }
-[0-9]+                 { yylval->node = nodo_nuevo_decimal(strtod(yytext, NULL), yylloc->first_line, yylloc->first_column); return ENTERO; }
+[0-9]+"."+[0-9]*{EXP}?|"."+[0-9]+{EXP}?       { yylval->node = nodo_nuevo_numerico(strtod(yytext, NULL), yylloc->first_line, yylloc->first_column); return NUMERICO; }
+[0-9]+                 { yylval->node = nodo_nuevo_numerico(strtod(yytext, NULL), yylloc->first_line, yylloc->first_column); return ENTERO; }
 \"([^\\\"]|\\.)*\"     { yytext[strlen(yytext) - 1] = '\0'; yylval->node = nodo_nuevo_cadena(yytext+1, yylloc->first_line, yylloc->first_column); return CADENA; }
 '([^\\\']|\\.)*'       { yytext[strlen(yytext) - 1] = '\0'; yylval->node = nodo_nuevo_cadena(yytext+1, yylloc->first_line, yylloc->first_column); return CADENA; }
 "#".*                  { ; }  /* comentario de una linea estilo python */

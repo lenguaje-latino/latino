@@ -20,6 +20,7 @@
 #include "object.h"
 #include "vm.h"
 
+/**\brief Bandera habilitar o deshabilitar GC */
 #define HABILITAR_GC 0
 
 #define TIME_THIS(X)                                         \
@@ -33,7 +34,19 @@
       + 1.0*ts2.tv_sec - 1.0*ts1.tv_sec ) );                 \
   }
 
+/** Agrega un objeto al colector de basura
+  *
+  * \param vm: Apuntador a Maquina Virtual
+  * \param o: Objeto a agregar
+  *
+  */
 void __colector_agregar(lat_mv* vm, lat_objeto* o);
+
+/** Ejecuta la limpieza de objetos basura
+  *
+  * \param vm: Apuntador a Maquina Virtual  
+  *
+  */
 void __colector_limpiar(lat_mv* vm);
 
 #endif /* _GC_H_ */
