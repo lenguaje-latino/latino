@@ -3,13 +3,19 @@ Para debuguear en visual studio:
 Menu propiedades del proyecto-> Debugging -> Command Arguments. Agregar
 $(SolutionDir)..\ejemplos\debug.lat
 */
-a = 2
-b = 4
-c = 6
-a = -b
-escribir(a)
-escribir(b)
-b = 2 * a + b
-escribir(a)
-escribir(b)
-escribir(c)
+
+original = "hola\\ mundo"
+escribir("original: " . original)
+
+str = reemplazar(original, "\\", "%5C")
+escribir("str: " . str)
+
+original = "hola[ mundo"
+escribir("original: " . original)
+str = reemplazar(original, "[", "%5B") # ERROR. Se queda trabado.
+escribir("str: " . str)
+
+original = "hola] mundo"
+escribir("original: " . original)
+str = reemplazar(original, "]", "%5D") # ERROR. Se queda trabado.
+escribir("str: " . str)

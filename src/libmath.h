@@ -165,6 +165,6 @@ void lat_redondear_abajo(lat_mv* vm);
   * \param vm: Maquina virtual de latino
   *
   */
-void lat_modulo_decimal(lat_mv* vm);
+void __modulo(lat_mv* vm);
 
 #endif /* !_LIBMATH_H_ */
