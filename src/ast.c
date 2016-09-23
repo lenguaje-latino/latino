@@ -79,8 +79,7 @@ ast *nodo_nuevo_cadena(const char *s, int num_linea, int num_columna)
     ast *a = (ast*)__memoria_asignar(sizeof(ast));
     a->tipo = NODO_VALOR;
     nodo_valor *val = (nodo_valor*)__memoria_asignar(sizeof(nodo_valor));
-    val->tipo = VALOR_CADENA;
-    //val->val.cadena = __str_analizar(s, strlen(s));
+    val->tipo = VALOR_CADENA;    
     val->val.cadena = __str_duplicar(s);
     a->valor = val;
     a->num_linea = num_linea;

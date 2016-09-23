@@ -38,9 +38,6 @@ THE SOFTWARE.
 #include "parse.h"
 #include "gc.h"
 
-#define Lat_INCREF(o) o->num_ref++;
-#define Lat_DECREF(o) o->num_ref--;
-
 static const char *const bycode_nombre[] = {
     "NOP",
     "HALT",
@@ -89,10 +86,7 @@ static void __registrar_cfuncion(lat_mv* vm, char *palabra_reservada, void (*fun
     lat_objeto *cfun = lat_definir_cfuncion(vm, function);
     cfun->nombre_cfun = palabra_reservada;
     cfun->num_params = num_params;
-    lat_asignar_contexto_objeto(ctx, nombre, cfun);
-    //se agregan funciones para que se eliminen con el Colector de basura
-    //__colector_agregar(vm, nombre);
-    //__colector_agregar(vm, cfun);    
+    lat_asignar_contexto_objeto(ctx, nombre, cfun);        
     lista* oo = __lista(vm->otros_objetos);    
     __lista_apilar(oo, nombre);
     __lista_apilar(oo, cfun);
@@ -317,24 +311,26 @@ lat_objeto* lat_definir_cfuncion(lat_mv* vm, void (*function)(lat_mv* vm))
 }
 
 void __imprimir_objeto(lat_mv* vm, lat_objeto* in)
-{    
+{   
     char *tmp1 = NULL;
     if(in->tipo != T_STR){
         tmp1 = __objeto_a_cadena(in);
-        //fprintf(stdout, "%s", tmp1);
-        fprintf(stdout, "%s", __str_analizar(tmp1, strlen(tmp1)));
-    }else{
-        //fprintf(stdout, "%s", __cadena(in));
+        char *tmp2 = __str_analizar(tmp1, strlen(tmp1));
+        fprintf(stdout, "%s", tmp2);
+        __memoria_liberar(tmp2);
+    }else{        
         char *s = __cadena(in);
-        fprintf(stdout, "%s", __str_analizar(s, strlen(s)));
+        tmp1 = __str_analizar(s, strlen(s));
+        fprintf(stdout, "%s", tmp1);
     }    
     __memoria_liberar(tmp1);
 }
 
 void lat_imprimir(lat_mv* vm)
 {
-    lat_objeto* in = lat_desapilar(vm);
-    __imprimir_objeto(vm, in);
+    lat_objeto* o = lat_desapilar(vm);
+    Lat_DECREF(o);
+    __imprimir_objeto(vm, o);
     printf("\n");    
 }
 
@@ -381,9 +377,9 @@ void lat_ejecutar_archivo(lat_mv *vm)
 
 void __menos_unario(lat_mv* vm)
 {
-    lat_objeto* o = lat_desapilar(vm);
-    Lat_DECREF(o);
+    lat_objeto* o = lat_desapilar(vm);    
     lat_objeto* r = lat_numerico_nuevo(vm, (-1) * __objeto_a_numerico(o));
+    Lat_DECREF(o);
     lat_apilar(vm, r);
     __colector_agregar(vm, r);
 }
@@ -391,18 +387,18 @@ void __menos_unario(lat_mv* vm)
 void __sumar(lat_mv* vm)
 {
     lat_objeto* b = lat_desapilar(vm);
-    lat_objeto* a = lat_desapilar(vm);
-    Lat_DECREF(b);
-    Lat_DECREF(a);
+    lat_objeto* a = lat_desapilar(vm);    
     lat_objeto* r = lat_numerico_nuevo(vm, __objeto_a_numerico(a) + __objeto_a_numerico(b));
     lat_apilar(vm, r);
+    Lat_DECREF(b);
+    Lat_DECREF(a);
     __colector_agregar(vm, r);
 }
 
 void __restar(lat_mv* vm)
 {
     lat_objeto* b = lat_desapilar(vm);
-    lat_objeto* a = lat_desapilar(vm);
+    lat_objeto* a = lat_desapilar(vm);  
     Lat_DECREF(b);
     Lat_DECREF(a);
     lat_objeto* r = lat_numerico_nuevo(vm, __objeto_a_numerico(a) - __objeto_a_numerico(b));
@@ -424,7 +420,7 @@ void __multiplicar(lat_mv* vm)
 void __dividir(lat_mv* vm)
 {
     lat_objeto* b = lat_desapilar(vm);
-    lat_objeto* a = lat_desapilar(vm);
+    lat_objeto* a = lat_desapilar(vm);  
     Lat_DECREF(b);
     Lat_DECREF(a);
     if(__objeto_a_numerico(b) == 0){
@@ -629,7 +625,7 @@ void __o_logico(lat_mv* vm)
 
 void __no_logico(lat_mv* vm)
 {
-    lat_objeto* o = lat_desapilar(vm);
+    lat_objeto* o = lat_desapilar(vm); 
     Lat_DECREF(o);
     lat_objeto* r = (__objeto_a_logico(o) == false) ? vm->objeto_verdadero : vm->objeto_falso;
     lat_apilar(vm, r);
@@ -645,6 +641,7 @@ void lat_logico(lat_mv* vm)
 void lat_numerico(lat_mv* vm)
 {
     lat_objeto* o = lat_desapilar(vm);
+    Lat_DECREF(o);
     lat_objeto* r = lat_numerico_nuevo(vm, __objeto_a_numerico(o));
     lat_apilar(vm, r);
     __colector_agregar(vm, r);
@@ -653,6 +650,7 @@ void lat_numerico(lat_mv* vm)
 void lat_cadena(lat_mv* vm)
 {
     lat_objeto* o = lat_desapilar(vm);
+    Lat_DECREF(o);
     lat_objeto* r = lat_cadena_nueva(vm, __objeto_a_cadena(o));
     lat_apilar(vm, r);
     __colector_agregar(vm, r);
@@ -744,8 +742,8 @@ void lat_llamar_funcion(lat_mv* vm, lat_objeto* func)
                 lat_objeto *name =  (lat_objeto*)cur.meta;
                 lat_objeto *ctx =  lat_obtener_contexto(vm);
                 lat_objeto *val = lat_obtener_contexto_objeto(ctx, name);
-                lat_objeto *tmp = lat_clonar_objeto(vm, val);
                 Lat_DECREF(val);
+                lat_objeto *tmp = lat_clonar_objeto(vm, val);
                 tmp->datos.numerico++;
                 lat_asignar_contexto_objeto(ctx, name, tmp);
                 __colector_agregar(vm, tmp);
@@ -755,8 +753,8 @@ void lat_llamar_funcion(lat_mv* vm, lat_objeto* func)
                 lat_objeto *name =  (lat_objeto*)cur.meta;
                 lat_objeto *ctx =  lat_obtener_contexto(vm);
                 lat_objeto *val = lat_obtener_contexto_objeto(ctx, name);
-                lat_objeto *tmp = lat_clonar_objeto(vm, val);
                 Lat_DECREF(val);
+                lat_objeto *tmp = lat_clonar_objeto(vm, val);                
                 tmp->datos.numerico--;
                 lat_asignar_contexto_objeto(ctx, name, tmp);
                 __colector_agregar(vm, tmp);
@@ -824,8 +822,7 @@ void lat_llamar_funcion(lat_mv* vm, lat_objeto* func)
             break;
             case LOAD_CONST:
             {                
-                lat_objeto *o = (lat_objeto*)cur.meta;
-                Lat_INCREF(o);
+                lat_objeto *o = (lat_objeto*)cur.meta;                
 #if DEPURAR_MV
                 __imprimir_objeto(vm, o);
                 printf("\t");
@@ -836,14 +833,18 @@ void lat_llamar_funcion(lat_mv* vm, lat_objeto* func)
             case STORE_NAME:{
                 lat_objeto *val = lat_desapilar(vm);
                 lat_objeto *name =  (lat_objeto*)cur.meta;
-                lat_objeto *ctx =  lat_obtener_contexto(vm);
+                lat_objeto *ctx =  lat_obtener_contexto(vm);                
                 Lat_INCREF(val);
 #if DEPURAR_MV
                 __imprimir_objeto(vm, name);
                 printf("\t");
 #endif
+                //objeto anterior
+                lat_objeto *tmp = lat_obtener_contexto_objeto(ctx, name);
+                if(tmp != NULL) {
+                    Lat_DECREF(tmp);
+                }
                 if(name->es_constante){
-                    lat_objeto *tmp = lat_obtener_contexto_objeto(ctx, name);
                     if(tmp != NULL){
                         lat_fatal_error("Linea %d, %d: Intento de reasignar valor a constante '%s'", 
                                 name->num_linea, name->num_columna, __cadena(name));
@@ -864,8 +865,7 @@ void lat_llamar_funcion(lat_mv* vm, lat_objeto* func)
                 __imprimir_objeto(vm, name);
                 printf("\t");
 #endif
-                lat_objeto *val = lat_obtener_contexto_objeto(ctx, name);
-                Lat_INCREF(val);
+                lat_objeto *val = lat_obtener_contexto_objeto(ctx, name);                
                 if(val == NULL){
                     lat_fatal_error("Linea %d, %d: Variable \"%s\" indefinida", 
                             name->num_linea, name->num_columna, __cadena(name));                        
@@ -949,7 +949,6 @@ void lat_llamar_funcion(lat_mv* vm, lat_objeto* func)
                 printf("\t");
 #endif
                 lat_objeto *val = lat_obtener_contexto_objeto(ctx, name);
-                Lat_INCREF(val);
                 if(val == NULL){
                     lat_fatal_error("Linea %d, %d: Objeto \"%s\" no tiene un atributo \"%s\" definido. ", 
                             name->num_linea, name->num_columna, __tipo(attr->tipo), __cadena(name));

@@ -372,6 +372,8 @@ void lat_concatenar(lat_mv* vm)
 {
     lat_objeto* b = lat_desapilar(vm);
     lat_objeto* a = lat_desapilar(vm);
+    //Lat_DECREF(b);
+    //Lat_DECREF(a);
     char *tmp1 = NULL;
     char *tmp2 = NULL;
     lat_objeto* r = NULL;
@@ -385,11 +387,11 @@ void lat_concatenar(lat_mv* vm)
     }else{
         tmp2 = __objeto_a_cadena(b);
     }    
-    r = lat_cadena_nueva(vm, __str_concatenar(tmp1, tmp2));    
-    __colector_agregar(vm, r);    
+    r = lat_cadena_nueva(vm, __str_concatenar(tmp1, tmp2));
     __memoria_liberar(tmp1);
     __memoria_liberar(tmp2);
     lat_apilar(vm, r);
+    __colector_agregar(vm, r);
 }
 
 void lat_comparar(lat_mv* vm)
