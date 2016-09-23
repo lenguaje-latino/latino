@@ -41,6 +41,10 @@ typedef struct lat_objeto lat_objeto;
 *
 */
 
+/**< Incrementa y decrementa las referencias de un objeto */
+#define Lat_INCREF(o)   o->num_ref++
+#define Lat_DECREF(o)   o->num_ref--
+
 /** \brief Tipo de dato
 *
 * Tipo de dato que maneja la maquina virtual
