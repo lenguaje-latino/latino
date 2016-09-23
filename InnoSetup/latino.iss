@@ -2,7 +2,7 @@
 ; SEE THE DOCUMENTATION FOR DETAILS ON CREATING INNO SETUP SCRIPT FILES!
 
 #define MyAppName "Latino"
-#define MyAppVersion "0.7.4"
+#define MyAppVersion "0.7.5"
 #define MyAppPublisher "Lenguaje Latino"
 #define MyAppURL "http://lenguaje-latino.org/"
 #define MyAppExeName "latino.exe"
