@@ -1,3 +1,4 @@
+```bash
 # Título
 .TH # Despúes de TH ponemos el titulo, si pones un espacio representará entre parentesis una indicacion acerca del titulo
 
@@ -12,3 +13,4 @@
 
 # Salto de línea
 .br # Simple salto de linea. Sin texto a continuacion.
+```
