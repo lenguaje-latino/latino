@@ -13,4 +13,20 @@
 
 # Salto de línea
 .br # Simple salto de linea. Sin texto a continuacion.
+
+# Subrayar texto
+.IR # Subraya el texto a continuacion
+
+# No se que mierd*s haga
+.TP # No se que mierd*s haga
+
+# Ejemplo
+.BR \-n ", " \-\-bits =\fIBITS\fR
+
+<<lat
+
+Vease más en:
+http://liw.fi/manpages/
+
+lat
 ```
