@@ -76,6 +76,9 @@ static const char *const bycode_nombre[] = {
     "BUILD_LIST",
     "STORE_SUBSCR",
     "BINARY_SUBSCR",
+    "BUILD_MAP",
+    "STORE_MAP",
+    "STORE_ATTR",
 };
 
 
@@ -239,17 +242,13 @@ lat_mv* lat_mv_crear()
 void lat_destruir_mv(lat_mv* mv){
     lat_eliminar_objeto(mv, mv->modulos);
     lat_eliminar_objeto(mv, mv->gc_objetos);    
-    lat_eliminar_objeto(mv, mv->otros_objetos);
-    lat_eliminar_objeto(mv, mv->pila);
+    lat_eliminar_objeto(mv, mv->otros_objetos);    
     lat_eliminar_objeto(mv, mv->objeto_verdadero);
-    lat_eliminar_objeto(mv, mv->objeto_falso); 
-    /*lat_objeto* ctx = lat_obtener_contexto(mv);
-    lat_eliminar_objeto(mv, ctx);
-     mv->contexto_pila[0]
-     */
+    lat_eliminar_objeto(mv, mv->objeto_falso);     
     if(mv->contexto_pila[0] != NULL){
         lat_eliminar_objeto(mv, mv->contexto_pila[0]);        
     }    
+    //lat_eliminar_objeto(mv, mv->pila);
     __memoria_liberar(mv);
 }
 
@@ -329,7 +328,7 @@ void __imprimir_objeto(lat_mv* vm, lat_objeto* in)
 void lat_imprimir(lat_mv* vm)
 {
     lat_objeto* o = lat_desapilar(vm);
-    Lat_DECREF(o);
+    //Lat_DECREF(o);
     __imprimir_objeto(vm, o);
     printf("\n");    
 }
@@ -368,7 +367,7 @@ void lat_ejecutar_archivo(lat_mv *vm)
         ast *tree = lat_analizar_archivo(input, &status);
         if (!tree)
         {
-            lat_fatal_error("Error al leer el archivo: %s", input);
+            lat_fatal_error("Al leer el archivo: %s", input);
         }
         lat_objeto *func = nodo_analizar_arbol(vm, tree);
         lat_llamar_funcion(vm, func);        
@@ -941,26 +940,42 @@ void lat_llamar_funcion(lat_mv* vm, lat_objeto* func)
             }
             break; 
             case LOAD_ATTR: {                
-                lat_objeto *attr = lat_desapilar(vm);
-                lat_objeto *name =  (lat_objeto*)cur.meta;
+                lat_objeto *obj = lat_desapilar(vm);
+                lat_objeto *attr =  (lat_objeto*)cur.meta;
                 lat_objeto *ctx =  lat_obtener_contexto(vm);
+                lat_objeto *val = NULL;
 #if DEPURAR_MV
-                __imprimir_objeto(vm, name);
+                __imprimir_objeto(vm, attr);
                 printf("\t");
 #endif
-                lat_objeto *val = lat_obtener_contexto_objeto(ctx, name);
+                if(obj->tipo == T_DICT){                    
+                    val = __dic_obtener(__dic(obj), __cadena(attr));
+                    lat_bytecode next = inslist[pos + 1];
+                    if(next.ins == STORE_ATTR){
+                        lat_apilar(vm, obj);
+                        lat_apilar(vm, attr);
+                    }else{
+                        if(val == NULL){
+                            goto ATTR_AS_FUNCTION;
+                        }
+                        lat_apilar(vm, val);
+                    }
+                    break;
+                }
+ATTR_AS_FUNCTION:
+                val = lat_obtener_contexto_objeto(ctx, attr);
                 if(val == NULL){
                     lat_fatal_error("Linea %d, %d: Objeto \"%s\" no tiene un atributo \"%s\" definido. ", 
-                            name->num_linea, name->num_columna, __tipo(attr->tipo), __cadena(name));
+                            attr->num_linea, attr->num_columna, __tipo(obj->tipo), __cadena(attr));
                 }
-                val->num_linea = name->num_linea;
-                val->num_columna = name->num_columna;                 
+                val->num_linea = attr->num_linea;
+                val->num_columna = attr->num_columna;                 
                 lista* list = __lista_crear();
                 int i;
                 for(i=0; i < val->num_params-1; i++){
                     __lista_insertar_inicio(list, (void*)lat_desapilar(vm));
                 }                
-                lat_apilar(vm, attr);
+                lat_apilar(vm, obj);
                 LIST_FOREACH(list, primero, siguiente, cur){
                     lat_apilar(vm, (lat_objeto*)cur->valor);                    
                 }
@@ -972,6 +987,10 @@ void lat_llamar_funcion(lat_mv* vm, lat_objeto* func)
                 lat_objeto* pos = lat_desapilar(vm);                
                 lat_objeto* lst = lat_desapilar(vm);
                 lat_objeto* exp = lat_desapilar(vm);
+                if(lst->tipo == T_DICT){
+                    __dic_asignar(__dic(lst), __cadena(pos), (void*)exp);
+                    break;
+                }
                 int ipos = __numerico(pos);
                 if(lst->tipo == T_STR){
                     char* slst = __cadena(lst);
@@ -992,14 +1011,23 @@ void lat_llamar_funcion(lat_mv* vm, lat_objeto* func)
                                 pos->num_linea, pos->num_columna);
                     }
                     __lista_modificar_elemento(__lista(lst), exp, ipos);
-                }
+                }                
             }
             break;            
             case BINARY_SUBSCR:{                
                 lat_objeto* lst = lat_desapilar(vm);
                 lat_objeto* pos = lat_desapilar(vm);
-                int ipos = __numerico(pos);
                 lat_objeto* o = NULL;
+                if(lst->tipo == T_DICT){
+                    o = __dic_obtener(__dic(lst), __cadena(pos));
+                    if(o == NULL){
+                        lat_fatal_error("Linea %d, %d: No se encontro la llave '%s' en el diccionario.", 
+                                pos->num_linea, pos->num_columna, __cadena(pos));
+                    }
+                    lat_apilar(vm, o);
+                    break;
+                }                
+                int ipos = __numerico(pos);                
                 if(lst->tipo == T_STR){
                     char* slst = __cadena(lst);
                     if(ipos < 0 || ipos >= strlen(slst)){
@@ -1018,8 +1046,28 @@ void lat_llamar_funcion(lat_mv* vm, lat_objeto* func)
                 }
                 lat_apilar(vm, o);
             }
-            break;                    
-            
+            break; 
+            case BUILD_MAP:{
+                lat_objeto* o = lat_dic_nuevo(vm, __dic_crear());
+                lat_apilar(vm, o);
+            }
+            break;
+            case STORE_MAP:{
+                lat_objeto* key = lat_desapilar(vm);
+                lat_objeto* val = lat_desapilar(vm);
+                lat_objeto* dic = lat_tope(vm);
+                __dic_asignar(__dic(dic), __cadena(key), (void*)val);
+            }
+            break;    
+            case STORE_ATTR: {
+                lat_objeto* attr = lat_desapilar(vm);
+                lat_objeto* obj = lat_desapilar(vm);
+                lat_objeto* val = lat_desapilar(vm);
+                if(obj->tipo == T_DICT){
+                    __dic_asignar(__dic(obj), __cadena(attr), (void*)val);
+                }
+            }
+            break;
 
             }   //fin de switch
             

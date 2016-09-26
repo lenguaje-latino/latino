@@ -138,21 +138,21 @@ lat_objeto* lat_obtener_contexto_objeto(lat_objeto* ns, lat_objeto* name);
 
 /** \brief Crea un objeto determinado
   *
-  * \param vm: Intancia de la maquina virtual
+  * \param vm: Instancia de la maquina virtual
   * \return lat_objeto: Apuntador al objeto creado
   */
 lat_objeto* lat_crear_objeto(lat_mv* vm);
 
 /** \brief Crea un contexto determinado
   *
-  * \param vm: Intancia de la maquina virtual
+  * \param vm: Instancia de la maquina virtual
   * \return lat_objeto: Apuntador al contexto creado
   */
 lat_objeto* lat_contexto_nuevo(lat_mv* vm);
 
 /** \brief Crea un objeto decimal
   *
-  * \param vm: Intancia de la maquina virtual
+  * \param vm: Instancia de la maquina virtual
   * \param val: valor decimal
   * \return lat_objeto: Apuntador al objeto creado
   */
@@ -160,7 +160,7 @@ lat_objeto* lat_numerico_nuevo(lat_mv* vm, double val);
 
 /** \brief Crea un objeto cadena
   *
-  * \param vm: Intancia de la maquina virtual
+  * \param vm: Instancia de la maquina virtual
   * \param val: valor cadena
   * \return lat_objeto: Apuntador al objeto creado
   */
@@ -168,7 +168,7 @@ lat_objeto* lat_cadena_nueva(lat_mv* vm, const char* val);
 
 /** \brief Crea un objeto logico
   *
-  * \param vm: Intancia de la maquina virtual
+  * \param vm: Instancia de la maquina virtual
   * \param val: valor logico
   * \return lat_objeto: Apuntador al objeto creado
   */
@@ -176,43 +176,51 @@ lat_objeto* lat_logico_nuevo(lat_mv* vm, bool val);
 
 /** \brief Crea un objeto lista
   *
-  * \param vm: Intancia de la maquina virtual
+  * \param vm: Instancia de la maquina virtual
   * \param l: Apuntador a un nodo de la lista
   * \return lat_objeto: Apuntador al objeto creado
   */
 lat_objeto* lat_lista_nueva(lat_mv* vm, lista* l);
 
+/** \brief Crea un objeto diccionario
+  *
+  * \param vm: Instancia de la maquina virtual
+  * \param dic: Apuntador a un diccionario
+  * \return lat_objeto: Apuntador al objeto creado
+  */
+lat_objeto* lat_dic_nuevo(lat_mv* vm, hash_map* dic);
+
 /** \brief Crea un objeto funcion
   *
-  * \param vm: Intancia de la maquina virtual
+  * \param vm: Instancia de la maquina virtual
   * \return lat_objeto: Apuntador al objeto creado
   */
 lat_objeto* lat_funcion_nueva(lat_mv* vm);
 
 /** \brief Crea un objeto funcion C
   *
-  * \param vm: Intancia de la maquina virtual
+  * \param vm: Instancia de la maquina virtual
   * \return lat_objeto: Apuntador al objeto creado
   */
 lat_objeto* lat_cfuncion_nueva(lat_mv* vm);
 
 /** \brief Elimina un objeto de la lista de objetos creados dinamicamente
   *
-  * \param vm: Intancia de la maquina virtual
+  * \param vm: Instancia de la maquina virtual
   * \param o: Apuntador al objeto
   */
 void lat_eliminar_objeto(lat_mv* vm, lat_objeto* o);
 
 /** \brief Clona (copia) un objeto
   *
-  * \param vm: Intancia de la maquina virtual
+  * \param vm: Instancia de la maquina virtual
   * \param o: Apuntador al objeto
   */
 lat_objeto* lat_clonar_objeto(lat_mv* vm, lat_objeto* o);
 
 /** \brief Clona (copia) una lista
   *
-  * \param vm: Intancia de la maquina virtual
+  * \param vm: Instancia de la maquina virtual
   * \param l: Apuntador al nodo de la lista
   */
 lista* lat_clonar_lista(lat_mv* vm, lista* l);
@@ -244,6 +252,13 @@ bool __logico(lat_objeto* o);
   * \return list_node: Apuntador al nodo de la lista
   */
 lista* __lista(lat_objeto* o);
+
+/** \brief Obtiene el valor del diccionario de un objeto
+  *
+  * \param o: Apuntador al objeto
+  * \return hash_map: Apuntador al diccionario
+  */
+hash_map* __dic(lat_objeto* o);
 
 /** \brief Valida si dos objetos son iguales
   *

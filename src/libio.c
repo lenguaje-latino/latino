@@ -59,9 +59,8 @@ void lat_leer(lat_mv *vm)
         lat_apilar(vm, lat_numerico_nuevo(vm, ret));
     }
     else
-    {
-        //lat_apilar(vm, lat_cadena_nueva(vm, __str_analizar(str, strlen(str))));
-        lat_apilar(vm, lat_cadena_nueva(vm, __str_duplicar(str)));
+    {   
+        lat_apilar(vm, lat_cadena_nueva(vm, __str_analizar(str, strlen(str))));
     }
 }
 void lat_leer_archivo(lat_mv *vm)
