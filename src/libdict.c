@@ -37,7 +37,6 @@ int __dic_hash(char* key)
     unsigned char c;
     for (c = *key; c != '\0'; c = *++key)
         h = h * 33 + c;
-
     return abs(h % 256);
 }
 
@@ -97,4 +96,56 @@ hash_map* __dic_clonar(hash_map *m)
         }
     }
     return ret;
+}
+
+char* __dic_a_cadena(hash_map* m){
+    char* valor = __memoria_asignar(MAX_STR_LENGTH);    
+    strcat(valor, "{");
+    int i;
+    for (i = 0; i < 256; i++)
+    {
+        lista *list = m->buckets[i];
+        if(list != NULL){
+            LIST_FOREACH(list, primero, siguiente, cur) {
+                if (cur->valor != NULL)
+                {
+                    //__dic_asignar(ret, ((hash_val *) cur->valor)->llave, ((hash_val *) cur->valor)->valor);                    
+                    strcat(valor, "'");
+                    strcat(valor, ((hash_val *) cur->valor)->llave);
+                    strcat(valor, "'");
+                    lat_objeto* val = (lat_objeto*)((hash_val *) cur->valor)->valor;                    
+                    strcat(valor, ": ");                    
+                    if(val->tipo == T_STR){
+                        strcat(valor, "'");                        
+                    }
+                    strcat(valor, __objeto_a_cadena(val));
+                    if(val->tipo == T_STR){
+                        strcat(valor, "'");                        
+                    }
+                    strcat(valor, ", ");
+                }
+            }
+        }
+    }
+    strcat(valor, "}");
+    valor = __str_reemplazar(valor, ", }", "}");    //elimina la ultima coma
+    __memoria_reasignar(valor, strlen(valor));
+    return valor;
+}
+
+int __dic_longitud(hash_map* m){
+    int cant = 0;
+    int i;
+    for (i = 0; i < 256; i++){
+        lista *list = m->buckets[i];
+        if(list != NULL){
+            LIST_FOREACH(list, primero, siguiente, cur) {
+                if (cur->valor != NULL)
+                {
+                    cant++;                    
+                }
+            }
+        }        
+    }    
+    return cant;
 }

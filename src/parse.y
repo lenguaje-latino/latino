@@ -360,14 +360,13 @@ dict_new
     ;
 
 dict_items
-    : dict_item ',' dict_items { $$ = nodo_nuevo(NODO_DICC_AGREGAR_ELEMENTO, $1, $3); }
+    : /* empty */ { $$ = NULL; }
     | dict_item { $$ = nodo_nuevo(NODO_DICC_AGREGAR_ELEMENTO, $1, NULL); }
+    | dict_items ',' dict_item { $$ = nodo_nuevo(NODO_DICC_AGREGAR_ELEMENTO, $3, $1); }
     ;
 
 dict_item
-    : { /* empty */
-        $$ = NULL;
-    }
+    : { /* empty */ $$ = NULL; }
     | CADENA ':' expression { $$ = nodo_nuevo(NODO_DICC_ELEMENTO, $1, $3); }
     ;
 

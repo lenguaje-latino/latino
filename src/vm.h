@@ -81,6 +81,9 @@ typedef struct lat_mv lat_mv;
 #define BUILD_LIST         34
 #define STORE_SUBSCR       35
 #define BINARY_SUBSCR      36
+#define BUILD_MAP          37
+#define STORE_MAP          38
+#define STORE_ATTR         39
 
 /**\brief Estructura que almacena las instrucciones bytecode de la MV */
 typedef struct lat_bytecode

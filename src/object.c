@@ -131,7 +131,7 @@ char* __objeto_a_cadena(lat_objeto* o)
     }
     else if (o->tipo == T_DICT)
     {
-        //__imprimir_diccionario(vm, in->data.dict);
+        return __dic_a_cadena(o->datos.dic);
     }    
     return "";
 }
@@ -229,6 +229,17 @@ lat_objeto* lat_lista_nueva(lat_mv* vm, lista* l)
     ret->tipo = T_LIST;
     ret->tamanio += sizeof(lista);
     ret->datos.lista = l;
+    vm->memoria_usada += ret->tamanio;
+    return ret;
+}
+
+lat_objeto* lat_dic_nuevo(lat_mv* vm, hash_map* dic)
+{
+    //printf("lat_dic_nuevo\n");
+    lat_objeto* ret = lat_crear_objeto(vm);
+    ret->tipo = T_DICT;
+    ret->tamanio += sizeof(hash_map);
+    ret->datos.dic = dic;
     vm->memoria_usada += ret->tamanio;
     return ret;
 }
@@ -383,6 +394,16 @@ lista* __lista(lat_objeto* o)
         return o->datos.lista;
     }
     lat_fatal_error("Linea %d, %d: %s", o->num_linea, o->num_columna,  "El parametro debe de ser una lista");
+    return NULL;
+}
+
+hash_map* __dic(lat_objeto* o)
+{
+    if (o->tipo == T_DICT)
+    {
+        return o->datos.dic;
+    }
+    lat_fatal_error("Linea %d, %d: %s", o->num_linea, o->num_columna,  "El parametro debe de ser un diccionario");
     return NULL;
 }
 

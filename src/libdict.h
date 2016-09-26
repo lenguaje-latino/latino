@@ -81,4 +81,12 @@ void __dic_asignar(hash_map* m, char* key, void* val);
   */
 hash_map* __dic_clonar(hash_map* m);
 
+/**\brief Genera la representacion en cadena del diccionario 
+ * \param m: Apuntador a tabla hash
+ * \return char: La cadena del diccionario
+ */
+char* __dic_a_cadena(hash_map* m);
+
+int __dic_longitud(hash_map* m);
+
 #endif /* !_LIB_DICT_H_ */

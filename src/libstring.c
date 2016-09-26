@@ -58,6 +58,10 @@ char* __str_analizar(const char* s, size_t len)
         {
             switch (s[i + 1])
             {
+            case '"':
+                c = '\"';
+                i++;
+                goto save;
             case 'a':
                 c = '\a';
                 i++;
@@ -546,6 +550,10 @@ void lat_longitud(lat_mv* vm)
     if (a->tipo == T_LIST)
     {
         lat_apilar(vm, lat_numerico_nuevo(vm, __lista_longitud(__lista(a))));        
+    }
+    if (a->tipo == T_DICT)
+    {
+        lat_apilar(vm, lat_numerico_nuevo(vm, __dic_longitud(__dic(a))));
     }
 }
 
