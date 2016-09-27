@@ -119,13 +119,21 @@ char* __lista_a_cadena(lista* list)
         char* str = __objeto_a_cadena(o);
         if(o->tipo == T_LIST && !__str_termina_con(valor, "[")){
             strcat(valor, "\n");
-        } 
+        }        
         if(o->tipo == T_STR){
-            strcat(valor, "'");
+            if(strstr(__cadena(o), "\"") != NULL){
+                strcat(valor, "'");
+            }else{
+                strcat(valor, "\"");
+            }
         }
         strcat(valor, str);
         if(o->tipo == T_STR){
-            strcat(valor, "'");
+            if(strstr(__cadena(o), "\"") != NULL){
+                strcat(valor, "'");
+            }else{
+                strcat(valor, "\"");
+            }
         }
         if(cur != list->ultimo){
             strcat(valor, ",");
