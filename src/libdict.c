@@ -110,17 +110,25 @@ char* __dic_a_cadena(hash_map* m){
                 if (cur->valor != NULL)
                 {
                     //__dic_asignar(ret, ((hash_val *) cur->valor)->llave, ((hash_val *) cur->valor)->valor);                    
-                    strcat(valor, "'");
+                    strcat(valor, "\"");
                     strcat(valor, ((hash_val *) cur->valor)->llave);
-                    strcat(valor, "'");
+                    strcat(valor, "\"");
                     lat_objeto* val = (lat_objeto*)((hash_val *) cur->valor)->valor;                    
                     strcat(valor, ": ");                    
                     if(val->tipo == T_STR){
-                        strcat(valor, "'");                        
+                        if(strstr(__cadena(val), "\"") != NULL){
+                            strcat(valor, "'");
+                        }else{
+                            strcat(valor, "\"");
+                        }
                     }
                     strcat(valor, __objeto_a_cadena(val));
                     if(val->tipo == T_STR){
-                        strcat(valor, "'");                        
+                        if(strstr(__cadena(val), "\"") != NULL){
+                            strcat(valor, "'");
+                        }else{
+                            strcat(valor, "\"");
+                        }
                     }
                     strcat(valor, ", ");
                 }
