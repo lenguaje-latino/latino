@@ -154,9 +154,10 @@ lat_mv* lat_mv_crear()
      * 30 funciones para cadenas (string)
      * 40 entrada y salida
      * 50 conversion de tipos de dato
-     * 60
+     * 55 numeros
+     * 60 Listas
      * 70
-     * 99 otras funciones // a crear una categoria para ellas
+     * 999 otras funciones // a crear una categoria para ellas
      *
      */
 
@@ -204,9 +205,6 @@ lat_mv* lat_mv_crear()
     __registrar_cfuncion(mv, "minusculas", lat_minusculas, 1);
     __registrar_cfuncion(mv, "mayusculas", lat_mayusculas, 1);
     __registrar_cfuncion(mv, "quitar_espacios", lat_quitar_espacios, 1);
-    __registrar_cfuncion(mv, "es_numerico", lat_es_numerico, 1);
-    __registrar_cfuncion(mv, "es_numero", lat_es_numerico, 1);
-    __registrar_cfuncion(mv, "es_alfanumerico", lat_es_alfanumerico, 1);
     __registrar_cfuncion(mv, "ejecutar", lat_ejecutar, 1);
     __registrar_cfuncion(mv, "ejecutar_archivo", lat_ejecutar_archivo, 1);
 
@@ -224,13 +222,18 @@ lat_mv* lat_mv_crear()
     __registrar_cfuncion(mv, "decimal", lat_numerico, 1);
     __registrar_cfuncion(mv, "cadena", lat_cadena, 1);
     
+    /** 55 Nùmeros*/
+    __registrar_cfuncion(mv, "es_numerico", lat_es_numerico, 1);
+    __registrar_cfuncion(mv, "es_numero", lat_es_numerico, 1);
+    __registrar_cfuncion(mv, "es_alfanumerico", lat_es_alfanumerico, 1);    
+    
     /*60 funciones para listas*/
     __registrar_cfuncion(mv, "agregar", lat_agregar, 2);
     __registrar_cfuncion(mv, "extender", lat_extender, 2);
     __registrar_cfuncion(mv, "eliminar_indice", lat_eliminar_indice, 2);    
     __registrar_cfuncion(mv, "invertir", lat_invertir, 1);
 
-    /*99 otras funciones */        
+    /*999 otras funciones */        
     __registrar_cfuncion(mv, "sistema", lat_sistema, 1);
     __registrar_cfuncion(mv, "ejecutar_pipe", lat_ejecutar_pipe, 1);
     
