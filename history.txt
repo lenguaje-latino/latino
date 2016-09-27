@@ -30,3 +30,4 @@ s()\r
 funcion resta(a,b)retorno a-bfin
 resta(1,2)
 resta(3,2)
+es_numero(1)
