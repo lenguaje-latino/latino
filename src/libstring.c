@@ -612,10 +612,10 @@ void lat_es_numerico(lat_mv* vm)
     {
         lat_apilar(vm, vm->objeto_verdadero);
         return;
-    }
-    char* cad = __cadena(a);
-    if(atoi(cad))
-    {
+    }    
+    char *ptr;
+    strtod(__cadena(a), &ptr);
+    if (strcmp(ptr, "") == 0){
         lat_apilar(vm, vm->objeto_verdadero);
     }
     else
