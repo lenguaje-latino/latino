@@ -157,7 +157,7 @@ lat_mv* lat_mv_crear()
      * 55 numeros
      * 60 Listas
      * 70
-     * 99 otras funciones // a crear una categoria para ellas
+     * 999 otras funciones // a crear una categoria para ellas
      *
      */
 
@@ -233,7 +233,7 @@ lat_mv* lat_mv_crear()
     __registrar_cfuncion(mv, "eliminar_indice", lat_eliminar_indice, 2);    
     __registrar_cfuncion(mv, "invertir", lat_invertir, 1);
 
-    /*99 otras funciones */        
+    /*999 otras funciones */        
     __registrar_cfuncion(mv, "sistema", lat_sistema, 1);
     __registrar_cfuncion(mv, "ejecutar_pipe", lat_ejecutar_pipe, 1);
     
