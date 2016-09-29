@@ -1027,13 +1027,13 @@ void lat_llamar_funcion(lat_mv* vm, lat_objeto* func)
                 lat_objeto *attr =  (lat_objeto*)cur.meta;
                 lat_objeto *ctx =  lat_obtener_contexto(vm);
                 lat_objeto *val = NULL;
+                lat_bytecode next = inslist[pos + 1];
 #if DEPURAR_MV
                 __imprimir_objeto(vm, attr);
                 printf("\t");
 #endif
                 if(obj->tipo == T_DICT){
                     val = __dic_obtener(__dic(obj), __cadena(attr));
-                    lat_bytecode next = inslist[pos + 1];
                     if(next.ins == STORE_ATTR){
                         lat_apilar(vm, obj);
                         lat_apilar(vm, attr);
@@ -1048,8 +1048,18 @@ void lat_llamar_funcion(lat_mv* vm, lat_objeto* func)
 ATTR_AS_FUNCTION:
                 val = lat_obtener_contexto_objeto(ctx, attr);
                 if(val == NULL){
-                    lat_fatal_error("Linea %d, %d: Objeto \"%s\" no tiene un atributo \"%s\" definido. ",
+                    if(obj->tipo == T_DICT || obj->tipo == T_LIST){
+                        val = lat_cadena_nueva(vm, "");
+                    }                    
+                }else{
+                    if(next.ins == CALL_FUNCTION && val->tipo != T_CFUNC)
+                    {
+                        lat_fatal_error("Linea %d, %d: Objeto \"%s\" no tiene una funcion \"%s\" definida. ",
                             attr->num_linea, attr->num_columna, __tipo(obj->tipo), __cadena(attr));
+                    }
+                    if(next.ins == LOAD_NAME && val->tipo == T_STR){
+                        val = lat_cadena_nueva(vm, "");
+                    }
                 }
                 val->num_linea = attr->num_linea;
                 val->num_columna = attr->num_columna;
@@ -1104,8 +1114,10 @@ ATTR_AS_FUNCTION:
                 if(lst->tipo == T_DICT){
                     o = __dic_obtener(__dic(lst), __cadena(pos));
                     if(o == NULL){
-                        lat_fatal_error("Linea %d, %d: No se encontro la llave '%s' en el diccionario.",
+                        /*lat_fatal_error("Linea %d, %d: No se encontro la llave '%s' en el diccionario.",
                                 pos->num_linea, pos->num_columna, __cadena(pos));
+                         */
+                        o = lat_cadena_nueva(vm, "");
                     }
                     lat_apilar(vm, o);
                     break;
@@ -1114,16 +1126,23 @@ ATTR_AS_FUNCTION:
                 if(lst->tipo == T_STR){
                     char* slst = __cadena(lst);
                     if(ipos < 0 || ipos >= strlen(slst)){
-                        lat_fatal_error("Linea %d, %d: Indice fuera de rango.",
+                        /*lat_fatal_error("Linea %d, %d: Indice fuera de rango.",
                                 pos->num_linea, pos->num_columna);
+                         */
+                        o = lat_cadena_nueva(vm, "");
+                        lat_apilar(vm, o);
+                        break;
                     }
                     char c[2] = {slst[ipos], '\0' };
                     o = lat_cadena_nueva(vm, c);
                 }
                 if(lst->tipo == T_LIST){
                     if(ipos < 0 || ipos >= __lista_longitud(__lista(lst))){
-                        lat_fatal_error("Linea %d, %d: Indice fuera de rango.",
-                                pos->num_linea, pos->num_columna);
+                        /*lat_fatal_error("Linea %d, %d: Indice fuera de rango.",
+                                pos->num_linea, pos->num_columna);*/
+                        o = lat_cadena_nueva(vm, "");
+                        lat_apilar(vm, o);
+                        break;
                     }
                     o = __lista_obtener_elemento(__lista(lst), __numerico(pos));
                 }
