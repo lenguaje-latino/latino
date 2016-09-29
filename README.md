@@ -81,6 +81,7 @@ https://www.microsoft.com/es-ES/download/details.aspx?id=48145
 | cmake   |   3.3.1 |Linux|
 | gcc     |   4.9.3 |Linux|
 | g++     |   4.9.3 |Linux|
+| libjansson-dev |   2.9   |Linux|
 | kernel-devel| |Solo Fedora|
 | jsoncpp| |Solo Fedora|
 --
