@@ -58,6 +58,10 @@ char* __str_analizar(const char* s, size_t len)
         {
             switch (s[i + 1])
             {
+            case '/':
+                c = '/';
+                i++;
+                goto save;
             case '"':
                 c = '\"';
                 i++;
@@ -90,6 +94,18 @@ char* __str_analizar(const char* s, size_t len)
                 c = '\\';
                 i++;
                 goto save;
+            case 'u':
+                c = s[i];
+                ret[j] = c;
+                j++;  
+                i++;
+                int k;
+                for(k = 0; k < 4; k++) {
+                    c = s[i];
+                    ret[j] = c;
+                    j++;
+                    i++;
+                }                    
             default:
                 break;
             }
