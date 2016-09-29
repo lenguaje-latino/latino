@@ -14,12 +14,13 @@ str = '{"ok":true,
                        "text":"esto es una prueba \ud83d\ude18 print (\"hola mundo\")",
                        "entities":[{"type":"code","offset":19,"length":20}]}}]}'
 
+str2 = '{"ok":true,
+      "result":[]}'
+
 dic = leer_json(str)
-escribir(str)
-escribir(dic)
-si dic->ok
-  //escribir("hola que hace")
-  //escribir(dic->result[0]->update_id)
-  text = "esto es una prueba \ud83d\ude18 print (\"hola mundo\")"#dic->result[0]->message->text
-  escribir(text)
-fin
+
+escribir(dic->cadena())  #convierte a cadena el diccionario
+#escribir(dic->str2())   #error dic no tiene una funcion str2()
+escribir(dic->str2)      #vacio
+escribir(dic->result[0]->message->text)   #esto es una prueba \ud83d\ude18 print (\"hola mundo\")
+escribir(dic->result[1])  #vacio
