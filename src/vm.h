@@ -426,4 +426,5 @@ void lat_eliminar_indice(lat_mv* vm);
   */
 void lat_invertir(lat_mv* vm);
 
+void lat_leer_json(lat_mv* vm);
 #endif //_VM_H_

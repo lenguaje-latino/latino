@@ -74,7 +74,7 @@ void* __dic_obtener(hash_map* m, char* key);
   *\param key: Llave
   *\param val: Valor
   */
-void __dic_asignar(hash_map* m, char* key, void* val);
+void __dic_asignar(hash_map* m, const char* key, void* val);
 
 /**\brief Copia una tabla hash con todos sus elementos
   *\param m: Apuntador a tabla hash

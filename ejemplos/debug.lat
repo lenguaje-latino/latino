@@ -4,10 +4,22 @@ Menu propiedades del proyecto-> Debugging -> Command Arguments. Agregar
 $(SolutionDir)..\ejemplos\debug.lat
 */
 
-n = "1abcdfgytypoipiklkjlmkj"
+str = '{"ok":true,
+       "result":[
+          {"update_id":710556635,
+            "message":{"message_id":130,
+                       "from":{"id":269610735,"first_name":"Primitivo","last_name":"Roman"},
+                       "chat":{"id":269610735,"first_name":"Primitivo","last_name":"Roman","type":"private"},
+                       "date":1474906910,
+                       "text":"esto es una prueba \ud83d\ude18 print (\"hola mundo\")",
+                       "entities":[{"type":"code","offset":19,"length":20}]}}]}'
 
-si(es_numerico(n))
-  escribir("Es numero")
-sino
-  escribir("No es")
+dic = leer_json(str)
+escribir(str)
+escribir(dic)
+si dic->ok
+  //escribir("hola que hace")
+  //escribir(dic->result[0]->update_id)
+  text = "esto es una prueba \ud83d\ude18 print (\"hola mundo\")"#dic->result[0]->message->text
+  escribir(text)
 fin

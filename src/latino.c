@@ -81,12 +81,12 @@ ast *lat_analizar_archivo(char *infile, int* status)
     else
     {
         extension = dot + 1;
-    }
-    if (strcmp(extension, "lat") != 0)
-    {
-        printf("El archivo no contiene la extension .lat\n");
-        return NULL;
-    }
+        if (strcmp(extension, "lat") != 0)
+        {
+            printf("El archivo no contiene la extension .lat\n");
+            return NULL;
+        }
+    }    
     FILE *file = fopen(infile, "r");
     if (file == NULL)
     {

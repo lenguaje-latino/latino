@@ -53,7 +53,7 @@ void* __dic_obtener(hash_map* m, char* key)
     return NULL;
 }
 
-void __dic_asignar(hash_map *m, char *key, void *val)
+void __dic_asignar(hash_map *m, const char *key, void *val)
 {    
     //printf("__dic_asignar\n");
     hash_val *hv = (hash_val *)__memoria_asignar(sizeof(hash_val));
