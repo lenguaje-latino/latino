@@ -119,8 +119,22 @@ char* __lista_a_cadena(lista* list)
         char* str = __objeto_a_cadena(o);
         if(o->tipo == T_LIST && !__str_termina_con(valor, "[")){
             strcat(valor, "\n");
-        }            
+        }        
+        if(o->tipo == T_STR){
+            if(strstr(__cadena(o), "\"") != NULL){
+                strcat(valor, "'");
+            }else{
+                strcat(valor, "\"");
+            }
+        }
         strcat(valor, str);
+        if(o->tipo == T_STR){
+            if(strstr(__cadena(o), "\"") != NULL){
+                strcat(valor, "'");
+            }else{
+                strcat(valor, "\"");
+            }
+        }
         if(cur != list->ultimo){
             strcat(valor, ",");
         }
@@ -144,38 +158,6 @@ void __lista_modificar_elemento(lista* list, void* data, int pos)
         }
         i++;
     }
-}
-
-int __objeto_comparar(lat_objeto* lhs, lat_objeto* rhs){
-    int res = 1;
-    if(lhs->tipo != rhs->tipo){
-        res = strcmp(__objeto_a_cadena(lhs), __objeto_a_cadena(rhs));
-        goto RESPUESTA;
-    }
-    if(lhs->tipo == T_BOOL){
-        res = lat_obtener_logico(lhs) - lat_obtener_logico(rhs);
-        goto RESPUESTA;
-    }
-    if(lhs->tipo == T_NUMERIC){
-        res = lat_obtener_decimal(lhs) - lat_obtener_decimal(rhs);
-        goto RESPUESTA;
-    }
-    if(lhs->tipo == T_STR){
-        res = strcmp(lat_obtener_cadena(lhs), lat_obtener_cadena(rhs));
-        goto RESPUESTA;
-    }
-    if(lhs->tipo == T_LIST){
-        res = __lista_comparar(lat_obtener_lista(lhs), lat_obtener_lista(rhs));
-        goto RESPUESTA;
-    }   
-RESPUESTA:    
-    if(res < 0){
-        return -1;
-    }
-    if(res > 0){
-        return 1;
-    }
-    return res;
 }
 
 int __lista_comparar(lista* lhs, lista*rhs){

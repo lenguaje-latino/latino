@@ -41,6 +41,10 @@ typedef struct lat_objeto lat_objeto;
 *
 */
 
+/**< Incrementa y decrementa las referencias de un objeto */
+#define Lat_INCREF(o)   o->num_ref++
+#define Lat_DECREF(o)   o->num_ref--
+
 /** \brief Tipo de dato
 *
 * Tipo de dato que maneja la maquina virtual
@@ -83,9 +87,10 @@ typedef struct lat_objeto
 {
     lat_type tipo;    /**< Tipo de objeto */
     int marca;    /**< para marcar el objeto Colector de basura */
+    int num_ref;    /**< numero de referencias a este objeto */
     size_t tamanio;   /**< Tamanio de la informacion */
     bool es_constante;   /**< Valida si es una constante */
-    int num_declared;   /**< Numero de veces declarado */    
+    int num_declared;   /**< Numero de veces declarado - auxiliar para validar CONSTANTES*/    
     int num_linea;
     int num_columna;
     int num_params;	/**<Numero de parametros de una funcion definida por el usuario */
@@ -97,6 +102,18 @@ struct lat_llave_valor
 {
     lat_type type;
 };
+
+/** \brief Convierte un objeto a su representacion logica (verdadero o falso)
+  *
+  * \param o: objeto a convertir
+  */
+bool __objeto_a_logico(lat_objeto* o);
+
+/** \brief Convierte un objeto a su representacion numerica
+  *
+  * \param o: objeto a convertir
+  */
+double __objeto_a_numerico(lat_objeto* o);
 
 /** \brief Convierte un objeto a su representacion en cadena
   *
@@ -121,29 +138,29 @@ lat_objeto* lat_obtener_contexto_objeto(lat_objeto* ns, lat_objeto* name);
 
 /** \brief Crea un objeto determinado
   *
-  * \param vm: Intancia de la maquina virtual
+  * \param vm: Instancia de la maquina virtual
   * \return lat_objeto: Apuntador al objeto creado
   */
 lat_objeto* lat_crear_objeto(lat_mv* vm);
 
 /** \brief Crea un contexto determinado
   *
-  * \param vm: Intancia de la maquina virtual
+  * \param vm: Instancia de la maquina virtual
   * \return lat_objeto: Apuntador al contexto creado
   */
 lat_objeto* lat_contexto_nuevo(lat_mv* vm);
 
 /** \brief Crea un objeto decimal
   *
-  * \param vm: Intancia de la maquina virtual
+  * \param vm: Instancia de la maquina virtual
   * \param val: valor decimal
   * \return lat_objeto: Apuntador al objeto creado
   */
-lat_objeto* lat_decimal_nuevo(lat_mv* vm, double val);
+lat_objeto* lat_numerico_nuevo(lat_mv* vm, double val);
 
 /** \brief Crea un objeto cadena
   *
-  * \param vm: Intancia de la maquina virtual
+  * \param vm: Instancia de la maquina virtual
   * \param val: valor cadena
   * \return lat_objeto: Apuntador al objeto creado
   */
@@ -151,7 +168,7 @@ lat_objeto* lat_cadena_nueva(lat_mv* vm, const char* val);
 
 /** \brief Crea un objeto logico
   *
-  * \param vm: Intancia de la maquina virtual
+  * \param vm: Instancia de la maquina virtual
   * \param val: valor logico
   * \return lat_objeto: Apuntador al objeto creado
   */
@@ -159,43 +176,51 @@ lat_objeto* lat_logico_nuevo(lat_mv* vm, bool val);
 
 /** \brief Crea un objeto lista
   *
-  * \param vm: Intancia de la maquina virtual
+  * \param vm: Instancia de la maquina virtual
   * \param l: Apuntador a un nodo de la lista
   * \return lat_objeto: Apuntador al objeto creado
   */
 lat_objeto* lat_lista_nueva(lat_mv* vm, lista* l);
 
+/** \brief Crea un objeto diccionario
+  *
+  * \param vm: Instancia de la maquina virtual
+  * \param dic: Apuntador a un diccionario
+  * \return lat_objeto: Apuntador al objeto creado
+  */
+lat_objeto* lat_dic_nuevo(lat_mv* vm, hash_map* dic);
+
 /** \brief Crea un objeto funcion
   *
-  * \param vm: Intancia de la maquina virtual
+  * \param vm: Instancia de la maquina virtual
   * \return lat_objeto: Apuntador al objeto creado
   */
 lat_objeto* lat_funcion_nueva(lat_mv* vm);
 
 /** \brief Crea un objeto funcion C
   *
-  * \param vm: Intancia de la maquina virtual
+  * \param vm: Instancia de la maquina virtual
   * \return lat_objeto: Apuntador al objeto creado
   */
 lat_objeto* lat_cfuncion_nueva(lat_mv* vm);
 
 /** \brief Elimina un objeto de la lista de objetos creados dinamicamente
   *
-  * \param vm: Intancia de la maquina virtual
+  * \param vm: Instancia de la maquina virtual
   * \param o: Apuntador al objeto
   */
 void lat_eliminar_objeto(lat_mv* vm, lat_objeto* o);
 
 /** \brief Clona (copia) un objeto
   *
-  * \param vm: Intancia de la maquina virtual
+  * \param vm: Instancia de la maquina virtual
   * \param o: Apuntador al objeto
   */
 lat_objeto* lat_clonar_objeto(lat_mv* vm, lat_objeto* o);
 
 /** \brief Clona (copia) una lista
   *
-  * \param vm: Intancia de la maquina virtual
+  * \param vm: Instancia de la maquina virtual
   * \param l: Apuntador al nodo de la lista
   */
 lista* lat_clonar_lista(lat_mv* vm, lista* l);
@@ -205,29 +230,49 @@ lista* lat_clonar_lista(lat_mv* vm, lista* l);
   * \param o: Apuntador al objeto
   * \return double: Valor decimal
   */
-double lat_obtener_decimal(lat_objeto* o);
+double __numerico(lat_objeto* o);
 
 /** \brief Obtiene el valor de la cadena de un objeto
   *
   * \param o: Apuntador al objeto
   * \return char*: Apuntador a una cadena de caracteres
   */
-char* lat_obtener_cadena(lat_objeto* o);
+char* __cadena(lat_objeto* o);
 
 /** \brief Obtiene el valor logico de un objeto
   *
   * \param o: Apuntador al objeto
   * \return bool: Valor logico
   */
-bool lat_obtener_logico(lat_objeto* o);
+bool __logico(lat_objeto* o);
 
 /** \brief Obtiene el valor de la lista de un objeto
   *
   * \param o: Apuntador al objeto
   * \return list_node: Apuntador al nodo de la lista
   */
-lista* lat_obtener_lista(lat_objeto* o);
+lista* __lista(lat_objeto* o);
 
+/** \brief Obtiene el valor del diccionario de un objeto
+  *
+  * \param o: Apuntador al objeto
+  * \return hash_map: Apuntador al diccionario
+  */
+hash_map* __dic(lat_objeto* o);
+
+/** \brief Valida si dos objetos son iguales
+  *
+  * \param lhs: Apuntador al objeto izquierdo
+  * \param rhs: Apuntador al objeto derecho
+  * \return bool: true si son iguales
+  */
 bool __es_igual(lat_objeto* lhs, lat_objeto* rhs);
 
+/** \brief Compara dos objetos
+  *
+  * \param lhs: Apuntador al objeto izquierdo
+  * \param rhs: Apuntador al objeto derecho
+  * \return int: 0 si son iguales, -1 si el objeto izquierdo es menos y 1 si es mayor
+  */
+int __objeto_comparar(lat_objeto* lhs, lat_objeto* rhs);
 #endif // !_OBJECT_H_

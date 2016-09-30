@@ -56,10 +56,10 @@ void lat_leer(lat_mv *vm)
     ret =strtod(str, &ptr);
     if(strcmp(ptr, "") == 0)
     {
-        lat_apilar(vm, lat_decimal_nuevo(vm, ret));
+        lat_apilar(vm, lat_numerico_nuevo(vm, ret));
     }
     else
-    {
+    {   
         lat_apilar(vm, lat_cadena_nueva(vm, __str_analizar(str, strlen(str))));
     }
 }
@@ -71,7 +71,7 @@ void lat_leer_archivo(lat_mv *vm)
     {
         FILE *fp;
         char *buf;
-        fp = fopen(lat_obtener_cadena(o), "r");
+        fp = fopen(__cadena(o), "r");
         if (fp == NULL)
         {
             lat_fatal_error("Linea %d, %d: %s", o->num_linea, o->num_columna,  "No se pudo abrir el archivo\n");
@@ -86,7 +86,7 @@ void lat_leer_archivo(lat_mv *vm)
         {
             printf("No se pudo asignar %d bytes de memoria\n", fsize);
         }
-        buf[newSize] = '\0';
+        buf[newSize - 1] = '\0';
         fclose(fp);
         lat_apilar(vm, lat_cadena_nueva(vm, buf));
     }
@@ -103,8 +103,8 @@ void lat_escribir_archivo(lat_mv *vm)
     if(o->tipo == T_STR)
     {
         FILE* fp;
-        fp = fopen(lat_obtener_cadena(o), "w");
-        const char* cad = lat_obtener_cadena(s);
+        fp = fopen(__cadena(o), "w");
+        const char* cad = __cadena(s);
         size_t lon = strlen(cad);
         fwrite(cad, 1 , lon , fp);
         fclose(fp);
@@ -118,16 +118,19 @@ void lat_escribir_archivo(lat_mv *vm)
 void lat_sistema(lat_mv *vm)
 {
     lat_objeto* cmd = lat_desapilar(vm);
-    system(lat_obtener_cadena(cmd));
+    system(__cadena(cmd));
 }
 
 void lat_ejecutar_pipe(lat_mv *vm){
     lat_objeto* cmd = lat_desapilar(vm);
-    FILE* fp = __lat_popen(vm, lat_obtener_cadena(cmd), "r");
+    FILE* fp = __lat_popen(vm, __cadena(cmd), "r");
     size_t rlen = MAX_BUFFERSIZE;
     char *p = __memoria_asignar(rlen);
     fread(p, sizeof(char), rlen, fp);
-    lat_objeto* res = lat_cadena_nueva(vm, p);
+    rlen = strlen(p);
+    p[rlen-1] = '\0';   //elimina el ultimo '\n'
+    lat_objeto* res = lat_cadena_nueva(vm, __str_duplicar(p));
     lat_apilar(vm, res);
     __lat_pclose(vm, fp);
+    __memoria_liberar(p);
 }

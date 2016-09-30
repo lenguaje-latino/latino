@@ -52,9 +52,9 @@ THE SOFTWARE.
 /** Version mayor de Latino */
 #define LAT_VERSION_MAYOR "0"
 /** Version menor de Latino */
-#define LAT_VERSION_MENOR "7"
+#define LAT_VERSION_MENOR "8"
 /** Version de correcion de errores */
-#define LAT_VERSION_PARCHE "2"
+#define LAT_VERSION_PARCHE "4"
 /** Version de Latino */
 #define LAT_VERSION "Latino " LAT_VERSION_MAYOR "." LAT_VERSION_MENOR "." LAT_VERSION_PARCHE
 /** Derechos de Latino */
@@ -104,7 +104,7 @@ extern int parse_silent;
 /** Tamanio maximo de instrucciones bytecode de una funcion */
 #define MAX_BYTECODE_FUNCTION (1024*10)
 /** Tamanio maximo de memoria virtual permitida*/
-#define MAX_VIRTUAL_MEMORY (1024*10)
+#define MAX_VIRTUAL_MEMORY (1024*128)
 /** Tamanio maximo de una cadena para ser almacenada en HASH TABLE */
 #define MAX_STR_INTERN 64
 /** Tamanio maximo de una cadena almacenada dinamicamente*/
@@ -118,10 +118,10 @@ extern int parse_silent;
 #define MAX_INPUT_SIZE 512
 /** Maximo numero de llamadas recursivas a funcion */
 #define MAX_CALL_FUNCTION 27
-
+/** Maximo numero de caracteres para un identificador */
 #define MAX_ID_LENGTH 32
-
-#define MAX_BUFFERSIZE		BUFSIZ
+/** Maximo numero de bits para un buffer */
+#define MAX_BUFFERSIZE BUFSIZ
 
 /** Interface con flex */
 typedef struct YYLTYPE

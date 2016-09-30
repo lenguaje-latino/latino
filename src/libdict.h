@@ -74,11 +74,19 @@ void* __dic_obtener(hash_map* m, char* key);
   *\param key: Llave
   *\param val: Valor
   */
-void __dic_asignar(hash_map* m, char* key, void* val);
+void __dic_asignar(hash_map* m, const char* key, void* val);
 
 /**\brief Copia una tabla hash con todos sus elementos
   *\param m: Apuntador a tabla hash
   */
 hash_map* __dic_clonar(hash_map* m);
+
+/**\brief Genera la representacion en cadena del diccionario 
+ * \param m: Apuntador a tabla hash
+ * \return char: La cadena del diccionario
+ */
+char* __dic_a_cadena(hash_map* m);
+
+int __dic_longitud(hash_map* m);
 
 #endif /* !_LIB_DICT_H_ */

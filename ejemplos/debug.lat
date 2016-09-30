@@ -3,13 +3,10 @@ Para debuguear en visual studio:
 Menu propiedades del proyecto-> Debugging -> Command Arguments. Agregar
 $(SolutionDir)..\ejemplos\debug.lat
 */
-a = 2
-b = 4
-c = 6
-a = -b
-escribir(a)
-escribir(b)
-b = 2 * a + b
-escribir(a)
-escribir(b)
-escribir(c)
+
+str = leer_json('{"update_id": 710556643, "message": {"text": "Hola", "date": 1475202427, "chat": {"type": "private", "id": 269610735, "first_name": "Primitivo", "last_name": "Roman"}, "message_id": 138, "from": {"id": 269610735, "first_name": "Primitivo", "last_name": "Roman"}}}
+msg: {"text": "Hola", "canal_chat_creado": "", "fecha_editado": "", "migrado_desde_id": "", "fecha_reenvio": "", "grupo_chat_creado": "", "capcion": "", "date": 1475202427, "chat": {"type": "private", "id": 269610735, "first_name": "Primitivo", "last_name": "Roman"}, "nuevo_titulo": "", "message_id": 138, "foto_eliminada": "", "migrado_para_id": "", "from": {"id": 269610735, "first_name": "Primitivo", "last_name": "Roman"}, "supergrupo_creado": ""}
+usuario: {"id": 269610735, "first_name": "Primitivo", "usuario": "", "last_name": "Roman"}
+chat: {"type": "private", "id": 269610735, "first_name": "Primitivo", "usuario": "", "last_name": "Roman", "titulo": ""}')
+
+escribir(str->result[0])

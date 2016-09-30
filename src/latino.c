@@ -81,12 +81,12 @@ ast *lat_analizar_archivo(char *infile, int* status)
     else
     {
         extension = dot + 1;
-    }
-    if (strcmp(extension, "lat") != 0)
-    {
-        printf("El archivo no contiene la extension .lat\n");
-        return NULL;
-    }
+        if (strcmp(extension, "lat") != 0)
+        {
+            printf("El archivo no contiene la extension .lat\n");
+            return NULL;
+        }
+    }    
     FILE *file = fopen(infile, "r");
     if (file == NULL)
     {
@@ -372,31 +372,27 @@ int main(int argc, char *argv[])
             infile = argv[i];
             //printf("%s", infile);
         }
-    }    
+    }   
+    
+    lat_mv *mv = lat_mv_crear();
     if(argc > 1 && infile != NULL)
-    {
-        lat_mv *mv = lat_mv_crear();        
+    {        
         mv->nombre_archivo = infile;
         mv->REPL = false;
         int status;
         ast *nodo = lat_analizar_archivo(infile, &status);
-        if (status || !nodo)
-        {
-            nodo_liberar(nodo);
-            lat_destruir_mv(mv);
-            return EXIT_FAILURE;
-        }
-        lat_objeto *mainFunc = nodo_analizar_arbol(mv, nodo);
-        lat_llamar_funcion(mv, mainFunc);        
+        if(status == 0 && nodo != NULL){
+            lat_objeto *mainFunc = nodo_analizar_arbol(mv, nodo);
+            lat_llamar_funcion(mv, mainFunc);
+            lat_eliminar_objeto(mv, mainFunc);            
+        }        
         nodo_liberar(nodo);
-        lat_destruir_mv(mv);
     }
     else
-    {
-        lat_mv *mv = lat_mv_crear();
+    {        
         lat_version();  
-        lat_repl(mv);
-        //lat_destruir_mv(mv);
+        lat_repl(mv);     
     }
+    lat_destruir_mv(mv);
     return EXIT_SUCCESS;
 }
