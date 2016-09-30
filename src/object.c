@@ -36,46 +36,102 @@ THE SOFTWARE.
 #include "libdict.h"
 #include "gc.h"
 
-char* __objeto_a_cadena(lat_objeto* in)
+bool __objeto_a_logico(lat_objeto* o){
+    switch (o->tipo)
+    {
+    case T_BOOL:
+        return __logico(o);
+        break;
+    case T_NUMERIC:
+        return __numerico(o) == 0 ? false : true;        
+        break;
+    case T_STR:
+        return strcmp(__cadena(o), "") == 0 
+                || strcmp(__cadena(o), "0") == 0 
+                || strcmp(__str_minusculas(__cadena(o)), "falso") == 0
+                || strcmp(__str_minusculas(__cadena(o)), "false") == 0 ? false : true;        
+        break;
+    case T_LIST:
+        return __lista_longitud(__lista(o)) == 0 ? false : true;
+    default:
+        lat_fatal_error("Linea %d, %d: %s", o->num_linea, o->num_columna,  
+                "Conversion de tipo de dato incompatible");
+        break;
+    }
+    return false;
+}
+
+double __objeto_a_numerico(lat_objeto* o){
+    switch (o->tipo)
+    {
+    case T_BOOL:
+        return __logico(o) == false ? 0 : 1;
+        break;
+    case T_NUMERIC:
+        return __numerico(o);
+        break;
+    case T_STR:{
+            char *ptr;
+            double ret;
+            ret = strtod(__cadena(o), &ptr);
+            if (strcmp(ptr, "") == 0){
+                return ret;
+            }
+        }
+        break;
+    case T_LIST:
+        return __lista_longitud(__lista(o));
+        break;
+    default:
+        lat_fatal_error("Linea %d, %d: %s", o->num_linea, o->num_columna,  
+                "Conversion de tipo de dato incompatible");
+        break;
+    }
+    lat_fatal_error("Linea %d, %d: %s", o->num_linea, o->num_columna,  
+                "Conversion de tipo de dato incompatible");
+    return 0;
+}
+
+char* __objeto_a_cadena(lat_objeto* o)
 { 
-    if(in == NULL){
+    if(o == NULL){
         return "nulo";
     }
-    if (in->tipo == T_BOOL)
+    if (o->tipo == T_BOOL)
     {
-        return __str_logico_a_cadena(lat_obtener_logico(in));
+        return __str_logico_a_cadena(__logico(o));
     }
-    else if (in->tipo == T_CONTEXT)
+    else if (o->tipo == T_CONTEXT)
     {
-        return "objeto";
+        return "contexto";
     }
-    else if (in->tipo == T_NUMERIC)
+    else if (o->tipo == T_NUMERIC)
     {        
-        return __str_decimal_a_cadena(lat_obtener_decimal(in));
+        return __str_decimal_a_cadena(__numerico(o));
     }
-    else if (in->tipo == T_STR)
+    else if (o->tipo == T_STR)
     {
-        return lat_obtener_cadena(in);
+        return __cadena(o);
     }
-    else if (in->tipo == T_FUNC)
+    else if (o->tipo == T_FUNC)
     {
         return "funcion";
     }
-    else if (in->tipo == T_CFUNC)
+    else if (o->tipo == T_CFUNC)
     {
         return "cfuncion";
     }
-    else if (in->tipo == T_CLASS)
+    else if (o->tipo == T_CLASS)
     {
         return "clase";
     }
-    if (in->tipo == T_LIST)
+    if (o->tipo == T_LIST)
     {
-        return __lista_a_cadena(in->datos.lista);
+        return __lista_a_cadena(o->datos.lista);
     }
-    else if (in->tipo == T_DICT)
+    else if (o->tipo == T_DICT)
     {
-        //__imprimir_diccionario(vm, in->data.dict);
+        return __dic_a_cadena(o->datos.dic);
     }    
     return "";
 }
@@ -90,10 +146,10 @@ void lat_asignar_contexto_objeto(lat_objeto* ns, lat_objeto* name, lat_objeto* o
     else
     {
         hash_map* h = ns->datos.contexto;        
-        if(strlen(lat_obtener_cadena(name)) > MAX_ID_LENGTH){
+        if(strlen(__cadena(name)) > MAX_ID_LENGTH){
             lat_fatal_error("Linea %d, %d: Longitud maxima de (%i) excedida para un identificador", name->num_linea, name->num_columna, MAX_ID_LENGTH);
         }
-        __dic_asignar(h, lat_obtener_cadena(name), (void*)o);
+        __dic_asignar(h, __cadena(name), (void*)o);
     }
 }
 
@@ -106,7 +162,7 @@ lat_objeto* lat_obtener_contexto_objeto(lat_objeto* ns, lat_objeto* name)
     else
     {
         hash_map* h = ns->datos.contexto;
-        lat_objeto* ret = (lat_objeto*) __dic_obtener(h, lat_obtener_cadena(name));        
+        lat_objeto* ret = (lat_objeto*) __dic_obtener(h, __cadena(name));        
         return ret;
     }
     return NULL;
@@ -118,6 +174,7 @@ lat_objeto* lat_crear_objeto(lat_mv* vm)
     lat_objeto* ret = (lat_objeto*)__memoria_asignar(sizeof(lat_objeto));
     ret->tipo = T_NULO;
     ret->tamanio = sizeof(lat_objeto);        
+    ret->num_ref = 0;
     return ret;
 }
 
@@ -132,7 +189,7 @@ lat_objeto* lat_contexto_nuevo(lat_mv* vm)
     return ret;
 }
 
-lat_objeto* lat_decimal_nuevo(lat_mv* vm, double val)
+lat_objeto* lat_numerico_nuevo(lat_mv* vm, double val)
 {
     //printf("lat_decimal_nuevo: %.14g\n", val);
     lat_objeto* ret = lat_crear_objeto(vm);
@@ -172,6 +229,17 @@ lat_objeto* lat_lista_nueva(lat_mv* vm, lista* l)
     ret->tipo = T_LIST;
     ret->tamanio += sizeof(lista);
     ret->datos.lista = l;
+    vm->memoria_usada += ret->tamanio;
+    return ret;
+}
+
+lat_objeto* lat_dic_nuevo(lat_mv* vm, hash_map* dic)
+{
+    //printf("lat_dic_nuevo\n");
+    lat_objeto* ret = lat_crear_objeto(vm);
+    ret->tipo = T_DICT;
+    ret->tamanio += sizeof(hash_map);
+    ret->datos.dic = dic;
     vm->memoria_usada += ret->tamanio;
     return ret;
 }
@@ -289,27 +357,7 @@ lista* lat_clonar_lista(lat_mv* vm, lista* list)
     return ret;
 }
 
-double lat_obtener_decimal(lat_objeto* o)
-{
-    if (o->tipo == T_NUMERIC)
-    {
-        return o->datos.numerico;
-    }
-    lat_fatal_error("Linea %d, %d: %s", o->num_linea, o->num_columna,  "El parametro debe de ser un decimal");
-    return 0;
-}
-
-char* lat_obtener_cadena(lat_objeto* o)
-{
-    if (o->tipo == T_STR)
-    {
-        return o->datos.cadena;
-    }
-    lat_fatal_error("Linea %d, %d: %s", o->num_linea, o->num_columna,  "El parametro debe de ser una cadena");
-    return 0;
-}
-
-bool lat_obtener_logico(lat_objeto* o)
+bool __logico(lat_objeto* o)
 {
     if (o->tipo == T_BOOL)
     {
@@ -319,7 +367,27 @@ bool lat_obtener_logico(lat_objeto* o)
     return false;
 }
 
-lista* lat_obtener_lista(lat_objeto* o)
+double __numerico(lat_objeto* o)
+{
+    if (o->tipo == T_NUMERIC)
+    {
+        return o->datos.numerico;
+    }
+    lat_fatal_error("Linea %d, %d: %s", o->num_linea, o->num_columna,  "El parametro debe de ser un decimal");
+    return 0;
+}
+
+char* __cadena(lat_objeto* o)
+{
+    if (o->tipo == T_STR)
+    {
+        return o->datos.cadena;
+    }
+    lat_fatal_error("Linea %d, %d: %s", o->num_linea, o->num_columna,  "El parametro debe de ser una cadena");
+    return 0;
+}
+
+lista* __lista(lat_objeto* o)
 {
     if (o->tipo == T_LIST)
     {
@@ -329,18 +397,61 @@ lista* lat_obtener_lista(lat_objeto* o)
     return NULL;
 }
 
+hash_map* __dic(lat_objeto* o)
+{
+    if (o->tipo == T_DICT)
+    {
+        return o->datos.dic;
+    }
+    lat_fatal_error("Linea %d, %d: %s", o->num_linea, o->num_columna,  "El parametro debe de ser un diccionario");
+    return NULL;
+}
+
 bool __es_igual(lat_objeto* lhs, lat_objeto* rhs){
     if(lhs->tipo != rhs->tipo){
         return false;
     }    
     if(lhs->tipo == T_NUMERIC){
-        return lat_obtener_decimal(lhs) == lat_obtener_decimal(rhs);
+        return __numerico(lhs) == __numerico(rhs);
     }    
     if(lhs->tipo == T_STR){
-        return strcmp(lat_obtener_cadena(lhs), lat_obtener_cadena(rhs)) == 0 ? true : false;
+        return strcmp(__cadena(lhs), __cadena(rhs)) == 0 ? true : false;
     }
     if(lhs->tipo == T_LIST){
-        return __lista_comparar(lat_obtener_lista(lhs), lat_obtener_lista(rhs)) == 0 ? true : false;
+        return __lista_comparar(__lista(lhs), __lista(rhs)) == 0 ? true : false;
     }
     return false;
+}
+
+
+int __objeto_comparar(lat_objeto* lhs, lat_objeto* rhs){
+    int res = 1;
+    if(lhs->tipo != rhs->tipo){
+        res = strcmp(__objeto_a_cadena(lhs), __objeto_a_cadena(rhs));
+        goto RESPUESTA;
+    }
+    if(lhs->tipo == T_BOOL){
+        res = __logico(lhs) - __logico(rhs);
+        goto RESPUESTA;
+    }
+    if(lhs->tipo == T_NUMERIC){
+        res = __numerico(lhs) - __numerico(rhs);
+        goto RESPUESTA;
+    }
+    if(lhs->tipo == T_STR){
+        res = strcmp(__cadena(lhs), __cadena(rhs));
+        goto RESPUESTA;
+    }
+    if(lhs->tipo == T_LIST){
+        res = __lista_comparar(__lista(lhs), __lista(rhs));
+        goto RESPUESTA;
+    }   
+RESPUESTA:    
+    if(res < 0){
+        return -1;
+    }
+    if(res > 0){
+        return 1;
+    }
+    return res;
 }

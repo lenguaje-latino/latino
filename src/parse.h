@@ -1,8 +1,8 @@
-/* A Bison parser, made by GNU Bison 3.0.4.  */
+/* A Bison parser, made by GNU Bison 3.0.2.  */
 
 /* Bison interface for Yacc-like parsers in C
 
-   Copyright (C) 1984, 1989-1990, 2000-2015 Free Software Foundation, Inc.
+   Copyright (C) 1984, 1989-1990, 2000-2013 Free Software Foundation, Inc.
 
    This program is free software: you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -79,7 +79,12 @@ extern int yydebug;
     INCREMENTO = 289,
     DECREMENTO = 290,
     CONCATENAR = 291,
-    CONCATENAR_IGUAL = 292
+    CONCATENAR_IGUAL = 292,
+    MAS_IGUAL = 293,
+    MENOS_IGUAL = 294,
+    POR_IGUAL = 295,
+    ENTRE_IGUAL = 296,
+    MODULO_IGUAL = 297
   };
 #endif
 /* Tokens.  */
@@ -118,6 +123,11 @@ extern int yydebug;
 #define DECREMENTO 290
 #define CONCATENAR 291
 #define CONCATENAR_IGUAL 292
+#define MAS_IGUAL 293
+#define MENOS_IGUAL 294
+#define POR_IGUAL 295
+#define ENTRE_IGUAL 296
+#define MODULO_IGUAL 297
 
 /* Value type.  */
 

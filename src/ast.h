@@ -44,8 +44,8 @@ typedef enum
     NODO_VALOR,     /**< El nodo contiene valores (logico | numerico | cadena) */
     NODO_MAS_UNARIO,  /**< Nodo mas unario */
     NODO_MENOS_UNARIO,  /**< Nodo menos unario */
-    NODO_INC,
-    NODO_DEC,
+    NODO_INC,       /**< Nodo incremento i++*/
+    NODO_DEC,       /**< Nodo decremento i--*/
     NODO_SUMA,    /**< Nodo suma */
     NODO_RESTA,    /**< Nodo resta */
     NODO_MULTIPLICACION,    /**< Nodo multiplicacion */
@@ -87,7 +87,7 @@ typedef enum
     NODO_DICC_OBTENER_ELEMENTO,   /**< Nodo obtener un elemento del diccionario */
     NODO_DICC_ELEMENTO,   /**< Nodo par de llave valor del diccionario (key : value) */
     NODO_INCLUIR,  /**< Nodo para incluir codigo de otro archivo */
-    NODO_ATRIBUTO,
+    NODO_ATRIBUTO,  /**< Attributo de un objeto: str->longitud() */
 } nodo_tipo;
 
 /** \brief Tipos de dato */
@@ -215,7 +215,7 @@ ast *nodo_nuevo_logico(int b, int num_linea, int num_columna);
   * \return ast: Un nodo AST
   *
   */
-ast *nodo_nuevo_decimal(double d, int num_linea, int num_columna);
+ast *nodo_nuevo_numerico(double d, int num_linea, int num_columna);
 
 /** Nuevo nodo tipo Cadena ("Esto es una 'cadena'")
   *

@@ -58,16 +58,24 @@ char* __str_analizar(const char* s, size_t len)
         {
             switch (s[i + 1])
             {
+            case '/':
+                c = '/';
+                i++;
+                goto save;
+            case '"':
+                c = '\"';
+                i++;
+                goto save;
             case 'a':
-                c = '\n';
+                c = '\a';
                 i++;
                 goto save;
             case 'b':
-                c = '\n';
+                c = '\b';
                 i++;
                 goto save;
             case 'f':
-                c = '\n';
+                c = '\f';
                 i++;
                 goto save;
             case 'n':
@@ -75,17 +83,29 @@ char* __str_analizar(const char* s, size_t len)
                 i++;
                 goto save;
             case 'r':
-                c = '\n';
+                c = '\r';
                 i++;
                 goto save;
             case 't':
                 c = '\t';
                 i++;
                 goto save;
-            case 'v':
-                c = '\n';
+            case '\\':
+                c = '\\';
                 i++;
                 goto save;
+            case 'u':
+                c = s[i];
+                ret[j] = c;
+                j++;  
+                i++;
+                int k;
+                for(k = 0; k < 4; k++) {
+                    c = s[i];
+                    ret[j] = c;
+                    j++;
+                    i++;
+                }                    
             default:
                 break;
             }
@@ -372,24 +392,26 @@ void lat_concatenar(lat_mv* vm)
 {
     lat_objeto* b = lat_desapilar(vm);
     lat_objeto* a = lat_desapilar(vm);
+    //Lat_DECREF(b);
+    //Lat_DECREF(a);
     char *tmp1 = NULL;
     char *tmp2 = NULL;
     lat_objeto* r = NULL;
     if(a->tipo == T_STR){
-        tmp1 = __str_duplicar(lat_obtener_cadena(a));        
+        tmp1 = __str_duplicar(__cadena(a));        
     }else{
         tmp1 = __objeto_a_cadena(a);
     }
     if(b->tipo == T_STR){
-        tmp2 = __str_duplicar(lat_obtener_cadena(b));
+        tmp2 = __str_duplicar(__cadena(b));
     }else{
         tmp2 = __objeto_a_cadena(b);
     }    
-    r = lat_cadena_nueva(vm, __str_concatenar(tmp1, tmp2));    
-    __colector_agregar(vm, r);    
+    r = lat_cadena_nueva(vm, __str_concatenar(tmp1, tmp2));
     __memoria_liberar(tmp1);
     __memoria_liberar(tmp2);
     lat_apilar(vm, r);
+    __colector_agregar(vm, r);
 }
 
 void lat_comparar(lat_mv* vm)
@@ -397,9 +419,9 @@ void lat_comparar(lat_mv* vm)
     lat_objeto* b = lat_desapilar(vm);
     lat_objeto* a = lat_desapilar(vm);
     if(a->tipo == T_STR && b->tipo == T_STR)
-        lat_apilar(vm, lat_decimal_nuevo(vm, strcmp(lat_obtener_cadena(a), lat_obtener_cadena(b))));
+        lat_apilar(vm, lat_numerico_nuevo(vm, strcmp(__cadena(a), __cadena(b))));
     if(a->tipo == T_LIST && b->tipo == T_LIST){
-        lat_apilar(vm, lat_decimal_nuevo(vm, __lista_comparar(lat_obtener_lista(a), lat_obtener_lista(b))));
+        lat_apilar(vm, lat_numerico_nuevo(vm, __lista_comparar(__lista(a), __lista(b))));
     }
 }
 
@@ -407,7 +429,7 @@ void lat_contiene(lat_mv* vm)
 {
     lat_objeto* b = lat_desapilar(vm);
     lat_objeto* a = lat_desapilar(vm);
-    char *result = strstr(lat_obtener_cadena(a), lat_obtener_cadena(b));
+    char *result = strstr(__cadena(a), __cadena(b));
     if (result != NULL)
     {
         lat_apilar(vm, vm->objeto_verdadero);
@@ -422,7 +444,7 @@ void lat_termina_con(lat_mv* vm)
 {
     lat_objeto* b = lat_desapilar(vm);
     lat_objeto* a = lat_desapilar(vm);
-    if (__str_termina_con(lat_obtener_cadena(a), lat_obtener_cadena(b)))
+    if (__str_termina_con(__cadena(a), __cadena(b)))
     {
         lat_apilar(vm, vm->objeto_verdadero);
     }
@@ -436,7 +458,7 @@ void lat_es_igual(lat_mv* vm)
 {
     lat_objeto* b = lat_desapilar(vm);
     lat_objeto* a = lat_desapilar(vm);
-    if (strcmp(lat_obtener_cadena(a), lat_obtener_cadena(b)) == 0)
+    if (strcmp(__cadena(a), __cadena(b)) == 0)
     {
         lat_apilar(vm, vm->objeto_verdadero);
     }
@@ -456,11 +478,11 @@ void lat_indice(lat_mv* vm)
     lat_objeto* b = lat_desapilar(vm);
     lat_objeto* a = lat_desapilar(vm);  
     if(a->tipo == T_STR && b->tipo == T_STR){
-        lat_apilar(vm, lat_decimal_nuevo(vm, __str_posicion(lat_obtener_cadena(a), lat_obtener_cadena(b))));
+        lat_apilar(vm, lat_numerico_nuevo(vm, __str_posicion(__cadena(a), __cadena(b))));
         return;
     }
     if(a->tipo == T_LIST){
-        lat_apilar(vm, lat_decimal_nuevo(vm, __lista_obtener_indice(lat_obtener_lista(a), (void*) b)));
+        lat_apilar(vm, lat_numerico_nuevo(vm, __lista_obtener_indice(__lista(a), (void*) b)));
         return;
     }
 }
@@ -471,10 +493,10 @@ void lat_insertar(lat_mv* vm)
     lat_objeto* b = lat_desapilar(vm);
     lat_objeto* a = lat_desapilar(vm);
     if(a->tipo == T_STR && b->tipo == T_STR){
-        lat_apilar(vm, lat_cadena_nueva(vm, __str_insertar(lat_obtener_cadena(a), lat_obtener_cadena(b), lat_obtener_decimal(c))));
+        lat_apilar(vm, lat_cadena_nueva(vm, __str_insertar(__cadena(a), __cadena(b), __numerico(c))));
     }
     if(a->tipo == T_LIST){
-        __lista_insertar_elemento(lat_obtener_lista(a), (void*)b, lat_obtener_decimal(c));
+        __lista_insertar_elemento(__lista(a), (void*)b, __numerico(c));
         return;
     }
 }
@@ -483,7 +505,7 @@ void lat_ultimo_indice(lat_mv* vm)
 {
     lat_objeto* b = lat_desapilar(vm);
     lat_objeto* a = lat_desapilar(vm);
-    lat_apilar(vm, lat_decimal_nuevo(vm, __str_ultima_posicion(lat_obtener_cadena(a), lat_obtener_cadena(b))));
+    lat_apilar(vm, lat_numerico_nuevo(vm, __str_ultima_posicion(__cadena(a), __cadena(b))));
 }
 
 void lat_rellenar_izquierda(lat_mv* vm)
@@ -491,7 +513,7 @@ void lat_rellenar_izquierda(lat_mv* vm)
     lat_objeto* c = lat_desapilar(vm);
     lat_objeto* b = lat_desapilar(vm);
     lat_objeto* a = lat_desapilar(vm);
-    lat_apilar(vm, lat_cadena_nueva(vm, __str_rellenar_izquierda(lat_obtener_cadena(a), lat_obtener_decimal(b), lat_obtener_cadena(c))));
+    lat_apilar(vm, lat_cadena_nueva(vm, __str_rellenar_izquierda(__cadena(a), __numerico(b), __cadena(c))));
 }
 
 void lat_rellenar_derecha(lat_mv* vm)
@@ -499,7 +521,7 @@ void lat_rellenar_derecha(lat_mv* vm)
     lat_objeto* c = lat_desapilar(vm);
     lat_objeto* b = lat_desapilar(vm);
     lat_objeto* a = lat_desapilar(vm);
-    lat_apilar(vm, lat_cadena_nueva(vm, __str_rellenar_derecha(lat_obtener_cadena(a), lat_obtener_decimal(b), lat_obtener_cadena(c))));
+    lat_apilar(vm, lat_cadena_nueva(vm, __str_rellenar_derecha(__cadena(a), __numerico(b), __cadena(c))));
 }
 
 void lat_eliminar(lat_mv* vm)
@@ -508,11 +530,11 @@ void lat_eliminar(lat_mv* vm)
     lat_objeto* a = lat_desapilar(vm);
     if(a->tipo == T_STR)
     {
-        lat_apilar(vm, lat_cadena_nueva(vm, __str_reemplazar(lat_obtener_cadena(a), lat_obtener_cadena(b), "")));
+        lat_apilar(vm, lat_cadena_nueva(vm, __str_reemplazar(__cadena(a), __cadena(b), "")));
     }
     if(a->tipo == T_LIST)
     {
-        lista* lst = lat_obtener_lista(a);
+        lista* lst = __lista(a);
         int i = __lista_obtener_indice(lst, (void*)b);
         if(i >= 0){
             lista_nodo *nt = __lista_obtener_nodo(lst, i);
@@ -524,7 +546,7 @@ void lat_eliminar(lat_mv* vm)
 void lat_esta_vacia(lat_mv* vm)
 {
     lat_objeto* a = lat_desapilar(vm);
-    if (strcmp(lat_obtener_cadena(a), "") == 0)
+    if (strcmp(__cadena(a), "") == 0)
     {
         lat_apilar(vm, vm->objeto_verdadero);
     }
@@ -539,11 +561,15 @@ void lat_longitud(lat_mv* vm)
     lat_objeto* a = lat_desapilar(vm);
     if (a->tipo == T_STR)
     {
-        lat_apilar(vm, lat_decimal_nuevo(vm, strlen(lat_obtener_cadena(a))));
+        lat_apilar(vm, lat_numerico_nuevo(vm, strlen(__cadena(a))));
     }
     if (a->tipo == T_LIST)
     {
-        lat_apilar(vm, lat_decimal_nuevo(vm, __lista_longitud(lat_obtener_lista(a))));        
+        lat_apilar(vm, lat_numerico_nuevo(vm, __lista_longitud(__lista(a))));        
+    }
+    if (a->tipo == T_DICT)
+    {
+        lat_apilar(vm, lat_numerico_nuevo(vm, __dic_longitud(__dic(a))));
     }
 }
 
@@ -552,14 +578,14 @@ void lat_reemplazar(lat_mv* vm)
     lat_objeto* c = lat_desapilar(vm);
     lat_objeto* b = lat_desapilar(vm);
     lat_objeto* a = lat_desapilar(vm);
-    lat_apilar(vm, lat_cadena_nueva(vm, __str_reemplazar(lat_obtener_cadena(a), lat_obtener_cadena(b), lat_obtener_cadena(c))));
+    lat_apilar(vm, lat_cadena_nueva(vm, __str_reemplazar(__cadena(a), __cadena(b), __cadena(c))));
 }
 
 void lat_empieza_con(lat_mv* vm)
 {
     lat_objeto* b = lat_desapilar(vm);
     lat_objeto* a = lat_desapilar(vm);
-    if (__str_empieza_con(lat_obtener_cadena(a), lat_obtener_cadena(b)))
+    if (__str_empieza_con(__cadena(a), __cadena(b)))
     {
         lat_apilar(vm, vm->objeto_verdadero);
     }
@@ -574,25 +600,25 @@ void lat_subcadena(lat_mv* vm)
     lat_objeto* c = lat_desapilar(vm);
     lat_objeto* b = lat_desapilar(vm);
     lat_objeto* a = lat_desapilar(vm);
-    lat_apilar(vm, lat_cadena_nueva(vm, __str_subcadena(lat_obtener_cadena(a), lat_obtener_decimal(b), lat_obtener_decimal(c))));
+    lat_apilar(vm, lat_cadena_nueva(vm, __str_subcadena(__cadena(a), __numerico(b), __numerico(c))));
 }
 
 void lat_minusculas(lat_mv* vm)
 {
     lat_objeto* a = lat_desapilar(vm);
-    lat_apilar(vm, lat_cadena_nueva(vm, __str_minusculas(lat_obtener_cadena(a))));
+    lat_apilar(vm, lat_cadena_nueva(vm, __str_minusculas(__cadena(a))));
 }
 
 void lat_mayusculas(lat_mv* vm)
 {
     lat_objeto* a = lat_desapilar(vm);
-    lat_apilar(vm, lat_cadena_nueva(vm, __str_mayusculas(lat_obtener_cadena(a))));
+    lat_apilar(vm, lat_cadena_nueva(vm, __str_mayusculas(__cadena(a))));
 }
 
 void lat_quitar_espacios(lat_mv* vm)
 {
     lat_objeto* a = lat_desapilar(vm);
-    lat_apilar(vm, lat_cadena_nueva(vm, __str_quitar_espacios(lat_obtener_cadena(a))));
+    lat_apilar(vm, lat_cadena_nueva(vm, __str_quitar_espacios(__cadena(a))));
 }
 
 void lat_es_numerico(lat_mv* vm)
@@ -602,10 +628,10 @@ void lat_es_numerico(lat_mv* vm)
     {
         lat_apilar(vm, vm->objeto_verdadero);
         return;
-    }
-    char* cad = lat_obtener_cadena(a);
-    if(atoi(cad))
-    {
+    }    
+    char *ptr;
+    strtod(__cadena(a), &ptr);
+    if (strcmp(ptr, "") == 0){
         lat_apilar(vm, vm->objeto_verdadero);
     }
     else
@@ -622,7 +648,7 @@ void lat_es_alfanumerico(lat_mv* vm)
         lat_apilar(vm, vm->objeto_falso);
         return;
     }
-    char* cad = lat_obtener_cadena(a);
+    char* cad = __cadena(a);
     bool res = true;
     for (int i = 0; i < strlen(cad); i++)
     {

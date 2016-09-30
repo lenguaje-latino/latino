@@ -160,10 +160,27 @@ char* __lista_a_cadena(lista* list);
   */
 void __lista_modificar_elemento(lista* list, void* data, int pos);
 
+/**\brief Compara los elementos de una lista
+  * 
+  *\param lhs: Apuntador a la lista izquierda
+  *\param rhs: Apuntador a la lista derecha  
+  *\return int: 0 si son iguales, -1 si la lista izquierda es menor y 1 si es mayor
+  */
 int __lista_comparar(lista* lhs, lista*rhs);
 
+/**\brief Agrega los elementos de la lista2 a la lista1
+  * 
+  *\param lista1: Apuntador a la lista1
+  *\param lista2: Apuntador a la lista2  
+  */
 void __lista_extender(lista* list1, lista* list2);
 
+/**\brief Inserta un elemento a la lista en la posicion indicada
+  * 
+  *\param list: Apuntador a la lista
+  *\param data: Objeto a insertar
+  *\param pos: posicion en que se insertara el elemento
+  */
 void __lista_insertar_elemento(lista* list, void* data, int pos);
 
 #endif /* !_LIBLIST_H_ */

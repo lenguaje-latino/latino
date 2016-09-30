@@ -70,6 +70,11 @@ int yylex (YYSTYPE * yylval_param,YYLTYPE * yylloc_param ,yyscan_t yyscanner);
     DECREMENTO
     CONCATENAR
     CONCATENAR_IGUAL
+    MAS_IGUAL
+    MENOS_IGUAL
+    POR_IGUAL
+    ENTRE_IGUAL
+    MODULO_IGUAL
 
 %type <node> include_declaration
 %type <node> expression relational_expression
@@ -92,7 +97,8 @@ int yylex (YYSTYPE * yylval_param,YYLTYPE * yylloc_param ,yyscan_t yyscanner);
  *
  */
 %right '='
-%left '+' '-' CONCATENAR CONCATENAR_IGUAL
+%left CONCATENAR CONCATENAR_IGUAL
+%left '+' '-'
 %left '*' '/' '%' '!'
 %left Y_LOGICO O_LOGICO
 %left IGUAL_LOGICO MAYOR_IGUAL MAYOR_QUE MENOR_IGUAL MENOR_QUE DIFERENTE
@@ -259,6 +265,11 @@ declaration
     | variable_access '[' IDENTIFICADOR ']' '=' expression { $$ = nodo_nuevo_asignacion_lista_elem($6, $1, $3); }
     | variable_access '[' CADENA ']' '=' expression { $$ = nodo_nuevo_asignacion_dicc_elem($6, $1, $3); }
     | variable_access CONCATENAR_IGUAL expression { $$ = nodo_nuevo_asignacion((nodo_nuevo(NODO_CONCATENAR, $1, $3)), $1); }
+    | variable_access MAS_IGUAL expression { $$ = nodo_nuevo_asignacion((nodo_nuevo(NODO_SUMA, $1, $3)), $1); }
+    | variable_access MENOS_IGUAL expression { $$ = nodo_nuevo_asignacion((nodo_nuevo(NODO_RESTA, $1, $3)), $1); }
+    | variable_access POR_IGUAL expression { $$ = nodo_nuevo_asignacion((nodo_nuevo(NODO_MULTIPLICACION, $1, $3)), $1); }
+    | variable_access ENTRE_IGUAL expression { $$ = nodo_nuevo_asignacion((nodo_nuevo(NODO_DIVISION, $1, $3)), $1); }
+    | variable_access MODULO_IGUAL expression { $$ = nodo_nuevo_asignacion((nodo_nuevo(NODO_MODULO, $1, $3)), $1); }
     | incdec_statement
 ;
 
@@ -349,14 +360,13 @@ dict_new
     ;
 
 dict_items
-    : dict_item ',' dict_items { $$ = nodo_nuevo(NODO_DICC_AGREGAR_ELEMENTO, $1, $3); }
+    : /* empty */ { $$ = NULL; }
     | dict_item { $$ = nodo_nuevo(NODO_DICC_AGREGAR_ELEMENTO, $1, NULL); }
+    | dict_items ',' dict_item { $$ = nodo_nuevo(NODO_DICC_AGREGAR_ELEMENTO, $3, $1); }
     ;
 
 dict_item
-    : { /* empty */
-        $$ = NULL;
-    }
+    : { /* empty */ $$ = NULL; }
     | CADENA ':' expression { $$ = nodo_nuevo(NODO_DICC_ELEMENTO, $1, $3); }
     ;
 
