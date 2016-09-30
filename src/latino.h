@@ -54,7 +54,7 @@ THE SOFTWARE.
 /** Version menor de Latino */
 #define LAT_VERSION_MENOR "8"
 /** Version de correcion de errores */
-#define LAT_VERSION_PARCHE "4"
+#define LAT_VERSION_PARCHE "5"
 /** Version de Latino */
 #define LAT_VERSION "Latino " LAT_VERSION_MAYOR "." LAT_VERSION_MENOR "." LAT_VERSION_PARCHE
 /** Derechos de Latino */
@@ -102,7 +102,7 @@ extern int parse_silent;
 #endif
 
 /** Tamanio maximo de instrucciones bytecode de una funcion */
-#define MAX_BYTECODE_FUNCTION (1024*10)
+#define MAX_BYTECODE_FUNCTION (1024*128)
 /** Tamanio maximo de memoria virtual permitida*/
 #define MAX_VIRTUAL_MEMORY (1024*128)
 /** Tamanio maximo de una cadena para ser almacenada en HASH TABLE */

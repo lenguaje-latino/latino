@@ -31,7 +31,7 @@ void __dic_destruir(hash_map *dic)
     __memoria_liberar(dic);
 }
 
-int __dic_hash(char* key)
+int __dic_hash(const char* key)
 {
     int h = 5381;
     unsigned char c;

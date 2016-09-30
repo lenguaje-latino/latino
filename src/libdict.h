@@ -58,7 +58,7 @@ void __dic_destruir(hash_map *dic);
   *\param key: Apuntador a cadena
   *\return int: Numero hash creado para la cadena
   */
-int __dic_hash(char* key);
+int __dic_hash(const char* key);
 
 /**\brief Obtiene un elemento de la tabla hash
   *
