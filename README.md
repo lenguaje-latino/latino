@@ -5,7 +5,7 @@
 <a href="http://lenguaje-latino.org"><img src="https://img.shields.io/npm/l/vue.svg" alt="License"></a>
 [![codecov.io](http://codecov.io/github/primitivorm/latino/coverage.svg?branch=master)](http://codecov.io/github/primitivorm/latino?branch=master)
 
-![latino sublime](https://raw.githubusercontent.com/primitivorm/latino/master/SublimeTextSyntax/latino_sublime.png "latino sublime")
+![latino sublime](https://raw.githubusercontent.com/lenguaje-latino/latino-sublimetext-plugin/master/latino_sublime.png "latino sublime")
 
 Este proyecto nace de la necesidad de incrementar la educación de nivel básico (primaria y secundaria)
 debido a que los niños tienen la capacidad de entender la lógica a muy temprana edad y es en esta edad
@@ -52,13 +52,13 @@ Cualquier versión/distribución de linux
 Instalación en dibs: Ubuntu, DEBIAN ó Mint
 
 ```bash
-  # Obtenemos paquete (podremos de ejemplo la última versión que es 0.7.0)
-  wget https://github.com/primitivorm/latino/releases/download/v0.7.0/latino-0.7.0-Linux.deb
+  # Obtenemos paquete (podremos de ejemplo la última versión que es 0.7.4)
+  wget https://github.com/primitivorm/latino/releases/download/v0.7.4/latino-0.7.4-Linux.deb
   # Instalamos
-  dpkg -i latino-0.7.0-Linux.deb
+  dpkg -i latino-0.7.4-Linux.deb
 ```
 
-Puedes comprobar las versiones anteriores si deseas en [RELEASES](https://github.com/primitivorm/latino/releases)
+Puedes comprobar si hay versiones nuevas en [RELEASES](https://github.com/primitivorm/latino/releases)
 
 
 ### Instalar en Windows
@@ -81,6 +81,7 @@ https://www.microsoft.com/es-ES/download/details.aspx?id=48145
 | cmake   |   3.3.1 |Linux|
 | gcc     |   4.9.3 |Linux|
 | g++     |   4.9.3 |Linux|
+| libjansson-dev |   2.9   |Linux|
 | kernel-devel| |Solo Fedora|
 | jsoncpp| |Solo Fedora|
 --
