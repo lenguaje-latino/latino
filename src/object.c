@@ -53,6 +53,8 @@ bool __objeto_a_logico(lat_objeto* o){
         break;
     case T_LIST:
         return __lista_longitud(__lista(o)) == 0 ? false : true;
+    case T_DICT:
+        return __dic_longitud(__dic(o)) == 0 ? false : true;
     default:
         lat_fatal_error("Linea %d, %d: %s", o->num_linea, o->num_columna,  
                 "Conversion de tipo de dato incompatible");
@@ -81,6 +83,9 @@ double __objeto_a_numerico(lat_objeto* o){
         break;
     case T_LIST:
         return __lista_longitud(__lista(o));
+        break;
+    case T_DICT:
+        return __dic_longitud(__dic(o));
         break;
     default:
         lat_fatal_error("Linea %d, %d: %s", o->num_linea, o->num_columna,  
@@ -312,7 +317,7 @@ lat_objeto* lat_clonar_objeto(lat_mv* vm, lat_objeto* obj)
         break;
     case T_LIST:
         ret = lat_lista_nueva(vm, lat_clonar_lista(vm, obj->datos.lista));        
-        break;
+        break;    
     case T_FUNC:
         ret = lat_crear_objeto(vm);
         ret->tipo = obj->tipo;
@@ -393,6 +398,11 @@ lista* __lista(lat_objeto* o)
     {
         return o->datos.lista;
     }
+    /*else{
+        o->tipo = T_LIST;
+        o->datos.lista = __lista_crear();
+        return o->datos.lista;
+    }*/
     lat_fatal_error("Linea %d, %d: %s", o->num_linea, o->num_columna,  "El parametro debe de ser una lista");
     return NULL;
 }
@@ -402,7 +412,12 @@ hash_map* __dic(lat_objeto* o)
     if (o->tipo == T_DICT)
     {
         return o->datos.dic;
-    }
+    }/*
+    else{
+        o->tipo = T_DICT;
+        o->datos.dic = __dic_crear();
+        return o->datos.dic;
+    }*/
     lat_fatal_error("Linea %d, %d: %s", o->num_linea, o->num_columna,  "El parametro debe de ser un diccionario");
     return NULL;
 }
