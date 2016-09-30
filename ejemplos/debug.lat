@@ -4,9 +4,23 @@ Menu propiedades del proyecto-> Debugging -> Command Arguments. Agregar
 $(SolutionDir)..\ejemplos\debug.lat
 */
 
-str = leer_json('{"update_id": 710556643, "message": {"text": "Hola", "date": 1475202427, "chat": {"type": "private", "id": 269610735, "first_name": "Primitivo", "last_name": "Roman"}, "message_id": 138, "from": {"id": 269610735, "first_name": "Primitivo", "last_name": "Roman"}}}
-msg: {"text": "Hola", "canal_chat_creado": "", "fecha_editado": "", "migrado_desde_id": "", "fecha_reenvio": "", "grupo_chat_creado": "", "capcion": "", "date": 1475202427, "chat": {"type": "private", "id": 269610735, "first_name": "Primitivo", "last_name": "Roman"}, "nuevo_titulo": "", "message_id": 138, "foto_eliminada": "", "migrado_para_id": "", "from": {"id": 269610735, "first_name": "Primitivo", "last_name": "Roman"}, "supergrupo_creado": ""}
-usuario: {"id": 269610735, "first_name": "Primitivo", "usuario": "", "last_name": "Roman"}
-chat: {"type": "private", "id": 269610735, "first_name": "Primitivo", "usuario": "", "last_name": "Roman", "titulo": ""}')
+str = '{"ok":true,
+       "result":[
+          {"update_id":710556635,
+            "message":{"message_id":130,
+                       "from":{"id":269610735,"first_name":"Primitivo","last_name":"Roman"},
+                       "chat":{"id":269610735,"first_name":"Primitivo","last_name":"Roman","type":"private"},
+                       "date":1474906910,
+                       "text":"esto es una prueba \ud83d\ude18 print (\"hola mundo\")",
+                       "entities":[{"type":"code","offset":19,"length":20}]}}]}'
 
-escribir(str->result[0])
+str2 = '{"ok":true,
+      "result":[]}'
+
+dic = leer_json(str)
+
+escribir(dic->cadena())  #convierte a cadena el diccionario
+#escribir(dic->str2())   #error dic no tiene una funcion str2()
+escribir(dic->str2)      #vacio
+escribir(dic->result[0]->message->text)   #esto es una prueba \ud83d\ude18 print (\"hola mundo\")
+escribir(dic->result[1])  #vacio

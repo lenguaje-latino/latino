@@ -81,3 +81,16 @@ if [ "$1" = "-make" ]; then
 	sudo rm -Rf .new
 	echo -e '\e[0;32mPaquete deb guardado en '$pwd'\e[0m'
 fi
+
+if [ "$1" = "-dependencias" ]; then
+echo "Clonando Jansson y compilando, este proceso puede tardar quizá 2 minutos..."
+	git clone https://github.com/akheron/jansson .temp &>/dev/null
+	cd .temp
+	autoreconf -i
+	./configure
+	make
+	sudo make install &>/dev/null
+	cd ..
+	sudo rm -Rf .temp
+	echo -e '\e[0;32mInstalación finalizada.\e[0m'
+fi
