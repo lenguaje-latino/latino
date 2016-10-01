@@ -87,8 +87,8 @@ static const char *const bycode_nombre[] = {
 json_t *load_json(const char *text) {
     json_t *root;
     json_error_t error;
-    //root = json_loads(text, 0, &error);
-    root = json_loads(text, JSON_DECODE_ANY, &error);
+    root = json_loads(text, 0, &error);
+    //root = json_loads(text, JSON_DECODE_ANY, &error);
     if (root) {
         return root;
     } else {
@@ -1301,7 +1301,8 @@ void lat_invertir(lat_mv* vm){
 
 void lat_leer_json(lat_mv* vm){
     lat_objeto* a = lat_desapilar(vm);
-    json_t *root = load_json(__cadena(a));
+    char* str = __cadena(a);
+    json_t *root = load_json(str);
     lat_objeto* o = NULL;
     
     if (root) {        
