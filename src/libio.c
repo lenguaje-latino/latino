@@ -129,7 +129,8 @@ void lat_ejecutar_pipe(lat_mv *vm){
     fread(p, sizeof(char), rlen, fp);
     rlen = strlen(p);
     p[rlen-1] = '\0';   //elimina el ultimo '\n'
-    lat_objeto* res = lat_cadena_nueva(vm, __str_duplicar(p));
+    //lat_objeto* res = lat_cadena_nueva(vm, __str_duplicar(p));
+    lat_objeto* res = lat_cadena_nueva(vm, __str_analizar(p, strlen(p)));
     lat_apilar(vm, res);
     __lat_pclose(vm, fp);
     __memoria_liberar(p);
