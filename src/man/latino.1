@@ -1,12 +1,128 @@
 .TH Latino manual
-.SH Funciones
-.B Funcion
+.SH Introducción
+\fBLatino es un nuevo lenguaje de programación para el público en general.\fR
 .PP
+¿Para qué aprender una nueva sintaxis?
+.PP
+Hemos visto varios lenguajes de programación, pero ¿Cuándo un lenguaje fácil y en español?
 .br
-En Latino podemos crear funciones incluyendo parametros de una manera basica o avanzada.
-Pondremos como ejemplo lo siguiente:
-  funcion nombre(parametro)
-    retorno parametro
-  fin
-  escribir(nombre("hola")
-Así retornando lo que se incluya en el parametro
+Es cierto que ya existen desarrollados lenguajes en español, pero la idea de Latino, es crear un lenguaje totalmente fácil tanto para niños como para adultos siendo un lenguaje de programación avanzado.
+.PP
+¿Que tanto puedo hacer con Latino?
+.br
+Lo mismo que en cualquier lenguaje de programación, incluye como \fIfunciones\fR
+.PP
+.PP
+.SH Aprendiendo a programar
+.PP
+.IR Incluir
+.PP
+En Latino se puede incluir otros scripts, como la mayoría de lenguajes de programación.
+La forma de incluir es bastante fácil.
+.PP
+La sintaxis es la siguiente:
+.RS
+.BR incluir('mi_script')
+.RE
+.PP
+Como ejemplo, podriamos crear un script llamado \fBmi_script.lat\fR y lo incluimos con la sintaxis anterior.
+.br
+Podremos agregar una \fIfuncion\fR y llamarla en otro script incluyendo el módulo \fBmi_script\fR (con la misma sintaxis anterior)
+.br
+Posteriormente, podemos crear cualquier función en el modulo para así, no necesitar crear de nuevo las mismas funciones.
+.PP
+.IR Funciones
+.PP
+También, podemos crear funciones incluyendo parametros entre parentesis \fB()\fR
+.PP
+La sintaxis sería la siguiente:
+.RS
+.BR funcion()
+.br
+// código
+.br
+.BR fin
+.RE
+.PP
+.IR Comentarios
+.PP
+Si queremos añadir comentarios en el código, podemos hacerlo de varias formas.
+.PP
+Comentarios simples:
+.RS
+\fB//\fR este es un ejemplo de comentario simple
+.br
+\fB#\fR este es otro ejemplo de comentario simple
+.RE
+.PP
+Comentarios múltiples:
+.RS
+\fB/*\fR
+.br
+Este es un
+.br
+comentario
+.br
+múltiple
+.br
+\fB*/\fR
+.RE
+.PP
+.IR Variables
+.PP
+Podemos declarar una variable simple, para en sí, llamar a funciones de una forma simple.
+.PP
+Sintaxis de valores declarados:
+.br
+.RS
+\fBmivalor=\fR"texto"
+.br
+\fBmiotrovalor = \fR"prueba"
+.RE
+.PP
+Como vemos, a diferencia de otras sintaxis, no importa si el valor declarado lleva el símbolo \fB=\fR entre espacios ó no.
+.PP
+.IR Imprimir
+.PP
+También, \fILatino\fR tiene múltiple sintaxis para impresión de texto.
+.PP
+Las sintaxis son las siguientes:
+.br
+.RS
+\fBescribir(\fR"hola mundo"\fB)\fR
+.br
+\fBimprimir(\fR"hola mundo"\fB)\fR
+.RE
+.PP
+.IR Expresiones
+.PP
+Además, podremos crear expresiones con la impresión de texto, pondremos un ejemplo con \fBescribir()\fR
+.PP
+Sintaxis:
+.br
+.RS
+\fBescribir(1 + 2)\fR
+.RE
+.br
+Ó, en valores declarados:
+.RS
+\fBa = 1\fR
+.br
+suma = \fBa + 2\fR
+.br
+\fBescribir(\fRsuma\fB)\fR
+.RE
+.PP
+Los operadores de expresión son los siguientes:
+.br
+.RS
+\fB+
+.br
+-
+.br
+*
+.br
+/
+.br
+%\fR
+.RE
