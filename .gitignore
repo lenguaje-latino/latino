@@ -2,8 +2,6 @@
 build/
 CMakeFiles/
 dist/
-Release/
-Debug/
 codeblocks/doxygen/
 Testing/
 test/
