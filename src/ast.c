@@ -80,7 +80,7 @@ ast *nodo_nuevo_cadena(const char *s, int num_linea, int num_columna)
     a->tipo = NODO_VALOR;
     nodo_valor *val = (nodo_valor*)__memoria_asignar(sizeof(nodo_valor));
     val->tipo = VALOR_CADENA;
-    val->val.cadena = __str_duplicar(s);
+    val->val.cadena = strdup(s);
     a->valor = val;
     a->num_linea = num_linea;
     a->num_columna = num_columna;
@@ -94,7 +94,7 @@ ast *nodo_nuevo_identificador(const char *s, int num_linea, int num_columna, boo
     a->tipo = NODO_IDENTIFICADOR;
     nodo_valor *val = (nodo_valor*)__memoria_asignar(sizeof(nodo_valor));
     val->tipo = VALOR_CADENA;
-    val->val.cadena = __str_duplicar(s);
+    val->val.cadena = strdup(s);
     val->es_constante = es_constante;
     a->valor = val;
     a->num_linea = num_linea;
@@ -669,7 +669,7 @@ static int nodo_analizar(lat_mv *vm, ast *node, lat_bytecode *bcode, int i)
         o->num_linea = fun->nombre->num_linea;
         o->num_columna = fun->nombre->num_columna;
         o->num_params = __contar_num_parargs(fun->parametros, NODO_FUNCION_PARAMETROS);
-        o->nombre_cfun = __str_duplicar(fun->nombre->valor->val.cadena);
+        o->nombre_cfun = strdup(fun->nombre->valor->val.cadena);
         dbc(STORE_NAME, 0, 0, o);
     }
     break;
