@@ -4,23 +4,24 @@ Menu propiedades del proyecto-> Debugging -> Command Arguments. Agregar
 $(SolutionDir)..\ejemplos\debug.lat
 */
 
-str = '{"ok":true,
-       "result":[
-          {"update_id":710556635,
-            "message":{"message_id":130,
-                       "from":{"id":269610735,"first_name":"Primitivo","last_name":"Roman"},
-                       "chat":{"id":269610735,"first_name":"Primitivo","last_name":"Roman","type":"private"},
-                       "date":1474906910,
-                       "text":"esto es una prueba \ud83d\ude18 print (\"hola mundo\")",
-                       "entities":[{"type":"code","offset":19,"length":20}]}}]}'
 
-str2 = '{"ok":true,
-      "result":[]}'
+url = 'https://api.telegram.org/bot229849153:AAGH8mIvfGoTAMM5HWjrsONXDn2zjJ5opLg/getUpdates'
+#sistema('echo $(curl -s "' . url . '")')
+//{"ok":true,"result":[{"update_id":710556682, "message":{"message_id":179,"from":{"id":269610735,"first_name":"Primitivo","last_name":"Roman"},"chat":{"id":269610735,"first_name":"Primitivo","last_name":"Roman","type":"private"},"date":1475506198,"text":"(@((#(\u20ac(\u20ac?3)3?\u20ac!+\/K{\u00a5{\u00a5{$\u00b6}]\u00a5{\u00a5[\u00a5","entities":[{"type":"bot_command","offset":17,"length":2},{"type":"code","offset":26,"length":1}]}}]}
+//{"ok":true,"result":[{"update_id":710556682, "message":{"message_id":179,"from":{"id":269610735,"first_name":"Primitivo","last_name":"Roman"},"chat":{"id":269610735,"first_name":"Primitivo","last_name":"Roman","type":"private"},"date":1475506198,"text":"(@((#(\u20ac(\u20ac?3)3?\u20ac!+\/K{\u00a5{\u00a5{$\u00b6}]\u00a5{\u00a5[\u00a5","entities":[{"type":"bot_command","offset":17,"length":2},{"type":"code","offset":26,"length":1}]}}]}
+str = ejecutar_pipe('echo $(curl -s "' . url . '")')
+#str = '{"ok":true,"result":[{"update_id":558904697, "message":{"message_id":4507,"from":{"id":189041244,"first_name":"Bruno Ric (K)","username":"Jarriz"},"chat":{"id":189041244,"first_name":"Bruno Ric (K)","username":"Jarriz","type":"private"},"date":1475275449,"text":"+\u20ac+#+(#(#(#\\^"}}]}'
+escribir(str)
+jsn = json_decodificar(str)
+escribir("jsn: " .  jsn)
 
-dic = leer_json(str)
+dec = json_codificar(jsn)
+escribir(dec)
 
-escribir(dic->cadena())  #convierte a cadena el diccionario
-#escribir(dic->str2())   #error dic no tiene una funcion str2()
-escribir(dic->str2)      #vacio
-escribir(dic->result[0]->message->text)   #esto es una prueba \ud83d\ude18 print (\"hola mundo\")
-escribir(dic->result[1])  #vacio
+#str = '{"ok":true,"result":[{"update_id":558904697, "message":{"message_id":4507,"from":{"id":189041244,"first_name":"Bruno Ric (K)","username":"Jarriz"},"chat":{"id":189041244,"first_name":"Bruno Ric (K)","username":"Jarriz","type":"private"},"date":1475275449,"text":"+\u20ac+#+(#(#(#\\^"}}]}'
+#str = '{"ok":true,"result":[{"update_id":558904697, "message":{"message_id":4507,"from":{"id":189041244,"first_name":"Bruno Ric (K)","username":"Jarriz"},"chat":{"id":189041244,"first_name":"Bruno Ric (K)","username":"Jarriz","type":"private"},"date":1475275449,"text":"+\u20ac+#+(#(#(#\\^"}}]}'
+/*str2 = '{"ok":true,
+      "result":[]}'*/
+#dic = leer_json(str)
+#0x6507d0 "{\\"ok\\":true,\\"result\\":[{\\"update_id\\":710556681, \\"message\\":{\\"message_id\\":178,\\"from\\":{\\"id\\":269610735,\\"first_name\\":\\"Primitivo\\",\\"last_name\\":\\"Roman\\"},\\"chat\\":{\\"id\\":269610735,\\"first_name\\":\\"Primitivo\\",\\"last_name\\":\\"Roman\\",\\"type\\":\\"private\\"},\\"date\\":1475260878,\\"text\\":\\"+\\\\u20ac+#+(#(#(#\\\\^\\"}}]}"
+#escribir(dic->result[0]->message->text)

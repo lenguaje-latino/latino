@@ -60,7 +60,7 @@ void lat_leer(lat_mv *vm)
     }
     else
     {   
-        lat_apilar(vm, lat_cadena_nueva(vm, __str_analizar(str, strlen(str))));
+        lat_apilar(vm, lat_cadena_nueva(vm, strdup(str)));
     }
 }
 void lat_leer_archivo(lat_mv *vm)
@@ -128,8 +128,8 @@ void lat_ejecutar_pipe(lat_mv *vm){
     char *p = __memoria_asignar(rlen);
     fread(p, sizeof(char), rlen, fp);
     rlen = strlen(p);
-    p[rlen-1] = '\0';   //elimina el ultimo '\n'
-    lat_objeto* res = lat_cadena_nueva(vm, __str_duplicar(p));
+    p[rlen-1] = '\0';   //elimina el ultimo '\n'    
+    lat_objeto* res = lat_cadena_nueva(vm, strdup(p));
     lat_apilar(vm, res);
     __lat_pclose(vm, fp);
     __memoria_liberar(p);

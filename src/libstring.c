@@ -31,96 +31,9 @@ THE SOFTWARE.
 #include "liblist.h"
 #include "gc.h"
 
-char* __str_duplicar(const char* s)
-{
-    size_t len = strlen(s);
-    char* p;
-    p = __memoria_asignar(len + 1);
-    if (p)
-    {
-        strncpy(p, s, len);
-    }
-    p[len] = '\0';
-    return p;
-}
-
 char* __str_analizar(const char* s, size_t len)
 {
-    char* ret = __memoria_asignar(len + 1);
-    int i = 0;
-    int j = 0;
-    int c = '@';
-    for (i = 0; i < ((int)len); i++)
-    {
-        switch (s[i])
-        {
-        case '\\':
-        {
-            switch (s[i + 1])
-            {
-            case '/':
-                c = '/';
-                i++;
-                goto save;
-            case '"':
-                c = '\"';
-                i++;
-                goto save;
-            case 'a':
-                c = '\a';
-                i++;
-                goto save;
-            case 'b':
-                c = '\b';
-                i++;
-                goto save;
-            case 'f':
-                c = '\f';
-                i++;
-                goto save;
-            case 'n':
-                c = '\n';
-                i++;
-                goto save;
-            case 'r':
-                c = '\r';
-                i++;
-                goto save;
-            case 't':
-                c = '\t';
-                i++;
-                goto save;
-            case '\\':
-                c = '\\';
-                i++;
-                goto save;
-            case 'u':
-                c = s[i];
-                ret[j] = c;
-                j++;  
-                i++;
-                int k;
-                for(k = 0; k < 4; k++) {
-                    c = s[i];
-                    ret[j] = c;
-                    j++;
-                    i++;
-                }                    
-            default:
-                break;
-            }
-        }
-        break;
-        default:
-            c = s[i];
-            break;
-        }
-save:
-        ret[j] = c;
-        j++;
-    }
-    ret[j] = '\0';
-    return ret;
+    return strdup(s);    
 }
 
 char* __str_decimal_a_cadena(double d)
@@ -398,12 +311,12 @@ void lat_concatenar(lat_mv* vm)
     char *tmp2 = NULL;
     lat_objeto* r = NULL;
     if(a->tipo == T_STR){
-        tmp1 = __str_duplicar(__cadena(a));        
+        tmp1 = strdup(__cadena(a));        
     }else{
         tmp1 = __objeto_a_cadena(a);
     }
     if(b->tipo == T_STR){
-        tmp2 = __str_duplicar(__cadena(b));
+        tmp2 = strdup(__cadena(b));
     }else{
         tmp2 = __objeto_a_cadena(b);
     }    

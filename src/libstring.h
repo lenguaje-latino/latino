@@ -35,13 +35,6 @@ THE SOFTWARE.
 *
 */
 
-/**\brief Duplica una cadena
-  *
-  * \param s: Apuntador a una cadena de caracteres
-  * \return char*: Apuntador a una cadena de caracteres
-  */
-char* __str_duplicar(const char* s);
-
 /**\brief Analiza una cadena de caracteres
   *
   * \param s: Apuntador a una cadena de caracteres

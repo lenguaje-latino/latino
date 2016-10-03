@@ -39,6 +39,7 @@ THE SOFTWARE.
 #define malloc_size(ptr) _msize(ptr)
 #define __lat_popen(L,c,m)		((void)L, _popen(c,m))
 #define __lat_pclose(L,file)		((void)L, _pclose(file))
+#define stdup _strdup
 #endif
 #ifdef __linux__
 #include <dlfcn.h>
