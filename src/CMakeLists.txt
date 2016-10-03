@@ -9,10 +9,10 @@ IF(UNIX)
     SET(CMAKE_C_FLAGS_DEBUG "${CMAKE_C_FLAGS} -D_GNU_SOURCE -coverage -g -O0 -Wall -std=c11")
 ELSE(UNIX)
     IF(MSVC)
-        add_library(jansson STATIC IMPORTED)
-        set_target_properties(jansson PROPERTIES IMPORTED_LOCATION_DEBUG
+        ADD_LIBRARY(jansson STATIC IMPORTED)
+        SET_TARGET_PROPERTIES(jansson PROPERTIES IMPORTED_LOCATION_DEBUG
             ${CMAKE_SOURCE_DIR}/src/lib/Debug/jansson_d.lib)
-        set_target_properties(jansson PROPERTIES IMPORTED_LOCATION_RELEASE
+        SET_TARGET_PROPERTIES(jansson PROPERTIES IMPORTED_LOCATION_RELEASE
             ${CMAKE_SOURCE_DIR}/src/lib/Release/jansson.lib)
         SET(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} /W4")
         SET(CMAKE_C_FLAGS_DEBUG "${CMAKE_C_FLAGS_DEBUG} /W4")
@@ -26,7 +26,7 @@ ENDIF(UNIX)
 
 ADD_DEFINITIONS(-D_DEBUG -D__STDC_CONSTANT_MACROS -D__STDC_FORMAT_MACROS -D__STDC_LIMIT_MACROS)
 ADD_SUBDIRECTORY(linenoise)
-include_directories(jansson)
+INCLUDE_DIRECTORIES(jansson)
 
 SET(SOURCES compat.h
     latino.h ast.h vm.h object.h libstring.h libmem.h liblist.h
@@ -44,11 +44,12 @@ TARGET_LINK_LIBRARIES(latino LINK_PUBLIC
     ${BISON_LIBRARIES} ${CMAKE_DL_LIBS})
 
 IF(MSVC)
-    target_link_libraries(latino jansson)
+    TARGET_LINK_LIBRARIES(latino jansson)
 ENDIF(MSVC)
 
 IF(UNIX)
   INSTALL(TARGETS latino DESTINATION ${CMAKE_INSTALL_PREFIX})
+  INSTALL(FILES man/latino.1 DESTINATION /usr/share/man/es/man1)
 ENDIF(UNIX)
 
 #crear paquete .deb https://cmake.org/Wiki/CMake/CPack/Examples/Linux/DEB

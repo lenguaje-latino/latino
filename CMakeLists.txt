@@ -9,12 +9,6 @@ if(CMAKE_COMPILER_IS_GNUCXX)
     target_link_libraries(${PROJECT_TEST_NAME} gcov)
 endif()
 
-file(GLOB MY_PUBLIC_HEADERS
-  "src/man/latino.1"
-)
-
-file(COPY ${MY_PUBLIC_HEADERS} DESTINATION /usr/share/man/es/man1)
-
 find_path(GLIB_INCLUDE_DIR NAMES glib.h PATH_SUFFIXES glib-2.0)
 
 PROJECT(latino)
