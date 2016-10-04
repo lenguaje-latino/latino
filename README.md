@@ -82,6 +82,8 @@ https://www.microsoft.com/es-ES/download/details.aspx?id=48145
 | gcc     |   4.9.3 |Linux|
 | g++     |   4.9.3 |Linux|
 | libjansson-dev |   2.9   |Linux|
+| libcurl4-openssl-dev |  |Linux|
+| curl    | 7.47.0 |Linux|
 | kernel-devel| |Solo Fedora|
 | jsoncpp| |Solo Fedora|
 --
