@@ -1,11 +1,43 @@
-ejecutar_pipe("echo nsns")
-ejecutar_pipe("echo nsn\\s")
-ejecutar_pipe("echo nsn\\\\s")
-ejecutar_pipe("echo '\\\\'")
-ejecutar_pipe("echo '\\\\' | sed 's/\\\\/\\\\\\\\g'")
-ejecutar_pipe("echo '\\\\' | sed 'g/\\\\/\\\\\\\\s'")
-ejecutar_pipe("echo '\\\\' | sed 'g/\\\\/\\\\\\\\/s'")
-ejecutar_pipe("echo '\\\\' | sed 's/\\\\/\\\\\\\\/g'")
-peticion("http://google.com")
-peticion("https://google.com")
-peticion("https://www.google.com")
+escribir("hola latino")\r\r\r
+1+6\r\r\r
+3.1416*2*10\r\r\r
+sistema("echo 'hola mundo'")\r\r\r
+sistema("echo 'hola ingrata'")\r\r\r
+1*3+4\r\r\r
+2*3+4\r\r\r
+1+5\r\r
+salir\r\r
+escribir("hola")\r
+i=10\r
+i=0\r
+escribir(i)\r
+x=10\r
+escribir(x)\r
+seno(0.65)\r
+z = seno(0.65)\r
+escribir(z)\r
+i=10\r
+iiescribir(i)\r
+escribir(i)\r
+funcion x(a,b)retorno a+bfin\r
+x(1,2)\r
+i=10\r
+escribir(i)\r
+funcion s(a,b)retorno a+bfin\r
+s(3,5)\r
+funcion s()escribir("hola")fin\r
+s()\r
+funcion resta(a,b)retorno a-bfin
+resta(1,2)
+resta(3,2)
+es_numero(1)
+es_numero(10)
+es_numero(1)
+es_numerico('1a')
+es_numerico('a')
+es_numerico('111112a')
+es_numero('1020.3')
+es_numero('1020,3')
+es_numerico('1020,3')
+es_numerico('102,2')
+es_numerico('102.2')
