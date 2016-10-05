@@ -1,6 +1,0 @@
-#se puede utilizar cadena o literal
-#incluir ("modulo")
-incluir('modulo')
-
-r = sumatoria(2, 3)
-escribir(r)
