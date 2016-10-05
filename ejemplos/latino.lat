@@ -1,0 +1,9 @@
+funcion lala()
+retorno "Jjj"
+fin
+
+dic = { "Chilindrina": lala(),
+		"El chavo del 8": "Roberto Gomez Bolaños",
+		"Tres patines": "Leopoldo Fernandez" }
+
+escribir(dic->Chilindrina)
