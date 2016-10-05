@@ -1,4 +1,4 @@
-.TH Latino manual
+.TH Latino manual "Licensia MIT" "Primitivo"
 .SH Introducción
 \fBLatino es un nuevo lenguaje de programación para el público en general.\fR
 .PP
@@ -39,7 +39,7 @@ La sintaxis sería la siguiente:
 .RS
 .BR funcion()
 .br
-// código
+    # código
 .br
 .BR fin
 .RE
@@ -125,4 +125,94 @@ Los operadores de expresión son los siguientes:
 /
 .br
 %\fR
+.RE
+.PP
+.IR Condiciones
+.PP
+Podemos añadir condiciones en Latino (esquema de decisión condicional)
+.br
+En otras programaciones lo conocerás como if, else, etc.
+.br
+La sintaxis es la siguiente:
+.br
+.RS
+\fB# Condición de si es verdadero ó falso\fR
+.br
+\fBsi\fR valor
+.br
+    # Código
+.br
+\fBfin\fR
+.PP
+\fB# Condición de que el valor es igual a...?\fR
+.br
+\fBsi\fR valor \fB== "\fRtexto\fB"\fR
+.br
+    # Código
+.br
+\fBfin\fR
+.PP
+\fB# Condición de que el valor no es igual a...?\fR
+.br
+\fBsi\fR valor \fB!= "\fRtexto\fB"\fR
+.br
+    # Código
+.br
+\fBfin\fR
+.PP
+\fB# Podemos ponerlo con ó sin paréntesis, es opcional.\fR
+.br
+\fB# Aquí unos ejemplos:\fR
+.br
+\fBsi (\fR valor \fB)
+.br
+\fBsi (\fR valor \fB==\fR "texto" \fB)\fR
+.RE
+.PP
+.IR Comandos
+.IR externos
+.PP
+Podemos añadir comandos que se ejecuten de forma externa en el sistema
+.br
+ya sea con retorno ó sin retorno para una simple ejecución
+.PP
+Sintaxis:
+.RS
+\fB# Sin retorno de la salida:\fR
+.br
+\fBsistema("\fRcomando\fB")\fR
+.PP
+\fB# Con retorno de la salida:\fR
+.br
+\fBejecutar_pipe("\fRcomando\fB")\fR
+.RE
+.PP
+.IR Bucle
+.PP
+Podemos crea un bucle, para así, no salir del script y continue siempre
+.br
+ejecutándose ó que termine hasta cierta condición.
+.PP
+Sintaxis:
+.RS
+\fB# Creará un bucle infinito\fR
+.br
+\fBmientras verdadero\fR
+.br
+    # Código
+.br
+\fBfin\fR
+.PP
+.RE
+Véase más en ejemplo #06 del Github de Latino.
+.PP
+.IR Leer
+.PP
+Podemos crear además valores para que sean leídos en Latino.
+.PP
+Sintaxis:
+.RS
+valor = \fBleer()\fR
+.br
+\fBescribir("\fREl valor es \fB".\fRvalor\fB)\fR
 .RE

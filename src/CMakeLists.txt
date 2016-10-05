@@ -50,7 +50,7 @@ ENDIF(MSVC)
 
 IF(UNIX)
   INSTALL(TARGETS latino DESTINATION ${CMAKE_INSTALL_PREFIX})
-  INSTALL(FILES man/latino.1 DESTINATION /usr/share/man/es/man1)
+  INSTALL(FILES man/latino.1.gz DESTINATION /usr/share/man/es/man1)
 ENDIF(UNIX)
 
 #crear paquete .deb https://cmake.org/Wiki/CMake/CPack/Examples/Linux/DEB
