@@ -1,0 +1,51 @@
+## Sintaxis Latino en Nano
+
+syntax "latino" "\.lat$"
+
+color brightwhite "\."
+
+# Operators
+color brightyellow ":|\*|/|%|\+|-|\^|>|>=|<|<=|!=|="
+
+# Statements
+color brightblue "\<(hacer|fin|mientras|defecto|si|caso|hasta|sino|desde|cuando|salto|romper|retorno|funcion|propiedad)\>"
+
+# Keywords
+
+
+# Standard library
+color brightyellow "\<(json_codificar|json_decodificar)\>"
+color brightyellow "\<(sistema|ejecutar_pipe)\>"
+color brightyellow "\<(escribir|imprimir)\>"
+color brightyellow "\<(peticion|elegir)\>"
+color brightyellow "\<(reemplazar|ejecutar_archivo|leer_archivo|escribir_archivo)\>"
+color brightyellow "\<(leer)\>"
+color brightyellow "\<(cadena)\>"
+
+# falso, nulo ó verdadero
+color brightmagenta "\<(verdadero|falso)\>"
+
+# Ficheros externos
+color brightblue "incluir"
+
+# Numbers
+color red "\<([0-9]+)\>"
+
+# Symbols
+color brightmagenta "(\(|\)|\[|\]|\{|\})"
+
+# Shebang
+color brightcyan   "^#!.*"
+
+# Comentarios simples
+color green        "\/\/.*$"
+color green        "#.*$"
+
+# Comentarios múltiples
+color green         start="\/\*" end="\*\/"
+
+# Strings
+color red "\"(\\.|[^\\\"])*\"|'(\\.|[^\\'])*'"
+
+# Hex literals
+color brightgreen "0x[0-9a-fA-F]*"
