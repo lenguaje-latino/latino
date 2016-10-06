@@ -100,7 +100,7 @@ hash_map* __dic_clonar(hash_map *m)
 
 char* __dic_a_cadena(hash_map* m){
     char* valor = __memoria_asignar(MAX_STR_LENGTH);    
-    strcat(valor, "{");
+    strcat(valor, "{\n");
     int i;
     for (i = 0; i < 256; i++)
     {
@@ -110,34 +110,42 @@ char* __dic_a_cadena(hash_map* m){
                 if (cur->valor != NULL)
                 {
                     //__dic_asignar(ret, ((hash_val *) cur->valor)->llave, ((hash_val *) cur->valor)->valor);                    
-                    strcat(valor, "\"");
+                    strcat(valor, "\t\"");
                     strcat(valor, ((hash_val *) cur->valor)->llave);
                     strcat(valor, "\"");
                     lat_objeto* val = (lat_objeto*)((hash_val *) cur->valor)->valor;                    
-                    strcat(valor, ": ");                    
-                    if(val->tipo == T_STR){
-                        if(strstr(__cadena(val), "\"") != NULL){
-                            strcat(valor, "'");
-                        }else{
-                            strcat(valor, "\"");
-                        }
-                    }
-                    strcat(valor, __objeto_a_cadena(val));
-                    if(val->tipo == T_STR){
-                        if(strstr(__cadena(val), "\"") != NULL){
-                            strcat(valor, "'");
-                        }else{
-                            strcat(valor, "\"");
-                        }
-                    }
-                    strcat(valor, ", ");
+                    strcat(valor, ": "); 
+					if (val == NULL){
+						strcat(valor, "\"nulo\"");
+					}
+					else {
+						if (val->tipo == T_STR){
+							if (strstr(__cadena(val), "\"") != NULL){
+								strcat(valor, "'");
+							}
+							else{
+								strcat(valor, "\"");
+							}
+						}
+						strcat(valor, __objeto_a_cadena(val));
+						if (val->tipo == T_STR){
+							if (strstr(__cadena(val), "\"") != NULL){
+								strcat(valor, "'");
+							}
+							else{
+								strcat(valor, "\"");
+							}
+						}
+					}
+                    strcat(valor, ",\n");
                 }
             }
         }
     }
     strcat(valor, "}");
-    valor = __str_reemplazar(valor, ", }", "}");    //elimina la ultima coma
-    __memoria_reasignar(valor, strlen(valor));
+    valor = __str_reemplazar(valor, ",\n}", "\n}\n");    //elimina la ultima coma
+	valor[strlen(valor)] = '\0';
+    __memoria_reasignar(valor, strlen(valor)+1);
     return valor;
 }
 

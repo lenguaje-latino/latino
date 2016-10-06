@@ -113,13 +113,14 @@ int __lista_contiene_valor(lista* list, void* data)
 char* __lista_a_cadena(lista* list)
 {
     char* valor = __memoria_asignar(MAX_STR_LENGTH);    
-    strcat(valor, "[");
+    strcat(valor, "[\n");
     LIST_FOREACH(list, primero, siguiente, cur) {
         lat_objeto* o = ((lat_objeto*)cur->valor);
         char* str = __objeto_a_cadena(o);
-        if(o->tipo == T_LIST && !__str_termina_con(valor, "[")){
+        /*if(o->tipo == T_LIST && !__str_termina_con(valor, "[")){
             strcat(valor, "\n");
-        }        
+        }*/
+		strcat(valor, "\t");
         if(o->tipo == T_STR){
             if(strstr(__cadena(o), "\"") != NULL){
                 strcat(valor, "'");
@@ -136,11 +137,12 @@ char* __lista_a_cadena(lista* list)
             }
         }
         if(cur != list->ultimo){
-            strcat(valor, ",");
+            strcat(valor, ",\n");
         }
     }
-    strcat(valor, "]");
-    __memoria_reasignar(valor, strlen(valor));
+    strcat(valor, "\n]\n");
+	valor[strlen(valor)] = '\0';
+    __memoria_reasignar(valor, strlen(valor)+1);
     return valor;
 }
 
