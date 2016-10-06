@@ -27,7 +27,10 @@ ENDIF(UNIX)
 
 ADD_DEFINITIONS(-D_DEBUG -D__STDC_CONSTANT_MACROS -D__STDC_FORMAT_MACROS -D__STDC_LIMIT_MACROS)
 ADD_SUBDIRECTORY(linenoise)
+ADD_SUBDIRECTORY(curl)
+
 INCLUDE_DIRECTORIES(jansson)
+INCLUDE_DIRECTORIES(curl/include)
 
 SET(SOURCES compat.h
     latino.h ast.h vm.h object.h libstring.h libmem.h liblist.h
@@ -45,7 +48,7 @@ TARGET_LINK_LIBRARIES(latino LINK_PUBLIC
     ${BISON_LIBRARIES} ${CMAKE_DL_LIBS})
 
 IF(MSVC)
-    TARGET_LINK_LIBRARIES(latino jansson)
+    TARGET_LINK_LIBRARIES(latino jansson libcurl)
 ENDIF(MSVC)
 
 IF(UNIX)
