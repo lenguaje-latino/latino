@@ -54,7 +54,7 @@ THE SOFTWARE.
 /** Version menor de Latino */
 #define LAT_VERSION_MENOR "8"
 /** Version de correcion de errores */
-#define LAT_VERSION_PARCHE "8"
+#define LAT_VERSION_PARCHE "9"
 /** Version de Latino */
 #define LAT_VERSION "Latino " LAT_VERSION_MAYOR "." LAT_VERSION_MENOR "." LAT_VERSION_PARCHE
 /** Derechos de Latino */
@@ -119,7 +119,7 @@ extern int parse_silent;
 /** Maximo numero de llamadas recursivas a funcion */
 #define MAX_CALL_FUNCTION 27
 /** Maximo numero de caracteres para un identificador */
-#define MAX_ID_LENGTH 32
+#define MAX_ID_LENGTH 64
 /** Maximo numero de bits para un buffer */
 #define MAX_BUFFERSIZE BUFSIZ
 

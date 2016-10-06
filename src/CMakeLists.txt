@@ -1,11 +1,11 @@
 SET(CMAKE_VERBOSE_MAKEFILE true)
 SET(CMAKE_C_OUTPUT_EXTENSION_REPLACE 1)
-SET(CMAKE_INSTALL_PREFIX /usr/bin)
+SET(CMAKE_INSTALL_PREFIX /usr/bin )
 
 IF(UNIX)
     LINK_LIBRARIES(m)
     LINK_LIBRARIES(jansson)
-    LINK_LIBRARIES(libcurl)
+    LINK_LIBRARIES(curl)
     SET(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -D_GNU_SOURCE -Wall -std=c11")
     SET(CMAKE_C_FLAGS_DEBUG "${CMAKE_C_FLAGS} -D_GNU_SOURCE -coverage -g -O0 -Wall -std=c11")
 ELSE(UNIX)
@@ -15,19 +15,11 @@ ELSE(UNIX)
             ${CMAKE_SOURCE_DIR}/src/lib/Debug/jansson_d.lib)
         SET_TARGET_PROPERTIES(jansson PROPERTIES IMPORTED_LOCATION_RELEASE
             ${CMAKE_SOURCE_DIR}/src/lib/Release/jansson.lib)
-
-        #ADD_LIBRARY(libcurl STATIC IMPORTED)
-        #SET_TARGET_PROPERTIES(libcurl PROPERTIES IMPORTED_LOCATION_DEBUG
-        #    ${CMAKE_SOURCE_DIR}/src/lib/Debug/libcurl.lib)
-        #SET_TARGET_PROPERTIES(libcurl PROPERTIES IMPORTED_LOCATION_RELEASE
-        #    ${CMAKE_SOURCE_DIR}/src/lib/Release/libcurl.lib)
-
         SET(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} /W4")
         SET(CMAKE_C_FLAGS_DEBUG "${CMAKE_C_FLAGS_DEBUG} /W4")
         SET_PROPERTY(DIRECTORY APPEND PROPERTY COMPILE_DEFINITIONS _CRT_SECURE_NO_WARNINGS)
     ELSEIF(CMAKE_COMPILER_IS_GNUCC OR CMAKE_COMPILER_IS_GNUCXX)
         LINK_LIBRARIES(jansson)
-        LINK_LIBRARIES(libcurl)
         SET(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -Wall -std=c11")
         SET(CMAKE_C_FLAGS_DEBUG "${CMAKE_C_FLAGS_DEBUG} -g -O0 -Wall -std=c11")
     ENDIF()
@@ -35,10 +27,7 @@ ENDIF(UNIX)
 
 ADD_DEFINITIONS(-D_DEBUG -D__STDC_CONSTANT_MACROS -D__STDC_FORMAT_MACROS -D__STDC_LIMIT_MACROS)
 ADD_SUBDIRECTORY(linenoise)
-ADD_SUBDIRECTORY(curl)
-
 INCLUDE_DIRECTORIES(jansson)
-INCLUDE_DIRECTORIES(curl/include)
 
 SET(SOURCES compat.h
     latino.h ast.h vm.h object.h libstring.h libmem.h liblist.h
@@ -56,12 +45,13 @@ TARGET_LINK_LIBRARIES(latino LINK_PUBLIC
     ${BISON_LIBRARIES} ${CMAKE_DL_LIBS})
 
 IF(MSVC)
-    TARGET_LINK_LIBRARIES(latino jansson libcurl)
+    TARGET_LINK_LIBRARIES(latino jansson)
 ENDIF(MSVC)
 
 IF(UNIX)
   INSTALL(TARGETS latino DESTINATION ${CMAKE_INSTALL_PREFIX})
-  INSTALL(FILES man/latino.1.gz DESTINATION /usr/share/man/es/man1)
+  INSTALL(FILES man/latino.1 DESTINATION /usr/share/man/es/man1)
+  INSTALL(FILES nano/latino.nanorc DESTINATION /usr/share/nano)
 ENDIF(UNIX)
 
 #crear paquete .deb https://cmake.org/Wiki/CMake/CPack/Examples/Linux/DEB
@@ -69,7 +59,7 @@ ENDIF(UNIX)
 #make package
 SET(CPACK_GENERATOR "DEB")
 SET(CPACK_DEBIAN_PACKAGE_NAME "latino")
-SET(CPACK_PACKAGE_VERSION "0.8.8")
+SET(CPACK_PACKAGE_VERSION "0.8.9")
 SET(CPACK_DEBIAN_PACKAGE_MAINTAINER "primitivo.roman.montero@gmail.com")
 SET(CPACK_DEBIAN_PACKAGE_DESCRIPTION "Lenguaje de programación de código abierto para latinos y de habla hispana. http://lenguaje-latino.org/")
 SET(CPACK_DEBIAN_PACKAGE_SECTION "education")
