@@ -236,7 +236,7 @@ char* __str_reemplazar(char *str, char *orig, char *rep)
     {
         strcpy(buffer, __str_reemplazar(buffer, orig, rep));
     }
-    __memoria_reasignar(buffer, strlen(buffer));
+    __memoria_reasignar(buffer, strlen(buffer)+1);
     return buffer;
 }
 

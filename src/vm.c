@@ -119,7 +119,7 @@ static lat_objeto* json2latino(lat_mv* mv, json_t *element){
             lat_objeto* lst = lat_lista_nueva(mv, __lista_crear());
             for (i = 0; i < size; i++) {
                 value = json_array_get(element, i);
-                __lista_apilar(__lista(lst), json2latino(mv, value));
+                __lista_apilar(__lista(lst), (void*)json2latino(mv, value));
             }
             return lst;
         }
