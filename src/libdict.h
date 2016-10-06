@@ -29,7 +29,7 @@ THE SOFTWARE.
 /**\brief Valor hash */
 typedef struct hash_val
 {
-    char llave[32];    /**< Llave */
+    char llave[64];    /**< Llave */
     void* valor;    /**< Valor */
 } hash_val;
 

@@ -108,6 +108,7 @@ static lat_objeto* json2latino(lat_mv* mv, json_t *element){
             size = json_object_size(element);
             lat_objeto* dic = lat_dic_nuevo(mv, __dic_crear());
             json_object_foreach(element, key, value) {
+                //printf("key: %s\n", key);
                 __dic_asignar(__dic(dic), key, (void*)json2latino(mv, value));
             }
             return dic;
