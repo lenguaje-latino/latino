@@ -1,2 +1,0 @@
-# Crear un archivo llamado "key" con la key de @BotFather
-api_key = leer_archivo("key")

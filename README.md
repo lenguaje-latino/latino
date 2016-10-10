@@ -44,6 +44,7 @@ Cualquier versión/distribución de linux
 ```bash
  git clone --recursive https://github.com/primitivorm/latino
  cd latino
+ git submodule update --init --recursive
  cmake .
  make
  sudo make install
