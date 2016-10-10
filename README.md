@@ -42,7 +42,7 @@ Leer LICENSE.txt
 Cualquier versión/distribución de linux
 
 ```bash
- git clone https://github.com/primitivorm/latino
+ git clone --recursive https://github.com/primitivorm/latino
  cd latino
  cmake .
  make
