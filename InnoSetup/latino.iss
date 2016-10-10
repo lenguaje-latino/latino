@@ -2,7 +2,7 @@
 ; SEE THE DOCUMENTATION FOR DETAILS ON CREATING INNO SETUP SCRIPT FILES!
 
 #define MyAppName "Latino"
-#define MyAppVersion "0.8.9"
+#define MyAppVersion "0.8.10"
 #define MyAppPublisher "Lenguaje Latino"
 #define MyAppURL "http://lenguaje-latino.org/"
 #define MyAppExeName "latino.exe"
@@ -57,7 +57,7 @@ Filename: "{app}\{#MyAppExeName}"; Description: "{cm:LaunchProgram,{#StringChang
 Root: HKLM; Subkey: "SYSTEM\CurrentControlSet\Control\Session Manager\Environment"; ValueType: expandsz; ValueName: "Path"; ValueData: "{olddata};{app}"
 
 [Tasks]
-Name: modifypath; Description:{cm:AppAddPath}; 
+Name: modifypath; Description:{cm:AppAddPath};
 
 [Code]
 

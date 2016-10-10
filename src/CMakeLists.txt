@@ -10,16 +10,18 @@ IF(UNIX)
     SET(CMAKE_C_FLAGS_DEBUG "${CMAKE_C_FLAGS} -D_GNU_SOURCE -coverage -g -O0 -Wall -std=c11")
 ELSE(UNIX)
     IF(MSVC)
-        ADD_LIBRARY(jansson STATIC IMPORTED)
-        SET_TARGET_PROPERTIES(jansson PROPERTIES IMPORTED_LOCATION_DEBUG
-            ${CMAKE_SOURCE_DIR}/src/lib/Debug/jansson_d.lib)
-        SET_TARGET_PROPERTIES(jansson PROPERTIES IMPORTED_LOCATION_RELEASE
-            ${CMAKE_SOURCE_DIR}/src/lib/Release/jansson.lib)
+#        ADD_LIBRARY(jansson STATIC IMPORTED)
+#        SET_TARGET_PROPERTIES(jansson PROPERTIES IMPORTED_LOCATION_DEBUG
+#            ${CMAKE_SOURCE_DIR}/src/lib/Debug/jansson_d.lib)
+#        SET_TARGET_PROPERTIES(jansson PROPERTIES IMPORTED_LOCATION_RELEASE
+#            ${CMAKE_SOURCE_DIR}/src/lib/Release/jansson.lib)
+
         SET(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} /W4")
         SET(CMAKE_C_FLAGS_DEBUG "${CMAKE_C_FLAGS_DEBUG} /W4")
         SET_PROPERTY(DIRECTORY APPEND PROPERTY COMPILE_DEFINITIONS _CRT_SECURE_NO_WARNINGS)
     ELSEIF(CMAKE_COMPILER_IS_GNUCC OR CMAKE_COMPILER_IS_GNUCXX)
         LINK_LIBRARIES(jansson)
+        LINK_LIBRARIES(curl)
         SET(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -Wall -std=c11")
         SET(CMAKE_C_FLAGS_DEBUG "${CMAKE_C_FLAGS_DEBUG} -g -O0 -Wall -std=c11")
     ENDIF()
@@ -27,12 +29,17 @@ ENDIF(UNIX)
 
 ADD_DEFINITIONS(-D_DEBUG -D__STDC_CONSTANT_MACROS -D__STDC_FORMAT_MACROS -D__STDC_LIMIT_MACROS)
 ADD_SUBDIRECTORY(linenoise)
-INCLUDE_DIRECTORIES(jansson)
+ADD_SUBDIRECTORY(jansson)
+ADD_SUBDIRECTORY(curl)
+
+INCLUDE_DIRECTORIES(../include)
+INCLUDE_DIRECTORIES(jansson/src)
+INCLUDE_DIRECTORIES(curl/include)
 
 SET(SOURCES compat.h
     latino.h ast.h vm.h object.h libstring.h libmem.h liblist.h
     lex.h parse.h libmath.h libio.h  libnet.h libdict.h gc.h
-    linenoise/utf8.h linenoise/linenoise.h jansson/jansson.h jansson/jansson_config.h
+    linenoise/utf8.h linenoise/linenoise.h
     latino.c ast.c vm.c object.c libstring.c libmem.c liblist.c
     lex.c parse.c libmath.c libio.c libnet.c libdict.c gc.c
     linenoise/utf8.c linenoise/linenoise.c )
@@ -45,7 +52,7 @@ TARGET_LINK_LIBRARIES(latino LINK_PUBLIC
     ${BISON_LIBRARIES} ${CMAKE_DL_LIBS})
 
 IF(MSVC)
-    TARGET_LINK_LIBRARIES(latino jansson)
+    TARGET_LINK_LIBRARIES(latino jansson libcurl)
 ENDIF(MSVC)
 
 IF(UNIX)
