@@ -86,7 +86,7 @@ ast *lat_analizar_archivo(char *infile, int* status)
             printf("El archivo no contiene la extension .lat\n");
             return NULL;
         }
-    }    
+    }
     FILE *file = fopen(infile, "r");
     if (file == NULL)
     {
@@ -105,9 +105,9 @@ ast *lat_analizar_archivo(char *infile, int* status)
     }
     if(file != NULL)
     {
-        fclose(file);            
+        fclose(file);
     }
-    buffer[newSize] = '\0';    
+    buffer[newSize] = '\0';
     return lat_analizar_expresion(buffer, status);
 }
 /**
@@ -322,11 +322,11 @@ static void lat_repl(lat_mv *vm)
     char* buf = __memoria_asignar(MAX_STR_INTERN);
     ast* tmp = NULL;
     int status;
-    vm->REPL = true;    
+    vm->REPL = true;
     linenoiseHistoryLoad("history.txt");
     linenoiseSetCompletionCallback(completion);
     while (leer_linea(buf) != -1)
-    {        
+    {
         tmp = lat_analizar_expresion(buf, &status);
         if(tmp != NULL)
         {
@@ -349,7 +349,7 @@ static void lat_repl(lat_mv *vm)
 int main(int argc, char *argv[])
 {
     int i;
-    char *infile = NULL;    
+    char *infile = NULL;
     for (i = 1; i < argc; i++)
     {
         if (strcmp(argv[i], "-v") == 0)
@@ -364,7 +364,7 @@ int main(int argc, char *argv[])
         }
         else if (strcmp(argv[i], "-i") == 0)
         {
-            lat_version();            
+            lat_version();
             return EXIT_SUCCESS;
         }
         else
@@ -372,11 +372,11 @@ int main(int argc, char *argv[])
             infile = argv[i];
             //printf("%s", infile);
         }
-    }   
-    
+    }
+
     lat_mv *mv = lat_mv_crear();
     if(argc > 1 && infile != NULL)
-    {        
+    {
         mv->nombre_archivo = infile;
         mv->REPL = false;
         int status;
@@ -384,14 +384,14 @@ int main(int argc, char *argv[])
         if(status == 0 && nodo != NULL){
             lat_objeto *mainFunc = nodo_analizar_arbol(mv, nodo);
             lat_llamar_funcion(mv, mainFunc);
-            lat_eliminar_objeto(mv, mainFunc);            
-        }        
+            lat_eliminar_objeto(mv, mainFunc);
+        }
         nodo_liberar(nodo);
     }
     else
-    {        
-        lat_version();  
-        lat_repl(mv);     
+    {
+        lat_version();
+        lat_repl(mv);
     }
     lat_destruir_mv(mv);
     return EXIT_SUCCESS;

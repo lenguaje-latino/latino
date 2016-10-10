@@ -27,10 +27,7 @@ ENDIF(UNIX)
 
 ADD_DEFINITIONS(-D_DEBUG -D__STDC_CONSTANT_MACROS -D__STDC_FORMAT_MACROS -D__STDC_LIMIT_MACROS)
 ADD_SUBDIRECTORY(linenoise)
-ADD_SUBDIRECTORY(curl)
-
 INCLUDE_DIRECTORIES(jansson)
-INCLUDE_DIRECTORIES(curl/include)
 
 SET(SOURCES compat.h
     latino.h ast.h vm.h object.h libstring.h libmem.h liblist.h
@@ -48,7 +45,7 @@ TARGET_LINK_LIBRARIES(latino LINK_PUBLIC
     ${BISON_LIBRARIES} ${CMAKE_DL_LIBS})
 
 IF(MSVC)
-    TARGET_LINK_LIBRARIES(latino jansson libcurl)
+    TARGET_LINK_LIBRARIES(latino jansson)
 ENDIF(MSVC)
 
 IF(UNIX)
@@ -62,7 +59,7 @@ ENDIF(UNIX)
 #make package
 SET(CPACK_GENERATOR "DEB")
 SET(CPACK_DEBIAN_PACKAGE_NAME "latino")
-SET(CPACK_PACKAGE_VERSION "0.8.9")
+SET(CPACK_PACKAGE_VERSION "0.8.10")
 SET(CPACK_DEBIAN_PACKAGE_MAINTAINER "primitivo.roman.montero@gmail.com")
 SET(CPACK_DEBIAN_PACKAGE_DESCRIPTION "Lenguaje de programación de código abierto para latinos y de habla hispana. http://lenguaje-latino.org/")
 SET(CPACK_DEBIAN_PACKAGE_SECTION "education")

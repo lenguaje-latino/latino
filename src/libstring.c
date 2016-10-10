@@ -33,7 +33,81 @@ THE SOFTWARE.
 
 char* __str_analizar(const char* s, size_t len)
 {
-    return strdup(s);    
+    char* ret = __memoria_asignar(len + 1);
+    int i = 0;
+    int j = 0;
+    int c = '@';
+    for (i = 0; i < ((int)len); i++)
+    {
+        switch (s[i])
+        {
+        case '\\':
+        {
+            switch (s[i + 1])
+            {
+            case '/':
+                c = '/';
+                i++;
+                goto save;
+            case '"':
+                c = '\"';
+                i++;
+                goto save;
+            case 'a':
+                c = '\a';
+                i++;
+                goto save;
+            case 'b':
+                c = '\b';
+                i++;
+                goto save;
+            case 'f':
+                c = '\f';
+                i++;
+                goto save;
+            case 'n':
+                c = '\n';
+                i++;
+                goto save;
+            case 'r':
+                c = '\r';
+                i++;
+                goto save;
+            case 't':
+                c = '\t';
+                i++;
+                goto save;
+            case '\\':
+                c = '\\';
+                i++;
+                goto save;
+            case 'u':
+                c = s[i];
+                ret[j] = c;
+                j++;  
+                i++;
+                int k;
+                for(k = 0; k < 4; k++) {
+                    c = s[i];
+                    ret[j] = c;
+                    j++;
+                    i++;
+                }                    
+            default:
+                break;
+            }
+        }
+        break;
+        default:
+            c = s[i];
+            break;
+        }
+save:
+        ret[j] = c;
+        j++;
+    }
+    ret[j] = '\0';
+    return ret;
 }
 
 char* __str_decimal_a_cadena(double d)

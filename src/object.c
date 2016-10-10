@@ -39,6 +39,9 @@ THE SOFTWARE.
 bool __objeto_a_logico(lat_objeto* o){
     switch (o->tipo)
     {
+    case T_NULL:
+        return false;
+        break;
     case T_BOOL:
         return __logico(o);
         break;
@@ -66,6 +69,9 @@ bool __objeto_a_logico(lat_objeto* o){
 double __objeto_a_numerico(lat_objeto* o){
     switch (o->tipo)
     {
+    case T_NULL:
+        return 0;
+        break;
     case T_BOOL:
         return __logico(o) == false ? 0 : 1;
         break;
@@ -99,7 +105,7 @@ double __objeto_a_numerico(lat_objeto* o){
 
 char* __objeto_a_cadena(lat_objeto* o)
 { 
-    if(o == NULL){
+    if(o->tipo == T_NULL){
         return "nulo";
     }
     if (o->tipo == T_BOOL)
@@ -177,7 +183,7 @@ lat_objeto* lat_crear_objeto(lat_mv* vm)
 {    
     //printf("lat_crear_objeto\n");
     lat_objeto* ret = (lat_objeto*)__memoria_asignar(sizeof(lat_objeto));
-    ret->tipo = T_NULO;
+    ret->tipo = T_NULL;
     ret->tamanio = sizeof(lat_objeto);        
     ret->num_ref = 0;
     return ret;

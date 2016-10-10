@@ -82,9 +82,9 @@ typedef enum
     NODO_LISTA_AGREGAR_ELEMENTO,   /**< Nodo agregar elemento a una lista */
     NODO_LISTA_OBTENER_ELEMENTO,   /**< Nodo obtener un elemento de una lista */
     NODO_DICCIONARIO,   /**< Nodo diccionario nuevo */
-    NODO_DICC_ASIGNAR_ELEMENTO,   /**< Nodo un nuevo valor a un elemento del diccionario */
+    //NODO_DICC_ASIGNAR_ELEMENTO,   /**< Nodo un nuevo valor a un elemento del diccionario */
     NODO_DICC_AGREGAR_ELEMENTO,   /**< Nodo agregar un elemento al diccionario */
-    NODO_DICC_OBTENER_ELEMENTO,   /**< Nodo obtener un elemento del diccionario */
+    //NODO_DICC_OBTENER_ELEMENTO,   /**< Nodo obtener un elemento del diccionario */
     NODO_DICC_ELEMENTO,   /**< Nodo par de llave valor del diccionario (key : value) */
     NODO_INCLUIR,  /**< Nodo para incluir codigo de otro archivo */
     NODO_ATRIBUTO,  /**< Attributo de un objeto: str->longitud() */
@@ -93,9 +93,10 @@ typedef enum
 /** \brief Tipos de dato */
 typedef enum
 {
-    VALOR_LOGICO, /**< Valor logico */
+    VALOR_NULO,     /**< Valor nulo */
+    VALOR_LOGICO,   /**< Valor logico */
     VALOR_NUMERICO, /**< Valor decimal */
-    VALOR_CADENA /**< Valor cadena */
+    VALOR_CADENA    /**< Valor cadena */
 } nodo_tipo_valor;
 
 #define AST_COMUN \
@@ -209,6 +210,14 @@ ast *nodo_nuevo_identificador(const char *s, int num_linea, int num_columna, boo
   */
 ast *nodo_nuevo_logico(int b, int num_linea, int num_columna);
 
+/** Nuevo nodo tipo nulo
+  *
+  * \param b: Nodo valor (NULL)
+  * \return ast: Un nodo AST
+  *
+  */
+ast *nodo_nuevo_nulo(void* nulo, int num_linea, int num_columna);
+
 /** Nuevo nodo tipo Decimal (1.25)
   *
   * \param d: Nodo valor
@@ -262,7 +271,7 @@ ast *nodo_nuevo_asignacion_lista_elem(ast *s, ast *v, ast *pos);
   * \return ast: Un nodo AST
   *
   */
-ast *nodo_nuevo_asignacion_dicc_elem(ast *s, ast *v, ast *llave);
+//ast *nodo_nuevo_asignacion_dicc_elem(ast *s, ast *v, ast *llave);
 
 /** Nuevo nodo tipo si (if)
   *

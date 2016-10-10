@@ -61,6 +61,19 @@ ast *nodo_nuevo_logico(int b, int num_linea, int num_columna)
     return a;
 }
 
+ast *nodo_nuevo_nulo(void* nulo, int num_linea, int num_columna)
+{
+    ast *a = (ast*)__memoria_asignar(sizeof(ast));
+    a->tipo = NODO_VALOR;
+    nodo_valor *val = (nodo_valor*)__memoria_asignar(sizeof(nodo_valor));
+    val->tipo = VALOR_NULO;
+    val->val.cadena = nulo;
+    a->valor = val;
+    a->num_linea = num_linea;
+    a->num_columna = num_columna;
+    return a;
+}
+
 ast *nodo_nuevo_numerico(double d, int num_linea, int num_columna)
 {
     ast *a = (ast*)__memoria_asignar(sizeof(ast));
@@ -122,7 +135,7 @@ ast *nodo_nuevo_asignacion_lista_elem(ast *exp, ast *id, ast *pos)
     return (ast *)a;
 }
 
-ast *nodo_nuevo_asignacion_dicc_elem(ast *exp, ast *id, ast *llave)
+/*ast *nodo_nuevo_asignacion_dicc_elem(ast *exp, ast *id, ast *llave)
 {
     nodo_dicc_elem *a = (nodo_dicc_elem*)__memoria_asignar(sizeof(nodo_dicc_elem));
     a->tipo = NODO_DICC_ASIGNAR_ELEMENTO;
@@ -130,7 +143,7 @@ ast *nodo_nuevo_asignacion_dicc_elem(ast *exp, ast *id, ast *llave)
     a->identificador = id;
     a->llave = llave;
     return (ast *)a;
-}
+}*/
 
 ast *nodo_nuevo_si(ast *cond, ast *th, ast *el)
 {
@@ -229,18 +242,18 @@ void nodo_liberar(ast *a)
             nodo_liberar(nelem->posicion);
             break;
         }
-        case NODO_DICC_ASIGNAR_ELEMENTO:
+        /*case NODO_DICC_ASIGNAR_ELEMENTO:
         {
             nodo_dicc_elem* nelem = (nodo_dicc_elem*)a;
             nodo_liberar(nelem->expresion);
             nodo_liberar(nelem->identificador);
             nodo_liberar(nelem->llave);
             break;
-        }
+        }*/
         case NODO_IDENTIFICADOR:
         case NODO_VALOR:
             if(a->valor->tipo == VALOR_CADENA){
-                __memoria_liberar(a->valor->val.cadena);                
+                __memoria_liberar(a->valor->val.cadena);
             }
             __memoria_liberar(a->valor);
         break;
@@ -398,6 +411,8 @@ static int nodo_analizar(lat_mv *vm, ast *node, lat_bytecode *bcode, int i)
             o = lat_numerico_nuevo(vm, node->valor->val.numerico);
         if(node->valor->tipo == VALOR_CADENA)
             o = lat_cadena_nueva(vm, node->valor->val.cadena);
+        if(node->valor->tipo == VALOR_NULO)
+            o = vm->objeto_nulo;
         o->num_linea = node->num_linea;
         o->num_columna = node->num_columna;
         dbc(LOAD_CONST, 0, 0, o);
@@ -626,7 +641,7 @@ static int nodo_analizar(lat_mv *vm, ast *node, lat_bytecode *bcode, int i)
         }
     }
     break;
-    case NODO_ATRIBUTO:{        
+    case NODO_ATRIBUTO:{
         pn(vm, node->izq);
         lat_objeto *o = lat_cadena_nueva(vm, node->der->valor->val.cadena);
         o->num_linea = node->der->num_linea;
@@ -745,7 +760,7 @@ static int nodo_analizar(lat_mv *vm, ast *node, lat_bytecode *bcode, int i)
         }
     }
     break;
-    case NODO_DICC_ASIGNAR_ELEMENTO:
+    /*case NODO_DICC_ASIGNAR_ELEMENTO:
     {
         nodo_dicc_elem* de = (nodo_dicc_elem*)node;
         if(de->expresion){
@@ -757,11 +772,11 @@ static int nodo_analizar(lat_mv *vm, ast *node, lat_bytecode *bcode, int i)
         if(de->llave){
             pn(vm, de->llave);
         }
-        dbc(STORE_SUBSCR, 0, 0, NULL);      
+        dbc(STORE_SUBSCR, 0, 0, NULL);
     }
     break;
     case NODO_DICC_OBTENER_ELEMENTO:
-    {        
+    {
         if(node->izq){
             pn(vm, node->izq);
         }
@@ -770,7 +785,7 @@ static int nodo_analizar(lat_mv *vm, ast *node, lat_bytecode *bcode, int i)
         }
         dbc(BINARY_SUBSCR, 0, 0, NULL);
     }
-    break;
+    break;*/
     default:
         printf("ERROR node->tipo:%i\n", node->tipo);
         return 0;

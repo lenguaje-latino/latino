@@ -110,7 +110,8 @@ typedef struct lat_mv
     lat_objeto* pila;     //< pila de la maquina virtual
     lat_objeto* contexto_pila[256];   //< Arreglo para el contexto actual
     lat_objeto* objeto_verdadero;   //< Valor logico verdadero
-    lat_objeto* objeto_falso;   //< Valor logico falso    
+    lat_objeto* objeto_falso;   //< Valor logico falso 
+    lat_objeto* objeto_nulo;
     int apuntador_ctx;      //< Apuntador para el contexto de la pila        
     bool REPL;  //< Indica si esta corriendo REPL
     int num_callf;  //< Numero de llamadas a funcion recursivas
