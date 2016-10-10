@@ -323,7 +323,7 @@ static void lat_repl(lat_mv *vm)
     ast* tmp = NULL;
     int status;
     vm->REPL = true;
-    linenoiseHistoryLoad("history.txt");
+    linenoiseHistoryLoad(".history");
     linenoiseSetCompletionCallback(completion);
     while (leer_linea(buf) != -1)
     {
@@ -339,7 +339,7 @@ static void lat_repl(lat_mv *vm)
                 lat_imprimir(vm);
             }
             linenoiseHistoryAdd(__str_reemplazar(buf, "\n", ""));
-            linenoiseHistorySave("history.txt");
+            linenoiseHistorySave(".history");
         }
     }
     __memoria_liberar(buf);
