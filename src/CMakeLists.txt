@@ -23,12 +23,10 @@ ENDIF(UNIX)
 
 ADD_DEFINITIONS(-D_DEBUG -D__STDC_CONSTANT_MACROS -D__STDC_FORMAT_MACROS -D__STDC_LIMIT_MACROS)
 ADD_SUBDIRECTORY(linenoise)
-ADD_SUBDIRECTORY(jansson)
-ADD_SUBDIRECTORY(curl)
 
 INCLUDE_DIRECTORIES(../include)
-INCLUDE_DIRECTORIES(jansson/src)
-INCLUDE_DIRECTORIES(curl/include)
+INCLUDE_DIRECTORIES(../jansson/src)
+INCLUDE_DIRECTORIES(../curl/include)
 
 SET(SOURCES compat.h
     latino.h ast.h vm.h object.h libstring.h libmem.h liblist.h
