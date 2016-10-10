@@ -14,6 +14,8 @@ find_path(GLIB_INCLUDE_DIR NAMES glib.h PATH_SUFFIXES glib-2.0)
 PROJECT(latino)
 
 ADD_SUBDIRECTORY(src)
+ADD_SUBDIRECTORY(jansson)
+ADD_SUBDIRECTORY(curl)
 
 enable_testing ()
 #se comentan los test que requieren entrada de datos leer()
