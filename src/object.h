@@ -51,7 +51,7 @@ typedef struct lat_objeto lat_objeto;
 */
 typedef enum lat_type
 {  
-    T_NULO,     /**< Nulo, valor inicial */
+    T_NULL,     /**< Nulo, valor inicial */
     T_CONTEXT,    /**< Contexto o contexto de variables */    
     T_NUMERIC,    /**< decimal */
     T_STR,    /**< cadena */

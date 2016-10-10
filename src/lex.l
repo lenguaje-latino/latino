@@ -100,12 +100,12 @@ EXP ([Ee][-+]?[0-9]+)
 "verdadero" { yylval->node = nodo_nuevo_logico(1, yylloc->first_line, yylloc->first_column); return VERDADERO; }
 "cierto"    { yylval->node = nodo_nuevo_logico(1, yylloc->first_line, yylloc->first_column); return VERDADERO; }
 "falso"     { yylval->node = nodo_nuevo_logico(0, yylloc->first_line, yylloc->first_column); return FALSO; }
+"nulo"      { yylval->node = nodo_nuevo_nulo(NULL, yylloc->first_line, yylloc->first_column); return NULO; }
 "retorno"   { return RETORNO; }
 "incluir"   { return INCLUIR; }
 "elegir"    { return ELEGIR; }
 "caso"      { return CASO; }
 "defecto"   { return DEFECTO; }
- /*"clase"     { return CLASE; }*/
 
  /* names */
 [_A-Z]*             { yylval->node = nodo_nuevo_identificador(yytext, yylloc->first_line, yylloc->first_column, 1); return IDENTIFICADOR; }

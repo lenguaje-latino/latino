@@ -143,18 +143,14 @@ static lat_objeto* json2latino(lat_mv* mv, json_t *element){
             return dec;
         }
         break;
-    case JSON_TRUE:
-        {
-            return mv->objeto_verdadero;
-        }
+    case JSON_TRUE:        
+        return mv->objeto_verdadero;        
         break;
-    case JSON_FALSE:
-        {
-            return mv->objeto_falso;
-        }
+    case JSON_FALSE:        
+        return mv->objeto_falso;        
         break;
     case JSON_NULL:
-        return NULL;
+        return mv->objeto_nulo;
         break;
     default:
         fprintf(stderr, "unrecognized JSON type %d\n", json_typeof(element));
@@ -216,6 +212,11 @@ static json_t* latino2json(lat_mv* mv, lat_objeto* element){
             }else{
                 value = json_false();
             }
+            return value;
+        }        
+        break;
+        case T_NULL:{
+            value = json_null();
             return value;
         }
         break;
@@ -288,6 +289,7 @@ lat_mv* lat_mv_crear()
     mv->pila = lat_lista_nueva(mv, __lista_crear());
     mv->objeto_verdadero = lat_logico_nuevo(mv, true);
     mv->objeto_falso = lat_logico_nuevo(mv, false);
+    mv->objeto_nulo = lat_crear_objeto(mv);
     memset(mv->contexto_pila, 0, 256);
     mv->contexto_pila[0] = lat_contexto_nuevo(mv);
     mv->apuntador_ctx = 0;
@@ -389,6 +391,7 @@ void lat_destruir_mv(lat_mv* mv){
     lat_eliminar_objeto(mv, mv->otros_objetos);
     lat_eliminar_objeto(mv, mv->objeto_verdadero);
     lat_eliminar_objeto(mv, mv->objeto_falso);
+    lat_eliminar_objeto(mv, mv->objeto_nulo);
     if(mv->contexto_pila[0] != NULL){
         lat_eliminar_objeto(mv, mv->contexto_pila[0]);
     }
@@ -469,7 +472,7 @@ void __imprimir_objeto(lat_mv* vm, lat_objeto* in)
         tmp1 = __str_analizar(s, strlen(s));
         fprintf(stdout, "%s", tmp1);
     }
-    __memoria_liberar(tmp1);
+    //__memoria_liberar(tmp1);
 }
 
 void lat_imprimir(lat_mv* vm)
@@ -805,6 +808,9 @@ void lat_cadena(lat_mv* vm)
 char* __tipo(int tipo){
     switch (tipo)
     {
+    case T_NULL:
+        return "nulo";
+        break;
     case T_BOOL:
         return "logico";
         break;
@@ -827,7 +833,7 @@ char* __tipo(int tipo){
         return "cfuncion";
         break;
     default:
-        return "nulo";
+        return "indefinido";
         break;
     }
 }
@@ -1046,8 +1052,16 @@ void lat_llamar_funcion(lat_mv* vm, lat_objeto* func)
                 int num_args = cur.a;
                 lat_objeto *fun = lat_desapilar(vm);
                 if(num_args != fun->num_params ){
-                    lat_fatal_error("Linea %d, %d: Numero invalido de argumentos en funcion '%s'. se esperaban %i valores.\n",
+                    /*si se envian menos parametros se acompletan con nulos*/
+                    while(num_args < fun->num_params){
+                        lat_apilar(vm, vm->objeto_nulo);
+                        num_args++;
+                    }
+                    if(num_args != fun->num_params ){
+                        lat_fatal_error("Linea %d, %d: Numero invalido de argumentos en funcion '%s'. se esperaban %i valores.\n",
                             fun->num_linea, fun->num_columna, fun->nombre_cfun, fun->num_params);
+                     
+                    }
                 }
                 lat_apilar_contexto(vm);
                 vm->num_callf++;

@@ -1,0 +1,67 @@
+/usr/lib/gcc/x86_64-linux-gnu/5/../../../x86_64-linux-gnu/crt1.o: En la función `_start':
+(.text+0x20): referencia a `main' sin definir
+/tmp/ccGNC5cl.o: En la función `nodo_nuevo':
+ast.c:(.text+0x19): referencia a `__memoria_asignar' sin definir
+/tmp/ccGNC5cl.o: En la función `nodo_nuevo_logico':
+ast.c:(.text+0x6b): referencia a `__memoria_asignar' sin definir
+ast.c:(.text+0x83): referencia a `__memoria_asignar' sin definir
+/tmp/ccGNC5cl.o: En la función `nodo_nuevo_numerico':
+ast.c:(.text+0xe2): referencia a `__memoria_asignar' sin definir
+ast.c:(.text+0xfa): referencia a `__memoria_asignar' sin definir
+/tmp/ccGNC5cl.o:ast.c:(.text+0x158): más referencias a `__memoria_asignar' sin definir a continuación
+/tmp/ccGNC5cl.o: En la función `nodo_liberar':
+ast.c:(.text+0x701): referencia a `__memoria_liberar' sin definir
+ast.c:(.text+0x711): referencia a `__memoria_liberar' sin definir
+ast.c:(.text+0x742): referencia a `__memoria_liberar' sin definir
+/tmp/ccGNC5cl.o: En la función `nodo_analizar':
+ast.c:(.text+0x96d): referencia a `lat_cadena_nueva' sin definir
+ast.c:(.text+0x986): referencia a `__lista' sin definir
+ast.c:(.text+0x9a6): referencia a `__lista_contiene_valor' sin definir
+ast.c:(.text+0xa23): referencia a `__str_termina_con' sin definir
+ast.c:(.text+0xa72): referencia a `__io_es_legible' sin definir
+ast.c:(.text+0xa8f): referencia a `__lista_apilar' sin definir
+ast.c:(.text+0xaa8): referencia a `lat_analizar_archivo' sin definir
+ast.c:(.text+0xb52): referencia a `__str_termina_con' sin definir
+ast.c:(.text+0xba1): referencia a `__io_es_legible' sin definir
+ast.c:(.text+0xbc2): referencia a `__lista_apilar' sin definir
+ast.c:(.text+0xbdb): referencia a `lat_analizar_archivo' sin definir
+ast.c:(.text+0xca9): referencia a `lat_cadena_nueva' sin definir
+ast.c:(.text+0xd46): referencia a `lat_bc' sin definir
+ast.c:(.text+0xe2c): referencia a `lat_bc' sin definir
+ast.c:(.text+0xe76): referencia a `lat_cadena_nueva' sin definir
+ast.c:(.text+0xf1f): referencia a `lat_bc' sin definir
+ast.c:(.text+0xfd7): referencia a `lat_numerico_nuevo' sin definir
+ast.c:(.text+0x1011): referencia a `lat_cadena_nueva' sin definir
+ast.c:(.text+0x1095): referencia a `lat_bc' sin definir
+ast.c:(.text+0x116a): referencia a `lat_bc' sin definir
+ast.c:(.text+0x11b4): referencia a `lat_cadena_nueva' sin definir
+ast.c:(.text+0x1255): referencia a `lat_bc' sin definir
+ast.c:(.text+0x129f): referencia a `lat_cadena_nueva' sin definir
+ast.c:(.text+0x1340): referencia a `lat_bc' sin definir
+ast.c:(.text+0x1410): referencia a `lat_bc' sin definir
+ast.c:(.text+0x14e0): referencia a `lat_bc' sin definir
+ast.c:(.text+0x15b0): referencia a `lat_bc' sin definir
+ast.c:(.text+0x1680): referencia a `lat_bc' sin definir
+/tmp/ccGNC5cl.o:ast.c:(.text+0x1750): más referencias a `lat_bc' sin definir a continuación
+/tmp/ccGNC5cl.o: En la función `nodo_analizar':
+ast.c:(.text+0x2a6f): referencia a `lat_cadena_nueva' sin definir
+ast.c:(.text+0x2b18): referencia a `lat_bc' sin definir
+ast.c:(.text+0x2b76): referencia a `lat_cadena_nueva' sin definir
+ast.c:(.text+0x2bd2): referencia a `lat_bc' sin definir
+ast.c:(.text+0x2c50): referencia a `__memoria_asignar' sin definir
+ast.c:(.text+0x2d1c): referencia a `lat_bc' sin definir
+ast.c:(.text+0x2d6a): referencia a `__memoria_reasignar' sin definir
+ast.c:(.text+0x2dc6): referencia a `lat_bc' sin definir
+ast.c:(.text+0x2e20): referencia a `lat_cadena_nueva' sin definir
+ast.c:(.text+0x2ef9): referencia a `lat_bc' sin definir
+ast.c:(.text+0x2fd5): referencia a `lat_bc' sin definir
+ast.c:(.text+0x3163): referencia a `lat_bc' sin definir
+ast.c:(.text+0x3233): referencia a `lat_bc' sin definir
+ast.c:(.text+0x32e2): referencia a `lat_bc' sin definir
+/tmp/ccGNC5cl.o:ast.c:(.text+0x3413): más referencias a `lat_bc' sin definir a continuación
+/tmp/ccGNC5cl.o: En la función `nodo_analizar_arbol':
+ast.c:(.text+0x3770): referencia a `__memoria_asignar' sin definir
+ast.c:(.text+0x37d5): referencia a `lat_bc' sin definir
+ast.c:(.text+0x3814): referencia a `__memoria_reasignar' sin definir
+ast.c:(.text+0x3833): referencia a `lat_definir_funcion' sin definir
+collect2: error: ld returned 1 exit status

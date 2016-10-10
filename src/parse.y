@@ -33,6 +33,7 @@ int yylex (YYSTYPE * yylval_param,YYLTYPE * yylloc_param ,yyscan_t yyscanner);
 /* declare tokens */
 %token <node> VERDADERO
 %token <node> FALSO
+%token <node> NULO
 %token <node> ENTERO
 %token <node> NUMERICO
 %token <node> CADENA
@@ -117,6 +118,7 @@ primary_expression
     : IDENTIFICADOR
     | VERDADERO
     | FALSO
+    | NULO
     ;
 
 unary_expression
@@ -253,17 +255,19 @@ variable_access
 
 field_designator
     : variable_access ATRIBUTO IDENTIFICADOR { $$ = nodo_nuevo(NODO_ATRIBUTO, $1, $3); }
-    | variable_access '[' ENTERO ']' { $$ = nodo_nuevo(NODO_LISTA_OBTENER_ELEMENTO, $3, $1); }
+    | variable_access '[' expression ']' { $$ = nodo_nuevo(NODO_LISTA_OBTENER_ELEMENTO, $3, $1); }
+    /*| variable_access '[' ENTERO ']' { $$ = nodo_nuevo(NODO_LISTA_OBTENER_ELEMENTO, $3, $1); }
     | variable_access '[' IDENTIFICADOR ']' { $$ = nodo_nuevo(NODO_LISTA_OBTENER_ELEMENTO, $3, $1); }
-    | variable_access '[' CADENA ']' { $$ = nodo_nuevo(NODO_DICC_OBTENER_ELEMENTO, $3, $1); }
+    | variable_access '[' CADENA ']' { $$ = nodo_nuevo(NODO_DICC_OBTENER_ELEMENTO, $3, $1); }*/
     ;
 
 declaration
     : variable_access '=' expression { $$ = nodo_nuevo_asignacion($3, $1); }
     | variable_access '=' ternary_expression { $$ = nodo_nuevo_asignacion($3, $1); }
-    | variable_access '[' ENTERO ']' '=' expression { $$ = nodo_nuevo_asignacion_lista_elem($6, $1, $3); }
+    | variable_access '[' expression ']' '=' expression { $$ = nodo_nuevo_asignacion_lista_elem($6, $1, $3); }
+    /*| variable_access '[' ENTERO ']' '=' expression { $$ = nodo_nuevo_asignacion_lista_elem($6, $1, $3); }
     | variable_access '[' IDENTIFICADOR ']' '=' expression { $$ = nodo_nuevo_asignacion_lista_elem($6, $1, $3); }
-    | variable_access '[' CADENA ']' '=' expression { $$ = nodo_nuevo_asignacion_dicc_elem($6, $1, $3); }
+    | variable_access '[' CADENA ']' '=' expression { $$ = nodo_nuevo_asignacion_dicc_elem($6, $1, $3); }*/
     | variable_access CONCATENAR_IGUAL expression { $$ = nodo_nuevo_asignacion((nodo_nuevo(NODO_CONCATENAR, $1, $3)), $1); }
     | variable_access MAS_IGUAL expression { $$ = nodo_nuevo_asignacion((nodo_nuevo(NODO_SUMA, $1, $3)), $1); }
     | variable_access MENOS_IGUAL expression { $$ = nodo_nuevo_asignacion((nodo_nuevo(NODO_RESTA, $1, $3)), $1); }
