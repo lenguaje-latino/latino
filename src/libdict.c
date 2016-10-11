@@ -100,7 +100,7 @@ hash_map* __dic_clonar(hash_map *m)
 
 char* __dic_a_cadena(hash_map* m){
     char* valor = __memoria_asignar(MAX_STR_LENGTH);    
-    strcat(valor, "{\n");
+    strcat(valor, "{");
     int i;
     for (i = 0; i < 256; i++)
     {
@@ -109,7 +109,7 @@ char* __dic_a_cadena(hash_map* m){
             LIST_FOREACH(list, primero, siguiente, cur) {
                 if (cur->valor != NULL)
                 {                    
-                    strcat(valor, "\t\"");
+                    strcat(valor, "\"");
                     strcat(valor, ((hash_val *) cur->valor)->llave);
                     strcat(valor, "\"");
                     lat_objeto* val = (lat_objeto*)((hash_val *) cur->valor)->valor;                    
@@ -136,13 +136,13 @@ char* __dic_a_cadena(hash_map* m){
                                     }
                             }
                     }
-                    strcat(valor, ",\n");
+                    strcat(valor, ", ");
                 }
             }
         }
     }
     strcat(valor, "}");
-    valor = __str_reemplazar(valor, ",\n}", "\n}\n");    //elimina la ultima coma
+    valor = __str_reemplazar(valor, ", }", "}");    //elimina la ultima coma
 	valor[strlen(valor)] = '\0';
     __memoria_reasignar(valor, strlen(valor)+1);
     return valor;
