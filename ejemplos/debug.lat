@@ -4,18 +4,7 @@ Menu propiedades del proyecto-> Debugging -> Command Arguments. Agregar
 $(SolutionDir)..\ejemplos\debug.lat
 */
 
-// se agrega valor nulo
-url = "https://raw.githubusercontent.com/yagop/node-telegram-bot-api/master/package.json"
-str = peticion(url)
-#escribir(str)
-jsn = json_decodificar(str)
-#escribir(jsn)
-escribir(jsn->contributors[3])
-escribir(jsn->contributors[3]->email)
-si jsn->contributors[2]->email
-  escribir("trae correo")
-fin
-
+var = 3.1416
+escribir(var)
 numeros = [1, 2, 3, 4, 5]
-//se puede acceder a listas con expresiones
-escribir(numeros[1+1])
+escribir(numeros)

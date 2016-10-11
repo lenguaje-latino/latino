@@ -48,8 +48,7 @@ int parse_silent;
 int yyparse(ast **root, yyscan_t scanner);
 
 ast *lat_analizar_expresion(char* expr, int *status)
-{
-    setlocale (LC_ALL, "");
+{    
     ast *ret = NULL;
     yyscan_t scanner;
     YY_BUFFER_STATE state;
@@ -348,6 +347,7 @@ static void lat_repl(lat_mv *vm)
 
 int main(int argc, char *argv[])
 {
+    setlocale (LC_ALL, "es_MX");
     int i;
     char *infile = NULL;
     for (i = 1; i < argc; i++)

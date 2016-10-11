@@ -381,8 +381,8 @@ static void yy_fatal_error (yyconst char msg[] ,yyscan_t yyscanner );
 	*yy_cp = '\0'; \
 	yyg->yy_c_buf_p = yy_cp;
 
-#define YY_NUM_RULES 67
-#define YY_END_OF_BUFFER 68
+#define YY_NUM_RULES 66
+#define YY_END_OF_BUFFER 67
 /* This struct is not used in this scanner,
    but its presence is necessary. */
 struct yy_trans_info
@@ -392,19 +392,19 @@ struct yy_trans_info
 	};
 static yyconst flex_int16_t yy_accept[178] =
     {   0,
-       55,   55,   68,   66,   65,   64,   64,   16,   66,   61,
-        5,   66,   66,    6,    7,    3,    1,    8,    2,   24,
-        4,   58,   15,    9,   32,   17,   31,   14,   55,   10,
+       55,   55,   67,   65,   64,   63,   63,   16,   65,   60,
+        5,   65,   65,    6,    7,    3,    1,    8,    2,   24,
+        4,   57,   15,    9,   32,   17,   31,   14,   55,   10,
        11,   56,   56,   56,   56,   56,   56,   56,   56,   56,
-       56,   56,   56,   12,   66,   13,   65,   20,    0,   59,
-        0,   61,   30,   22,    0,   60,    0,   28,   33,   26,
-       34,   27,   35,   57,   25,    0,   62,   29,   57,   58,
+       56,   56,   56,   12,   65,   13,   64,   20,    0,   58,
+        0,   60,   30,   22,    0,   59,    0,   28,   33,   26,
+       34,   27,   35,   57,   25,    0,   61,   29,   57,   57,
        19,   21,   18,   56,   55,   56,   56,   56,   56,   56,
        56,   56,   56,   56,   56,   56,   56,   56,   56,   56,
-       36,   56,   23,    0,    0,    0,   62,   57,    0,   56,
+       36,   56,   23,    0,    0,    0,   61,   57,    0,   56,
 
        56,   56,   56,   56,   56,   56,   56,   37,   56,   56,
-       56,   56,   56,   56,   56,   56,   56,    0,   57,   63,
+       56,   56,   56,   56,   56,   56,   56,    0,   57,   62,
         0,   57,   53,   56,   56,   56,   56,   56,   56,   56,
        56,   56,   56,   56,   49,   56,   56,   38,   56,   56,
        56,   56,   56,   45,   56,   48,   56,   42,   56,   56,
@@ -570,12 +570,12 @@ static yyconst flex_int16_t yy_chk[271] =
     } ;
 
 /* Table of booleans, true if rule could match eol. */
-static yyconst flex_int32_t yy_rule_can_match_eol[68] =
+static yyconst flex_int32_t yy_rule_can_match_eol[67] =
     {   0,
 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 
     0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 
-    0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 
-    1, 0, 0, 1, 1, 0, 0, 0,     };
+    0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 
+    0, 0, 1, 1, 0, 0, 0,     };
 
 /* The intent behind this definition is that it'll catch
  * any uses of REJECT which flex missed.
@@ -612,15 +612,13 @@ static yyconst flex_int32_t yy_rule_can_match_eol[68] =
         } \
     }
 
-int f(int token, yyscan_t scanner);
-
 #if YYBISON
 union YYSTYPE;
 extern int yylex (YYSTYPE * yylval_param,YYLTYPE * yylloc_param ,yyscan_t yyscanner);
 #endif
 
 /* exponente de punto flotante */
-#line 624 "lex.c"
+#line 622 "lex.c"
 
 #define INITIAL 0
 
@@ -901,11 +899,11 @@ YY_DECL
 		}
 
 	{
-#line 48 "lex.l"
+#line 46 "lex.l"
 
 
  /* operadores de un solo caracter */
-#line 909 "lex.c"
+#line 907 "lex.c"
 
 	while ( /*CONSTCOND*/1 )		/* loops until end-of-file is reached */
 		{
@@ -971,300 +969,295 @@ do_action:	/* This label is used only to access EOF actions. */
 			goto yy_find_action;
 
 case 1:
-#line 52 "lex.l"
+#line 50 "lex.l"
 case 2:
-#line 53 "lex.l"
+#line 51 "lex.l"
 case 3:
-#line 54 "lex.l"
+#line 52 "lex.l"
 case 4:
-#line 55 "lex.l"
+#line 53 "lex.l"
 case 5:
-#line 56 "lex.l"
+#line 54 "lex.l"
 case 6:
-#line 57 "lex.l"
+#line 55 "lex.l"
 case 7:
-#line 58 "lex.l"
+#line 56 "lex.l"
 case 8:
-#line 59 "lex.l"
+#line 57 "lex.l"
 case 9:
-#line 60 "lex.l"
+#line 58 "lex.l"
 case 10:
-#line 61 "lex.l"
+#line 59 "lex.l"
 case 11:
-#line 62 "lex.l"
+#line 60 "lex.l"
 case 12:
-#line 63 "lex.l"
+#line 61 "lex.l"
 case 13:
-#line 64 "lex.l"
+#line 62 "lex.l"
 case 14:
-#line 65 "lex.l"
+#line 63 "lex.l"
 case 15:
-#line 66 "lex.l"
+#line 64 "lex.l"
 case 16:
-#line 67 "lex.l"
+#line 65 "lex.l"
 case 17:
 YY_RULE_SETUP
-#line 67 "lex.l"
+#line 65 "lex.l"
 { return yytext[0]; }
 	YY_BREAK
 /* operadores de comparacion y demas*/
 case 18:
 YY_RULE_SETUP
-#line 70 "lex.l"
+#line 68 "lex.l"
 { return MAYOR_IGUAL; }
 	YY_BREAK
 case 19:
 YY_RULE_SETUP
-#line 71 "lex.l"
+#line 69 "lex.l"
 { return MENOR_IGUAL; }
 	YY_BREAK
 case 20:
 YY_RULE_SETUP
-#line 72 "lex.l"
+#line 70 "lex.l"
 { return DIFERENTE; }
 	YY_BREAK
 case 21:
 YY_RULE_SETUP
-#line 73 "lex.l"
+#line 71 "lex.l"
 { return IGUAL_LOGICO; }
 	YY_BREAK
 case 22:
 YY_RULE_SETUP
-#line 74 "lex.l"
+#line 72 "lex.l"
 { return Y_LOGICO; }
 	YY_BREAK
 case 23:
 YY_RULE_SETUP
-#line 75 "lex.l"
+#line 73 "lex.l"
 { return O_LOGICO; }
 	YY_BREAK
 case 24:
 YY_RULE_SETUP
-#line 76 "lex.l"
+#line 74 "lex.l"
 { return CONCATENAR; }
 	YY_BREAK
 case 25:
 YY_RULE_SETUP
-#line 77 "lex.l"
+#line 75 "lex.l"
 { return CONCATENAR_IGUAL; }
 	YY_BREAK
 case 26:
 YY_RULE_SETUP
-#line 78 "lex.l"
+#line 76 "lex.l"
 { return MAS_IGUAL; }
 	YY_BREAK
 case 27:
 YY_RULE_SETUP
-#line 79 "lex.l"
+#line 77 "lex.l"
 { return MENOS_IGUAL; }
 	YY_BREAK
 case 28:
 YY_RULE_SETUP
-#line 80 "lex.l"
+#line 78 "lex.l"
 { return POR_IGUAL; }
 	YY_BREAK
 case 29:
 YY_RULE_SETUP
-#line 81 "lex.l"
+#line 79 "lex.l"
 { return ENTRE_IGUAL; }
 	YY_BREAK
 case 30:
 YY_RULE_SETUP
-#line 82 "lex.l"
+#line 80 "lex.l"
 { return MODULO_IGUAL; }
 	YY_BREAK
 case 31:
 YY_RULE_SETUP
-#line 83 "lex.l"
+#line 81 "lex.l"
 { return MAYOR_QUE; }
 	YY_BREAK
 case 32:
 YY_RULE_SETUP
-#line 84 "lex.l"
+#line 82 "lex.l"
 { return MENOR_QUE; }
 	YY_BREAK
 case 33:
 YY_RULE_SETUP
-#line 85 "lex.l"
+#line 83 "lex.l"
 { return INCREMENTO; }
 	YY_BREAK
 case 34:
 YY_RULE_SETUP
-#line 86 "lex.l"
+#line 84 "lex.l"
 { return DECREMENTO; }
 	YY_BREAK
 case 35:
 YY_RULE_SETUP
-#line 87 "lex.l"
+#line 85 "lex.l"
 { return ATRIBUTO; }
 	YY_BREAK
 /* palabras reservadas */
 case 36:
 YY_RULE_SETUP
-#line 90 "lex.l"
+#line 88 "lex.l"
 { return SI; }
 	YY_BREAK
 case 37:
 YY_RULE_SETUP
-#line 91 "lex.l"
+#line 89 "lex.l"
 { return FIN; }
 	YY_BREAK
 case 38:
 YY_RULE_SETUP
-#line 92 "lex.l"
+#line 90 "lex.l"
 { return SINO; }
 	YY_BREAK
 case 39:
 YY_RULE_SETUP
-#line 93 "lex.l"
+#line 91 "lex.l"
 { return ROMPER; }
 	YY_BREAK
 case 40:
 YY_RULE_SETUP
-#line 94 "lex.l"
+#line 92 "lex.l"
 { return CONTINUAR; }
 	YY_BREAK
 case 41:
 YY_RULE_SETUP
-#line 95 "lex.l"
+#line 93 "lex.l"
 { return MIENTRAS; }
 	YY_BREAK
 case 42:
 YY_RULE_SETUP
-#line 96 "lex.l"
+#line 94 "lex.l"
 { return HACER; }
 	YY_BREAK
 case 43:
 YY_RULE_SETUP
-#line 97 "lex.l"
+#line 95 "lex.l"
 { return CUANDO; }
 	YY_BREAK
 case 44:
 YY_RULE_SETUP
-#line 98 "lex.l"
+#line 96 "lex.l"
 { return FUNCION; }
 	YY_BREAK
 case 45:
 YY_RULE_SETUP
-#line 99 "lex.l"
+#line 97 "lex.l"
 { return DESDE; }
 	YY_BREAK
 case 46:
 YY_RULE_SETUP
-#line 100 "lex.l"
+#line 98 "lex.l"
 { yylval->node = nodo_nuevo_logico(1, yylloc->first_line, yylloc->first_column); return VERDADERO; }
 	YY_BREAK
 case 47:
 YY_RULE_SETUP
-#line 101 "lex.l"
+#line 99 "lex.l"
 { yylval->node = nodo_nuevo_logico(1, yylloc->first_line, yylloc->first_column); return VERDADERO; }
 	YY_BREAK
 case 48:
 YY_RULE_SETUP
-#line 102 "lex.l"
+#line 100 "lex.l"
 { yylval->node = nodo_nuevo_logico(0, yylloc->first_line, yylloc->first_column); return FALSO; }
 	YY_BREAK
 case 49:
 YY_RULE_SETUP
-#line 103 "lex.l"
+#line 101 "lex.l"
 { yylval->node = nodo_nuevo_nulo(NULL, yylloc->first_line, yylloc->first_column); return NULO; }
 	YY_BREAK
 case 50:
 YY_RULE_SETUP
-#line 104 "lex.l"
+#line 102 "lex.l"
 { return RETORNO; }
 	YY_BREAK
 case 51:
 YY_RULE_SETUP
-#line 105 "lex.l"
+#line 103 "lex.l"
 { return INCLUIR; }
 	YY_BREAK
 case 52:
 YY_RULE_SETUP
-#line 106 "lex.l"
+#line 104 "lex.l"
 { return ELEGIR; }
 	YY_BREAK
 case 53:
 YY_RULE_SETUP
-#line 107 "lex.l"
+#line 105 "lex.l"
 { return CASO; }
 	YY_BREAK
 case 54:
 YY_RULE_SETUP
-#line 108 "lex.l"
+#line 106 "lex.l"
 { return DEFECTO; }
 	YY_BREAK
 /* names */
 case 55:
 YY_RULE_SETUP
-#line 111 "lex.l"
+#line 109 "lex.l"
 { yylval->node = nodo_nuevo_identificador(yytext, yylloc->first_line, yylloc->first_column, 1); return IDENTIFICADOR; }
 	YY_BREAK
 case 56:
 YY_RULE_SETUP
-#line 112 "lex.l"
+#line 110 "lex.l"
 { yylval->node = nodo_nuevo_identificador(yytext, yylloc->first_line, yylloc->first_column, 0); return IDENTIFICADOR; }
 	YY_BREAK
 case 57:
 YY_RULE_SETUP
-#line 113 "lex.l"
+#line 111 "lex.l"
 { yylval->node = nodo_nuevo_numerico(strtod(yytext, NULL), yylloc->first_line, yylloc->first_column); return NUMERICO; }
 	YY_BREAK
 case 58:
+/* rule 58 can match eol */
 YY_RULE_SETUP
-#line 114 "lex.l"
-{ yylval->node = nodo_nuevo_numerico(strtod(yytext, NULL), yylloc->first_line, yylloc->first_column); return ENTERO; }
+#line 112 "lex.l"
+{ yytext[strlen(yytext) - 1] = '\0'; yylval->node = nodo_nuevo_cadena(yytext+1, yylloc->first_line, yylloc->first_column); return CADENA; }
 	YY_BREAK
 case 59:
 /* rule 59 can match eol */
 YY_RULE_SETUP
-#line 115 "lex.l"
+#line 113 "lex.l"
 { yytext[strlen(yytext) - 1] = '\0'; yylval->node = nodo_nuevo_cadena(yytext+1, yylloc->first_line, yylloc->first_column); return CADENA; }
 	YY_BREAK
 case 60:
-/* rule 60 can match eol */
 YY_RULE_SETUP
-#line 116 "lex.l"
-{ yytext[strlen(yytext) - 1] = '\0'; yylval->node = nodo_nuevo_cadena(yytext+1, yylloc->first_line, yylloc->first_column); return CADENA; }
+#line 114 "lex.l"
+{ ; }  /* comentario de una linea estilo python */
 	YY_BREAK
 case 61:
 YY_RULE_SETUP
-#line 117 "lex.l"
-{ ; }  /* comentario de una linea estilo python */
+#line 115 "lex.l"
+{ ; }  /* comentario de una linea estilo c/c++ */
 	YY_BREAK
 case 62:
+/* rule 62 can match eol */
 YY_RULE_SETUP
-#line 118 "lex.l"
-{ ; }  /* comentario de una linea estilo c/c++ */
+#line 116 "lex.l"
+{ ; } /* comentarios multilinea estilo c/c++ */
 	YY_BREAK
 case 63:
 /* rule 63 can match eol */
 YY_RULE_SETUP
-#line 119 "lex.l"
-{ ; } /* comentarios multilinea estilo c/c++ */
+#line 117 "lex.l"
+{ ; }  /* ignora saltos de linea */
 	YY_BREAK
 case 64:
-/* rule 64 can match eol */
 YY_RULE_SETUP
-#line 120 "lex.l"
-{ ; }  /* ignora saltos de linea */
+#line 118 "lex.l"
+{ ; } /* ignora espacios en blanco y tabuladores */
 	YY_BREAK
 case 65:
 YY_RULE_SETUP
-#line 121 "lex.l"
-{ ; } /* ignora espacios en blanco y tabuladores */
+#line 119 "lex.l"
+{ ; } /* ignora caracteres incorrectos */
 	YY_BREAK
 case 66:
 YY_RULE_SETUP
-#line 122 "lex.l"
-{ ; } /* ignora caracteres incorrectos */
-	YY_BREAK
-case 67:
-YY_RULE_SETUP
-#line 124 "lex.l"
+#line 121 "lex.l"
 YY_FATAL_ERROR( "flex scanner jammed" );
 	YY_BREAK
-#line 1268 "lex.c"
+#line 1261 "lex.c"
 case YY_STATE_EOF(INITIAL):
 	yyterminate();
 
@@ -2427,7 +2420,7 @@ void yyfree (void * ptr , yyscan_t yyscanner)
 
 #define YYTABLES_NAME "yytables"
 
-#line 124 "lex.l"
+#line 121 "lex.l"
 
 
 
