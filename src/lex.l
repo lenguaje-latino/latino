@@ -110,7 +110,7 @@ EXP ([Ee][-+]?[0-9]+)
  /* names */
 [_A-Z]*             { yylval->node = nodo_nuevo_identificador(yytext, yylloc->first_line, yylloc->first_column, 1); return IDENTIFICADOR; }
 [_a-zA-Z][_a-zA-Z0-9]* { yylval->node = nodo_nuevo_identificador(yytext, yylloc->first_line, yylloc->first_column, 0); return IDENTIFICADOR; }
-[0-9]+"."+[0-9]*{EXP}?|"."+[0-9]+{EXP}?       { yylval->node = nodo_nuevo_numerico(strtod(yytext, NULL), yylloc->first_line, yylloc->first_column); return NUMERICO; }
+[0-9]+"."[0-9]*{EXP}?|"."[0-9]+{EXP}?       { yylval->node = nodo_nuevo_numerico(strtod(yytext, NULL), yylloc->first_line, yylloc->first_column); return NUMERICO; }
 [0-9]+                 { yylval->node = nodo_nuevo_numerico(strtod(yytext, NULL), yylloc->first_line, yylloc->first_column); return ENTERO; }
 \"([^\\\"]|\\.)*\"     { yytext[strlen(yytext) - 1] = '\0'; yylval->node = nodo_nuevo_cadena(yytext+1, yylloc->first_line, yylloc->first_column); return CADENA; }
 '([^\\\']|\\.)*'       { yytext[strlen(yytext) - 1] = '\0'; yylval->node = nodo_nuevo_cadena(yytext+1, yylloc->first_line, yylloc->first_column); return CADENA; }
