@@ -1,0 +1,6 @@
+escribir("¡Hola Latino! Vamos a copiar el texto de un archivo a otro, si no existe, te creará el archivo")
+escribir("Escribe el archivo a copiar")
+archivo1 = leer()
+escribir("Escribe a dónde vamos a copiar el texto de ese archivo ó con que nombre se va a crear")
+archivo2 = leer()
+copiar_texto(archivo1, archivo2)
