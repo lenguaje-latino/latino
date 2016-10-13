@@ -77,7 +77,7 @@ void lat_sistema(lat_mv *vm);
 void lat_ejecutar_pipe(lat_mv *vm);
 
 /** Limpia pantalla. En windows es "cls" y linux "clear"
-  * Uso: limpiar
+  * Uso: limpiar()
   */
 void lat_limpiar();
 
