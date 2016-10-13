@@ -154,7 +154,7 @@ void lat_copiar_texto(lat_mv* vm)
         lat_fatal_error("Linea %d, %d: %s", a->num_linea, a->num_columna, "Error al copiar el archivo.");
     }
     else {
-        FILE *archivo2 = archivo2 = fopen(__cadena(b), "a");
+        FILE *archivo2 = fopen(__cadena(b), "a");
         while(fgets(buffer, sizeof(buffer), archivo1)) {
           fprintf(archivo2, "%s", buffer);
         }
