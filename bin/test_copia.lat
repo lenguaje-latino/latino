@@ -1,0 +1,1 @@
+copiar_texto("prueba.txt", "prueba_copia.txt")
