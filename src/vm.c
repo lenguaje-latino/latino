@@ -1395,3 +1395,26 @@ void lat_json_codificar(lat_mv* vm){
     r = lat_cadena_nueva(vm, strdup(s));
     lat_apilar(vm, r);
 }
+
+void lat_copiar_texto(lat_mv* vm)
+{
+    lat_objeto* a = lat_desapilar(vm);
+    lat_objeto* b = lat_desapilar(vm);
+    FILE *archivo1;
+    FILE *archivo2;
+    char buffer[256];
+
+    archivo1=fopen(__cadena(b), "r");
+    archivo2=fopen(__cadena(a), "a");
+    if(archivo1==NULL) {
+        lat_fatal_error("No se encontró el archivo %s", __cadena(b));
+        return 0;
+        }
+    else {
+        while(fgets(buffer, sizeof(buffer), archivo1)) {
+        fprintf(archivo2, "%s", buffer);
+    }
+}
+fclose(archivo1);
+fclose(archivo2);
+}
