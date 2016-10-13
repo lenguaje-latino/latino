@@ -140,7 +140,7 @@ void lat_limpiar()
     system("@cls||clear");
 }
 
-void lat_reemplazar(lat_mv* vm)
+void lat_copiar_texto(lat_mv* vm)
 {
     lat_objeto* a = lat_desapilar(vm);
     lat_objeto* b = lat_desapilar(vm);
