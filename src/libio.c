@@ -139,3 +139,26 @@ void lat_limpiar()
 {
     system("@cls||clear");
 }
+
+void lat_reemplazar(lat_mv* vm)
+{
+    lat_objeto* a = lat_desapilar(vm);
+    lat_objeto* b = lat_desapilar(vm);
+    FILE *__cadena(a);
+    FILE *__cadena(b);
+    char buffer[256];
+
+    archivo1=fopen(__cadena(a), "r");
+    archivo2=fopen(__cadena(b), "a");
+    if(__cadena(a)==NULL) {
+        perror("Error al ejecutar el archivo.");
+        return 0;
+        }
+    else {
+        while(fgets(buffer, sizeof(buffer), __cadena(a))) {
+        fprintf(__cadena(b), "%s", buffer);
+    }
+}
+fclose(__cadena(a));
+fclose(__cadena(b));
+}
