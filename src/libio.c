@@ -30,6 +30,7 @@ THE SOFTWARE.
 #include "vm.h"
 #include "latino.h"
 #include "libmem.h"
+#include "compat.h"
 
 bool __io_es_legible(const char *archivo)
 {
@@ -59,7 +60,7 @@ void lat_leer(lat_mv *vm)
         lat_apilar(vm, lat_numerico_nuevo(vm, ret));
     }
     else
-    {   
+    {
         lat_apilar(vm, lat_cadena_nueva(vm, strdup(str)));
     }
 }
@@ -78,7 +79,7 @@ void lat_leer_archivo(lat_mv *vm)
         }
         fseek(fp, 0, SEEK_END);
         int fsize = ftell(fp);
-        fseek(fp, 0, SEEK_SET);        
+        fseek(fp, 0, SEEK_SET);
         //buf = calloc(1, fsize);
         buf = __memoria_asignar(fsize+1);
         size_t newSize = fread(buf, sizeof(char), fsize, fp);
@@ -128,7 +129,7 @@ void lat_ejecutar_pipe(lat_mv *vm){
     char *p = __memoria_asignar(rlen);
     fread(p, sizeof(char), rlen, fp);
     rlen = strlen(p);
-    p[rlen-1] = '\0';   //elimina el ultimo '\n'    
+    p[rlen-1] = '\0';   //elimina el ultimo '\n'
     lat_objeto* res = lat_cadena_nueva(vm, strdup(p));
     lat_apilar(vm, res);
     __lat_pclose(vm, fp);
@@ -142,23 +143,20 @@ void lat_limpiar()
 
 void lat_copiar_texto(lat_mv* vm)
 {
-    lat_objeto* a = lat_desapilar(vm);
     lat_objeto* b = lat_desapilar(vm);
-    FILE *__cadena(a);
-    FILE *__cadena(b);
-    char buffer[256];
-
-    archivo1=fopen(__cadena(a), "r");
-    archivo2=fopen(__cadena(b), "a");
-    if(__cadena(a)==NULL) {
-        perror("Error al ejecutar el archivo.");
-        return 0;
-        }
-    else {
-        while(fgets(buffer, sizeof(buffer), __cadena(a))) {
-        fprintf(__cadena(b), "%s", buffer);
+    lat_objeto* a = lat_desapilar(vm);
+    char buffer[MAX_BUFFERSIZE];
+    FILE *archivo1 = fopen(__cadena(a), "r");
+    if(archivo1 == NULL) {
+        lat_fatal_error("Linea %d, %d: %s", a->num_linea, a->num_columna, "Error al copiar el archivo.");
     }
-}
-fclose(__cadena(a));
-fclose(__cadena(b));
+    else {
+        FILE *archivo2 = archivo2 = fopen(__cadena(b), "a");
+        while(fgets(buffer, sizeof(buffer), archivo1)) {
+          fprintf(archivo2, "%s", buffer);
+        }
+        fclose(archivo2);
+    }
+    fclose(archivo1);
+
 }

@@ -143,11 +143,11 @@ static lat_objeto* json2latino(lat_mv* mv, json_t *element){
             return dec;
         }
         break;
-    case JSON_TRUE:        
-        return mv->objeto_verdadero;        
+    case JSON_TRUE:
+        return mv->objeto_verdadero;
         break;
-    case JSON_FALSE:        
-        return mv->objeto_falso;        
+    case JSON_FALSE:
+        return mv->objeto_falso;
         break;
     case JSON_NULL:
         return mv->objeto_nulo;
@@ -213,7 +213,7 @@ static json_t* latino2json(lat_mv* mv, lat_objeto* element){
                 value = json_false();
             }
             return value;
-        }        
+        }
         break;
         case T_NULL:{
             value = json_null();
@@ -1063,7 +1063,7 @@ void lat_llamar_funcion(lat_mv* vm, lat_objeto* func)
                     if(num_args != fun->num_params ){
                         lat_fatal_error("Linea %d, %d: Numero invalido de argumentos en funcion '%s'. se esperaban %i valores.\n",
                             fun->num_linea, fun->num_columna, fun->nombre_cfun, fun->num_params);
-                     
+
                     }
                 }
                 lat_apilar_contexto(vm);
@@ -1397,27 +1397,4 @@ void lat_json_codificar(lat_mv* vm){
     char *s = json_dumps(j, 0);
     r = lat_cadena_nueva(vm, strdup(s));
     lat_apilar(vm, r);
-}
-
-void lat_copiar_texto(lat_mv* vm)
-{
-    lat_objeto* a = lat_desapilar(vm);
-    lat_objeto* b = lat_desapilar(vm);
-    FILE *archivo1;
-    FILE *archivo2;
-    char buffer[256];
-
-    archivo1=fopen(__cadena(b), "r");
-    archivo2=fopen(__cadena(a), "a");
-    if(archivo1==NULL) {
-        lat_fatal_error("No se encontró el archivo %s", __cadena(b));
-        return 0;
-        }
-    else {
-        while(fgets(buffer, sizeof(buffer), archivo1)) {
-        fprintf(archivo2, "%s", buffer);
-    }
-}
-fclose(archivo1);
-fclose(archivo2);
 }
