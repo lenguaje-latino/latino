@@ -310,6 +310,7 @@ lat_mv* lat_mv_crear()
 
     /*20 funciones matematicas */
     __registrar_cfuncion(mv, "arco_coseno", lat_arco_coseno, 1);
+    __registrar_cfuncion(mv, "copiar_texto", lat_copiar_texto, 2);
     __registrar_cfuncion(mv, "arco_seno", lat_arco_seno, 1);
     __registrar_cfuncion(mv, "arco_tangente", lat_arco_tangente, 1);
     __registrar_cfuncion(mv, "arco_tangente2", lat_arco_tangente2, 2);
