@@ -362,6 +362,7 @@ lat_mv* lat_mv_crear()
     __registrar_cfuncion(mv, "leer_archivo", lat_leer_archivo, 1);
     __registrar_cfuncion(mv, "escribir_archivo", lat_escribir_archivo, 2);
     __registrar_cfuncion(mv, "salir", lat_salir, 0);
+    __registrar_cfuncion(mv, "copiar_texto", lat_copiar_texto, 2);
 
     /*50 conversion de tipos de dato*/
     __registrar_cfuncion(mv, "tipo", lat_tipo, 1);
