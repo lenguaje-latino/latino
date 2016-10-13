@@ -44,7 +44,7 @@ Para depurar en Netbeans ir a propiedades del proyecto -> Run command y Agregar
 
 int yydebug = 0; /* 1 para debuguear analizador lexico/sintactico */
 int parse_silent;
-
+char* filename = NULL;
 int yyparse(ast **root, yyscan_t scanner);
 
 ast *lat_analizar_expresion(char* expr, int *status)
@@ -54,7 +54,7 @@ ast *lat_analizar_expresion(char* expr, int *status)
     YY_BUFFER_STATE state;
     lex_state scan_state = {.insert = 0};
     yylex_init_extra(&scan_state, &scanner);
-    state = yy_scan_string(expr, scanner);
+    state = yy_scan_string(expr, scanner);    
     *status = yyparse(&ret, scanner);
     yy_delete_buffer(state, scanner);
     yylex_destroy(scanner);
@@ -82,14 +82,14 @@ ast *lat_analizar_archivo(char *infile, int* status)
         extension = dot + 1;
         if (strcmp(extension, "lat") != 0)
         {
-            printf("El archivo no contiene la extension .lat\n");
+            printf("El archivo '%s' no contiene la extension .lat\n", infile);
             return NULL;
         }
     }
     FILE *file = fopen(infile, "r");
     if (file == NULL)
     {
-        printf("No se pudo abrir el archivo\n");
+        printf("No se pudo abrir el archivo: %s\n", infile);
         return NULL;
     }
     fseek(file, 0, SEEK_END);
@@ -107,6 +107,7 @@ ast *lat_analizar_archivo(char *infile, int* status)
         fclose(file);
     }
     buffer[newSize] = '\0';
+    filename = infile;
     return lat_analizar_expresion(buffer, status);
 }
 /**
@@ -116,6 +117,7 @@ void lat_version()
 {
     printf("%s\n", LAT_DERECHOS);
 }
+
 /**
  * Para crear el logo en ascii
  */

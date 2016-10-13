@@ -2,9 +2,6 @@
 #incluir("incluir")  #Error: Linea 1, 9: No se pudo incluir el modulo 'incluir'
 #Error: los modulos se incluyen sin extension
 #incluir("modulo.lat")  #Error: Linea 1, 9: No se pudo incluir el modulo 'mods.modulo.lat'
-
-incluir("modulo")
-#incluir modulo en carpeta mods/modulo separar con .
-#incluir(mods.modulo)
-r = sumatoria(2, 3)
-escribir(r)
+#incluir modulo en carpeta mods/* separar con .
+incluir("mods.modulo")
+escribir(sumatoria(1,2))

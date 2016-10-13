@@ -84,7 +84,20 @@ static const char *const bycode_nombre[] = {
 };
 
 
-static json_t* load_json(const char *text) {
+bool __lista_contiene_valor(lista* list, void* data)
+{    
+    lat_objeto* bus = (lat_objeto*)data;    
+    LIST_FOREACH(list, primero, siguiente, cur) {        
+        lat_objeto* tmp = (lat_objeto*)cur->valor;        
+        if (__objeto_comparar(tmp, bus) == 0)
+        {
+            return true;            
+        }
+    }
+    return false;
+}
+
+static json_t* __cargar_json(const char *text) {
     json_t *root;
     json_error_t error;
     root = json_loads(text, 0, &error);
@@ -97,7 +110,7 @@ static json_t* load_json(const char *text) {
     }
 }
 
-static lat_objeto* json2latino(lat_mv* mv, json_t *element){
+static lat_objeto* __json_a_latino(lat_mv* mv, json_t *element){
     size_t i;
     size_t size;
     json_t *value = NULL;
@@ -109,7 +122,7 @@ static lat_objeto* json2latino(lat_mv* mv, json_t *element){
             lat_objeto* dic = lat_dic_nuevo(mv, __dic_crear());
             json_object_foreach(element, key, value) {
                 //printf("key: %s\n", key);
-                __dic_asignar(__dic(dic), key, (void*)json2latino(mv, value));
+                __dic_asignar(__dic(dic), key, (void*)__json_a_latino(mv, value));
             }
             return dic;
         }
@@ -120,7 +133,7 @@ static lat_objeto* json2latino(lat_mv* mv, json_t *element){
             lat_objeto* lst = lat_lista_nueva(mv, __lista_crear());
             for (i = 0; i < size; i++) {
                 value = json_array_get(element, i);
-                __lista_apilar(__lista(lst), (void*)json2latino(mv, value));
+                __lista_apilar(__lista(lst), (void*)__json_a_latino(mv, value));
             }
             return lst;
         }
@@ -143,11 +156,11 @@ static lat_objeto* json2latino(lat_mv* mv, json_t *element){
             return dec;
         }
         break;
-    case JSON_TRUE:
-        return mv->objeto_verdadero;
+    case JSON_TRUE:        
+        return mv->objeto_verdadero;        
         break;
-    case JSON_FALSE:
-        return mv->objeto_falso;
+    case JSON_FALSE:        
+        return mv->objeto_falso;        
         break;
     case JSON_NULL:
         return mv->objeto_nulo;
@@ -158,7 +171,7 @@ static lat_objeto* json2latino(lat_mv* mv, json_t *element){
     return NULL;
 }
 
-static json_t* latino2json(lat_mv* mv, lat_objeto* element){
+static json_t* __latino_a_json(lat_mv* mv, lat_objeto* element){
     json_t *value = NULL;
     switch(element->tipo){
         case T_DICT:
@@ -171,7 +184,7 @@ static json_t* latino2json(lat_mv* mv, lat_objeto* element){
                     LIST_FOREACH(list, primero, siguiente, cur) {
                         if (cur->valor != NULL)
                         {
-                            json_object_set(value, ((hash_val *) cur->valor)->llave, latino2json(mv, (lat_objeto*)((hash_val *) cur->valor)->valor));
+                            json_object_set(value, ((hash_val *) cur->valor)->llave, __latino_a_json(mv, (lat_objeto*)((hash_val *) cur->valor)->valor));
                         }
                     }
                 }
@@ -185,7 +198,7 @@ static json_t* latino2json(lat_mv* mv, lat_objeto* element){
             LIST_FOREACH(list, primero, siguiente, cur) {
                 if (cur->valor != NULL)
                 {
-                    json_array_append_new(value, latino2json(mv, (lat_objeto*)cur->valor));
+                    json_array_append_new(value, __latino_a_json(mv, (lat_objeto*)cur->valor));
                 }
             }
             return value;
@@ -213,7 +226,7 @@ static json_t* latino2json(lat_mv* mv, lat_objeto* element){
                 value = json_false();
             }
             return value;
-        }
+        }        
         break;
         case T_NULL:{
             value = json_null();
@@ -310,7 +323,6 @@ lat_mv* lat_mv_crear()
 
     /*20 funciones matematicas */
     __registrar_cfuncion(mv, "arco_coseno", lat_arco_coseno, 1);
-    __registrar_cfuncion(mv, "copiar_texto", lat_copiar_texto, 2);
     __registrar_cfuncion(mv, "arco_seno", lat_arco_seno, 1);
     __registrar_cfuncion(mv, "arco_tangente", lat_arco_tangente, 1);
     __registrar_cfuncion(mv, "arco_tangente2", lat_arco_tangente2, 2);
@@ -355,6 +367,7 @@ lat_mv* lat_mv_crear()
     __registrar_cfuncion(mv, "es_alfanumerico", lat_es_alfanumerico, 1);
     __registrar_cfuncion(mv, "ejecutar", lat_ejecutar, 1);
     __registrar_cfuncion(mv, "ejecutar_archivo", lat_ejecutar_archivo, 1);
+    __registrar_cfuncion(mv, "separar", lat_separar, 2);
 
     /*40 entrada / salida */
     __registrar_cfuncion(mv, "imprimir", lat_imprimir, 1);
@@ -364,6 +377,8 @@ lat_mv* lat_mv_crear()
     __registrar_cfuncion(mv, "escribir_archivo", lat_escribir_archivo, 2);
     __registrar_cfuncion(mv, "salir", lat_salir, 0);
     __registrar_cfuncion(mv, "copiar_texto", lat_copiar_texto, 2);
+    __registrar_cfuncion(mv, "leer_lineas", lat_leer_lineas, 1);
+    
 
     /*50 conversion de tipos de dato*/
     __registrar_cfuncion(mv, "tipo", lat_tipo, 1);
@@ -475,7 +490,7 @@ void __imprimir_objeto(lat_mv* vm, lat_objeto* in)
         tmp1 = __str_analizar(s, strlen(s));
         fprintf(stdout, "%s", tmp1);
     }
-    //__memoria_liberar(tmp1);
+    __memoria_liberar(tmp1);
 }
 
 void lat_imprimir(lat_mv* vm)
@@ -1063,7 +1078,7 @@ void lat_llamar_funcion(lat_mv* vm, lat_objeto* func)
                     if(num_args != fun->num_params ){
                         lat_fatal_error("Linea %d, %d: Numero invalido de argumentos en funcion '%s'. se esperaban %i valores.\n",
                             fun->num_linea, fun->num_columna, fun->nombre_cfun, fun->num_params);
-
+                     
                     }
                 }
                 lat_apilar_contexto(vm);
@@ -1380,11 +1395,11 @@ void lat_invertir(lat_mv* vm){
 void lat_json_decodificar(lat_mv* vm){
     lat_objeto* a = lat_desapilar(vm);
     char* str = __cadena(a);
-    json_t *root = load_json(str);
+    json_t *root = __cargar_json(str);
     lat_objeto* o = NULL;
 
     if (root) {
-        o = json2latino(vm, root);
+        o = __json_a_latino(vm, root);
         json_decref(root);
     }
     lat_apilar(vm, o);
@@ -1393,7 +1408,7 @@ void lat_json_decodificar(lat_mv* vm){
 void lat_json_codificar(lat_mv* vm){
     lat_objeto* a = lat_desapilar(vm);
     lat_objeto* r = NULL;
-    json_t* j = latino2json(vm, a);
+    json_t* j = __latino_a_json(vm, a);
     char *s = json_dumps(j, 0);
     r = lat_cadena_nueva(vm, strdup(s));
     lat_apilar(vm, r);

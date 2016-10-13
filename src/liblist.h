@@ -137,14 +137,6 @@ void *__lista_eliminar_elemento(lista *list, lista_nodo *node);
     lista_nodo *V = NULL;\
     for(V = _node = L->S; _node != NULL; V = _node = _node->M)
 
-/**\brief Busca un elemento en la lista
-  * 
-  *\param l: Apuntador a la lista
-  *\param data: Apuntador a objeto buscado
-  *\return int: Retorna 1 si se encontro el objeto 0 en caso contrario
-  */
-int __lista_contiene_valor(lista* l, void* data);
-
 /**\brief Devuelve la representacion en cadena de la lista
   * 
   *\param l: Apuntador a la lista  

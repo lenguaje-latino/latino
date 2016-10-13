@@ -558,6 +558,10 @@ void lat_longitud(lat_mv* vm)
     {
         lat_apilar(vm, lat_numerico_nuevo(vm, __dic_longitud(__dic(a))));
     }
+    if (a->tipo == T_NUMERIC)
+    {
+        lat_apilar(vm, lat_numerico_nuevo(vm, strlen(__objeto_a_cadena(a))));
+    }
 }
 
 void lat_reemplazar(lat_mv* vm)
@@ -653,4 +657,30 @@ void lat_es_alfanumerico(lat_mv* vm)
     {
         lat_apilar(vm, vm->objeto_falso);
     }
+}
+
+void lat_separar(lat_mv* vm)
+{
+    lat_objeto* b = lat_desapilar(vm);
+    lat_objeto* a = lat_desapilar(vm);
+    char *sep = " ";    //separador default
+    if (b->tipo != T_NULL){
+        sep = __cadena(b);
+        if(strlen(sep) == 0){
+            sep = " ";
+        }
+    }
+    char *str = strdup(__cadena(a));
+    lista* lst = __lista_crear();    
+    char *tok = strtok(str, sep);
+    if(tok){
+        __lista_apilar(lst, lat_cadena_nueva(vm, strdup(tok)));
+    }
+    while (tok != NULL){
+        tok = strtok(NULL, sep);
+        if(tok){
+            __lista_apilar(lst, lat_cadena_nueva(vm, strdup(tok)));
+        }
+    }
+    lat_apilar(vm, lat_lista_nueva(vm, lst));
 }

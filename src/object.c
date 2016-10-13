@@ -106,7 +106,7 @@ double __objeto_a_numerico(lat_objeto* o){
 char* __objeto_a_cadena(lat_objeto* o)
 { 
     if(o->tipo == T_NULL){
-        return "nulo";
+        return strdup("nulo");
     }
     if (o->tipo == T_BOOL)
     {
@@ -114,7 +114,7 @@ char* __objeto_a_cadena(lat_objeto* o)
     }
     else if (o->tipo == T_CONTEXT)
     {
-        return "contexto";
+        return strdup("contexto");
     }
     else if (o->tipo == T_NUMERIC)
     {        
@@ -126,15 +126,15 @@ char* __objeto_a_cadena(lat_objeto* o)
     }
     else if (o->tipo == T_FUNC)
     {
-        return "funcion";
+        return strdup("funcion");
     }
     else if (o->tipo == T_CFUNC)
     {
-        return "cfuncion";
+        return strdup("cfuncion");
     }
     else if (o->tipo == T_CLASS)
     {
-        return "clase";
+        return strdup("clase");
     }
     if (o->tipo == T_LIST)
     {
@@ -144,7 +144,7 @@ char* __objeto_a_cadena(lat_objeto* o)
     {
         return __dic_a_cadena(o->datos.dic);
     }    
-    return "";
+    return strdup("");
 }
 
 void lat_asignar_contexto_objeto(lat_objeto* ns, lat_objeto* name, lat_objeto* o)
@@ -228,7 +228,7 @@ lat_objeto* lat_cadena_nueva(lat_mv* vm, const char* p)
     lat_objeto* ret = lat_crear_objeto(vm);
     ret->tipo = T_STR;
     ret->tamanio += strlen(p);
-    ret->datos.cadena = (char *)p;  
+    ret->datos.cadena = strdup(p);  
     vm->memoria_usada += ret->tamanio;
     return ret;
 }
@@ -473,6 +473,6 @@ RESPUESTA:
     }
     if(res > 0){
         return 1;
-    }
+    }    
     return res;
 }

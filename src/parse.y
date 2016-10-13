@@ -373,7 +373,7 @@ dict_item
 int yyerror(struct YYLTYPE *yylloc_param, void *scanner, struct ast **root,
             const char *s) {
   if(!parse_silent){
-      lat_error("Linea %d, %d: %s", yylloc_param->first_line, yylloc_param->first_column,  s);
+      lat_fatal_error("Linea %d, %d: %s", yylloc_param->first_line, yylloc_param->first_column,  s);
   }
   return 0;
 }

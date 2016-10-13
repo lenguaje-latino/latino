@@ -119,6 +119,14 @@ typedef struct lat_mv
     char *nombre_archivo;
 } lat_mv;
 
+/**\brief Busca un elemento en la lista
+  * 
+  *\param l: Apuntador a la lista
+  *\param data: Apuntador a objeto buscado
+  *\return int: Retorna 1 si se encontro el objeto 0 en caso contrario
+  */
+bool __lista_contiene_valor(lista* l, void* data);
+
 /**\brief Obtiene el nombre del bytecode
   *
   *\param vm: Apuntador a la MV
@@ -430,4 +438,5 @@ void lat_invertir(lat_mv* vm);
 void lat_json_decodificar(lat_mv* vm);
 
 void lat_json_codificar(lat_mv* vm);
+
 #endif //_VM_H_
