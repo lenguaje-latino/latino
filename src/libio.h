@@ -82,4 +82,7 @@ void lat_ejecutar_pipe(lat_mv *vm);
   */
 void lat_limpiar();
 
+/* Copia el texto de un archivo a otro, y si no existe, lo crea */
+void lat_copiar_texto(lat_mv *vm);
+
 #endif /* !_LIBIO_H_ */
