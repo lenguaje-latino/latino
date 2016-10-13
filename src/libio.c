@@ -134,3 +134,8 @@ void lat_ejecutar_pipe(lat_mv *vm){
     __lat_pclose(vm, fp);
     __memoria_liberar(p);
 }
+
+void lat_limpiar()
+{
+    system("@cls||clear");
+}
