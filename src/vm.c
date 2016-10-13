@@ -363,6 +363,7 @@ lat_mv* lat_mv_crear()
     __registrar_cfuncion(mv, "leer_archivo", lat_leer_archivo, 1);
     __registrar_cfuncion(mv, "escribir_archivo", lat_escribir_archivo, 2);
     __registrar_cfuncion(mv, "salir", lat_salir, 0);
+    __registrar_cfuncion(mv, "copiar_texto", lat_copiar_texto, 2);
 
     /*50 conversion de tipos de dato*/
     __registrar_cfuncion(mv, "tipo", lat_tipo, 1);
@@ -1396,4 +1397,27 @@ void lat_json_codificar(lat_mv* vm){
     char *s = json_dumps(j, 0);
     r = lat_cadena_nueva(vm, strdup(s));
     lat_apilar(vm, r);
+}
+
+void lat_copiar_texto(lat_mv* vm)
+{
+    lat_objeto* a = lat_desapilar(vm);
+    lat_objeto* b = lat_desapilar(vm);
+    FILE *archivo1;
+    FILE *archivo2;
+    char buffer[256];
+
+    archivo1=fopen(__cadena(b), "r");
+    archivo2=fopen(__cadena(a), "a");
+    if(archivo1==NULL) {
+        lat_fatal_error("No se encontró el archivo %s", __cadena(b));
+        return 0;
+        }
+    else {
+        while(fgets(buffer, sizeof(buffer), archivo1)) {
+        fprintf(archivo2, "%s", buffer);
+    }
+}
+fclose(archivo1);
+fclose(archivo2);
 }
