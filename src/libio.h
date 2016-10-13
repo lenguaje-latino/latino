@@ -68,6 +68,7 @@ void lat_escribir_archivo(lat_mv *vm);
   *
   */
 void lat_sistema(lat_mv *vm);
+void lat_copiar_texto(lat_mv *vm);
 
 /** Ejecuta un comando en el sistema actual ej. "cat file.lat" regresando la cadena de salida
   *
@@ -75,5 +76,10 @@ void lat_sistema(lat_mv *vm);
   *
   */
 void lat_ejecutar_pipe(lat_mv *vm);
+
+/** Limpia pantalla. En windows es "cls" y linux "clear"
+  * Uso: limpiar()
+  */
+void lat_limpiar();
 
 #endif /* !_LIBIO_H_ */
