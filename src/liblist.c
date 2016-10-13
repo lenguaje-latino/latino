@@ -98,18 +98,6 @@ void *__lista_eliminar_elemento(lista *list, lista_nodo *node)
     return result;
 }
 
-int __lista_contiene_valor(lista* list, void* data)
-{
-    LIST_FOREACH(list, primero, siguiente, cur) {
-        //if (memcmp(cur->valor, data, sizeof(cur->valor)) == 0)
-        if (memcmp(cur->valor, data, __memoria_tamanio(cur->valor)) == 0)
-        {
-            return 1;
-        }
-    }
-    return 0;
-}
-
 char* __lista_a_cadena(lista* list)
 {
     char* valor = __memoria_asignar(MAX_STR_LENGTH);    

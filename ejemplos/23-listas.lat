@@ -125,7 +125,6 @@ escribir(m1)
 escribir("m2 no se modifico: ")
 escribir(m2)
 
-
 escribir("--------------------------------------------------------------------")
 escribir("Ejemplo de matrices multidimensionales")
 escribir("--------------------------------------------------------------------")

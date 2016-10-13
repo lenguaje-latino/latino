@@ -79,9 +79,16 @@ void lat_ejecutar_pipe(lat_mv *vm);
 /** Limpia pantalla. En windows es "cls" y linux "clear"
   * Uso: limpiar()
   */
-void lat_limpiar();
+void lat_limpiar(lat_mv *vm);
 
 /* Copia el texto de un archivo a otro, y si no existe, lo crea */
 void lat_copiar_texto(lat_mv *vm);
+
+/** Lee las lineas de un archivo
+  *
+  * \param vm: Maquina virtual de latino
+  *
+  */
+void lat_leer_lineas(lat_mv *vm);
 
 #endif /* !_LIBIO_H_ */

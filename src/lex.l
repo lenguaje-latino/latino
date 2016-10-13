@@ -21,6 +21,7 @@
 #define YYBISON 1
 
 #define YY_USER_ACTION \
+    yylloc->file_name = filename;\
     yylloc->first_line = yylloc->last_line+1; \
     yylloc->first_column = yylloc->last_column+1; \
     for(int i = 0; yytext[i] != '\0'; i++) { \

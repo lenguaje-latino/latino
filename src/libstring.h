@@ -327,4 +327,12 @@ void lat_es_numerico(lat_mv* vm);
 *
 */
 void lat_es_alfanumerico(lat_mv* vm);
+
+/** Separa una cadena en subcadenas y las agrega una lista
+*
+* \param vm: Maquina virtual de latino
+*
+*/
+void lat_separar(lat_mv* vm);
+
 #endif // !_LIBSTRING_H_

@@ -1,0 +1,10 @@
+#lee un archivo
+#regresa una lista de lineas
+lineas = leer_lineas("../ejemplos/36-separar.lat")
+escribir(lineas)
+
+escribir(lineas->longitud())
+#recorrer la lista
+desde (i=0; i < lineas->longitud(); i++)
+  escribir(i . " :" . lineas[i])
+fin

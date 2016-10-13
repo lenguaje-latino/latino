@@ -54,7 +54,7 @@ THE SOFTWARE.
 /** Version menor de Latino */
 #define LAT_VERSION_MENOR "8"
 /** Version de correcion de errores */
-#define LAT_VERSION_PARCHE "10"
+#define LAT_VERSION_PARCHE "11"
 /** Version de Latino */
 #define LAT_VERSION "Latino " LAT_VERSION_MAYOR "." LAT_VERSION_MENOR "." LAT_VERSION_PARCHE
 /** Derechos de Latino */
@@ -75,17 +75,19 @@ THE SOFTWARE.
 /** Afirmar (asset), sirve para testear una condicion */
 #define lat_afirmar(cond) ((void)(false && (cond)))
 
+extern char* filename;
+
 /* Envia un mensaje de error */
 #define lat_error(M, ...)                               \
   {                                                   \
-    fprintf(stderr, "Error: " M "\n", ##__VA_ARGS__); \
+    fprintf(stderr, "Error: " M " en archivo '%s'\n", ##__VA_ARGS__, filename); \
   }
 
 /* Envia un mensaje de error */
-#define lat_fatal_error(M, ...)                               \
-  {                                                   \
-    fprintf(stderr, "Error: " M "\n", ##__VA_ARGS__); \
-    exit(1);  \
+#define lat_fatal_error(M, ...) \
+  { \
+    fprintf(stderr, " Error: " M " en archivo '%s'\n", ##__VA_ARGS__, filename); \
+    exit(1); \
   }
 
 /** Indica si se desea debuguear el parser de bison */
@@ -130,6 +132,7 @@ typedef struct YYLTYPE
     int first_column;
     int last_line;
     int last_column;
+    char* file_name;
 } YYLTYPE;
 
 /** Establece que se definio una interface con Flex */
