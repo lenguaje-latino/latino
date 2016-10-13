@@ -381,6 +381,7 @@ lat_mv* lat_mv_crear()
     __registrar_cfuncion(mv, "json_decodificar", lat_json_decodificar, 1);
     __registrar_cfuncion(mv, "json_codificar", lat_json_codificar, 1);
     __registrar_cfuncion(mv, "peticion", lat_peticion, 1);
+    __registrar_cfuncion(mv, "limpiar", lat_limpiar, 0);
 
     return mv;
 }
