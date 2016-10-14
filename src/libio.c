@@ -151,7 +151,7 @@ void lat_copiar_texto(lat_mv* vm)
     char buffer[MAX_BUFFERSIZE];
     FILE *archivo1 = fopen(__cadena(a), "r");
     if(archivo1 == NULL) {
-        lat_fatal_error("Linea %d, %d: %s", a->num_linea, a->num_columna, "Error al copiar el archivo.");
+        lat_fatal_error("Linea %d, %d: %s", a->num_linea, a->num_columna, "Error al copiar el archivo.", __cadena(b));
     }
     else {
         FILE *archivo2 = fopen(__cadena(b), "a");

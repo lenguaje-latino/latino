@@ -49,7 +49,7 @@ ENDIF(MSVC)
 
 IF(UNIX)
   INSTALL(TARGETS latino DESTINATION ${CMAKE_INSTALL_PREFIX})
-  INSTALL(FILES man/latino.1 DESTINATION /usr/share/man/es/man1)
+  INSTALL(FILES man/latino.1.gz DESTINATION /usr/share/man/man1)
   INSTALL(FILES nano/latino.nanorc DESTINATION /usr/share/nano)
 ENDIF(UNIX)
 
