@@ -368,6 +368,7 @@ lat_mv* lat_mv_crear()
     __registrar_cfuncion(mv, "ejecutar", lat_ejecutar, 1);
     __registrar_cfuncion(mv, "ejecutar_archivo", lat_ejecutar_archivo, 1);
     __registrar_cfuncion(mv, "separar", lat_separar, 2);
+    __registrar_cfuncion(mv, "separar_en_palabras", lat_separar, 2);
 
     /*40 entrada / salida */
     __registrar_cfuncion(mv, "imprimir", lat_imprimir, 1);
