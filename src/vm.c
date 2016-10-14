@@ -496,8 +496,12 @@ void __imprimir_objeto(lat_mv* vm, lat_objeto* in)
 void lat_imprimir(lat_mv* vm)
 {
     lat_objeto* o = lat_desapilar(vm);
-    //Lat_DECREF(o);
-    __imprimir_objeto(vm, o);
+    if(o == NULL){
+        printf("nulo");
+    }else{
+        //Lat_DECREF(o);
+        __imprimir_objeto(vm, o);
+    }
     printf("\n");
 }
 

@@ -1,0 +1,10 @@
+a = leer_lineas('datos.lat')
+escribir(a)
+/*
+lineas = leer_lineas('datos.lat')
+palabras = []
+desde (i=0; i<lineas->longitud(); i++)
+  palabras->extender(separar(lineas[i]))
+fin
+escribir(palabras)
+*/
