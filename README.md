@@ -50,6 +50,14 @@ Cualquier versión/distribución de linux
  sudo make install
 ```
 
+Ahora en una sola linea
+
+``` 
+ git clone --recursive https://github.com/primitivorm/latino && cd latino && git submodule update --init --recursive && cmake . && make && sudo make install
+
+```
+
+
 Instalación en dibs: Ubuntu, DEBIAN ó Mint
 
 ```bash
