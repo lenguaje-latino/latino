@@ -7,3 +7,9 @@ escribir("dic->result[0]->message->text: " . dic->result[0]->message->text)
 #convierte un objeto latino a una cadena json
 str = json_codificar(dic)
 escribir("str: " . str)
+
+url = "https://raw.githubusercontent.com/yagop/node-telegram-bot-api/master/package.json"
+str = peticion(url)
+escribir(str)
+jsn = json_decodificar(str)
+escribir(jsn)
