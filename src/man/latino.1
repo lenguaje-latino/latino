@@ -17,17 +17,17 @@ Lo mismo que en cualquier lenguaje de programación, incluye como \fIfunciones\f
 .PP
 .IR Incluir
 .PP
-En Latino se puede incluir otros scripts, como la mayoría de lenguajes de programación.
+En Latino se puede incluir otros módulos de Latino ó módulos en la misma carpeta, como la mayoría de lenguajes de programación.
 La forma de incluir es bastante fácil.
 .PP
 La sintaxis es la siguiente:
 .RS
-.BR incluir('mi_script')
+.BR incluir('mi_modulo')
 .RE
 .PP
-Como ejemplo, podriamos crear un script llamado \fBmi_script.lat\fR y lo incluimos con la sintaxis anterior.
+Como ejemplo, podriamos crear un llamado \fBmi_modulo.lat\fR y lo incluimos con la sintaxis anterior.
 .br
-Podremos agregar una \fIfuncion\fR y llamarla en otro script incluyendo el módulo \fBmi_script\fR (con la misma sintaxis anterior)
+Podremos agregar una \fIfuncion\fR y llamarla en otro código incluyendo el módulo \fBmi_modulo\fR (con la misma sintaxis anterior)
 .br
 Posteriormente, podemos crear cualquier función en el modulo para así, no necesitar crear de nuevo las mismas funciones.
 .PP
@@ -50,9 +50,9 @@ Si queremos añadir comentarios en el código, podemos hacerlo de varias formas.
 .PP
 Comentarios simples:
 .RS
-\fB//\fR este es un ejemplo de comentario simple
+\fB//\fR este es un ejemplo de comentario de una línea
 .br
-\fB#\fR este es otro ejemplo de comentario simple
+\fB#\fR este es otro ejemplo de comentario
 .RE
 .PP
 Comentarios múltiples:
@@ -75,9 +75,9 @@ Podemos declarar una variable simple, para en sí, llamar a funciones de una for
 Sintaxis de valores declarados:
 .br
 .RS
-\fBmivalor=\fR"texto"
+\fBmi_valor=\fR"texto"
 .br
-\fBmiotrovalor = \fR"prueba"
+\fBmi_otro_valor = \fR"prueba"
 .RE
 .PP
 Como vemos, a diferencia de otras sintaxis, no importa si el valor declarado lleva el símbolo \fB=\fR entre espacios ó no.
@@ -216,3 +216,22 @@ valor = \fBleer()\fR
 .br
 \fBescribir("\fREl valor es \fB".\fRvalor\fB)\fR
 .RE
+.SH Copyright
+.PP
+Se concede permiso, de forma gratuita, a cualquier persona que obtenga una copia
+de este software y archivos de documentacion asociados (el "Software"), para hacer frente
+el Software sin restriccion, incluyendo sin limitacion, los derechos
+para usar, copiar, modificar, fusionar, publicar, distribuir, sublicenciar y / o vender
+las copias del Software y permitir a las personas a las que el Software es
+amueblado para hacerlo, con sujecion a las siguientes condiciones:
+
+El aviso de copyright anterior y este aviso de permiso se incluiran en
+todas las copias o partes sustanciales del Software.
+
+EL SOFTWARE SE PROPORCIONA "TAL CUAL", SIN GARANTIA DE NINGUN TIPO, EXPRESA O
+IMPLICITAS, INCLUYENDO PERO NO LIMITADO A LAS GARANTIAS DE COMERCIALIZACION,
+IDONEIDAD PARA UN PROPOSITO PARTICULAR Y NO INFRACCION. EN NINGUN CASO EL
+AUTORES O TITULARES DEL COPYRIGHT SERAN RESPONSABLES POR NINGUN RECLAMO, DAÑO U OTRA
+RESPONSABILIDAD, YA SEA EN UNA ACCION DE CONTRATO, AGRAVIO O CUALQUIER OTRA FORMA, DERIVADOS DE,
+DE O EN RELACION CON EL SOFTWARE O EL USO U OTROS TRATOS EN
+EL SOFTWARE.
