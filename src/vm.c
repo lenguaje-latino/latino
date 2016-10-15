@@ -313,7 +313,7 @@ lat_mv* lat_mv_crear()
      * 30 funciones para cadenas (string)
      * 40 entrada y salida
      * 50 conversion de tipos de dato
-     * 60
+     * 60 funciones para listas
      * 70
      * 99 otras funciones // a crear una categoria para ellas
      *
@@ -380,6 +380,7 @@ lat_mv* lat_mv_crear()
     __registrar_cfuncion(mv, "salir", lat_salir, 0);
     __registrar_cfuncion(mv, "copiar_texto", lat_copiar_texto, 2);
     __registrar_cfuncion(mv, "leer_lineas", lat_leer_lineas, 1);
+    __registrar_cfuncion(mv, "contenido", lat_contenido, 1);
     
 
     /*50 conversion de tipos de dato*/
@@ -496,6 +497,18 @@ void __imprimir_objeto(lat_mv* vm, lat_objeto* in)
 }
 
 void lat_imprimir(lat_mv* vm)
+{
+    lat_objeto* o = lat_desapilar(vm);
+    if(o == NULL){
+        printf("nulo");
+    }else{
+        //Lat_DECREF(o);
+        __imprimir_objeto(vm, o);
+    }
+    printf("\n");
+}
+
+void lat_contenido(lat_mv* vm)
 {
     lat_objeto* o = lat_desapilar(vm);
     if(o == NULL){
