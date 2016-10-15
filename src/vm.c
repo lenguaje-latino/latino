@@ -364,6 +364,7 @@ lat_mv* lat_mv_crear()
     __registrar_cfuncion(mv, "mayusculas", lat_mayusculas, 1);
     __registrar_cfuncion(mv, "quitar_espacios", lat_quitar_espacios, 1);
     __registrar_cfuncion(mv, "es_numerico", lat_es_numerico, 1);
+    __registrar_cfuncion(mv, "es_numero", lat_es_numerico, 1); // alias
     __registrar_cfuncion(mv, "es_alfanumerico", lat_es_alfanumerico, 1);
     __registrar_cfuncion(mv, "ejecutar", lat_ejecutar, 1);
     __registrar_cfuncion(mv, "ejecutar_archivo", lat_ejecutar_archivo, 1);
