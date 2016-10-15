@@ -242,6 +242,8 @@ lat_objeto* lat_definir_cfuncion(lat_mv* vm, void (*function)(lat_mv* vm));
   */
 void lat_imprimir(lat_mv* vm);
 
+void lat_contenido(lat_mv* vm);
+
 /**\brief Ejecuta una cadena de codigo Latino
   *
   *\param vm: Apuntador a la MV
