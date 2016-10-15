@@ -80,13 +80,13 @@ extern char* filename;
 /* Envia un mensaje de error */
 #define lat_error(M, ...)                               \
   {                                                   \
-    fprintf(stderr, "Error: " M " en archivo '%s'\n", ##__VA_ARGS__, filename); \
+    fprintf(stderr, "Error: " M " en archivo '%s'.\n", ##__VA_ARGS__, filename); \
   }
 
 /* Envia un mensaje de error */
 #define lat_fatal_error(M, ...) \
   { \
-    fprintf(stderr, " Error: " M " en archivo '%s'\n", ##__VA_ARGS__, filename); \
+    fprintf(stderr, " Error: " M " en archivo '%s'.\n", ##__VA_ARGS__, filename); \
     exit(1); \
   }
 
