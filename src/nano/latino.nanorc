@@ -1,6 +1,6 @@
 ## Sintaxis Latino en Nano 
 syntax "latino" "\.lat$"
-color brightblack "\."
+color brightwhite "\."
 
 # Operadores
 color yellow ":|\*|/|%|\+|-|\^|>|>=|<|<=|!=|="
@@ -9,19 +9,19 @@ color yellow ":|\*|/|%|\+|-|\^|>|>=|<|<=|!=|="
 color green "\<(hacer|fin|mientras|defecto|si|caso|hasta|sino|desde|cuando|salto|romper|retorno)\>"
 
 # Librerias
-color blue "\<(funcion|json_codificar|json_decodificar|sistema|ejecutar_pipe|escribir|imprimir)\>"
-color blue "\<(peticion|elegir|reemplazar|ejecutar_archivo|leer_archivo|escribir_archivo)\>"
-color blue "\<(leer|cadena|longitud)\>"
+color brightblue "\<(funcion|json_codificar|json_decodificar|sistema|ejecutar_pipe|escribir|imprimir)\>"
+color brightblue "\<(peticion|elegir|reemplazar|ejecutar_archivo|leer_archivo|escribir_archivo)\>"
+color brightblue "\<(leer|cadena|longitud|copiar_texto)\>"
 
 # falso, nulo ó verdadero
 color brightgreen "verdadero"
 color brightred  "falso"
 
 # Ficheros externos
-color brightblack,white "incluir"
+color brightblack,white "^incluir"
 
 # Numeros
-color brightblack "\<([0-9]+)\>"
+color brightyellow "\<([0-9]+)\>"
 
 # Simbolos
 color brightmagenta "(\(|\)|\[|\]|\{|\})"

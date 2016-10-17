@@ -151,7 +151,7 @@ void lat_copiar_texto(lat_mv* vm)
     char buffer[MAX_BUFFERSIZE];
     FILE *archivo1 = fopen(__cadena(a), "r");
     if(archivo1 == NULL) {
-        lat_fatal_error("Linea %d, %d: %s", a->num_linea, a->num_columna, "Error al copiar el archivo,", __cadena(a));
+        lat_fatal_error("Linea %d, %d: %s", a->num_linea, a->num_columna, "Error al copiar el archivo ", __cadena(a));
     }
     else {
         FILE *archivo2 = fopen(__cadena(b), "a");
@@ -216,4 +216,17 @@ void lat_leer_lineas(lat_mv *vm)
     }
     fclose(fp);
     lat_apilar(vm, lineas);
+}
+
+void lat_invertir_cadena(lat_mv *vm)
+{
+ lat_objeto* a = lat_desapilar(vm);
+ char salida[25]={0}, largo, i, x;
+ largo = strlen(__cadena(a)) - 1;
+ for(i=largo, x=0; i >=0; i--, x++)
+ {
+   salida[x]=__cadena(a)[i];
+ }
+  lat_objeto* res = lat_cadena_nueva(vm, salida);
+  lat_apilar(vm, res);
 }
