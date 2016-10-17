@@ -33,6 +33,7 @@ THE SOFTWARE.
 
 char* __str_analizar(const char* s, size_t len)
 {
+    //return strdup(s);    
     char* ret = __memoria_asignar(len + 1);
     int i = 0;
     int j = 0;
@@ -107,7 +108,7 @@ save:
         j++;
     }
     ret[j] = '\0';
-    return ret;
+    return ret;    
 }
 
 char* __str_decimal_a_cadena(double d)

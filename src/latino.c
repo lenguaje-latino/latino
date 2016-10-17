@@ -137,17 +137,18 @@ void lat_ayuda()
     printf("\n");
     printf("%s\n", "Opciones:");
     printf("%s\n", "-a           : Muestra la ayuda de Latino");
-    //printf("%s\n", "-i           : Inicia el interprete de Latino (Modo interactivo)");
+    printf("%s\n", "-e           : Ejecuta una cadena de codigo");
     printf("%s\n", "-v           : Muestra la version de Latino");
     printf("%s\n", "archivo      : Nombre del archivo con extension .lat");
     printf("%s\n", "Ctrl-C       : Para cerrar");
+    /*
     printf("\n");
     printf("%s\n", "Variables de entorno:");
     printf("%s\n", "_____________________");
     printf("%s%s\n", "LATINO_PATH  : ", getenv("LATINO_PATH"));
-    printf("%s%s\n", "LATINO_LIB   : ", getenv("LATINO_LIB"));
-    printf("%s%s\n", "LC_LANG      : ", getenv("LC_LANG"));
+    printf("%s%s\n", "LATINO_LIB   : ", getenv("LATINO_LIB"));    
     printf("%s%s\n", "HOME         : ", getenv("HOME"));
+    */
 }
 
 static int leer_linea(char* buffer)
@@ -338,10 +339,11 @@ static void lat_repl(lat_mv *vm)
             {
                 lat_apilar(vm, o);
                 lat_imprimir(vm);
-            }
-            linenoiseHistoryAdd(__str_reemplazar(buf, "\n", ""));
-            linenoiseHistorySave(".history");
+            }        
         }
+        //se guarda el comando al historial aunque haya error
+        linenoiseHistoryAdd(__str_reemplazar(buf, "\n", ""));
+        linenoiseHistorySave(".history");
     }
     __memoria_liberar(buf);
 }
@@ -352,6 +354,7 @@ int main(int argc, char *argv[])
     setlocale (LC_ALL, "es_MX");
     int i;
     char *infile = NULL;
+    int pe = false;
     for (i = 1; i < argc; i++)
     {
         if (strcmp(argv[i], "-v") == 0)
@@ -359,15 +362,14 @@ int main(int argc, char *argv[])
             lat_version();
             return EXIT_SUCCESS;
         }
-        else if (strcmp(argv[i], "-a") == 0)
+        else if (strcmp(argv[i], "-a") == 0 || strcmp(argv[i], "--help") == 0)
         {
             lat_ayuda();
             return EXIT_SUCCESS;
         }
-        else if (strcmp(argv[i], "-i") == 0)
+        else if (strcmp(argv[i], "-e") == 0)
         {
-            lat_version();
-            return EXIT_SUCCESS;
+            pe = true;            
         }
         else
         {
@@ -377,7 +379,24 @@ int main(int argc, char *argv[])
     }
 
     lat_mv *mv = lat_mv_crear();
-    if(argc > 1 && infile != NULL)
+    if(pe){
+        if(argc != 3){
+            printf("Error: Se requiere una cadena para ejecución.\n");
+            return EXIT_FAILURE;
+        }
+        mv->nombre_archivo = NULL;
+        mv->REPL = false;
+        int status;        
+        char *cmd = __memoria_asignar(MAX_STR_LENGTH);
+        strcpy(cmd, argv[2]);
+        ast *nodo = lat_analizar_expresion(cmd, &status);
+        if(status == 0 && nodo != NULL){
+            lat_objeto *mainFunc = nodo_analizar_arbol(mv, nodo);
+            lat_llamar_funcion(mv, mainFunc);
+            lat_eliminar_objeto(mv, mainFunc);
+        }
+        nodo_liberar(nodo);
+    } else if(argc > 1 && infile != NULL)
     {
         mv->nombre_archivo = infile;
         mv->REPL = false;

@@ -65,6 +65,12 @@ THE SOFTWARE.
 #define LAT_TRY(L,c,a)		if (setjmp((c)->b) == 0) { a }
 #define lat_jmpbuf		jmp_buf
 
+/** Indica si se desea debuguear el parser de bison */
+extern int debug;
+
+/** Indica que el parser no debe de devolver errores, se usa para REPL */
+extern int parse_silent;
+
 // generado en
 // http://www.patorjk.com/software/taag/#p=display&f=Graffiti&t=latino
 /**
@@ -91,12 +97,6 @@ extern char* filename;
     else { fprintf(stderr, " Error: " M "\n", ##__VA_ARGS__); } \
     exit(1); \
   }
-
-/** Indica si se desea debuguear el parser de bison */
-extern int debug;
-
-/** Indica que el parser no debe de devolver errores, se usa para REPL */
-extern int parse_silent;
 
 /** Maximo numero de size_t */
 #ifdef SIZE_MAX
