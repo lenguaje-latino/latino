@@ -1,0 +1,14 @@
+funcion tecla(a)
+	imprimir("Se ha puesto la tecla ".a)
+fin
+
+tecla("H") # La abrimos
+
+# Reasignamos la función
+
+funcion tecla(a, b)
+	imprimir("Se ha puesto la tecla ".a." y la tecla ".b)
+fin
+
+tecla("H", "B")
+

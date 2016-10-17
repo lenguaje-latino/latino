@@ -380,7 +380,7 @@ lat_mv* lat_mv_crear()
     __registrar_cfuncion(mv, "salir", lat_salir, 0);
     __registrar_cfuncion(mv, "copiar_texto", lat_copiar_texto, 2);
     __registrar_cfuncion(mv, "leer_lineas", lat_leer_lineas, 1);
-    __registrar_cfuncion(mv, "contenido", lat_contenido, 1);
+    __registrar_cfuncion(mv, "invertir", lat_invertir_cadena, 1);
     
 
     /*50 conversion de tipos de dato*/
@@ -393,7 +393,7 @@ lat_mv* lat_mv_crear()
     __registrar_cfuncion(mv, "agregar", lat_agregar, 2);
     __registrar_cfuncion(mv, "extender", lat_extender, 2);
     __registrar_cfuncion(mv, "eliminar_indice", lat_eliminar_indice, 2);
-    __registrar_cfuncion(mv, "invertir", lat_invertir, 1);
+    __registrar_cfuncion(mv, "invertir_lista", lat_invertir_lista, 1);
 
     /*99 otras funciones */
     __registrar_cfuncion(mv, "sistema", lat_sistema, 1);
@@ -497,18 +497,6 @@ void __imprimir_objeto(lat_mv* vm, lat_objeto* in)
 }
 
 void lat_imprimir(lat_mv* vm)
-{
-    lat_objeto* o = lat_desapilar(vm);
-    if(o == NULL){
-        printf("nulo");
-    }else{
-        //Lat_DECREF(o);
-        __imprimir_objeto(vm, o);
-    }
-    printf("\n");
-}
-
-void lat_contenido(lat_mv* vm)
 {
     lat_objeto* o = lat_desapilar(vm);
     if(o == NULL){
@@ -1397,7 +1385,7 @@ void lat_eliminar_indice(lat_mv* vm)
     }
 }
 
-void lat_invertir(lat_mv* vm){
+void lat_invertir_lista(lat_mv* vm){
     lat_objeto* a = lat_desapilar(vm);
     lista* lst = __lista(a);
     lista* new = __lista_crear();

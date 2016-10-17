@@ -79,14 +79,16 @@ extern char* filename;
 
 /* Envia un mensaje de error */
 #define lat_error(M, ...)                               \
-  {                                                   \
-    fprintf(stderr, "Error: " M " en archivo '%s'.\n", ##__VA_ARGS__, filename); \
+  {                                              \
+    if (filename) { fprintf(stderr, "Error: " M " en archivo '%s'.\n", ##__VA_ARGS__, filename); } \
+    else { fprintf(stderr, " Error: " M "\n", ##__VA_ARGS__); } \
   }
 
 /* Envia un mensaje de error */
 #define lat_fatal_error(M, ...) \
   { \
-    fprintf(stderr, " Error: " M " en archivo '%s'.\n", ##__VA_ARGS__, filename); \
+    if (filename) { fprintf(stderr, " Error: " M " en archivo '%s'.\n", ##__VA_ARGS__, filename); } \
+    else { fprintf(stderr, " Error: " M "\n", ##__VA_ARGS__); } \
     exit(1); \
   }
 

@@ -242,8 +242,6 @@ lat_objeto* lat_definir_cfuncion(lat_mv* vm, void (*function)(lat_mv* vm));
   */
 void lat_imprimir(lat_mv* vm);
 
-void lat_contenido(lat_mv* vm);
-
 /**\brief Ejecuta una cadena de codigo Latino
   *
   *\param vm: Apuntador a la MV
@@ -435,7 +433,9 @@ void lat_eliminar_indice(lat_mv* vm);
   *
   *\param vm: Apuntador a la MV
   */
-void lat_invertir(lat_mv* vm);
+void lat_invertir_lista(lat_mv* vm);
+
+void lat_invertir_cadena(lat_mv* vm);
 
 void lat_json_decodificar(lat_mv* vm);
 
