@@ -100,8 +100,7 @@ bool __lista_contiene_valor(lista* list, void* data)
 static json_t* __cargar_json(const char *text) {
     json_t *root;
     json_error_t error;
-    root = json_loads(text, 0, &error);
-    //root = json_loads(text, JSON_DECODE_ANY, &error);
+    root = json_loads(text, 0, &error);    
     if (root) {
         return root;
     } else {
