@@ -1281,7 +1281,7 @@ yysyntax_error (YYSIZE_T *yymsg_alloc, char **yymsg,
       case N:                               \
         yyformat = S;                       \
       break
-     YYCASE_(0, YY_("error de sintaxis"));
+      YYCASE_(0, YY_("error de sintaxis"));
       YYCASE_(1, YY_("error de sintaxis inesperado: %s"));
       YYCASE_(2, YY_("error de sintaxis inesperado: %s, se esperaba: %s"));
       YYCASE_(3, YY_("error de sintaxis inesperado: %s, se esperaba: %s ó %s"));
