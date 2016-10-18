@@ -550,7 +550,7 @@ static const yytype_uint16 yyrline[] =
    First, the terminals, then, starting at YYNTOKENS, nonterminals.  */
 static const char *const yytname[] =
 {
-  "$end", "error", "$undefined", "VERDADERO", "FALSO", "NULO", "NUMERICO",
+  "SINTAXIS INCOMPLETA", "error", "INDEFINIDO", "VERDADERO", "FALSO", "NULO", "NUMERICO",
   "CADENA", "IDENTIFICADOR", "SI", "FIN", "SINO", "MIENTRAS", "HACER",
   "ROMPER", "CONTINUAR", "CUANDO", "FUNCION", "DESDE", "KBOOL", "RETORNO",
   "INCLUIR", "ELEGIR", "CASO", "DEFECTO", "ATRIBUTO", "MAYOR_QUE",
