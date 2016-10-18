@@ -4,4 +4,8 @@ Menu propiedades del proyecto-> Debugging -> Command Arguments. Agregar
 $(SolutionDir)..\ejemplos\debug.lat
 */
 
-escribir(escribir('aa'))
+str = "\"este año\n es\\2016\t/2018\/xyz+€+&&||{}¿?`|°!#$% ()=?¡ü+~*{}[^`]0x4C\""
+inv = invertir(str)
+escribir(str)
+escribir(inv)
+escribir(str, 1)  #imprime caracteres escapados \c (\n\t, etc)

@@ -25,6 +25,7 @@ THE SOFTWARE.
 #include <stddef.h>
 #include <stdio.h>
 #include <string.h>
+//#include <wchar.h>
 #include <math.h>
 
 #include <jansson.h>
@@ -371,8 +372,8 @@ lat_mv* lat_mv_crear()
     __registrar_cfuncion(mv, "separar_en_palabras", lat_separar, 2);
 
     /*40 entrada / salida */
-    __registrar_cfuncion(mv, "imprimir", lat_imprimir, 1);
-    __registrar_cfuncion(mv, "escribir", lat_imprimir, 1);
+    __registrar_cfuncion(mv, "imprimir", lat_imprimir, 2);
+    __registrar_cfuncion(mv, "escribir", lat_imprimir, 2);
     __registrar_cfuncion(mv, "leer", lat_leer, 0);
     __registrar_cfuncion(mv, "leer_archivo", lat_leer_archivo, 1);
     __registrar_cfuncion(mv, "escribir_archivo", lat_escribir_archivo, 2);
@@ -479,39 +480,60 @@ lat_objeto* lat_definir_cfuncion(lat_mv* vm, void (*function)(lat_mv* vm))
     return ret;
 }
 
-void __imprimir_objeto(lat_mv* vm, lat_objeto* in)
+void __imprimir_objeto(lat_mv* vm, lat_objeto* in, bool fmt)
 {
     char *tmp1 = NULL;
     if(in->tipo != T_STR){
         tmp1 = __objeto_a_cadena(in);
-        char *tmp2 = __str_analizar(tmp1, strlen(tmp1));
+        char *tmp2;
+        if(fmt){
+            tmp2 = __str_analizar_fmt(tmp1, strlen(tmp1));
+        }else{
+            tmp2 = __str_analizar(tmp1, strlen(tmp1));
+        }
         fprintf(stdout, "%s", tmp2);
+        //wprintf(stdout, "%s", tmp2);
         __memoria_liberar(tmp2);
     }else{
         char *s = __cadena(in);
-        tmp1 = __str_analizar(s, strlen(s));
+        if(fmt){
+            tmp1 = __str_analizar_fmt(s, strlen(s));
+        }else{
+            tmp1 = __str_analizar(s, strlen(s));
+        }
         fprintf(stdout, "%s", tmp1);
+        //fprintf(stdout, "%s", s);
+        //return;
     }
     __memoria_liberar(tmp1);
 }
 
 void lat_imprimir(lat_mv* vm)
 {
-    lat_objeto* o = lat_desapilar(vm);
-    if(o == NULL){
+    lat_objeto* f = lat_desapilar(vm);
+    bool fmt = false;
+    if(f == NULL){
         printf("nulo");
     }else{
         //Lat_DECREF(o);
-        __imprimir_objeto(vm, o);
+        lat_objeto* o = lat_desapilar(vm);
+        if(f->tipo != T_NULL){
+            fmt = __objeto_a_logico(f);
+        }
+        __imprimir_objeto(vm, o, fmt);
     }
     printf("\n");
 }
 
-void __imprimir_lista(lat_mv* vm, lista* l)
+void __imprimir_lista(lat_mv* vm, lista* l, bool fmt)
 {
     char *tmp1 = __lista_a_cadena(l);
     //fprintf(stdout, "%s", tmp1);
-    fprintf(stdout, "%s", __str_analizar(tmp1, strlen(tmp1)));
+    if(fmt){
+        fprintf(stdout, "%s", __str_analizar_fmt(tmp1, strlen(tmp1)));
+    }else{
+        fprintf(stdout, "%s", __str_analizar(tmp1, strlen(tmp1)));
+    }
     __memoria_liberar(tmp1);
 }
 

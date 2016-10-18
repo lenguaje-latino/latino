@@ -217,16 +217,3 @@ void lat_leer_lineas(lat_mv *vm)
     fclose(fp);
     lat_apilar(vm, lineas);
 }
-
-void lat_invertir_cadena(lat_mv *vm)
-{
- lat_objeto* a = lat_desapilar(vm);
- char salida[25]={0}, largo, i, x;
- largo = strlen(__cadena(a)) - 1;
- for(i=largo, x=0; i >=0; i--, x++)
- {
-   salida[x]=__cadena(a)[i];
- }
-  lat_objeto* res = lat_cadena_nueva(vm, salida);
-  lat_apilar(vm, res);
-}
