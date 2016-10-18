@@ -550,7 +550,7 @@ static const yytype_uint16 yyrline[] =
    First, the terminals, then, starting at YYNTOKENS, nonterminals.  */
 static const char *const yytname[] =
 {
-  "$end", "error", "$undefined", "VERDADERO", "FALSO", "NULO", "NUMERICO",
+  "SINTAXIS INCOMPLETA", "error", "INDEFINIDO", "VERDADERO", "FALSO", "NULO", "NUMERICO",
   "CADENA", "IDENTIFICADOR", "SI", "FIN", "SINO", "MIENTRAS", "HACER",
   "ROMPER", "CONTINUAR", "CUANDO", "FUNCION", "DESDE", "KBOOL", "RETORNO",
   "INCLUIR", "ELEGIR", "CASO", "DEFECTO", "ATRIBUTO", "MAYOR_QUE",
@@ -1281,12 +1281,12 @@ yysyntax_error (YYSIZE_T *yymsg_alloc, char **yymsg,
       case N:                               \
         yyformat = S;                       \
       break
-      YYCASE_(0, YY_("syntax error"));
-      YYCASE_(1, YY_("syntax error, unexpected %s"));
-      YYCASE_(2, YY_("syntax error, unexpected %s, expecting %s"));
-      YYCASE_(3, YY_("syntax error, unexpected %s, expecting %s or %s"));
-      YYCASE_(4, YY_("syntax error, unexpected %s, expecting %s or %s or %s"));
-      YYCASE_(5, YY_("syntax error, unexpected %s, expecting %s or %s or %s or %s"));
+      YYCASE_(0, YY_("error de sintaxis"));
+      YYCASE_(1, YY_("error de sintaxis inesperado: %s"));
+      YYCASE_(2, YY_("error de sintaxis inesperado: %s, se esperaba: %s"));
+      YYCASE_(3, YY_("error de sintaxis inesperado: %s, se esperaba: %s ó %s"));
+      YYCASE_(4, YY_("error de sintaxis inesperado: %s, se esperaba: %s, %s ó %s"));
+      YYCASE_(5, YY_("error de sintaxis inesperado: %s, se esperaba: %s, %s, %s ó %s"));
 # undef YYCASE_
     }
 
