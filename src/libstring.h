@@ -35,6 +35,8 @@ THE SOFTWARE.
 *
 */
 
+char* __str_analizar_fmt(const char* s, size_t len);
+
 /**\brief Analiza una cadena de caracteres
   *
   * \param s: Apuntador a una cadena de caracteres
@@ -171,8 +173,6 @@ char* __str_decimal_a_cadena(double d);
   *\return char*: Apuntador a cadena
   */
 char* __str_logico_a_cadena(int i);
-
-char* __str_concatenar(char* s1, char* s2);
 
 /** concatenar: Une dos cadenas
   *
@@ -334,5 +334,7 @@ void lat_es_alfanumerico(lat_mv* vm);
 *
 */
 void lat_separar(lat_mv* vm);
+
+void lat_invertir_cadena(lat_mv* vm);
 
 #endif // !_LIBSTRING_H_

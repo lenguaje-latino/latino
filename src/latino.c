@@ -22,6 +22,8 @@ THE SOFTWARE.
 #include <stdlib.h>
 #include <string.h>
 #include <locale.h>
+#include <ctype.h>
+#include <limits.h>
 
 #include "linenoise/linenoise.h"
 #include "latino.h"
@@ -351,7 +353,10 @@ static void lat_repl(lat_mv *vm)
 
 int main(int argc, char *argv[])
 {
-    setlocale (LC_ALL, "es_MX");
+    //setlocale(LC_ALL, "en_US");
+    //setlocale(LC_ALL, "es_MX");    
+    setlocale(LC_ALL, "es_MX");
+    setlocale(LC_CTYPE, "");
     int i;
     char *infile = NULL;
     int pe = false;

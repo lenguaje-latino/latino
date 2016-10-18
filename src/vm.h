@@ -137,14 +137,14 @@ const char* __obtener_bytecode_nombre(int inst);
   *
   *\param vm: Apuntador a la MV
   */
-void __imprimir_objeto(lat_mv* vm, lat_objeto* in);
+void __imprimir_objeto(lat_mv* vm, lat_objeto* in, bool fmt);
 
 /**\brief Envia a consola el contenido de la lista
   *
   *\param vm: Apuntador a la MV
   *\param l: Apuntador a la lista
   */
-void __imprimir_lista(lat_mv* vm, lista* l);
+void __imprimir_lista(lat_mv* vm, lista* l, bool fmt);
 
 /**\brief Obtiene un elemento de la lista en la posicion indicada
   *
@@ -434,8 +434,6 @@ void lat_eliminar_indice(lat_mv* vm);
   *\param vm: Apuntador a la MV
   */
 void lat_invertir_lista(lat_mv* vm);
-
-void lat_invertir_cadena(lat_mv* vm);
 
 void lat_json_decodificar(lat_mv* vm);
 

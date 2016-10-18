@@ -31,9 +31,8 @@ THE SOFTWARE.
 #include "liblist.h"
 #include "gc.h"
 
-char* __str_analizar(const char* s, size_t len)
-{
-    //return strdup(s);    
+char* __str_analizar_fmt(const char* s, size_t len)
+{    
     char* ret = __memoria_asignar(len + 1);
     int i = 0;
     int j = 0;
@@ -53,7 +52,7 @@ char* __str_analizar(const char* s, size_t len)
             case '"':
                 c = '\"';
                 i++;
-                goto save;
+                goto save;            
             case 'a':
                 c = '\a';
                 i++;
@@ -77,29 +76,87 @@ char* __str_analizar(const char* s, size_t len)
             case 't':
                 c = '\t';
                 i++;
-                goto save;
+                goto save;            
             case '\\':
                 c = '\\';
                 i++;
-                goto save;
+                goto save;            
             case 'u':
                 c = s[i];
                 ret[j] = c;
                 j++;  
                 i++;
                 int k;
-                for(k = 0; k < 4; k++) {
+                for(k = 0; k <= 4; k++) {
                     c = s[i];
                     ret[j] = c;
                     j++;
                     i++;
                 }                    
-            default:
+            default:                
+                c = s[i];                
                 break;
             }
         }
         break;
-        default:
+        default:            
+            c = s[i];
+            break;
+        }
+save:
+        ret[j] = c;
+        j++;
+    }
+    ret[j] = '\0';
+    return ret;    
+}
+
+char* __str_analizar(const char* s, size_t len)
+{    
+    char* ret = __memoria_asignar(len + 1);
+    int i = 0;
+    int j = 0;
+    int c = '@';
+    for (i = 0; i < ((int)len); i++)
+    {
+        switch (s[i])
+        {
+        case '\\':
+        {
+            switch (s[i + 1])
+            {
+            /*case '/':
+                c = '/';
+                i++;
+                goto save;*/            
+            case '\\':
+                c = '\\';
+                i++;
+                ret[j] = c;
+                j++;
+                c = '\\';
+                i++;
+                ret[j] = c;
+                j++;
+            case 'u':
+                c = s[i];
+                ret[j] = c;
+                j++;  
+                i++;
+                int k;
+                for(k = 0; k <= 4; k++) {
+                    c = s[i];
+                    ret[j] = c;
+                    j++;
+                    i++;
+                }                    
+            default:                
+                c = s[i];                
+                break;
+            }
+        }
+        break;
+        default:            
             c = s[i];
             break;
         }
@@ -684,4 +741,49 @@ void lat_separar(lat_mv* vm)
         }
     }
     lat_apilar(vm, lat_lista_nueva(vm, lst));
+}
+
+void lat_invertir_cadena(lat_mv *vm)
+{
+    lat_objeto* a = lat_desapilar(vm);
+    //parseamos la cadena por si tiene caracteres de escape(\n, \t, etc...)
+    char* slst = __str_analizar(__cadena(a), strlen(__cadena(a)));
+    int i=0;
+    int p = 0;
+    char *cad;
+    lista *cads = __lista_crear();
+    //separamos en una lista de caracteres
+    char ch[8];
+    for(p; p < strlen(slst); p++){
+        i=0;
+        if(slst[p] < 0){            
+            while(slst[p] < 0){
+                ch[i] = slst[p];
+                p++;
+                i++;                
+            }
+            p--;
+        }else{
+            i=0;
+            ch[i] = slst[p];
+            i++;
+        }
+        ch[i] = '\0';        
+        cad = lat_cadena_nueva(vm, ch);
+        __lista_apilar(cads, cad);
+    }
+    //unimos los caracteres
+    char* res = __memoria_asignar(__cadena(a));
+    for(i=__lista_longitud(cads)-1;i>=0; i--){
+        char *elem = __cadena(__lista_obtener_elemento(cads, i));        
+        res = strcat(res, elem);
+    }
+    int len = strlen(res);
+    res[len+1] = '\0';  
+    lat_objeto* obj = lat_cadena_nueva(vm, res);
+    lat_apilar(vm, obj);    
+    //liberamos los objetos temporales
+    __lista_destruir(cads);
+    __memoria_liberar(res);
+    __memoria_liberar(slst);
 }
