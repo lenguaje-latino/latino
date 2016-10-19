@@ -225,8 +225,7 @@ void lat_dormir(lat_mv *vm)
 		// si la libreria es de windows.h la funcion es con S mayúscula
 		Sleep(__numerico(segundos));
 		usleep(__numerico(segundos));
-	#endif
-	#ifdef _WIN64
+	#elif _WIN64
 		Sleep(__numerico(segundos));
 		usleep(__numerico(segundos));
 	#else
