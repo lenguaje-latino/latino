@@ -220,16 +220,19 @@ void lat_leer_lineas(lat_mv *vm)
 
 void lat_dormir(lat_mv *vm)
 {
-	lat_objeto* segundos = lat_desapilar(vm);
+   lat_objeto* segundos = lat_desapilar(vm);
+   if (__numerico(segundos)) {
+	unsigned int segundos;
 	#ifdef _WIN32
 		// si la libreria es de windows.h la funcion es con S mayúscula
-		Sleep(__numerico(segundos));
-		usleep(__numerico(segundos));
+		Sleep(segundos);
+		usleep(segundos);
 	#elif _WIN64
-		Sleep(__numerico(segundos));
-		usleep(__numerico(segundos));
+		Sleep(segundos);
+		usleep(segundos);
 	#else
-		sleep(__numerico(segundos));
-		usleep(__numerico(segundos));
+		sleep(segundos);
+		usleep(segundos);
 	#endif
+     }
 }
