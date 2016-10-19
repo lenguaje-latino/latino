@@ -1,0 +1,9 @@
+#muestra un mensaje despues de N milisegundos
+funcion alarma(tiempo)
+    dormir(tiempo)
+    escribir("despierta...")
+fin
+
+escribir("estoy durmiendo...")
+#espera 10 segundos y muestra el mensaje
+alarma(10000)

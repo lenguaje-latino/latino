@@ -31,6 +31,7 @@ THE SOFTWARE.
 /* Visual Leak Detector for Visual C++ */
 //#include <vld.h>
 #define LAT_FUNC extern
+#include <conio.h>
 #include <windows.h>
 #include <limits.h>
 #define snprintf(s, l, f, i) _snprintf(s, l, f, i)
@@ -40,6 +41,8 @@ THE SOFTWARE.
 #define __lat_popen(L,c,m)		((void)L, _popen(c,m))
 #define __lat_pclose(L,file)		((void)L, _pclose(file))
 #define stdup _strdup
+#define sleep Sleep
+#define __lat_clear "@cls"
 #endif
 #ifdef __linux__
 #include <dlfcn.h>
@@ -50,6 +53,7 @@ THE SOFTWARE.
 #define malloc_size(ptr) malloc_usable_size(ptr)
 #define __lat_popen(L,c,m)	((void)L, fflush(NULL), popen(c,m))
 #define __lat_pclose(L,file)	((void)L, pclose(file))
+#define __lat_clear "clear"
 #endif
 
 /** Determina el compilador*/
