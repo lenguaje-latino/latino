@@ -141,7 +141,7 @@ void lat_ejecutar_pipe(lat_mv *vm){
 
 void lat_limpiar(lat_mv *vm)
 {
-    system("@cls||clear");
+	system(__lat_clear);
 }
 
 void lat_copiar_texto(lat_mv* vm)
@@ -221,18 +221,5 @@ void lat_leer_lineas(lat_mv *vm)
 void lat_dormir(lat_mv *vm)
 {
    lat_objeto* segundos = lat_desapilar(vm);
-   if (__numerico(segundos)) {
-	unsigned int segundos;
-	#ifdef _WIN32
-		// si la libreria es de windows.h la funcion es con S mayúscula
-		Sleep(segundos);
-		usleep(segundos);
-	#elif _WIN64
-		Sleep(segundos);
-		usleep(segundos);
-	#else
-		sleep(segundos);
-		usleep(segundos);
-	#endif
-     }
+   sleep(__numerico(segundos));
 }
