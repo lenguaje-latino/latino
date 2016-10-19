@@ -91,4 +91,6 @@ void lat_copiar_texto(lat_mv *vm);
   */
 void lat_leer_lineas(lat_mv *vm);
 
+void lat_dormir(lat_mv *vm);
+
 #endif /* !_LIBIO_H_ */
