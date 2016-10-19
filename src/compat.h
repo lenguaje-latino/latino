@@ -41,8 +41,8 @@ THE SOFTWARE.
 #define __lat_popen(L,c,m)		((void)L, _popen(c,m))
 #define __lat_pclose(L,file)		((void)L, _pclose(file))
 #define stdup _strdup
-#define sleep Sleep
 #define __lat_clear "@cls"
+#define __lat_sleep(mili) Sleep(mili)
 #endif
 #ifdef __linux__
 #include <dlfcn.h>
@@ -54,6 +54,7 @@ THE SOFTWARE.
 #define __lat_popen(L,c,m)	((void)L, fflush(NULL), popen(c,m))
 #define __lat_pclose(L,file)	((void)L, pclose(file))
 #define __lat_clear "clear"
+#define __lat_sleep(seg) sleep(seg/1000)
 #endif
 
 /** Determina el compilador*/

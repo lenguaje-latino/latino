@@ -220,6 +220,6 @@ void lat_leer_lineas(lat_mv *vm)
 
 void lat_dormir(lat_mv *vm)
 {
-   lat_objeto* segundos = lat_desapilar(vm);
-   sleep(__numerico(segundos));
+   lat_objeto* mili_segundos = lat_desapilar(vm);
+   __lat_sleep(__numerico(mili_segundos));
 }
