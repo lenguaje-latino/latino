@@ -217,3 +217,16 @@ void lat_leer_lineas(lat_mv *vm)
     fclose(fp);
     lat_apilar(vm, lineas);
 }
+
+void lat_dormir(lat_mv *vm)
+{
+	lat_objeto* segundos = lat_desapilar(vm);
+	#ifdef _WIN32
+		// si la libreria es de windows la funcion es con S mayúscula
+		Sleep(__numerico(segundos));
+		usleep(__numerico(segundos));
+	#else
+		sleep(__numerico(segundos));
+		usleep(__numerico(segundos));
+	#endif
+}
