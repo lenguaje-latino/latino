@@ -340,6 +340,7 @@ static void lat_repl(lat_mv *vm)
             if(o != NULL && (strstr(buf, "escribir") == NULL && strstr(buf, "imprimir") == NULL))
             {
                 lat_apilar(vm, o);
+                lat_apilar(vm, vm->objeto_nulo);
                 lat_imprimir(vm);
             }        
         }
