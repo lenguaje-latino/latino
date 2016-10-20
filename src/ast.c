@@ -21,6 +21,7 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 */
+
 #include <math.h>
 #include <stdbool.h>
 
@@ -135,16 +136,6 @@ ast *nodo_nuevo_asignacion_lista_elem(ast *exp, ast *id, ast *pos)
     return (ast *)a;
 }
 
-/*ast *nodo_nuevo_asignacion_dicc_elem(ast *exp, ast *id, ast *llave)
-{
-    nodo_dicc_elem *a = (nodo_dicc_elem*)__memoria_asignar(sizeof(nodo_dicc_elem));
-    a->tipo = NODO_DICC_ASIGNAR_ELEMENTO;
-    a->expresion = exp;
-    a->identificador = id;
-    a->llave = llave;
-    return (ast *)a;
-}*/
-
 ast *nodo_nuevo_si(ast *cond, ast *th, ast *el)
 {
     nodo_si *a = (nodo_si*)__memoria_asignar(sizeof(nodo_si));
@@ -206,7 +197,6 @@ ast* nodo_nuevo_incluir(ast* ruta)
 }
 
 ast* nodo_reducir_constantes(nodo_tipo nt, ast* lhs, ast* rhs){
-    //le dejamos el trabajo a la maquina virtual :)
     return nodo_nuevo(nt, lhs, rhs);
 }
 
@@ -242,14 +232,6 @@ void nodo_liberar(ast *a)
             nodo_liberar(nelem->posicion);
             break;
         }
-        /*case NODO_DICC_ASIGNAR_ELEMENTO:
-        {
-            nodo_dicc_elem* nelem = (nodo_dicc_elem*)a;
-            nodo_liberar(nelem->expresion);
-            nodo_liberar(nelem->identificador);
-            nodo_liberar(nelem->llave);
-            break;
-        }*/
         case NODO_IDENTIFICADOR:
         case NODO_VALOR:
             if(a->valor->tipo == VALOR_CADENA){
@@ -324,47 +306,40 @@ static int nodo_analizar(lat_mv *vm, ast *node, lat_bytecode *bcode, int i)
     {
     case NODO_INCLUIR:
     {
-        //TODO: Incluir rutas con punto ej. incluir "lib.modulos.myModulo"
-        char* archivo = node->izq->valor->val.cadena;
-        lat_objeto* mod = lat_cadena_nueva(vm, archivo);
-        lista *modulos = __lista(vm->modulos);
         int status;
-        if (!__lista_contiene_valor(modulos, (void*)mod))
-        {
-            //encontrar el modulo en la ruta actual
-            char dir_actual[MAX_PATH_LENGTH];
-            getcwd(dir_actual, sizeof(dir_actual));
-            strcat(dir_actual, PATH_SEP);
-            strcat(dir_actual, archivo);
-            if (!__str_termina_con(dir_actual, ".lat"))
-            {
-                strcat(dir_actual, ".lat");
-            }
-            if (__io_es_legible(dir_actual))
-            {
+        char* archivo = node->izq->valor->val.cadena;          
+        lista *modulos = __lista(vm->modulos);        
+        char dir_actual[MAX_PATH_LENGTH]; 
+        getcwd(dir_actual, sizeof(dir_actual));
+        strcat(dir_actual, PATH_SEP);
+        char* latino_lib = getenv("LATINO_LIB");
+        if(latino_lib != NULL) strcat(latino_lib, PATH_SEP);        
+        lat_objeto* mod = lat_cadena_nueva(vm, __str_reemplazar(archivo, ".", PATH_SEP));
+        char *archivo_ext = __str_concatenar(__str_reemplazar(archivo, ".", PATH_SEP), ".lat");
+        //buscar en ruta actual
+        mod = lat_cadena_nueva(vm, __str_concatenar(dir_actual, archivo_ext));
+        if (__io_es_legible(__cadena(mod))){
+            if (!__lista_contiene_valor(modulos, mod)){
+                //printf("buscar con terminacion .lat, buscar en ruta actual: %s\n", __cadena(mod));
                 __lista_apilar(modulos, mod);
-                pn(vm, lat_analizar_archivo(dir_actual, &status));
-            }
-            else
-            {
-                //sino existe buscar en el path_home de latino/lib
-                char* latino_lib = getenv("LATINO_LIB");
-                if (latino_lib != NULL)
-                {
-                    strcat(latino_lib, PATH_SEP);
-                    strcat(latino_lib, archivo);
-                    if (!__str_termina_con(latino_lib, ".lat"))
-                    {
-                        strcat(latino_lib, ".lat");
-                    }
-                    if (__io_es_legible(latino_lib))
-                    {
-                        __lista_apilar(modulos, mod);
-                        pn(vm, lat_analizar_archivo(latino_lib, &status));
-                    }
-                }
+                pn(vm, lat_analizar_archivo(__cadena(mod), &status));
+                break;
             }
         }
+        //buscar en $LATINO_LIB
+        if(latino_lib != NULL){
+            mod = lat_cadena_nueva(vm, __str_concatenar(latino_lib, archivo_ext));
+            if (__io_es_legible(__cadena(mod)))
+            {
+                if (!__lista_contiene_valor(modulos, mod)){
+                    //printf("buscar con terminacion .lat, buscar en $LATINO_LIB: %s\n", __cadena(mod)
+                    __lista_apilar(modulos, mod);
+                    pn(vm, lat_analizar_archivo(__cadena(mod), &status));
+                    break;
+                }
+            }
+        }        
+        lat_fatal_error("Linea %d, %d: %s '%s'", node->izq->num_linea, node->izq->num_columna,  "No se pudo incluir el modulo", archivo);        
     }
     break;
     case NODO_BLOQUE:
@@ -759,33 +734,7 @@ static int nodo_analizar(lat_mv *vm, ast *node, lat_bytecode *bcode, int i)
             pn(vm, node->izq);
         }
     }
-    break;
-    /*case NODO_DICC_ASIGNAR_ELEMENTO:
-    {
-        nodo_dicc_elem* de = (nodo_dicc_elem*)node;
-        if(de->expresion){
-            pn(vm, de->expresion);
-        }
-        if(de->identificador){
-            pn(vm, de->identificador);
-        }
-        if(de->llave){
-            pn(vm, de->llave);
-        }
-        dbc(STORE_SUBSCR, 0, 0, NULL);
-    }
-    break;
-    case NODO_DICC_OBTENER_ELEMENTO:
-    {
-        if(node->izq){
-            pn(vm, node->izq);
-        }
-        if(node->der){
-            pn(vm, node->der);
-        }
-        dbc(BINARY_SUBSCR, 0, 0, NULL);
-    }
-    break;*/
+    break;    
     default:
         printf("ERROR node->tipo:%i\n", node->tipo);
         return 0;
