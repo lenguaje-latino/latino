@@ -12,7 +12,7 @@ for all in ${!DEBIAN_DIBS[@]}; do
 	dib=$(echo ${OS} | tr [:upper:] [:lower:])
 	if [ "${dib}" == "${DEBIAN_DIBS[$all]}" ]; then
 		echo ${dib}
-fi
+	fi
 done
 }
 
