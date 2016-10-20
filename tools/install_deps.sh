@@ -1,8 +1,26 @@
-#!/usr/bin/bash
-echo "Instalando dependecias de paquetes para latino..."
+#!/bin/bash
 OS=$(lsb_release -si)
-if [ "$OS" == "Ubuntu" ] || [ "$OS" == "Debian" ] ;
-then
+
+DEBIAN_DIBS=(
+	"debian"
+	"ubuntu"
+	"mint"
+	)
+
+dib_debian() {
+for all in ${!DEBIAN_DIBS[@]}; do
+	dib=$(echo ${OS} | tr [:upper:] [:lower:])
+	if [ "${dib}" == "${DEBIAN_DIBS[$all]}" ]; then
+		echo ${dib}
+fi
+done
+}
+
+ES_DEBIAN=$(dib_debian)
+
+echo "Instalando dependecias de "${OS}" para Latino..."
+
+if [ "$ES_DEBIAN" ]; then
   sudo apt-get update -qq -y
   sudo apt-get install bison -y
   sudo apt-get install flex -y
@@ -13,8 +31,7 @@ then
   sudo apt-get install libcurl4-openssl-dev -y
   sudo apt-get install curl -y
   sudo apt-get autoremove -qq -y
-elif [ "$OS" == "Fedora" ] ;
-then
+else
   sudo dnf update
   sudo dnf install bison
   sudo dnf install flex
