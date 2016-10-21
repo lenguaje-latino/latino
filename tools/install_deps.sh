@@ -29,3 +29,8 @@ packages_fedora=(
     )
 
 source tools/lib_dibs
+
+update_packages_debian
+update_packages_fedora
+autoremove_packages_debian
+autoremove_packages_fedora
