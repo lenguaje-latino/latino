@@ -2,6 +2,7 @@
 
 echo "Instalando dependecias de "$(lsb_release -si)" para Latino..."
 
+sudo=true
 action=install
 
 packages_debian=(
