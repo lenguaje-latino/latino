@@ -1,0 +1,4 @@
+funcion sumatoria(a, b)
+  retorno (a + b)
+fin
+escribir("desde modulo: " . sumatoria(1,2))
