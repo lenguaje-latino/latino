@@ -1,0 +1,118 @@
+#!/bin/bash
+OS=$(lsb_release -si)
+
+DEBIAN_DIBS=(
+	"debian"
+	"ubuntu"
+	"linuxmint"
+	"canaima"
+	"mint"
+	)
+	
+FEDORA_DIBS=(
+	"debian"
+	"ubuntu"
+	"asplinux"
+	)
+	
+SUSELINUX_DIBS=(
+	"suse linux"
+	)
+	
+ARCHLINUX_DIBS=(
+ 	"archlinux"
+	"arch"
+	)
+
+dib_debian() {
+for all in ${!DEBIAN_DIBS[@]}; do
+	dib=$(echo ${OS} | tr [:upper:] [:lower:])
+	if [ "${dib}" == "${DEBIAN_DIBS[$all]}" ]; then
+		echo ${dib}
+	fi
+done
+}
+
+dib_suselinux() {
+for all in ${!SUSELINUX_DIBS[@]}; do
+	dib=$(echo ${OS} | tr [:upper:] [:lower:])
+	if [ "${dib}" == "${SUSELINUX_DIBS[$all]}" ]; then
+		echo ${dib}
+	fi
+done
+}
+
+dib_fedora() {
+for all in ${!FEDORA_DIBS[@]}; do
+	dib=$(echo ${OS} | tr [:upper:] [:lower:])
+	if [ "${dib}" == "${FEDORA_DIBS[$all]}" ]; then
+		echo ${dib}
+	fi
+done
+}
+
+dib_archlinux() {
+for all in ${!ARCHLINUX_DIBS[@]}; do
+	dib=$(echo ${OS} | tr [:upper:] [:lower:])
+	if [ "${dib}" == "${ARCHLINUX_DIBS[$all]}" ]; then
+		echo ${dib}
+	fi
+done
+}
+
+IS_DEBIAN=$(dib_debian)
+IS_FEDORA=$(dib_fedora)
+IS_SUSELINUX=$(dib_suselinux)
+IS_ARCHLINUX=$(dib_archlinux)
+
+if [ "$action" == "install" ]; then
+
+if [ "$IS_DEBIAN" ]; then
+  for package in ${!packages_debian[@]}; do
+		sudo apt-get install ${packages_debian[$package]} -y
+  done
+  
+elif [ "$IS_FEDORA" ]; then
+  for package in ${!packages_fedora[@]}; do
+		sudo dnf install ${packages_fedora[$package]} -y
+  done
+  
+elif [ "$IS_SUSELINUX" ]; then
+  for package in ${!packages_suselinux[@]}; do
+		sudo aptitude install ${packages_suselinux[$package]} -y
+  done
+  
+elif [ "$IS_ARCHLINUX" ]; then
+  for package in ${!packages_archlinux[@]}; do
+		sudo pacman -S ${packages_archlinux[$package]}
+  done 
+fi
+fi
+
+if [ "$action" == "remove" ]; then
+
+if [ "$IS_DEBIAN" ]; then
+  for package in ${!packages_debian[@]}; do
+		sudo apt-get remove ${packages_debian[$package]} -y
+  done
+  
+elif [ "$IS_FEDORA" ]; then
+  for package in ${!packages_fedora[@]}; do
+		sudo dnf remove ${packages_fedora[$package]} -y
+  done
+  
+elif [ "$IS_SUSELINUX" ]; then
+  for package in ${!packages_suselinux[@]}; do
+		sudo aptitude remove ${packages_suselinux[$package]} -y
+  done
+  
+elif [ "$IS_ARCHLINUX" ]; then
+  for package in ${!packages_archlinux[@]}; do
+		sudo pacman -R ${packages_archlinux[$package]}
+  done
+fi
+fi
+
+if [ "$action" == "end" ]; then
+  echo "Nothing to install or remove..."
+fi
