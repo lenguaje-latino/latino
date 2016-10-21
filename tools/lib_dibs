@@ -10,8 +10,7 @@ DEBIAN_DIBS=(
 	)
 
 FEDORA_DIBS=(
-	"debian"
-	"ubuntu"
+	"fedora"
 	"asplinux"
 	)
 
