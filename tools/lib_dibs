@@ -8,21 +8,26 @@ DEBIAN_DIBS=(
 	"canaima"
 	"mint"
 	)
-	
+
 FEDORA_DIBS=(
 	"debian"
 	"ubuntu"
 	"asplinux"
 	)
-	
+
 SUSELINUX_DIBS=(
 	"suse linux"
 	)
-	
+
 ARCHLINUX_DIBS=(
  	"archlinux"
 	"arch"
 	)
+
+unset prefix
+if [ "$sudo" == true ]; then
+	prefix="sudo"
+fi
 
 dib_debian() {
 for all in ${!DEBIAN_DIBS[@]}; do
@@ -65,26 +70,43 @@ IS_FEDORA=$(dib_fedora)
 IS_SUSELINUX=$(dib_suselinux)
 IS_ARCHLINUX=$(dib_archlinux)
 
+# Debian/Ubuntu or derivatives functions
+function update_packages_debian() { if [ "$IS_DEBIAN" ]; then $prefix apt-get update -y; fi }
+function upgrade_packages_debian() { if [ "$IS_DEBIAN" ]; then $prefix apt-get upgrade -y; fi }
+function autoremove_packages_debian() { if [ "$IS_DEBIAN" ]; then $prefix apt-get autoremove -y; fi }
+# Fedora or drivatives functions
+function update_packages_fedora() { if [ "$IS_FEDORA" ]; then $prefix dnf update -y; fi }
+function upgrade_packages_fedora() { if [ "$IS_FEDORA" ]; then $prefix dnf upgrade -y; fi }
+function autoremove_packages_fedora() { if [ "$IS_FEDORA" ]; then $prefix dnf autoremove -y; fi }
+# SuseLinux or drivatives functions
+function update_packages_suselinux() { if [ "$IS_SUSELINUX" ]; then $prefix aptitude update -y; fi }
+function upgrade_packages_suselinux() { if [ "$IS_SUSELINUX" ]; then $prefix aptitude safe-upgrade -y; fi }
+function autoremove_packages_suselinux() { if [ "$IS_SUSELINUX" ]; then $prefix aptitude full-upgrade -y; fi }
+# ArchLinux or derivatives functions
+function update_packages_archlinux() { if [ "$IS_ARCHLINUX" ]; then $prefix pacman -Sy; fi }
+function upgrade_packages_archlinux() { if [ "$IS_ARCHLINUX" ]; then $prefix pacman -Syu $(pacman -Qq) -Sy; fi }
+function autoremove_packages_archlinux() { if [ "$IS_ARCHLINUX" ]; then $prefix pacman -R $(pacman -Qdtq) -Sy; fi }
+
 if [ "$action" == "install" ]; then
 
 if [ "$IS_DEBIAN" ]; then
   for package in ${!packages_debian[@]}; do
-		sudo apt-get install ${packages_debian[$package]} -y
+		$prefix apt-get install ${packages_debian[$package]} -y
   done
   
 elif [ "$IS_FEDORA" ]; then
   for package in ${!packages_fedora[@]}; do
-		sudo dnf install ${packages_fedora[$package]} -y
+		$prefix dnf install ${packages_fedora[$package]} -y
   done
   
 elif [ "$IS_SUSELINUX" ]; then
   for package in ${!packages_suselinux[@]}; do
-		sudo aptitude install ${packages_suselinux[$package]} -y
+		$prefix aptitude install ${packages_suselinux[$package]} -y
   done
   
 elif [ "$IS_ARCHLINUX" ]; then
   for package in ${!packages_archlinux[@]}; do
-		sudo pacman -S ${packages_archlinux[$package]}
+		$prefix pacman -S --noconfirm ${packages_archlinux[$package]}
   done 
 fi
 fi
@@ -93,22 +115,22 @@ if [ "$action" == "remove" ]; then
 
 if [ "$IS_DEBIAN" ]; then
   for package in ${!packages_debian[@]}; do
-		sudo apt-get remove ${packages_debian[$package]} -y
+		$prefix apt-get remove ${packages_debian[$package]} -y
   done
   
 elif [ "$IS_FEDORA" ]; then
   for package in ${!packages_fedora[@]}; do
-		sudo dnf remove ${packages_fedora[$package]} -y
+		$prefix dnf remove ${packages_fedora[$package]} -y
   done
   
 elif [ "$IS_SUSELINUX" ]; then
   for package in ${!packages_suselinux[@]}; do
-		sudo aptitude remove ${packages_suselinux[$package]} -y
+		$prefix aptitude remove ${packages_suselinux[$package]} -y
   done
   
 elif [ "$IS_ARCHLINUX" ]; then
   for package in ${!packages_archlinux[@]}; do
-		sudo pacman -R ${packages_archlinux[$package]}
+		$prefix pacman -R --noconfirm ${packages_archlinux[$package]}
   done
 fi
 fi
