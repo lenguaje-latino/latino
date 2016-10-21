@@ -27,5 +27,5 @@ packages_fedora=(
 	"kernel-devel"
 	"jsoncpp"
     )
-	
-source lib_dibs
+
+source tools/lib_dibs
