@@ -1,37 +1,31 @@
 #!/bin/bash
 
-echo "Instalando dependecias de "$(lsb_release -si)" para Latino..."
+action=install # Se selecciona la acción a hacer con los paquetes a seguir.
+sudo=true # Aquí obligas al usuario a ser sudo.
+update_packages=true # Aquí indica que al finalizar la instalación se actualizen los repositorios.
+upgrade_packages=true # Aquí indica que al finalizar la instalación se actualizen los paquetes.
+autoremove_packages=true # Aquí indica que al finalizar la instalación se autoremuevan los paquetes innecesarios.
 
-sudo=true
-action=install
+echo "Instalando dependecias para Latino..."
 
-packages_debian=(
-	"bison"
-	"flex"
-	"build-essential"
-	"gcc"
-	"g++"
+packages_all=( # Aquí indicamos los programas (generales) que se van a instalar en derivados de DEBIAN, Suse Linux, Archlinux y Fedora
+    "bison"
+    "flex"
+    "gcc"
+    "g++"
+    "curl"
 	"libjansson-dev"
-	"curl"
-	"libcurl4-openssl-dev"
+    "libcurl4-openssl-dev"
+    )
+    
+packages_debian=( # Aquí nomás los de Debian, Ubuntu o derivados
+	"build-essential"
     )
 
-packages_fedora=(
-	"bison"
-	"flex"
+packages_fedora=( # Aquí de Fedora o derivados
 	"build-essentials"
-	"gcc"
-	"g++"
-	"libjansson-dev"
-	"curl"
-	"libcurl4-openssl-dev"
 	"kernel-devel"
 	"jsoncpp"
     )
 
-source tools/lib_dibs
-
-update_packages_debian
-update_packages_fedora
-autoremove_packages_debian
-autoremove_packages_fedora
+source tools/lib_dibs # Aquí incluimos la librería de las acciones
