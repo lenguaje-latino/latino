@@ -109,7 +109,7 @@ elif [ "$IS_ARCHLINUX" ]; then
 		$prefix pacman -S --noconfirm ${packages_archlinux[$package]}
   done
 fi
-if [ ${!packages_all[@]} ]; then
+if [ "${!packages_all[@]}" ]; then
   for package in ${!packages_all[@]}; do
   	if [ "$IS_DEBIAN" ]; then $prefix apt-get install ${packages_all[$package]} -y; fi
 	if [ "$IS_FEDORA" ]; then $prefix dnf install ${packages_all[$package]} -y; fi
@@ -144,7 +144,7 @@ elif [ "$IS_ARCHLINUX" ]; then
 		$prefix pacman -R --noconfirm ${packages_archlinux[$package]}
   done
 fi
-if [ ${!packages_all[@]} ]; then
+if [ "${!packages_all[@]}" ]; then
   for package in ${!packages_all[@]}; do
   	if [ "$IS_DEBIAN" ]; then $prefix apt-get remove ${packages_all[$package]} -y; fi
 	if [ "$IS_FEDORA" ]; then $prefix dnf remove ${packages_all[$package]} -y; fi
