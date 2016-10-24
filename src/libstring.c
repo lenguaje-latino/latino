@@ -626,8 +626,12 @@ void lat_reemplazar(lat_mv* vm)
 {
     lat_objeto* c = lat_desapilar(vm);
     lat_objeto* b = lat_desapilar(vm);
-    lat_objeto* a = lat_desapilar(vm);
-    lat_apilar(vm, lat_cadena_nueva(vm, __str_reemplazar(__cadena(a), __cadena(b), __cadena(c))));
+    lat_objeto* a = lat_desapilar(vm);  
+    char *bf = __str_analizar_fmt(__cadena(b), strlen(__cadena(b)));
+    char *cf = __str_analizar_fmt(__cadena(c), strlen(__cadena(c)));
+    lat_apilar(vm, lat_cadena_nueva(vm, __str_reemplazar(__cadena(a), bf, cf)));
+    __memoria_liberar(bf);
+    __memoria_liberar(cf);
 }
 
 void lat_empieza_con(lat_mv* vm)
