@@ -111,11 +111,14 @@ typedef struct lat_mv
     lat_objeto* contexto_pila[256];   //< Arreglo para el contexto actual
     lat_objeto* objeto_verdadero;   //< Valor logico verdadero
     lat_objeto* objeto_falso;   //< Valor logico falso 
-    lat_objeto* objeto_nulo;
-    int apuntador_ctx;      //< Apuntador para el contexto de la pila        
-    bool REPL;  //< Indica si esta corriendo REPL
-    int num_callf;  //< Numero de llamadas a funcion recursivas
+    lat_objeto* objeto_nulo;    
+    lat_objeto* argv;
+    int argc;    
+    int apuntador_ctx;      //< Apuntador para el contexto de la pila            
+    int num_callf;  //< Numero de llamadas a funcion recursivas        
     size_t memoria_usada;   //< Tamanio de memoria creado dinamicamente
+    bool menu;
+    bool REPL;  //< Indica si esta corriendo REPL
     char *nombre_archivo;
 } lat_mv;
 
@@ -226,7 +229,7 @@ lat_objeto* lat_obtener_contexto(lat_mv* vm);
   *\param inslist: Lista de instrucciones de la funcion
   *\return lat_objeto: Apuntador a un objeto tipo funcion
   */
-lat_objeto* lat_definir_funcion(lat_mv* vm, lat_bytecode* inslist);
+lat_objeto* lat_definir_funcion(lat_mv* vm, lat_bytecode* inslist, int num_inst);
 
 /**\brief Define una funcion creada en C
   *

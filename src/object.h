@@ -94,6 +94,7 @@ typedef struct lat_objeto
     int num_linea;
     int num_columna;
     int num_params;	/**<Numero de parametros de una funcion definida por el usuario */
+    int num_inst;
     char* nombre_cfun;
     lat_datos_objeto datos;   /**< Informacion del objeto */
 } lat_objeto;

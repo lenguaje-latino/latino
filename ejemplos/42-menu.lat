@@ -1,0 +1,11 @@
+#!/usr/bin/latino
+
+/*
+ * ejecuta este arhchivo con parametros ej:
+ * ./latino 42-menu.lat "parametros" "aqui"
+ *
+ */
+funcion menu(argc, argv)
+    escribir("recibiendo " . argc ." parametros:")
+    escribir(argv)
+fin

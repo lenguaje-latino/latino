@@ -652,15 +652,18 @@ static int nodo_analizar(lat_mv *vm, ast *node, lat_bytecode *bcode, int i)
         fpn(vm, fun->sentencias);
         fdbc(RETURN_VALUE, 0, 0, NULL);
         funcion_bcode = __memoria_reasignar(funcion_bcode, sizeof(lat_bytecode) * (fi+1));
-        dbc(MAKE_FUNCTION, 0, 0, (void*)funcion_bcode);
+        dbc(MAKE_FUNCTION, fi+1, 0, (void*)funcion_bcode);
         funcion_bcode = NULL;
         fi = 0;
         lat_objeto *o = lat_cadena_nueva(vm, fun->nombre->valor->val.cadena);
         o->num_linea = fun->nombre->num_linea;
         o->num_columna = fun->nombre->num_columna;
         o->num_params = __contar_num_parargs(fun->parametros, NODO_FUNCION_PARAMETROS);
-        o->nombre_cfun = strdup(fun->nombre->valor->val.cadena);
-        dbc(STORE_NAME, 0, 0, o);
+        o->nombre_cfun = strdup(fun->nombre->valor->val.cadena);        
+        dbc(STORE_NAME, 0, 0, o);        
+        if(0 == strcmp(o->datos.cadena, "menu")){
+            vm->menu = true;            
+        }
     }
     break;
     case NODO_LISTA:
@@ -742,7 +745,7 @@ static int nodo_analizar(lat_mv *vm, ast *node, lat_bytecode *bcode, int i)
     return i;
 }
 
-static void __mostrar_bytecode(lat_bytecode *bcode){
+void __mostrar_bytecode(lat_bytecode *bcode){
 #if DEPURAR_AST
     lat_bytecode *inslist = bcode;
     lat_bytecode cur;
@@ -846,7 +849,9 @@ lat_objeto *nodo_analizar_arbol(lat_mv *vm, ast *tree)
     lat_bytecode *bcode = (lat_bytecode *)__memoria_asignar(sizeof(lat_bytecode) * MAX_BYTECODE_FUNCTION);
     int i = nodo_analizar(vm, tree, bcode, 0);
     dbc(HALT, 0, 0, NULL);
-    __memoria_reasignar(bcode, sizeof(lat_bytecode) * (i+1));
+    //__memoria_reasignar(bcode, sizeof(lat_bytecode) * (i+1));    
+    __memoria_reasignar(bcode, sizeof(lat_bytecode) * i);    
     __mostrar_bytecode(bcode);
-    return lat_definir_funcion(vm, bcode);
+    //return lat_definir_funcion(vm, bcode, i+1);
+    return lat_definir_funcion(vm, bcode, i);
 }
