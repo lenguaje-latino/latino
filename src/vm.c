@@ -300,6 +300,7 @@ lat_mv* lat_mv_crear()
     mv->gc_objetos = lat_lista_nueva(mv, __lista_crear());
     mv->otros_objetos = lat_lista_nueva(mv, __lista_crear());
     mv->pila = lat_lista_nueva(mv, __lista_crear());
+    mv->argv = lat_lista_nueva(mv, __lista_crear());
     mv->objeto_verdadero = lat_logico_nuevo(mv, true);
     mv->objeto_falso = lat_logico_nuevo(mv, false);
     mv->objeto_nulo = lat_crear_objeto(mv);
@@ -408,6 +409,7 @@ lat_mv* lat_mv_crear()
 }
 
 void lat_destruir_mv(lat_mv* mv){
+    lat_eliminar_objeto(mv, mv->argv);
     lat_eliminar_objeto(mv, mv->modulos);
     lat_eliminar_objeto(mv, mv->gc_objetos);
     lat_eliminar_objeto(mv, mv->otros_objetos);
@@ -465,12 +467,13 @@ lat_objeto* lat_obtener_contexto(lat_mv* vm)
     return vm->contexto_pila[vm->apuntador_ctx];
 }
 
-lat_objeto* lat_definir_funcion(lat_mv* vm, lat_bytecode* inslist)
+lat_objeto* lat_definir_funcion(lat_mv* vm, lat_bytecode* inslist, int num_inst)
 {
     lat_objeto* ret = lat_funcion_nueva(vm);
     lat_function* fval = (lat_function*)__memoria_asignar(sizeof(lat_function));
     fval->bcode = inslist;
     ret->datos.fun_usuario = fval;
+    ret->num_inst = num_inst;
     return ret;
 }
 
@@ -1024,7 +1027,7 @@ void lat_llamar_funcion(lat_mv* vm, lat_objeto* func)
             {
                 lat_objeto *o = (lat_objeto*)cur.meta;
 #if DEPURAR_MV
-                __imprimir_objeto(vm, o);
+                __imprimir_objeto(vm, o, false);
                 printf("\t");
 #endif
                 lat_apilar(vm, o);
@@ -1036,7 +1039,7 @@ void lat_llamar_funcion(lat_mv* vm, lat_objeto* func)
                 lat_objeto *ctx =  lat_obtener_contexto(vm);
                 Lat_INCREF(val);
 #if DEPURAR_MV
-                __imprimir_objeto(vm, name);
+                __imprimir_objeto(vm, name, false);
                 printf("\t");
 #endif
                 //objeto anterior
@@ -1062,7 +1065,7 @@ void lat_llamar_funcion(lat_mv* vm, lat_objeto* func)
                 lat_objeto *name =  (lat_objeto*)cur.meta;
                 lat_objeto *ctx =  lat_obtener_contexto(vm);
 #if DEPURAR_MV
-                __imprimir_objeto(vm, name);
+                __imprimir_objeto(vm, name, false);
                 printf("\t");
 #endif
                 lat_objeto *val = lat_obtener_contexto_objeto(ctx, name);
@@ -1126,7 +1129,7 @@ void lat_llamar_funcion(lat_mv* vm, lat_objeto* func)
             }
             break;
             case MAKE_FUNCTION: {
-                lat_objeto *fun = lat_definir_funcion(vm, (lat_bytecode*)cur.meta);
+                lat_objeto *fun = lat_definir_funcion(vm, (lat_bytecode*)cur.meta, cur.a);
                 lat_apilar(vm, fun);
             }
             break;
@@ -1154,7 +1157,7 @@ void lat_llamar_funcion(lat_mv* vm, lat_objeto* func)
                 lat_objeto *ctx =  lat_obtener_contexto(vm);
                 lat_objeto *val = NULL;
 #if DEPURAR_MV
-                __imprimir_objeto(vm, attr);
+                __imprimir_objeto(vm, attr, false);
                 printf("\t");
 #endif
                 val = lat_obtener_contexto_objeto(ctx, attr);
@@ -1303,7 +1306,7 @@ void lat_llamar_funcion(lat_mv* vm, lat_objeto* func)
             }   //fin de switch
 
 #if DEPURAR_MV
-            __imprimir_lista(vm, __lista(vm->pila));
+            __imprimir_lista(vm, __lista(vm->pila), false);
             printf("\n");
 #endif
         }   //fin for

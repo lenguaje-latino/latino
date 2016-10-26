@@ -50,13 +50,13 @@ char* filename = NULL;
 int yyparse(ast **root, yyscan_t scanner);
 
 ast *lat_analizar_expresion(char* expr, int *status)
-{    
+{
     ast *ret = NULL;
     yyscan_t scanner;
     YY_BUFFER_STATE state;
     lex_state scan_state = {.insert = 0};
     yylex_init_extra(&scan_state, &scanner);
-    state = yy_scan_string(expr, scanner);    
+    state = yy_scan_string(expr, scanner);
     *status = yyparse(&ret, scanner);
     yy_delete_buffer(state, scanner);
     yylex_destroy(scanner);
@@ -148,7 +148,7 @@ void lat_ayuda()
     printf("%s\n", "Variables de entorno:");
     printf("%s\n", "_____________________");
     printf("%s%s\n", "LATINO_PATH  : ", getenv("LATINO_PATH"));
-    printf("%s%s\n", "LATINO_LIB   : ", getenv("LATINO_LIB"));    
+    printf("%s%s\n", "LATINO_LIB   : ", getenv("LATINO_LIB"));
     printf("%s%s\n", "HOME         : ", getenv("HOME"));
     */
 }
@@ -342,7 +342,7 @@ static void lat_repl(lat_mv *vm)
                 lat_apilar(vm, o);
                 lat_apilar(vm, vm->objeto_nulo);
                 lat_imprimir(vm);
-            }        
+            }
         }
         //se guarda el comando al historial aunque haya error
         linenoiseHistoryAdd(__str_reemplazar(buf, "\n", ""));
@@ -351,16 +351,14 @@ static void lat_repl(lat_mv *vm)
     __memoria_liberar(buf);
 }
 
-
 int main(int argc, char *argv[])
 {
-    //setlocale(LC_ALL, "en_US");
-    //setlocale(LC_ALL, "es_MX");    
     setlocale(LC_ALL, "es_MX");
     setlocale(LC_CTYPE, "");
     int i;
     char *infile = NULL;
     int pe = false;
+    int pf = false;
     for (i = 1; i < argc; i++)
     {
         if (strcmp(argv[i], "-v") == 0)
@@ -375,15 +373,16 @@ int main(int argc, char *argv[])
         }
         else if (strcmp(argv[i], "-e") == 0)
         {
-            pe = true;            
+            pe = true;
         }
         else
         {
+            pf = true;
+            /*printf("%i: \t", i);
             infile = argv[i];
-            //printf("%s", infile);
+            printf("%s\n", infile);*/
         }
     }
-
     lat_mv *mv = lat_mv_crear();
     if(pe){
         if(argc != 3){
@@ -392,7 +391,7 @@ int main(int argc, char *argv[])
         }
         mv->nombre_archivo = NULL;
         mv->REPL = false;
-        int status;        
+        int status;
         char *cmd = __memoria_asignar(MAX_STR_LENGTH);
         strcpy(cmd, argv[2]);
         ast *nodo = lat_analizar_expresion(cmd, &status);
@@ -402,15 +401,38 @@ int main(int argc, char *argv[])
             lat_eliminar_objeto(mv, mainFunc);
         }
         nodo_liberar(nodo);
-    } else if(argc > 1 && infile != NULL)
+    } else if(argc > 1 && pf)
     {
+        infile = argv[1];   //nombre del archivo
         mv->nombre_archivo = infile;
         mv->REPL = false;
+        mv->argc = argc - 2;
+        int i;
+        for(i=2; i < argc; i++){
+            __lista_apilar(__lista(mv->argv), lat_cadena_nueva(mv, strdup(argv[i])));
+        }
         int status;
         ast *nodo = lat_analizar_archivo(infile, &status);
         if(status == 0 && nodo != NULL){
             lat_objeto *mainFunc = nodo_analizar_arbol(mv, nodo);
-            lat_llamar_funcion(mv, mainFunc);
+            if(mv->menu){
+                //agrego instrucciones para llamar a menu
+                lat_function* fval = (lat_function*)mainFunc->datos.fun_usuario;
+                lat_bytecode *bcode = (lat_bytecode *)fval->bcode;
+                int num_inst = mainFunc->num_inst;                
+                lat_bytecode *new_bcode = __memoria_asignar(sizeof(lat_bytecode) * (num_inst + 2));                
+                memcpy(new_bcode, bcode, __memoria_tamanio(new_bcode));                
+                new_bcode[num_inst-1] = lat_bc(LOAD_NAME, 0, 0, lat_cadena_nueva(mv, strdup("menu")));
+                new_bcode[num_inst] = lat_bc(CALL_FUNCTION, 2, 0, NULL);
+                new_bcode[num_inst+1] = lat_bc(HALT, 0, 0, NULL);                
+                lat_apilar(mv, lat_numerico_nuevo(mv, mv->argc));                
+                lat_apilar(mv, mv->argv);
+                lat_objeto* newMain = lat_definir_funcion(mv, new_bcode, num_inst+2);
+                lat_llamar_funcion(mv, newMain);                
+                lat_eliminar_objeto(mv, newMain);
+            }else{
+                lat_llamar_funcion(mv, mainFunc);                
+            }
             lat_eliminar_objeto(mv, mainFunc);
         }
         nodo_liberar(nodo);
