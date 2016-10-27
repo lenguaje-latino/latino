@@ -1,0 +1,31 @@
+#!/usr/bin/latino
+
+funcion num_aleatorio()
+numero = aleatorio(0, 3)
+si numero == 0
+	imprimir("Te tocó el número 0")
+fin
+si numero == 1
+	imprimir("Te tocó el número 1")
+fin
+si numero == 2
+	imprimir("Te tocó el número 2")
+fin
+si numero == 3
+	imprimir("Te tocó el número 3")
+fin
+fin
+
+funcion menu(a, b)
+si a>=1
+numero = aleatorio(0, 1)
+si (numero == 0)
+	imprimir("No eres nada ".b[0])
+fin
+si (numero == 1)
+	imprimir("Eres muy ".b[0])
+fin
+sino
+	num_aleatorio()
+fin
+fin
