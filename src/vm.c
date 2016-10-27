@@ -342,6 +342,7 @@ lat_mv* lat_mv_crear()
     __registrar_cfuncion(mv, "valor_absoluto", lat_valor_absoluto, 1);
     __registrar_cfuncion(mv, "redondear_abajo", lat_redondear_abajo, 1);
     __registrar_cfuncion(mv, "modulo", __modulo, 1);
+    __registrar_cfuncion(mv, "aleatorio", lat_aleatorio, 2);
 
     /*30 funciones para cadenas (string)*/
     __registrar_cfuncion(mv, "comparar", lat_comparar, 2);
