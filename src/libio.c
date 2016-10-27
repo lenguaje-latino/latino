@@ -63,7 +63,7 @@ void lat_leer(lat_mv *vm)
         lat_apilar(vm, lat_numerico_nuevo(vm, ret));
     }
     else
-    {   
+    {
         lat_apilar(vm, lat_cadena_nueva(vm, strdup(str)));
     }
 }
@@ -83,7 +83,7 @@ void lat_leer_archivo(lat_mv *vm)
         }
         fseek(fp, 0, SEEK_END);
         int fsize = ftell(fp);
-        fseek(fp, 0, SEEK_SET);        
+        fseek(fp, 0, SEEK_SET);
         //buf = calloc(1, fsize);
         buf = __memoria_asignar(fsize+1);
         size_t newSize = fread(buf, sizeof(char), fsize, fp);
@@ -133,7 +133,7 @@ void lat_ejecutar_pipe(lat_mv *vm){
     char *p = __memoria_asignar(rlen);
     fread(p, sizeof(char), rlen, fp);
     rlen = strlen(p);
-    p[rlen-1] = '\0';   //elimina el ultimo '\n'    
+    p[rlen-1] = '\0';   //elimina el ultimo '\n'
     lat_objeto* res = lat_cadena_nueva(vm, strdup(p));
     lat_apilar(vm, res);
     __lat_pclose(vm, fp);
@@ -175,12 +175,12 @@ static size_t __leer_linea(char **lineptr, size_t *n, FILE *stream)
        errno = EINVAL;
        return -1;
     }
-    if (ferror (stream)){       
+    if (ferror (stream)){
        return -1;
     }
-    if (feof(stream)){        
-       return -1;    
-    }       
+    if (feof(stream)){
+       return -1;
+    }
     fgets(line,256,stream);
     ptr = strchr(line,'\n');
     if (ptr){
@@ -194,8 +194,8 @@ static size_t __leer_linea(char **lineptr, size_t *n, FILE *stream)
        ptr = __memoria_reasignar(*lineptr,  256);
        *lineptr = ptr;
        *n = 256;
-    } 
-    strcpy(*lineptr,line); 
+    }
+    strcpy(*lineptr,line);
     return(len);
 }
 
@@ -204,16 +204,16 @@ void lat_leer_lineas(lat_mv *vm)
     lat_objeto* o = lat_desapilar(vm);
     FILE *fp;
     char *buf = NULL;
-    size_t len = 0;    
-    char *path = __cadena(o);    
+    size_t len = 0;
+    char *path = __cadena(o);
     fp = fopen(path, "r");
     if (fp == NULL)
     {
         lat_fatal_error("Linea %d, %d: %s", o->num_linea, o->num_columna,  "No se pudo abrir el archivo\n");
     }
     lat_objeto* lineas = lat_lista_nueva(vm, __lista_crear());
-    while((len = __leer_linea(&buf, &len, fp)) != -1){        
-        __lista_apilar(__lista(lineas), (void*)lat_cadena_nueva(vm, buf));        
+    while((len = __leer_linea(&buf, &len, fp)) != -1){
+        __lista_apilar(__lista(lineas), (void*)lat_cadena_nueva(vm, buf));
     }
     fclose(fp);
     lat_apilar(vm, lineas);
@@ -227,18 +227,18 @@ void lat_dormir(lat_mv *vm)
 
 void lat_aleatorio(lat_mv *vm)
 {
-   lat_objeto* min = lat_desapilar(vm);
    lat_objeto* max = lat_desapilar(vm);
+   lat_objeto* min = lat_desapilar(vm);
    int resultado, primario, secundario;
-   if(min<max)
+   if(__numerico(min) < __numerico(max))
    {
-      primario=min;
-      secundario=max+1;
+      primario=__numerico(min);
+      secundario=__numerico(max)+1;
    }
    else
    {
-      primario=max+1;
-      secundario=min;
+      primario=__numerico(max)+1;
+      secundario=__numerico(min);
    }
    srand(time(NULL));
    resultado = (rand()%(secundario-primario))+primario;
