@@ -6,12 +6,12 @@ color brightwhite "\."
 color yellow ":|\*|/|%|\+|-|\^|>|>=|<|<=|!=|="
 
 # Palabras clave
-color green "\<(hacer|fin|mientras|defecto|si|caso|hasta|sino|desde|cuando|salto|romper|retorno)\>"
+color green "\<(hacer|fin|mientras|defecto|si|caso|hasta|sino|desde|cuando|salto|romper|retorno| menu)\>"
 
 # Librerias
 color brightblue "\<(funcion|json_codificar|json_decodificar|sistema|ejecutar_pipe|escribir|imprimir)\>"
 color brightblue "\<(peticion|elegir|reemplazar|ejecutar_archivo|leer_archivo|escribir_archivo)\>"
-color brightblue "\<(leer|cadena|longitud|copiar_texto)\>"
+color brightblue "\<(leer|cadena|longitud|copiar_texto|limpiar|aleatorio|leer_lineas)\>"
 
 # falso, nulo ó verdadero
 color brightgreen "verdadero"
