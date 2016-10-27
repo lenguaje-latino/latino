@@ -25,6 +25,7 @@ THE SOFTWARE.
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <time.h>
 
 #include "compat.h"
 #include "libio.h"
@@ -222,4 +223,24 @@ void lat_dormir(lat_mv *vm)
 {
    lat_objeto* mili_segundos = lat_desapilar(vm);
    __lat_sleep(__numerico(mili_segundos));
+}
+
+void lat_aleatorio(lat_mv *vm)
+{
+   lat_objeto* min = lat_desapilar(vm);
+   lat_objeto* max = lat_desapilar(vm);
+   int resultado, primario, secundario;
+   if(min<max)
+   {
+      primario=min;
+      secundario=max+1;
+   }
+   else
+   {
+      primario=max+1;
+      secundario=min;
+   }
+   srand(time(NULL));
+   resultado = (rand()%(secundario-primario))+primario;
+   lat_apilar(vm, lat_numerico_nuevo(vm, resultado));
 }
