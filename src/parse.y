@@ -40,6 +40,7 @@ int yylex (YYSTYPE * yylval_param,YYLTYPE * yylloc_param ,yyscan_t yyscanner);
 
 %token
     SI
+    O_SI
     FIN
     SINO
     MIENTRAS
@@ -88,6 +89,7 @@ int yylex (YYSTYPE * yylval_param,YYLTYPE * yylloc_param ,yyscan_t yyscanner);
 %type <node> dict_new dict_items dict_item
 %type <node> labeled_statements labeled_statement_case labeled_statement_default
 %type <node> variable_access field_designator
+%type <node> osi_statements osi_statement
 
 /*
  * precedencia de operadores
@@ -301,8 +303,27 @@ selection_statement:
         $$ = nodo_nuevo_si($2, $3, NULL); }
     | SI expression statement_list SINO statement_list FIN {
         $$ = nodo_nuevo_si($2, $3, $5); }
+    | SI expression statement_list osi_statements FIN {
+        $$ = nodo_nuevo_si($2, $3, $4); }
     | ELEGIR expression labeled_statements FIN {
         $$ = nodo_nuevo(NODO_ELEGIR, $2, $3);
+    }
+    ;
+
+osi_statements:
+    osi_statement
+    | osi_statements osi_statement
+    ;
+
+osi_statement:
+    O_SI expression statement_list {
+          $$ = nodo_nuevo_si($2, $3, NULL);
+    }
+    | O_SI expression statement_list SINO statement_list {
+          $$ = nodo_nuevo_si($2, $3, $5);
+    }
+    | O_SI expression statement_list osi_statements {
+          $$ = nodo_nuevo_si($2, $3, $4);
     }
     ;
 

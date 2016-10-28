@@ -87,6 +87,7 @@ EXP ([Ee][-+]?[0-9]+)
 
  /* palabras reservadas */
 "si"        { return SI; }
+"osi"       { return O_SI; }
 "fin"       { return FIN; }
 "sino"      { return SINO; }
 "romper"    { return ROMPER; }
