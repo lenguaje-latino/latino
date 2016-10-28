@@ -227,20 +227,21 @@ void lat_dormir(lat_mv *vm)
 
 void lat_aleatorio(lat_mv *vm)
 {
-   lat_objeto* max = lat_desapilar(vm);
-   lat_objeto* min = lat_desapilar(vm);
-   int resultado, primario, secundario;
-   if(__numerico(min) < __numerico(max))
-   {
-      primario=__numerico(min);
-      secundario=__numerico(max)+1;
+   lat_objeto* secundario = lat_desapilar(vm);
+   lat_objeto* primario = lat_desapilar(vm);
+   int resultado, min, max;
+
+   min=__numerico(primario);
+   max=__numerico(secundario);
+
+   if (min <= max) {
+       max = max+1;
+   } else {
+       min =__numerico(secundario);
+       max =__numerico(primario)+1;
    }
-   else
-   {
-      primario=__numerico(max)+1;
-      secundario=__numerico(min);
-   }
+
    srand(time(NULL));
-   resultado = (rand()%(secundario-primario))+primario;
+   resultado = (rand()%(max-min))+min;
    lat_apilar(vm, lat_numerico_nuevo(vm, resultado));
 }
