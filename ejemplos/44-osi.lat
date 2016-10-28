@@ -1,0 +1,74 @@
+//HACER: descomentar el caso que se quiera testear
+
+/*
+//test1
+a = 3
+b = 2
+c = 3
+//salida:
+//mayor o igual a 3
+//osi mayor o igual a 3
+*/
+
+/*
+//test2
+a = 2
+b = 0
+c = 3
+//salida:
+//menor o igual a 1
+//osi menor o igual a 1
+*/
+
+/*
+//test3
+a = 2
+b = 2
+c = 2
+//salida:
+//igual a 2
+//osi igual a 2
+*/
+
+//test4
+a = 2
+b = 2
+c = -1
+//salida:
+//ninguna
+//osi ninguna
+
+si a >= 3
+   escribir("mayor o igual a 3")
+sino
+  si b <= 1
+     escribir("menor o igual a 1")
+  sino
+     si c == 2 && c >= 0 || a > 3
+       escribir("igual a 2")
+     sino
+       escribir("ninguna")
+     fin
+  fin
+fin
+
+
+si a >= 3
+   escribir("osi mayor o igual a 3")
+osi b <= 1
+   escribir("osi menor o igual a 1")
+osi c == 2 && c >= 0 || a > 3
+   escribir("osi igual a 2")
+sino
+  escribir("osi ninguna")
+fin
+
+//sino opcional
+si a >= 3
+   escribir("osi mayor o igual a 3")
+osi b <= 1
+   escribir("osi menor o igual a 1")
+osi c == 2 && c >= 0 || a > 3
+   escribir("osi igual a 2")
+fin
+//salida:(ninguna opcion)

@@ -5,8 +5,8 @@ $(SolutionDir)..\ejemplos\debug.lat
 */
 
 str = "esta cadena
-tiene saltos 
-de linea"
+tiene saltos
+de linea";
 
 str2 = "esta cadena\n tiene saltos\n de linea"
 
