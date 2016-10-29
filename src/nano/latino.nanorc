@@ -2,32 +2,64 @@
 syntax "latino" "\.lat$"
 color brightwhite "\."
 
-# Operadores
-color yellow ":|\*|/|%|\+|-|\^|>|>=|<|<=|!=|="
-
+##################################################################
 # Palabras clave
-color green "\<(hacer|fin|mientras|defecto|si|caso|hasta|sino|desde|cuando|salto|romper|retorno| menu)\>"
+color green "\<(si|osi|sino|fin|romper|continuar|mientras|hacer|cuando|desde|nulo|retorno|caso|defecto)\>"
+color green "[[:space:]]+menu"
 
-# Librerias
-color brightblue "\<(funcion|json_codificar|json_decodificar|sistema|ejecutar_pipe|escribir|imprimir)\>"
-color brightblue "\<(peticion|elegir|reemplazar|ejecutar_archivo|leer_archivo|escribir_archivo)\>"
-color brightblue "\<(leer|cadena|longitud|copiar_texto|limpiar|aleatorio|leer_lineas)\>"
+# Funciones
+ # Funciones matematicas
+color brightblue "\<(arco_coseno|arco_seno|arco_tangente|arco_tangente2|coseno|coseno_hiperbolico|seno|seno_hiperbolico|tangente)\>"
+color brightblue "\<(tangente_hiperbolica|exponente|logaritmo_natural|logaritmo_base10|potencia|raiz_cuadrada|redondear_arriba)\>"
+color brightblue "\<(valor_absoluto|redondear_abajo|modulo|aleatorio)\>"
 
-# falso, nulo ó verdadero
-color brightgreen "verdadero"
+ # Funciones para cadenas
+color brightblue "\<(comparar|concatenar|contiene|termina_con|es_igual|indice|insertar|ultimo_indice|rellenar_izquierda|rellenar_derecha)\>"
+color brightblue "\<(eliminar|esta_vacia|longitud|reemplazar|empieza_con|subcadena|minusculas|mayusculas|quitar_espacios|es_numerico)\>"
+color brightblue "\<(es_numero|es_alfanumerico|separar|separar_en_palabras|invertir)\>"
+
+ # Funciones para archivos
+color brightblue "\<(ejecutar_archivo|ejecutar|leer_archivo|escribir_archivo|leer_lineas|copiar_texto|)\>"
+
+ # Funciones de entrada y salida
+color brightblue "\<(imprimir|escribir|leer|salir|funcion|elegir)\>"
+
+ # Funciones para conversiones de tipo de dato
+color brightblue "\<(tipo|logico|decimal|cadena)\>"
+
+ # Funciones para listas
+color brightblue "\<(agregar|extender|eliminar_indice|invertir_lista)\>"
+
+ # Funciones para petición y JSON
+color brightblue "\<(json_decodificar|json_codificar|peticion)\>"
+
+ # Funciones para sistema (comandos externos)
+color brightblue "\<(sistema|ejecutar_pipe|limpiar|dormir)\>"
+
+##################################################################
+# Booleanos
+color brightgreen "verdadero|cierto"
 color brightred  "falso"
 
-# Ficheros externos
+# Códigos externos y path
 color brightblack,white "^incluir"
+color cyan   "^#!.*"
 
+# Operadores
+color yellow ":|\*|/|%|\+|-|\^|>|>=|<|=<|!=|=|&&|\|\|"
+##################################################################
 # Numeros
 color brightyellow "\<([0-9]+)\>"
 
 # Simbolos
 color brightmagenta "(\(|\)|\[|\]|\{|\})"
 
-# Script en PATH ó ejecución simple
-color cyan   "^#!.*"
+# Strings
+color magenta "\"(\\.|[^\\\"])*\"|'(\\.|[^\\'])*'"
+
+# Hexadecimales
+color brightgreen "0x[0-9a-fA-F]*"
+##################################################################
 
 # Comentarios simples
 color cyan       "\/\/.*$"
@@ -35,9 +67,3 @@ color cyan       "#.*$"
 
 # Comentarios múltiples
 color cyan       start="\/\*" end="\*\/"
-
-# Strings
-color magenta "\"(\\.|[^\\\"])*\"|'(\\.|[^\\'])*'"
-
-# Hexadecimales
-color brightgreen "0x[0-9a-fA-F]*"
