@@ -383,6 +383,7 @@ lat_mv* lat_mv_crear()
     __registrar_cfuncion(mv, "copiar_texto", lat_copiar_texto, 2);
     __registrar_cfuncion(mv, "leer_lineas", lat_leer_lineas, 1);
     __registrar_cfuncion(mv, "invertir", lat_invertir_cadena, 1);
+    __registrar_cfuncion(mv, "fecha", lat_fecha, 1);
     
 
     /*50 conversion de tipos de dato*/
