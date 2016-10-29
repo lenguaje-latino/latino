@@ -245,3 +245,41 @@ void lat_aleatorio(lat_mv *vm)
    resultado = (rand()%(max-min))+min;
    lat_apilar(vm, lat_numerico_nuevo(vm, resultado));
 }
+
+void lat_fecha(lat_mv *vm)
+{
+    time_t raw, notiempo;
+    struct tm * tipo;
+    time (&raw);
+    /* fix 1: Mostrar hora completa sin argumentos
+    fix 2: soporte de la letra ñ al ejecutar comando latino sin argumentos
+    notiempo = time(NULL); #fix 1
+    char valor2[] = ctime(&notiempo); #fix 1
+    */
+    tipo = localtime (&raw);
+
+    lat_objeto* tiempo = lat_desapilar(vm);
+    int valor;
+    char *num = __cadena(tiempo);
+    if (!strcmp(num,"seg")) {
+        valor = tipo->tm_sec; // segundos
+    } else if (!strcmp(num,"min")) {
+        valor = tipo->tm_min; // minutos
+    } else if (!strcmp(num,"hora")) {
+        valor = tipo->tm_hour; // horas
+    } else if (!strcmp(num,"d_mes")) {
+        valor = tipo->tm_mday; // día del mes
+    } else if (!strcmp(num,"mes")) {
+        valor = tipo->tm_mon; // mes
+    } else if (!strcmp(num,"año")) { //fix 2
+        valor = tipo->tm_year; // año
+    } else if (!strcmp(num,"d_sem")) {
+        valor = tipo->tm_wday; // día de la sem.
+    } else if (!strcmp(num,"d_año")) { // fix 2
+        valor = tipo->tm_yday; // día del año
+    } else if (!strcmp(num,"estacion")) {
+        valor = tipo->tm_isdst; // verano/invierno   
+    };
+    if (valor) { lat_apilar(vm, lat_numerico_nuevo(vm, valor)); };
+    //if (!valor) {  lat_apilar(vm, lat_cadena_nueva(vm, valor2)); }; fix 1
+}
