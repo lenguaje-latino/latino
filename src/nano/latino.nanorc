@@ -54,8 +54,8 @@ color brightyellow "\<([0-9]+)\>"
 # Simbolos
 color brightmagenta "(\(|\)|\[|\]|\{|\})"
 
-# Strings
-color magenta "\"(\\.|[^\\\"])*\"|'(\\.|[^\\'])*'"
+# Cadenas
+color magenta 	start="\"|'" end="\"|'"
 
 # Hexadecimales
 color brightgreen "0x[0-9a-fA-F]*"
