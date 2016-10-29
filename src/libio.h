@@ -95,4 +95,6 @@ void lat_dormir(lat_mv *vm);
 
 void lat_aleatorio(lat_mv *vm);
 
+void lat_tiempo(lat_mv *vm);
+
 #endif /* !_LIBIO_H_ */
