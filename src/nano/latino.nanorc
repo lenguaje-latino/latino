@@ -46,7 +46,7 @@ color brightblack,white "^incluir"
 color cyan   "^#!.*"
 
 # Operadores
-color yellow ":|\*|/|%|\+|-|\^|>|>=|<|=<|!=|="
+color yellow ":|\*|/|%|\+|-|\^|>|>=|<|=<|!=|=|&&|\|\|"
 ##################################################################
 # Numeros
 color brightyellow "\<([0-9]+)\>"
