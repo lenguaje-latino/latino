@@ -272,7 +272,7 @@ void lat_fecha(lat_mv *vm)
     } else if (!strcmp(num,"mes")) {
         valor = tipo->tm_mon; // mes
     } else if (!strcmp(num,"año")) { //fix 2
-        valor = tipo->tm_year; // año
+        valor = tipo->tm_year+1900; // año
     } else if (!strcmp(num,"d_sem")) {
         valor = tipo->tm_wday; // día de la sem.
     } else if (!strcmp(num,"d_año")) { // fix 2
