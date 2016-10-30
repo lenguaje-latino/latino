@@ -150,19 +150,9 @@ void lat_copiar_texto(lat_mv* vm)
     lat_objeto* b = lat_desapilar(vm);
     lat_objeto* a = lat_desapilar(vm);
     char buffer[MAX_BUFFERSIZE];
-    FILE *archivo1 = fopen(__cadena(a), "r");
-    if(archivo1 == NULL) {
-        lat_fatal_error("Linea %d, %d: %s", a->num_linea, a->num_columna, "Error al copiar el archivo ", __cadena(a));
-    }
-    else {
-        FILE *archivo2 = fopen(__cadena(b), "a");
-        while(fgets(buffer, sizeof(buffer), archivo1)) {
-          fprintf(archivo2, "%s", buffer);
-        }
-        fclose(archivo2);
-    }
-    fclose(archivo1);
-
+    FILE *archivo2 = fopen(__cadena(b), "a");
+    fprintf(archivo2, "%s", __cadena(a));
+    fclose(archivo2);
 }
 
 static size_t __leer_linea(char **lineptr, size_t *n, FILE *stream)
