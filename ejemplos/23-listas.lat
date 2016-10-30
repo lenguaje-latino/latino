@@ -82,7 +82,7 @@ escribir(list3)
 list3->eliminar_indice(4)
 escribir(list3)
 #list3->eliminar_indice(4)   #indice fuera de rango
-list5 = list3->invertir()
+list5 = list3->invertir_lista()
 escribir(list5)
 escribir(comparar(['123', 'xyz'], [123, 'xyz']))
 escribir(list1)
