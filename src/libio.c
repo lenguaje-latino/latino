@@ -34,6 +34,7 @@ THE SOFTWARE.
 #include "vm.h"
 #include "latino.h"
 #include "libmem.h"
+#include "./hiredis/hiredis.h"
 
 bool __io_es_legible(const char *archivo)
 {
@@ -272,4 +273,57 @@ void lat_fecha(lat_mv *vm)
     };
     if (valor) { lat_apilar(vm, lat_numerico_nuevo(vm, valor)); };
     //if (!valor) {  lat_apilar(vm, lat_cadena_nueva(vm, valor2)); }; fix 1
+}
+
+void lat_redis_conectar(lat_mv *vm)
+{
+    lat_objeto* puerto = lat_desapilar(vm);
+    lat_objeto* servidor = lat_desapilar(vm);
+    unsigned int j;
+    redisContext *redis;
+    redisReply *reply;
+    const char *servidor2 = __cadena(servidor);
+    int puerto2 = __numerico(puerto);
+
+    struct timeval timeout = { 1, 500000 }; // 1.5 segundos
+    redis = redisConnectWithTimeout(servidor2, puerto2, timeout);
+    if (redis == NULL || redis->err) {
+        if (redis) {
+            lat_fatal_error("Linea %d, %d: %s", servidor->num_linea, servidor->num_columna, "error en conexión.");
+            redisFree(redis);
+        } else {
+            lat_fatal_error("Linea %d, %d: %s", servidor->num_linea, servidor->num_columna, "error en contexto redis.");
+        }
+        exit(1);
+    }
+    lat_apilar(vm, redis);
+}
+
+void lat_redis_asignar(lat_mv *vm)
+{
+    lat_objeto* string = lat_desapilar(vm);
+    lat_objeto* llave = lat_desapilar(vm);
+    lat_objeto* conexion = lat_desapilar(vm);
+    redisReply *respuesta;
+    respuesta = redisCommand(conexion,"SET %s %s", __cadena(llave), __cadena(string));
+    if(!respuesta->str) {
+        lat_fatal_error("Linea %d, %d: %s", conexion->num_linea, conexion->num_columna, "error asignar llave.");
+    };
+    printf("REGISTRO: %s\n", respuesta->str);
+    freeReplyObject(respuesta);
+    redisFree(conexion);
+}
+
+void lat_redis_obtener(lat_mv *vm)
+{
+    lat_objeto* llave = lat_desapilar(vm);
+    lat_objeto* conexion = lat_desapilar(vm);
+    redisReply *respuesta;
+    respuesta = redisCommand(conexion,"GET %s", __cadena(llave));
+    if(!respuesta->str) {
+        lat_fatal_error("Linea %d, %d: %s", conexion->num_linea, conexion->num_columna, "error en obtener llave.");
+    };
+        lat_apilar(vm, lat_cadena_nueva(vm, respuesta->str));
+        freeReplyObject(respuesta);
+        redisFree(conexion);
 }

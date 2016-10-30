@@ -97,4 +97,11 @@ void lat_aleatorio(lat_mv *vm);
 
 void lat_fecha(lat_mv *vm);
 
+/* Redis */
+void lat_redis_asignar(lat_mv *vm);
+
+void lat_redis_conectar(lat_mv *vm);
+
+void lat_redis_obtener(lat_mv *vm);
+
 #endif /* !_LIBIO_H_ */
