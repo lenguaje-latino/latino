@@ -92,7 +92,7 @@ void lat_leer_archivo(lat_mv *vm)
         {
             printf("No se pudo asignar %d bytes de memoria\n", fsize);
         }
-        buf[newSize - 1] = '\0';
+        buf[newSize] = '\0';
         fclose(fp);
         lat_apilar(vm, lat_cadena_nueva(vm, buf));
     }
