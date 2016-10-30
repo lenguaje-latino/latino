@@ -4,8 +4,8 @@ color brightwhite "\."
 
 ##################################################################
 # Palabras clave
-color green "\<(si|osi|sino|fin|romper|continuar|mientras|hacer|cuando|desde|nulo|retorno|caso|defecto)\>"
-color green "[[:space:]]+menu"
+color magenta "\<(si|osi|sino|fin|romper|continuar|mientras|hacer|cuando|desde|nulo|retorno|caso|defecto)\>"
+color brightmagenta "[[:space:]]+menu"
 
 # Funciones
  # Funciones matematicas
@@ -22,7 +22,7 @@ color brightblue "\<(es_numero|es_alfanumerico|separar|separar_en_palabras|inver
 color brightblue "\<(ejecutar_archivo|ejecutar|leer_archivo|escribir_archivo|leer_lineas|copiar_texto|)\>"
 
  # Funciones de entrada y salida
-color brightblue "\<(imprimir|escribir|leer|salir|funcion|elegir)\>"
+color brightblue "\<(imprimir|escribir|leer|salir|funcion|elegir|fecha)\>"
 
  # Funciones para conversiones de tipo de dato
 color brightblue "\<(tipo|logico|decimal|cadena)\>"
@@ -38,12 +38,11 @@ color brightblue "\<(sistema|ejecutar_pipe|limpiar|dormir)\>"
 
 ##################################################################
 # Booleanos
-color brightgreen "verdadero|cierto"
-color brightred  "falso"
+color brightcyan "\<(verdadero|cierto|falso)\>"
 
 # Códigos externos y path
-color brightblack,white "^incluir"
-color cyan   "^#!.*"
+color cyan "^incluir+[(]+.*+[)]|^incluir+[[:space:]]+[(]+.*+[)]"
+color brightred "^#!.*"
 
 # Operadores
 color yellow ":|\*|/|%|\+|-|\^|>|>=|<|=<|!=|=|&&|\|\|"
@@ -55,15 +54,22 @@ color brightyellow "\<([0-9]+)\>"
 color brightmagenta "(\(|\)|\[|\]|\{|\})"
 
 # Cadenas
-color magenta 	start="\"|'" end="\"|'"
+color brightgreen	start="'" end="'"
+color brightgreen	start="\"" end="\""
 
 # Hexadecimales
 color brightgreen "0x[0-9a-fA-F]*"
 ##################################################################
 
 # Comentarios simples
-color cyan       "\/\/.*$"
-color cyan       "#.*$"
+color brightred	"(^|[[:blank:]])\/\/.*$"
+color brightred	"(^|[[:blank:]])#.*$"
 
 # Comentarios múltiples
-color cyan       start="\/\*" end="\*\/"
+
+color brightred	start="\/\*"	end="\*\/"
+
+#Valid colors are "green", "red", "blue",
+#"white", "yellow", "cyan", "magenta" and
+#"black", with the optional prefix "bright"
+#for foreground colors.
