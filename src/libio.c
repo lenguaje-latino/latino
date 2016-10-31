@@ -34,7 +34,7 @@ THE SOFTWARE.
 #include "vm.h"
 #include "latino.h"
 #include "libmem.h"
-#include "./hiredis/hiredis.h"
+#include "/usr/include/hiredis/hiredis.h"
 
 bool __io_es_legible(const char *archivo)
 {
