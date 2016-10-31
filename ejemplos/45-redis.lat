@@ -1,0 +1,5 @@
+conexion = redis_conectar("127.0.0.1", 6379) 
+redis_asignar(conexion, "Latino", "Hola amigos latinos") 
+imprimir("pulsa enter para obtener la llave")
+leer()
+redis_obtener(conexion, "Latino")
