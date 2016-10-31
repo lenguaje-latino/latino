@@ -1,6 +1,22 @@
-escribir("¡Hola Latino! Vamos a copiar el texto de un archivo a otro, si no existe, te creará el archivo")
-escribir("Escribe el archivo a copiar")
-archivo1 = leer()
-escribir("Escribe a dónde vamos a copiar el texto de ese archivo ó con que nombre se va a crear")
-archivo2 = leer()
-copiar_texto(archivo1, archivo2)
+opciones = "Selecciona tu opción:
+\t1) Copiar archivo.
+\t2) Copiar cadena."
+imprimir("¡Hola latino! Vamos a crear un archivo desde una cadena u otro archivo.\n\nEscribe un archivo ó cadena:", 1)
+copia = leer()
+limpiar()
+imprimir(opciones, 1)
+opcion = leer()
+elegir(opcion)
+	caso 1:
+		accion = leer_archivo(copia)
+	caso 2:
+		accion = copia
+	defecto:
+		imprimir("Opción inválida.")
+		retorno 0
+fin
+escribir("Escribe el nombre del nuevo archivo ó de un archivo ya existente para añadir el texto")
+archivo_nuevo = leer()
+copiar_texto(accion, archivo_nuevo)
+limpiar()
+imprimir("\a¡Copia finalizada!", 1)
