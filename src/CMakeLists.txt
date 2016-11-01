@@ -18,6 +18,7 @@ ELSE(UNIX)
     ELSEIF(CMAKE_COMPILER_IS_GNUCC OR CMAKE_COMPILER_IS_GNUCXX)
         LINK_LIBRARIES(jansson)
         LINK_LIBRARIES(curl)
+        LINK_LIBRARIES(hiredis)
         SET(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -Wall -std=c11")
         SET(CMAKE_C_FLAGS_DEBUG "${CMAKE_C_FLAGS_DEBUG} -g -O0 -Wall -std=c11")
     ENDIF(MSVC)
@@ -28,6 +29,7 @@ ADD_SUBDIRECTORY(linenoise)
 
 INCLUDE_DIRECTORIES(../include)
 INCLUDE_DIRECTORIES(../jansson/src)
+INCLUDE_DIRECTORIES(../hiredis)
 
 SET(SOURCES compat.h
     latino.h ast.h vm.h object.h libstring.h libmem.h liblist.h
@@ -45,7 +47,7 @@ TARGET_LINK_LIBRARIES(latino LINK_PUBLIC
     ${BISON_LIBRARIES} ${CMAKE_DL_LIBS})
 
 IF(MSVC)
-    TARGET_LINK_LIBRARIES(latino jansson libcurl)
+    TARGET_LINK_LIBRARIES(latino jansson libcurl hiredis)
 ENDIF(MSVC)
 
 IF(UNIX)

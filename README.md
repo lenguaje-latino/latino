@@ -52,7 +52,7 @@ Cualquier versión/distribución de linux
 
 Ahora en una sola linea
 
-``` 
+```
  git clone --recursive https://github.com/primitivorm/latino && cd latino && git submodule update --init --recursive && cmake . && make && sudo make install
 
 ```
@@ -92,6 +92,8 @@ https://www.microsoft.com/es-ES/download/details.aspx?id=48145
 | g++     |   4.9.3 |Linux|
 | libjansson-dev |   2.9   |Linux|
 | libcurl4-openssl-dev |  |Linux|
+| libhiredis-dev |  |Linux|
+| redis-server |  |Linux|
 | curl    | 7.47.0 |Linux|
 | kernel-devel| |Solo Fedora|
 | jsoncpp| |Solo Fedora|

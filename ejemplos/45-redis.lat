@@ -1,5 +1,14 @@
-conexion = redis_conectar("127.0.0.1", 6379) 
-redis_asignar(conexion, "Latino", "Hola amigos latinos") 
-imprimir("pulsa enter para obtener la llave")
-leer()
-redis_obtener(conexion, "Latino")
+//se conecta con el servicio de redis corriendo en el puerto 6379
+conexion = redis_conectar("127.0.0.1", 6379)
+
+//asignamos una clave
+redis_asignar(conexion, "Latino", "Hola amigos latinos")
+
+//otro codigo bla bla bla
+
+//obtenemos un valor y lo mostramos
+msj = redis_obtener(conexion, "Latino")
+escribir(msj)
+
+//libera la conexion con redis
+redis_liberar(conexion)
