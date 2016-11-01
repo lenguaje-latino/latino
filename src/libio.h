@@ -25,8 +25,8 @@ THE SOFTWARE.
 #ifndef _LIBIO_H_
 #define _LIBIO_H_
 
-#include <stdio.h>
 #include "vm.h"
+#include <stdio.h>
 
 /** \file libio.h
 *
@@ -69,7 +69,8 @@ void lat_escribir_archivo(lat_mv *vm);
   */
 void lat_sistema(lat_mv *vm);
 
-/** Ejecuta un comando en el sistema actual ej. "cat file.lat" regresando la cadena de salida
+/** Ejecuta un comando en el sistema actual ej. "cat file.lat" regresando la
+ * cadena de salida
   *
   * \param vm: Máquina virtual de latino
   *
@@ -103,5 +104,7 @@ void lat_redis_asignar(lat_mv *vm);
 void lat_redis_conectar(lat_mv *vm);
 
 void lat_redis_obtener(lat_mv *vm);
+
+void lat_redis_liberar(lat_mv *vm);
 
 #endif /* !_LIBIO_H_ */
