@@ -293,11 +293,7 @@ void lat_redis_hasignar(lat_mv *vm) {
   lat_objeto *llave = lat_desapilar(vm);
   redisContext *conexion = lat_desapilar(vm);
   redisReply *respuesta;
-  respuesta = redisCommand(conexion, "HSET %s %s", __cadena(llave), __cadena(llave2), __cadena(cadena));
-  if (!respuesta->str) {
-    lat_fatal_error("Linea %d, %d: %s", llave->num_linea, llave->num_columna,
-                    "error asignar llave.");
-  };
+  respuesta = redisCommand(conexion, "HSET %s %s %s", __cadena(llave), __cadena(llave2), __cadena(cadena));
   freeReplyObject(respuesta);
 }
 
