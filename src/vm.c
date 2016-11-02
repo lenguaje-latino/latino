@@ -382,9 +382,16 @@ lat_mv *lat_mv_crear() {
 
   /* Redis funciones */
   __registrar_cfuncion(mv, "redis_asignar", lat_redis_asignar, 3);
+  __registrar_cfuncion(mv, "redis_hasignar", lat_redis_hasignar, 4);
+  __registrar_cfuncion(mv, "redis_borrar", lat_redis_borrar, 2);
+  __registrar_cfuncion(mv, "redis_hborrar", lat_redis_hborrar, 3);
   __registrar_cfuncion(mv, "redis_obtener", lat_redis_obtener, 2);
+  __registrar_cfuncion(mv, "redis_hobtener", lat_redis_hobtener, 3);
   __registrar_cfuncion(mv, "redis_conectar", lat_redis_conectar, 2);
   __registrar_cfuncion(mv, "redis_liberar", lat_redis_liberar, 1);
+  __registrar_cfuncion(mv, "redis_incremento", lat_redis_incremento, 2);
+  __registrar_cfuncion(mv, "redis_hincremento", lat_redis_hincremento, 3);
+  __registrar_cfuncion(mv, "redis_ping", lat_redis_ping, 1);
 
   return mv;
 }
