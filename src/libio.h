@@ -101,10 +101,25 @@ void lat_fecha(lat_mv *vm);
 /* Redis */
 void lat_redis_asignar(lat_mv *vm);
 
+void lat_redis_hasignar(lat_mv *vm);
+
 void lat_redis_conectar(lat_mv *vm);
 
 void lat_redis_obtener(lat_mv *vm);
 
+void lat_redis_hobtener(lat_mv *vm);
+
 void lat_redis_liberar(lat_mv *vm);
+
+void lat_redis_borrar(lat_mv *vm);
+
+void lat_redis_hborrar(lat_mv *vm);
+
+void lat_redis_incremento(lat_mv *vm);
+
+void lat_redis_hincremento(lat_mv *vm);
+
+void lat_redis_ping(lat_mv *vm);
+
 
 #endif /* !_LIBIO_H_ */

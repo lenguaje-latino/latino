@@ -132,7 +132,6 @@ void lat_limpiar(lat_mv *vm) { system(__lat_clear); }
 void lat_copiar_texto(lat_mv *vm) {
   lat_objeto *b = lat_desapilar(vm);
   lat_objeto *a = lat_desapilar(vm);
-  char buffer[MAX_BUFFERSIZE];
   FILE *archivo2 = fopen(__cadena(b), "a");
   fprintf(archivo2, "%s", __cadena(a));
   fclose(archivo2);
@@ -214,7 +213,7 @@ void lat_aleatorio(lat_mv *vm) {
 }
 
 void lat_fecha(lat_mv *vm) {
-  time_t raw, notiempo;
+  time_t raw;
   struct tm *tipo;
   time(&raw);
   /* fix 1: Mostrar hora completa sin argumentos
@@ -255,9 +254,7 @@ void lat_fecha(lat_mv *vm) {
 void lat_redis_conectar(lat_mv *vm) {
   lat_objeto *puerto = lat_desapilar(vm);
   lat_objeto *servidor = lat_desapilar(vm);
-  unsigned int j;
   redisContext *redis;
-  redisReply *reply;
   const char *servidor2 = __cadena(servidor);
   int puerto2 = __numerico(puerto);
 
@@ -278,16 +275,25 @@ void lat_redis_conectar(lat_mv *vm) {
 }
 
 void lat_redis_asignar(lat_mv *vm) {
-  lat_objeto *string = lat_desapilar(vm);
+  lat_objeto *cadena = lat_desapilar(vm);
   lat_objeto *llave = lat_desapilar(vm);
   redisContext *conexion = lat_desapilar(vm);
   redisReply *respuesta;
-  respuesta =
-      redisCommand(conexion, "SET %s %s", __cadena(llave), __cadena(string));
+  respuesta = redisCommand(conexion, "SET %s %s", __cadena(llave), __cadena(cadena));
   if (!respuesta->str) {
     lat_fatal_error("Linea %d, %d: %s", llave->num_linea, llave->num_columna,
                     "error asignar llave.");
   };
+  freeReplyObject(respuesta);
+}
+
+void lat_redis_hasignar(lat_mv *vm) {
+  lat_objeto *cadena = lat_desapilar(vm);
+  lat_objeto *llave2 = lat_desapilar(vm);
+  lat_objeto *llave = lat_desapilar(vm);
+  redisContext *conexion = lat_desapilar(vm);
+  redisReply *respuesta;
+  respuesta = redisCommand(conexion, "HSET %s %s %s", __cadena(llave), __cadena(llave2), __cadena(cadena));
   freeReplyObject(respuesta);
 }
 
@@ -299,6 +305,72 @@ void lat_redis_obtener(lat_mv *vm) {
   if (!respuesta->str) {
     lat_fatal_error("Linea %d, %d: %s", llave->num_linea, llave->num_columna,
                     "error en obtener llave.");
+  };
+  lat_apilar(vm, lat_cadena_nueva(vm, respuesta->str));
+  freeReplyObject(respuesta);
+}
+
+void lat_redis_hobtener(lat_mv *vm) {
+  lat_objeto *llave2 = lat_desapilar(vm);
+  lat_objeto *llave = lat_desapilar(vm);
+  redisContext *conexion = lat_desapilar(vm);
+  redisReply *respuesta;
+  respuesta = redisCommand(conexion, "HGET %s %s", __cadena(llave), __cadena(llave2));
+  if (!respuesta->str) {
+    lat_fatal_error("Linea %d, %d: %s", llave->num_linea, llave->num_columna,
+                    "error en obtener llave.");
+  };
+  lat_apilar(vm, lat_cadena_nueva(vm, respuesta->str));
+  freeReplyObject(respuesta);
+}
+
+void lat_redis_borrar(lat_mv *vm) {
+  lat_objeto *llave = lat_desapilar(vm);
+  redisContext *conexion = lat_desapilar(vm);
+  redisCommand(conexion, "DEL %s", __cadena(llave));
+}
+
+
+void lat_redis_hborrar(lat_mv *vm) {
+  lat_objeto *llave2 = lat_desapilar(vm);
+  lat_objeto *llave = lat_desapilar(vm);
+  redisContext *conexion = lat_desapilar(vm);
+  redisCommand(conexion, "HDEL %s %s", __cadena(llave), __cadena(llave2));
+}
+
+void lat_redis_incremento(lat_mv *vm) {
+  lat_objeto *llave = lat_desapilar(vm);
+  redisContext *conexion = lat_desapilar(vm);
+  redisReply *respuesta;
+  respuesta = redisCommand(conexion, "INCR %s", __cadena(llave));
+  if (!respuesta->integer) {
+    lat_fatal_error("Linea %d, %d: %s", llave->num_linea, llave->num_columna,
+                    "error al incrementar el entero.");
+  };
+  lat_apilar(vm, lat_numerico_nuevo(vm, respuesta->integer));
+  freeReplyObject(respuesta);
+}
+void lat_redis_hincremento(lat_mv *vm) {
+  lat_objeto *llave2 = lat_desapilar(vm);
+  lat_objeto *llave = lat_desapilar(vm);
+  redisContext *conexion = lat_desapilar(vm);
+  redisReply *respuesta;
+  respuesta = redisCommand(conexion, "HINCR %s %s", __cadena(llave), __cadena(llave2));
+  if (!respuesta->integer) {
+    lat_fatal_error("Linea %d, %d: %s", llave->num_linea, llave->num_columna,
+                    "error al incrementar el entero.");
+  };
+  lat_apilar(vm, lat_numerico_nuevo(vm, respuesta->integer));
+  freeReplyObject(respuesta);
+}
+
+
+void lat_redis_ping(lat_mv *vm) {
+  redisContext *conexion = lat_desapilar(vm);
+  redisReply *respuesta;
+  respuesta = redisCommand(conexion, "PING");
+  if (!respuesta->str) {
+    lat_fatal_error("Error: error al obtener respuesta de redis");
   };
   lat_apilar(vm, lat_cadena_nueva(vm, respuesta->str));
   freeReplyObject(respuesta);
