@@ -1,14 +1,59 @@
 //se conecta con el servicio de redis corriendo en el puerto 6379
 conexion = redis_conectar("127.0.0.1", 6379)
-
+# Redis de 1 llave
+imprimir("#### Valores de 1 llave ####")
 //asignamos una clave
 redis_asignar(conexion, "Latino", "Hola amigos latinos")
 
-//otro codigo bla bla bla
+//asignamos un entero a otra llave
+redis_asignar(conexion, "entero", "0")
 
-//obtenemos un valor y lo mostramos
-msj = redis_obtener(conexion, "Latino")
-escribir(msj)
+// obtenemos los valores Redis de 1 llave
+cadena = redis_obtener(conexion, "Latino")
+entero  = redis_obtener(conexion, "entero")
 
-//libera la conexion con redis
+// Devolvemos los valores Redis de 1 llave
+imprimir("El valor de la cadena es:\t".cadena, 1)
+imprimir("El valor del entero es:\t\t".entero, 1)
+
+// le incrementamos 1 al entero y lo volvemos a declarar
+redis_incremento(conexion, "entero")
+nuevo_valor = redis_obtener(conexion, "entero")
+imprimir("Ahora el entero vale:\t\t".nuevo_valor, 1)
+
+// borramos las llaves
+redis_borrar(conexion, "Latino")
+redis_borrar(conexion, "entero")
+
+# Redis de 2 llaves
+imprimir("\n#### Valores de 2 llaves ####", 1)
+//asignamos una clave
+redis_hasignar(conexion, "latino", "saludo", "Hola amigo Latino")
+
+//asignamos un entero a otra llave
+redis_hasignar(conexion, "valor", "entero", "0")
+
+// obtenemos los valores Redis de 1 llave
+cadena = redis_hobtener(conexion, "latino", "saludo")
+entero  = redis_hobtener(conexion, "valor", "entero")
+
+// Devolvemos los valores Redis de 1 llave
+imprimir("El valor de la cadena es:\t".cadena, 1)
+imprimir("El valor del entero es:\t\t".entero, 1)
+
+// le incrementamos 1 al entero y lo volvemos a declarar
+//redis_hincremento(conexion, "valor", "entero")
+//nuevo_valor = redis_hobtener(conexion, "valor", "entero")
+//imprimir("Ahora el entero vale:\t\t".nuevo_valor, 1)
+
+// borramos las llaves
+redis_hborrar(conexion, "latino", "saludo")
+redis_hborrar(conexion, "valor", "entero")
+
+// Prueba del servicio Redis
+imprimir("\n### Devolución del ping ###", 1)
+ping = redis_ping(conexion)
+imprimir("PING:\t\t".ping, 1)
+
+// terminamos la conexión
 redis_liberar(conexion)
