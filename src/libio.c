@@ -66,20 +66,13 @@ void lat_leer(lat_mv *vm) {
 void lat_leer_archivo(lat_mv *vm) {
     lat_objeto *o = lat_desapilar(vm);
     FILE *archivo = fopen(__cadena(o), "r");
-    char *final;
-    size_t n = 0;
-    int c;
-    if (archivo == NULL){
-      lat_fatal_error("Linea %d, %d: %s", o->num_linea, o->num_columna,
-                      "No se pudo abrir el archivo\n");
-    }
+    if (archivo == NULL){ lat_fatal_error("Linea %d, %d: %s", o->num_linea, o->num_columna, "No se pudo abrir el archivo\n"); }
+    char *final; size_t n = 0; int c;
     fseek(archivo, 0, SEEK_END);
     long f_size = ftell(archivo);
     fseek(archivo, 0, SEEK_SET);
     final = malloc(f_size);
-    while ((c = fgetc(archivo)) != EOF) {
-        final[n++] = (char)c;
-    }
+    while ((c = fgetc(archivo)) != EOF) { final[n++] = (char)c; }
     final[n-1] = '\0';
     lat_apilar(vm, lat_cadena_nueva(vm, final));
 }
