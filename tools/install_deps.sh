@@ -14,7 +14,8 @@ packages_all=( # Aquí indicamos los programas (generales) que se van a instalar
     "gcc"
     "g++"
     "curl"
-	"libjansson-dev"
+    "libjansson-dev"
+    "libhiredis-dev"
     "libcurl4-openssl-dev"
     )
     
