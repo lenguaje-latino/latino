@@ -390,7 +390,8 @@ lat_mv *lat_mv_crear() {
   __registrar_cfuncion(mv, "redis_conectar", lat_redis_conectar, 2);
   __registrar_cfuncion(mv, "redis_liberar", lat_redis_liberar, 1);
   __registrar_cfuncion(mv, "redis_incremento", lat_redis_incremento, 2);
-  __registrar_cfuncion(mv, "redis_hincremento", lat_redis_hincremento, 3);
+  __registrar_cfuncion(mv, "redis_incrementar", lat_redis_incrementar, 3);
+  __registrar_cfuncion(mv, "redis_hincrementar", lat_redis_hincrementar, 4);
   __registrar_cfuncion(mv, "redis_ping", lat_redis_ping, 1);
 
   return mv;

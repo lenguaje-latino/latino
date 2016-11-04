@@ -117,7 +117,9 @@ void lat_redis_hborrar(lat_mv *vm);
 
 void lat_redis_incremento(lat_mv *vm);
 
-void lat_redis_hincremento(lat_mv *vm);
+void lat_redis_incrementar(lat_mv *vm);
+
+void lat_redis_hincrementar(lat_mv *vm);
 
 void lat_redis_ping(lat_mv *vm);
 
