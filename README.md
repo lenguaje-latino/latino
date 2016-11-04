@@ -11,12 +11,12 @@ Este proyecto nace de la necesidad de incrementar la educación de nivel básico
 debido a que los niños tienen la capacidad de entender la lógica a muy temprana edad y es en esta edad
 cuando más aprenden, esto motivará a los niños y jovenes por interesarse en el mundo del desarrollo de aplicaciones.
 
-¿Y por que un lenguaje de programación más?
-Si es bien sabido que ya hay muchos lenguajes de programación; pero no tenemos un lenguaje para programar
+¿Y por qué un lenguaje de programación más?
+Si bien se sabe, que ya hay muchos lenguajes de programación; pero no tenemos un lenguaje para programar
 con sintaxis en español, y entonces ¿por qué no hacer uno?
 
 ¿Cuantos de ustedes no batallaron con el inglés?
-¿Cúal seria la ventaja si no tuvieras que preocuparte por aprender javascript, html, css y mysql para desarrollar tus paginas web?
+¿Cúal sería la ventaja si no tuvieras que preocuparte por aprender javascript, html, css y mysql para desarrollar tus paginas web?
 
 Pues bien si este proyecto suena ambicioso, realmente les puedo decir que dependerá de la participación de todos nosotros para que esto sea posible.
 
