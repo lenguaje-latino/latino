@@ -64,32 +64,17 @@ void lat_leer(lat_mv *vm) {
 }
 
 void lat_leer_archivo(lat_mv *vm) {
-  lat_objeto *o = lat_desapilar(vm);
-
-  if (o->tipo == T_STR) {
-    FILE *fp;
-    char *buf;
-    fp = fopen(__cadena(o), "r");
-    if (fp == NULL) {
-      lat_fatal_error("Linea %d, %d: %s", o->num_linea, o->num_columna,
-                      "No se pudo abrir el archivo\n");
-    }
-    fseek(fp, 0, SEEK_END);
-    int fsize = ftell(fp);
-    fseek(fp, 0, SEEK_SET);
-    // buf = calloc(1, fsize);
-    buf = __memoria_asignar(fsize + 1);
-    size_t newSize = fread(buf, sizeof(char), fsize, fp);
-    if (buf == NULL) {
-      printf("No se pudo asignar %d bytes de memoria\n", fsize);
-    }
-    buf[newSize] = '\0';
-    fclose(fp);
-    lat_apilar(vm, lat_cadena_nueva(vm, buf));
-  } else {
-    lat_fatal_error("Linea %d, %d: %s", o->num_linea, o->num_columna,
-                    "No se pudo abrir el archivo\n");
-  }
+    lat_objeto *o = lat_desapilar(vm);
+    FILE *archivo = fopen(__cadena(o), "r");
+    if (archivo == NULL){ lat_fatal_error("Linea %d, %d: %s", o->num_linea, o->num_columna, "No se pudo abrir el archivo\n"); }
+    char *final; size_t n = 0; int c;
+    fseek(archivo, 0, SEEK_END);
+    long f_size = ftell(archivo);
+    fseek(archivo, 0, SEEK_SET);
+    final = malloc(f_size);
+    while ((c = fgetc(archivo)) != EOF) { final[n++] = (char)c; }
+    final[n-1] = '\0';
+    lat_apilar(vm, lat_cadena_nueva(vm, final));
 }
 
 void lat_escribir_archivo(lat_mv *vm) {
