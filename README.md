@@ -64,7 +64,7 @@ Instalación en dibs: Ubuntu, DEBIAN ó Mint
   # Obtenemos paquete (podremos de ejemplo la última versión que es 0.8.9)
   wget https://github.com/primitivorm/latino/releases/download/v0.8.9/latino-0.8.9-Linux.deb
   # Instalamos
-  dpkg -i latino-0.8.9-Linux.deb
+  sudo dpkg -i latino-0.8.9-Linux.deb
 ```
 
 Puedes comprobar si hay versiones nuevas en [RELEASES](https://github.com/primitivorm/latino/releases)
