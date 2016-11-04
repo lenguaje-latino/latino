@@ -16,6 +16,7 @@ packages_all=( # Aquí indicamos los programas (generales) que se van a instalar
     "curl"
     "libjansson-dev"
     "libhiredis-dev"
+    "redis-server"
     "libcurl4-openssl-dev"
     )
     
