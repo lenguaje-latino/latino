@@ -16,8 +16,8 @@ entero  = redis_obtener(conexion, "entero")
 imprimir("El valor de la cadena es:\t".cadena, 1)
 imprimir("El valor del entero es:\t\t".entero, 1)
 
-// le incrementamos 1 al entero y lo volvemos a declarar
-nuevo_valor = redis_incremento(conexion, "entero")
+// le aumentamos 1 al entero y lo declaramos
+nuevo_valor = redis_aumentar(conexion, "entero")
 imprimir("Ahora el entero vale:\t\t".nuevo_valor, 1)
 // le incrementamos el valor que desees, en este caso es 5
 nuevo_valor = redis_incrementar(conexion, "entero", 5)
@@ -45,8 +45,10 @@ entero  = redis_hobtener(conexion, "entero", "valor")
 imprimir("El valor de la cadena es:\t".cadena, 1)
 imprimir("El valor del entero es:\t\t".entero, 1)
 
-// le incrementamos 5 al entero y lo volvemos a declarar
-// debido a que no existe un incremento positivo (+1) tenemos que asignarlo
+// le aumentamos 1 al entero y lo declaramos
+nuevo_valor = redis_haumentar(conexion, "entero", "valor")
+imprimir("Ahora el entero vale:\t\t".nuevo_valor, 1)
+// le incrementamos el valor que desees, en este caso es 5
 nuevo_valor = redis_hincrementar(conexion, "entero", "valor", 5)
 imprimir("Se le incrementa 5 al entero:\t".nuevo_valor, 1)
 
