@@ -214,41 +214,32 @@ void lat_aleatorio(lat_mv *vm) {
 
 void lat_fecha(lat_mv *vm) {
   time_t raw;
-  struct tm *tipo;
-  time(&raw);
-  /* fix 1: Mostrar hora completa sin argumentos
-  fix 2: soporte de la letra ñ al ejecutar comando latino sin argumentos
-  notiempo = time(NULL); #fix 1
-  char valor2[] = ctime(&notiempo); #fix 1
-  */
+  struct tm *tipo; time(&raw);
   tipo = localtime(&raw);
-
   lat_objeto *tiempo = lat_desapilar(vm);
-  int valor;
-  char *num = __cadena(tiempo);
+  unsigned char *num = __cadena(tiempo);
   if (!strcmp(num, "seg")) {
-    valor = tipo->tm_sec; // segundos
+    lat_apilar(vm, lat_numerico_nuevo(vm, tipo->tm_sec)); //segs
   } else if (!strcmp(num, "min")) {
-    valor = tipo->tm_min; // minutos
+    lat_apilar(vm, lat_numerico_nuevo(vm, tipo->tm_min)); //mins
   } else if (!strcmp(num, "hora")) {
-    valor = tipo->tm_hour; // horas
+    lat_apilar(vm, lat_numerico_nuevo(vm, tipo->tm_hour)); // horas
   } else if (!strcmp(num, "d_mes")) {
-    valor = tipo->tm_mday; // día del mes
+    lat_apilar(vm, lat_numerico_nuevo(vm, tipo->tm_mday)); //dia del mes
   } else if (!strcmp(num, "mes")) {
-    valor = tipo->tm_mon;           // mes
-  } else if (!strcmp(num, "año")) { // fix 2
-    valor = tipo->tm_year + 1900;   // año
+    lat_apilar(vm, lat_numerico_nuevo(vm, tipo->tm_mon)); //mes
+  } else if (!strcmp(num, "año")) {
+    lat_apilar(vm, lat_numerico_nuevo(vm, tipo->tm_year+1900)); //año
   } else if (!strcmp(num, "d_sem")) {
-    valor = tipo->tm_wday;            // día de la sem.
-  } else if (!strcmp(num, "d_año")) { // fix 2
-    valor = tipo->tm_yday;            // día del año
+    lat_apilar(vm, lat_numerico_nuevo(vm, tipo->tm_wday));// día de la sem.
+  } else if (!strcmp(num, "d_año")) {
+    lat_apilar(vm, lat_numerico_nuevo(vm, tipo->tm_yday)); // día del año
   } else if (!strcmp(num, "estacion")) {
-    valor = tipo->tm_isdst; // verano/invierno
+    lat_apilar(vm, lat_numerico_nuevo(vm, tipo->tm_isdst)); //verano/inv
+  } else {
+          lat_fatal_error("Linea %d, %d: %s", tiempo->num_linea,
+                      tiempo->num_columna, "el formato de tiempo indicado no existe.");
   };
-  if (valor) {
-    lat_apilar(vm, lat_numerico_nuevo(vm, valor));
-  };
-  // if (!valor) {  lat_apilar(vm, lat_cadena_nueva(vm, valor2)); }; fix 1
 }
 
 void lat_redis_conectar(lat_mv *vm) {
@@ -257,7 +248,6 @@ void lat_redis_conectar(lat_mv *vm) {
   redisContext *redis;
   const char *servidor2 = __cadena(servidor);
   int puerto2 = __numerico(puerto);
-
   struct timeval timeout = {1, 500000}; // 1.5 segundos
   redis = redisConnectWithTimeout(servidor2, puerto2, timeout);
   if (redis == NULL || redis->err) {
@@ -350,13 +340,15 @@ void lat_redis_incremento(lat_mv *vm) {
   lat_apilar(vm, lat_numerico_nuevo(vm, respuesta->integer));
   freeReplyObject(respuesta);
 }
-void lat_redis_hincremento(lat_mv *vm) {
+void lat_redis_hincrementar(lat_mv *vm) {
+  lat_objeto *numero = lat_desapilar(vm);
   lat_objeto *llave2 = lat_desapilar(vm);
   lat_objeto *llave = lat_desapilar(vm);
   redisContext *conexion = lat_desapilar(vm);
   redisReply *respuesta;
-  respuesta = redisCommand(conexion, "HINCR %s %s", __cadena(llave), __cadena(llave2));
-  if (!respuesta->integer) {
+  long int numerico = __numerico(numero);
+  respuesta = redisCommand(conexion, "HINCRBY %s %s %i", __cadena(llave), __cadena(llave2), numerico);
+  if (!respuesta->integer && strcmp(respuesta->integer, 0)) {
     lat_fatal_error("Linea %d, %d: %s", llave->num_linea, llave->num_columna,
                     "error al incrementar el entero.");
   };
@@ -364,6 +356,21 @@ void lat_redis_hincremento(lat_mv *vm) {
   freeReplyObject(respuesta);
 }
 
+void lat_redis_incrementar(lat_mv *vm) {
+  lat_objeto *numero = lat_desapilar(vm);
+  lat_objeto *llave = lat_desapilar(vm);
+  redisContext *conexion = lat_desapilar(vm);
+  redisReply *respuesta;
+  long int numerico = __numerico(numero);
+  respuesta = redisCommand(conexion, "INCRBY %s %i", __cadena(llave), numerico);
+  if (!respuesta->integer && strcmp(respuesta->integer, 0)) {
+    lat_fatal_error("Linea %d, %d: %s", llave->num_linea, llave->num_columna,
+                    "error al incrementar el entero.");
+  };
+  lat_apilar(vm, lat_numerico_nuevo(vm, respuesta->integer));
+  freeReplyObject(respuesta);
+  
+}
 
 void lat_redis_ping(lat_mv *vm) {
   redisContext *conexion = lat_desapilar(vm);
