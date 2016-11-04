@@ -249,6 +249,22 @@ void lat_redis_conectar(lat_mv *vm) {
   lat_apilar(vm, redis);
 }
 
+void lat_redis_liberar(lat_mv *vm) {
+  redisContext *conexion = lat_desapilar(vm);
+  redisFree(conexion);
+}
+
+void lat_redis_ping(lat_mv *vm) {
+  redisContext *conexion = lat_desapilar(vm);
+  redisReply *respuesta;
+  respuesta = redisCommand(conexion, "PING");
+  if (!respuesta->str) {
+    lat_fatal_error("Error: error al obtener respuesta de redis");
+  };
+  lat_apilar(vm, lat_cadena_nueva(vm, respuesta->str));
+  freeReplyObject(respuesta);
+}
+
 void lat_redis_asignar(lat_mv *vm) {
   lat_objeto *cadena = lat_desapilar(vm);
   lat_objeto *llave = lat_desapilar(vm);
@@ -313,7 +329,7 @@ void lat_redis_hborrar(lat_mv *vm) {
   redisCommand(conexion, "HDEL %s %s", __cadena(llave), __cadena(llave2));
 }
 
-void lat_redis_incremento(lat_mv *vm) {
+void lat_redis_aumentar(lat_mv *vm) {
   lat_objeto *llave = lat_desapilar(vm);
   redisContext *conexion = lat_desapilar(vm);
   redisReply *respuesta;
@@ -325,15 +341,14 @@ void lat_redis_incremento(lat_mv *vm) {
   lat_apilar(vm, lat_numerico_nuevo(vm, respuesta->integer));
   freeReplyObject(respuesta);
 }
-void lat_redis_hincrementar(lat_mv *vm) {
-  lat_objeto *numero = lat_desapilar(vm);
+
+void lat_redis_haumentar(lat_mv *vm) {
   lat_objeto *llave2 = lat_desapilar(vm);
   lat_objeto *llave = lat_desapilar(vm);
   redisContext *conexion = lat_desapilar(vm);
   redisReply *respuesta;
-  long int numerico = __numerico(numero);
-  respuesta = redisCommand(conexion, "HINCRBY %s %s %i", __cadena(llave), __cadena(llave2), numerico);
-  if (!respuesta->integer && strcmp(respuesta->integer, 0)) {
+  respuesta = redisCommand(conexion, "HINCRBY %s %s 1", __cadena(llave), __cadena(llave2));
+  if (!respuesta->integer) {
     lat_fatal_error("Linea %d, %d: %s", llave->num_linea, llave->num_columna,
                     "error al incrementar el entero.");
   };
@@ -354,21 +369,20 @@ void lat_redis_incrementar(lat_mv *vm) {
   };
   lat_apilar(vm, lat_numerico_nuevo(vm, respuesta->integer));
   freeReplyObject(respuesta);
-  
 }
 
-void lat_redis_ping(lat_mv *vm) {
+void lat_redis_hincrementar(lat_mv *vm) {
+  lat_objeto *numero = lat_desapilar(vm);
+  lat_objeto *llave2 = lat_desapilar(vm);
+  lat_objeto *llave = lat_desapilar(vm);
   redisContext *conexion = lat_desapilar(vm);
   redisReply *respuesta;
-  respuesta = redisCommand(conexion, "PING");
-  if (!respuesta->str) {
-    lat_fatal_error("Error: error al obtener respuesta de redis");
+  long int numerico = __numerico(numero);
+  respuesta = redisCommand(conexion, "HINCRBY %s %s %i", __cadena(llave), __cadena(llave2), numerico);
+  if (!respuesta->integer && strcmp(respuesta->integer, 0)) {
+    lat_fatal_error("Linea %d, %d: %s", llave->num_linea, llave->num_columna,
+                    "error al incrementar el entero.");
   };
-  lat_apilar(vm, lat_cadena_nueva(vm, respuesta->str));
+  lat_apilar(vm, lat_numerico_nuevo(vm, respuesta->integer));
   freeReplyObject(respuesta);
-}
-
-void lat_redis_liberar(lat_mv *vm) {
-  redisContext *conexion = lat_desapilar(vm);
-  redisFree(conexion);
 }

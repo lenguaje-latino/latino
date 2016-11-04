@@ -381,18 +381,19 @@ lat_mv *lat_mv_crear() {
   __registrar_cfuncion(mv, "dormir", lat_dormir, 1);
 
   /* Redis funciones */
-  __registrar_cfuncion(mv, "redis_asignar", lat_redis_asignar, 3);
-  __registrar_cfuncion(mv, "redis_hasignar", lat_redis_hasignar, 4);
-  __registrar_cfuncion(mv, "redis_borrar", lat_redis_borrar, 2);
-  __registrar_cfuncion(mv, "redis_hborrar", lat_redis_hborrar, 3);
-  __registrar_cfuncion(mv, "redis_obtener", lat_redis_obtener, 2);
-  __registrar_cfuncion(mv, "redis_hobtener", lat_redis_hobtener, 3);
   __registrar_cfuncion(mv, "redis_conectar", lat_redis_conectar, 2);
   __registrar_cfuncion(mv, "redis_liberar", lat_redis_liberar, 1);
-  __registrar_cfuncion(mv, "redis_incremento", lat_redis_incremento, 2);
+  __registrar_cfuncion(mv, "redis_ping", lat_redis_ping, 1);
+  __registrar_cfuncion(mv, "redis_asignar", lat_redis_asignar, 3);
+  __registrar_cfuncion(mv, "redis_hasignar", lat_redis_hasignar, 4);
+  __registrar_cfuncion(mv, "redis_obtener", lat_redis_obtener, 2);
+  __registrar_cfuncion(mv, "redis_hobtener", lat_redis_hobtener, 3);
+  __registrar_cfuncion(mv, "redis_borrar", lat_redis_borrar, 2);
+  __registrar_cfuncion(mv, "redis_hborrar", lat_redis_hborrar, 3);
+  __registrar_cfuncion(mv, "redis_aumentar", lat_redis_aumentar, 2);
+  __registrar_cfuncion(mv, "redis_haumentar", lat_redis_haumentar, 3);
   __registrar_cfuncion(mv, "redis_incrementar", lat_redis_incrementar, 3);
   __registrar_cfuncion(mv, "redis_hincrementar", lat_redis_hincrementar, 4);
-  __registrar_cfuncion(mv, "redis_ping", lat_redis_ping, 1);
 
   return mv;
 }
