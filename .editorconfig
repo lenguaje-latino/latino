@@ -7,3 +7,11 @@ end_of_line = lf
 charset = utf-8
 trim_trailing_whitespace = true
 insert_final_newline = true
+
+[*.{bash,sh,lat,nanorc}]
+
+charset = utf-8
+indent_style = tab
+indent_size = 8
+trim_trailing_whitespace = true
+insert_final_newline = false
