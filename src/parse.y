@@ -345,10 +345,14 @@ function_definition
     : FUNCION IDENTIFICADOR '(' parameter_list ')' statement_list FIN {
         $$ = nodo_nuevo_funcion($2, $4, $6);
     }
+    | FUNCION IDENTIFICADOR parameter_list statement_list FIN {
+        $$ = nodo_nuevo_funcion($2, $3, $4);
+    }
     ;
 
 function_call
     : variable_access '(' argument_expression_list ')' { $$ = nodo_nuevo(NODO_FUNCION_LLAMADA, $1, $3); }
+    | variable_access argument_expression_list { $$ = nodo_nuevo(NODO_FUNCION_LLAMADA, $1, $2); }
     ;
 
 argument_expression_list

@@ -1,10 +1,14 @@
-a = leer_lineas('datos.lat')
-escribir(a)
-/*
-lineas = leer_lineas('datos.lat')
-palabras = []
-desde (i=0; i<lineas->longitud(); i++)
-  palabras->extender(separar(lineas[i]))
+funcion promedio(a,b)
+    retorno (a+b)/2
 fin
-escribir(palabras)
-*/
+
+funcion max a,b
+    si (a > b)
+        retorno a
+    sino
+        retorno b
+    fin
+fin
+
+escribir promedio (3, 5)
+escribir max 3, 5 #5

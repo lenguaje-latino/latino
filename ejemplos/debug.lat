@@ -4,16 +4,17 @@ Menu propiedades del proyecto-> Debugging -> Command Arguments. Agregar
 $(SolutionDir)..\ejemplos\debug.lat
 */
 
-str = "esta cadena
-tiene saltos
-de linea";
+funcion promedio(a,b)
+    retorno (a+b)/2
+fin
 
-str2 = "esta cadena\n tiene saltos\n de linea"
+funcion max a,b
+    si (a > b)
+        retorno a
+    sino
+        retorno b
+    fin
+fin
 
-mod = reemplazar(str, "\n", "-")
-escribir(str)
-escribir(mod)
-mod = reemplazar(str2, "\\n", "-")
-escribir(mod)
-mod = reemplazar(str2, "cadena", "string")
-escribir(mod)
+escribir(promedio (3, 5))
+escribir max 3, 5 #5
