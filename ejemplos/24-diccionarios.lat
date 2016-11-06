@@ -25,15 +25,37 @@ escribir("Num de elementos: " . dic->longitud())
 #ejemplo de request de la api de telegram
 true = verdadero
 false = falso
-dic = {"ok":true,
-       "result":[
-          {"update_id":710556635,
-            "message":{"message_id":130,
-                       "from":{"id":269610735,"first_name":"Primitivo","last_name":"Roman"},
-                       "chat":{"id":269610735,"first_name":"Primitivo","last_name":"Roman","type":"private"},
-                       "date":1474906910,
-                       "text":"esto es una prueba print (\"hola mundo\")",
-                       "entities":[{"type":"code","offset":19,"length":20}]}}]}
+dic = {
+	"ok":true,
+	"result":[
+	{
+	"update_id":710556635,
+	"message":
+		{
+		"message_id":130,
+		"from":{
+			"id":269610735,
+			"first_name":"Primitivo",
+			"last_name":"Roman"
+			},
+		"chat":{
+			"id":269610735,
+			"first_name":"Primitivo",
+			"last_name":"Roman",
+			"type":"private"
+			},
+		"date":1474906910,
+		"text":"esto es una prueba print (\"hola mundo\")",
+		"entities":[{
+	  		"type":"code",
+			"offset":19,
+			"length":20
+			}]
+		}
+	}
+		  ]
+      }
+
 
 
 #escribir(dic->ok)
