@@ -358,6 +358,7 @@ lat_mv *lat_mv_crear() {
   __registrar_cfuncion(mv, "leer_lineas", lat_leer_lineas, 1);
   __registrar_cfuncion(mv, "invertir", lat_invertir_cadena, 1);
   __registrar_cfuncion(mv, "fecha", lat_fecha, 1);
+  __registrar_cfuncion(mv, "url_escape", lat_url_escape, 1);
 
   /*50 conversion de tipos de dato*/
   __registrar_cfuncion(mv, "tipo", lat_tipo, 1);
