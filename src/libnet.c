@@ -59,8 +59,8 @@ void lat_url_escape(lat_mv *vm){
     lat_objeto* a = lat_desapilar(vm);
     CURL *curl = curl_easy_init();
     char *texto = __cadena(a);
-    if(curl && strlen(text) > 0) {
-        char *output = curl_easy_escape(curl, text, strlen(texto));
+    if(curl && strlen(texto) > 0) {
+        char *output = curl_easy_escape(curl, texto, strlen(texto));
         if(output) {
             lat_apilar(vm, lat_cadena_nueva(vm, output));
             curl_free(output);
