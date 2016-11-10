@@ -54,3 +54,19 @@ void lat_peticion(lat_mv* mv){
   }
   lat_apilar(mv, r);
 }
+
+void lat_url_escape(lat_mv *vm){
+    lat_objeto* a = lat_desapilar(vm);
+    CURL *curl = curl_easy_init();
+    char *texto = __cadena(a);
+    if(curl && strlen(text) > 0) {
+        char *output = curl_easy_escape(curl, text, strlen(texto));
+        if(output) {
+            lat_apilar(vm, lat_cadena_nueva(vm, output));
+            curl_free(output);
+        }
+    }
+    else {
+        lat_fatal_error("Linea %d, %d: %s", a->num_linea, a->num_columna, "se esperaba una cadena mayor");
+    }
+}
