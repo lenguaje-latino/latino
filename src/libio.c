@@ -26,9 +26,9 @@ THE SOFTWARE.
 #include <stdlib.h>
 #include <string.h>
 #include <time.h>
+#include <hiredis/hiredis.h>
 
 #include "compat.h"
-#include "hiredis.h"
 #include "latino.h"
 #include "libio.h"
 #include "liblist.h"
