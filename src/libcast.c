@@ -1,7 +1,7 @@
 /*
 The MIT License (MIT)
 
-Copyright (c) 2015 - Latino
+Copyright (c) 2015 - 2016. Latino
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -22,41 +22,40 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 */
 
-#include <stdio.h>
-#include <stdlib.h>
-#include <malloc.h>
+#define LIB_CAST_NAME "convertir"
+
+#include "latgc.h"
 #include "latino.h"
-#include "libmem.h"
-#include "compat.h"
+#include "latmv.h"
+#include "latobj.h"
 
-void* __memoria_asignar(size_t size)
-{    
-    void* value = calloc(1, size);
-    if (value == 0)
-        lat_fatal_error("Memoria virtual agotada\n");
-    //printf("+++ memoria asignada: %zu, %p\n", size, &value);
-    return value;
+void lat_logico(lat_mv *mv) {
+  lat_objeto *o = lat_desapilar(mv);
+  lat_objeto *tmp =
+      lat_obj2bool(o) == true ? mv->objeto_verdadero : mv->objeto_falso;
+  lat_apilar(mv, tmp);
 }
 
-size_t __memoria_tamanio(void* ptr){
-    return malloc_size(ptr);
+void lat_numerico(lat_mv *mv) {
+  lat_objeto *o = lat_desapilar(mv);
+  lat_objeto *tmp = lat_numerico_nuevo(mv, lat_obj2double(o));
+  lat_apilar(mv, tmp);
+  lat_gc_agregar(mv, tmp);
 }
 
-void* __memoria_reasignar(void* ptr, size_t size)
-{
-    //size_t mem_ini = __memoria_tamanio(ptr);
-    void* value = realloc(ptr, size);
-    if (value == 0)
-        lat_fatal_error("Memoria virtual agotada\n");
-    //printf("memoria inicial: %zu memoria nueva: %zu, %p\n", mem_ini, __memoria_tamanio(value), &value);
-    return value;
+void lat_cadena(lat_mv *mv) {
+  lat_objeto *o = lat_desapilar(mv);
+  char *buf = lat_obj2cstring(o);
+  lat_objeto *tmp = lat_cadena_nueva(mv, buf);
+  lat_apilar(mv, tmp);
+  lat_gc_agregar(mv, tmp);
 }
 
-void __memoria_liberar(void* ptr)
-{    
-    if (ptr != NULL)
-    {        
-        //printf("--- memoria liberada: %zu, %p\n", __memoria_tamanio(ptr), &ptr);
-        free(ptr);
-    }
+static const lat_CReg lib_cast[] = {{"logico", lat_logico, 1},
+                                    {"numerico", lat_numerico, 1},
+                                    {"cadena", lat_cadena, 1},
+                                    {NULL, NULL}};
+
+void lat_importar_lib_cast(lat_mv *mv) {
+  lat_importar_lib(mv, LIB_CAST_NAME, lib_cast);
 }

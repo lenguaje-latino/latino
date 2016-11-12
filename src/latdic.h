@@ -1,7 +1,7 @@
 /*
 The MIT License (MIT)
 
-Copyright (c) 2015 - Latino
+Copyright (c) 2015 - 2016. Latino
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -24,19 +24,17 @@ THE SOFTWARE.
 #ifndef _LIB_DICT_H_
 #define _LIB_DICT_H_
 
-#include "liblist.h"
+#include "latlist.h"
 
 /**\brief Valor hash */
-typedef struct hash_val
-{
-    char llave[64];    /**< Llave */
-    void* valor;    /**< Valor */
+typedef struct hash_val {
+  char llave[64]; /**< Llave */
+  void *valor;    /**< Valor */
 } hash_val;
 
 /**\brief Mapa de valores hash */
-typedef struct hash_map
-{
-    lista* buckets[256];  //< Arreglo de listas
+typedef struct hash_map {
+  lista *buckets[256]; //< Arreglo de listas
 } hash_map;
 
 /**
@@ -44,7 +42,7 @@ typedef struct hash_map
   *
   *\return hash_map*: Apuntador a la tabla creada
   */
-hash_map* __dic_crear();
+hash_map *__dic_crear();
 
 /**
   *\brief Libera la informacion de una tabla hash
@@ -58,7 +56,7 @@ void __dic_destruir(hash_map *dic);
   *\param key: Apuntador a cadena
   *\return int: Numero hash creado para la cadena
   */
-int __dic_hash(const char* key);
+int __dic_hash(const char *key);
 
 /**\brief Obtiene un elemento de la tabla hash
   *
@@ -66,7 +64,7 @@ int __dic_hash(const char* key);
   *\param key: Llave buscada
   *\return void*: Apuntador al objeto buscado
   */
-void* __dic_obtener(hash_map* m, char* key);
+void *__dic_obtener(hash_map *m, char *key);
 
 /**\brief Guarda un elemento en la tabla buscada
   *
@@ -74,19 +72,23 @@ void* __dic_obtener(hash_map* m, char* key);
   *\param key: Llave
   *\param val: Valor
   */
-void __dic_asignar(hash_map* m, const char* key, void* val);
+void __dic_asignar(hash_map *m, const char *key, void *val);
 
 /**\brief Copia una tabla hash con todos sus elementos
   *\param m: Apuntador a tabla hash
   */
-hash_map* __dic_clonar(hash_map* m);
+hash_map *__dic_clonar(hash_map *m);
 
-/**\brief Genera la representacion en cadena del diccionario 
+/**\brief Genera la representacion en cadena del diccionario
  * \param m: Apuntador a tabla hash
  * \return char: La cadena del diccionario
  */
-char* __dic_a_cadena(hash_map* m);
+char *__dic_a_cadena(hash_map *m);
 
-int __dic_longitud(hash_map* m);
+/**\brief Obtiene la longitud del diccionario
+ * \param m: Apuntador a tabla hash
+ * \return int: La longitud del diccionario
+ */
+int __dic_longitud(hash_map *m);
 
 #endif /* !_LIB_DICT_H_ */

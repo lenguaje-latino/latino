@@ -1,7 +1,7 @@
 /*
 The MIT License (MIT)
 
-Copyright (c) 2015 - Latino
+Copyright (c) 2015 - 2016. Latino
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -27,6 +27,8 @@ THE SOFTWARE.
 
 #include <stdlib.h>
 
+#include "latmv.h"
+
 /** \file libmem.h
 *
 * Contiene las funciones para el manejo de memoria dinamica
@@ -38,14 +40,14 @@ THE SOFTWARE.
   * \param size: Tamanio de memoria solicitado
   *
   */
-void* __memoria_asignar(size_t size);
+void *__memoria_asignar(lat_mv *mv, size_t size);
 
 /** Regresa el tamanio de la memoria ocupada por un apuntador void
   *
   * \param ptr: Apuntador a la memoria
   *
   */
-size_t __memoria_tamanio(void* ptr);
+size_t __memoria_tamanio(void *ptr);
 
 /** Reasigna memoria dinamicamente (realloc)
   *
@@ -53,13 +55,13 @@ size_t __memoria_tamanio(void* ptr);
   * \param size: Tamanio nuevo de memoria solicitado
   *
   */
-void* __memoria_reasignar(void* ptr, size_t size);
+void *__memoria_reasignar(void *ptr, size_t size);
 
 /** Libera la memoria (free)
   *
   * \param ptr: Apuntador a la memoria a liberar
   *
   */
-void __memoria_liberar(void* ptr);
+void __memoria_liberar(lat_mv *mv, void *ptr);
 
 #endif /* !_LIBMEM_H_ */

@@ -1,7 +1,7 @@
 /*
 The MIT License (MIT)
 
-Copyright (c) 2015 - Latino
+Copyright (c) 2015 - 2016. Latino
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -25,23 +25,23 @@ THE SOFTWARE.
 #ifndef _LATINO_H_
 #define _LATINO_H_
 
-#include <stdio.h>
-#include <math.h>
 #include <ctype.h>
-#include <string.h>
-#include <memory.h>
-#include <stdlib.h>
-#include <stdarg.h>
-#include <float.h>
-#include <setjmp.h>
-#include <stdbool.h>
 #include <errno.h>
+#include <float.h>
 #include <limits.h>
+#include <math.h>
+#include <memory.h>
+#include <setjmp.h>
+#include <stdarg.h>
+#include <stdbool.h>
 #include <stddef.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
 
-#include "compat.h"
-#include "ast.h"
-#include "vm.h"
+#include "latast.h"
+#include "latcompat.h"
+#include "latmv.h"
 
 /** \file latino.h
 *
@@ -52,18 +52,23 @@ THE SOFTWARE.
 /** Version mayor de Latino */
 #define LAT_VERSION_MAYOR "0"
 /** Version menor de Latino */
-#define LAT_VERSION_MENOR "8"
+#define LAT_VERSION_MENOR "9"
 /** Version de correcion de errores */
-#define LAT_VERSION_PARCHE "11"
+#define LAT_VERSION_PARCHE "0"
 /** Version de Latino */
-#define LAT_VERSION "Latino " LAT_VERSION_MAYOR "." LAT_VERSION_MENOR "." LAT_VERSION_PARCHE
+#define LAT_VERSION                                                            \
+  "Latino " LAT_VERSION_MAYOR "." LAT_VERSION_MENOR "." LAT_VERSION_PARCHE
 /** Derechos de Latino */
-#define LAT_DERECHOS LAT_VERSION "\nTodos los derechos reservados (C) 2015-2016. Latinoamerica"
+#define LAT_DERECHOS                                                           \
+  LAT_VERSION "\nTodos los derechos reservados (C) 2015-2016. Latinoamerica"
 
 /** Define el manejo de excepciones en Latino */
-#define LAT_THROW(L,c)		longjmp((c)->b, 1)
-#define LAT_TRY(L,c,a)		if (setjmp((c)->b) == 0) { a }
-#define lat_jmpbuf		jmp_buf
+#define LAT_THROW(L, c) longjmp((c)->b, 1)
+#define LAT_TRY(L, c, a)                                                       \
+  if (setjmp((c)->b) == 0) {                                                   \
+    a                                                                          \
+  }
+#define lat_jmpbuf jmp_buf
 
 /** Indica si se desea debuguear el parser de bison */
 extern int debug;
@@ -76,26 +81,27 @@ extern int parse_silent;
 /**
  Dibuja el logo
  */
-#define LAT_LOGO "\n.__          __  .__               \n|  | _____ _/  |_|__| ____   ____  \n|  | \\__  \\\\   __\\  |/    \\ /  _ \\ \n|  |__/ __ \\|  | |  |   |  (  <_> )\n|____(____  /__| |__|___|  /\\____/ \n          \\/             \\/        \n"
+#define LAT_LOGO                                                               \
+  "\n.__          __  .__               \n|  | _____ _/  |_|__| ____   ____  " \
+  "\n|  | \\__  \\\\   __\\  |/    \\ /  _ \\ \n|  |__/ __ \\|  | |  |   |  "  \
+  "(  <_> )\n|____(____  /__| |__|___|  /\\____/ \n          \\/             " \
+  "\\/        \n"
 
 /** Afirmar (asset), sirve para testear una condicion */
 #define lat_afirmar(cond) ((void)(false && (cond)))
 
-extern char* filename;
+extern char *filename;
 
 /* Envia un mensaje de error */
-#define lat_error(M, ...)                               \
-  {                                              \
-    if (filename) { fprintf(stderr, "Error: " M " en archivo '%s'.\n", ##__VA_ARGS__, filename); } \
-    else { fprintf(stderr, " Error: " M "\n", ##__VA_ARGS__); } \
-  }
-
-/* Envia un mensaje de error */
-#define lat_fatal_error(M, ...) \
-  { \
-    if (filename) { fprintf(stderr, " Error: " M " en archivo '%s'.\n", ##__VA_ARGS__, filename); } \
-    else { fprintf(stderr, " Error: " M "\n", ##__VA_ARGS__); } \
-    exit(1); \
+#define lat_error(M, ...)                                                \
+  {                                                                            \
+    if (filename) {                                                            \
+      fprintf(stderr, " Error: " M " en archivo '%s'.\n", ##__VA_ARGS__,       \
+              filename);                                                       \
+    } else {                                                                   \
+      fprintf(stderr, " Error: " M "\n", ##__VA_ARGS__);                       \
+    }                                                                          \
+    exit(1);                                                                   \
   }
 
 /** Maximo numero de size_t */
@@ -106,14 +112,14 @@ extern char* filename;
 #endif
 
 /** Tamanio maximo de instrucciones bytecode de una funcion */
-#define MAX_BYTECODE_FUNCTION (1024*128)
+#define MAX_BYTECODE_FUNCTION (1024 * 128)
 /** Tamanio maximo de memoria virtual permitida*/
-#define MAX_VIRTUAL_MEMORY (1024*128)
+#define MAX_VIRTUAL_MEMORY MAX_BYTECODE_FUNCTION * 256
 /** Tamanio maximo de una cadena para ser almacenada en HASH TABLE */
 #define MAX_STR_INTERN 64
 /** Tamanio maximo de una cadena almacenada dinamicamente*/
-//#define MAX_STR_LENGTH (1024*100)
-#define MAX_STR_LENGTH (1024*1024)
+//#define MAX_STR_LENGTH 4096
+#define MAX_STR_LENGTH 1024 * 1024
 /** Tamanio maximo de la pila de la maquina virtual */
 #define MAX_STACK_SIZE 255
 /** Tamanio maximo de una ruta de derectorio */
@@ -128,13 +134,12 @@ extern char* filename;
 #define MAX_BUFFERSIZE BUFSIZ
 
 /** Interface con flex */
-typedef struct YYLTYPE
-{
-    int first_line;
-    int first_column;
-    int last_line;
-    int last_column;
-    char* file_name;
+typedef struct YYLTYPE {
+  int first_line;
+  int first_column;
+  int last_line;
+  int last_column;
+  char *file_name;
 } YYLTYPE;
 
 /** Establece que se definio una interface con Flex */
@@ -149,7 +154,7 @@ typedef struct YYLTYPE
   * \return ast: Nodo AST
   *
   */
-ast* lat_analizar_expresion(char* expr, int* status);
+ast *lat_analizar_expresion(char *expr, int *status);
 
 /** Analiza un archivo
   *
@@ -157,5 +162,5 @@ ast* lat_analizar_expresion(char* expr, int* status);
   * \return ast: Nodo AST
   *
   */
-ast* lat_analizar_archivo(char* ruta, int* status);
+ast *lat_analizar_archivo(char *ruta, int *status);
 #endif /* _LATINO_H_ */
