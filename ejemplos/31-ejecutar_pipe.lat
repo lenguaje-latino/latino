@@ -1,5 +1,6 @@
 cmd = "echo 'hola mundo'"
-salida = ejecutar_pipe(cmd)
+//salida = ejecutar_pipe(cmd)
+salida = sistema->pipe(cmd)
 escribir("salida: ")
 escribir("---------------------------------------------------")
 escribir(salida)

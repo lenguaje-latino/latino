@@ -3,9 +3,11 @@ escribir('Vamos a enviar un mensaje')
 chatId = '-1001051061242' #chat latino
 escribir('Escribe un texto')
 texto = leer()
-texto = reemplazar(texto, " ", "%20") #reemplazamos los espacio con %20
+//texto = reemplazar(texto, " ", "%20") #reemplazamos los espacio con %20
+texto = cadena->reemplazar(texto, " ", "%20") #reemplazamos los espacio con %20
 cmd = "curl  -s 'https://api.telegram.org/bot" . TOKEN . "/sendMessage?chat_id=" . chatId . "&text=" . texto . "'"
 #ver el comando que se ejecutara
 #escribir(cmd)
-sistema(cmd)
+//sistema(cmd)
+sistema->ejecutar(cmd)
 escribir('Mensaje enviado al chat id ' . chatId . ' con el texto: ' . texto)

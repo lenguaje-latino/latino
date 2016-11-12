@@ -3,18 +3,3 @@ Para debuguear en visual studio:
 Menu propiedades del proyecto-> Debugging -> Command Arguments. Agregar
 $(SolutionDir)..\ejemplos\debug.lat
 */
-
-funcion promedio(a,b)
-    retorno (a+b)/2
-fin
-
-funcion max a,b
-    si (a > b)
-        retorno a
-    sino
-        retorno b
-    fin
-fin
-
-escribir(promedio (3, 5))
-escribir max 3, 5 #5

@@ -1,2 +1,3 @@
-contenido = leer_archivo("prueba.txt")
+//contenido = leer_archivo("prueba.txt")
+contenido = archivo->leer("prueba.txt")
 escribir(contenido)
