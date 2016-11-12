@@ -1,7 +1,7 @@
 /*
 The MIT License (MIT)
 
-Copyright (c) 2015 - Latino
+Copyright (c) 2015 - 2016. Latino
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -31,38 +31,38 @@ THE SOFTWARE.
 /* Visual Leak Detector for Visual C++ */
 //#include <vld.h>
 #define LAT_FUNC extern
-#include <windows.h>
 #include <limits.h>
+#include <windows.h>
 #define snprintf(s, l, f, i) _snprintf(s, l, f, i)
-#define getcwd(ruta, tamanio) GetCurrentDirectory (MAX_PATH, ruta);
+#define getcwd(ruta, tamanio) GetCurrentDirectory(MAX_PATH, ruta);
 #include "stdbool.h"
 #define malloc_size(ptr) _msize(ptr)
-#define __lat_popen(L,c,m)		((void)L, _popen(c,m))
-#define __lat_pclose(L,file)		((void)L, _pclose(file))
-#define stdup _strdup
+#define __lat_popen(L, c, m) ((void)L, _popen(c, m))
+#define __lat_pclose(L, file) ((void)L, _pclose(file))
+#define strdup _strdup
 #define __lat_clear "@cls"
-#define __lat_sleep(mili) Sleep(mili*1000)
+#define __lat_sleep(mili) Sleep(mili * 1000)
 #endif
 #ifdef __linux__
 #include <dlfcn.h>
-#include <unistd.h>
 #include <stdbool.h>
+#include <unistd.h>
 #define PATH_SEP "/"
 #define LAT_FUNC __attribute__((visibility("hidden"))) extern
 #define malloc_size(ptr) malloc_usable_size(ptr)
-#define __lat_popen(L,c,m)	((void)L, fflush(NULL), popen(c,m))
-#define __lat_pclose(L,file)	((void)L, pclose(file))
+#define __lat_popen(L, c, m) ((void)L, fflush(NULL), popen(c, m))
+#define __lat_pclose(L, file) ((void)L, pclose(file))
 #define __lat_clear "clear"
 #define __lat_sleep(seg) sleep(seg)
 #endif
 
 /** Determina el compilador*/
 #if defined(__GNUC__)
-#define lat_noret		void __attribute__((noreturn))
-#elif defined(_MSC_VER) 
-#define lat_noret		void __declspec(noreturn)
+#define __lat_noret void __attribute__((noreturn))
+#elif defined(_MSC_VER)
+#define __lat_noret void __declspec(noreturn)
 #else
-#define lat_noret		void
+#define __lat_noret void
 #endif
 
 #endif /*_COMPAT_H_*/

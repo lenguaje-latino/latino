@@ -31,13 +31,16 @@ INCLUDE_DIRECTORIES(../include)
 INCLUDE_DIRECTORIES(../jansson/src)
 INCLUDE_DIRECTORIES(../hiredis)
 
-SET(SOURCES compat.h
-    latino.h ast.h vm.h object.h libstring.h libmem.h liblist.h
-    lex.h parse.h libmath.h libio.h  libnet.h libdict.h gc.h
-    linenoise/utf8.h linenoise/linenoise.h
-    latino.c ast.c vm.c object.c libstring.c libmem.c liblist.c
-    lex.c parse.c libmath.c libio.c libnet.c libdict.c gc.c
-    linenoise/utf8.c linenoise/linenoise.c )
+SET(SOURCES
+    latino.h latast.h latmv.h latobj.h latmem.h
+    latlist.h latdic.h latgc.h latlex.h latparse.h
+    linenoise/utf8.h linenoise/linenoise.h latcompat.h
+    latino.c latast.c latmv.c latobj.c latmem.c
+    latlist.c latdic.c latgc.c latlex.c latparse.c
+    libstr.c libcast.c libmath.c libfile.c libsys.c
+    libcurl.c libjson.c libredis.c libbase.c
+    linenoise/utf8.c linenoise/linenoise.c
+    )
 
 SET(EXECUTABLE_OUTPUT_PATH ${PROJECT_BINARY_DIR}/bin)
 
@@ -61,7 +64,7 @@ ENDIF(UNIX)
 #make package
 SET(CPACK_GENERATOR "DEB")
 SET(CPACK_DEBIAN_PACKAGE_NAME "latino")
-SET(CPACK_PACKAGE_VERSION "0.8.11")
+SET(CPACK_PACKAGE_VERSION "0.9.0")
 SET(CPACK_DEBIAN_PACKAGE_MAINTAINER "primitivo.roman.montero@gmail.com")
 SET(CPACK_DEBIAN_PACKAGE_DESCRIPTION "Lenguaje de programación de código abierto para latinos y de habla hispana. http://lenguaje-latino.org/")
 SET(CPACK_DEBIAN_PACKAGE_SECTION "education")
