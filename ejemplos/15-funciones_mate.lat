@@ -1,4 +1,5 @@
 #ejemplos de funciones matematicas
+/*
 escribir("ingresa un numero decimal")
 x = leer()
 escribir("seno de x: " . seno(x))
@@ -10,3 +11,16 @@ escribir("arco tangente de x: " . arco_tangente(x))
 escribir("coseno hiperbolico de x: " . coseno_hiperbolico(x))
 escribir("seno hiperbolico de x: " . seno_hiperbolico(x))
 escribir("tangente hiperbolica de x: " . tangente_hiperbolica(x))
+*/
+
+escribir("ingresa un numero decimal")
+x = leer()
+escribir("seno de x: " . mate->sen(x))
+escribir("coseno de x: " . mate->cos(x))
+escribir("tangente de x: " . mate->tan(x))
+escribir("arco coseno de x: " . mate->acos(x))
+escribir("arco seno de x: " . mate->asen(x))
+escribir("arco tangente de x: " . mate->atan(x))
+escribir("coseno hiperbolico de x: " . mate->cosh(x))
+escribir("seno hiperbolico de x: " . mate->senh(x))
+escribir("tangente hiperbolica de x: " . mate->tanh(x))

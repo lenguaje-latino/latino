@@ -11,4 +11,3 @@ funcion tecla(a, b)
 fin
 
 tecla("H", "B")
-

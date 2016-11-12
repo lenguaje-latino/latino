@@ -3,8 +3,9 @@ dic = { "Chilindrina": "Maria Antonieta de las Nieves",
      "Tres patines": "Leopoldo Fernandez" }
 
 #mandamos a consola el diccionario o podemos obtener su representacion en cadena
-str = dic->cadena()
-escribir(str)
+//str = dic->cadena()
+//escribir(str)
+escribir(dic)
 
 #cambiamos un elemento
 dic["Chilindrina"] = "Maria Antonieta"
@@ -20,7 +21,8 @@ dic["CH"] = "Chapulin C."
 escribir(dic->CH)
 
 #obtenemos la longitud del diccionario
-escribir("Num de elementos: " . dic->longitud())
+//escribir("Num de elementos: " . dic->longitud)
+escribir("Num de elementos: " . diccionario->longitud(dic))
 
 #ejemplo de request de la api de telegram
 true = verdadero
@@ -63,6 +65,10 @@ dic = {
 #escribir(dic->result[0])
 #escribir(dic->result[0]->message)
 escribir(dic->result[0]->message->text)
+escribir(dic->result[0]->message->xyz)  //cadena vacia
+
+msg = dic->result[0]->message
+escribir(msg["xyz"])
 
 /*
 #obtenemos el valor de un elemento que no existe

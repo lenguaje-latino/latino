@@ -1,2 +1,3 @@
 s = "prueba de escritura de archivo\ndesde Latino"
-escribir_archivo("prueba.txt", s)
+//escribir_archivo("prueba.txt", s)
+archivo->escribir("prueba.txt", s)

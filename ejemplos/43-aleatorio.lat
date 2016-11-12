@@ -1,7 +1,8 @@
 #!/usr/bin/latino
 
 funcion num_aleatorio()
-	numero = aleatorio(0, 3)
+	//numero = aleatorio(0, 3)
+	numero = mate->aleatorio(0, 3)
 	si numero == 0
 		imprimir("Te tocó el número 0")
 	osi numero == 1
@@ -15,13 +16,14 @@ fin
 
 funcion menu(a, b)
 	si a>=1
-		numero = aleatorio(0, 1)
+		//numero = aleatorio(0, 1)
+		numero = mate->aleatorio(0, 1)
 		si (numero == 0)
 			imprimir("Tocó el número 0 para el argumento ".b[0])
 		osi (numero == 1)
 			imprimir("Tocó el número 1 para el argumento ".b[0])
 		fin
-	sino    
+	sino
 		num_aleatorio()
 	fin
 fin

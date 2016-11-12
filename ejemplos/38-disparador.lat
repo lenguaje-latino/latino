@@ -16,7 +16,8 @@ triggers = [
 ]
 
 texto = "/test"  #para test
-desde (i=0; i<triggers->longitud(); i++)
+//desde (i=0; i<triggers->longitud(); i++)
+desde (i=0; i< lista->longitud(triggers); i++)
   si texto == triggers[i]->comando
     #ejecuto el disparador (trigger) para test_accion
     fun = triggers[i]->accion
