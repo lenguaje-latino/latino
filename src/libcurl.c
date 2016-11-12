@@ -77,7 +77,7 @@ void lat_curl_peticion(lat_mv *mv) {
   lat_gc_agregar(mv, tmp);
 }
 
-void lat_curl_escape_url(lat_mv *mv) {
+void lat_curl_escape(lat_mv *mv) {
   lat_objeto *a = lat_desapilar(mv);
   CURL *curl = curl_easy_init();
   char *texto = __cadena(a);
@@ -96,7 +96,7 @@ void lat_curl_escape_url(lat_mv *mv) {
 }
 
 static const lat_CReg lib_curl[] = {{"peticion", lat_curl_peticion, 1},
-                                    {"url_escape", lat_curl_escape_url, 1},
+                                    {"escape", lat_curl_escape, 1},
                                     {NULL, NULL}};
 
 void lat_importar_lib_curl(lat_mv *mv) {
