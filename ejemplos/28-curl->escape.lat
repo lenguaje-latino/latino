@@ -3,4 +3,4 @@ busqueda = "perros y gatos"
 imprimir("El texto escrito ya codificado es:\t" . curl->escape(busqueda), 1)
 imprimir("Pulsa enter para hacer una petición")
 leer()
-peticion("https://www.google.com.mx/search?q=" . curl->escape(busqueda))
+curl->peticion("https://www.google.com.mx/search?q=" . curl->escape(busqueda))
