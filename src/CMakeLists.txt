@@ -56,7 +56,9 @@ ENDIF(MSVC)
 IF(UNIX)
   INSTALL(TARGETS latino DESTINATION ${CMAKE_INSTALL_PREFIX})
   INSTALL(FILES man/latino.1.gz DESTINATION /usr/share/man/man1)
-  INSTALL(FILES nano/latino.nanorc DESTINATION /usr/share/nano)
+  INSTALL(FILES gnu-utilities/latino.nanorc DESTINATION /usr/share/nano)
+  INSTALL(FILES gnu-utilities/latino.desktop DESTINATION /usr/share/applications)
+  INSTALL(FILES ../logo/desktop.png DESTINATION /usr/share/latino)
 ENDIF(UNIX)
 
 #crear paquete .deb https://cmake.org/Wiki/CMake/CPack/Examples/Linux/DEB

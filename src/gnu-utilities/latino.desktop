@@ -1,0 +1,10 @@
+[Desktop Entry]
+Version=1.0
+Name=Latino
+Comment=Ejecutable de Latino oficial
+Exec=/usr/bin/latino
+#Path=/home/samuel/ugene-1.11.5/
+Icon=/usr/share/latino/desktop.png
+Terminal=true
+Type=Application
+Categories=Utility;Application;Development;
