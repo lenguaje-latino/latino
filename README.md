@@ -32,6 +32,20 @@ http://opensource.org/licenses/MIT
 
 Leer LICENSE.txt
 
+##Dependencia
+Antes de instalar latino, vamos a instalar todos paquetes necesarios: 
+
+```
+# Debian
+sudo apt-get install bison flex cmake gcc g++ libjansson-dev libcurl4-openssl-dev libhiredis-dev redis-server curl
+```
+
+```
+#Fedora
+
+sudo dnf install bison flex cmake gcc g++ libjansson-dev libcurl4-openssl-dev libhiredis-dev redis-server curl jansson-devel groupinstall "Development Tools" "Development Libraries" groupinstall "RPM Development Tools" redhat-lsb
+
+```
 
 ## INSTALAR
 
