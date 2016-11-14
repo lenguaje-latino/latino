@@ -128,18 +128,19 @@ void lat_incluir(lat_mv *mv) {
       __lista_agregar(modulos, mod);
       ast *nodo = lat_analizar_archivo(__cadena(mod), &status);
       if (status == 0 && nodo != NULL) {
-        lat_objeto *funmod = ast_analizar_arbol(mv, nodo);
+        lat_objeto *funmod = ast_analizar_arbol(mv, nodo);        
         lat_llamar_funcion(mv, funmod);
         ast_liberar(nodo);
-        lat_gc_agregar(mv, funmod);
+        lat_gc_agregar(mv, funmod);        
         return;
       }
+    }else{
+      return;
     }
   }
   lat_gc_agregar(mv, mod);
-  // buscar en $LATINO_LIB
-  char latino_lib[MAX_PATH_LENGTH] = {0};
-  strcat(latino_lib, getenv("LATINO_LIB"));
+  // buscar en $LATINO_LIB  
+  char *latino_lib = getenv("LATINO_LIB");
   if (latino_lib != NULL) {
     strcat(latino_lib, PATH_SEP);
     strcat(latino_lib, archivo_ext);
@@ -151,12 +152,14 @@ void lat_incluir(lat_mv *mv) {
         __lista_agregar(modulos, mod_lib);
         ast *nodo = lat_analizar_archivo(__cadena(mod_lib), &status);
         if (status == 0 && nodo != NULL) {
-          lat_objeto *funmod_lib = ast_analizar_arbol(mv, nodo);
+          lat_objeto *funmod_lib = ast_analizar_arbol(mv, nodo);          
           lat_llamar_funcion(mv, funmod_lib);
           ast_liberar(nodo);
           lat_gc_agregar(mv, funmod_lib);
           return;
         }
+      }else{
+        return;
       }
     }
     lat_gc_agregar(mv, mod_lib);
@@ -164,6 +167,7 @@ void lat_incluir(lat_mv *mv) {
   lat_error("Linea %d, %d: %s '%s'", o->num_linea, o->num_columna,
             "No se pudo incluir el modulo", __cadena(o));
 }
+
 void lat_leer(lat_mv *mv) {
   char str[MAX_INPUT_SIZE];
   fgets(str, MAX_INPUT_SIZE, stdin);
