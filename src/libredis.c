@@ -22,11 +22,13 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 */
 
+#include "latmv.h"
+
+#ifndef _WIN32
 #include<stdlib.h>
 
 #include "hiredis.h"
 #include "latino.h"
-#include "latmv.h"
 #include "latgc.h"
 
 #define LIB_REDIS_NAME "redis"
@@ -239,6 +241,10 @@ static const lat_CReg lib_redis[] = {
     {"hincrementar", lat_redis_hincrementar, 4},
     {NULL, NULL}};
 
+#endif
+
 void lat_importar_lib_redis(lat_mv *mv) {
+#ifndef _WIN32
   lat_importar_lib(mv, LIB_REDIS_NAME, lib_redis);
+#endif
 }

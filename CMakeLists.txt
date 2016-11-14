@@ -20,7 +20,7 @@ ELSE(UNIX)
   IF(MSVC)
       ADD_SUBDIRECTORY(jansson)
       ADD_SUBDIRECTORY(curl)
-      ADD_SUBDIRECTORY(hiredis)
+      #ADD_SUBDIRECTORY(hiredis)
   ENDIF(MSVC)
 ENDIF(UNIX)
 
