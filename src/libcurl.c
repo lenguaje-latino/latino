@@ -84,7 +84,7 @@ void lat_curl_escape(lat_mv *mv) {
   if (curl && strlen(texto) > 0) {
     char *output = curl_easy_escape(curl, texto, strlen(texto));
     if (output) {
-      lat_objeto *tmp = lat_cadena_nueva(mv, output);
+      lat_objeto *tmp = lat_cadena_nueva(mv, strdup(output));
       lat_apilar(mv, tmp);
       curl_free(output);
       lat_gc_agregar(mv, tmp);
