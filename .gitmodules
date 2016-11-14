@@ -4,9 +4,6 @@
 [submodule "curl"]
 	path = curl
 	url = https://github.com/curl/curl
-[submodule "src/hiredis"]
-	path = src/hiredis
-	url = https://github.com/redis/hiredis
 [submodule "hiredis"]
 	path = hiredis
 	url = https://github.com/redis/hiredis

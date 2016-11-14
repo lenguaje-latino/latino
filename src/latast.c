@@ -31,7 +31,6 @@ THE SOFTWARE.
 #include "latmem.h"
 #include "latmv.h"
 #include "latobj.h"
-#include "libio.h"
 
 #define dbc(I, A, B, M) bcode[i++] = lat_bc(I, A, B, M)
 #define pn(vm, N) i = nodo_analizar(vm, N, bcode, i)

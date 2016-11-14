@@ -33,7 +33,6 @@ THE SOFTWARE.
 #include "latmem.h"
 #include "latmv.h"
 #include "latparse.h"
-#include "libio.h"
 
 static const char *const bycode_nombre[] = {
     "NOP",
