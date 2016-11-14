@@ -103,6 +103,7 @@ void lat_importar_lib(lat_mv *mv, const char *nombre_lib,
       cfun->nombre_cfun = strdup(funs->nombre);
       cfun->num_params = funs->num_params;
       lat_objeto *tmp = lat_cadena_nueva(mv, strdup(funs->nombre));
+      tmp->nombre_cfun = funs->nombre;
       __obj_asignar_contexto(ctx, tmp, cfun);
       __lista_agregar(__lista(mv->otros_objetos), tmp);
       __lista_agregar(__lista(mv->otros_objetos), cfun);
@@ -188,7 +189,7 @@ lat_objeto *lat_tope(lat_mv *mv) {
 }
 
 static void __mv_apilar_contexto(lat_mv *mv) {
-  // printf("apilando contexto...\n");
+  //printf("apilando contexto...\n");
   if (mv->apuntador_ctx >= MAX_STACK_SIZE) {
     lat_error("Namespace desborde de la pila");
   }
@@ -198,7 +199,7 @@ static void __mv_apilar_contexto(lat_mv *mv) {
 }
 
 static void __mv_desapilar_contexto(lat_mv *mv) {
-  // printf("...desapilando contexto\n");
+  //printf("...desapilando contexto\n");
   if (mv->apuntador_ctx == 0) {
     lat_error("Namespace pila vacia");
   }
@@ -644,8 +645,10 @@ void lat_llamar_funcion(lat_mv *mv, lat_objeto *func) {
                             fun->num_linea, fun->num_columna, fun->nombre_cfun,
                             fun->num_params);
           }
+        } 
+        if(next.ins == STORE_NAME){
+            __mv_apilar_contexto(mv);
         }
-        __mv_apilar_contexto(mv);
         mv->num_callf++;
         if (mv->num_callf >= MAX_CALL_FUNCTION) {
           lat_error("Linea %d, %d: Numero maximo de llamadas a funciones "
@@ -654,7 +657,9 @@ void lat_llamar_funcion(lat_mv *mv, lat_objeto *func) {
         }
         lat_llamar_funcion(mv, fun);
         mv->num_callf--;
-        __mv_desapilar_contexto(mv);
+        if(next.ins == STORE_NAME){
+            __mv_desapilar_contexto(mv);
+        }
       } break;
       case RETURN_VALUE: {
         return;
@@ -825,6 +830,7 @@ void lat_llamar_funcion(lat_mv *mv, lat_objeto *func) {
     } // fin for
   }   // fin if (T_FUNC)
   else if (func->tipo == T_CFUNC) {
+    //printf("%s\n", "llamando c funcion");
     ((void (*)(lat_mv *))(func->datos.fun_usuario))(mv);
   } else {
     lat_error("Linea %d, %d: %s", func->num_linea, func->num_columna,

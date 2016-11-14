@@ -3,5 +3,13 @@
 #Error: los modulos se incluyen sin extension
 #incluir("modulo.lat")  #Error: Linea 1, 9: No se pudo incluir el modulo 'mods.modulo.lat'
 #incluir modulo en carpeta mods/* separar con .
-incluir("mods.modulo")
-escribir(sumatoria(1,2))
+
+incluir("modulo")
+escribir(sumatoria(1,2)) #no da error
+
+
+mod = incluir("modulo")
+
+r = mod->sumatoria(1,2)
+escribir(r)  
+escribir(sumatoria(1,2)) #no da error
