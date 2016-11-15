@@ -4,9 +4,9 @@ x = final+1
 escribir("Este es un contador en Latino\nUsa las funciones limpiar() y dormir() establecida en 1", 1)
 sistema->dormir(3)
 
-hacer
+repetir
 	limpiar()
 	imprimir(inicio)
   inicio++
 	sistema->dormir(1)
-cuando(inicio<x)
+hasta(inicio >= x)

@@ -100,7 +100,6 @@ void __dic_asignar(hash_map *m, const char *key, void *val) {
 }
 
 hash_map *__dic_clonar(hash_map *m) {
-  // FIX: Memory leak
   hash_map *ret = __dic_crear();
   int i;
   for (i = 0; i < 256; i++) {
@@ -109,7 +108,7 @@ hash_map *__dic_clonar(hash_map *m) {
       LIST_FOREACH(list, primero, siguiente, cur) {
         if (cur->valor != NULL) {
           char *str_key = ((hash_val *)cur->valor)->llave;
-          __dic_asignar(ret, strdup(str_key), ((hash_val *)cur->valor)->valor);
+          __dic_asignar(ret, str_key, ((hash_val *)cur->valor)->valor);
         }
       }
     }

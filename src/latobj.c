@@ -48,8 +48,8 @@ void __obj_asignar_contexto(lat_objeto *ns, lat_objeto *name, lat_objeto *o) {
     hash_map *h = ns->datos.contexto;
     if (strlen(__cadena(name)) > MAX_ID_LENGTH) {
       lat_error("Linea %d, %d: Longitud maxima de (%i) excedida para un "
-                      "identificador",
-                      name->num_linea, name->num_columna, MAX_ID_LENGTH);
+                "identificador",
+                name->num_linea, name->num_columna, MAX_ID_LENGTH);
     }
     __dic_asignar(h, __cadena(name), o);
   }
@@ -132,7 +132,7 @@ lat_objeto *lat_dic_nuevo(lat_mv *mv, hash_map *dic) {
 lat_objeto *lat_cdato_nuevo(lat_mv *mv, void *ptr) {
   // printf("lat_cadena_nueva: %s\n", p);
   lat_objeto *ret = __obj_crear(mv);
-  ret->tipo = T_CDATA;  
+  ret->tipo = T_CDATA;
   ret->datos.fun_usuario = ptr;
   return ret;
 }
@@ -159,12 +159,13 @@ void __obj_eliminar(lat_mv *mv, lat_objeto *o) {
     __dic_destruir(o->datos.contexto);
     break;
   case T_LIST: {
-    // FIX: Memory leak
     lista *list = __lista(o);
-    // printf("eliminando lista... %i\n", __lista_longitud(list));
+    /*printf("eliminando lista... %i\n", __lista_longitud(list));
+    __imprimir_objeto(mv, o, false);
+    printf("%s\n", "");*/
     LIST_FOREACH(list, primero, siguiente, cur) {
       lat_objeto *tmp = (lat_objeto *)cur->valor;
-      if (tmp != NULL) {
+      if (tmp != NULL && tmp->tipo != T_LIST) {
         __obj_eliminar(mv, tmp);
       }
     }
@@ -187,8 +188,13 @@ void __obj_eliminar(lat_mv *mv, lat_objeto *o) {
     for (pos = 0, cur = inslist[pos]; pos < o->num_inst; cur = inslist[++pos]) {
       if (cur.meta != NULL) {
         lat_objeto *tmp = (lat_objeto *)cur.meta;
-        if (tmp != NULL) {
+        if (tmp != NULL && cur.ins != BUILD_LIST) {
           __obj_eliminar(mv, tmp);
+        }
+        if (tmp != NULL && cur.ins == BUILD_LIST) {
+          lista *list = __lista(tmp);
+          __memoria_liberar(mv, list);
+          __memoria_liberar(mv, tmp);
         }
       }
     }
@@ -245,7 +251,7 @@ lat_objeto *__obj_clonar(lat_mv *mv, lat_objeto *obj) {
     ret = lat_cadena_nueva(mv, strdup(__cadena(obj)));
   } break;
   case T_NUMERIC:
-    ret = lat_numerico_nuevo(mv, obj->datos.numerico);
+    ret = lat_numerico_nuevo(mv, __numerico(obj));
     break;
   default:
     ret = __obj_crear(mv);
@@ -276,9 +282,8 @@ bool __logico(lat_objeto *o) {
   if (o->tipo == T_BOOL) {
     return o->datos.logico;
   }
-  lat_error(
-      "Linea %d, %d: %s", o->num_linea, o->num_columna,
-      "El parametro debe de ser un valor logico (verdadero o falso)");
+  lat_error("Linea %d, %d: %s", o->num_linea, o->num_columna,
+            "El parametro debe de ser un valor logico (verdadero o falso)");
   return false;
 }
 
@@ -287,7 +292,7 @@ double __numerico(lat_objeto *o) {
     return o->datos.numerico;
   }
   lat_error("Linea %d, %d: %s", o->num_linea, o->num_columna,
-                  "El parametro debe de ser un decimal");
+            "El parametro debe de ser un decimal");
   return 0;
 }
 
@@ -296,7 +301,7 @@ char *__cadena(lat_objeto *o) {
     return o->datos.cadena;
   }
   lat_error("Linea %d, %d: %s", o->num_linea, o->num_columna,
-                  "El parametro debe de ser una cadena");
+            "El parametro debe de ser una cadena");
   return 0;
 }
 
@@ -305,7 +310,7 @@ lista *__lista(lat_objeto *o) {
     return o->datos.lista;
   }
   lat_error("Linea %d, %d: %s", o->num_linea, o->num_columna,
-                  "El parametro debe de ser una lista");
+            "El parametro debe de ser una lista");
   return NULL;
 }
 
@@ -314,17 +319,17 @@ hash_map *__dic(lat_objeto *o) {
     return o->datos.dic;
   }
   lat_error("Linea %d, %d: %s", o->num_linea, o->num_columna,
-                  "El parametro debe de ser un diccionario");
+            "El parametro debe de ser un diccionario");
   return NULL;
 }
 
-void *__cdato(lat_objeto *o){
-    if(o->tipo == T_CDATA){
-        return o->datos.fun_usuario;
-    }
-    lat_error("Linea %d, %d: %s", o->num_linea, o->num_columna,
-                  "El parametro debe de ser un dato de c (void *)");
-    return NULL;
+void *__cdato(lat_objeto *o) {
+  if (o->tipo == T_CDATA) {
+    return o->datos.fun_usuario;
+  }
+  lat_error("Linea %d, %d: %s", o->num_linea, o->num_columna,
+            "El parametro debe de ser un dato de c (void *)");
+  return NULL;
 }
 
 bool __obj_es_igual(lat_objeto *lhs, lat_objeto *rhs) {
@@ -403,7 +408,7 @@ bool lat_obj2bool(lat_objeto *o) {
     return __dic_longitud(__dic(o)) == 0 ? false : true;
   default:
     lat_error("Linea %d, %d: %s", o->num_linea, o->num_columna,
-                    "Conversion de tipo de dato incompatible");
+              "Conversion de tipo de dato incompatible");
     break;
   }
   return false;
@@ -436,11 +441,11 @@ double lat_obj2double(lat_objeto *o) {
     break;
   default:
     lat_error("Linea %d, %d: %s", o->num_linea, o->num_columna,
-                    "Conversion de tipo de dato incompatible");
+              "Conversion de tipo de dato incompatible");
     break;
   }
   lat_error("Linea %d, %d: %s", o->num_linea, o->num_columna,
-                  "Conversion de tipo de dato incompatible");
+            "Conversion de tipo de dato incompatible");
   return 0;
 }
 

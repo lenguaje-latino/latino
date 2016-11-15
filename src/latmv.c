@@ -93,6 +93,236 @@ void lat_importar_lib_dic(lat_mv *mv);
 
 const char *__obtener_bytecode_nombre(int inst) { return bycode_nombre[inst]; }
 
+static void __menos_unario(lat_mv *mv) {
+  lat_objeto *o = lat_desapilar(mv);
+  lat_objeto *r = lat_numerico_nuevo(mv, (-1) * lat_obj2double(o));
+  lat_apilar(mv, r);
+  lat_gc_agregar(mv, r);
+}
+
+static void __sumar(lat_mv *mv) {
+  lat_objeto *b = lat_desapilar(mv);
+  lat_objeto *a = lat_desapilar(mv);
+  lat_objeto *r = lat_numerico_nuevo(mv, lat_obj2double(a) + lat_obj2double(b));
+  lat_apilar(mv, r);
+  lat_gc_agregar(mv, r);
+}
+
+static void __restar(lat_mv *mv) {
+  lat_objeto *b = lat_desapilar(mv);
+  lat_objeto *a = lat_desapilar(mv);
+  lat_objeto *r = lat_numerico_nuevo(mv, lat_obj2double(a) - lat_obj2double(b));
+  lat_apilar(mv, r);
+  lat_gc_agregar(mv, r);
+}
+
+static void __multiplicar(lat_mv *mv) {
+  lat_objeto *b = lat_desapilar(mv);
+  lat_objeto *a = lat_desapilar(mv);
+  lat_objeto *r = lat_numerico_nuevo(mv, lat_obj2double(a) * lat_obj2double(b));
+  lat_apilar(mv, r);
+  lat_gc_agregar(mv, r);
+}
+
+static void __dividir(lat_mv *mv) {
+  lat_objeto *b = lat_desapilar(mv);
+  lat_objeto *a = lat_desapilar(mv);
+  if (lat_obj2double(b) == 0) {
+    lat_error("Linea %d, %d: %s", b->num_linea, b->num_columna,
+              "Division entre cero");
+  }
+  lat_objeto *r =
+      lat_numerico_nuevo(mv, (lat_obj2double(a) / lat_obj2double(b)));
+  lat_apilar(mv, r);
+  lat_gc_agregar(mv, r);
+}
+
+static void __modulo(lat_mv *mv) {
+  lat_objeto *b = lat_desapilar(mv);
+  lat_objeto *a = lat_desapilar(mv);
+  if (lat_obj2double(b) == 0) {
+    lat_error("Linea %d, %d: %s", b->num_linea, b->num_columna,
+              "Modulo entre cero");
+  }
+  lat_objeto *r =
+      lat_numerico_nuevo(mv, fmod(lat_obj2double(a), lat_obj2double(b)));
+  lat_apilar(mv, r);
+  lat_gc_agregar(mv, r);
+}
+
+static void __igualdad(lat_mv *mv) {
+  lat_objeto *b = lat_desapilar(mv);
+  lat_objeto *a = lat_desapilar(mv);
+  lat_objeto *r = NULL;
+  char *buffer = NULL;
+  char *buffer2 = NULL;
+  switch (a->tipo) {
+  case T_BOOL: {
+    r = __logico(a) == lat_obj2bool(b) ? mv->objeto_verdadero
+                                       : mv->objeto_falso;
+    lat_apilar(mv, r);
+    return;
+  } break;
+  case T_NUMERIC: {
+    r = (__numerico(a) == lat_obj2double(b)) ? mv->objeto_verdadero
+                                             : mv->objeto_falso;
+    lat_apilar(mv, r);
+    return;
+  } break;
+  case T_STR: {
+    buffer = lat_obj2cstring(b);
+    r = strcmp(__cadena(a), buffer) == 0 ? mv->objeto_verdadero
+                                         : mv->objeto_falso;
+    lat_apilar(mv, r);
+    __memoria_liberar(mv, buffer);
+    return;
+  } break;
+  default: {
+    buffer = lat_obj2cstring(a);
+    buffer2 = lat_obj2cstring(b);
+    r = strcmp(buffer, buffer2) == 0 ? mv->objeto_verdadero : mv->objeto_falso;
+    lat_apilar(mv, r);
+    __memoria_liberar(mv, buffer);
+    __memoria_liberar(mv, buffer2);
+  }
+    return;
+  }
+  r = mv->objeto_falso;
+  lat_apilar(mv, r);
+}
+
+static void __diferente(lat_mv *mv) {
+  lat_objeto *b = lat_desapilar(mv);
+  lat_objeto *a = lat_desapilar(mv);
+  lat_objeto *r = NULL;
+  char *buffer = NULL;
+  char *buffer2 = NULL;
+  switch (a->tipo) {
+  case T_BOOL: {
+    r = __logico(a) != lat_obj2bool(b) ? mv->objeto_verdadero
+                                       : mv->objeto_falso;
+    lat_apilar(mv, r);
+    return;
+  } break;
+  case T_NUMERIC: {
+    r = (__numerico(a) != lat_obj2double(b)) ? mv->objeto_verdadero
+                                             : mv->objeto_falso;
+    lat_apilar(mv, r);
+    return;
+  } break;
+  case T_STR: {
+    buffer = lat_obj2cstring(b);
+    r = strcmp(__cadena(a), buffer) != 0 ? mv->objeto_verdadero
+                                         : mv->objeto_falso;
+    lat_apilar(mv, r);
+    __memoria_liberar(mv, buffer);
+    return;
+  } break;
+  default: {
+    buffer = lat_obj2cstring(a);
+    buffer2 = lat_obj2cstring(b);
+    r = strcmp(buffer, buffer2) != 0 ? mv->objeto_verdadero : mv->objeto_falso;
+    lat_apilar(mv, r);
+    __memoria_liberar(mv, buffer);
+    __memoria_liberar(mv, buffer2);
+    return;
+  }
+  }
+  r = mv->objeto_falso;
+  lat_apilar(mv, r);
+}
+
+static void __menor_que(lat_mv *mv) {
+  lat_objeto *b = lat_desapilar(mv);
+  lat_objeto *a = lat_desapilar(mv);
+  lat_objeto *r = NULL;
+  if (a->tipo == T_NUMERIC || b->tipo == T_NUMERIC) {
+    r = (lat_obj2double(a) < lat_obj2double(b)) ? mv->objeto_verdadero
+                                                : mv->objeto_falso;
+    lat_apilar(mv, r);
+    return;
+  }
+  r = __obj_comparar(a, b) < 0 ? mv->objeto_verdadero : mv->objeto_falso;
+  lat_apilar(mv, r);
+  return;
+}
+
+static void __menor_igual(lat_mv *mv) {
+  lat_objeto *b = lat_desapilar(mv);
+  lat_objeto *a = lat_desapilar(mv);
+  lat_objeto *r = NULL;
+  if (a->tipo == T_NUMERIC || b->tipo == T_NUMERIC) {
+    r = (lat_obj2double(a) <= lat_obj2double(b)) ? mv->objeto_verdadero
+                                                 : mv->objeto_falso;
+    lat_apilar(mv, r);
+    return;
+  }
+  r = __obj_comparar(a, b) <= 0 ? mv->objeto_verdadero : mv->objeto_falso;
+  lat_apilar(mv, r);
+  return;
+}
+
+static void __mayor_que(lat_mv *mv) {
+  lat_objeto *b = lat_desapilar(mv);
+  lat_objeto *a = lat_desapilar(mv);
+  lat_objeto *r = NULL;
+  if (a->tipo == T_NUMERIC || b->tipo == T_NUMERIC) {
+    r = (lat_obj2double(a) > lat_obj2double(b)) ? mv->objeto_verdadero
+                                                : mv->objeto_falso;
+    lat_apilar(mv, r);
+    return;
+  }
+  r = __obj_comparar(a, b) > 0 ? mv->objeto_verdadero : mv->objeto_falso;
+  lat_apilar(mv, r);
+  return;
+}
+
+static void __mayor_igual(lat_mv *mv) {
+  lat_objeto *b = lat_desapilar(mv);
+  lat_objeto *a = lat_desapilar(mv);
+  lat_objeto *r = NULL;
+  if (a->tipo == T_NUMERIC || b->tipo == T_NUMERIC) {
+    r = (lat_obj2double(a) >= lat_obj2double(b)) ? mv->objeto_verdadero
+                                                 : mv->objeto_falso;
+    lat_apilar(mv, r);
+    return;
+  }
+  r = __obj_comparar(a, b) >= 0 ? mv->objeto_verdadero : mv->objeto_falso;
+  lat_apilar(mv, r);
+  return;
+}
+
+static void __y_logico(lat_mv *mv) {
+  lat_objeto *b = lat_desapilar(mv);
+  lat_objeto *a = lat_desapilar(mv);
+  lat_objeto *r = NULL;
+  if (lat_obj2bool(a)) {
+    r = b;
+  } else {
+    r = a;
+  }
+  lat_apilar(mv, r);
+}
+
+static void __o_logico(lat_mv *mv) {
+  lat_objeto *b = lat_desapilar(mv);
+  lat_objeto *a = lat_desapilar(mv);
+  lat_objeto *r = NULL;
+  if (lat_obj2bool(a)) {
+    r = a;
+  } else {
+    r = b;
+  }
+  lat_apilar(mv, r);
+}
+
+static void __no_logico(lat_mv *mv) {
+  lat_objeto *o = lat_desapilar(mv);
+  lat_objeto *r =
+      (lat_obj2bool(o) == false) ? mv->objeto_verdadero : mv->objeto_falso;
+  lat_apilar(mv, r);
+}
+
 void lat_importar_lib(lat_mv *mv, const char *nombre_lib,
                       const lat_CReg *funs) {
   lat_objeto *ctx = lat_obtener_contexto(mv);
@@ -103,7 +333,6 @@ void lat_importar_lib(lat_mv *mv, const char *nombre_lib,
       cfun->nombre_cfun = strdup(funs->nombre);
       cfun->num_params = funs->num_params;
       lat_objeto *tmp = lat_cadena_nueva(mv, strdup(funs->nombre));
-      tmp->nombre_cfun = funs->nombre;
       __obj_asignar_contexto(ctx, tmp, cfun);
       __lista_agregar(__lista(mv->otros_objetos), tmp);
       __lista_agregar(__lista(mv->otros_objetos), cfun);
@@ -189,7 +418,7 @@ lat_objeto *lat_tope(lat_mv *mv) {
 }
 
 static void __mv_apilar_contexto(lat_mv *mv) {
-  //printf("apilando contexto...\n");
+  // printf("apilando contexto...\n");
   if (mv->apuntador_ctx >= MAX_STACK_SIZE) {
     lat_error("Namespace desborde de la pila");
   }
@@ -199,7 +428,7 @@ static void __mv_apilar_contexto(lat_mv *mv) {
 }
 
 static void __mv_desapilar_contexto(lat_mv *mv) {
-  //printf("...desapilando contexto\n");
+  // printf("...desapilando contexto\n");
   if (mv->apuntador_ctx == 0) {
     lat_error("Namespace pila vacia");
   }
@@ -224,239 +453,6 @@ lat_objeto *lat_definir_cfuncion(lat_mv *mv, lat_CFuncion func) {
   lat_objeto *ret = __obj_cfuncion_nueva(mv);
   ret->datos.c_funcion = func;
   return ret;
-}
-
-void __menos_unario(lat_mv *mv) {
-  lat_objeto *o = lat_desapilar(mv);
-  lat_objeto *r = lat_numerico_nuevo(mv, (-1) * lat_obj2double(o));
-  lat_apilar(mv, r);
-  lat_gc_agregar(mv, r);
-}
-
-void __sumar(lat_mv *mv) {
-  lat_objeto *b = lat_desapilar(mv);
-  lat_objeto *a = lat_desapilar(mv);
-  lat_objeto *r =
-      lat_numerico_nuevo(mv, lat_obj2double(a) + lat_obj2double(b));
-  lat_apilar(mv, r);
-  lat_gc_agregar(mv, r);
-}
-
-void __restar(lat_mv *mv) {
-  lat_objeto *b = lat_desapilar(mv);
-  lat_objeto *a = lat_desapilar(mv);
-  lat_objeto *r =
-      lat_numerico_nuevo(mv, lat_obj2double(a) - lat_obj2double(b));
-  lat_apilar(mv, r);
-  lat_gc_agregar(mv, r);
-}
-
-void __multiplicar(lat_mv *mv) {
-  lat_objeto *b = lat_desapilar(mv);
-  lat_objeto *a = lat_desapilar(mv);
-  lat_objeto *r =
-      lat_numerico_nuevo(mv, lat_obj2double(a) * lat_obj2double(b));
-  lat_apilar(mv, r);
-  lat_gc_agregar(mv, r);
-}
-
-void __dividir(lat_mv *mv) {
-  lat_objeto *b = lat_desapilar(mv);
-  lat_objeto *a = lat_desapilar(mv);
-  if (lat_obj2double(b) == 0) {
-    lat_error("Linea %d, %d: %s", b->num_linea, b->num_columna,
-                    "Division entre cero");
-  }
-  lat_objeto *r =
-      lat_numerico_nuevo(mv, (lat_obj2double(a) / lat_obj2double(b)));
-  lat_apilar(mv, r);
-  lat_gc_agregar(mv, r);
-}
-
-void __modulo(lat_mv *mv) {
-  lat_objeto *b = lat_desapilar(mv);
-  lat_objeto *a = lat_desapilar(mv);
-  if (lat_obj2double(b) == 0) {
-    lat_error("Linea %d, %d: %s", b->num_linea, b->num_columna,
-                    "Modulo entre cero");
-  }
-  lat_objeto *r =
-      lat_numerico_nuevo(mv, fmod(lat_obj2double(a), lat_obj2double(b)));
-  lat_apilar(mv, r);
-  lat_gc_agregar(mv, r);
-}
-
-void __igualdad(lat_mv *mv) {
-  lat_objeto *b = lat_desapilar(mv);
-  lat_objeto *a = lat_desapilar(mv);
-  lat_objeto *r = NULL;
-  char *buffer = NULL;
-  char *buffer2 = NULL;
-  switch (a->tipo) {
-  case T_BOOL: {
-    r = __logico(a) == lat_obj2bool(b) ? mv->objeto_verdadero
-                                         : mv->objeto_falso;
-    lat_apilar(mv, r);
-    return;
-  } break;
-  case T_NUMERIC: {
-    r = (__numerico(a) == lat_obj2double(b)) ? mv->objeto_verdadero
-                                               : mv->objeto_falso;
-    lat_apilar(mv, r);
-    return;
-  } break;
-  case T_STR: {
-    buffer = lat_obj2cstring(b);
-    r = strcmp(__cadena(a), buffer) == 0 ? mv->objeto_verdadero
-                                         : mv->objeto_falso;
-    lat_apilar(mv, r);
-    __memoria_liberar(mv, buffer);
-    return;
-  } break;
-  default: {
-    buffer = lat_obj2cstring(a);
-    buffer2 = lat_obj2cstring(b);
-    r = strcmp(buffer, buffer2) == 0 ? mv->objeto_verdadero : mv->objeto_falso;
-    lat_apilar(mv, r);
-    __memoria_liberar(mv, buffer);
-    __memoria_liberar(mv, buffer2);
-  }
-    return;
-  }
-  r = mv->objeto_falso;
-  lat_apilar(mv, r);
-}
-
-void __diferente(lat_mv *mv) {
-  lat_objeto *b = lat_desapilar(mv);
-  lat_objeto *a = lat_desapilar(mv);
-  lat_objeto *r = NULL;
-  char *buffer = NULL;
-  char *buffer2 = NULL;
-  switch (a->tipo) {
-  case T_BOOL: {
-    r = __logico(a) != lat_obj2bool(b) ? mv->objeto_verdadero
-                                         : mv->objeto_falso;
-    lat_apilar(mv, r);
-    return;
-  } break;
-  case T_NUMERIC: {
-    r = (__numerico(a) != lat_obj2double(b)) ? mv->objeto_verdadero
-                                               : mv->objeto_falso;
-    lat_apilar(mv, r);
-    return;
-  } break;
-  case T_STR: {
-    buffer = lat_obj2cstring(b);
-    r = strcmp(__cadena(a), buffer) != 0 ? mv->objeto_verdadero
-                                         : mv->objeto_falso;
-    lat_apilar(mv, r);
-    __memoria_liberar(mv, buffer);
-    return;
-  } break;
-  default: {
-    buffer = lat_obj2cstring(a);
-    buffer2 = lat_obj2cstring(b);
-    r = strcmp(buffer, buffer2) != 0 ? mv->objeto_verdadero : mv->objeto_falso;
-    lat_apilar(mv, r);
-    __memoria_liberar(mv, buffer);
-    __memoria_liberar(mv, buffer2);
-    return;
-  }
-  }
-  r = mv->objeto_falso;
-  lat_apilar(mv, r);
-}
-
-void __menor_que(lat_mv *mv) {
-  lat_objeto *b = lat_desapilar(mv);
-  lat_objeto *a = lat_desapilar(mv);
-  lat_objeto *r = NULL;
-  if (a->tipo == T_NUMERIC || b->tipo == T_NUMERIC) {
-    r = (lat_obj2double(a) < lat_obj2double(b)) ? mv->objeto_verdadero
-                                                    : mv->objeto_falso;
-    lat_apilar(mv, r);
-    return;
-  }
-  r = __obj_comparar(a, b) < 0 ? mv->objeto_verdadero : mv->objeto_falso;
-  lat_apilar(mv, r);
-  return;
-}
-
-void __menor_igual(lat_mv *mv) {
-  lat_objeto *b = lat_desapilar(mv);
-  lat_objeto *a = lat_desapilar(mv);
-  lat_objeto *r = NULL;
-  if (a->tipo == T_NUMERIC || b->tipo == T_NUMERIC) {
-    r = (lat_obj2double(a) <= lat_obj2double(b)) ? mv->objeto_verdadero
-                                                     : mv->objeto_falso;
-    lat_apilar(mv, r);
-    return;
-  }
-  r = __obj_comparar(a, b) <= 0 ? mv->objeto_verdadero : mv->objeto_falso;
-  lat_apilar(mv, r);
-  return;
-}
-
-void __mayor_que(lat_mv *mv) {
-  lat_objeto *b = lat_desapilar(mv);
-  lat_objeto *a = lat_desapilar(mv);
-  lat_objeto *r = NULL;
-  if (a->tipo == T_NUMERIC || b->tipo == T_NUMERIC) {
-    r = (lat_obj2double(a) > lat_obj2double(b)) ? mv->objeto_verdadero
-                                                    : mv->objeto_falso;
-    lat_apilar(mv, r);
-    return;
-  }
-  r = __obj_comparar(a, b) > 0 ? mv->objeto_verdadero : mv->objeto_falso;
-  lat_apilar(mv, r);
-  return;
-}
-
-void __mayor_igual(lat_mv *mv) {
-  lat_objeto *b = lat_desapilar(mv);
-  lat_objeto *a = lat_desapilar(mv);
-  lat_objeto *r = NULL;
-  if (a->tipo == T_NUMERIC || b->tipo == T_NUMERIC) {
-    r = (lat_obj2double(a) >= lat_obj2double(b)) ? mv->objeto_verdadero
-                                                     : mv->objeto_falso;
-    lat_apilar(mv, r);
-    return;
-  }
-  r = __obj_comparar(a, b) >= 0 ? mv->objeto_verdadero : mv->objeto_falso;
-  lat_apilar(mv, r);
-  return;
-}
-
-void __y_logico(lat_mv *mv) {
-  lat_objeto *b = lat_desapilar(mv);
-  lat_objeto *a = lat_desapilar(mv);
-  lat_objeto *r = NULL;
-  if (lat_obj2bool(a)) {
-    r = b;
-  } else {
-    r = a;
-  }
-  lat_apilar(mv, r);
-}
-
-void __o_logico(lat_mv *mv) {
-  lat_objeto *b = lat_desapilar(mv);
-  lat_objeto *a = lat_desapilar(mv);
-  lat_objeto *r = NULL;
-  if (lat_obj2bool(a)) {
-    r = a;
-  } else {
-    r = b;
-  }
-  lat_apilar(mv, r);
-}
-
-void __no_logico(lat_mv *mv) {
-  lat_objeto *o = lat_desapilar(mv);
-  lat_objeto *r =
-      (lat_obj2bool(o) == false) ? mv->objeto_verdadero : mv->objeto_falso;
-  lat_apilar(mv, r);
 }
 
 lat_bytecode lat_bc(int i, int a, int b, void *meta) {
@@ -592,6 +588,7 @@ void lat_llamar_funcion(lat_mv *mv, lat_objeto *func) {
         // asigna el numero de parametros
         if (name->nombre_cfun) {
           val->num_params = name->num_params;
+          // val->nombre_cfun = strdup(name->nombre_cfun);
           val->nombre_cfun = name->nombre_cfun;
         }
         __obj_asignar_contexto(ctx, name, val);
@@ -605,8 +602,8 @@ void lat_llamar_funcion(lat_mv *mv, lat_objeto *func) {
 #endif
         lat_objeto *val = __obj_obtener_contexto(ctx, name);
         if (val == NULL) {
-          lat_error("Linea %d, %d: Variable \"%s\" indefinida",
-                          name->num_linea, name->num_columna, __cadena(name));
+          lat_error("Linea %d, %d: Variable \"%s\" indefinida", name->num_linea,
+                    name->num_columna, __cadena(name));
         }
         val->num_linea = name->num_linea;
         val->num_columna = name->num_columna;
@@ -641,24 +638,24 @@ void lat_llamar_funcion(lat_mv *mv, lat_objeto *func) {
           }
           if (num_args != fun->num_params) {
             lat_error("Linea %d, %d: Numero invalido de argumentos en "
-                            "funcion '%s'. se esperaban %i valores.\n",
-                            fun->num_linea, fun->num_columna, fun->nombre_cfun,
-                            fun->num_params);
+                      "funcion '%s'. se esperaban %i valores.\n",
+                      fun->num_linea, fun->num_columna, fun->nombre_cfun,
+                      fun->num_params);
           }
-        } 
-        if(next.ins == STORE_NAME){
-            __mv_apilar_contexto(mv);
+        }
+        if (next.ins == STORE_NAME) {
+          __mv_apilar_contexto(mv);
         }
         mv->num_callf++;
         if (mv->num_callf >= MAX_CALL_FUNCTION) {
           lat_error("Linea %d, %d: Numero maximo de llamadas a funciones "
-                          "recursivas excedido en '%s'\n",
-                          fun->num_linea, fun->num_columna, fun->nombre_cfun);
+                    "recursivas excedido en '%s'\n",
+                    fun->num_linea, fun->num_columna, fun->nombre_cfun);
         }
         lat_llamar_funcion(mv, fun);
         mv->num_callf--;
-        if(next.ins == STORE_NAME){
-            __mv_desapilar_contexto(mv);
+        if (next.ins == STORE_NAME) {
+          __mv_desapilar_contexto(mv);
         }
       } break;
       case RETURN_VALUE: {
@@ -680,8 +677,7 @@ void lat_llamar_funcion(lat_mv *mv, lat_objeto *func) {
         lat_objeto *obj = (lat_objeto *)cur.meta;
         for (i = 0; i < num_elem; i++) {
           lat_objeto *tmp = lat_desapilar(mv);
-          lat_objeto *nuevo = __obj_clonar(mv, tmp);
-          __lista_agregar(__lista(obj), nuevo);
+          __lista_agregar(__lista(obj), tmp);
         }
         lat_apilar(mv, obj);
       } break;
@@ -701,13 +697,13 @@ void lat_llamar_funcion(lat_mv *mv, lat_objeto *func) {
             lat_apilar(mv, val);
             break;
           } else {
-              if(next.ins == CALL_FUNCTION){
-                  lat_error("Linea %d, %d: No se encontro la funcion %s.",
-                            attr->num_linea, attr->num_columna, __cadena(attr));
-              }else{
-                val = lat_cadena_nueva(mv, strdup(""));
-                lat_apilar(mv, val);
-              }
+            if (next.ins == CALL_FUNCTION) {
+              lat_error("Linea %d, %d: No se encontro la funcion %s.",
+                        attr->num_linea, attr->num_columna, __cadena(attr));
+            } else {
+              val = lat_cadena_nueva(mv, strdup(""));
+              lat_apilar(mv, val);
+            }
           }
         }
         lat_objeto *top = lat_tope(mv);
@@ -744,8 +740,8 @@ void lat_llamar_funcion(lat_mv *mv, lat_objeto *func) {
         if (lst->tipo == T_STR) {
           char *slst = __cadena(lst);
           if (ipos < 0 || ipos >= strlen(slst)) {
-            lat_error("Linea %d, %d: Indice fuera de rango.",
-                            pos->num_linea, pos->num_columna);
+            lat_error("Linea %d, %d: Indice fuera de rango.", pos->num_linea,
+                      pos->num_columna);
           }
           char *sexp = strdup(__cadena(exp));
           if (strlen(sexp) == 0) {
@@ -756,8 +752,8 @@ void lat_llamar_funcion(lat_mv *mv, lat_objeto *func) {
         }
         if (lst->tipo == T_LIST) {
           if (ipos < 0 || ipos >= __lista_longitud(__lista(lst))) {
-            lat_error("Linea %d, %d: Indice fuera de rango.",
-                            pos->num_linea, pos->num_columna);
+            lat_error("Linea %d, %d: Indice fuera de rango.", pos->num_linea,
+                      pos->num_columna);
           }
           __lista_modificar_elemento(__lista(lst), exp, ipos);
         }
@@ -809,8 +805,9 @@ void lat_llamar_funcion(lat_mv *mv, lat_objeto *func) {
           lat_desapilar(mv);
           dic = lat_tope(mv);
         }
-        lat_objeto *tmp = __obj_clonar(mv, val);
-        __dic_asignar(__dic(dic), strdup(__cadena(key)), tmp);
+        // lat_objeto *tmp = __obj_clonar(mv, val);
+        //__dic_asignar(__dic(dic), strdup(__cadena(key)), tmp);
+        __dic_asignar(__dic(dic), __cadena(key), val);
       } break;
       case STORE_ATTR: {
         lat_objeto *attr = lat_desapilar(mv);
@@ -830,10 +827,10 @@ void lat_llamar_funcion(lat_mv *mv, lat_objeto *func) {
     } // fin for
   }   // fin if (T_FUNC)
   else if (func->tipo == T_CFUNC) {
-    //printf("%s\n", "llamando c funcion");
+    // printf("%s\n", "llamando c funcion");
     ((void (*)(lat_mv *))(func->datos.fun_usuario))(mv);
   } else {
     lat_error("Linea %d, %d: %s", func->num_linea, func->num_columna,
-                    "El objeto no es una funcion");
+              "El objeto no es una funcion");
   }
 }
