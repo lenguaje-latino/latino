@@ -95,7 +95,7 @@ ast *ast_nuevo_cadena(const char *s, int num_linea, int num_columna) {
 }
 
 ast *ast_nuevo_identificador(const char *s, int num_linea, int num_columna,
-                              bool es_constante) {
+                             bool es_constante) {
   ast *a = (ast *)__memoria_asignar(NULL, sizeof(ast));
   a->tipo = NODO_IDENTIFICADOR;
   nodo_valor *val = (nodo_valor *)__memoria_asignar(NULL, sizeof(nodo_valor));
@@ -231,7 +231,7 @@ ast *__transformar_casos(ast *casos, ast *cond_izq) {
     cond = ast_nuevo(NODO_IGUALDAD, cond_izq, cond_izq);
   }
   ast *nSi = ast_nuevo_si(cond, caso->der,
-                           ((ast *)__transformar_casos(casos->der, cond_izq)));
+                          ((ast *)__transformar_casos(casos->der, cond_izq)));
   return nSi;
 }
 
@@ -322,16 +322,14 @@ static int nodo_analizar(lat_mv *mv, ast *node, lat_bytecode *bcode, int i) {
     dbc(UNARY_MINUS, 0, 0, NULL);
   } break;
   case NODO_INC: {
-    lat_objeto *o =
-        lat_cadena_nueva(mv, strdup(node->izq->valor->val.cadena));
+    lat_objeto *o = lat_cadena_nueva(mv, strdup(node->izq->valor->val.cadena));
     o->num_linea = node->num_linea;
     o->num_columna = node->num_columna;
     o->es_constante = node->izq->valor->es_constante;
     dbc(INC, 0, 0, o);
   } break;
   case NODO_DEC: {
-    lat_objeto *o =
-        lat_cadena_nueva(mv, strdup(node->izq->valor->val.cadena));
+    lat_objeto *o = lat_cadena_nueva(mv, strdup(node->izq->valor->val.cadena));
     o->num_linea = node->num_linea;
     o->num_columna = node->num_columna;
     o->es_constante = node->izq->valor->es_constante;
@@ -452,7 +450,7 @@ static int nodo_analizar(lat_mv *mv, ast *node, lat_bytecode *bcode, int i) {
     temp[1] = i;
     dbc(NOP, 0, 0, NULL);
     dbc(POP_BLOCK, 0, 0, NULL);
-    //bcode[temp[1]] = lat_bc(POP_JUMP_IF_TRUE, (temp[0] - 1), 0, NULL);
+    // bcode[temp[1]] = lat_bc(POP_JUMP_IF_TRUE, (temp[0] - 1), 0, NULL);
     bcode[temp[1]] = lat_bc(POP_JUMP_IF_FALSE, (temp[0] - 1), 0, NULL);
   } break;
   case NODO_FUNCION_LLAMADA: {
@@ -485,8 +483,7 @@ static int nodo_analizar(lat_mv *mv, ast *node, lat_bytecode *bcode, int i) {
   } break;
   case NODO_ATRIBUTO: {
     pn(mv, node->izq);
-    lat_objeto *o =
-        lat_cadena_nueva(mv, strdup(node->der->valor->val.cadena));
+    lat_objeto *o = lat_cadena_nueva(mv, strdup(node->der->valor->val.cadena));
     o->num_linea = node->der->num_linea;
     o->num_columna = node->der->num_columna;
     o->es_constante = node->der->valor->es_constante;
@@ -536,6 +533,7 @@ static int nodo_analizar(lat_mv *mv, ast *node, lat_bytecode *bcode, int i) {
       pn(mv, node->izq);
       num_params = __contar_num_parargs(node->izq, NODO_LISTA_AGREGAR_ELEMENTO);
     }
+    // FIX: Memory leak
     lat_objeto *o = lat_lista_nueva(mv, __lista_crear());
     dbc(BUILD_LIST, num_params, 0, o);
   } break;

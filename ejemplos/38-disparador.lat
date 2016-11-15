@@ -20,7 +20,8 @@ texto = "/test"  #para test
 desde (i=0; i< lista->longitud(triggers); i++)
   si texto == triggers[i]->comando
     #ejecuto el disparador (trigger) para test_accion
-    fun = triggers[i]->accion
-    fun("enviando desde triggers")
+    //fun = triggers[i]->accion
+    //fun("enviando desde triggers")
+    triggers[i]->accion("enviando desde triggers")
   fin
 fin
