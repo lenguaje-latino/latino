@@ -1,8 +1,7 @@
 #!/bin/bash
 
-typeset -l OS id_dib sudo update_packages upgrade_packages autoremove_packages
-OS=$(lsb_release -si)
-
+typeset -l sudo
+if [ -f "/usr/bin/lsb_release" ]; then OS=$(lsb_release -si); else OS=null; fi
 DEBIAN_DIBS=(
 	"debian"
 	"ubuntu"
@@ -28,37 +27,52 @@ ARCHLINUX_DIBS=(
 	"arch"
 	)
 
-if [ "$sudo" == true ]; then prefix=sudo; fi
+if [[ "$sudo" == true ]]; then prefix=sudo; fi
 
 dib_debian() {
+a="echo debian"
 for all in ${!DEBIAN_DIBS[@]}; do
-	if [ "${OS}" == "${DEBIAN_DIBS[$all]}" ] || [ -f "/etc/debian_version" ]; then
-		if [ "${OS}" ]; then echo ${OS}; else echo debian; fi
+	if [[ -f "/etc/debian_version" ]]; then
+		$a; exit
+	elif [[ "${OS}" == "${DEBIAN_DIBS[$all]}" ]]; then
+		echo ${OS}; exit
 	fi
 done
 }
 
 dib_suselinux() {
+a="echo suse"
 for all in ${!SUSELINUX_DIBS[@]}; do
-	if [ "${OS}" == "${SUSELINUX_DIBS[$all]}" ] || [ -f "/etc/SuSE-release" ]; then
-		if [ "${OS}" ]; then echo ${OS}; else echo suselinux; fi
+	if [[ -f "/etc/SuSE-release" ]]; then
+		$a; exit
+	elif [[ "${OS}" == "${SUSELINUX_DIBS[$all]}" ]]; then
+		echo ${OS}; exit
 	fi
 done
 }
 
 dib_fedora() {
+a="echo fedora"
 for all in ${!FEDORA_DIBS[@]}; do
-	if [ "${OS}" == "${FEDORA_DIBS[$all]}" ] || [ -f "/etc/fedora-release" ] || [ -f "/etc/redhat-release" ]; then
-		if [ "${OS}" ]; then echo ${OS}; else echo fedora; fi
+	if [[ -f "/etc/fedora-release" ]]; then
+		$a; exit
+	elif [[ -f "/etc/redhat-release" ]]; then
+		$a; exit
+	elif [[ "${OS}" == "${FEDORA_DIBS[$all]}" ]]; then
+		echo ${OS}; exit
 	fi
 done
 }
 
 dib_archlinux() {
+a="echo arch"
 for all in ${!ARCHLINUX_DIBS[@]}; do
-	id_dib=$(source /usr/lib/os-release && echo $ID)
-	if [ "${OS}" == "${ARCHLINUX_DIBS[$all]}" ] || [[ ${id_dib} == "arc"* ]]; then
-		if [ "${OS}" ]; then echo ${OS}; else echo ${id_dib}; fi
+    if [[ -f "/etc/arch-release" ]]; then
+        $a; exit
+	elif [[ `source /usr/lib/os-release && echo $ID | tr [:upper:] [:lower:]` == "arc"* ]]; then
+		$a; exit
+	elif [[ "${OS}" == "${ARCHLINUX_DIBS[$all]}" ]]; then
+		echo ${OS}; exit
 	fi
 done
 }
@@ -117,9 +131,16 @@ if [ "${packages_all}" ]; then
 	if [ "$IS_ARCHLINUX" ]; then $prefix pacman -S --noconfirm ${packages_all[$package]} -y; fi
   done
 fi
-if [ "$update_packages" == true ]; then update_packages_debian;update_packages_fedora;update_packages_suselinux;update_packages_archlinux; fi
-if [ "$upgrade_packages" == true ]; then upgrade_packages_debian;upgrade_packages_fedora;upgrade_packages_suselinux;upgrade_packages_archlinux; fi
-if [ "$autoremove_packages" == true ]; then autoremove_packages_debian;autoremove_packages_fedora;autoremove_packages_suselinux;autoremove_packages_archlinux; fi
+if [ "$update_packages" == true ]; then
+	update_packages_debian;update_packages_fedora;update_packages_suselinux;update_packages_archlinux
+fi
+if [ "$upgrade_packages" == true ]; then
+	upgrade_packages_debian;upgrade_packages_fedora;upgrade_packages_suselinux;upgrade_packages_archlinux
+fi
+if [ "$autoremove_packages" == true ]; then
+	autoremove_packages_debian;autoremove_packages_fedora;autoremove_packages_suselinux;autoremove_packages_archlinux
+fi
+exit
 fi
 
 if [ "$action" == "remove" ]; then
@@ -152,11 +173,20 @@ if [ "${packages_all}" ]; then
 	if [ "$IS_ARCHLINUX" ]; then $prefix pacman -R --noconfirm ${packages_all[$package]} -y; fi
   done
 fi
-if [ "$update_packages" == true ]; then update_packages_debian;update_packages_fedora;update_packages_suselinux;update_packages_archlinux; fi
-if [ "$upgrade_packages" == true ]; then upgrade_packages_debian;upgrade_packages_fedora;upgrade_packages_suselinux;upgrade_packages_archlinux; fi
-if [ "$autoremove_packages" == true ]; then autoremove_packages_debian;autoremove_packages_fedora;autoremove_packages_suselinux;autoremove_packages_archlinux; fi
+if [ "$update_packages" == true ]; then
+	update_packages_debian;update_packages_fedora;update_packages_suselinux;update_packages_archlinux
+fi
+if [ "$upgrade_packages" == true ]; then
+	upgrade_packages_debian;upgrade_packages_fedora;upgrade_packages_suselinux;upgrade_packages_archlinux
+fi
+if [ "$autoremove_packages" == true ]; then
+	autoremove_packages_debian;autoremove_packages_fedora;autoremove_packages_suselinux;autoremove_packages_archlinux
+fi
+exit
 fi
 
 if [ "$action" == "end" ]; then
-  echo "Nothing to install or remove..."
+  unset action
+  exit
 fi
+exit
