@@ -40,6 +40,7 @@ SET(SOURCES
     libstr.c libcast.c libmath.c libfile.c libsys.c
     libcurl.c libjson.c libredis.c libbase.c
     linenoise/utf8.c linenoise/linenoise.c
+    libgtk.c
     )
 
 SET(EXECUTABLE_OUTPUT_PATH ${PROJECT_BINARY_DIR}/bin)
