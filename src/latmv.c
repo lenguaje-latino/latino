@@ -618,6 +618,7 @@ void lat_llamar_funcion(lat_mv *mv, lat_objeto *func) {
         }
       } break;
       case POP_JUMP_IF_TRUE: {
+        // TODO: Unused bytecode
         lat_objeto *o = lat_desapilar(mv);
         if (lat_obj2bool(o) == true) {
           pos = cur.a;
@@ -645,18 +646,21 @@ void lat_llamar_funcion(lat_mv *mv, lat_objeto *func) {
                       fun->num_params);
           }
         }
-        if (next.ins == STORE_NAME) {
-          __mv_apilar_contexto(mv);
-        }
         mv->num_callf++;
         if (mv->num_callf >= MAX_CALL_FUNCTION) {
           lat_error("Linea %d, %d: Numero maximo de llamadas a funciones "
                     "recursivas excedido en '%s'\n",
                     fun->num_linea, fun->num_columna, fun->nombre_cfun);
         }
+        bool apilar = next.ins == STORE_NAME ||
+                      (func->nombre_cfun != NULL && fun->nombre_cfun != NULL &&
+                       0 == strcmp(func->nombre_cfun, fun->nombre_cfun));
+        if (apilar) {
+          __mv_apilar_contexto(mv);
+        }
         lat_llamar_funcion(mv, fun);
         mv->num_callf--;
-        if (next.ins == STORE_NAME) {
+        if (apilar) {
           __mv_desapilar_contexto(mv);
         }
       } break;
@@ -812,7 +816,7 @@ void lat_llamar_funcion(lat_mv *mv, lat_objeto *func) {
         __dic_asignar(__dic(dic), __cadena(key), val);
       } break;
       case STORE_ATTR: {
-        lat_objeto *attr = lat_desapilar(mv);
+        lat_objeto *attr = (lat_objeto *)cur.meta;
         lat_objeto *obj = lat_desapilar(mv);
         lat_objeto *val = lat_desapilar(mv);
         if (obj->tipo == T_DICT) {

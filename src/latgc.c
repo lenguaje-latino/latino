@@ -41,10 +41,11 @@ void lat_gc_agregar(lat_mv *mv, lat_objeto *o) {
 // Simple garbage collector
 void lat_gc_limpiar(lat_mv *mv) {
   if (mv->memoria_usada > MAX_VIRTUAL_MEMORY &&
-      (mv->memoria_usada / MAX_VIRTUAL_MEMORY > 0.25)) {
-    // printf("recolectando basura:\t");
+      (mv->memoria_usada / MAX_VIRTUAL_MEMORY > 0.25)) {    
     lista *list = __lista(mv->gc_objetos);
-    /*clock_t t_ini, t_fin;
+    /*
+    printf("recolectando basura:\t");
+    clock_t t_ini, t_fin;
     double secs;
     t_ini = clock();*/
     int i;
@@ -65,7 +66,8 @@ void lat_gc_limpiar(lat_mv *mv) {
     }
     /*t_fin = clock();
     secs = (double)(t_fin - t_ini) / CLOCKS_PER_SEC;
-    printf("%.16g milisegundos\n", secs * 1000.0);*/
+    printf("%.2g milisegundos\n", secs * 1000.0);
+    */
     // printf("__lista_longitud: %i\n", __lista_longitud(list));
   }
 }

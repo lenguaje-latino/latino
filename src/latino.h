@@ -93,7 +93,7 @@ extern int parse_silent;
 extern char *filename;
 
 /* Envia un mensaje de error */
-#define lat_error(M, ...)                                                \
+#define lat_error(M, ...)                                                      \
   {                                                                            \
     if (filename) {                                                            \
       fprintf(stderr, " Error: " M " en archivo '%s'.\n", ##__VA_ARGS__,       \
@@ -114,12 +114,12 @@ extern char *filename;
 /** Tamanio maximo de instrucciones bytecode de una funcion */
 #define MAX_BYTECODE_FUNCTION (1024 * 128)
 /** Tamanio maximo de memoria virtual permitida*/
-#define MAX_VIRTUAL_MEMORY MAX_BYTECODE_FUNCTION * 256
+#define MAX_VIRTUAL_MEMORY (MAX_BYTECODE_FUNCTION * 1024)
 /** Tamanio maximo de una cadena para ser almacenada en HASH TABLE */
 #define MAX_STR_INTERN 64
 /** Tamanio maximo de una cadena almacenada dinamicamente*/
 //#define MAX_STR_LENGTH 4096
-#define MAX_STR_LENGTH 1024 * 1024
+#define MAX_STR_LENGTH (1024 * 1024)
 /** Tamanio maximo de la pila de la maquina virtual */
 #define MAX_STACK_SIZE 255
 /** Tamanio maximo de una ruta de derectorio */
