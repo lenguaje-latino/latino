@@ -11,3 +11,8 @@ mod = incluir("modulo")	//ahora modulo es una funcion que se puede asignar a una
 r = mod->sumatoria(2, 3)
 escribir(r)
 escribir(mod->variable)
+
+#version anterior
+incluir("modulo")
+r = mod->sumatoria(2, 3)
+escribir(r)

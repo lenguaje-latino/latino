@@ -245,7 +245,7 @@ int __lista_obtener_indice(lista *list, void *data) {
 }
 
 void __lista_insertar_elemento(lista *list, void *data, int pos) {
-  // FIX: Memory leak and for performance
+  // FIXME: Memory leak and for performance
   int len = __lista_longitud(list);
   if (pos < 0 || pos > len) // permite insertar al ultimo
   {
@@ -290,11 +290,11 @@ void lat_lista_extender(lat_mv *mv) {
   lat_objeto *lst = lat_desapilar(mv);
   if (lst->tipo != T_LIST) {
     lat_error("Linea %d, %d: %s", lst->num_linea, lst->num_columna,
-                    "El objeto no es una lista");
+              "El objeto no es una lista");
   }
   if (l2->tipo != T_LIST) {
     lat_error("Linea %d, %d: %s", l2->num_linea, l2->num_columna,
-                    "El objeto no es una lista");
+              "El objeto no es una lista");
   }
   lista *_lst2 = __lista(l2);
   lista *_lst = __lista(lst);
@@ -308,7 +308,7 @@ void lat_lista_eliminar_indice(lat_mv *mv) {
   int pos = __numerico(b);
   if (pos < 0 || pos >= __lista_longitud(lst)) {
     lat_error("Linea %d, %d: %s", a->num_linea, a->num_columna,
-                    "Indice fuera de rango");
+              "Indice fuera de rango");
   }
   if (pos >= 0) {
     lista_nodo *nt = __lista_obtener_nodo(lst, pos);
@@ -320,7 +320,7 @@ void lat_lista_invertir(lat_mv *mv) {
   lat_objeto *a = lat_desapilar(mv);
   lista *lst = __lista(a);
   lista *new = __lista_crear();
-  // FIX: For performance
+  // FIXME: For performance
   int i;
   int len = __lista_longitud(lst) - 1;
   for (i = len; i >= 0; i--) {
@@ -374,6 +374,18 @@ void lat_lista_indice(lat_mv *mv) {
   lat_gc_agregar(mv, tmp);
 }
 
+void lat_lista_contiene(lat_mv *mv) {
+  lat_objeto *b = lat_desapilar(mv);
+  lat_objeto *a = lat_desapilar(mv);
+  lista *lst = __lista(a);
+  bool contiene = __lista_contiene_valor(lst, b);
+  if (contiene) {
+    lat_apilar(mv, mv->objeto_verdadero);
+  } else {
+    lat_apilar(mv, mv->objeto_falso);
+  }
+}
+
 static const lat_CReg lib_lista[] = {
     {"invertir", lat_lista_invertir, 1},
     {"agregar", lat_lista_agregar, 2},
@@ -384,6 +396,7 @@ static const lat_CReg lib_lista[] = {
     {"comparar", lat_lista_comparar, 2},
     {"insertar", lat_lista_insertar, 3},
     {"eliminar", lat_lista_eliminar, 2},
+    {"contiene", lat_lista_contiene, 2},
     {NULL, NULL}};
 
 void lat_importar_lib_lista(lat_mv *mv) {

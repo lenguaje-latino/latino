@@ -37,7 +37,6 @@ THE SOFTWARE.
 int __lista_obtener_indice(lista *list, void *data);
 
 char *__str_analizar_fmt(const char *s, size_t len) {
-  // FIX: Memory leak
   char *ret = __memoria_asignar(NULL, len + 1);
   int i = 0;
   int j = 0;
@@ -112,7 +111,6 @@ char *__str_analizar_fmt(const char *s, size_t len) {
 }
 
 char *__str_analizar(const char *s, size_t len) {
-  // FIX: Memory leak
   char *ret = __memoria_asignar(NULL, len + 1);
   int i = 0;
   int j = 0;
