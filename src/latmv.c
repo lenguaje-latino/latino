@@ -90,6 +90,7 @@ void lat_importar_lib_cadena(lat_mv *mv);
 void lat_importar_lib_redis(lat_mv *mv);
 void lat_importar_lib_sistema(lat_mv *mv);
 void lat_importar_lib_dic(lat_mv *mv);
+void lat_importar_lib_gtk(lat_mv *mv);
 
 const char *__obtener_bytecode_nombre(int inst) { return bycode_nombre[inst]; }
 
@@ -381,6 +382,7 @@ lat_mv *lat_mv_crear() {
   lat_importar_lib_redis(mv);
   lat_importar_lib_sistema(mv);
   lat_importar_lib_dic(mv);
+  lat_importar_lib_gtk(mv);
   return mv;
 }
 
