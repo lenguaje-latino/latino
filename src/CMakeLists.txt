@@ -10,6 +10,16 @@ IF(UNIX)
     LINK_LIBRARIES(hiredis)
     SET(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -D_GNU_SOURCE -Wall -std=c11")
     SET(CMAKE_C_FLAGS_DEBUG "${CMAKE_C_FLAGS} -D_GNU_SOURCE -coverage -g -O0 -Wall -std=c11 -fprofile-arcs -ftest-coverage -coverage")
+
+    # Use the package PkgConfig to detect GTK+ headers/library files 
+    find_package(PkgConfig REQUIRED)
+    pkg_check_modules(GTK3 REQUIRED gtk+-3.0)
+    # Setup CMake to use GTK+, tell the compiler where to look for headers
+    # and to the linker where to look for libraries
+    include_directories(${GTK3_INCLUDE_DIRS})
+    link_directories(${GTK3_LIBRARY_DIRS})
+    # Add other flags to the compiler
+    add_definitions(${GTK3_CFLAGS_OTHER})
 ELSE(UNIX)
     IF(MSVC)
         SET(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} /W4")
@@ -48,7 +58,7 @@ SET(EXECUTABLE_OUTPUT_PATH ${PROJECT_BINARY_DIR}/bin)
 ADD_EXECUTABLE(latino ${SOURCES})
 
 TARGET_LINK_LIBRARIES(latino LINK_PUBLIC
-    ${BISON_LIBRARIES} ${CMAKE_DL_LIBS})
+    ${BISON_LIBRARIES} ${CMAKE_DL_LIBS} ${GTK3_LIBRARIES})
 
 IF(MSVC)
     TARGET_LINK_LIBRARIES(latino jansson libcurl)

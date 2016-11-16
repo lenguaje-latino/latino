@@ -119,6 +119,7 @@ https://www.microsoft.com/es-ES/download/details.aspx?id=48145
 | libhiredis-dev |  |Linux|
 | redis-server |  |Linux|
 | curl    | 7.47.0 |Linux|
+| libgtk-3-dev |  3.0 | Linux |
 | kernel-devel| |Solo Fedora|
 | jsoncpp| |Solo Fedora|
 --
