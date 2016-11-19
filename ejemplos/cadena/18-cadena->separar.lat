@@ -1,0 +1,9 @@
+a = "hola amigo latino"
+separacion_normal = cadena->separar(a)
+imprimir("En la cadena 'a' se reemplazó el espacio y se creó una lista, debido a que no hay un segundo parámetro, se separa por espacios\n", 1)
+imprimir("El resultado es el siguiente: ".separacion_normal)
+
+a = "hola amigo-latino"
+separacion_por_simbolo_o_letra_indicada = cadena->separar(a, "-")
+imprimir("\n\nVolvemos a declarar el valor 'a' con otra frase y elegimos un modo de separación, en este caso se usará el símbolo '-'\n",1)
+imprimir("El resultado es el siguiente: ".separacion_por_simbolo_o_letra_indicada)

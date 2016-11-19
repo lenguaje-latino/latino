@@ -1,0 +1,7 @@
+a = "Hola_Latino 1"
+
+si cadena->es_alfanumerico(a)
+	imprimir("La cadena 'a' es alfanúmerica")
+sino
+	imprimir("La cadena 'a' no es alfanúmerica")
+fin

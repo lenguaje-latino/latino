@@ -1,0 +1,8 @@
+a = "Hola latino" // declaramos una cadena
+b = "Hola amigo" // y otra
+mi_cadena_es_igual = cadena->es_igual(a, b)
+si mi_cadena_es_igual
+  imprimir("La cadena 'a' y 'b' son iguales")
+sino
+  imprimir("La cadena 'a' y 'b' no son iguales")
+fin

@@ -1,0 +1,2 @@
+a = "escribir('vdv')"
+cadena->ejecutar(a)

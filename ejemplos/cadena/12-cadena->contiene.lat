@@ -1,0 +1,7 @@
+a = "Hola amigo" // registramos la cadena a
+la_cadena_tiene_hola = cadena->contiene(a, "Hola")
+si la_cadena_tiene_hola
+  imprimir("La cadena 'a' tiene la palabra Hola")
+sino
+  imprimir("La cadena 'a' no tiene la palabra Hola")
+fin
