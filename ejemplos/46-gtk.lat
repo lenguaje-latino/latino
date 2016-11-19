@@ -1,0 +1,8 @@
+gtk->iniciar() // Desde aquí inicias el proceso de gtk
+app = gtk->ventana("Mi primer ventana") // creas una ventana con un  nombre
+gtk->titulo(app, "Hola") // Pones un título
+gtk->redimensionar(app, 700, 700) // la redimensionamos
+b = gtk->boton_texto(app, "Este es un test gráfico de Latino") //creamos un botón de texto en la ventana nueva
+gtk->boton_destruir(app, b) // Hacemos que al presionar el boton destruya la ventana
+gtk->mostrar(app) // Hacemos que todos los menus se apilen
+gtk->menu() // Finalmente lanzamos el mini-programa que hemos hecho

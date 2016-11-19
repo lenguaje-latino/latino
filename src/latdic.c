@@ -78,7 +78,6 @@ void *__dic_obtener(hash_map *m, char *key) {
 }
 
 void __dic_asignar(hash_map *m, const char *key, void *val) {
-  // FIX: Memory leak
   // printf("__dic_asignar\n");
   hash_val *hv = (hash_val *)__memoria_asignar(NULL, sizeof(hash_val));
   strncpy(hv->llave, key, (strlen(key) + 1));
