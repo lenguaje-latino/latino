@@ -1,0 +1,7 @@
+a = "Hola chico raro" // declaramos la cadena
+mi_cadena_inicia_con_h = cadena->inicia_con(a, "H")
+si mi_cadena_inicia_con_h
+  imprimir("La cadena 'a' inicia con la letra H")
+sino
+  imprimir("La cadena 'a' no inicia con la letra H")
+fin
