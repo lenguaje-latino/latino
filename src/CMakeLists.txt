@@ -10,8 +10,7 @@ IF(UNIX)
     LINK_LIBRARIES(hiredis)
     SET(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -D_GNU_SOURCE -Wall -std=c11")
     SET(CMAKE_C_FLAGS_DEBUG "${CMAKE_C_FLAGS} -D_GNU_SOURCE -coverage -g -O0 -Wall -std=c11 -fprofile-arcs -ftest-coverage -coverage")
-
-    # Use the package PkgConfig to detect GTK+ headers/library files 
+    # Use the package PkgConfig to detect GTK+ headers/library files
     find_package(PkgConfig REQUIRED)
     pkg_check_modules(GTK3 REQUIRED gtk+-3.0)
     # Setup CMake to use GTK+, tell the compiler where to look for headers

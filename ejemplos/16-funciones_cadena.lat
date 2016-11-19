@@ -106,7 +106,6 @@ escribir("empieza con:")
 #sensible a mayusculas
 escribir(lorem)
 //escribir("lorem empieza con 'Lorem'? " . inicia_con(lorem, 'Lorem'))
-//FIX: Error
 escribir("lorem empieza con 'Lorem'? " . cadena->inicia_con(lorem, 'Lorem'))
 
 escribir("------------------------------------------------------")
@@ -149,6 +148,6 @@ escribir(str[0])
 str[4] = "-"
 escribir(str)
 
-//FIX: Error al obtener la ñ
+//FIXME: Error al obtener la ñ
 str = "año"
 escribir(str[1])

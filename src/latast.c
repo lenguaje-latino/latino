@@ -286,8 +286,14 @@ static int nodo_analizar(lat_mv *mv, ast *node, lat_bytecode *bcode, int i) {
     /*SET: Asigna el valor de la variable en la tabla de simbolos*/
     pn(mv, node->izq);
     if (node->der->tipo == NODO_ATRIBUTO) {
-      pn(mv, node->der);
-      dbc(STORE_ATTR, 0, 0, NULL);
+      // pn(mv, node->der);
+      pn(mv, node->der->izq);
+      lat_objeto *o =
+          lat_cadena_nueva(mv, strdup(node->der->der->valor->val.cadena));
+      o->num_linea = node->der->der->num_linea;
+      o->num_columna = node->der->der->num_columna;
+      o->es_constante = node->der->der->valor->es_constante;
+      dbc(STORE_ATTR, 0, 0, o);
     } else {
       lat_objeto *o =
           lat_cadena_nueva(mv, strdup(node->der->valor->val.cadena));
@@ -426,7 +432,7 @@ static int nodo_analizar(lat_mv *mv, ast *node, lat_bytecode *bcode, int i) {
     bcode[temp[1]] = lat_bc(JUMP_ABSOLUTE, (temp[3] - 1), 0, NULL);
   } break;
   case NODO_ELEGIR: {
-    // FIX: Memory leak
+    // FIXME: Memory leak
     // transformar nodo elegir en nodos si
     ast *nSi = __transformar_elegir(node);
     pn(mv, nSi);
@@ -450,7 +456,6 @@ static int nodo_analizar(lat_mv *mv, ast *node, lat_bytecode *bcode, int i) {
     temp[1] = i;
     dbc(NOP, 0, 0, NULL);
     dbc(POP_BLOCK, 0, 0, NULL);
-    // bcode[temp[1]] = lat_bc(POP_JUMP_IF_TRUE, (temp[0] - 1), 0, NULL);
     bcode[temp[1]] = lat_bc(POP_JUMP_IF_FALSE, (temp[0] - 1), 0, NULL);
   } break;
   case NODO_FUNCION_LLAMADA: {
@@ -473,12 +478,6 @@ static int nodo_analizar(lat_mv *mv, ast *node, lat_bytecode *bcode, int i) {
     }
     if (node->der) {
       pn(mv, node->der);
-      if (node->der->valor || node->der->tipo == NODO_FUNCION_LLAMADA) {
-        // se agrega para soporte recursivo
-        int num_args =
-            __contar_num_parargs(node->der->izq, NODO_FUNCION_ARGUMENTOS);
-        dbc(CALL_FUNCTION, num_args, 0, NULL);
-      }
     }
   } break;
   case NODO_ATRIBUTO: {

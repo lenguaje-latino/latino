@@ -37,7 +37,6 @@ THE SOFTWARE.
 int __lista_obtener_indice(lista *list, void *data);
 
 char *__str_analizar_fmt(const char *s, size_t len) {
-  // FIX: Memory leak
   char *ret = __memoria_asignar(NULL, len + 1);
   int i = 0;
   int j = 0;
@@ -112,7 +111,6 @@ char *__str_analizar_fmt(const char *s, size_t len) {
 }
 
 char *__str_analizar(const char *s, size_t len) {
-  // FIX: Memory leak
   char *ret = __memoria_asignar(NULL, len + 1);
   int i = 0;
   int j = 0;
@@ -257,24 +255,23 @@ char *__str_insertar(char *dest, char *src, int pos) {
   return m;
 }
 
-char *__str_rellenar_izquierda(char *base, int n, char *c) {
+char *__str_rellenar_izquierda(char *base, char *c, int n) {
   char *ret = __memoria_asignar(NULL, MAX_STR_LENGTH);
   int len = strlen(base);
-  int i = 0;
-  for (i = 0; i < (n - len); i++) {
+  int i, final = len-1;
+  for (i = 0; i < (n - final); i++) {
     ret = strcat(ret, c);
   }
   ret = strcat(ret, base);
   return ret;
 }
 
-char *__str_rellenar_derecha(char *base, int n, char *c) {
+char *__str_rellenar_derecha(char *base, char *c, int n) {
   char *ret = __memoria_asignar(NULL, MAX_STR_LENGTH);
   int len = strlen(base);
-  // ret = base;
   strcpy(ret, base);
-  int i;
-  for (i = 0; i < (n - len); i++) {
+  int i, final = len-1;
+  for (i = 0; i < (n - final); i++) {
     ret = strcat(ret, c);
   }
   return ret;
@@ -449,7 +446,7 @@ void lat_cadena_rellenar_izquierda(lat_mv *mv) {
   lat_objeto *c = lat_desapilar(mv);
   lat_objeto *b = lat_desapilar(mv);
   lat_objeto *a = lat_desapilar(mv);
-  char *buf = __str_rellenar_izquierda(__cadena(a), __numerico(b), __cadena(c));
+  char *buf = __str_rellenar_izquierda(__cadena(a), __cadena(b), __numerico(c));
   lat_objeto *tmp = lat_cadena_nueva(mv, buf);
   lat_apilar(mv, tmp);
   lat_gc_agregar(mv, tmp);
@@ -459,7 +456,7 @@ void lat_cadena_rellenar_derecha(lat_mv *mv) {
   lat_objeto *c = lat_desapilar(mv);
   lat_objeto *b = lat_desapilar(mv);
   lat_objeto *a = lat_desapilar(mv);
-  char *buf = __str_rellenar_derecha(__cadena(a), __numerico(b), __cadena(c));
+  char *buf = __str_rellenar_derecha(__cadena(a), __cadena(b), __numerico(c));
   lat_objeto *tmp = lat_cadena_nueva(mv, buf);
   lat_apilar(mv, tmp);
   lat_gc_agregar(mv, tmp);

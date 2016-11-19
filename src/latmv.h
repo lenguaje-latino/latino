@@ -32,16 +32,7 @@ THE SOFTWARE.
 
 #include <math.h>
 
-/**\brief Objeto tipo maquina virtual */
 typedef struct lat_mv lat_mv;
-
-typedef void (*lat_CFuncion)(lat_mv *mv);
-
-typedef struct lat_CReg {
-  const char *nombre;
-  lat_CFuncion func;
-  int num_params;
-} lat_CReg;
 
 #include "latdic.h"
 #include "latlist.h"
@@ -91,6 +82,16 @@ typedef struct lat_CReg {
 #define BUILD_MAP 37
 #define STORE_MAP 38
 #define STORE_ATTR 39
+
+/**\brief Objeto tipo maquina virtual */
+
+typedef void (*lat_CFuncion)(lat_mv *mv);
+
+typedef struct lat_CReg {
+  const char *nombre;
+  lat_CFuncion func;
+  int num_params;
+} lat_CReg;
 
 /**\brief Estructura que almacena las instrucciones bytecode de la MV */
 typedef struct lat_bytecode {
