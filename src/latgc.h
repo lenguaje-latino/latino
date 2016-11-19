@@ -39,7 +39,7 @@ THE SOFTWARE.
 #include "latobj.h"
 
 /**\brief Bandera habilitar o deshabilitar GC */
-#define HABILITAR_GC 1
+#define HABILITAR_GC 0
 
 #define TIME_THIS(X)                                                           \
   {                                                                            \

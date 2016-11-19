@@ -393,7 +393,7 @@ void lat_destruir_mv(lat_mv *mv) {
   // printf("%s\n", ">>>liberando otros_objetos:");
   __obj_eliminar(mv, mv->otros_objetos);
   // printf("%s\n", ">>>liberando gc:");
-  __obj_eliminar(mv, mv->gc_objetos);
+  //__obj_eliminar(mv, mv->gc_objetos);
   __obj_eliminar(mv, mv->pila);
   if (mv->contexto_pila[0] != NULL) {
     __obj_eliminar(mv, mv->contexto_pila[0]);

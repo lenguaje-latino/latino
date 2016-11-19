@@ -606,46 +606,20 @@ void lat_cadena_separar(lat_mv *mv) {
 }
 
 void lat_cadena_invertir(lat_mv *mv) {
+  // TODO: Pendiente implementacion para multibyte
   lat_objeto *a = lat_desapilar(mv);
-  // parseamos la cadena por si tiene caracteres de escape(\n, \t, etc...)
-  char *slst = __str_analizar(__cadena(a), strlen(__cadena(a)));
-  int i = 0;
-  int p;
-  lista *cads = __lista_crear();
-  // separamos en una lista de caracteres
-  char ch[8];
-  for (p = 0; p < strlen(slst); p++) {
-    i = 0;
-    if (slst[p] < 0) {
-      while (slst[p] < 0) {
-        ch[i] = slst[p];
-        p++;
-        i++;
-      }
-      p--;
-    } else {
-      i = 0;
-      ch[i] = slst[p];
-      i++;
-    }
-    ch[i] = '\0';
-    __lista_agregar(cads, lat_cadena_nueva(mv, strdup(ch)));
+  char *orig = __cadena(a);
+  int i = strlen(orig) - 1;
+  char *dest = __memoria_asignar(mv, strlen(orig) + 1);
+  int j = 0;
+  for (; i >= 0; i--) {
+    dest[j] = orig[i];
+    j++;
   }
-  // unimos los caracteres
-  char *res = __memoria_asignar(mv, strlen(__cadena(a)));
-  for (i = __lista_longitud(cads) - 1; i >= 0; i--) {
-    char *elem = __cadena(__lista_obtener_elemento(cads, i));
-    res = strcat(res, elem);
-  }
-  int len = strlen(res);
-  res[len + 1] = '\0';
-  lat_objeto *tmp = lat_cadena_nueva(mv, res);
+  dest[strlen(orig)] = '\0';
+  lat_objeto *tmp = lat_cadena_nueva(mv, dest);
   lat_apilar(mv, tmp);
   lat_gc_agregar(mv, tmp);
-  // liberamos los objetos temporales
-  __lista_destruir(cads);
-  __memoria_liberar(mv, res);
-  __memoria_liberar(mv, slst);
 }
 
 void lat_cadena_ejecutar(lat_mv *mv) {
@@ -668,7 +642,7 @@ static const lat_CReg lib_cadena[] = {
     {"quitar_espacios", lat_cadena_quitar_espacios, 1},
     {"es_numerico", lat_cadena_es_numerico, 1},
     {"es_numero", lat_cadena_es_numerico, 1},
-    {"es_alfanumerico", lat_cadena_es_alfa, 1},
+    {"es_alfa", lat_cadena_es_alfa, 1},
     {"invertir", lat_cadena_invertir, 1},
     {"ejecutar", lat_cadena_ejecutar, 1},
     {"concatenar", lat_cadena_concatenar, 2},

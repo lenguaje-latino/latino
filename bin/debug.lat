@@ -3,18 +3,14 @@ Para debuguear en visual studio:
 Menu propiedades del proyecto-> Debugging -> Command Arguments. Agregar
 $(SolutionDir)..\ejemplos\debug.lat
 */
-msg = {"message_id":130,
-           "from":{"id":269610735,"first_name":"Primitivo","last_name":"Roman"},
-           "chat":{"id":269610735,"first_name":"Primitivo","last_name":"Roman","type":"private"},
-           "date": nulo,
-           "text":"esto es una prueba print (\"hola mundo\")"}
 
-escribir(msg->text)
-msg->text = "blablabla"
-escribir(msg->text)
-
-escribir(msg->chat->id)
-msg->chat->id = "18"
-escribir(msg->chat->id)
-msg->chat["id"] = "32"
-escribir(msg->chat->id)
+str = "hola mundo"
+escribir(cadena->invertir(str))
+escribir(cadena->es_alfa(str))	#da falso porque espacio no es alfanumerico
+cadena->ejecutar("escribir('hola desde una cadena')")
+pos = cadena->indice(str, "mundo")
+escribir("'hola' esta en la posicion: " . pos)
+#crea una nueva cadena, no reemplaza la cadena anterior
+nueva = cadena->reemplazar(str, "mundo", "latinos")
+escribir(nueva)
+escribir(str) #cadena original

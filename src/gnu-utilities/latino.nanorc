@@ -1,4 +1,4 @@
-## Sintaxis Latino en Nano 
+## Sintaxis Latino en Nano
 syntax "latino" "\.lat$"
 color brightwhite "\."
 
@@ -16,7 +16,7 @@ color brightblue "\<(valor_absoluto|redondear_abajo|modulo|aleatorio)\>"
  # Funciones para cadenas
 color brightblue "\<(comparar|concatenar|contiene|termina_con|es_igual|indice|insertar|ultimo_indice|rellenar_izquierda|rellenar_derecha)\>"
 color brightblue "\<(eliminar|esta_vacia|longitud|reemplazar|inicia_con|subcadena|minusculas|mayusculas|quitar_espacios|es_numerico)\>"
-color brightblue "\<(es_numero|es_alfanumerico|separar|separar_en_palabras|invertir)\>"
+color brightblue "\<(es_numero|es_alfa|separar|separar_en_palabras|invertir)\>"
 
  # Funciones para archivos
 color brightblue "\<(ejecutar_archivo|ejecutar|leer_archivo|escribir_archivo|leer_lineas|copiar_texto|)\>"

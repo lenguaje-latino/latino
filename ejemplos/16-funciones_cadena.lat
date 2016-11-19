@@ -140,7 +140,7 @@ escribir("es numerico: " . cadena->es_numerico(numero))
 escribir("------------------------------------------------------")
 escribir("es_alfanumerico:")
 alfa = "variable1"
-escribir("es alfanumerico: " . cadena->es_alfanumerico(alfa))
+escribir("es alfanumerico: " . cadena->es_alfa(alfa))
 
 #se puede acceder a un elemento de la cadena ya que es un arreglo de caracteres
 str = "hola mundo"
