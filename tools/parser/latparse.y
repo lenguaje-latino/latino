@@ -123,10 +123,10 @@ int yylex (YYSTYPE * yylval_param,YYLTYPE * yylloc_param ,yyscan_t yyscanner);
  */
 %right '='
 %left CONCATENAR CONCATENAR_IGUAL
-%left '+' '-'
-%left '*' '/' '%' '!'
 %left Y_LOGICO O_LOGICO
 %left IGUAL_LOGICO MAYOR_IGUAL MAYOR_QUE MENOR_IGUAL MENOR_QUE DIFERENTE
+%left '+' '-'
+%left '*' '/' '%' '!'
 
 %start program
 
@@ -164,7 +164,7 @@ multiplicative_expression
         $$ = ast_reducir_constantes(NODO_DIVISION, $1, $3);
         if($$ == NULL) YYABORT;
     }
-    | expression '%' expression {
+    | expression '%' expression %prec '*' {
         $$ = ast_reducir_constantes(NODO_MODULO, $1, $3);
         if($$ == NULL) YYABORT;
     }
