@@ -497,6 +497,10 @@ void lat_llamar_funcion(lat_mv *mv, lat_objeto *func) {
         lat_objeto *name = (lat_objeto *)cur.meta;
         lat_objeto *ctx = lat_obtener_contexto(mv);
         lat_objeto *val = __obj_obtener_contexto(ctx, name);
+        if(val == NULL){
+          //si no existe se infiere que es entero y se inicializa en 0
+          val = lat_numerico_nuevo(mv, 0);
+        }
         lat_objeto *tmp = __obj_clonar(mv, val);
         tmp->datos.numerico++;
         __obj_asignar_contexto(ctx, name, tmp);
@@ -508,6 +512,10 @@ void lat_llamar_funcion(lat_mv *mv, lat_objeto *func) {
         lat_objeto *name = (lat_objeto *)cur.meta;
         lat_objeto *ctx = lat_obtener_contexto(mv);
         lat_objeto *val = __obj_obtener_contexto(ctx, name);
+        if(val == NULL){
+          //si no existe se infiere que es entero y se inicializa en 0
+          val = lat_numerico_nuevo(mv, 0);
+        }
         lat_objeto *tmp = __obj_clonar(mv, val);
         tmp->datos.numerico--;
         __obj_asignar_contexto(ctx, name, tmp);
