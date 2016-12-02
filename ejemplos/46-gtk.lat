@@ -1,8 +1,11 @@
-gtk->iniciar() // Desde aquí inicias el proceso de gtk
-app = gtk->ventana("Mi primer ventana") // creas una ventana con un  nombre
-gtk->titulo(app, "Hola") // Pones un título
-gtk->redimensionar(app, 700, 700) // la redimensionamos
-b = gtk->boton_texto(app, "Este es un test gráfico de Latino") //creamos un botón de texto en la ventana nueva
-gtk->boton_destruir(app, b) // Hacemos que al presionar el boton destruya la ventana
-gtk->mostrar(app) // Hacemos que todos los menus se apilen
-gtk->menu() // Finalmente lanzamos el mini-programa que hemos hecho
+gtk->iniciar() // iniciamos una aplicación de GTK
+mi_ventana = gtk->ventanaNueva("org.ventana.nueva") // creamos una ventana declarandola
+gtk->titulo(mi_ventana, "Prueba de GTK") // asignamos un título a la ventana
+gtk->ventanaMagnitud(mi_ventana, 500, 500) // le cambiamos el tamaño a la ventana
+caja = gtk->cajaNueva() // creamos una caja nueva declarandola
+gtk->agregar(mi_ventana, caja) // agregamos la caja a la ventana
+texto_boton = gtk->botonTexto(mi_ventana, caja, "SALIR") // creamos un botón de texto declarandolo
+gtk->agregar(caja, texto_boton) // agregamos el texto del boton a la caja
+gtk->botonDestruir(mi_ventana, texto_boton) // mencionamos que al pulsar el botón destruya la ventana
+gtk->mostrarTodo(mi_ventana) // mostramos todo lo de la ventana
+gtk->menu()  // finalmente hacemos que la ventana se muestre en el sistema operativo
