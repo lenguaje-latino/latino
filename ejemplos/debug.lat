@@ -4,4 +4,11 @@ Menu propiedades del proyecto-> Debugging -> Command Arguments. Agregar
 $(SolutionDir)..\ejemplos\debug.lat
 */
 
-gtk->test()
+
+str = "este es un test..."
+desde(i=cadena->longitud(str)-1; i >=0; i--)
+	escribir("\r" . cadena->subcadena(str, i, cadena->longitud(str)), 1)
+	sistema->dormir(0.2)
+fin
+
+//escribir(str)

@@ -47,14 +47,18 @@ THE SOFTWARE.
 #include <dlfcn.h>
 #include <stdbool.h>
 #include <unistd.h>
+#include <time.h>
 #define PATH_SEP "/"
 #define LAT_FUNC __attribute__((visibility("hidden"))) extern
 #define malloc_size(ptr) malloc_usable_size(ptr)
 #define __lat_popen(L, c, m) ((void)L, fflush(NULL), popen(c, m))
 #define __lat_pclose(L, file) ((void)L, pclose(file))
 #define __lat_clear "clear"
-#define __lat_sleep(seg) sleep(seg)
+#define __lat_sleep(seg) sleep_ms(seg * 1000)
 #endif
+
+
+void sleep_ms(int milliseconds);
 
 /** Determina el compilador*/
 #if defined(__GNUC__)

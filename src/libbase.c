@@ -51,10 +51,10 @@ void __imprimir_objeto(lat_mv *mv, lat_objeto *o, bool fmt) {
   char *tmp2 = NULL;
   if (fmt) {
     tmp2 = __str_analizar_fmt(tmp, strlen(tmp));
-    fprintf(stdout, "%s", tmp2);
+    printf("%s", tmp2);
   } else {
     tmp2 = __str_analizar(tmp, strlen(tmp));
-    fprintf(stdout, "%s", tmp2);
+    printf("%s", tmp2);
   }
   __memoria_liberar(mv, tmp);
   __memoria_liberar(mv, tmp2);
