@@ -142,7 +142,7 @@ void lat_archivo_ejecutar(lat_mv *mv) {
     lat_objeto *func = ast_analizar_arbol(mv, tree);
     if (status == 0) {
       lat_llamar_funcion(mv, func);
-      __obj_eliminar(mv, func);
+      //__obj_eliminar(mv, func);
     } else {
       lat_error("Error al ejeuctar archivo: %s\n", input);
     }

@@ -4,7 +4,7 @@ Menu propiedades del proyecto-> Debugging -> Command Arguments. Agregar
 $(SolutionDir)..\ejemplos\debug.lat
 */
 
-escribir("Ingrese un numero:")
+/*escribir("Ingrese un numero:")
 n = leer()
 
 desde(i=1; i< n +1;i++)
@@ -18,3 +18,9 @@ si a <= 2
 sino
     escribir("No es primo")
 fin
+*/
+
+source = "___ abc123def ___ ghi456 ___"
+regexString = "[a-z]*([0-9]+)([a-z]*)"
+
+cadena->match(source, regexString)
