@@ -25,6 +25,7 @@ THE SOFTWARE.
 #include <stdbool.h>
 #include <stdio.h>
 #include <string.h>
+#include <regex.h>
 
 #include "latgc.h"
 #include "latino.h"
@@ -634,6 +635,27 @@ void lat_cadena_ejecutar(lat_mv *mv) {
   }
 }
 
+void lat_cadena_regex(lat_mv *mv) {
+  lat_objeto *cadena_regex = lat_desapilar(mv);
+  lat_objeto *cadena = lat_desapilar(mv);
+  regex_t regex; int reti;
+  reti = regcomp(&regex, __cadena(cadena_regex), 0);
+  if (reti) {
+    lat_error("Linea %d, %d: %s", cadena->num_linea, cadena->num_columna,
+                    "error al compilar regex.");
+  }
+  reti = regexec(&regex, __cadena(cadena), 0, NULL, 0);
+  if (!reti) {
+    lat_apilar(mv, mv->objeto_verdadero);
+  } else if (reti == REG_NOMATCH) {
+    lat_apilar(mv, mv->objeto_falso);
+  } else {
+    lat_error("Linea %d, %d: %s", cadena->num_linea, cadena->num_columna,
+                    "error en el match regex.");
+  }
+  regfree(&regex);
+}
+
 static const lat_CReg lib_cadena[] = {
     {"esta_vacia", lat_cadena_esta_vacia, 1},
     {"longitud", lat_cadena_longitud, 1},
@@ -655,6 +677,7 @@ static const lat_CReg lib_cadena[] = {
     {"eliminar", lat_cadena_eliminar, 2},
     {"separar", lat_cadena_separar, 2},
     {"inicia_con", lat_cadena_inicia_con, 2},
+    {"regex", lat_cadena_regex, 2},
     {"insertar", lat_cadena_insertar, 3},
     {"rellenar_izquierda", lat_cadena_rellenar_izquierda, 3},
     {"rellenar_derecha", lat_cadena_rellenar_derecha, 3},
