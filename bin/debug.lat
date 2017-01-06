@@ -23,4 +23,5 @@ fin
 source = "___ abc123def ___ ghi456 ___"
 regexString = "[a-z]*([0-9]+)([a-z]*)"
 
-cadena->match(source, regexString)
+lst = cadena->match(source, regexString)
+escribir(lst)
