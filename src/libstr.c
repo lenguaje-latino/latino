@@ -656,6 +656,54 @@ void lat_cadena_regex(lat_mv *mv) {
   regfree(&regex);
 }
 
+void lat_cadena_match(lat_mv *mv){
+  lat_objeto *regexString = lat_desapilar(mv);
+  lat_objeto *source = lat_desapilar(mv);
+  size_t maxMatches = 10;
+  size_t maxGroups = 15;
+  regex_t regexCompiled;
+  regmatch_t groupArray[maxGroups];
+  unsigned int m;
+  char * cursor;
+  if (regcomp(&regexCompiled, regexString, REG_EXTENDED))
+  {
+    lat_error("Linea %d, %d: %s", source->num_linea, source->num_columna,
+                  "error en el match regex.");
+  };
+
+  m = 0;
+  cursor = source;
+  for (m = 0; m < maxMatches; m ++)
+    {
+      if (regexec(&regexCompiled, cursor, maxGroups, groupArray, 0))
+        break;  // No more matches
+
+      unsigned int g = 0;
+      unsigned int offset = 0;
+      for (g = 0; g < maxGroups; g++)
+        {
+          if (groupArray[g].rm_so == (size_t)-1)
+            break;  // No more groups
+
+          if (g == 0)
+            offset = groupArray[g].rm_eo;
+
+          char cursorCopy[strlen(cursor) + 1];
+          strcpy(cursorCopy, cursor);
+          cursorCopy[groupArray[g].rm_eo] = 0;
+          printf("Match %u, Group %u: [%2u-%2u]: %s\n",
+                 m, g, groupArray[g].rm_so, groupArray[g].rm_eo,
+                 cursorCopy + groupArray[g].rm_so);
+        }
+      cursor += offset;
+    }
+
+regfree(&regexCompiled);
+
+
+
+}
+
 static const lat_CReg lib_cadena[] = {
     {"esta_vacia", lat_cadena_esta_vacia, 1},
     {"longitud", lat_cadena_longitud, 1},
@@ -678,6 +726,7 @@ static const lat_CReg lib_cadena[] = {
     {"separar", lat_cadena_separar, 2},
     {"inicia_con", lat_cadena_inicia_con, 2},
     {"regex", lat_cadena_regex, 2},
+    {"match", lat_cadena_match, 2},
     {"insertar", lat_cadena_insertar, 3},
     {"rellenar_izquierda", lat_cadena_rellenar_izquierda, 3},
     {"rellenar_derecha", lat_cadena_rellenar_derecha, 3},
