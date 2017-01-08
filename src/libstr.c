@@ -660,8 +660,7 @@ void lat_cadena_regex(lat_mv *mv) {
 void lat_cadena_match(lat_mv *mv) {
   lat_objeto *regexString = __cadena(lat_desapilar(mv));
   lat_objeto *source = __cadena(lat_desapilar(mv));
-  size_t maxMatches = 2;
-  size_t maxGroups = 3;
+  char maxMatches = 50, maxGroups = 50;
   regex_t regexCompiled;
   regmatch_t groupArray[maxGroups];
   unsigned int m;
