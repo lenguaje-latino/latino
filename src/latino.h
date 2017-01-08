@@ -96,10 +96,10 @@ extern char *filename;
 #define lat_error(M, ...)                                                      \
   {                                                                            \
     if (filename) {                                                            \
-      fprintf(stderr, " Error: " M " en archivo '%s'.\n", ##__VA_ARGS__,       \
+      fprintf(stderr, "\033[1;31merror\033[0m " M " en archivo \033[1;36m%s\033[0m.\n", ##__VA_ARGS__,       \
               filename);                                                       \
     } else {                                                                   \
-      fprintf(stderr, " Error: " M "\n", ##__VA_ARGS__);                       \
+      fprintf(stderr, "\033[1;31merror\033[0m " M "\n", ##__VA_ARGS__);                       \
     }                                                                          \
     exit(1);                                                                   \
   }

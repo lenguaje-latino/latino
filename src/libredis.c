@@ -56,7 +56,7 @@ void lat_redis_conectar(lat_mv *mv) {
   lat_apilar(mv, cref);
 }
 
-void lat_redis_liberar(lat_mv *mv) {
+void lat_redis_desconectar(lat_mv *mv) {
   lat_objeto *o = lat_desapilar(mv);
   redisContext *conexion = __cdato(o);
   redisFree(conexion);
@@ -67,47 +67,49 @@ void lat_redis_ping(lat_mv *mv) {
   redisContext *conexion = __cdato(o);
   redisReply *respuesta;
   respuesta = redisCommand(conexion, "PING");
-  if (!respuesta->str) {
-    lat_error("Error: error al obtener respuesta de redis");
+  if (respuesta->str) {
+    lat_objeto *tmp = lat_cadena_nueva(mv, strdup(respuesta->str));
+    lat_apilar(mv, tmp);
+  } else {
+    lat_apilar(mv, mv->objeto_falso);
   }
-  lat_objeto *tmp = lat_cadena_nueva(mv, strdup(respuesta->str));
-  lat_apilar(mv, tmp);
   freeReplyObject(respuesta);
 }
 
 void lat_redis_asignar(lat_mv *mv) {
   lat_objeto *cadena = lat_desapilar(mv);
-  lat_objeto *llave = lat_desapilar(mv);
+  lat_objeto *hash = lat_desapilar(mv);
   lat_objeto *o = lat_desapilar(mv);
   redisContext *conexion = __cdato(o);
   redisReply *respuesta;
   respuesta =
-      redisCommand(conexion, "SET %s %s", __cadena(llave), __cadena(cadena));
-  if (!respuesta->str) {
-    lat_error("Linea %d, %d: %s", llave->num_linea, llave->num_columna,
-                    "error asignar llave.");
+      redisCommand(conexion, "SET %s %s", __cadena(hash), __cadena(cadena));
+  if (respuesta->str) {
+    lat_apilar(mv, mv->objeto_verdadero);
+  } else {
+    lat_apilar(mv, mv->objeto_falso);
   }
   freeReplyObject(respuesta);
 }
 
 void lat_redis_hasignar(lat_mv *mv) {
   lat_objeto *cadena = lat_desapilar(mv);
-  lat_objeto *llave2 = lat_desapilar(mv);
   lat_objeto *llave = lat_desapilar(mv);
+  lat_objeto *hash = lat_desapilar(mv);
   lat_objeto *o = lat_desapilar(mv);
   redisContext *conexion = __cdato(o);
   redisReply *respuesta;
-  respuesta = redisCommand(conexion, "HSET %s %s %s", __cadena(llave),
-                           __cadena(llave2), __cadena(cadena));
+  respuesta = redisCommand(conexion, "HSET %s %s %s", __cadena(hash),
+                           __cadena(llave), __cadena(cadena));
   freeReplyObject(respuesta);
 }
 
 void lat_redis_obtener(lat_mv *mv) {
-  lat_objeto *llave = lat_desapilar(mv);
+  lat_objeto *hash = lat_desapilar(mv);
   lat_objeto *o = lat_desapilar(mv);
   redisContext *conexion = __cdato(o);
   redisReply *respuesta;
-  respuesta = redisCommand(conexion, "GET %s", __cadena(llave));
+  respuesta = redisCommand(conexion, "GET %s", __cadena(hash));
   lat_objeto *tmp;
   if (respuesta->str) {
       tmp = lat_cadena_nueva(mv, strdup(respuesta->str));
@@ -119,13 +121,13 @@ void lat_redis_obtener(lat_mv *mv) {
 }
 
 void lat_redis_hobtener(lat_mv *mv) {
-  lat_objeto *llave2 = lat_desapilar(mv);
   lat_objeto *llave = lat_desapilar(mv);
+  lat_objeto *hash = lat_desapilar(mv);
   lat_objeto *o = lat_desapilar(mv);
   redisContext *conexion = __cdato(o);
   redisReply *respuesta;
   respuesta =
-  redisCommand(conexion, "HGET %s %s", __cadena(llave), __cadena(llave2));
+  redisCommand(conexion, "HGET %s %s", __cadena(hash), __cadena(llave));
   lat_objeto *tmp;
   if (respuesta->str) {
       tmp = lat_cadena_nueva(mv, strdup(respuesta->str));
@@ -137,44 +139,43 @@ void lat_redis_hobtener(lat_mv *mv) {
 }
 
 void lat_redis_borrar(lat_mv *mv) {
-  lat_objeto *llave = lat_desapilar(mv);
+  lat_objeto *hash = lat_desapilar(mv);
   lat_objeto *o = lat_desapilar(mv);
   redisContext *conexion = __cdato(o);
-  redisCommand(conexion, "DEL %s", __cadena(llave));
+  redisCommand(conexion, "DEL %s", __cadena(hash));
 }
 
 void lat_redis_hborrar(lat_mv *mv) {
-  lat_objeto *llave2 = lat_desapilar(mv);
   lat_objeto *llave = lat_desapilar(mv);
+  lat_objeto *hash = lat_desapilar(mv);
   lat_objeto *o = lat_desapilar(mv);
   redisContext *conexion = __cdato(o);
-  redisCommand(conexion, "HDEL %s %s", __cadena(llave), __cadena(llave2));
+  redisCommand(conexion, "HDEL %s %s", __cadena(hash), __cadena(llave));
 }
 
 void lat_redis_aumentar(lat_mv *mv) {
-  lat_objeto *llave = lat_desapilar(mv);
+  lat_objeto *hash = lat_desapilar(mv);
   lat_objeto *o = lat_desapilar(mv);
   redisContext *conexion = __cdato(o);
   redisReply *respuesta;
-  respuesta = redisCommand(conexion, "INCR %s", __cadena(llave));
+  respuesta = redisCommand(conexion, "INCR %s", __cadena(hash));
   if (!respuesta->integer) {
-    lat_error("Linea %d, %d: %s", llave->num_linea, llave->num_columna,
+    lat_error("Linea %d, %d: %s", hash->num_linea, hash->num_columna,
                     "error al incrementar el entero.");
   }
   lat_objeto *tmp = lat_numerico_nuevo(mv, (double)respuesta->integer);
   lat_apilar(mv, tmp);
-  //lat_gc_agregar(mv, tmp);
   freeReplyObject(respuesta);
 }
 
 void lat_redis_haumentar(lat_mv *mv) {
-  lat_objeto *llave2 = lat_desapilar(mv);
   lat_objeto *llave = lat_desapilar(mv);
+  lat_objeto *hash = lat_desapilar(mv);
   lat_objeto *o = lat_desapilar(mv);
   redisContext *conexion = __cdato(o);
   redisReply *respuesta;
-  respuesta = redisCommand(conexion, "HINCRBY %s %s 1", __cadena(llave),
-                           __cadena(llave2));
+  respuesta = redisCommand(conexion, "HINCRBY %s %s 1", __cadena(hash),
+                           __cadena(llave));
   if (!respuesta->integer) {
     lat_error("Linea %d, %d: %s", llave->num_linea, llave->num_columna,
                     "error al incrementar el entero.");
@@ -186,14 +187,14 @@ void lat_redis_haumentar(lat_mv *mv) {
 
 void lat_redis_incrementar(lat_mv *mv) {
   lat_objeto *numero = lat_desapilar(mv);
-  lat_objeto *llave = lat_desapilar(mv);
+  lat_objeto *hash = lat_desapilar(mv);
   lat_objeto *o = lat_desapilar(mv);
   redisContext *conexion = __cdato(o);
   redisReply *respuesta;
   long int numerico = __numerico(numero);
-  respuesta = redisCommand(conexion, "INCRBY %s %i", __cadena(llave), numerico);
+  respuesta = redisCommand(conexion, "INCRBY %s %i", __cadena(hash), numerico);
   if (!respuesta->integer) {
-    lat_error("Linea %d, %d: %s", llave->num_linea, llave->num_columna,
+    lat_error("Linea %d, %d: %s", hash->num_linea, hash->num_columna,
                     "error al incrementar el entero.");
   }
   lat_objeto *tmp = lat_numerico_nuevo(mv, respuesta->integer);
@@ -203,16 +204,16 @@ void lat_redis_incrementar(lat_mv *mv) {
 
 void lat_redis_hincrementar(lat_mv *mv) {
   lat_objeto *numero = lat_desapilar(mv);
-  lat_objeto *llave2 = lat_desapilar(mv);
   lat_objeto *llave = lat_desapilar(mv);
+  lat_objeto *hash = lat_desapilar(mv);
   lat_objeto *o = lat_desapilar(mv);
   redisContext *conexion = __cdato(o);
   redisReply *respuesta;
   long int numerico = __numerico(numero);
-  respuesta = redisCommand(conexion, "HINCRBY %s %s %i", __cadena(llave),
-                           __cadena(llave2), numerico);
+  respuesta = redisCommand(conexion, "HINCRBY %s %s %i", __cadena(hash),
+                           __cadena(llave), numerico);
   if (!respuesta->integer) {
-    lat_error("Linea %d, %d: %s", llave->num_linea, llave->num_columna,
+    lat_error("Linea %d, %d: %s", hash->num_linea, hash->num_columna,
                     "error al incrementar el entero.");
   };
   lat_objeto *tmp = lat_numerico_nuevo(mv, respuesta->integer);
@@ -220,9 +221,74 @@ void lat_redis_hincrementar(lat_mv *mv) {
   freeReplyObject(respuesta);
 }
 
+void lat_redis_hllaves(lat_mv *mv) {
+  lat_objeto *hash = lat_desapilar(mv);
+  lat_objeto *o = lat_desapilar(mv);
+  redisContext *conexion = __cdato(o);
+  lat_objeto *elementos = lat_lista_nueva(mv, __lista_crear());
+  redisReply *respuesta;
+  respuesta = redisCommand(conexion, "HKEYS %s", __cadena(hash));
+  if (respuesta->elements) {
+  		for (int i=0; i < respuesta->elements; i++) {
+        __lista_agregar(__lista(elementos), lat_cadena_nueva(mv, strdup(respuesta->element[i]->str)));
+  		};
+      lat_apilar(mv, elementos);
+  } else {
+      lat_apilar(mv, mv->objeto_nulo);
+  };
+  freeReplyObject(respuesta);
+}
+
+void lat_redis_llaves(lat_mv *mv) {
+  lat_objeto *hash = lat_desapilar(mv);
+  lat_objeto *o = lat_desapilar(mv);
+  redisContext *conexion = __cdato(o);
+  lat_objeto *elementos = lat_lista_nueva(mv, __lista_crear());
+  redisReply *respuesta;
+  respuesta = redisCommand(conexion, "KEYS %s", __cadena(hash));
+  if (respuesta->elements) {
+  		for (int i=0; i < respuesta->elements; i++) {
+        __lista_agregar(__lista(elementos), lat_cadena_nueva(mv, strdup(respuesta->element[i]->str)));
+  		};
+      lat_apilar(mv, elementos);
+  } else {
+      lat_apilar(mv, mv->objeto_nulo);
+  };
+  freeReplyObject(respuesta);
+}
+
+void lat_redis_smiembros(lat_mv *mv) {
+  lat_objeto *hash = lat_desapilar(mv);
+  lat_objeto *o = lat_desapilar(mv);
+  redisContext *conexion = __cdato(o);
+  lat_objeto *elementos = lat_lista_nueva(mv, __lista_crear());
+  redisReply *respuesta;
+  respuesta = redisCommand(conexion, "SMEMBERS %s", __cadena(hash));
+  if (respuesta->elements) {
+  		for (int i=0; i < respuesta->elements ; i++) {
+        __lista_agregar(__lista(elementos), lat_cadena_nueva(mv, strdup(respuesta->element[i]->str)));
+  		};
+      lat_apilar(mv, elementos);
+  } else {
+      lat_apilar(mv, mv->objeto_nulo);
+  };
+  freeReplyObject(respuesta);
+}
+
+void lat_redis_sagregar(lat_mv *mv) {
+  lat_objeto *llave = lat_desapilar(mv);
+  lat_objeto *hash = lat_desapilar(mv);
+  lat_objeto *o = lat_desapilar(mv);
+  redisContext *conexion = __cdato(o);
+  redisReply *respuesta;
+  respuesta =
+      redisCommand(conexion, "SADD %s %s", __cadena(hash), __cadena(llave));
+  freeReplyObject(respuesta);
+}
+
 static const lat_CReg lib_redis[] = {
     {"conectar", lat_redis_conectar, 2},
-    {"liberar", lat_redis_liberar, 1},
+    {"desconectar", lat_redis_desconectar, 1},
     {"ping", lat_redis_ping, 1},
     {"asignar", lat_redis_asignar, 3},
     {"hasignar", lat_redis_hasignar, 4},
@@ -234,6 +300,10 @@ static const lat_CReg lib_redis[] = {
     {"haumentar", lat_redis_haumentar, 3},
     {"incrementar", lat_redis_incrementar, 3},
     {"hincrementar", lat_redis_hincrementar, 4},
+    {"hllaves", lat_redis_hllaves, 2},
+    {"llaves", lat_redis_llaves, 2},
+    {"smiembros", lat_redis_smiembros, 2},
+    {"sagregar", lat_redis_sagregar, 3},
     {NULL, NULL}};
 
 #endif
