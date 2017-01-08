@@ -217,8 +217,35 @@ va_end(ap);
 imprimirf("hola latino, %s", sksk)
 */
 
+// convertir
+
+void lat_alogico(lat_mv *mv) {
+  lat_objeto *o = lat_desapilar(mv);
+  lat_objeto *tmp =
+      lat_obj2bool(o) == true ? mv->objeto_verdadero : mv->objeto_falso;
+  lat_apilar(mv, tmp);
+}
+
+void lat_anumero(lat_mv *mv) {
+  lat_objeto *o = lat_desapilar(mv);
+  lat_objeto *tmp = lat_numerico_nuevo(mv, lat_obj2double(o));
+  lat_apilar(mv, tmp);
+  lat_gc_agregar(mv, tmp);
+}
+
+void lat_acadena(lat_mv *mv) {
+  lat_objeto *o = lat_desapilar(mv);
+  char *buf = lat_obj2cstring(o);
+  lat_objeto *tmp = lat_cadena_nueva(mv, buf);
+  lat_apilar(mv, tmp);
+  lat_gc_agregar(mv, tmp);
+}
+
 static const lat_CReg lib_base[] = {{"escribir", lat_imprimir, 2},
                                     {"imprimir", lat_imprimir, 2},
+                                    {"acadena", lat_acadena, 1},
+                                    {"anumero", lat_anumero, 1},
+                                    {"alogico", lat_alogico, 1},
                                     {"incluir", lat_incluir, 1},
                                     {"leer", lat_leer, 0},
                                     {"limpiar", lat_limpiar, 0},
