@@ -60,7 +60,6 @@ void lat_redis_liberar(lat_mv *mv) {
   lat_objeto *o = lat_desapilar(mv);
   redisContext *conexion = __cdato(o);
   redisFree(conexion);
-  //lat_gc_agregar(mv, o);
 }
 
 void lat_redis_ping(lat_mv *mv) {
@@ -73,7 +72,6 @@ void lat_redis_ping(lat_mv *mv) {
   }
   lat_objeto *tmp = lat_cadena_nueva(mv, strdup(respuesta->str));
   lat_apilar(mv, tmp);
-  //lat_gc_agregar(mv, tmp);
   freeReplyObject(respuesta);
 }
 
@@ -110,13 +108,13 @@ void lat_redis_obtener(lat_mv *mv) {
   redisContext *conexion = __cdato(o);
   redisReply *respuesta;
   respuesta = redisCommand(conexion, "GET %s", __cadena(llave));
-  if (!respuesta->str) {
-    lat_error("Linea %d, %d: %s", llave->num_linea, llave->num_columna,
-                    "error en obtener llave.");
+  lat_objeto *tmp;
+  if (respuesta->str) {
+      tmp = lat_cadena_nueva(mv, strdup(respuesta->str));
+  } else {
+      tmp = mv->objeto_nulo;
   }
-  lat_objeto * tmp = lat_cadena_nueva(mv, strdup(respuesta->str));
   lat_apilar(mv, tmp);
-  //lat_gc_agregar(mv, tmp);
   freeReplyObject(respuesta);
 }
 
@@ -127,14 +125,14 @@ void lat_redis_hobtener(lat_mv *mv) {
   redisContext *conexion = __cdato(o);
   redisReply *respuesta;
   respuesta =
-      redisCommand(conexion, "HGET %s %s", __cadena(llave), __cadena(llave2));
-  if (!respuesta->str) {
-    lat_error("Linea %d, %d: %s", llave->num_linea, llave->num_columna,
-                    "error en obtener llave.");
+  redisCommand(conexion, "HGET %s %s", __cadena(llave), __cadena(llave2));
+  lat_objeto *tmp;
+  if (respuesta->str) {
+      tmp = lat_cadena_nueva(mv, strdup(respuesta->str));
+  } else {
+      tmp = mv->objeto_nulo;
   }
-  lat_objeto *tmp = lat_cadena_nueva(mv, strdup(respuesta->str));
   lat_apilar(mv, tmp);
-  //lat_gc_agregar(mv, tmp);
   freeReplyObject(respuesta);
 }
 
@@ -183,7 +181,6 @@ void lat_redis_haumentar(lat_mv *mv) {
   }
   lat_objeto *tmp = lat_numerico_nuevo(mv, (double)respuesta->integer);
   lat_apilar(mv, tmp);
-  //lat_gc_agregar(mv, tmp);
   freeReplyObject(respuesta);
 }
 
@@ -201,7 +198,6 @@ void lat_redis_incrementar(lat_mv *mv) {
   }
   lat_objeto *tmp = lat_numerico_nuevo(mv, respuesta->integer);
   lat_apilar(mv, tmp);
-  //lat_gc_agregar(mv, tmp);
   freeReplyObject(respuesta);
 }
 
@@ -221,7 +217,6 @@ void lat_redis_hincrementar(lat_mv *mv) {
   };
   lat_objeto *tmp = lat_numerico_nuevo(mv, respuesta->integer);
   lat_apilar(mv, tmp);
-  //lat_gc_agregar(mv, tmp);
   freeReplyObject(respuesta);
 }
 
