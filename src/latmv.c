@@ -688,7 +688,8 @@ void lat_llamar_funcion(lat_mv *mv, lat_objeto *func) {
       case BUILD_LIST: {
         int num_elem = cur.a;
         int i;
-        lat_objeto *obj = (lat_objeto *)cur.meta;
+        //lat_objeto *obj = (lat_objeto *)cur.meta;
+        lat_objeto *obj = lat_lista_nueva(mv, __lista_crear());
         for (i = 0; i < num_elem; i++) {
           lat_objeto *tmp = lat_desapilar(mv);
           __lista_agregar(__lista(obj), tmp);
