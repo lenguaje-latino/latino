@@ -122,10 +122,10 @@ void lat_incluir(lat_mv *mv) {
   lat_objeto *mod =
       lat_cadena_nueva(mv, strdup(strcat(dir_actual, archivo_ext)));
   if (__es_legible(__cadena(mod))) {
-    if (!__lista_contiene_valor(modulos, mod)) {
+    //if (!__lista_contiene_valor(modulos, mod)) {
       // printf("buscar con terminacion .lat, buscar en ruta actual: %s\n",
       // __cadena(mod));
-      __lista_agregar(modulos, mod);
+      //__lista_agregar(modulos, mod);
       ast *nodo = lat_analizar_archivo(__cadena(mod), &status);
       if (status == 0 && nodo != NULL) {
         lat_objeto *funmod = ast_analizar_arbol(mv, nodo);        
@@ -134,9 +134,9 @@ void lat_incluir(lat_mv *mv) {
         lat_gc_agregar(mv, funmod);        
         return;
       }
-    }else{
+    /*}else{
       return;
-    }
+    }*/
   }
   lat_gc_agregar(mv, mod);
   // buscar en $LATINO_LIB  
@@ -147,7 +147,7 @@ void lat_incluir(lat_mv *mv) {
     lat_objeto *mod_lib = lat_cadena_nueva(mv, strdup(latino_lib));
     // printf("buscar con terminacion .lat, buscar en $LATINO_LIB: %s\n",
     // __cadena(mod));
-    if (__es_legible(__cadena(mod_lib))) {
+    //if (__es_legible(__cadena(mod_lib))) {
       if (!__lista_contiene_valor(modulos, mod_lib)) {
         __lista_agregar(modulos, mod_lib);
         ast *nodo = lat_analizar_archivo(__cadena(mod_lib), &status);
@@ -158,9 +158,9 @@ void lat_incluir(lat_mv *mv) {
           lat_gc_agregar(mv, funmod_lib);
           return;
         }
-      }else{
+      /*}else{
         return;
-      }
+      }*/
     }
     lat_gc_agregar(mv, mod_lib);
   }
