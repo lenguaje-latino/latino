@@ -50,7 +50,7 @@ char *filename = NULL;
 int yyparse(ast **root, yyscan_t scanner);
 
 bool __str_inicia_con(const char *base, const char *str);
-char *__str_reemplazar(char *str, const char *orig, const char *rep);
+void __str_reemplazar(char *str, const char *orig, const char *rep);
 
 ast *lat_analizar_expresion(char *expr, int *status) {
   ast *ret = NULL;
@@ -282,7 +282,8 @@ static void lat_repl(lat_mv *mv) {
       }
     }
     // se guarda el comando al historial aunque haya error
-    linenoiseHistoryAdd(__str_reemplazar(buf, "\n", ""));
+    __str_reemplazar(buf, "\n", "");
+    linenoiseHistoryAdd(buf);
     linenoiseHistorySave(".history");
   }
   __memoria_liberar(mv, buf);
@@ -335,8 +336,7 @@ int main(int argc, char *argv[]) {
     mv->argc = argc - 2;
     int i;
     for (i = 2; i < argc; i++) {
-      __lista_agregar(__lista(mv->argv),
-                      lat_cadena_nueva(mv, strdup(argv[i])));
+      __lista_agregar(__lista(mv->argv), lat_cadena_nueva(mv, strdup(argv[i])));
     }
     int status;
     ast *nodo = lat_analizar_archivo(infile, &status);

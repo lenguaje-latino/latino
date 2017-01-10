@@ -278,22 +278,17 @@ char *__str_rellenar_derecha(char *base, char *c, int n) {
   return ret;
 }
 
-char *__str_reemplazar(char *str, const char *orig, const char *rep) {
-  char *buffer = __memoria_asignar(NULL, MAX_STR_LENGTH);
-  char *p;
-  int i = 0;
-  while (str[i]) {
-    if (!(p = strstr(str + i, orig))) {
-      strcpy(buffer, str);
-      return buffer;
-    }
-    strncpy(buffer + strlen(buffer), str + i, (p - str) - i);
-    buffer[p - str] = '\0';
-    strcat(buffer, rep);
-    // printf("STR:%s\n",buffer);
-    i = (p - str) + strlen(orig);
-  }
-  return buffer;
+void __str_reemplazar(char * o_string, char * s_string, char * r_string) {
+  char buffer[MAX_STR_LENGTH];
+  char * ch; 
+  if(!(ch = strstr(o_string, s_string)))
+    return;
+  strncpy(buffer, o_string, ch-o_string);
+  buffer[ch-o_string] = 0; 
+  sprintf(buffer+(ch - o_string), "%s%s", r_string, ch + strlen(s_string)); 
+  o_string[0] = 0;
+  strcpy(o_string, buffer);
+  return __str_reemplazar(o_string, s_string, r_string);
 }
 
 char *__str_subcadena(const char *str, int beg, int n) {
@@ -466,7 +461,8 @@ void lat_cadena_rellenar_derecha(lat_mv *mv) {
 void lat_cadena_eliminar(lat_mv *mv) {
   lat_objeto *b = lat_desapilar(mv);
   lat_objeto *a = lat_desapilar(mv);
-  char *buf = __str_reemplazar(__cadena(a), __cadena(b), "");
+  char *buf = strdup(__cadena(a));
+  __str_reemplazar(buf, __cadena(b), "");
   lat_objeto *tmp = lat_cadena_nueva(mv, buf);
   lat_apilar(mv, tmp);
   lat_gc_agregar(mv, tmp);
@@ -501,7 +497,8 @@ void lat_cadena_reemplazar(lat_mv *mv) {
   lat_objeto *a = lat_desapilar(mv);
   char *bf = __str_analizar_fmt(__cadena(b), strlen(__cadena(b)));
   char *cf = __str_analizar_fmt(__cadena(c), strlen(__cadena(c)));
-  char *tmp = __str_reemplazar(__cadena(a), bf, cf);
+  char *tmp =  strdup(__cadena(a));
+  __str_reemplazar(tmp, bf, cf);
   lat_objeto *r = lat_cadena_nueva(mv, tmp);
   lat_apilar(mv, r);
   lat_gc_agregar(mv, r);

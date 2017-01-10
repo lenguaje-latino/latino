@@ -28,15 +28,6 @@ escribir(lst)
 
 */
 
-mientras verdadero
-ayuda = {"inline_keyboard":[
-    [
-    {"text":"Programación Latino","url":"https://github.com/primitivorm/latino"},
-    {"text":"Repositorio del Bot","url":"https://github.com/jarriztg/telegram-bot-latino"}
-    ]
-    ]}
-    imprimir(lista->longitud(ayuda->inline_keyboard[0]))
-    imprimir(ayuda->inline_keyboard[0])
-    imprimir("----------------------------------------")
-    sistema->dormir(1)
-fin
+hola = "$id$usuario$titulo"
+b = cadena->reemplazar(hola, "$id", "123")
+imprimir(b)
