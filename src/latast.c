@@ -533,8 +533,8 @@ static int nodo_analizar(lat_mv *mv, ast *node, lat_bytecode *bcode, int i) {
       num_params = __contar_num_parargs(node->izq, NODO_LISTA_AGREGAR_ELEMENTO);
     }
     // FIX: Memory leak
-    lat_objeto *o = lat_lista_nueva(mv, __lista_crear());
-    dbc(BUILD_LIST, num_params, 0, o);
+    //lat_objeto *o = lat_lista_nueva(mv, __lista_crear());
+    dbc(BUILD_LIST, num_params, 0, NULL);
   } break;
   case NODO_LISTA_AGREGAR_ELEMENTO: {
     if (node->izq) {

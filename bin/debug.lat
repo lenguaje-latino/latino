@@ -18,10 +18,25 @@ si a <= 2
 sino
     escribir("No es primo")
 fin
-*/
+
 
 source = "___ abc123def ___ ghi456 ___"
 regexString = "[a-z]*([0-9]+)([a-z]*)"
 
 lst = cadena->match(source, regexString)
 escribir(lst)
+
+*/
+
+mientras verdadero
+ayuda = {"inline_keyboard":[
+    [
+    {"text":"Programación Latino","url":"https://github.com/primitivorm/latino"},
+    {"text":"Repositorio del Bot","url":"https://github.com/jarriztg/telegram-bot-latino"}
+    ]
+    ]}
+    imprimir(lista->longitud(ayuda->inline_keyboard[0]))
+    imprimir(ayuda->inline_keyboard[0])
+    imprimir("----------------------------------------")
+    sistema->dormir(1)
+fin
