@@ -286,6 +286,17 @@ void lat_redis_sagregar(lat_mv *mv) {
   freeReplyObject(respuesta);
 }
 
+void lat_redis_sborrar(lat_mv *mv) {
+  lat_objeto *llave = lat_desapilar(mv);
+  lat_objeto *hash = lat_desapilar(mv);
+  lat_objeto *o = lat_desapilar(mv);
+  redisContext *conexion = __cdato(o);
+  redisReply *respuesta;
+  respuesta =
+      redisCommand(conexion, "SREM %s %s", __cadena(hash), __cadena(llave));
+  freeReplyObject(respuesta);
+}
+
 static const lat_CReg lib_redis[] = {
     {"conectar", lat_redis_conectar, 2},
     {"desconectar", lat_redis_desconectar, 1},
@@ -304,6 +315,7 @@ static const lat_CReg lib_redis[] = {
     {"llaves", lat_redis_llaves, 2},
     {"smiembros", lat_redis_smiembros, 2},
     {"sagregar", lat_redis_sagregar, 3},
+    {"sborrar", lat_redis_sborrar, 3},
     {NULL, NULL}};
 
 #endif
