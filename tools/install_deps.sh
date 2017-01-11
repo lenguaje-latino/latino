@@ -2,9 +2,6 @@
 
 action=install # Se selecciona la acción a hacer con los paquetes a seguir.
 sudo=true # Aquí obligas al usuario a ser sudo.
-update_packages=true # Aquí indica que al finalizar la instalación se actualizen los repositorios.
-upgrade_packages=true # Aquí indica que al finalizar la instalación se actualizen los paquetes.
-autoremove_packages=true # Aquí indica que al finalizar la instalación se autoremuevan los paquetes innecesarios.
 
 echo "Instalando dependecias para Latino..."
 
