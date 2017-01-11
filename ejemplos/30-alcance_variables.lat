@@ -10,7 +10,7 @@ sino
 	i = 3
 	imprimir("i dentro del sino: " . i)	//3
 fin
-imprimir("i global: " . i)	//0
+imprimir("i global: " . i)	//5
 
 funcion algo (a)
   #contexto local
