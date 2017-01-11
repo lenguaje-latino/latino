@@ -416,20 +416,24 @@ static int nodo_analizar(lat_mv *mv, ast *node, lat_bytecode *bcode, int i) {
     dbc(CONCAT, 0, 0, NULL);
   } break;
   case NODO_SI: {
-    nodo_si *nIf = ((nodo_si *)node);
+    nodo_si *nIf = ((nodo_si *)node);    
     pn(mv, nIf->condicion);
+    dbc(SETUP_LOOP, 0, 0, NULL);    
     temp[0] = i;
     dbc(NOP, 0, 0, NULL);
     pn(mv, nIf->entonces);
-    temp[1] = i;
+    temp[1] = i;    
     dbc(NOP, 0, 0, NULL);
     temp[2] = i;
     if (nIf->_sino) {
+      dbc(SETUP_LOOP, 0, 0, NULL);
       pn(mv, nIf->_sino);
+      dbc(POP_BLOCK, 0, 0, NULL);
     }
     temp[3] = i;
-    bcode[temp[0]] = lat_bc(POP_JUMP_IF_FALSE, (temp[2] - 1), 0, NULL);
-    bcode[temp[1]] = lat_bc(JUMP_ABSOLUTE, (temp[3] - 1), 0, NULL);
+    dbc(POP_BLOCK, 0, 0, NULL);
+    bcode[temp[0]] = lat_bc(POP_JUMP_IF_FALSE, (temp[2] - 1), 0, NULL);    
+    bcode[temp[1]] = lat_bc(JUMP_ABSOLUTE, (temp[3] - 1), 0, NULL);    
   } break;
   case NODO_ELEGIR: {
     // FIXME: Memory leak
@@ -438,25 +442,27 @@ static int nodo_analizar(lat_mv *mv, ast *node, lat_bytecode *bcode, int i) {
     pn(mv, nSi);
   } break;
   case NODO_MIENTRAS: {
-    dbc(SETUP_LOOP, 0, 0, NULL);
+    dbc(SETUP_LOOP, 0, 0, NULL);    
     temp[0] = i;
     pn(mv, node->izq);
     temp[1] = i;
     dbc(NOP, 0, 0, NULL);
     pn(mv, node->der);
     dbc(JUMP_ABSOLUTE, (temp[0] - 1), 0, NULL);
-    dbc(POP_BLOCK, 0, 0, NULL);
+    //dbc(POP_BLOCK, 0, 0, NULL);
     bcode[temp[1]] = lat_bc(POP_JUMP_IF_FALSE, (i - 1), 0, NULL);
+    dbc(POP_BLOCK, 0, 0, NULL);
   } break;
   case NODO_REPETIR: {
     dbc(SETUP_LOOP, 0, 0, NULL);
-    temp[0] = i;
+    temp[0] = i;    
     pn(mv, node->der);
     pn(mv, node->izq);
     temp[1] = i;
     dbc(NOP, 0, 0, NULL);
-    dbc(POP_BLOCK, 0, 0, NULL);
+    //dbc(POP_BLOCK, 0, 0, NULL);
     bcode[temp[1]] = lat_bc(POP_JUMP_IF_FALSE, (temp[0] - 1), 0, NULL);
+    dbc(POP_BLOCK, 0, 0, NULL);
   } break;
   case NODO_FUNCION_LLAMADA: {
     // argumentos

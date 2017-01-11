@@ -420,7 +420,7 @@ lat_objeto *lat_tope(lat_mv *mv) {
 }
 
 static void __mv_apilar_contexto(lat_mv *mv) {
-  // printf("apilando contexto...\n");
+  //printf("apilando contexto...\n");
   if (mv->apuntador_ctx >= MAX_STACK_SIZE) {
     lat_error("Namespace desborde de la pila");
   }
@@ -430,7 +430,7 @@ static void __mv_apilar_contexto(lat_mv *mv) {
 }
 
 static void __mv_desapilar_contexto(lat_mv *mv) {
-  // printf("...desapilando contexto\n");
+  //printf("...desapilando contexto\n");
   if (mv->apuntador_ctx == 0) {
     lat_error("Namespace pila vacia");
   }
@@ -680,10 +680,10 @@ void lat_llamar_funcion(lat_mv *mv, lat_objeto *func) {
         lat_apilar(mv, fun);
       } break;
       case SETUP_LOOP:
-        // lat_apilar_contexto(mv);
+        __mv_apilar_contexto(mv);
         break;
       case POP_BLOCK:
-        // lat_desapilar_contexto(mv);
+        __mv_desapilar_contexto(mv);
         break;
       case BUILD_LIST: {
         int num_elem = cur.a;
