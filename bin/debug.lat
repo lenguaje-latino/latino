@@ -3,31 +3,3 @@ Para debuguear en visual studio:
 Menu propiedades del proyecto-> Debugging -> Command Arguments. Agregar
 $(SolutionDir)..\ejemplos\debug.lat
 */
-
-/*escribir("Ingrese un numero:")
-n = leer()
-
-desde(i=1; i< n +1;i++)
-    si n % i == 0
-        a++
-    fin
-fin
-
-si a <= 2
-    escribir("Es primo")
-sino
-    escribir("No es primo")
-fin
-
-
-source = "___ abc123def ___ ghi456 ___"
-regexString = "[a-z]*([0-9]+)([a-z]*)"
-
-lst = cadena->match(source, regexString)
-escribir(lst)
-
-*/
-
-hola = "$id$usuario$titulo"
-b = cadena->reemplazar(hola, "$id", "123")
-imprimir(b)
