@@ -418,7 +418,7 @@ static int nodo_analizar(lat_mv *mv, ast *node, lat_bytecode *bcode, int i) {
   case NODO_SI: {
     nodo_si *nIf = ((nodo_si *)node);    
     pn(mv, nIf->condicion);
-    dbc(SETUP_LOOP, 0, 0, NULL);    
+    //dbc(SETUP_LOOP, 0, 0, NULL);    
     temp[0] = i;
     dbc(NOP, 0, 0, NULL);
     pn(mv, nIf->entonces);
@@ -426,12 +426,12 @@ static int nodo_analizar(lat_mv *mv, ast *node, lat_bytecode *bcode, int i) {
     dbc(NOP, 0, 0, NULL);
     temp[2] = i;
     if (nIf->_sino) {
-      dbc(SETUP_LOOP, 0, 0, NULL);
+      //dbc(SETUP_LOOP, 0, 0, NULL);
       pn(mv, nIf->_sino);
-      dbc(POP_BLOCK, 0, 0, NULL);
+      //dbc(POP_BLOCK, 0, 0, NULL);
     }
     temp[3] = i;
-    dbc(POP_BLOCK, 0, 0, NULL);
+    //dbc(POP_BLOCK, 0, 0, NULL);
     bcode[temp[0]] = lat_bc(POP_JUMP_IF_FALSE, (temp[2] - 1), 0, NULL);    
     bcode[temp[1]] = lat_bc(JUMP_ABSOLUTE, (temp[3] - 1), 0, NULL);    
   } break;
