@@ -24,6 +24,8 @@ THE SOFTWARE.
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+/*#include <pwd.h> // libreria para obtener usuario
+#include <unistd.h> // lo ocupa para 'geteuid' */
 
 #include "latast.h"
 #include "latgc.h"
@@ -261,8 +263,24 @@ REP:
   }
 }
 
+/*
+void *__lat_sistema_usuario() {
+  register struct passwd *pw;
+  unsigned int uid; // al parecer no usaba variables con signo y usaba una tipo size_t (creo que es long long int) y mejor usamos esta
+  // tipo char no funcionaba arriba, seguro el número que necesita es mayor a 255, ya que no funciona ni con unsigned.
+  uid = geteuid ();
+  pw = getpwuid (uid);
+  if (pw) {
+      return pw->pw_name;
+  } else {
+      return 0;
+  };
+}
+*/
+
 static void lat_repl(lat_mv *mv) {
   char *buf = __memoria_asignar(mv, MAX_STR_LENGTH);
+  //char *usuario = __lat_sistema_usuario(); y pues ya sabes xd
   ast *tmp = NULL;
   int status;
   mv->REPL = true;
