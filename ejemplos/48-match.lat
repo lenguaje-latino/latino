@@ -1,0 +1,15 @@
+error=falso
+mientras verdadero
+  si ! error
+	  imprimir("Escribe un correo electronico")
+  sino
+	  imprimir("No has escrito un correo, vuelve a escribirlo")
+  fin
+  correo = leer()
+  es_un_correo = cadena->match(correo, "^[a-Z0-9._+-]+@[a-Z0-9.-]+\.[a-Z]{2,4}\b$")
+  si es_un_correo
+    imprimir("Correo escrito bien")
+    retorno 0
+  fin
+  error=verdadero
+fin
