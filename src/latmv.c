@@ -386,10 +386,10 @@ lat_mv *lat_mv_crear() {
   return mv;
 }
 
-void lat_destruir_mv(lat_mv *mv) {
+void lat_destruir_mv(lat_mv *mv) {  
   __obj_eliminar(mv, mv->argv);
   // printf("%s\n", ">>>liberando modulos:");
-  __obj_eliminar(mv, mv->modulos);
+  //__obj_eliminar(mv, mv->modulos);
   // printf("%s\n", ">>>liberando otros_objetos:");
   __obj_eliminar(mv, mv->otros_objetos);
   // printf("%s\n", ">>>liberando gc:");
@@ -836,7 +836,7 @@ void lat_llamar_funcion(lat_mv *mv, lat_objeto *func) {
       } // fin de switch
 
 #if DEPURAR_MV
-      __imprimir_objeto(mv, __lista(mv->pila), false);
+      __imprimir_objeto(mv, mv->pila, false);
       printf("\n");
 #endif
     } // fin for

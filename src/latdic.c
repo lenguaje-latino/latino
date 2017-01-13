@@ -33,7 +33,7 @@ THE SOFTWARE.
 
 #define LIB_DIC_NAME "diccionario"
 
-void __str_reemplazar(char *str, const char *orig, const char *rep);
+char * __str_reemplazar(char *str, const char *orig, const char *rep);
 
 hash_map *__dic_crear() {
   // printf("__dic_crear\n");
@@ -156,8 +156,7 @@ char *__dic_a_cadena(hash_map *m) {
     }
   }
   strcat(valor, "}");
-  char *tmp = strdup(valor);
-  __str_reemplazar(tmp, ", }", "}"); // elimina la ultima coma
+  char *tmp = __str_reemplazar(valor, ", }", "}"); // elimina la ultima coma
   tmp[strlen(tmp)] = '\0';
   __memoria_liberar(NULL, valor);
   return tmp;
