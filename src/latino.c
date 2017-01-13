@@ -52,7 +52,7 @@ char *filename = NULL;
 int yyparse(ast **root, yyscan_t scanner);
 
 bool __str_inicia_con(const char *base, const char *str);
-void __str_reemplazar(char *str, const char *orig, const char *rep);
+char * __str_reemplazar(char *str, const char *orig, const char *rep);
 
 ast *lat_analizar_expresion(char *expr, int *status) {
   ast *ret = NULL;
@@ -300,8 +300,8 @@ static void lat_repl(lat_mv *mv) {
       }
     }
     // se guarda el comando al historial aunque haya error
-    __str_reemplazar(buf, "\n", "");
-    linenoiseHistoryAdd(buf);
+    char *tmp = __str_reemplazar(buf, "\n", "");
+    linenoiseHistoryAdd(tmp);
     linenoiseHistorySave(".history");
   }
   __memoria_liberar(mv, buf);
