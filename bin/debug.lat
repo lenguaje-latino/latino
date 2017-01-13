@@ -4,13 +4,28 @@ Menu propiedades del proyecto-> Debugging -> Command Arguments. Agregar
 $(SolutionDir)..\ejemplos\debug.lat
 */
 
-str = "$id $titulo $nombre"
-str = cadena->reemplazar(str, "$id", "123456789")
+str = "\""
 escribir(str)
-str = cadena->reemplazar(str, "$titulo", "tests bot latino")	//error
+str = cadena->reemplazar(str, "\"", "\\\"")
 escribir(str)
-//str = cadena->reemplazar(str, "$titulo", "tests")
-str = cadena->reemplazar(str, "$nombre", "hello")
+
+//reemplazar varios valores
+str = "hola mundo"
 escribir(str)
 str = cadena->reemplazar(str, "o", "x")
+escribir(str)
+
+//reemplazar al inicio
+str = "hola mundo"
+str = cadena->reemplazar(str, "hola", "hello")
+escribir(str)
+
+//reemplazar en medio
+str = "hola mundo"
+str = cadena->reemplazar(str, " ", "...")
+escribir(str)
+
+//reemplazar al final
+str = "hola mundo"
+str = cadena->reemplazar(str, "mundo", "world")
 escribir(str)
