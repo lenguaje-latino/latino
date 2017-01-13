@@ -498,9 +498,12 @@ void lat_cadena_reemplazar(lat_mv *mv) {
   lat_objeto *a = lat_desapilar(mv);
   char *bf = __str_analizar_fmt(__cadena(b), strlen(__cadena(b)));
   char *cf = __str_analizar_fmt(__cadena(c), strlen(__cadena(c)));
+  //char *bf = strdup(__cadena(b));
+  //char *cf = strdup(__cadena(c));
   char *tmp =  __cadena(a);
   while(strstr(tmp, bf)){
-    tmp =  __str_reemplazar(tmp, bf, cf);
+     tmp = __str_reemplazar(tmp, bf, cf);
+     if(__str_termina_con(tmp, cf)) break;
   }
   lat_objeto *r = lat_cadena_nueva(mv, tmp);
   lat_apilar(mv, r);
