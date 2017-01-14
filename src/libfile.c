@@ -88,8 +88,8 @@ void lat_archivo_leer(lat_mv *mv) {
   lat_objeto *o = lat_desapilar(mv);
   FILE *archivo = fopen(__cadena(o), "r");
   if (archivo == NULL) {
-    lat_error("Linea %d, %d: %s %s\n", o->num_linea, o->num_columna,
-                    "No se pudo abrir el archivo", __cadena(o));
+      lat_apilar(mv, mv->objeto_falso);
+      return;
   }
   char * final;
   size_t n = 0;
