@@ -492,10 +492,46 @@ void lat_cadena_longitud(lat_mv *mv) {
   lat_gc_agregar(mv, tmp);
 }
 
+char *reemplazar_lat(char *orig, char *rep, char *with) {
+    char *result, *ins, *tmp;
+    int len_rep, len_with, len_front, count;
+    if (!orig && !rep)
+        return NULL;
+    len_rep = strlen(rep);
+    if (len_rep == 0)
+        return NULL;
+    if (!with)
+        with = "";
+    len_with = strlen(with);
+    ins = orig;
+    for (count = 0; tmp = strstr(ins, rep); ++count) {
+        ins = tmp + len_rep;
+    }
+    tmp = result = malloc(strlen(orig) + (len_with - len_rep) * count + 1);
+    if (!result)
+        return NULL;
+    while (count--) {
+        ins = strstr(orig, rep);
+        len_front = ins - orig;
+        tmp = strncpy(tmp, orig, len_front) + len_front;
+        tmp = strcpy(tmp, with) + len_with;
+        orig += len_front + len_rep; // move to next "end of rep"
+    }
+    strcpy(tmp, orig);
+    return result;
+	free(result);
+    free(tmp);
+}
+
 void lat_cadena_reemplazar(lat_mv *mv) {
   lat_objeto *c = lat_desapilar(mv);
   lat_objeto *b = lat_desapilar(mv);
   lat_objeto *a = lat_desapilar(mv);
+  char *cadena_final = reemplazar_lat(__cadena(a), __cadena(b), __cadena(c));
+  lat_objeto *r = lat_cadena_nueva(mv, cadena_final);
+  lat_apilar(mv, r);
+  lat_gc_agregar(mv, r);
+  /*
   char *bf = __str_analizar_fmt(__cadena(b), strlen(__cadena(b)));
   char *cf = __str_analizar_fmt(__cadena(c), strlen(__cadena(c)));
   //char *bf = strdup(__cadena(b));
@@ -510,6 +546,7 @@ void lat_cadena_reemplazar(lat_mv *mv) {
   lat_gc_agregar(mv, r);
   __memoria_liberar(mv, bf);
   __memoria_liberar(mv, cf);
+  */
 }
 
 void lat_cadena_inicia_con(lat_mv *mv) {
