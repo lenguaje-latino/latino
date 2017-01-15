@@ -26,6 +26,7 @@ THE SOFTWARE.
 #include <stdlib.h>
 #include <string.h>
 #include <time.h>
+#include <signal.h>
 
 #include "latcompat.h"
 #include "latgc.h"
@@ -34,7 +35,8 @@ THE SOFTWARE.
 #include "latmem.h"
 #include "latmv.h"
 
-#define LIB_SISTEMA_NAME "sistema"
+#define LIB_SISTEMA_NAME "sis"
+volatile sig_atomic_t proceso_detenido;
 
 void sleep_ms(int milliseconds) // cross-platform sleep function
 {
@@ -110,14 +112,62 @@ void lat_sistema_fecha(lat_mv *mv) {
   lat_gc_agregar(mv, tmp);
 }
 
+void proceso_al_activarse(int sig) {
+    proceso_detenido = 1;
+}
+
+    /* SIGHUP        1       Term    Hangup detected on controlling terminal
+                                     or death of controlling process
+       SIGINT        2       Term    Interrupt from keyboard
+       SIGQUIT       3       Core    Quit from keyboard
+       SIGILL        4       Core    Illegal Instruction
+       SIGABRT       6       Core    Abort signal from abort(3)
+       SIGFPE        8       Core    Floating point exception
+       SIGKILL       9       Term    Kill signal
+       SIGSEGV      11       Core    Invalid memory reference
+       SIGPIPE      13       Term    Broken pipe: write to pipe with no
+                                     readers
+       SIGALRM      14       Term    Timer signal from alarm(2)
+       SIGTERM      15       Term    Termination signal
+       SIGUSR1   30,10,16    Term    User-defined signal 1
+       SIGUSR2   31,12,17    Term    User-defined signal 2
+       SIGCHLD   20,17,18    Ign     Child stopped or terminated
+       SIGCONT   19,18,25    Cont    Continue if stopped
+       SIGSTOP   17,19,23    Stop    Stop process
+       SIGTSTP   18,20,24    Stop    Stop typed at terminal
+       SIGTTIN   21,21,26    Stop    Terminal input for background process
+       SIGTTOU   22,22,27    Stop    Terminal output for background process */
+
+void lat_sistema_avisar(lat_mv *mv) {
+    char i=0;
+    int status;
+    lat_objeto *func = ast_analizar_arbol(
+        mv, lat_analizar_expresion(__cadena(lat_desapilar(mv)), &status));
+    lat_objeto *a = lat_desapilar(mv);
+    signal(__numerico(a), proceso_al_activarse);
+    while (!proceso_detenido)
+        i=1;
+    if (status == 0) {
+      lat_llamar_funcion(mv, func);
+      __obj_eliminar(mv, func);
+    } else {
+      lat_apilar(mv, mv->objeto_falso);
+    }
+    exit(i);
+}
+
 void lat_sistema_salir(lat_mv *mv) {
   exit(0);
 }
 
 static const lat_CReg libsistema[] = {
-    {"dormir", lat_sistema_dormir, 1}, {"ejecutar", lat_sistema_ejecutar, 1},
-    {"pipe", lat_sistema_pipe, 1},     {"fecha", lat_sistema_fecha, 1},
-    {"salir", lat_sistema_salir, 0},   {NULL, NULL}};
+    {"dormir", lat_sistema_dormir, 1},
+    {"ejecutar", lat_sistema_ejecutar, 1},
+    {"pipe", lat_sistema_pipe, 1},
+    {"fecha", lat_sistema_fecha, 1},
+    {"salir", lat_sistema_salir, 0},
+    {"avisar", lat_sistema_avisar, 2},
+    {NULL, NULL}};
 
 void lat_importar_lib_sistema(lat_mv *mv) {
   lat_importar_lib(mv, LIB_SISTEMA_NAME, libsistema);
