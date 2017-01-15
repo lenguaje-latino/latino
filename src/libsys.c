@@ -139,21 +139,14 @@ void proceso_al_activarse(int sig) {
        SIGTTOU   22,22,27    Stop    Terminal output for background process */
 
 void lat_sistema_avisar(lat_mv *mv) {
-    char i=0;
-    int status;
-    lat_objeto *func = ast_analizar_arbol(
-        mv, lat_analizar_expresion(__cadena(lat_desapilar(mv)), &status));
     lat_objeto *a = lat_desapilar(mv);
     signal(__numerico(a), proceso_al_activarse);
-    while (!proceso_detenido)
-        i=1;
-    if (status == 0) {
-      lat_llamar_funcion(mv, func);
-      __obj_eliminar(mv, func);
+    if (!proceso_detenido) {
+        lat_apilar(mv, mv->objeto_falso);
+        return;
     } else {
-      lat_apilar(mv, mv->objeto_falso);
-    }
-    exit(i);
+        lat_apilar(mv, mv->objeto_verdadero);
+    };
 }
 
 void lat_sistema_salir(lat_mv *mv) {
@@ -166,7 +159,7 @@ static const lat_CReg libsistema[] = {
     {"pipe", lat_sistema_pipe, 1},
     {"fecha", lat_sistema_fecha, 1},
     {"salir", lat_sistema_salir, 0},
-    {"avisar", lat_sistema_avisar, 2},
+    {"avisar", lat_sistema_avisar, 1},
     {NULL, NULL}};
 
 void lat_importar_lib_sistema(lat_mv *mv) {
