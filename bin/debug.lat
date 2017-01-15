@@ -6,26 +6,26 @@ $(SolutionDir)..\ejemplos\debug.lat
 
 str = "\""
 escribir(str)
-str = cadena->reemplazar(str, "\"", "\\\"")
+str = cadena.reemplazar(str, "\"", "\\\"")
 escribir(str)
 
 //reemplazar varios valores
 str = "hola mundo"
 escribir(str)
-str = cadena->reemplazar(str, "o", "x")
+str = cadena.reemplazar(str, "o", "x")
 escribir(str)
 
 //reemplazar al inicio
 str = "hola mundo"
-str = cadena->reemplazar(str, "hola", "hello")
+str = cadena.reemplazar(str, "hola", "hello")
 escribir(str)
 
 //reemplazar en medio
 str = "hola mundo"
-str = cadena->reemplazar(str, " ", "...")
+str = cadena.reemplazar(str, " ", "...")
 escribir(str)
 
 //reemplazar al final
 str = "hola mundo"
-str = cadena->reemplazar(str, "mundo", "world")
+str = cadena.reemplazar(str, "mundo", "world")
 escribir(str)
