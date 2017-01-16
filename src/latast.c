@@ -465,7 +465,7 @@ static int nodo_analizar(lat_mv *mv, ast *node, lat_bytecode *bcode, int i) {
     pn(mv, nSi);
   } break;
   case NODO_MIENTRAS: {
-    dbc(SETUP_LOOP, 0, 0, NULL);
+    //dbc(SETUP_LOOP, 0, 0, NULL);
     temp[0] = i;
     pn(mv, node->izq);
     temp[1] = i;
@@ -474,10 +474,10 @@ static int nodo_analizar(lat_mv *mv, ast *node, lat_bytecode *bcode, int i) {
     dbc(JUMP_ABSOLUTE, (temp[0] - 1), 0, NULL);
     //dbc(POP_BLOCK, 0, 0, NULL);
     bcode[temp[1]] = lat_bc(POP_JUMP_IF_FALSE, (i - 1), 0, NULL);
-    dbc(POP_BLOCK, 0, 0, NULL);
+    //dbc(POP_BLOCK, 0, 0, NULL);
   } break;
   case NODO_REPETIR: {
-    dbc(SETUP_LOOP, 0, 0, NULL);
+    //dbc(SETUP_LOOP, 0, 0, NULL);
     temp[0] = i;
     pn(mv, node->der);
     pn(mv, node->izq);
@@ -485,7 +485,7 @@ static int nodo_analizar(lat_mv *mv, ast *node, lat_bytecode *bcode, int i) {
     dbc(NOP, 0, 0, NULL);
     //dbc(POP_BLOCK, 0, 0, NULL);
     bcode[temp[1]] = lat_bc(POP_JUMP_IF_FALSE, (temp[0] - 1), 0, NULL);
-    dbc(POP_BLOCK, 0, 0, NULL);
+    //dbc(POP_BLOCK, 0, 0, NULL);
   } break;
   case NODO_FUNCION_LLAMADA: {
     // argumentos
@@ -690,12 +690,6 @@ void __mostrar_bytecode(lat_bytecode *bcode) {
       printf("STORE_NAME\t(%s)\n", buffer);
       __memoria_liberar(NULL, buffer);
     } break;
-    /*case STORE_GLOBAL: {
-      o = (lat_objeto *)cur.meta;
-      buffer = lat_obj2cstring(o);
-      printf("STORE_GLOBAL\t(%s)\n", buffer);
-      __memoria_liberar(NULL, buffer);
-    } break;*/
     case JUMP_ABSOLUTE: {
       printf("JUMP_ABSOLUTE\t(%i)\n", (cur.a + 1));
     } break;

@@ -3,19 +3,24 @@ imprimir("i global: " .. i)	//0
 si i==0
 	i = 5
 	mientras i < 10
-	    imprimir("i dentro del ciclo: " .. i)	//5-9
+	    imprimir("i dentro de mientras: " .. i)	//5-9
 	    i++
 	fin
-	imprimir("i dentro del si: " .. i)	//5
-	global i = 10
+	imprimir("i despues de mientras: " .. i)	//10
+	desde(i=0;i<3;i++)
+		imprimir("i dentro de desde: " .. i)	//5-9
+	fin
+	imprimir("i despues de desde: " .. i)	//3
+	global i = 2
 sino
 	i = 3
 	imprimir("i dentro del sino: " .. i)	//3
 fin
-imprimir("i global: " .. i)	//10
+
+imprimir("i global: " .. i)	//2
 
 funcion algo (a)
-  #contexto local
+  #contexto local a la funcion
   a=15
   escribir("local a dentro de la funcion:" .. a) #15
   retorno 10
@@ -28,9 +33,11 @@ global x=algo(a)
 
 global funcion cuadrado(y)
   escribir("global dentro de funcion cuadrado x : " .. x)
+  global a = 13 	//se cambia variable global a
   retorno y*y
 fin
 
 escribir("global a:" .. a) #20
 escribir("global x:" .. x) #10
 escribir("cuadrado de a:" .. cuadrado(a)) #400
+escribir("global a:" .. a) #13
