@@ -54,7 +54,7 @@ THE SOFTWARE.
 /** Version menor de Latino */
 #define LAT_VERSION_MENOR "9"
 /** Version de correcion de errores */
-#define LAT_VERSION_PARCHE "0"
+#define LAT_VERSION_PARCHE "1"
 /** Version de Latino */
 #define LAT_VERSION                                                            \
   "Latino " LAT_VERSION_MAYOR "." LAT_VERSION_MENOR "." LAT_VERSION_PARCHE
@@ -96,10 +96,11 @@ extern char *filename;
 #define lat_error(M, ...)                                                      \
   {                                                                            \
     if (filename) {                                                            \
-      fprintf(stderr, "\033[1;31merror\033[0m " M " en archivo \033[1;36m%s\033[0m.\n", ##__VA_ARGS__,       \
-              filename);                                                       \
+      fprintf(stderr, "\033[1;31merror\033[0m " M                              \
+                      " en archivo \033[1;36m%s\033[0m.\n",                    \
+              ##__VA_ARGS__, filename);                                        \
     } else {                                                                   \
-      fprintf(stderr, "\033[1;31merror\033[0m " M "\n", ##__VA_ARGS__);                       \
+      fprintf(stderr, "\033[1;31merror\033[0m " M "\n", ##__VA_ARGS__);        \
     }                                                                          \
     exit(1);                                                                   \
   }
