@@ -2,26 +2,26 @@ i=0
 si i==0
 	i = 5
 	mientras i < 10
-	    imprimir("i dentro del ciclo: " . i)	//5-9
+	    imprimir("i dentro del ciclo: " .. i)	//5-9
 	    i++
 	fin
-	imprimir("i dentro del si: " . i)	//5
+	imprimir("i dentro del si: " .. i)	//5
 sino 
 	i = 3
-	imprimir("i dentro del sino: " . i)	//3
+	imprimir("i dentro del sino: " .. i)	//3
 fin
-imprimir("i global: " . i)	//5
+imprimir("i global: " .. i)	//5
 
 funcion algo (a)
   #contexto local
   a=15
-  escribir("local a dentro de la funcion:" . a) #15
+  escribir("local a dentro de la funcion:" .. a) #15
   retorno 10
 fin
 
 #contexto global
 a=20
-escribir("global a:" . a) #20
+escribir("global a:" .. a) #20
 x=algo(a)
-escribir("global a:" . a) #20
-escribir("global x:" . x) #10
+escribir("global a:" .. a) #20
+escribir("global x:" .. x) #10
