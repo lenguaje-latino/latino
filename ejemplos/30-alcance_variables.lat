@@ -1,4 +1,5 @@
-i=0
+global i=0
+imprimir("i global: " .. i)	//0
 si i==0
 	i = 5
 	mientras i < 10
@@ -6,11 +7,12 @@ si i==0
 	    i++
 	fin
 	imprimir("i dentro del si: " .. i)	//5
-sino 
+	global i = 10
+sino
 	i = 3
 	imprimir("i dentro del sino: " .. i)	//3
 fin
-imprimir("i global: " .. i)	//5
+imprimir("i global: " .. i)	//10
 
 funcion algo (a)
   #contexto local
@@ -22,6 +24,13 @@ fin
 #contexto global
 a=20
 escribir("global a:" .. a) #20
-x=algo(a)
+global x=algo(a)
+
+global funcion cuadrado(y)
+  escribir("global dentro de funcion cuadrado x : " .. x)
+  retorno y*y
+fin
+
 escribir("global a:" .. a) #20
 escribir("global x:" .. x) #10
+escribir("cuadrado de a:" .. cuadrado(a)) #400

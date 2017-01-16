@@ -1,8 +1,8 @@
-/* A Bison parser, made by GNU Bison 3.0.4.  */
+/* A Bison parser, made by GNU Bison 3.0.2.  */
 
 /* Bison interface for Yacc-like parsers in C
 
-   Copyright (C) 1984, 1989-1990, 2000-2015 Free Software Foundation, Inc.
+   Copyright (C) 1984, 1989-1990, 2000-2013 Free Software Foundation, Inc.
 
    This program is free software: you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -84,7 +84,8 @@ extern int yydebug;
     MENOS_IGUAL = 294,
     POR_IGUAL = 295,
     ENTRE_IGUAL = 296,
-    MODULO_IGUAL = 297
+    MODULO_IGUAL = 297,
+    GLOBAL = 298
   };
 #endif
 /* Tokens.  */
@@ -128,6 +129,7 @@ extern int yydebug;
 #define POR_IGUAL 295
 #define ENTRE_IGUAL 296
 #define MODULO_IGUAL 297
+#define GLOBAL 298
 
 /* Value type.  */
 

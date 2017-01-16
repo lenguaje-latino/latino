@@ -88,6 +88,7 @@ typedef enum {
   NODO_DICC_ELEMENTO, /**< Nodo par de llave valor del diccionario (key : value)
                          */
   NODO_ATRIBUTO,      /**< Attributo de un objeto: str->longitud() */
+  NODO_GLOBAL,        /**< declaracion de variables globales */
 } nodo_tipo;
 
 /** \brief Tipos de dato */

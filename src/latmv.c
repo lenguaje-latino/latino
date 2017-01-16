@@ -75,6 +75,7 @@ static const char *const bycode_nombre[] = {
     "BUILD_MAP",
     "STORE_MAP",
     "STORE_ATTR",
+    "STORE_GLOBAL",
 };
 
 void lat_cadena_concatenar(lat_mv *mv);
@@ -386,7 +387,7 @@ lat_mv *lat_mv_crear() {
   return mv;
 }
 
-void lat_destruir_mv(lat_mv *mv) {  
+void lat_destruir_mv(lat_mv *mv) {
   __obj_eliminar(mv, mv->argv);
   // printf("%s\n", ">>>liberando modulos:");
   //__obj_eliminar(mv, mv->modulos);
@@ -439,6 +440,10 @@ static void __mv_desapilar_contexto(lat_mv *mv) {
 
 lat_objeto *lat_obtener_contexto(lat_mv *mv) {
   return mv->contexto_pila[mv->apuntador_ctx];
+}
+
+lat_objeto *lat_obtener_global_ctx(lat_mv *mv) {
+  return mv->contexto_pila[0];
 }
 
 lat_objeto *lat_definir_funcion(lat_mv *mv, lat_bytecode *inslist,
@@ -577,10 +582,43 @@ void lat_llamar_funcion(lat_mv *mv, lat_objeto *func) {
         lat_apilar(mv, o);
       } break;
       case STORE_NAME: {
-        lat_objeto *val = lat_desapilar(mv);
+        lat_objeto *val = NULL;
+        if(next.ins == STORE_GLOBAL){
+          val = lat_tope(mv);
+        }else {
+          val = lat_desapilar(mv);
+        }
         lat_objeto *name = (lat_objeto *)cur.meta;
         lat_objeto *ctx = lat_obtener_contexto(mv);
         Lat_INCREF(val);
+#if DEPURAR_MV
+        __imprimir_objeto(mv, name, false);
+        printf("\t");
+#endif
+        // objeto anterior
+        lat_objeto *tmp = __obj_obtener_contexto(ctx, name);
+        Lat_DECREF(tmp);
+        if (name->es_constante) {
+          if (tmp != NULL) {
+            lat_error(
+                "Linea %d, %d: Intento de reasignar valor a constante '%s'",
+                name->num_linea, name->num_columna, __cadena(name));
+          }
+        }
+        // asigna el numero de parametros
+        if (name->nombre_cfun) {
+          val->num_params = name->num_params;
+          // val->nombre_cfun = strdup(name->nombre_cfun);
+          val->nombre_cfun = name->nombre_cfun;
+        }
+        __obj_asignar_contexto(ctx, name, val);
+      } break;
+      case STORE_GLOBAL: {
+        lat_bytecode prev = inslist[pos - 1];
+        lat_objeto *val = lat_desapilar(mv);
+        lat_objeto *name = (lat_objeto *)prev.meta;
+        lat_objeto *ctx = lat_obtener_global_ctx(mv);
+        //Lat_INCREF(val);
 #if DEPURAR_MV
         __imprimir_objeto(mv, name, false);
         printf("\t");
@@ -612,8 +650,12 @@ void lat_llamar_funcion(lat_mv *mv, lat_objeto *func) {
 #endif
         lat_objeto *val = __obj_obtener_contexto(ctx, name);
         if (val == NULL) {
-          lat_error("Linea %d, %d: Variable \"%s\" indefinida", name->num_linea,
+          ctx = lat_obtener_global_ctx(mv);
+          val = __obj_obtener_contexto(ctx, name);
+          if (val == NULL) {
+            lat_error("Linea %d, %d: Variable \"%s\" indefinida", name->num_linea,
                     name->num_columna, __cadena(name));
+          }
         }
         val->num_linea = name->num_linea;
         val->num_columna = name->num_columna;

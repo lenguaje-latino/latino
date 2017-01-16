@@ -100,6 +100,7 @@ int yylex (YYSTYPE * yylval_param,YYLTYPE * yylloc_param ,yyscan_t yyscanner);
     POR_IGUAL
     ENTRE_IGUAL
     MODULO_IGUAL
+    GLOBAL
 
 %type <node> expression relational_expression
 %type <node> logical_not_expression logical_and_expression logical_or_expression equality_expression
@@ -112,7 +113,7 @@ int yylex (YYSTYPE * yylval_param,YYLTYPE * yylloc_param ,yyscan_t yyscanner);
 %type <node> dict_new dict_items dict_item
 %type <node> labeled_statements labeled_statement_case labeled_statement_default
 %type <node> variable_access field_designator
-%type <node> osi_statements osi_statement
+%type <node> osi_statements osi_statement global_declaration
 
 /*
  * precedencia de operadores
@@ -255,6 +256,7 @@ statement_list
 
 statement
     : declaration
+    | global_declaration
     | selection_statement
     | iteration_statement
     | jump_statement
@@ -276,6 +278,16 @@ field_designator
     : variable_access ATRIBUTO IDENTIFICADOR { $$ = ast_nuevo(NODO_ATRIBUTO, $1, $3); }
     | variable_access '[' expression ']' { $$ = ast_nuevo(NODO_LISTA_OBTENER_ELEMENTO, $3, $1); }
     ;
+
+global_declaration
+    : GLOBAL declaration {
+        $$ = ast_nuevo(NODO_GLOBAL, $2, NULL);
+    }
+    | GLOBAL function_definition {
+        $$ = ast_nuevo(NODO_GLOBAL, $2, NULL);
+    }
+    ;
+
 
 declaration
     : variable_access '=' expression { $$ = ast_nuevo_asignacion($3, $1); }
@@ -363,14 +375,10 @@ function_definition
     : FUNCION IDENTIFICADOR '(' parameter_list ')' statement_list FIN {
         $$ = ast_nuevo_funcion($2, $4, $6);
     }
-    /*| FUNCION IDENTIFICADOR parameter_list statement_list FIN {
-        $$ = ast_nuevo_funcion($2, $3, $4);
-    }*/
     ;
 
 function_call
     : variable_access '(' argument_expression_list ')' { $$ = ast_nuevo(NODO_FUNCION_LLAMADA, $1, $3); }
-    /*| variable_access argument_expression_list { $$ = ast_nuevo(NODO_FUNCION_LLAMADA, $1, $2); }*/
     ;
 
 argument_expression_list
