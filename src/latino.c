@@ -52,7 +52,7 @@ char *filename = NULL;
 int yyparse(ast **root, yyscan_t scanner);
 
 bool __str_inicia_con(const char *base, const char *str);
-char * __str_reemplazar(char *str, const char *orig, const char *rep);
+char *__str_reemplazar(char *str, const char *orig, const char *rep);
 
 ast *lat_analizar_expresion(char *expr, int *status) {
   ast *ret = NULL;
@@ -266,8 +266,10 @@ REP:
 /*
 void *__lat_sistema_usuario() {
   register struct passwd *pw;
-  unsigned int uid; // al parecer no usaba variables con signo y usaba una tipo size_t (creo que es long long int) y mejor usamos esta
-  // tipo char no funcionaba arriba, seguro el número que necesita es mayor a 255, ya que no funciona ni con unsigned.
+  unsigned int uid; // al parecer no usaba variables con signo y usaba una tipo
+size_t (creo que es long long int) y mejor usamos esta
+  // tipo char no funcionaba arriba, seguro el número que necesita es mayor a
+255, ya que no funciona ni con unsigned.
   uid = geteuid ();
   pw = getpwuid (uid);
   if (pw) {
@@ -280,7 +282,7 @@ void *__lat_sistema_usuario() {
 
 static void lat_repl(lat_mv *mv) {
   char *buf = __memoria_asignar(mv, MAX_STR_LENGTH);
-  //char *usuario = __lat_sistema_usuario(); y pues ya sabes xd
+  // char *usuario = __lat_sistema_usuario(); y pues ya sabes xd
   ast *tmp = NULL;
   int status;
   mv->REPL = true;
@@ -351,9 +353,9 @@ int main(int argc, char *argv[]) {
     infile = argv[1]; // nombre del archivo
     mv->nombre_archivo = infile;
     mv->REPL = false;
-    mv->argc = argc - 2;
+    mv->argc = argc - 1;
     int i;
-    for (i = 2; i < argc; i++) {
+    for (i = 1; i < argc; i++) {
       __lista_agregar(__lista(mv->argv), lat_cadena_nueva(mv, strdup(argv[i])));
     }
     int status;
