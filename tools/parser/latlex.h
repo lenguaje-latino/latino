@@ -353,7 +353,7 @@ extern int yylex \
 #undef YY_DECL
 #endif
 
-#line 146 "latlex.l"
+#line 147 "latlex.l"
 
 
 #line 360 "latlex.h"

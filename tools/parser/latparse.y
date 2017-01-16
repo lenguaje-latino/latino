@@ -100,6 +100,7 @@ int yylex (YYSTYPE * yylval_param,YYLTYPE * yylloc_param ,yyscan_t yyscanner);
     POR_IGUAL
     ENTRE_IGUAL
     MODULO_IGUAL
+    REGEX
     GLOBAL
 
 %type <node> expression relational_expression
@@ -125,7 +126,7 @@ int yylex (YYSTYPE * yylval_param,YYLTYPE * yylloc_param ,yyscan_t yyscanner);
 %right '='
 %left CONCATENAR CONCATENAR_IGUAL
 %left Y_LOGICO O_LOGICO
-%left IGUAL_LOGICO MAYOR_IGUAL MAYOR_QUE MENOR_IGUAL MENOR_QUE DIFERENTE
+%left IGUAL_LOGICO MAYOR_IGUAL MAYOR_QUE MENOR_IGUAL MENOR_QUE DIFERENTE REGEX
 %left '+' '-'
 %left '*' '/' '%' '!'
 
@@ -192,6 +193,7 @@ relational_expression
 equality_expression
     : expression DIFERENTE expression { $$ = ast_nuevo(NODO_DESIGUALDAD, $1, $3); }
     | expression IGUAL_LOGICO expression { $$ = ast_nuevo(NODO_IGUALDAD, $1, $3); }
+    | expression REGEX expression { $$ = ast_nuevo(NODO_REGEX, $1, $3); }
     ;
 
 logical_not_expression

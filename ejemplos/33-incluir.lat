@@ -8,11 +8,11 @@ mod = incluir("modulo")	//ahora modulo es una funcion que se puede asignar a una
 #incluir modulo en carpeta mods/modulo separar con .
 #incluir(mods.modulo)
 //r = sumatoria(2, 3)	//ahora esto manda error ya que no esta definida la variable o funcion sumatoria
-r = mod->sumatoria(2, 3)
+r = mod.sumatoria(2, 3)
 escribir(r)
-escribir(mod->variable)
+escribir(mod.variable)
 
 #version anterior
 incluir("modulo")
-r = mod->sumatoria(2, 3)
+r = mod.sumatoria(2, 3)
 escribir(r)

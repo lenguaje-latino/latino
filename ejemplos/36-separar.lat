@@ -1,17 +1,17 @@
 #sin argumento 2 separa por espacio
 frutas = "melon sandia mango"
 //lst = separar(frutas)
-lst = cadena->separar(frutas)
+lst = cadena.separar(frutas)
 escribir(lst)
 
 #separar por comas
 frutas = "melon, sandia, mango"
 //lst = separar(frutas, ",")
-lst = cadena->separar(frutas, ",")
+lst = cadena.separar(frutas, ",")
 escribir(lst)
 
 #si no se encuentra el separador regresa la misma cadena
 frutas = "melon, sandia, mango"
 //lst = separar(frutas, "|")
-lst = cadena->separar(frutas, "|")
+lst = cadena.separar(frutas, "|")
 escribir(lst)

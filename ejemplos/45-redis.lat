@@ -1,40 +1,40 @@
 //se conecta con el servicio de redis corriendo en el puerto 6379
 //conexion = redis_conectar("127.0.0.1", 6379)
-conexion = redis->conectar("127.0.0.1", 6379)
+conexion = redis.conectar("127.0.0.1", 6379)
 # Redis de 1 llave
 imprimir("#### Valores de 1 llave ####")
 //asignamos una clave
 //redis_asignar(conexion, "Latino", "Hola amigos latinos")
-redis->asignar(conexion, "Latino", "Hola amigos latinos")
+redis.asignar(conexion, "Latino", "Hola amigos latinos")
 
 //asignamos un entero a otra llave
 //redis_asignar(conexion, "entero", "0")
-redis->asignar(conexion, "entero", "0")
+redis.asignar(conexion, "entero", "0")
 
 // obtenemos los valores Redis de 1 llave
 //cadena = redis_obtener(conexion, "Latino")
 //entero  = redis_obtener(conexion, "entero")
-cadena = redis->obtener(conexion, "Latino")
-entero  = redis->obtener(conexion, "entero")
+cadena = redis.obtener(conexion, "Latino")
+entero  = redis.obtener(conexion, "entero")
 
 // Devolvemos los valores Redis de 1 llave
-imprimir("El valor de la cadena es:\t".cadena, 1)
-imprimir("El valor del entero es:\t\t".entero, 1)
+imprimir("El valor de la cadena es:\t"..cadena, 1)
+imprimir("El valor del entero es:\t\t"..entero, 1)
 
 // le aumentamos 1 al entero y lo declaramos
 //nuevo_valor = redis_aumentar(conexion, "entero")
-nuevo_valor = redis->aumentar(conexion, "entero")
-imprimir("Ahora el entero vale:\t\t".nuevo_valor, 1)
+nuevo_valor = redis.aumentar(conexion, "entero")
+imprimir("Ahora el entero vale:\t\t"..nuevo_valor, 1)
 // le incrementamos el valor que desees, en este caso es 5
 //nuevo_valor = redis_incrementar(conexion, "entero", 5)
-nuevo_valor = redis->incrementar(conexion, "entero", 5)
-imprimir("Se le incrementa 5 al entero:\t".nuevo_valor, 1)
+nuevo_valor = redis.incrementar(conexion, "entero", 5)
+imprimir("Se le incrementa 5 al entero:\t"..nuevo_valor, 1)
 
 // borramos las llaves
 //redis_borrar(conexion, "Latino")
 //redis_borrar(conexion, "entero")
-redis->borrar(conexion, "Latino")
-redis->borrar(conexion, "entero")
+redis.borrar(conexion, "Latino")
+redis.borrar(conexion, "entero")
 
 //////////////////\\\\\\\\\\\\\\\\\\\\
 
@@ -42,43 +42,43 @@ redis->borrar(conexion, "entero")
 imprimir("\n#### Valores de 2 llaves ####", 1)
 //asignamos una clave
 //redis_hasignar(conexion, "latino", "saludo", "Hola amigo Latino")
-redis->hasignar(conexion, "latino", "saludo", "Hola amigo Latino")
+redis.hasignar(conexion, "latino", "saludo", "Hola amigo Latino")
 
 //asignamos un entero a otra llave
 //redis_hasignar(conexion, "entero", "valor", "0")
-redis->hasignar(conexion, "entero", "valor", "0")
+redis.hasignar(conexion, "entero", "valor", "0")
 
 // obtenemos los valores Redis de 1 llave
 //cadena = redis_hobtener(conexion, "latino", "saludo")
 //entero  = redis_hobtener(conexion, "entero", "valor")
-cadena = redis->hobtener(conexion, "latino", "saludo")
-entero  = redis->hobtener(conexion, "entero", "valor")
+cadena = redis.hobtener(conexion, "latino", "saludo")
+entero  = redis.hobtener(conexion, "entero", "valor")
 
 // Devolvemos los valores Redis de 1 llave
-imprimir("El valor de la cadena es:\t".cadena, 1)
-imprimir("El valor del entero es:\t\t".entero, 1)
+imprimir("El valor de la cadena es:\t"..cadena, 1)
+imprimir("El valor del entero es:\t\t"..entero, 1)
 
 // le aumentamos 1 al entero y lo declaramos
 //nuevo_valor = redis_haumentar(conexion, "entero", "valor")
-nuevo_valor = redis->haumentar(conexion, "entero", "valor")
-imprimir("Ahora el entero vale:\t\t".nuevo_valor, 1)
+nuevo_valor = redis.haumentar(conexion, "entero", "valor")
+imprimir("Ahora el entero vale:\t\t"..nuevo_valor, 1)
 // le incrementamos el valor que desees, en este caso es 5
 //nuevo_valor = redis_hincrementar(conexion, "entero", "valor", 5)
-nuevo_valor = redis->hincrementar(conexion, "entero", "valor", 5)
-imprimir("Se le incrementa 5 al entero:\t".nuevo_valor, 1)
+nuevo_valor = redis.hincrementar(conexion, "entero", "valor", 5)
+imprimir("Se le incrementa 5 al entero:\t"..nuevo_valor, 1)
 
 // borramos las llaves
 //redis_hborrar(conexion, "latino", "saludo")
 //redis_hborrar(conexion, "entero", "valor")
-redis->hborrar(conexion, "latino", "saludo")
-redis->hborrar(conexion, "entero", "valor")
+redis.hborrar(conexion, "latino", "saludo")
+redis.hborrar(conexion, "entero", "valor")
 
 // Prueba del servicio Redis
 imprimir("\n### Devolución del ping ###", 1)
 //ping = redis_ping(conexion)
-ping = redis->ping(conexion)
-imprimir("PING:\t\t".ping, 1)
+ping = redis.ping(conexion)
+imprimir("PING:\t\t"..ping, 1)
 
 // terminamos la conexión
 //redis_liberar(conexion)
-redis->liberar(conexion)
+redis.desconectar(conexion)

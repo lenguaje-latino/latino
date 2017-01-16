@@ -1,6 +1,6 @@
 #muestra un mensaje despues de N milisegundos
 funcion alarma(tiempo)
-    sistema->dormir(tiempo)
+    sis.dormir(tiempo)
     escribir("despierta...")
 fin
 escribir("estoy durmiendo...")

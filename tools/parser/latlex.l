@@ -96,18 +96,19 @@ EXP ([Ee][-+]?[0-9]+)
 "=="    { return IGUAL_LOGICO; }
 "&&"    { return Y_LOGICO; }
 "||"    { return O_LOGICO; }
-".."     { return CONCATENAR; }
-"..="    { return CONCATENAR_IGUAL; }
+".."    { return CONCATENAR; }
+"..="   { return CONCATENAR_IGUAL; }
 "+="    { return MAS_IGUAL; }
 "-="    { return MENOS_IGUAL; }
 "*="    { return POR_IGUAL; }
 "/="    { return ENTRE_IGUAL; }
 "%="    { return MODULO_IGUAL; }
+"~="    { return REGEX; }
 ">"     { return MAYOR_QUE; }
 "<"     { return MENOR_QUE; }
 "++"	  { return INCREMENTO; }
 "--"	  { return DECREMENTO; }
-"."	  { return ATRIBUTO; }
+"."	    { return ATRIBUTO; }
 
  /* palabras reservadas */
 "si"        { return SI; }

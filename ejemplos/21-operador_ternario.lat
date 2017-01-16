@@ -7,10 +7,10 @@ si (a > 10)
 sino
   c = b
 fin
-escribir("el mayor es: " . c)
+escribir("el mayor es: " .. c)
 
 #obtener el menor de dos numeros
 #con operador condicional ternario (cond ? exp1 : exp2 )
 #c = a < 10 ? a : b     #sin parentesis tambien es correcto
 c = (a < 10) ? a : b
-escribir("el menor es: " . c)
+escribir("el menor es: " .. c)

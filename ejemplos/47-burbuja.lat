@@ -1,11 +1,12 @@
 fun burbuja(l)
-	lon = lista->longitud(l) -1
+	lon = lista.longitud(l)-1
 	desde(i=0; i<lon; i++)
-		desde(j=0; j<i; j++)
+		desde(j=0; j<lon; j++)
 			si l[j] > l[j+1]
 				tmp = l[j]
 				l[j] = l[j+1]
 				l[j+1] = tmp
+				#escribir(lst)	// <- para ver uno a uno
 			fin
 		fin
 	fin
@@ -14,5 +15,10 @@ fin
 
 lst = [54,26,93,17,77,31,44,55,20]
 escribir(lst)
-burbuja(lst)
+lst = burbuja(lst)
+escribir(lst)
+
+lst = ["hola", "este", "es", "el", "ordenamiento", "burbuja", "."]
+escribir(lst)
+lst = burbuja(lst)
 escribir(lst)

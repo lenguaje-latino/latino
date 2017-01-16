@@ -1,2 +1,2 @@
 #ejecutar_archivo("modulo.lat")
-archivo->ejecutar("modulo.lat")
+archivo.ejecutar("modulo.lat")

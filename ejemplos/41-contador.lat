@@ -2,11 +2,11 @@ inicio = 0
 final = 10
 x = final+1
 escribir("Este es un contador en Latino\nUsa las funciones limpiar() y dormir() establecida en 1", 1)
-sistema->dormir(3)
+sis.dormir(3)
 
 repetir
 	limpiar()
 	imprimir(inicio)
   inicio++
-	sistema->dormir(1)
+	sis.dormir(1)
 hasta(inicio >= x)
