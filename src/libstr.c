@@ -584,7 +584,7 @@ void lat_cadena_mayusculas(lat_mv *mv) {
   lat_gc_agregar(mv, tmp);
 }
 
-void lat_cadena_quitar_espacios(lat_mv *mv) {
+void lat_cadena_recortar(lat_mv *mv) {
   lat_objeto *a = lat_desapilar(mv);
   lat_objeto *tmp = lat_cadena_nueva(mv, __str_quitar_espacios(__cadena(a)));
   lat_apilar(mv, tmp);
@@ -751,7 +751,7 @@ static const lat_CReg lib_cadena[] = {
     {"longitud", lat_cadena_longitud, 1},
     {"minusculas", lat_cadena_minusculas, 1},
     {"mayusculas", lat_cadena_mayusculas, 1},
-    {"quitar_espacios", lat_cadena_quitar_espacios, 1},
+    {"recortar", lat_cadena_recortar, 1},
     {"es_numerico", lat_cadena_es_numerico, 1},
     {"es_numero", lat_cadena_es_numerico, 1},
     {"es_alfa", lat_cadena_es_alfa, 1},
