@@ -265,9 +265,13 @@ REP:
 
 static void lat_repl(lat_mv *mv) {
   char *buf = __memoria_asignar(mv, MAX_STR_LENGTH), dir_history[32];
-  strcpy(dir_history, getenv("HOME"));
-  strcat(dir_history, "/");
-  strcat(dir_history, HISTORY_FILE);
+  if (getenv("HOME") != NULL) {
+      strcpy(dir_history, getenv("HOME"));
+      strcat(dir_history, "/");
+      strcat(dir_history, HISTORY_FILE);
+  } else {
+      char *dir_history = HISTORY_FILE;
+  }
   ast *tmp = NULL;
   int status;
   mv->REPL = true;
