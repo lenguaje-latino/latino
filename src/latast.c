@@ -303,6 +303,29 @@ static int nodo_analizar(lat_mv *mv, ast *node, lat_bytecode *bcode, int i) {
       dbc(STORE_NAME, 0, 0, o);
     }
   } break;
+  case NODO_GLOBAL:{
+      /*SET: Asigna el valor de la variable en la tabla de simbolos*/
+      /*pn(mv, node->izq->izq);
+      if (node->izq->der->tipo == NODO_ATRIBUTO) {
+        // pn(mv, node->der);
+        pn(mv, node->izq->der->izq);
+        lat_objeto *o =
+            lat_cadena_nueva(mv, strdup(node->izq->der->der->valor->val.cadena));
+        o->num_linea = node->izq->der->der->num_linea;
+        o->num_columna = node->izq->der->der->num_columna;
+        o->es_constante = node->izq->der->der->valor->es_constante;
+        dbc(STORE_ATTR, 0, 0, o);
+      } else {
+        lat_objeto *o =
+            lat_cadena_nueva(mv, strdup(node->izq->der->valor->val.cadena));
+        o->num_linea = node->izq->der->num_linea;
+        o->num_columna = node->izq->der->num_columna;
+        o->es_constante = node->izq->der->valor->es_constante;
+        dbc(STORE_GLOBAL, 0, 0, o);
+    }*/
+    pn(mv, node->izq);
+    dbc(STORE_GLOBAL, 0, 0, NULL);
+  } break;
   case NODO_VALOR: {
     lat_objeto *o = NULL;
     if (node->valor->tipo == VALOR_LOGICO)
@@ -416,13 +439,13 @@ static int nodo_analizar(lat_mv *mv, ast *node, lat_bytecode *bcode, int i) {
     dbc(CONCAT, 0, 0, NULL);
   } break;
   case NODO_SI: {
-    nodo_si *nIf = ((nodo_si *)node);    
+    nodo_si *nIf = ((nodo_si *)node);
     pn(mv, nIf->condicion);
-    //dbc(SETUP_LOOP, 0, 0, NULL);    
+    //dbc(SETUP_LOOP, 0, 0, NULL);
     temp[0] = i;
     dbc(NOP, 0, 0, NULL);
     pn(mv, nIf->entonces);
-    temp[1] = i;    
+    temp[1] = i;
     dbc(NOP, 0, 0, NULL);
     temp[2] = i;
     if (nIf->_sino) {
@@ -432,8 +455,8 @@ static int nodo_analizar(lat_mv *mv, ast *node, lat_bytecode *bcode, int i) {
     }
     temp[3] = i;
     //dbc(POP_BLOCK, 0, 0, NULL);
-    bcode[temp[0]] = lat_bc(POP_JUMP_IF_FALSE, (temp[2] - 1), 0, NULL);    
-    bcode[temp[1]] = lat_bc(JUMP_ABSOLUTE, (temp[3] - 1), 0, NULL);    
+    bcode[temp[0]] = lat_bc(POP_JUMP_IF_FALSE, (temp[2] - 1), 0, NULL);
+    bcode[temp[1]] = lat_bc(JUMP_ABSOLUTE, (temp[3] - 1), 0, NULL);
   } break;
   case NODO_ELEGIR: {
     // FIXME: Memory leak
@@ -442,7 +465,7 @@ static int nodo_analizar(lat_mv *mv, ast *node, lat_bytecode *bcode, int i) {
     pn(mv, nSi);
   } break;
   case NODO_MIENTRAS: {
-    dbc(SETUP_LOOP, 0, 0, NULL);    
+    dbc(SETUP_LOOP, 0, 0, NULL);
     temp[0] = i;
     pn(mv, node->izq);
     temp[1] = i;
@@ -455,7 +478,7 @@ static int nodo_analizar(lat_mv *mv, ast *node, lat_bytecode *bcode, int i) {
   } break;
   case NODO_REPETIR: {
     dbc(SETUP_LOOP, 0, 0, NULL);
-    temp[0] = i;    
+    temp[0] = i;
     pn(mv, node->der);
     pn(mv, node->izq);
     temp[1] = i;
@@ -637,6 +660,7 @@ void __mostrar_bytecode(lat_bytecode *bcode) {
     case BINARY_SUBSCR:
     case STORE_MAP:
     case STORE_ATTR:
+    case STORE_GLOBAL:
       printf("%s\n", __obtener_bytecode_nombre(cur.ins));
       break;
     case CALL_FUNCTION: {
@@ -666,6 +690,12 @@ void __mostrar_bytecode(lat_bytecode *bcode) {
       printf("STORE_NAME\t(%s)\n", buffer);
       __memoria_liberar(NULL, buffer);
     } break;
+    /*case STORE_GLOBAL: {
+      o = (lat_objeto *)cur.meta;
+      buffer = lat_obj2cstring(o);
+      printf("STORE_GLOBAL\t(%s)\n", buffer);
+      __memoria_liberar(NULL, buffer);
+    } break;*/
     case JUMP_ABSOLUTE: {
       printf("JUMP_ABSOLUTE\t(%i)\n", (cur.a + 1));
     } break;
@@ -699,6 +729,7 @@ void __mostrar_bytecode(lat_bytecode *bcode) {
     case BUILD_MAP: {
       printf("BUILD_MAP\t%i\n", cur.a);
     } break;
+
     }
   }
 #endif

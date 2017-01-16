@@ -82,6 +82,7 @@ typedef struct lat_mv lat_mv;
 #define BUILD_MAP 37
 #define STORE_MAP 38
 #define STORE_ATTR 39
+#define STORE_GLOBAL 40
 
 /**\brief Objeto tipo maquina virtual */
 
@@ -193,6 +194,8 @@ lat_objeto *lat_desapilar(lat_mv *mv);
   *\return lat_objeto: Apuntador al contexto
   */
 lat_objeto *lat_obtener_contexto(lat_mv *mv);
+
+lat_objeto *lat_obtener_global_ctx(lat_mv *mv);
 
 /**\brief Define una funcion creada por el usuario
   *

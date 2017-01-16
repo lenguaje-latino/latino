@@ -128,6 +128,7 @@ EXP ([Ee][-+]?[0-9]+)
 "elegir"    { return ELEGIR; }
 "caso"      { return CASO; }
 "defecto"   { return DEFECTO; }
+"global"    { return GLOBAL; }
 
  /* names */
 [_A-Z]*             { yylval->node = ast_nuevo_identificador(yytext, yylloc->first_line, yylloc->first_column, 1); return IDENTIFICADOR; }
