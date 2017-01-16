@@ -76,6 +76,7 @@ static const char *const bycode_nombre[] = {
     "STORE_MAP",
     "STORE_ATTR",
     "STORE_GLOBAL",
+    "OP_REGEX",
 };
 
 void lat_cadena_concatenar(lat_mv *mv);
@@ -192,6 +193,8 @@ static void __igualdad(lat_mv *mv) {
   r = mv->objeto_falso;
   lat_apilar(mv, r);
 }
+
+static void __regex(lat_mv *mv) { lat_cadena_regex(mv); }
 
 static void __diferente(lat_mv *mv) {
   lat_objeto *b = lat_desapilar(mv);
@@ -421,7 +424,7 @@ lat_objeto *lat_tope(lat_mv *mv) {
 }
 
 static void __mv_apilar_contexto(lat_mv *mv) {
-  //printf("apilando contexto...\n");
+  // printf("apilando contexto...\n");
   if (mv->apuntador_ctx >= MAX_STACK_SIZE) {
     lat_error("Namespace desborde de la pila");
   }
@@ -431,7 +434,7 @@ static void __mv_apilar_contexto(lat_mv *mv) {
 }
 
 static void __mv_desapilar_contexto(lat_mv *mv) {
-  //printf("...desapilando contexto\n");
+  // printf("...desapilando contexto\n");
   if (mv->apuntador_ctx == 0) {
     lat_error("Namespace pila vacia");
   }
@@ -442,9 +445,7 @@ lat_objeto *lat_obtener_contexto(lat_mv *mv) {
   return mv->contexto_pila[mv->apuntador_ctx];
 }
 
-lat_objeto *lat_obtener_global_ctx(lat_mv *mv) {
-  return mv->contexto_pila[0];
-}
+lat_objeto *lat_obtener_global_ctx(lat_mv *mv) { return mv->contexto_pila[0]; }
 
 lat_objeto *lat_definir_funcion(lat_mv *mv, lat_bytecode *inslist,
                                 int num_inst) {
@@ -502,8 +503,8 @@ void lat_llamar_funcion(lat_mv *mv, lat_objeto *func) {
         lat_objeto *name = (lat_objeto *)cur.meta;
         lat_objeto *ctx = lat_obtener_contexto(mv);
         lat_objeto *val = __obj_obtener_contexto(ctx, name);
-        if(val == NULL){
-          //si no existe se infiere que es entero y se inicializa en 0
+        if (val == NULL) {
+          // si no existe se infiere que es entero y se inicializa en 0
           val = lat_numerico_nuevo(mv, 0);
         }
         lat_objeto *tmp = __obj_clonar(mv, val);
@@ -517,8 +518,8 @@ void lat_llamar_funcion(lat_mv *mv, lat_objeto *func) {
         lat_objeto *name = (lat_objeto *)cur.meta;
         lat_objeto *ctx = lat_obtener_contexto(mv);
         lat_objeto *val = __obj_obtener_contexto(ctx, name);
-        if(val == NULL){
-          //si no existe se infiere que es entero y se inicializa en 0
+        if (val == NULL) {
+          // si no existe se infiere que es entero y se inicializa en 0
           val = lat_numerico_nuevo(mv, 0);
         }
         lat_objeto *tmp = __obj_clonar(mv, val);
@@ -558,6 +559,9 @@ void lat_llamar_funcion(lat_mv *mv, lat_objeto *func) {
       case OP_EQ: {
         __igualdad(mv);
       } break;
+      case OP_REGEX: {
+        __regex(mv);
+      } break;
       case OP_NEQ: {
         __diferente(mv);
       } break;
@@ -583,9 +587,9 @@ void lat_llamar_funcion(lat_mv *mv, lat_objeto *func) {
       } break;
       case STORE_NAME: {
         lat_objeto *val = NULL;
-        if(next.ins == STORE_GLOBAL){
+        if (next.ins == STORE_GLOBAL) {
           val = lat_tope(mv);
-        }else {
+        } else {
           val = lat_desapilar(mv);
         }
         lat_objeto *name = (lat_objeto *)cur.meta;
@@ -618,7 +622,7 @@ void lat_llamar_funcion(lat_mv *mv, lat_objeto *func) {
         lat_objeto *val = lat_desapilar(mv);
         lat_objeto *name = (lat_objeto *)prev.meta;
         lat_objeto *ctx = lat_obtener_global_ctx(mv);
-        //Lat_INCREF(val);
+// Lat_INCREF(val);
 #if DEPURAR_MV
         __imprimir_objeto(mv, name, false);
         printf("\t");
@@ -653,8 +657,8 @@ void lat_llamar_funcion(lat_mv *mv, lat_objeto *func) {
           ctx = lat_obtener_global_ctx(mv);
           val = __obj_obtener_contexto(ctx, name);
           if (val == NULL) {
-            lat_error("Linea %d, %d: Variable \"%s\" indefinida", name->num_linea,
-                    name->num_columna, __cadena(name));
+            lat_error("Linea %d, %d: Variable \"%s\" indefinida",
+                      name->num_linea, name->num_columna, __cadena(name));
           }
         }
         val->num_linea = name->num_linea;
@@ -730,7 +734,7 @@ void lat_llamar_funcion(lat_mv *mv, lat_objeto *func) {
       case BUILD_LIST: {
         int num_elem = cur.a;
         int i;
-        //lat_objeto *obj = (lat_objeto *)cur.meta;
+        // lat_objeto *obj = (lat_objeto *)cur.meta;
         lat_objeto *obj = lat_lista_nueva(mv, __lista_crear());
         for (i = 0; i < num_elem; i++) {
           lat_objeto *tmp = lat_desapilar(mv);

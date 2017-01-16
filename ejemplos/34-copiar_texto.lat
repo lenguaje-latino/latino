@@ -9,7 +9,7 @@ opcion = leer()
 elegir(opcion)
 	caso 1:
 		//accion = leer_archivo(copia)
-		accion = archivo->leer(copia)
+		accion = archivo.leer(copia)
 	caso 2:
 		accion = copia
 	defecto:
@@ -19,6 +19,6 @@ fin
 escribir("Escribe el nombre del nuevo archivo ó de un archivo ya existente para añadir el texto")
 archivo_nuevo = leer()
 //copiar_texto(accion, archivo_nuevo)
-archivo->copiar(accion, archivo_nuevo)
+archivo.copiar(accion, archivo_nuevo)
 limpiar()
 imprimir("\a¡Copia finalizada!", 1)

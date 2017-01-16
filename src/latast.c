@@ -303,26 +303,26 @@ static int nodo_analizar(lat_mv *mv, ast *node, lat_bytecode *bcode, int i) {
       dbc(STORE_NAME, 0, 0, o);
     }
   } break;
-  case NODO_GLOBAL:{
-      /*SET: Asigna el valor de la variable en la tabla de simbolos*/
-      /*pn(mv, node->izq->izq);
-      if (node->izq->der->tipo == NODO_ATRIBUTO) {
-        // pn(mv, node->der);
-        pn(mv, node->izq->der->izq);
-        lat_objeto *o =
-            lat_cadena_nueva(mv, strdup(node->izq->der->der->valor->val.cadena));
-        o->num_linea = node->izq->der->der->num_linea;
-        o->num_columna = node->izq->der->der->num_columna;
-        o->es_constante = node->izq->der->der->valor->es_constante;
-        dbc(STORE_ATTR, 0, 0, o);
-      } else {
-        lat_objeto *o =
-            lat_cadena_nueva(mv, strdup(node->izq->der->valor->val.cadena));
-        o->num_linea = node->izq->der->num_linea;
-        o->num_columna = node->izq->der->num_columna;
-        o->es_constante = node->izq->der->valor->es_constante;
-        dbc(STORE_GLOBAL, 0, 0, o);
-    }*/
+  case NODO_GLOBAL: {
+    /*SET: Asigna el valor de la variable en la tabla de simbolos*/
+    /*pn(mv, node->izq->izq);
+    if (node->izq->der->tipo == NODO_ATRIBUTO) {
+      // pn(mv, node->der);
+      pn(mv, node->izq->der->izq);
+      lat_objeto *o =
+          lat_cadena_nueva(mv, strdup(node->izq->der->der->valor->val.cadena));
+      o->num_linea = node->izq->der->der->num_linea;
+      o->num_columna = node->izq->der->der->num_columna;
+      o->es_constante = node->izq->der->der->valor->es_constante;
+      dbc(STORE_ATTR, 0, 0, o);
+    } else {
+      lat_objeto *o =
+          lat_cadena_nueva(mv, strdup(node->izq->der->valor->val.cadena));
+      o->num_linea = node->izq->der->num_linea;
+      o->num_columna = node->izq->der->num_columna;
+      o->es_constante = node->izq->der->valor->es_constante;
+      dbc(STORE_GLOBAL, 0, 0, o);
+  }*/
     pn(mv, node->izq);
     dbc(STORE_GLOBAL, 0, 0, NULL);
   } break;
@@ -414,6 +414,11 @@ static int nodo_analizar(lat_mv *mv, ast *node, lat_bytecode *bcode, int i) {
     pn(mv, node->der);
     dbc(OP_EQ, 0, 0, NULL);
   } break;
+  case NODO_REGEX: {
+    pn(mv, node->izq);
+    pn(mv, node->der);
+    dbc(OP_REGEX, 0, 0, NULL);
+  } break;
   case NODO_DESIGUALDAD: {
     pn(mv, node->izq);
     pn(mv, node->der);
@@ -441,7 +446,7 @@ static int nodo_analizar(lat_mv *mv, ast *node, lat_bytecode *bcode, int i) {
   case NODO_SI: {
     nodo_si *nIf = ((nodo_si *)node);
     pn(mv, nIf->condicion);
-    //dbc(SETUP_LOOP, 0, 0, NULL);
+    // dbc(SETUP_LOOP, 0, 0, NULL);
     temp[0] = i;
     dbc(NOP, 0, 0, NULL);
     pn(mv, nIf->entonces);
@@ -449,12 +454,12 @@ static int nodo_analizar(lat_mv *mv, ast *node, lat_bytecode *bcode, int i) {
     dbc(NOP, 0, 0, NULL);
     temp[2] = i;
     if (nIf->_sino) {
-      //dbc(SETUP_LOOP, 0, 0, NULL);
+      // dbc(SETUP_LOOP, 0, 0, NULL);
       pn(mv, nIf->_sino);
-      //dbc(POP_BLOCK, 0, 0, NULL);
+      // dbc(POP_BLOCK, 0, 0, NULL);
     }
     temp[3] = i;
-    //dbc(POP_BLOCK, 0, 0, NULL);
+    // dbc(POP_BLOCK, 0, 0, NULL);
     bcode[temp[0]] = lat_bc(POP_JUMP_IF_FALSE, (temp[2] - 1), 0, NULL);
     bcode[temp[1]] = lat_bc(JUMP_ABSOLUTE, (temp[3] - 1), 0, NULL);
   } break;
@@ -465,27 +470,27 @@ static int nodo_analizar(lat_mv *mv, ast *node, lat_bytecode *bcode, int i) {
     pn(mv, nSi);
   } break;
   case NODO_MIENTRAS: {
-    //dbc(SETUP_LOOP, 0, 0, NULL);
+    // dbc(SETUP_LOOP, 0, 0, NULL);
     temp[0] = i;
     pn(mv, node->izq);
     temp[1] = i;
     dbc(NOP, 0, 0, NULL);
     pn(mv, node->der);
     dbc(JUMP_ABSOLUTE, (temp[0] - 1), 0, NULL);
-    //dbc(POP_BLOCK, 0, 0, NULL);
+    // dbc(POP_BLOCK, 0, 0, NULL);
     bcode[temp[1]] = lat_bc(POP_JUMP_IF_FALSE, (i - 1), 0, NULL);
-    //dbc(POP_BLOCK, 0, 0, NULL);
+    // dbc(POP_BLOCK, 0, 0, NULL);
   } break;
   case NODO_REPETIR: {
-    //dbc(SETUP_LOOP, 0, 0, NULL);
+    // dbc(SETUP_LOOP, 0, 0, NULL);
     temp[0] = i;
     pn(mv, node->der);
     pn(mv, node->izq);
     temp[1] = i;
     dbc(NOP, 0, 0, NULL);
-    //dbc(POP_BLOCK, 0, 0, NULL);
+    // dbc(POP_BLOCK, 0, 0, NULL);
     bcode[temp[1]] = lat_bc(POP_JUMP_IF_FALSE, (temp[0] - 1), 0, NULL);
-    //dbc(POP_BLOCK, 0, 0, NULL);
+    // dbc(POP_BLOCK, 0, 0, NULL);
   } break;
   case NODO_FUNCION_LLAMADA: {
     // argumentos
@@ -562,7 +567,7 @@ static int nodo_analizar(lat_mv *mv, ast *node, lat_bytecode *bcode, int i) {
       num_params = __contar_num_parargs(node->izq, NODO_LISTA_AGREGAR_ELEMENTO);
     }
     // FIX: Memory leak
-    //lat_objeto *o = lat_lista_nueva(mv, __lista_crear());
+    // lat_objeto *o = lat_lista_nueva(mv, __lista_crear());
     dbc(BUILD_LIST, num_params, 0, NULL);
   } break;
   case NODO_LISTA_AGREGAR_ELEMENTO: {
@@ -646,6 +651,7 @@ void __mostrar_bytecode(lat_bytecode *bcode) {
     case OP_LT:
     case OP_LE:
     case OP_EQ:
+    case OP_REGEX:
     case OP_NEQ:
     case OP_AND:
     case OP_OR:
@@ -723,7 +729,6 @@ void __mostrar_bytecode(lat_bytecode *bcode) {
     case BUILD_MAP: {
       printf("BUILD_MAP\t%i\n", cur.a);
     } break;
-
     }
   }
 #endif

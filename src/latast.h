@@ -70,7 +70,7 @@ typedef enum {
   NODO_DEFECTO,                /**< Nodo defecto */
   NODO_CASOS,                  /**< Nodo casos */
   NODO_MIENTRAS,               /**< Nodo mientras */
-  NODO_REPETIR,                  /**< Nodo repetir */
+  NODO_REPETIR,                /**< Nodo repetir */
   NODO_DESDE,                  /**< Nodo desde */
   NODO_FUNCION_PARAMETROS,     /**< Nodo parametros */
   NODO_FUNCION_ARGUMENTOS,     /**< Nodo argumentos de una funcion */
@@ -89,6 +89,7 @@ typedef enum {
                          */
   NODO_ATRIBUTO,      /**< Attributo de un objeto: str->longitud() */
   NODO_GLOBAL,        /**< declaracion de variables globales */
+  NODO_REGEX,         /**< expresion regular match*/
 } nodo_tipo;
 
 /** \brief Tipos de dato */
@@ -191,7 +192,7 @@ ast *ast_nuevo(nodo_tipo tipo, ast *l, ast *r);
   *
   */
 ast *ast_nuevo_identificador(const char *s, int num_linea, int num_columna,
-                              bool es_constante);
+                             bool es_constante);
 
 /** Nuevo nodo tipo Logico (verdadero/falso)
   *

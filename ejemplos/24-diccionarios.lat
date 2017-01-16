@@ -3,7 +3,7 @@ dic = { "Chilindrina": "Maria Antonieta de las Nieves",
      "Tres patines": "Leopoldo Fernandez" }
 
 #mandamos a consola el diccionario o podemos obtener su representacion en cadena
-//str = dic->cadena()
+//str = dic.cadena()
 //escribir(str)
 escribir(dic)
 
@@ -18,11 +18,11 @@ escribir("")
 escribir(dic)
 
 dic["CH"] = "Chapulin C."
-escribir(dic->CH)
+escribir(dic.CH)
 
 #obtenemos la longitud del diccionario
-//escribir("Num de elementos: " . dic->longitud)
-escribir("Num de elementos: " . diccionario->longitud(dic))
+//escribir("Num de elementos: " .. dic.longitud)
+escribir("Num de elementos: " .. diccionario.longitud(dic))
 
 #ejemplo de request de la api de telegram
 true = verdadero
@@ -60,19 +60,19 @@ dic = {
 
 
 
-#escribir(dic->ok)
-#escribir(dic->result)
-#escribir(dic->result[0])
-#escribir(dic->result[0]->message)
-escribir(dic->result[0]->message->text)
-escribir(dic->result[0]->message->xyz)  //cadena vacia
+#escribir(dic.ok)
+#escribir(dic.result)
+#escribir(dic.result[0])
+#escribir(dic.result[0].message)
+escribir(dic.result[0].message.text)
+escribir(dic.result[0].message.xyz)  //cadena vacia
 
-msg = dic->result[0]->message
+msg = dic.result[0].message
 escribir(msg["xyz"])
 
 /*
 #obtenemos el valor de un elemento que no existe
 escribir("")
-ch = dic["CH2"] #Error: Linea 25, 10: No se encontro la llave 'CH2' en el diccionario.
+ch = dic["CH2"] #Error: Linea 25, 10: No se encontro la llave 'CH2' en el diccionario..
 escribir(ch)
 */

@@ -1,11 +1,11 @@
 #se pueden crear disparadores (triggers) en latino
 #accion para /test
 funcion test_accion (arg1)
-  escribir("test_accion: " . arg1)
+  escribir("test_accion: " .. arg1)
 fin
 #accion para /id
 funcion id_accion (arg1)
-  escribir("id_accion: " . arg1)
+  escribir("id_accion: " .. arg1)
 fin
 
 #listado de disparadores
@@ -16,12 +16,12 @@ triggers = [
 ]
 
 texto = "/test"  #para test
-//desde (i=0; i<triggers->longitud(); i++)
-desde (i=0; i< lista->longitud(triggers); i++)
-  si texto == triggers[i]->comando
+//desde (i=0; i<triggers.longitud(); i++)
+desde (i=0; i< lista.longitud(triggers); i++)
+  si texto == triggers[i].comando
     #ejecuto el disparador (trigger) para test_accion
-    //fun = triggers[i]->accion
+    //fun = triggers[i].accion
     //fun("enviando desde triggers")
-    triggers[i]->accion("enviando desde triggers")
+    triggers[i].accion("enviando desde triggers")
   fin
 fin

@@ -3,29 +3,3 @@ Para debuguear en visual studio:
 Menu propiedades del proyecto-> Debugging -> Command Arguments. Agregar
 $(SolutionDir)..\ejemplos\debug.lat
 */
-
-str = "\""
-escribir(str)
-str = cadena.reemplazar(str, "\"", "\\\"")
-escribir(str)
-
-//reemplazar varios valores
-str = "hola mundo"
-escribir(str)
-str = cadena.reemplazar(str, "o", "x")
-escribir(str)
-
-//reemplazar al inicio
-str = "hola mundo"
-str = cadena.reemplazar(str, "hola", "hello")
-escribir(str)
-
-//reemplazar en medio
-str = "hola mundo"
-str = cadena.reemplazar(str, " ", "...")
-escribir(str)
-
-//reemplazar al final
-str = "hola mundo"
-str = cadena.reemplazar(str, "mundo", "world")
-escribir(str)

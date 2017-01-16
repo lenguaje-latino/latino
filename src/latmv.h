@@ -83,6 +83,7 @@ typedef struct lat_mv lat_mv;
 #define STORE_MAP 38
 #define STORE_ATTR 39
 #define STORE_GLOBAL 40
+#define OP_REGEX 41
 
 /**\brief Objeto tipo maquina virtual */
 
