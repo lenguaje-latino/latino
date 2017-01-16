@@ -24,8 +24,6 @@ THE SOFTWARE.
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-/*#include <pwd.h> // libreria para obtener usuario
-#include <unistd.h> // lo ocupa para 'geteuid' */
 
 #include "latast.h"
 #include "latgc.h"
@@ -36,6 +34,8 @@ THE SOFTWARE.
 #include "latobj.h"
 #include "latparse.h"
 #include "linenoise/linenoise.h"
+
+#define HISTORY_FILE ".lat_history"
 
 /*
 Para depurar en visual studio:
@@ -263,30 +263,15 @@ REP:
   }
 }
 
-/*
-void *__lat_sistema_usuario() {
-  register struct passwd *pw;
-  unsigned int uid; // al parecer no usaba variables con signo y usaba una tipo
-size_t (creo que es long long int) y mejor usamos esta
-  // tipo char no funcionaba arriba, seguro el número que necesita es mayor a
-255, ya que no funciona ni con unsigned.
-  uid = geteuid ();
-  pw = getpwuid (uid);
-  if (pw) {
-      return pw->pw_name;
-  } else {
-      return 0;
-  };
-}
-*/
-
 static void lat_repl(lat_mv *mv) {
-  char *buf = __memoria_asignar(mv, MAX_STR_LENGTH);
-  // char *usuario = __lat_sistema_usuario(); y pues ya sabes xd
+  char *buf = __memoria_asignar(mv, MAX_STR_LENGTH), dir_history[32];
+  strcpy(dir_history, getenv("HOME"));
+  strcat(dir_history, "/");
+  strcat(dir_history, HISTORY_FILE);
   ast *tmp = NULL;
   int status;
   mv->REPL = true;
-  linenoiseHistoryLoad(".history");
+  linenoiseHistoryLoad(dir_history);
   linenoiseSetCompletionCallback(completion);
   while (leer_linea(buf) != -1) {
     tmp = lat_analizar_expresion(buf, &status);
@@ -304,7 +289,7 @@ static void lat_repl(lat_mv *mv) {
     // se guarda el comando al historial aunque haya error
     char *tmp = __str_reemplazar(buf, "\n", "");
     linenoiseHistoryAdd(tmp);
-    linenoiseHistorySave(".history");
+    linenoiseHistorySave(dir_history);
   }
   __memoria_liberar(mv, buf);
 }
