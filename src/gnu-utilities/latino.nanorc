@@ -3,7 +3,7 @@ syntax "latino" "\.lat$"
 
  ##################################################################
  # Palabras clave
- color magenta "si|osi|sino|fin|romper|continuar|mientras|hacer|cuando|desde|nulo|retorno|caso|defecto|repetir|global"
+ color magenta "si|osi|sino|fin|romper|continuar|mientras|hacer|cuando|desde|nulo|retorno|caso|defecto|repetir|global|retornar"
  color blue "funcion"
  color green "\<(verdadero|cierto|falso)\>"
  color brightmagenta "[[:space:]]+menu"
