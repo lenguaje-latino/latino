@@ -304,25 +304,6 @@ static int nodo_analizar(lat_mv *mv, ast *node, lat_bytecode *bcode, int i) {
     }
   } break;
   case NODO_GLOBAL: {
-    /*SET: Asigna el valor de la variable en la tabla de simbolos*/
-    /*pn(mv, node->izq->izq);
-    if (node->izq->der->tipo == NODO_ATRIBUTO) {
-      // pn(mv, node->der);
-      pn(mv, node->izq->der->izq);
-      lat_objeto *o =
-          lat_cadena_nueva(mv, strdup(node->izq->der->der->valor->val.cadena));
-      o->num_linea = node->izq->der->der->num_linea;
-      o->num_columna = node->izq->der->der->num_columna;
-      o->es_constante = node->izq->der->der->valor->es_constante;
-      dbc(STORE_ATTR, 0, 0, o);
-    } else {
-      lat_objeto *o =
-          lat_cadena_nueva(mv, strdup(node->izq->der->valor->val.cadena));
-      o->num_linea = node->izq->der->num_linea;
-      o->num_columna = node->izq->der->num_columna;
-      o->es_constante = node->izq->der->valor->es_constante;
-      dbc(STORE_GLOBAL, 0, 0, o);
-  }*/
     pn(mv, node->izq);
     dbc(STORE_GLOBAL, 0, 0, NULL);
   } break;
@@ -543,7 +524,7 @@ static int nodo_analizar(lat_mv *mv, ast *node, lat_bytecode *bcode, int i) {
     }
     // procesar instrucciones
     fpn(mv, fun->sentencias);
-    fdbc(RETURN_VALUE, 0, 0, NULL);
+    fdbc(RETURN_VALUE, 0, 0, mv->objeto_nulo);
     lat_objeto *f = lat_definir_funcion(mv, funcion_bcode, fi + 1);
     dbc(MAKE_FUNCTION, fi + 1, 0, f);
     funcion_bcode = NULL;
@@ -717,17 +698,19 @@ void __mostrar_bytecode(lat_bytecode *bcode) {
       printf("DEC\t(%s)\n", buffer);
       __memoria_liberar(NULL, buffer);
     } break;
-    case MAKE_FUNCTION: {
-      printf("MAKE_FUNCTION\n");
-      printf("-------------------------------\n");
-      __mostrar_bytecode(cur.meta);
-      printf("-------------------------------\n");
-    } break;
     case BUILD_LIST: {
       printf("BUILD_LIST\t%i\n", cur.a);
     } break;
     case BUILD_MAP: {
       printf("BUILD_MAP\t%i\n", cur.a);
+    } break;
+    case MAKE_FUNCTION: {
+      printf("MAKE_FUNCTION\n");
+      printf("-------------------------------\n");
+      o = (lat_objeto *)cur.meta;
+      lat_function *fun = o->datos.fun_usuario;
+      __mostrar_bytecode(fun->bcode);
+      printf("-------------------------------\n");
     } break;
     }
   }

@@ -1,0 +1,2 @@
+i = cadena.ultimo_indice("hola mundo", "o")
+escribir("la ultima 'o' esta en la posicion: " .. i)

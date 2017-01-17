@@ -1,4 +1,0 @@
-a = "                      latino                           "
-sin_espacios = cadena->quitar_espacios(a)
-imprimir("Cadena sin recortar: ".a)
-imprimir("Cadena recortada: ".sin_espacios)

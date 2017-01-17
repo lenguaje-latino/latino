@@ -1,2 +1,2 @@
 a = "escribir('vdv')"
-cadena->ejecutar(a)
+cadena.ejecutar(a)

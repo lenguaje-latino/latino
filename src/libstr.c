@@ -278,17 +278,17 @@ char *__str_rellenar_derecha(char *base, char *c, int n) {
   return ret;
 }
 
-char *__str_reemplazar(char * o_string, char * s_string, char * r_string) {
-  char* buffer = __memoria_asignar(NULL, MAX_STR_LENGTH);
-  char * ch; 
-  if(!(ch = strstr(o_string, s_string))){    
+char *__str_reemplazar(char *o_string, char *s_string, char *r_string) {
+  char *buffer = __memoria_asignar(NULL, MAX_STR_LENGTH);
+  char *ch;
+  if (!(ch = strstr(o_string, s_string))) {
     strcpy(buffer, o_string);
     return buffer;
   }
-  strncpy(buffer, o_string, ch-o_string);
-  buffer[ch-o_string] = 0;   
-  sprintf(buffer+(ch - o_string), "%s%s", r_string, ch + strlen(s_string));
-  //printf("REPLACE: %s\n", buffer);
+  strncpy(buffer, o_string, ch - o_string);
+  buffer[ch - o_string] = 0;
+  sprintf(buffer + (ch - o_string), "%s%s", r_string, ch + strlen(s_string));
+  // printf("REPLACE: %s\n", buffer);
   return buffer;
 }
 
@@ -404,14 +404,16 @@ void lat_format(lat_mv* mv){
 void lat_cadena_indice(lat_mv *mv) {
   lat_objeto *b = lat_desapilar(mv);
   lat_objeto *a = lat_desapilar(mv);
+  char *cb = __cadena(b);
+  char *ca = __cadena(a);
   lat_objeto *r = NULL;
   if (a->tipo == T_STR && b->tipo == T_STR) {
-    char *cpos = strstr(__cadena(a), __cadena(b));
+    char *cpos = strstr(ca, cb);
     int pos;
     if (cpos == NULL) {
       pos = -1;
     } else {
-      pos = cpos - __cadena(a);
+      pos = cpos - ca;
     }
     r = lat_numerico_nuevo(mv, pos);
   }
@@ -463,8 +465,8 @@ void lat_cadena_eliminar(lat_mv *mv) {
   lat_objeto *b = lat_desapilar(mv);
   lat_objeto *a = lat_desapilar(mv);
   char *buf = strdup(__cadena(a));
-  __str_reemplazar(buf, __cadena(b), "");
-  lat_objeto *tmp = lat_cadena_nueva(mv, buf);
+  char *res = __str_reemplazar(buf, __cadena(b), "");
+  lat_objeto *tmp = lat_cadena_nueva(mv, res);
   lat_apilar(mv, tmp);
   lat_gc_agregar(mv, tmp);
 }
@@ -493,34 +495,34 @@ void lat_cadena_longitud(lat_mv *mv) {
 }
 
 char *reemplazar_lat(char *orig, char *rep, char *with) {
-    char *result, *ins, *tmp;
-    int len_rep, len_with, len_front, count;
-    if (!orig && !rep)
-        return NULL;
-    len_rep = strlen(rep);
-    if (len_rep == 0)
-        return NULL;
-    if (!with)
-        with = "";
-    len_with = strlen(with);
-    ins = orig;
-    for (count = 0; tmp = strstr(ins, rep); ++count) {
-        ins = tmp + len_rep;
-    }
-    tmp = result = malloc(strlen(orig) + (len_with - len_rep) * count + 1);
-    if (!result)
-        return NULL;
-    while (count--) {
-        ins = strstr(orig, rep);
-        len_front = ins - orig;
-        tmp = strncpy(tmp, orig, len_front) + len_front;
-        tmp = strcpy(tmp, with) + len_with;
-        orig += len_front + len_rep; // move to next "end of rep"
-    }
-    strcpy(tmp, orig);
-    return result;
-	free(result);
-    free(tmp);
+  char *result, *ins, *tmp;
+  int len_rep, len_with, len_front, count;
+  if (!orig && !rep)
+    return NULL;
+  len_rep = strlen(rep);
+  if (len_rep == 0)
+    return NULL;
+  if (!with)
+    with = "";
+  len_with = strlen(with);
+  ins = orig;
+  for (count = 0; tmp = strstr(ins, rep); ++count) {
+    ins = tmp + len_rep;
+  }
+  tmp = result = malloc(strlen(orig) + (len_with - len_rep) * count + 1);
+  if (!result)
+    return NULL;
+  while (count--) {
+    ins = strstr(orig, rep);
+    len_front = ins - orig;
+    tmp = strncpy(tmp, orig, len_front) + len_front;
+    tmp = strcpy(tmp, with) + len_with;
+    orig += len_front + len_rep; // move to next "end of rep"
+  }
+  strcpy(tmp, orig);
+  return result;
+  free(result);
+  free(tmp);
 }
 
 void lat_cadena_reemplazar(lat_mv *mv) {
@@ -665,13 +667,14 @@ void lat_cadena_invertir(lat_mv *mv) {
 
 void lat_cadena_ejecutar(lat_mv *mv) {
   int status;
-  lat_objeto *func = ast_analizar_arbol(
-      mv, lat_analizar_expresion(__cadena(lat_desapilar(mv)), &status));
+  char *codigo = strdup(__cadena(lat_desapilar(mv)));
+  lat_objeto *func =
+      ast_analizar_arbol(mv, lat_analizar_expresion(codigo, &status));
   if (status == 0) {
     lat_llamar_funcion(mv, func);
-    __obj_eliminar(mv, func);
+    //__obj_eliminar(mv, func);
   } else {
-    lat_error("Error al ejeuctar cadena...");
+    lat_error("Error al ejecutar cadena...");
   }
 }
 
@@ -729,10 +732,10 @@ void lat_cadena_match(lat_mv *mv) {
       /*printf("Match %u, Group %u: [%2u-%2u]: %s\n", m, g, groupArray[g].rm_so,
              groupArray[g].rm_eo, cursorCopy + groupArray[g].rm_so);*/
       int len = groupArray[g].rm_eo - groupArray[g].rm_so;
-      if (len<=0) {
-              lat_apilar(mv, mv->objeto_nulo);
-              regfree(&regexCompiled);
-              return;
+      if (len <= 0) {
+        lat_apilar(mv, mv->objeto_nulo);
+        regfree(&regexCompiled);
+        return;
       }
       char *str = __memoria_asignar(mv, len + 1);
       strcpy(str, cursorCopy + groupArray[g].rm_so);

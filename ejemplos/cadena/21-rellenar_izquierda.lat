@@ -1,0 +1,5 @@
+a = "ola amigo Latino" // Ponemos un texto incorrecto para corregir despúes
+b = "H" // declaramos la letra que vamos a ingresar
+c = 1 // ingresamos el número de veces a rellenar en un entero
+resultado = cadena.rellenar_izquierda(a, b, c) // si cambiamos los  valores declarados por cadenas directas y númerico directo nos va a añadir la letra
+imprimir("La  cadena final es: " .. resultado)

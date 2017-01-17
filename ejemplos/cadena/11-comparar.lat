@@ -1,6 +1,6 @@
 a = "Hola"
 b = "Hola"
-es_igual = cadena->comparar(a, b)
+es_igual = cadena.comparar(a, b)
 si es_igual == 0
 	imprimir("Si es el mismo texto el de los valores 'a' y 'b'")
 sino

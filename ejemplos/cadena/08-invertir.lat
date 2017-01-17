@@ -1,0 +1,3 @@
+a = "hola amigo Latino ¿Cómo estás?"
+invertida = cadena.invertir(a)
+imprimir("La cadena 'a' invertida es: "..invertida)

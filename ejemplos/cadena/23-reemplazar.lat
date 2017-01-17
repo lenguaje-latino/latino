@@ -1,0 +1,3 @@
+texto = "Hola chico guay"
+texto_final = cadena.reemplazar(texto, " ", ", ") // ingresamos que se reemplacen  los espacios por comas
+imprimir(texto_final) // imprimimos

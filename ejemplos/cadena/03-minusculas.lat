@@ -1,0 +1,3 @@
+a = "HOLA LATINO" # Creamos una cadena en minúsculas
+minusculas = cadena.minusculas(a)
+imprimir("La cadena en minusculas es: "..minusculas)

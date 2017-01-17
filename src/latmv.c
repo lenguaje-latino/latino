@@ -707,8 +707,10 @@ void lat_llamar_funcion(lat_mv *mv, lat_objeto *func) {
                     fun->num_linea, fun->num_columna, fun->nombre_cfun);
         }
         bool apilar = next.ins == STORE_NAME ||
+                      strcmp(fun->nombre_cfun, "incluir") ||
                       (func->nombre_cfun != NULL && fun->nombre_cfun != NULL &&
                        0 == strcmp(func->nombre_cfun, fun->nombre_cfun));
+        // printf("apilar contexto: %i\n", apilar);
         if (apilar) {
           __mv_apilar_contexto(mv);
         }
@@ -719,6 +721,10 @@ void lat_llamar_funcion(lat_mv *mv, lat_objeto *func) {
         }
       } break;
       case RETURN_VALUE: {
+        lat_objeto *o = (lat_objeto *)cur.meta;
+        if (o != NULL) {
+          lat_apilar(mv, o);
+        }
         return;
       } break;
       case MAKE_FUNCTION: {
