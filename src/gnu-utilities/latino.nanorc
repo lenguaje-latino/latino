@@ -1,10 +1,12 @@
 ## Sintaxis Latino en Nano
 syntax "latino" "\.lat$"
 
+ # Color de funciones personalizadas del usuario
+ color blue "[a-Z_0-9\.]+[(]+.*+[)]"
  ##################################################################
  # Palabras clave
- color magenta "si|osi|sino|fin|romper|continuar|mientras|hacer|cuando|desde|nulo|retorno|caso|defecto|repetir|global|retornar"
- color blue "funcion"
+ color magenta "\<(si|osi|sino|fin|romper|continuar|mientras|hacer|cuando|desde|nulo|retorno|caso|defecto|repetir|global|retornar)\>"
+ color brightblue "funcion"
  color green "\<(verdadero|cierto|falso)\>"
  color brightmagenta "[[:space:]]+menu"
  color brightblue "elegir[(]+.*+[)]"
@@ -71,15 +73,7 @@ color brightblue "archivo\.\<(leer|lineas|ejecutar|escribir|copiar)\>[[:space:]]
  color brightgreen	start="'" end="'"
  color brightgreen	start="\"" end="\""
  ##################################################################
-
- # Comentarios simples
- color brightred	"[[:blank:]]\/\/.*|^\/\/.*"
- color brightred	"^#.*|[[:blank:]]#.*"
-
- # Comentarios múltiples
- color brightred	start="\/\*"	end="\*\/"
-
- # concatenar, despúes de...
+ # concatenar, despúes de... o antes de..
  color brightwhite "\.\.\<([a-Z_0-9\.]+|[a-Z_0-9\.]+\.[a-Z_0-9\.]+)\>\.\."
  color brightwhite "\.\.\<([a-Z_0-9\.]+|[a-Z_0-9\.]+\.[a-Z_0-9\.]+)\>"
   # concatenar con funciones con variables ó númericos
@@ -100,6 +94,13 @@ color brightblue "archivo\.\<(leer|lineas|ejecutar|escribir|copiar)\>[[:space:]]
    color brightwhite "\<([a-Z_0-9\.]+|[a-Z_0-9\.]+\.[a-Z_0-9\.]+)\>\(\)\.\."
    # concatenar con funciones con cadena
    color brightwhite "\<([a-Z_0-9\.]+|[a-Z_0-9\.]+\.[a-Z_0-9\.]+)\>\(\".*\"\)\.\."
+
+   # Comentarios simples
+   color brightred	"[[:blank:]]\/\/.*|^\/\/.*"
+   color brightred	"^#.*|[[:blank:]]#.*"
+
+   # Comentarios múltiples
+   color brightred	start="\/\*"	end="\*\/"
 
  #Valid colors are "green", "red", "blue",
  #"white", "yellow", "cyan", "magenta" and
