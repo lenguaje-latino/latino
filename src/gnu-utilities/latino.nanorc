@@ -3,6 +3,10 @@ syntax "latino" "\.lat$"
 
  # Color de funciones personalizadas del usuario
  color blue "[a-Z_0-9\.]+[(]+.*+[)]"
+
+ # Constantes
+ color red "^[[:upper:]]+"
+
  ##################################################################
  # Palabras clave
  color magenta "\<(si|osi|sino|fin|romper|continuar|mientras|hacer|cuando|desde|nulo|retorno|caso|defecto|repetir|global|retornar)\>"
