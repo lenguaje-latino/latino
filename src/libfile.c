@@ -106,7 +106,7 @@ void lat_archivo_leer(lat_mv *mv) {
   char *archivo_leido = strdup(final);
   lat_apilar(mv, lat_cadena_nueva(mv, archivo_leido));
   lat_gc_agregar(mv, lat_cadena_nueva(mv, archivo_leido));
-  free(archivo_leido);
+  //free(archivo_leido);
 }
 
 void lat_archivo_escribir(lat_mv *mv) {
