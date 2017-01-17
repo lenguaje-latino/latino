@@ -84,7 +84,7 @@ void lat_redis_asignar(lat_mv *mv) {
   redisReply *respuesta;
   respuesta =
       redisCommand(conexion, "SET %s %s", __cadena(hash), __cadena(cadena));
-  if (respuesta->str) {
+  if (respuesta->integer) {
     lat_apilar(mv, mv->objeto_verdadero);
   } else {
     lat_apilar(mv, mv->objeto_falso);
@@ -142,7 +142,14 @@ void lat_redis_borrar(lat_mv *mv) {
   lat_objeto *hash = lat_desapilar(mv);
   lat_objeto *o = lat_desapilar(mv);
   redisContext *conexion = __cdato(o);
-  redisCommand(conexion, "DEL %s", __cadena(hash));
+  redisReply *respuesta;
+  respuesta = redisCommand(conexion, "DEL %s", __cadena(hash));
+  if(!respuesta->integer) {
+      lat_apilar(mv, mv->objeto_falso);
+  } else {
+      lat_apilar(mv, mv->objeto_verdadero);
+  }
+  freeReplyObject(respuesta);
 }
 
 void lat_redis_hborrar(lat_mv *mv) {
@@ -150,7 +157,14 @@ void lat_redis_hborrar(lat_mv *mv) {
   lat_objeto *hash = lat_desapilar(mv);
   lat_objeto *o = lat_desapilar(mv);
   redisContext *conexion = __cdato(o);
-  redisCommand(conexion, "HDEL %s %s", __cadena(hash), __cadena(llave));
+  redisReply *respuesta;
+  respuesta = redisCommand(conexion, "HDEL %s %s", __cadena(hash), __cadena(llave));
+  if(!respuesta->integer) {
+      lat_apilar(mv, mv->objeto_falso);
+  } else {
+      lat_apilar(mv, mv->objeto_verdadero);
+  }
+  freeReplyObject(respuesta);
 }
 
 void lat_redis_aumentar(lat_mv *mv) {
@@ -160,11 +174,11 @@ void lat_redis_aumentar(lat_mv *mv) {
   redisReply *respuesta;
   respuesta = redisCommand(conexion, "INCR %s", __cadena(hash));
   if (!respuesta->integer) {
-    lat_error("Linea %d, %d: %s", hash->num_linea, hash->num_columna,
-                    "error al incrementar el entero.");
+      lat_apilar(mv, mv->objeto_falso);
+  } else {
+      lat_objeto *tmp = lat_numerico_nuevo(mv, (double)respuesta->integer);
+      lat_apilar(mv, tmp);
   }
-  lat_objeto *tmp = lat_numerico_nuevo(mv, (double)respuesta->integer);
-  lat_apilar(mv, tmp);
   freeReplyObject(respuesta);
 }
 
@@ -177,11 +191,11 @@ void lat_redis_haumentar(lat_mv *mv) {
   respuesta = redisCommand(conexion, "HINCRBY %s %s 1", __cadena(hash),
                            __cadena(llave));
   if (!respuesta->integer) {
-    lat_error("Linea %d, %d: %s", llave->num_linea, llave->num_columna,
-                    "error al incrementar el entero.");
+      lat_apilar(mv, mv->objeto_falso);
+  } else {
+      lat_objeto *tmp = lat_numerico_nuevo(mv, (double)respuesta->integer);
+      lat_apilar(mv, tmp);
   }
-  lat_objeto *tmp = lat_numerico_nuevo(mv, (double)respuesta->integer);
-  lat_apilar(mv, tmp);
   freeReplyObject(respuesta);
 }
 
@@ -194,11 +208,11 @@ void lat_redis_incrementar(lat_mv *mv) {
   long int numerico = __numerico(numero);
   respuesta = redisCommand(conexion, "INCRBY %s %i", __cadena(hash), numerico);
   if (!respuesta->integer) {
-    lat_error("Linea %d, %d: %s", hash->num_linea, hash->num_columna,
-                    "error al incrementar el entero.");
+      lat_apilar(mv, mv->objeto_falso);
+  } else {
+      lat_objeto *tmp = lat_numerico_nuevo(mv, respuesta->integer);
+      lat_apilar(mv, tmp);
   }
-  lat_objeto *tmp = lat_numerico_nuevo(mv, respuesta->integer);
-  lat_apilar(mv, tmp);
   freeReplyObject(respuesta);
 }
 
@@ -213,11 +227,11 @@ void lat_redis_hincrementar(lat_mv *mv) {
   respuesta = redisCommand(conexion, "HINCRBY %s %s %i", __cadena(hash),
                            __cadena(llave), numerico);
   if (!respuesta->integer) {
-    lat_error("Linea %d, %d: %s", hash->num_linea, hash->num_columna,
-                    "error al incrementar el entero.");
-  };
-  lat_objeto *tmp = lat_numerico_nuevo(mv, respuesta->integer);
-  lat_apilar(mv, tmp);
+      lat_apilar(mv, mv->objeto_falso);
+  } else {
+      lat_objeto *tmp = lat_numerico_nuevo(mv, respuesta->integer);
+      lat_apilar(mv, tmp);
+  }
   freeReplyObject(respuesta);
 }
 
@@ -284,6 +298,11 @@ void lat_redis_sagregar(lat_mv *mv) {
   respuesta =
       redisCommand(conexion, "SADD %s %s", __cadena(hash), __cadena(llave));
   freeReplyObject(respuesta);
+  if(!respuesta->integer) {
+      lat_apilar(mv, mv->objeto_falso);
+  } else {
+      lat_apilar(mv, mv->objeto_verdadero);
+  }
 }
 
 void lat_redis_sborrar(lat_mv *mv) {
@@ -295,6 +314,27 @@ void lat_redis_sborrar(lat_mv *mv) {
   respuesta =
       redisCommand(conexion, "SREM %s %s", __cadena(hash), __cadena(llave));
   freeReplyObject(respuesta);
+  if(!respuesta->integer) {
+      lat_apilar(mv, mv->objeto_falso);
+  } else {
+      lat_apilar(mv, mv->objeto_verdadero);
+  }
+}
+
+void lat_redis_sesmiembro(lat_mv *mv) {
+  lat_objeto *llave = lat_desapilar(mv);
+  lat_objeto *hash = lat_desapilar(mv);
+  lat_objeto *o = lat_desapilar(mv);
+  redisContext *conexion = __cdato(o);
+  redisReply *respuesta;
+  respuesta =
+      redisCommand(conexion, "SISMEMBER %s %s", __cadena(hash), __cadena(llave));
+  freeReplyObject(respuesta);
+  if(!respuesta->integer) {
+      lat_apilar(mv, mv->objeto_falso);
+  } else {
+      lat_apilar(mv, mv->objeto_verdadero);
+  }
 }
 
 static const lat_CReg lib_redis[] = {
@@ -316,6 +356,7 @@ static const lat_CReg lib_redis[] = {
     {"smiembros", lat_redis_smiembros, 2},
     {"sagregar", lat_redis_sagregar, 3},
     {"sborrar", lat_redis_sborrar, 3},
+    {"sesmiembro", lat_redis_sesmiembro, 3},
     {NULL, NULL}};
 
 #endif
