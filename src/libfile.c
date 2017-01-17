@@ -152,9 +152,9 @@ void lat_archivo_ejecutar(lat_mv *mv) {
 void lat_archivo_copiar(lat_mv *mv) {
   lat_objeto *b = lat_desapilar(mv);
   lat_objeto *a = lat_desapilar(mv);
-  FILE *archivo2 = fopen(__cadena(b), "a");
-  fprintf(archivo2, "%s", __cadena(a));
-  fclose(archivo2);
+  FILE *archivo = fopen(__cadena(a), "a");
+  fprintf(archivo, "%s", __cadena(b));
+  fclose(archivo);
 }
 
 static const lat_CReg lib_archivo[] = {{"leer", lat_archivo_leer, 1},
