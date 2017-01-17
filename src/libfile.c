@@ -101,11 +101,12 @@ void lat_archivo_leer(lat_mv *mv) {
   while ((c = fgetc(archivo)) != EOF) {
     final[n++] = (char)c;
   }
-  final[n] = '\0';
+  final[n-1] = '\0';
   fclose(archivo);
-  lat_objeto *tmp = lat_cadena_nueva(mv, final);
-  lat_apilar(mv, tmp);
-  lat_gc_agregar(mv, tmp);
+  char *archivo_leido = strdup(final);
+  lat_apilar(mv, lat_cadena_nueva(mv, archivo_leido));
+  lat_gc_agregar(mv, lat_cadena_nueva(mv, archivo_leido));
+  free(archivo_leido);
 }
 
 void lat_archivo_escribir(lat_mv *mv) {
