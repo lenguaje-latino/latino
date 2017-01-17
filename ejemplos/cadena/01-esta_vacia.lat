@@ -1,7 +1,7 @@
 a="" # Ponemos una cadena vacía
 
 # Ponemos una condición
-si cadena->esta_vacia(a)
+si cadena.esta_vacia(a)
 	imprimir("La cadena a esta vacía")
 sino
 	imprimir("La cadena no está vacía")

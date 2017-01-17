@@ -1,6 +1,6 @@
 a = "hola" # Declaramos una cadena y no un númerico
 
-si cadena->es_numerico(a)
+si cadena.es_numerico(a)
 	imprimir("La cadena 'a' es númerica")
 sino
 	imprimir("La cadena 'a' no es númerica")

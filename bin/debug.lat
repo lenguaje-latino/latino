@@ -3,3 +3,24 @@ Para debuguear en visual studio:
 Menu propiedades del proyecto-> Debugging -> Command Arguments. Agregar
 $(SolutionDir)..\ejemplos\debug.lat
 */
+
+/*
+funcion x()
+  retornar verdadero
+fin
+
+funcion y()
+  x()
+fin
+*/
+
+//y retorna nulo
+//si y() imprimir(y()) fin
+
+funcion x()
+  j=1
+fin
+
+x()
+imprimir("y")
+imprimir(j)

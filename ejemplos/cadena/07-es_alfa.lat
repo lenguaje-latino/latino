@@ -1,6 +1,6 @@
 a = "Hola_Latino 1"
 
-si cadena->es_alfa(a)
+si cadena.es_alfa(a)
 	imprimir("La cadena 'a' es alfanúmerica")
 sino
 	imprimir("La cadena 'a' no es alfanúmerica")

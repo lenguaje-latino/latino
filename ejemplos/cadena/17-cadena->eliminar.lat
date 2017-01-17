@@ -1,5 +1,0 @@
-a = "Hola latino"
-b = cadena->eliminar(a, " ")
-imprimir("En la cadena 'a' se eliminó 'Hola' el resultado es: ".b)
-
-// No sé que hace XD

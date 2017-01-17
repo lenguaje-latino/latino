@@ -1,4 +1,0 @@
-a = "Hola"
-b = "latino"
-unido = cadena->concatenar(a, " ".b)
-imprimir("El texto concatenado (unido) es: ".unido)

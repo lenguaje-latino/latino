@@ -1,4 +1,0 @@
-texto = "Hola chico guay
-s"
-texto_final = cadena->reemplazar(texto, "\n", "[ENTER]") // ingresamos que se reemplacen  los espacios por comas
-imprimir(texto_final) // imprimimos

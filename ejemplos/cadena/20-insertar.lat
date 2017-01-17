@@ -1,5 +1,5 @@
 a = "ola amigo" // declaramos una cadena que le falta la letra H
 b = "H" //  declaramos una letra a insertar, en este caso, la letra H
 c = 0 // aquí declaramos el lugar donde se va a insertar
-insertado = cadena->insertar(a, b, c) // declaramos todo ya hecho
+insertado = cadena.insertar(a, b, c) // declaramos todo ya hecho
 imprimir(insertado) // imprimimos finalmente

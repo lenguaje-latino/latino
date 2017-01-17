@@ -1,3 +1,0 @@
-a = "hola latino"
-mayusculas = cadena->mayusculas(a)
-imprimir("La cadena en mayusculas es: ".mayusculas)

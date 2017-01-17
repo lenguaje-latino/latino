@@ -1,4 +1,0 @@
-a = "123456789" # Ponemos una cadena númerica para que veas cuantos caracteres tiene
-
-longitud = cadena->longitud(a) # Declaramos la longitud 
-imprimir("La cadena 'a' tiene ".longitud." caracteres") #Imprimimos

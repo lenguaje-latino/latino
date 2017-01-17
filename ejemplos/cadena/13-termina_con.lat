@@ -1,0 +1,7 @@
+a = "Hola latino" // declaramos una cadena
+mi_cadena_termina_con_o = cadena.termina_con(a, "o")
+si mi_cadena_termina_con_o
+  imprimir("La cadena 'a' termina con o")
+sino
+  imprimir("La cadena 'a' no termina con o")
+fin

@@ -1,0 +1,3 @@
+str = "hola amigos"
+sub = cadena.subcadena(str, 5, 3)   //recortamos una cadena apartir del indice y la longitud
+imprimir(sub)

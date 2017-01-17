@@ -1,0 +1,2 @@
+i = cadena.indice("hola mundo", "mundo")
+escribir("mundo esta en la posicion: " .. i)
