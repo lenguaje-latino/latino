@@ -219,6 +219,37 @@ imprimirf("hola latino, %s", sksk)
 
 // convertir
 
+double lat_tonumber(lat_objeto *o) {
+  switch (o->tipo) {
+  case T_NULL:
+    return 0;
+    break;
+  case T_BOOL:
+    return __logico(o) == false ? 0 : 1;
+    break;
+  case T_NUMERIC:
+    return __numerico(o);
+    break;
+  case T_STR: {
+    char *ptr;
+    double ret;
+    ret = strtod(__cadena(o), &ptr);
+    if (strcmp(ptr, "") == 0) {
+      return ret;
+    }
+  } break;
+  case T_LIST:
+    return __lista_longitud(__lista(o));
+    break;
+  case T_DICT:
+    return __dic_longitud(__dic(o));
+    break;
+  default:
+    break;
+  }
+  return 0;
+}
+
 void lat_alogico(lat_mv *mv) {
   lat_objeto *o = lat_desapilar(mv);
   lat_objeto *tmp =
@@ -228,7 +259,12 @@ void lat_alogico(lat_mv *mv) {
 
 void lat_anumero(lat_mv *mv) {
   lat_objeto *o = lat_desapilar(mv);
-  lat_objeto *tmp = lat_numerico_nuevo(mv, lat_obj2double(o));
+  double var = lat_tonumber(o);
+  if (!var) {
+      lat_apilar(mv, mv->objeto_nulo);
+      return;
+  }
+  lat_objeto *tmp = lat_numerico_nuevo(mv, var);
   lat_apilar(mv, tmp);
   lat_gc_agregar(mv, tmp);
 }
