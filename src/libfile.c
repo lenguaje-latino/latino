@@ -158,11 +158,24 @@ void lat_archivo_copiar(lat_mv *mv) {
   fclose(archivo);
 }
 
+void lat_archivo_eliminar(lat_mv *mv) {
+   int status;
+   lat_objeto *a = lat_desapilar(mv);
+
+   status = remove(__cadena(a));
+   if( status == 0 ) {
+      lat_apilar(mv, mv->objeto_verdadero);
+   } else {
+      lat_apilar(mv, mv->objeto_falso);
+   }
+}
+
 static const lat_CReg lib_archivo[] = {{"leer", lat_archivo_leer, 1},
                                        {"lineas", lat_archivo_lineas, 1},
                                        {"ejecutar", lat_archivo_ejecutar, 1},
                                        {"escribir", lat_archivo_escribir, 2},
                                        {"copiar", lat_archivo_copiar, 2},
+                                       {"eliminar", lat_archivo_eliminar, 1},
                                        {NULL, NULL}};
 
 void lat_importar_lib_archivo(lat_mv *mv) {
