@@ -194,6 +194,8 @@ static void __igualdad(lat_mv *mv) {
   lat_apilar(mv, r);
 }
 
+void lat_cadena_regex(lat_mv *mv);
+
 static void __regex(lat_mv *mv) { lat_cadena_regex(mv); }
 
 static void __diferente(lat_mv *mv) {
@@ -874,7 +876,13 @@ void lat_llamar_funcion(lat_mv *mv, lat_objeto *func) {
         }
         // lat_objeto *tmp = __obj_clonar(mv, val);
         //__dic_asignar(__dic(dic), strdup(__cadena(key)), tmp);
-        __dic_asignar(__dic(dic), __cadena(key), val);
+        char *_k = NULL;
+        if (key->tipo == T_NUMERIC) {
+          _k = lat_obj2cstring(key);
+        } else {
+          _k = __cadena(key);
+        }
+        __dic_asignar(__dic(dic), _k, val);
       } break;
       case STORE_ATTR: {
         lat_objeto *attr = (lat_objeto *)cur.meta;

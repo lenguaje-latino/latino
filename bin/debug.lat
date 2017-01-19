@@ -4,5 +4,6 @@ Menu propiedades del proyecto-> Debugging -> Command Arguments. Agregar
 $(SolutionDir)..\ejemplos\debug.lat
 */
 
-x = 12345678901234567890
-imprimir(x)
+x = 123
+dic = { x : "123" }
+escribir("dic : " .. dic)

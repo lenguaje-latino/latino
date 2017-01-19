@@ -134,6 +134,8 @@ extern char *filename;
 /** Maximo numero de bits para un buffer */
 #define MAX_BUFFERSIZE BUFSIZ
 
+#define UNUSED(x) (void)(x)
+
 /** Interface con flex */
 typedef struct YYLTYPE {
   int first_line;
