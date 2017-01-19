@@ -506,7 +506,7 @@ char *reemplazar_lat(char *orig, char *rep, char *with) {
     with = "";
   len_with = strlen(with);
   ins = orig;
-  for (count = 0; tmp = strstr(ins, rep); ++count) {
+  for (count = 0; (tmp = strstr(ins, rep)) != NULL; ++count) {
     ins = tmp + len_rep;
   }
   tmp = result = malloc(strlen(orig) + (len_with - len_rep) * count + 1);
@@ -701,19 +701,19 @@ void lat_cadena_regex(lat_mv *mv) {
 }
 
 void lat_cadena_match(lat_mv *mv) {
-  lat_objeto *regexString = __cadena(lat_desapilar(mv));
-  lat_objeto *source = __cadena(lat_desapilar(mv));
+  lat_objeto *regexString = lat_desapilar(mv);
+  lat_objeto *source = lat_desapilar(mv);
   char maxMatches = 50, maxGroups = 50;
   regex_t regexCompiled;
   regmatch_t groupArray[maxGroups];
   unsigned int m;
   char *cursor;
-  if (regcomp(&regexCompiled, regexString, REG_EXTENDED)) {
+  if (regcomp(&regexCompiled, __cadena(regexString), REG_EXTENDED)) {
     lat_error("Linea %d, %d: %s", source->num_linea, source->num_columna,
               "error en el match regex.");
   };
   m = 0;
-  cursor = source;
+  cursor = __cadena(source);
   lat_objeto *l_matches = lat_lista_nueva(mv, __lista_crear());
   for (m = 0; m < maxMatches; m++) {
     if (regexec(&regexCompiled, cursor, maxGroups, groupArray, 0))

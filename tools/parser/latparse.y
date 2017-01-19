@@ -418,6 +418,7 @@ dict_items
 dict_item
     : { /* empty */ $$ = NULL; }
     | CADENA ':' expression { $$ = ast_nuevo(NODO_DICC_ELEMENTO, $1, $3); }
+    | IDENTIFICADOR ':' expression { $$ = ast_nuevo(NODO_DICC_ELEMENTO, $1, $3); }
     ;
 
 %%
