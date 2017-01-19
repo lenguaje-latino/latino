@@ -4,6 +4,6 @@ Menu propiedades del proyecto-> Debugging -> Command Arguments. Agregar
 $(SolutionDir)..\ejemplos\debug.lat
 */
 
-x = 123
-dic = { x : "123" }
+x = [123]
+dic = { x[0] : "123" }
 escribir("dic : " .. dic)
