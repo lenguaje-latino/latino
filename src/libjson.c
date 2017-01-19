@@ -67,8 +67,7 @@ static lat_objeto *__json_a_latino(lat_mv *mv, json_t *element) {
     return lst;
   } break;
   case JSON_STRING: {
-    lat_objeto *str =
-        lat_cadena_nueva(mv, strdup(json_string_value(element)));
+    lat_objeto *str = lat_cadena_nueva(mv, strdup(json_string_value(element)));
     return str;
   } break;
   case JSON_INTEGER: {
@@ -77,8 +76,7 @@ static lat_objeto *__json_a_latino(lat_mv *mv, json_t *element) {
     return dec;
   } break;
   case JSON_REAL: {
-    lat_objeto *dec =
-        lat_numerico_nuevo(mv, (double)json_real_value(element));
+    lat_objeto *dec = lat_numerico_nuevo(mv, (double)json_real_value(element));
     return dec;
   } break;
   case JSON_TRUE:
@@ -183,8 +181,31 @@ void lat_json_codificar(lat_mv *mv) {
   lat_gc_agregar(mv, tmp);
 }
 
+void lat_json_formato(lat_mv *mv) {
+  lat_objeto *a = lat_desapilar(mv);
+  int spaces = 4;
+  char *str = NULL;
+  json_t *root = NULL;
+  if (a->tipo != T_STR) {
+    root = __latino_a_json(mv, a);
+  } else {
+    str = strdup(__cadena(a));
+    root = __json_cargar(str);
+  }
+  lat_objeto *tmp = mv->objeto_nulo;
+  if (root) {
+    int flags = JSON_INDENT(spaces);
+    char *buf = json_dumps(root, flags);
+    tmp = lat_cadena_nueva(mv, buf);
+    json_decref(root);
+  }
+  lat_apilar(mv, tmp);
+  lat_gc_agregar(mv, tmp);
+}
+
 static const lat_CReg lib_json[] = {{"decodificar", lat_json_decodificar, 1},
                                     {"codificar", lat_json_codificar, 1},
+                                    {"formato", lat_json_formato, 1},
                                     {NULL, NULL}};
 
 void lat_importar_lib_json(lat_mv *mv) {
