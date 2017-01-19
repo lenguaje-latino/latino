@@ -101,7 +101,7 @@ void lat_archivo_leer(lat_mv *mv) {
   while ((c = fgetc(archivo)) != EOF) {
     final[n++] = (char)c;
   }
-  final[n-1] = '\0';
+  final[n] = '\0';
   fclose(archivo);
   char *archivo_leido = strdup(final);
   lat_apilar(mv, lat_cadena_nueva(mv, archivo_leido));
