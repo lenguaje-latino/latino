@@ -576,8 +576,9 @@ static int nodo_analizar(lat_mv *mv, ast *node, lat_bytecode *bcode, int i) {
     if (node->izq) {
       num_params = __contar_num_parargs(node->izq, NODO_DICC_AGREGAR_ELEMENTO);
     }
-    lat_objeto *o = lat_dic_nuevo(mv, __dic_crear());
-    dbc(BUILD_MAP, num_params, 0, o);
+    // lat_objeto *o = lat_dic_nuevo(mv, __dic_crear());
+    // dbc(BUILD_MAP, num_params, 0, o);
+    dbc(BUILD_MAP, num_params, 0, NULL);
     if (node->izq) {
       pn(mv, node->izq);
     }
