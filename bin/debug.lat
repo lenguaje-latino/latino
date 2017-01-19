@@ -4,6 +4,16 @@ Menu propiedades del proyecto-> Debugging -> Command Arguments. Agregar
 $(SolutionDir)..\ejemplos\debug.lat
 */
 
-x = [123]
-dic = { x[0] : "123" }
-escribir("dic : " .. dic)
+funcion crear_archivo_ids_usuarios()
+  llave = [1,2,3,4,5]
+  //json_ = {"usuarios": []}
+  lst = []
+  desde(i=0; i<llave; i++)
+    //lista.agregar(json_.usuarios, { i : llave[i]})
+    lista.agregar(lst, { i : llave[i]})
+  fin
+  //imprimir(json_)
+  imprimir(lst)
+fin
+
+crear_archivo_ids_usuarios()

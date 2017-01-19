@@ -863,7 +863,8 @@ void lat_llamar_funcion(lat_mv *mv, lat_objeto *func) {
         lat_apilar(mv, o);
       } break;
       case BUILD_MAP: {
-        lat_objeto *o = (lat_objeto *)cur.meta;
+        // lat_objeto *o = (lat_objeto *)cur.meta;
+        lat_objeto *o = lat_dic_nuevo(mv, __dic_crear());
         lat_apilar(mv, o);
       } break;
       case STORE_MAP: {
