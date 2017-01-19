@@ -131,7 +131,7 @@ void lat_redis_hobtener(lat_mv *mv) {
   redisCommand(conexion, "HGET %s %s", __cadena(hash), __cadena(llave));
   lat_objeto *tmp;
   if (respuesta->str) {
-      tmp = mv->objeto_verdadero;
+      tmp = lat_cadena_nueva(mv, strdup(respuesta->str));
   } else {
       tmp = mv->objeto_nulo;
   }
