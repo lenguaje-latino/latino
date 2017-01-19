@@ -170,12 +170,25 @@ void lat_archivo_eliminar(lat_mv *mv) {
    }
 }
 
+void lat_archivo_crear(lat_mv *mv) {
+  lat_objeto *a = lat_desapilar(mv);
+  FILE *archivo;
+  archivo = fopen(__cadena(a), "r");
+  if(archivo == NULL) {
+     archivo = fopen(__cadena(a), "wb");
+     lat_apilar(mv, mv->objeto_verdadero);
+  } else {
+     lat_apilar(mv, mv->objeto_falso);
+  }
+}
+
 static const lat_CReg lib_archivo[] = {{"leer", lat_archivo_leer, 1},
                                        {"lineas", lat_archivo_lineas, 1},
                                        {"ejecutar", lat_archivo_ejecutar, 1},
                                        {"escribir", lat_archivo_escribir, 2},
                                        {"copiar", lat_archivo_copiar, 2},
                                        {"eliminar", lat_archivo_eliminar, 1},
+                                       {"crear", lat_archivo_crear, 1},
                                        {NULL, NULL}};
 
 void lat_importar_lib_archivo(lat_mv *mv) {
