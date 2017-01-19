@@ -732,11 +732,11 @@ void lat_cadena_match(lat_mv *mv) {
       /*printf("Match %u, Group %u: [%2u-%2u]: %s\n", m, g, groupArray[g].rm_so,
              groupArray[g].rm_eo, cursorCopy + groupArray[g].rm_so);*/
       int len = groupArray[g].rm_eo - groupArray[g].rm_so;
-      if (len <= 0) {
+      /*if (len <= 0) {
         lat_apilar(mv, mv->objeto_nulo);
         regfree(&regexCompiled);
         return;
-      }
+      }*/
       char *str = __memoria_asignar(mv, len + 1);
       strcpy(str, cursorCopy + groupArray[g].rm_so);
       str[len] = '\0';
