@@ -4,16 +4,16 @@ Menu propiedades del proyecto-> Debugging -> Command Arguments. Agregar
 $(SolutionDir)..\ejemplos\debug.lat
 */
 
-funcion crear_archivo_ids_usuarios()
-  llave = [1,2,3,4,5]
-  //json_ = {"usuarios": []}
-  lst = []
-  desde(i=0; i<llave; i++)
-    //lista.agregar(json_.usuarios, { i : llave[i]})
-    lista.agregar(lst, { i : llave[i]})
-  fin
-  //imprimir(json_)
-  imprimir(lst)
-fin
+//formatea una cadena json
+str = json.formato('{"ok":true,"result":[{"update_id":558904697, "message":{"message_id":4507,"from":{"id":189041244,"first_name":"Bruno Ric (K)","username":"Jarriz"},"chat":{"id":189041244,"first_name":"Bruno Ric (K)","username":"Jarriz","type":"private"},"date":1475275449,"text":"+\u20ac+#+(#(#(#\\^"}}]}')
+imprimir(str)
 
-crear_archivo_ids_usuarios()
+//un objeto de latino
+true = verdadero
+obj = {"ok":true,"result":[{"update_id":558904697, "message":{"message_id":4507,"from":{"id":189041244,"first_name":"Bruno Ric (K)","username":"Jarriz"},"chat":{"id":189041244,"first_name":"Bruno Ric (K)","username":"Jarriz","type":"private"},"date":1475275449,"text":"+\u20ac+#+(#(#(#\\^"}}]}
+str = json.formato(obj)
+imprimir(str)
+
+//invalid json, error
+str = json.formato('obj')
+imprimir(str)
