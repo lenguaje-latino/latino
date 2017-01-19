@@ -706,22 +706,19 @@ void lat_cadena_match(lat_mv *mv) {
   char maxMatches = 50, maxGroups = 50;
   regex_t regexCompiled;
   regmatch_t groupArray[maxGroups];
-  unsigned int m;
   char *cursor;
   if (regcomp(&regexCompiled, __cadena(regexString), REG_EXTENDED)) {
     lat_error("Linea %d, %d: %s", source->num_linea, source->num_columna,
               "error en el match regex.");
   };
-  m = 0;
   cursor = __cadena(source);
   lat_objeto *l_matches = lat_lista_nueva(mv, __lista_crear());
-  for (m = 0; m < maxMatches; m++) {
+  for (int m = 0; m < maxMatches; m++) {
     if (regexec(&regexCompiled, cursor, maxGroups, groupArray, 0))
       break; // No more matches
-    unsigned int g = 0;
     unsigned int offset = 0;
     lat_objeto *l_groups = lat_lista_nueva(mv, __lista_crear());
-    for (g = 0; g < maxGroups; g++) {
+    for (int g = 0; g < maxGroups; g++) {
       if (groupArray[g].rm_so == (size_t)-1)
         break; // No more groups
       if (g == 0)
@@ -740,10 +737,14 @@ void lat_cadena_match(lat_mv *mv) {
       char *str = __memoria_asignar(mv, len + 1);
       strcpy(str, cursorCopy + groupArray[g].rm_so);
       str[len] = '\0';
-      __lista_agregar(__lista(l_groups), lat_cadena_nueva(mv, str));
+      if (strcmp("", str)) {
+        __lista_agregar(__lista(l_groups), lat_cadena_nueva(mv, str));
+      }
     }
     cursor += offset;
-    __lista_agregar(__lista(l_matches), l_groups);
+    if (__lista_longitud(l_groups->datos.lista) > 0) {
+      __lista_agregar(__lista(l_matches), l_groups);
+    }
   }
   lat_apilar(mv, l_matches);
   regfree(&regexCompiled);

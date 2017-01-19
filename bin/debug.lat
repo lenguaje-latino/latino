@@ -4,16 +4,5 @@ Menu propiedades del proyecto-> Debugging -> Command Arguments. Agregar
 $(SolutionDir)..\ejemplos\debug.lat
 */
 
-//formatea una cadena json
-str = json.formato('{"ok":true,"result":[{"update_id":558904697, "message":{"message_id":4507,"from":{"id":189041244,"first_name":"Bruno Ric (K)","username":"Jarriz"},"chat":{"id":189041244,"first_name":"Bruno Ric (K)","username":"Jarriz","type":"private"},"date":1475275449,"text":"+\u20ac+#+(#(#(#\\^"}}]}')
-imprimir(str)
-
-//un objeto de latino
-true = verdadero
-obj = {"ok":true,"result":[{"update_id":558904697, "message":{"message_id":4507,"from":{"id":189041244,"first_name":"Bruno Ric (K)","username":"Jarriz"},"chat":{"id":189041244,"first_name":"Bruno Ric (K)","username":"Jarriz","type":"private"},"date":1475275449,"text":"+\u20ac+#+(#(#(#\\^"}}]}
-str = json.formato(obj)
-imprimir(str)
-
-//invalid json, error
-str = json.formato('obj')
-imprimir(str)
+matches = cadena.match("hola", "(.*)")
+escribir(matches)
