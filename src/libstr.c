@@ -160,7 +160,7 @@ char *__str_analizar(const char *s, size_t len) {
 
 char *__str_decimal_a_cadena(double d) {
   char *buffer = __memoria_asignar(NULL, 32);
-  snprintf(buffer, 32, "%.14g", d);
+  snprintf(buffer, 32, "%.32g", d);
   return buffer;
 }
 
