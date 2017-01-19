@@ -81,11 +81,12 @@ void lat_redis_asignar(lat_mv *mv) {
   lat_objeto *hash = lat_desapilar(mv);
   lat_objeto *o = lat_desapilar(mv);
   redisContext *conexion = __cdato(o);
+  char *str = __cadena(cadena);
   redisReply *respuesta;
   respuesta =
-      redisCommand(conexion, "SET %s %s", __cadena(hash), __cadena(cadena));
-  if (respuesta->integer) {
-    lat_apilar(mv, mv->objeto_verdadero);
+      redisCommand(conexion, "GETSET %s %s", __cadena(hash), __cadena(cadena));
+  if (!respuesta->str) {
+    lat_apilar(mv, lat_cadena_nueva(mv, strdup(str)));
   } else {
     lat_apilar(mv, mv->objeto_falso);
   }
@@ -130,7 +131,7 @@ void lat_redis_hobtener(lat_mv *mv) {
   redisCommand(conexion, "HGET %s %s", __cadena(hash), __cadena(llave));
   lat_objeto *tmp;
   if (respuesta->str) {
-      tmp = lat_cadena_nueva(mv, strdup(respuesta->str));
+      tmp = mv->objeto_verdadero;
   } else {
       tmp = mv->objeto_nulo;
   }
@@ -337,6 +338,58 @@ void lat_redis_sesmiembro(lat_mv *mv) {
   }
 }
 
+void lat_redis_expirar(lat_mv *mv) {
+  lat_objeto *tiempo = lat_desapilar(mv);
+  lat_objeto *hash = lat_desapilar(mv);
+  lat_objeto *o = lat_desapilar(mv);
+  redisContext *conexion = __cdato(o);
+  int num = __numerico(tiempo);
+  redisReply *respuesta;
+  respuesta =
+      redisCommand(conexion, "EXPIRE %s %d", __cadena(hash), num);
+  freeReplyObject(respuesta);
+  if(!respuesta->integer) {
+      lat_apilar(mv, mv->objeto_falso);
+  } else {
+      lat_apilar(mv, mv->objeto_verdadero);
+  }
+}
+
+void lat_redis_adjuntar(lat_mv *mv) {
+  lat_objeto *string = lat_desapilar(mv);
+  lat_objeto *hash = lat_desapilar(mv);
+  lat_objeto *o = lat_desapilar(mv);
+  redisContext *conexion = __cdato(o);
+  redisReply *respuesta;
+  respuesta =
+      redisCommand(conexion, "APPEND %s %s", __cadena(hash), __cadena(string));
+  freeReplyObject(respuesta);
+  if(!respuesta->integer) {
+      lat_apilar(mv, mv->objeto_falso);
+  } else {
+      lat_apilar(mv, mv->objeto_verdadero);
+  }
+}
+
+void lat_redis_setex(lat_mv *mv) {
+  lat_objeto *tiempo = lat_desapilar(mv);
+  lat_objeto *cadena = lat_desapilar(mv);
+  lat_objeto *hash = lat_desapilar(mv);
+  lat_objeto *o = lat_desapilar(mv);
+  redisContext *conexion = __cdato(o);
+  int num = __numerico(tiempo);
+  redisReply *respuesta;
+  respuesta =
+      redisCommand(conexion, "SETEX %s %d %s", __cadena(hash), num, __cadena(cadena));
+  freeReplyObject(respuesta);
+  if(!respuesta->str) {
+      lat_apilar(mv, mv->objeto_falso);
+  } else {
+      lat_apilar(mv, mv->objeto_verdadero);
+  }
+}
+
+
 static const lat_CReg lib_redis[] = {
     {"conectar", lat_redis_conectar, 2},
     {"desconectar", lat_redis_desconectar, 1},
@@ -357,6 +410,9 @@ static const lat_CReg lib_redis[] = {
     {"sagregar", lat_redis_sagregar, 3},
     {"sborrar", lat_redis_sborrar, 3},
     {"sesmiembro", lat_redis_sesmiembro, 3},
+    {"expirar", lat_redis_expirar, 3},
+    {"adjuntar", lat_redis_adjuntar, 3},
+    {"setex", lat_redis_setex, 4},
     {NULL, NULL}};
 
 #endif
