@@ -389,6 +389,26 @@ void lat_redis_setex(lat_mv *mv) {
   }
 }
 
+void lat_redis_tiempo(lat_mv *mv) {
+   lat_objeto *hash = lat_desapilar(mv);
+   lat_objeto *o = lat_desapilar(mv);
+   redisContext *conexion = __cdato(o);
+   redisReply *respuesta;
+   respuesta =
+   redisCommand(conexion, "TTL %s", __cadena(hash));
+   freeReplyObject(respuesta);
+   if(respuesta->integer) {
+      if (respuesta->integer==-2) {
+         lat_apilar(mv, mv->objeto_falso);
+      } else if (respuesta->integer==-1) {
+         lat_apilar(mv, mv->objeto_nulo);
+      } else {
+         lat_apilar(mv, lat_numerico_nuevo(mv, respuesta->integer));
+      }
+   } else {
+      lat_apilar(mv, lat_numerico_nuevo(mv, 0));
+   }
+}
 
 static const lat_CReg lib_redis[] = {
     {"conectar", lat_redis_conectar, 2},
@@ -413,6 +433,7 @@ static const lat_CReg lib_redis[] = {
     {"expirar", lat_redis_expirar, 3},
     {"adjuntar", lat_redis_adjuntar, 3},
     {"setex", lat_redis_setex, 4},
+    {"tiempo", lat_redis_tiempo, 2},
     {NULL, NULL}};
 
 #endif
