@@ -695,7 +695,11 @@ void lat_llamar_funcion(lat_mv *mv, lat_objeto *func) {
             lat_apilar(mv, mv->objeto_nulo);
             num_args++;
           }
-          if (num_args != fun->num_params) {
+          if (fun->num_params == -1) {
+            // funcion es var_arg: apilamos el numero de argumentos
+            lat_objeto *params = lat_numerico_nuevo(mv, num_args);  
+            lat_apilar(mv, params);
+          } else if (num_args != fun->num_params) {
             lat_error("Linea %d, %d: Numero invalido de argumentos en "
                       "funcion '%s'. se esperaban %i valores.\n",
                       fun->num_linea, fun->num_columna, fun->nombre_cfun,

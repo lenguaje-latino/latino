@@ -4,5 +4,17 @@ Menu propiedades del proyecto-> Debugging -> Command Arguments. Agregar
 $(SolutionDir)..\ejemplos\debug.lat
 */
 
-matches = cadena.match("hola", "(.*)")
-escribir(matches)
+str = cadena.formato("%s %c %d %i", "hola", 65, 4.123, 4.123)
+imprimir(str)
+
+str = cadena.formato("%s %s", "hola", "mundo")
+imprimir(str)
+
+str = cadena.formato("%s", "hola", "mundo")
+imprimir(str)
+//error Linea 16, 22: Opcion de formato invalida. en archivo bin/debug.lat.
+//str = cadena.formato("%s %f %s", "hola", "mundo")
+//imprimir(str)
+//error Linea 19, 22: Numero de argumentos invalido para el formato. en archivo bin/debug.lat.
+//str = cadena.formato("%s %s %s", "hola", "mundo")
+//imprimir(str)
