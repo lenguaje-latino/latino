@@ -396,11 +396,6 @@ void lat_cadena_es_igual(lat_mv *mv) {
   }
 }
 
-/*
-void lat_format(lat_mv* mv){
-}
-*/
-
 void lat_cadena_indice(lat_mv *mv) {
   lat_objeto *b = lat_desapilar(mv);
   lat_objeto *a = lat_desapilar(mv);
@@ -750,6 +745,65 @@ void lat_cadena_match(lat_mv *mv) {
   regfree(&regexCompiled);
 }
 
+void lat_cadena_formato(lat_mv *mv) {
+  //para funciones var_arg se obtiene el numero de parametros enviados
+  lat_objeto *num_params = lat_desapilar(mv);
+  int top = __numerico(num_params);
+  int arg = 1;
+  int i = 0;
+  lista *params = __lista_crear();
+  while(i < top){
+    __lista_insertar_inicio(params, lat_desapilar(mv));
+    i++;
+  }  
+  lat_objeto *ofmt = __lista_extraer_inicio(params);
+  char *strfrmt = __cadena(ofmt);
+  char *strfrmt_end = strfrmt + strlen(strfrmt);
+  char *b = __memoria_asignar(mv, MAX_STR_LENGTH);
+  while(strfrmt < strfrmt_end){
+      if(*strfrmt != '%'){
+          sprintf(b, "%s%c", b, *strfrmt++);
+      } else if(*++strfrmt == '%'){
+          sprintf(b, "%s%c", b, *strfrmt++);
+      } else{
+          char buff[1024];          
+          if(++arg > top){
+              lat_error("Linea %d, %d: %s", ofmt->num_linea, ofmt->num_columna,
+              "Numero de argumentos invalido para el formato.");
+          }
+          switch(*strfrmt++){
+              case 'c': {
+                  lat_objeto *cr = __lista_extraer_inicio(params);
+                  sprintf(buff, "%c", (int)__numerico(cr));
+              }
+              break;
+              case 'i': {
+                  lat_objeto *ent = __lista_extraer_inicio(params);
+                  sprintf(buff, "%i", (int)__numerico(ent));
+              }
+              break;
+              case 'd': {
+                  lat_objeto *dec = __lista_extraer_inicio(params);
+                  sprintf(buff, "%.32g", __numerico(dec));
+              }
+              break;
+              case 's': {
+                  lat_objeto *str = __lista_extraer_inicio(params);
+                  sprintf(buff, "%s", __cadena(str));
+              }
+              break;
+              default:{
+                  lat_error("Linea %d, %d: %s", ofmt->num_linea, ofmt->num_columna,
+                        "Opcion de formato invalida.");
+              }
+          }
+          strcat(b, buff);
+      }
+  }
+  lat_objeto *tmp = lat_cadena_nueva(mv, b);
+  lat_apilar(mv, tmp);
+}
+
 static const lat_CReg lib_cadena[] = {
     {"esta_vacia", lat_cadena_esta_vacia, 1},
     {"longitud", lat_cadena_longitud, 1},
@@ -778,6 +832,7 @@ static const lat_CReg lib_cadena[] = {
     {"rellenar_derecha", lat_cadena_rellenar_derecha, 3},
     {"reemplazar", lat_cadena_reemplazar, 3},
     {"subcadena", lat_cadena_subcadena, 3},
+    {"formato", lat_cadena_formato, -1},    //para funciones var_arg se envia -1
     {NULL, NULL}};
 
 void lat_importar_lib_cadena(lat_mv *mv) {
