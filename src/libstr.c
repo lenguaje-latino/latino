@@ -755,7 +755,7 @@ void lat_cadena_formato(lat_mv *mv) {
   while(i < top){
     __lista_insertar_inicio(params, lat_desapilar(mv));
     i++;
-  }  
+  }
   lat_objeto *ofmt = __lista_extraer_inicio(params);
   char *strfrmt = __cadena(ofmt);
   char *strfrmt_end = strfrmt + strlen(strfrmt);
@@ -766,7 +766,7 @@ void lat_cadena_formato(lat_mv *mv) {
       } else if(*++strfrmt == '%'){
           sprintf(b, "%s%c", b, *strfrmt++);
       } else{
-          char buff[1024];          
+          char buff[1024];
           if(++arg > top){
               lat_error("Linea %d, %d: %s", ofmt->num_linea, ofmt->num_columna,
               "Numero de argumentos invalido para el formato.");
@@ -780,6 +780,11 @@ void lat_cadena_formato(lat_mv *mv) {
               case 'i': {
                   lat_objeto *ent = __lista_extraer_inicio(params);
                   sprintf(buff, "%i", (int)__numerico(ent));
+              }
+              break;
+              case 'f': {
+                  lat_objeto *dec = __lista_extraer_inicio(params);
+                  sprintf(buff, "%f", (float)__numerico(dec));
               }
               break;
               case 'd': {
