@@ -1,0 +1,34 @@
+imprimirf("Ingresa el numero de filas\n")
+n = leer()
+
+espacio = n - 1
+desde (k = 1; k <= n; k++)
+   desde (c = 1; c <= espacio; c++)
+      imprimirf(" ")
+   fin
+   espacio--
+
+   desde (c = 1; c <= 2*k-1; c++)
+      imprimirf("*")
+   fin
+
+   imprimirf("\n")
+fin
+
+
+
+espacio = 1 // le volvemos a dar valor
+
+desde (k = 1; k <= n - 1; k++)
+   desde (c = 1; c <= espacio; c++)
+      imprimirf(" ") // dejamos un número de espacios antes de imprimir los '*'
+   fin
+
+   espacio++
+
+   desde (c = 1 ; c <= 2*(n-k)-1; c++)
+      imprimirf("*") // imprimimos el contenido
+   fin
+
+   imprimirf("\n") // finalmente hacemos un salto de linea para tener mejor orden
+fin
