@@ -1,4 +1,4 @@
-imprimirf("Ingresa el numero de filas\n")
+imprimirf("%s\n", "Ingresa el numero de filas")
 n = leer()
 
 espacio = n - 1
