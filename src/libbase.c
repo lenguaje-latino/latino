@@ -108,68 +108,63 @@ void lat_imprimir(lat_mv *mv) {
 }
 
 void lat_imprimirf(lat_mv *mv) {
-  //para funciones var_arg se obtiene el numero de parametros enviados
+  // para funciones var_arg se obtiene el numero de parametros enviados
   lat_objeto *num_params = lat_desapilar(mv);
   int top = __numerico(num_params);
   int arg = 1;
   int i = 0;
   lista *params = __lista_crear();
-  while(i < top){
+  while (i < top) {
     __lista_insertar_inicio(params, lat_desapilar(mv));
     i++;
   }
   lat_objeto *ofmt = __lista_extraer_inicio(params);
-  if (ofmt==NULL){
-     printf("nulo\n");
-     return;
+  if (ofmt == NULL) {
+    printf("nulo\n");
+    return;
   }
   char *strfrmt = __cadena(ofmt);
   char *strfrmt_end = strfrmt + strlen(strfrmt);
   char *b = __memoria_asignar(mv, MAX_STR_LENGTH);
-  while(strfrmt < strfrmt_end){
-      if(*strfrmt != '%'){
-          sprintf(b, "%s%c", b, *strfrmt++);
-      } else if(*++strfrmt == '%'){
-          sprintf(b, "%s%c", b, *strfrmt++);
-      } else{
-          char buff[1024];
-          if(++arg > top){
-              lat_error("Linea %d, %d: %s", ofmt->num_linea, ofmt->num_columna,
-              "Numero de argumentos invalido para el formato.");
-          }
-          switch(*strfrmt++){
-              case 'c': {
-                  lat_objeto *cr = __lista_extraer_inicio(params);
-                  sprintf(buff, "%c", (int)__numerico(cr));
-              }
-              break;
-              case 'i': {
-                  lat_objeto *ent = __lista_extraer_inicio(params);
-                  sprintf(buff, "%i", (int)__numerico(ent));
-              }
-              break;
-              case 'f': {
-                   lat_objeto *dec = __lista_extraer_inicio(params);
-                   sprintf(buff, "%f", (float)__numerico(dec));
-               }
-              break;
-              case 'd': {
-                  lat_objeto *dec = __lista_extraer_inicio(params);
-                  sprintf(buff, "%.32g", __numerico(dec));
-              }
-              break;
-              case 's': {
-                  lat_objeto *str = __lista_extraer_inicio(params);
-                  sprintf(buff, "%s", __cadena(str));
-              }
-              break;
-              default:{
-                  lat_error("Linea %d, %d: %s", ofmt->num_linea, ofmt->num_columna,
-                        "Opcion de formato invalida.");
-              }
-          }
-          strcat(b, buff);
+  while (strfrmt < strfrmt_end) {
+    if (*strfrmt != '%') {
+      sprintf(b, "%s%c", b, *strfrmt++);
+    } else if (*++strfrmt == '%') {
+      sprintf(b, "%s%c", b, *strfrmt++);
+    } else {
+      char buff[1024];
+      if (++arg > top) {
+        lat_error("Linea %d, %d: %s", ofmt->num_linea, ofmt->num_columna,
+                  "Numero de argumentos invalido para el formato.");
       }
+      switch (*strfrmt++) {
+      case 'c': {
+        lat_objeto *cr = __lista_extraer_inicio(params);
+        sprintf(buff, "%c", (int)lat_obj2double(cr));
+      } break;
+      case 'i': {
+        lat_objeto *ent = __lista_extraer_inicio(params);
+        sprintf(buff, "%i", (int)lat_obj2double(ent));
+      } break;
+      case 'f': {
+        lat_objeto *dec = __lista_extraer_inicio(params);
+        sprintf(buff, "%f", (float)lat_obj2double(dec));
+      } break;
+      case 'd': {
+        lat_objeto *dec = __lista_extraer_inicio(params);
+        sprintf(buff, "%.32g", lat_obj2double(dec));
+      } break;
+      case 's': {
+        lat_objeto *str = __lista_extraer_inicio(params);
+        sprintf(buff, "%s", lat_obj2cstring(str));
+      } break;
+      default: {
+        lat_error("Linea %d, %d: %s", ofmt->num_linea, ofmt->num_columna,
+                  "Opcion de formato invalida.");
+      }
+      }
+      strcat(b, buff);
+    }
   }
   lat_objeto *f = lat_cadena_nueva(mv, b);
   __imprimir_objeto(mv, f, 1);
@@ -190,24 +185,24 @@ void lat_incluir(lat_mv *mv) {
   lat_objeto *mod =
       lat_cadena_nueva(mv, strdup(strcat(dir_actual, archivo_ext)));
   if (__es_legible(__cadena(mod))) {
-    //if (!__lista_contiene_valor(modulos, mod)) {
-      // printf("buscar con terminacion .lat, buscar en ruta actual: %s\n",
-      // __cadena(mod));
-      //__lista_agregar(modulos, mod);
-      ast *nodo = lat_analizar_archivo(__cadena(mod), &status);
-      if (status == 0 && nodo != NULL) {
-        lat_objeto *funmod = ast_analizar_arbol(mv, nodo);        
-        lat_llamar_funcion(mv, funmod);
-        ast_liberar(nodo);
-        lat_gc_agregar(mv, funmod);        
-        return;
-      }
+    // if (!__lista_contiene_valor(modulos, mod)) {
+    // printf("buscar con terminacion .lat, buscar en ruta actual: %s\n",
+    // __cadena(mod));
+    //__lista_agregar(modulos, mod);
+    ast *nodo = lat_analizar_archivo(__cadena(mod), &status);
+    if (status == 0 && nodo != NULL) {
+      lat_objeto *funmod = ast_analizar_arbol(mv, nodo);
+      lat_llamar_funcion(mv, funmod);
+      ast_liberar(nodo);
+      lat_gc_agregar(mv, funmod);
+      return;
+    }
     /*}else{
       return;
     }*/
   }
   lat_gc_agregar(mv, mod);
-  // buscar en $LATINO_LIB  
+  // buscar en $LATINO_LIB
   char *latino_lib = getenv("LATINO_LIB");
   if (latino_lib != NULL) {
     strcat(latino_lib, PATH_SEP);
@@ -215,17 +210,17 @@ void lat_incluir(lat_mv *mv) {
     lat_objeto *mod_lib = lat_cadena_nueva(mv, strdup(latino_lib));
     // printf("buscar con terminacion .lat, buscar en $LATINO_LIB: %s\n",
     // __cadena(mod));
-    //if (__es_legible(__cadena(mod_lib))) {
-      if (!__lista_contiene_valor(modulos, mod_lib)) {
-        __lista_agregar(modulos, mod_lib);
-        ast *nodo = lat_analizar_archivo(__cadena(mod_lib), &status);
-        if (status == 0 && nodo != NULL) {
-          lat_objeto *funmod_lib = ast_analizar_arbol(mv, nodo);          
-          lat_llamar_funcion(mv, funmod_lib);
-          ast_liberar(nodo);
-          lat_gc_agregar(mv, funmod_lib);
-          return;
-        }
+    // if (__es_legible(__cadena(mod_lib))) {
+    if (!__lista_contiene_valor(modulos, mod_lib)) {
+      __lista_agregar(modulos, mod_lib);
+      ast *nodo = lat_analizar_archivo(__cadena(mod_lib), &status);
+      if (status == 0 && nodo != NULL) {
+        lat_objeto *funmod_lib = ast_analizar_arbol(mv, nodo);
+        lat_llamar_funcion(mv, funmod_lib);
+        ast_liberar(nodo);
+        lat_gc_agregar(mv, funmod_lib);
+        return;
+      }
       /*}else{
         return;
       }*/
@@ -309,8 +304,8 @@ void lat_anumero(lat_mv *mv) {
   lat_objeto *o = lat_desapilar(mv);
   double var = lat_tonumber(o);
   if (!var) {
-      lat_apilar(mv, mv->objeto_nulo);
-      return;
+    lat_apilar(mv, mv->objeto_nulo);
+    return;
   }
   lat_objeto *tmp = lat_numerico_nuevo(mv, var);
   lat_apilar(mv, tmp);
@@ -325,18 +320,13 @@ void lat_acadena(lat_mv *mv) {
   lat_gc_agregar(mv, tmp);
 }
 
-static const lat_CReg lib_base[] = {{"escribir", lat_imprimir, 2},
-                                    {"escribirf", lat_imprimirf, -1},
-                                    {"imprimir", lat_imprimir, 2},
-                                    {"imprimirf", lat_imprimirf, -1},
-                                    {"acadena", lat_acadena, 1},
-                                    {"anumero", lat_anumero, 1},
-                                    {"alogico", lat_alogico, 1},
-                                    {"incluir", lat_incluir, 1},
-                                    {"leer", lat_leer, 0},
-                                    {"limpiar", lat_limpiar, 0},
-                                    {"tipo", lat_tipo, 1},
-                                    {NULL, NULL}};
+static const lat_CReg lib_base[] = {
+    {"escribir", lat_imprimir, 2}, {"escribirf", lat_imprimirf, -1},
+    {"imprimir", lat_imprimir, 2}, {"imprimirf", lat_imprimirf, -1},
+    {"acadena", lat_acadena, 1},   {"anumero", lat_anumero, 1},
+    {"alogico", lat_alogico, 1},   {"incluir", lat_incluir, 1},
+    {"leer", lat_leer, 0},         {"limpiar", lat_limpiar, 0},
+    {"tipo", lat_tipo, 1},         {NULL, NULL}};
 
 void lat_importar_lib_base(lat_mv *mv) {
   lat_importar_lib(mv, LIB_BASE_NAME, lib_base);
