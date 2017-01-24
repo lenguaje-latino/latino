@@ -107,6 +107,74 @@ void lat_imprimir(lat_mv *mv) {
   printf("\n");
 }
 
+void lat_imprimirf(lat_mv *mv) {
+  //para funciones var_arg se obtiene el numero de parametros enviados
+  lat_objeto *num_params = lat_desapilar(mv);
+  int top = __numerico(num_params);
+  int arg = 1;
+  int i = 0;
+  lista *params = __lista_crear();
+  while(i < top){
+    __lista_insertar_inicio(params, lat_desapilar(mv));
+    i++;
+  }
+  lat_objeto *ofmt = __lista_extraer_inicio(params);
+  if (ofmt==NULL){
+     printf("nulo\n");
+     return;
+  }
+  char *strfrmt = __cadena(ofmt);
+  char *strfrmt_end = strfrmt + strlen(strfrmt);
+  char *b = __memoria_asignar(mv, MAX_STR_LENGTH);
+  while(strfrmt < strfrmt_end){
+      if(*strfrmt != '%'){
+          sprintf(b, "%s%c", b, *strfrmt++);
+      } else if(*++strfrmt == '%'){
+          sprintf(b, "%s%c", b, *strfrmt++);
+      } else{
+          char buff[1024];
+          if(++arg > top){
+              lat_error("Linea %d, %d: %s", ofmt->num_linea, ofmt->num_columna,
+              "Numero de argumentos invalido para el formato.");
+          }
+          switch(*strfrmt++){
+              case 'c': {
+                  lat_objeto *cr = __lista_extraer_inicio(params);
+                  sprintf(buff, "%c", (int)__numerico(cr));
+              }
+              break;
+              case 'i': {
+                  lat_objeto *ent = __lista_extraer_inicio(params);
+                  sprintf(buff, "%i", (int)__numerico(ent));
+              }
+              break;
+              case 'f': {
+                   lat_objeto *dec = __lista_extraer_inicio(params);
+                   sprintf(buff, "%f", (float)__numerico(dec));
+               }
+              break;
+              case 'd': {
+                  lat_objeto *dec = __lista_extraer_inicio(params);
+                  sprintf(buff, "%.32g", __numerico(dec));
+              }
+              break;
+              case 's': {
+                  lat_objeto *str = __lista_extraer_inicio(params);
+                  sprintf(buff, "%s", __cadena(str));
+              }
+              break;
+              default:{
+                  lat_error("Linea %d, %d: %s", ofmt->num_linea, ofmt->num_columna,
+                        "Opcion de formato invalida.");
+              }
+          }
+          strcat(b, buff);
+      }
+  }
+  lat_objeto *f = lat_cadena_nueva(mv, b);
+  __imprimir_objeto(mv, f, 1);
+}
+
 void lat_incluir(lat_mv *mv) {
   lat_objeto *o = lat_desapilar(mv);
   int status;
@@ -197,26 +265,6 @@ void lat_tipo(lat_mv *mv) {
   lat_gc_agregar(mv, tmp);
 }
 
-void lat_imprimirf(lat_mv *mv) {
-  // TODO: Pendiente implementacion
-  /*
-  lat_objeto *args = lat_desapilar(mv);
-  lat_objeto *fmt = lat_desapilar(mv);
-  char *cfmt = __cadena(fmt);*/
-}
-
-/*
-void imprimirf(const char *formato, ...)
-{
-va_list ap;
-va_start(ap, formato);
-vfprintf(stderr, formato, ap);
-va_end(ap);
-}
-
-imprimirf("hola latino, %s", sksk)
-*/
-
 // convertir
 
 double lat_tonumber(lat_objeto *o) {
@@ -278,7 +326,9 @@ void lat_acadena(lat_mv *mv) {
 }
 
 static const lat_CReg lib_base[] = {{"escribir", lat_imprimir, 2},
+                                    {"escribirf", lat_imprimirf, -1},
                                     {"imprimir", lat_imprimir, 2},
+                                    {"imprimirf", lat_imprimirf, -1},
                                     {"acadena", lat_acadena, 1},
                                     {"anumero", lat_anumero, 1},
                                     {"alogico", lat_alogico, 1},
