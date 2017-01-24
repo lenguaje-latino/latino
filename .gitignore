@@ -1,4 +1,5 @@
 #ignora directorios
+bin/latino
 build/
 CMakeFiles/
 dist/

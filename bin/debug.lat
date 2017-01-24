@@ -4,8 +4,5 @@ Menu propiedades del proyecto-> Debugging -> Command Arguments. Agregar
 $(SolutionDir)..\ejemplos\debug.lat
 */
 
-str = "este es un test..."
-desde(i=cadena.longitud(str)-1; i >=0; i--)
-     escribirf("%s", cadena.subcadena(str, i, cadena.longitud(str)), 1)
-     sis.dormir(0.2)
- fin
+str = "este es \nun test..."
+escribirf(str)
