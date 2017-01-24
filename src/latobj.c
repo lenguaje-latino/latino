@@ -431,6 +431,9 @@ double lat_obj2double(lat_objeto *o) {
     ret = strtod(__cadena(o), &ptr);
     if (strcmp(ptr, "") == 0) {
       return ret;
+    } else {
+      ret = (int)(__cadena(o)[0]);
+      return ret;
     }
   } break;
   case T_LIST:

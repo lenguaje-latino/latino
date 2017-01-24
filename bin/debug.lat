@@ -4,17 +4,12 @@ Menu propiedades del proyecto-> Debugging -> Command Arguments. Agregar
 $(SolutionDir)..\ejemplos\debug.lat
 */
 
-str = cadena.formato("%s, %c, %i, %f, %d", "hola", 65, 4.123, 4.123, 4.123)
-imprimir(str)
+/*imprimirf("%c", 65)
+imprimirf("%i", 'A')*/
 
-str = cadena.formato("%s %s", "hola", "mundo")
-imprimir(str)
-
-str = cadena.formato("%s", "hola", "mundo")
-imprimir(str)
-//error Linea 16, 22: Opcion de formato invalida. en archivo bin/debug.lat.
-//str = cadena.formato("%s %f %s", "hola", "mundo")
-//imprimir(str)
-//error Linea 19, 22: Numero de argumentos invalido para el formato. en archivo bin/debug.lat.
-//str = cadena.formato("%s %s %s", "hola", "mundo")
-//imprimir(str)
+str = cadena.formato("%c", 65)
+imprimir("formato: " .. str)
+imprimirf("imprimirf: %c\n", 65)
+str = cadena.formato("%i", "A")
+imprimir("formato: " .. str)
+imprimirf("imprimirf: %i\n", "AA")
