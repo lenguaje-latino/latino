@@ -264,12 +264,13 @@ REP:
 }
 
 static void lat_repl(lat_mv *mv) {
-  char *buf = __memoria_asignar(mv, MAX_STR_LENGTH), *dir_history = getenv("HOME");
+  char *buf = __memoria_asignar(mv, MAX_STR_LENGTH),
+       *dir_history = getenv("HOME");
   if (!dir_history || dir_history == NULL) {
-      dir_history = HISTORY_FILE;
+    dir_history = HISTORY_FILE;
   } else {
-      strcat(dir_history, "/");
-      strcat(dir_history, HISTORY_FILE);
+    strcat(dir_history, "/");
+    strcat(dir_history, HISTORY_FILE);
   }
   ast *tmp = NULL;
   int status;
@@ -282,8 +283,12 @@ static void lat_repl(lat_mv *mv) {
       lat_objeto *curexpr = ast_analizar_arbol(mv, tmp);
       lat_llamar_funcion(mv, curexpr);
       lat_objeto *o = lat_desapilar(mv);
-      if (o != NULL && (strstr(buf, "escribir") == NULL &&
-                        strstr(buf, "imprimir") == NULL)) {
+      if(strstr(buf, "escribirf") != NULL ||
+          strstr(buf, "imprimirf") != NULL){
+          printf("\n");
+      }else if (o != NULL && strstr(buf, "escribir") == NULL &&
+          strstr(buf, "imprimir") == NULL && strstr(buf, "escribirf") == NULL &&
+          strstr(buf, "imprimirf") == NULL) {
         lat_apilar(mv, o);
         lat_apilar(mv, mv->objeto_nulo);
         lat_imprimir(mv);
