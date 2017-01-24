@@ -757,6 +757,10 @@ void lat_cadena_formato(lat_mv *mv) {
     i++;
   }
   lat_objeto *ofmt = __lista_extraer_inicio(params);
+  if (ofmt==NULL){
+      lat_apilar(mv, mv->objeto_nulo);
+      return;
+  }
   char *strfrmt = __cadena(ofmt);
   char *strfrmt_end = strfrmt + strlen(strfrmt);
   char *b = __memoria_asignar(mv, MAX_STR_LENGTH);
