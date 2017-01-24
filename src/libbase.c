@@ -167,7 +167,7 @@ void lat_imprimirf(lat_mv *mv) {
     }
   }
   lat_objeto *f = lat_cadena_nueva(mv, b);
-  __imprimir_objeto(mv, f, 1);
+  __imprimir_objeto(mv, f, false);  
 }
 
 void lat_incluir(lat_mv *mv) {
