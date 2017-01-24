@@ -1,7 +1,0 @@
-variable = 23
-funcion sumatoria(a, b)
-  retorno (a + b)
-fin
-//se deben de regresar las funciones y variables que se quieran exponer del modulo
-retornar {"variable" : variable,
-	"sumatoria" : sumatoria}
