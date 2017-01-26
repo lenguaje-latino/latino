@@ -678,7 +678,7 @@ void lat_cadena_regex(lat_mv *mv) {
   lat_objeto *cadena = lat_desapilar(mv);
   regex_t regex;
   int reti;
-  reti = regcomp(&regex, __cadena(cadena_regex), 0);
+  reti = regcomp(&regex, __cadena(cadena_regex), REG_EXTENDED);
   if (reti) {
     lat_error("Linea %d, %d: %s", cadena->num_linea, cadena->num_columna,
               "error al compilar regex.");
