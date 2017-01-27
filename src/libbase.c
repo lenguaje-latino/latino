@@ -193,7 +193,8 @@ void lat_incluir(lat_mv *mv) {
     if (status == 0 && nodo != NULL) {
       lat_objeto *funmod = ast_analizar_arbol(mv, nodo);
       lat_llamar_funcion(mv, funmod);
-      ast_liberar(nodo);
+      //FIX: Memory leak
+      //ast_liberar(nodo);
       lat_gc_agregar(mv, funmod);
       return;
     }
@@ -217,7 +218,8 @@ void lat_incluir(lat_mv *mv) {
       if (status == 0 && nodo != NULL) {
         lat_objeto *funmod_lib = ast_analizar_arbol(mv, nodo);
         lat_llamar_funcion(mv, funmod_lib);
-        ast_liberar(nodo);
+        //FIX: Memory leak
+        //ast_liberar(nodo);
         lat_gc_agregar(mv, funmod_lib);
         return;
       }

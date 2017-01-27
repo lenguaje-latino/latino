@@ -4,42 +4,6 @@ Menu propiedades del proyecto-> Debugging -> Command Arguments. Agregar
 $(SolutionDir)..\ejemplos\debug.lat
 */
 
-str = "hola mundo"
-si str ~= "^hola"
-	escribir("inicia con hola")
-fin
-
-str = "hola mundo"
-si str ~= "mundo$"
-	escribir("termina con mundo")
-fin
-
-str = "palabra"
-si str ~= "[a-Z]\+"
-	escribir("contiene una palabra")
-fin
-
-str = "palabra"
-si str ~= "[:word]"
-	escribir("contiene una palabra")
-fin
-
-str = "palabra"
-si str ~= "\w"
-	escribir("contiene una palabra")
-fin
-
-str = "hola mundo ingrato"
-si str ~= "(\w)\+\|\s"
-	escribir("contiene varias palabras, separadas por espacios")
-fin
-
-str = "Hola"
-si str ~= "[A-Z][a-Z]\+"
-	escribir("Empieza con mayusculas")
-fin
-
-str = "mi_variable2"
-si str ~= "[:alnum:]\+"
-	escribir("alfanumericos")
-fin
+str = "Welcome to RegExr v2.1 by gskinner.com 123456"
+res = cadena.match(str, "[[:digit:]]+")
+imprimir(res)
