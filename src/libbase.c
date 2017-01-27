@@ -27,6 +27,9 @@ THE SOFTWARE.
 #include <stdlib.h>
 #include <string.h>
 
+#include <readline/readline.h>
+#include <readline/history.h>
+
 #include "latgc.h"
 #include "latino.h"
 #include "latmem.h"
@@ -233,9 +236,9 @@ void lat_incluir(lat_mv *mv) {
             "No se pudo incluir el modulo", __cadena(o));
 }
 
-void lat_leer(lat_mv *mv) {
-  char str[MAX_INPUT_SIZE];
-  fgets(str, MAX_INPUT_SIZE, stdin);
+void lat_leer(lat_mv *mv) {  
+  char *str = __memoria_asignar(NULL, MAX_INPUT_SIZE);
+  str = readline(NULL);
   int i = strlen(str) - 1;
   if (str[i] == '\n')
     str[i] = '\0';
