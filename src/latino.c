@@ -35,6 +35,9 @@ THE SOFTWARE.
 #include "latparse.h"
 #include "linenoise/linenoise.h"
 
+#include <readline/readline.h>
+#include <readline/history.h>
+
 #define HISTORY_FILE ".lat_history"
 
 /*
@@ -240,7 +243,12 @@ static int leer_linea(char *buffer) {
   // char *tmp = "";
   char *tmp = __memoria_asignar(NULL, MAX_STR_LENGTH);
 REP:
+#ifdef __linux__      
+  input = readline(prompt);
+  add_history(input);
+#else
   input = linenoise(prompt);
+#endif
   if (input == NULL) {
     return -1;
   }
