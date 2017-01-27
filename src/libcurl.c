@@ -53,8 +53,13 @@ size_t __curl_writefunc(void *ptr, size_t size, size_t nmemb, struct string *s) 
 }
 
 void lat_curl_peticion(lat_mv *mv) {
+  lat_objeto *tiempo = lat_desapilar(mv);
   lat_objeto *o = lat_desapilar(mv);
   lat_objeto *tmp = NULL;
+  int espera;
+  if (strlen((char*)tiempo)!=0) {
+     espera = __numerico(tiempo);
+  }
   char *url = __cadena(o);
   CURL *curl;
   CURLcode res;
@@ -65,8 +70,12 @@ void lat_curl_peticion(lat_mv *mv) {
     curl_easy_setopt(curl, CURLOPT_URL, url);
     curl_easy_setopt(curl, CURLOPT_WRITEFUNCTION, __curl_writefunc);
     curl_easy_setopt(curl, CURLOPT_WRITEDATA, &s);
+    if(espera) { curl_easy_setopt(curl, CURLOPT_TIMEOUT, espera); };
     res = curl_easy_perform(curl);
-    if (res != CURLE_OK) {
+    if (res == CURLE_OPERATION_TIMEDOUT){
+      lat_apilar(mv, mv->objeto_falso);
+      return;
+   } else if (res != CURLE_OK) {
       lat_error("Linea %d, %d: %s", o->num_linea, o->num_columna,
                       curl_easy_strerror(res));
     }
@@ -95,7 +104,7 @@ void lat_curl_escape(lat_mv *mv) {
   }
 }
 
-static const lat_CReg lib_curl[] = {{"peticion", lat_curl_peticion, 1},
+static const lat_CReg lib_curl[] = {{"peticion", lat_curl_peticion, 2},
                                     {"escape", lat_curl_escape, 1},
                                     {NULL, NULL}};
 
