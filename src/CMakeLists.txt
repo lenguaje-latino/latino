@@ -8,6 +8,7 @@ IF(UNIX)
     LINK_LIBRARIES(jansson)
     LINK_LIBRARIES(curl)
     LINK_LIBRARIES(hiredis)
+    LINK_LIBRARIES(readline)
     SET(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -D_GNU_SOURCE -Wall -std=c11")
     SET(CMAKE_C_FLAGS_DEBUG "${CMAKE_C_FLAGS} -D_GNU_SOURCE -coverage -g -O0 -Wall -std=c11 -fprofile-arcs -ftest-coverage -coverage")
     # Use the package PkgConfig to detect GTK+ headers/library files

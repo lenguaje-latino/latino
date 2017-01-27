@@ -60,7 +60,7 @@ THE SOFTWARE.
   "Latino " LAT_VERSION_MAYOR "." LAT_VERSION_MENOR "." LAT_VERSION_PARCHE
 /** Derechos de Latino */
 #define LAT_DERECHOS                                                           \
-  LAT_VERSION "\nTodos los derechos reservados (C) 2015-2016. Latinoamerica"
+  LAT_VERSION "\nTodos los derechos reservados (C) 2015-2017. Latinoamerica"
 
 /** Define el manejo de excepciones en Latino */
 #define LAT_THROW(L, c) longjmp((c)->b, 1)
