@@ -57,7 +57,7 @@ void lat_curl_peticion(lat_mv *mv) {
   lat_objeto *o = lat_desapilar(mv);
   lat_objeto *tmp = NULL;
   int espera;
-  if (strlen((char*)tiempo)!=0) {
+  if (tiempo->tipo != T_NULL) {
      espera = __numerico(tiempo);
   }
   char *url = __cadena(o);
@@ -76,6 +76,7 @@ void lat_curl_peticion(lat_mv *mv) {
       lat_apilar(mv, mv->objeto_falso);
       return;
    } else if (res != CURLE_OK) {
+      curl_easy_cleanup(curl);
       lat_error("Linea %d, %d: %s", o->num_linea, o->num_columna,
                       curl_easy_strerror(res));
     }
@@ -104,8 +105,37 @@ void lat_curl_escape(lat_mv *mv) {
   }
 }
 
+size_t __escribir_datos(void *ptr, size_t size, size_t nmemb, FILE *stream) {
+    size_t cdato = fwrite(ptr, size, nmemb, stream);
+    return cdato;
+}
+
+void lat_curl_descargar(lat_mv *mv) {
+   lat_objeto *nombre_archivo = lat_desapilar(mv);
+   lat_objeto *url = lat_desapilar(mv);
+   CURL *curl;
+   FILE *fp;
+   CURLcode res;
+   curl = curl_easy_init();
+   if (curl) {
+      fp = fopen(__cadena(nombre_archivo),"wb");
+      curl_easy_setopt(curl, CURLOPT_URL, __cadena(url));
+      curl_easy_setopt(curl, CURLOPT_WRITEFUNCTION, __escribir_datos);
+      curl_easy_setopt(curl, CURLOPT_WRITEDATA, fp);
+      res = curl_easy_perform(curl);
+      if (res != CURLE_OK) {
+         lat_apilar(mv, mv->objeto_falso);
+         curl_easy_cleanup(curl);
+         return;
+      }
+      lat_apilar(mv, mv->objeto_verdadero);
+      curl_easy_cleanup(curl);
+      fclose(fp);
+   }
+}
 static const lat_CReg lib_curl[] = {{"peticion", lat_curl_peticion, 2},
                                     {"escape", lat_curl_escape, 1},
+                                    {"descargar", lat_curl_descargar, 2},
                                     {NULL, NULL}};
 
 void lat_importar_lib_curl(lat_mv *mv) {
