@@ -84,24 +84,24 @@ void lat_sistema_fecha(lat_mv *mv) {
   time_t raw;
   struct tm *tipo;
   time(&raw);
-  tipo = localtime(&raw);    
+  tipo = localtime(&raw);
   lat_objeto *tmp = mv->objeto_nulo;
   if (!strcmp(num, "seg")) {
-    tmp = lat_numerico_nuevo(mv, tipo->tm_sec); //segundos    
+    tmp = lat_numerico_nuevo(mv, tipo->tm_sec); //segundos
   } else if (!strcmp(num, "min")) {
-    tmp = lat_numerico_nuevo(mv, tipo->tm_min);    
+    tmp = lat_numerico_nuevo(mv, tipo->tm_min);
   } else if (!strcmp(num, "hora")) {
     tmp = lat_numerico_nuevo(mv, tipo->tm_hour);
   } else if (!strcmp(num, "d_mes")) {
-    tmp = lat_numerico_nuevo(mv, tipo->tm_mday); // dia del mes    
+    tmp = lat_numerico_nuevo(mv, tipo->tm_mday); // dia del mes
   } else if (!strcmp(num, "mes")) {
-    tmp = lat_numerico_nuevo(mv, tipo->tm_mon);    
+    tmp = lat_numerico_nuevo(mv, tipo->tm_mon);
   } else if (!strcmp(num, "año")) {
-    tmp = lat_numerico_nuevo(mv, tipo->tm_year + 1900);    
+    tmp = lat_numerico_nuevo(mv, tipo->tm_year + 1900);
   } else if (!strcmp(num, "d_sem")) {
     tmp = lat_numerico_nuevo(mv, tipo->tm_wday); // día de la sem.
   } else if (!strcmp(num, "d_año")) {
-    tmp = lat_numerico_nuevo(mv, tipo->tm_yday); // día del año    
+    tmp = lat_numerico_nuevo(mv, tipo->tm_yday); // día del año
   } else if (!strcmp(num, "estacion")) {
     tmp = lat_numerico_nuevo(mv, tipo->tm_isdst); // verano/inv
   } else {
@@ -153,6 +153,16 @@ void lat_sistema_salir(lat_mv *mv) {
   exit(0);
 }
 
+void lat_sistema_cwd(lat_mv *mv) {
+   char dir[1024];
+   getcwd(dir, sizeof(dir));
+   if (dir!=NULL) {
+      lat_apilar(mv, lat_cadena_nueva(mv, strdup(dir)));
+   } else {
+      lat_apilar(mv, mv->objeto_nulo);
+   };
+}
+
 static const lat_CReg libsistema[] = {
     {"dormir", lat_sistema_dormir, 1},
     {"ejecutar", lat_sistema_ejecutar, 1},
@@ -160,6 +170,7 @@ static const lat_CReg libsistema[] = {
     {"fecha", lat_sistema_fecha, 1},
     {"salir", lat_sistema_salir, 0},
     {"avisar", lat_sistema_avisar, 1},
+    {"cwd", lat_sistema_cwd, 0},
     {NULL, NULL}};
 
 void lat_importar_lib_sistema(lat_mv *mv) {
