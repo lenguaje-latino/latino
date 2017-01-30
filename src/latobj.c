@@ -374,6 +374,10 @@ int __obj_comparar(lat_objeto *lhs, lat_objeto *rhs) {
     res = __lista_comparar(__lista(lhs), __lista(rhs));
     goto RESPUESTA;
   }
+  if (lhs->tipo == T_DICT) {
+    res = memcmp(lhs, rhs, sizeof(lhs));
+    goto RESPUESTA;
+  }
 RESPUESTA:
   if (res < 0) {
     return -1;
