@@ -844,7 +844,14 @@ void lat_llamar_funcion(lat_mv *mv, lat_objeto *func) {
           lat_apilar(mv, o);
           break;
         }
-        int ipos = __numerico(pos);
+        int ipos = 0;
+        if(pos->tipo == T_NUMERIC){
+            ipos = __numerico(pos);
+        }else{
+            o = lat_cadena_nueva(mv, strdup(""));
+            lat_apilar(mv, o);
+            break;            
+        }
         if (obj->tipo == T_STR) {
           char *slst = __cadena(obj);
           if (ipos < 0 || ipos >= strlen(slst)) {
