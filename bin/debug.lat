@@ -4,9 +4,11 @@ Menu propiedades del proyecto-> Debugging -> Command Arguments. Agregar
 $(SolutionDir)..\ejemplos\debug.lat
 */
 
-a = { "jn": "jnj" }
-si a.b
-a.c = ["hola"]
-fin
+lst = [1, 2]
+lst = [1,2,3, lst]
+#lista.agregar(lst, lst)
+imprimir(lst)
 
-imprimir(a.c[0]) // imprime vacio
+dic = { "hola" : "mundo", "uno" : 1 }
+#dic.nuevo = dic
+imprimir(dic)
