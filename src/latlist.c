@@ -283,8 +283,8 @@ void lat_lista_agregar(lat_mv *mv) {
   lat_objeto *elem = lat_desapilar(mv);
   lat_objeto *lst = lat_desapilar(mv);  
   if(!__obj_comparar(lst, elem)){
-    lat_error("Linea %d, %d: Referencia circular detectada.", elem->num_linea,
-              elem->num_columna);
+    lat_error("Linea %d, %d: Referencia circular detectada.", lst->num_linea,
+              lst->num_columna);
   }  
   __lista_agregar(__lista(lst), elem);
 }
