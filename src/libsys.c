@@ -84,24 +84,24 @@ void lat_sistema_fecha(lat_mv *mv) {
   time_t raw;
   struct tm *tipo;
   time(&raw);
-  tipo = localtime(&raw);    
+  tipo = localtime(&raw);
   lat_objeto *tmp = mv->objeto_nulo;
   if (!strcmp(num, "seg")) {
-    tmp = lat_numerico_nuevo(mv, tipo->tm_sec); //segundos    
+    tmp = lat_numerico_nuevo(mv, tipo->tm_sec); //segundos
   } else if (!strcmp(num, "min")) {
-    tmp = lat_numerico_nuevo(mv, tipo->tm_min);    
+    tmp = lat_numerico_nuevo(mv, tipo->tm_min);
   } else if (!strcmp(num, "hora")) {
     tmp = lat_numerico_nuevo(mv, tipo->tm_hour);
   } else if (!strcmp(num, "d_mes")) {
-    tmp = lat_numerico_nuevo(mv, tipo->tm_mday); // dia del mes    
+    tmp = lat_numerico_nuevo(mv, tipo->tm_mday); // dia del mes
   } else if (!strcmp(num, "mes")) {
-    tmp = lat_numerico_nuevo(mv, tipo->tm_mon);    
+    tmp = lat_numerico_nuevo(mv, tipo->tm_mon);
   } else if (!strcmp(num, "año")) {
-    tmp = lat_numerico_nuevo(mv, tipo->tm_year + 1900);    
+    tmp = lat_numerico_nuevo(mv, tipo->tm_year + 1900);
   } else if (!strcmp(num, "d_sem")) {
     tmp = lat_numerico_nuevo(mv, tipo->tm_wday); // día de la sem.
   } else if (!strcmp(num, "d_año")) {
-    tmp = lat_numerico_nuevo(mv, tipo->tm_yday); // día del año    
+    tmp = lat_numerico_nuevo(mv, tipo->tm_yday); // día del año
   } else if (!strcmp(num, "estacion")) {
     tmp = lat_numerico_nuevo(mv, tipo->tm_isdst); // verano/inv
   } else {
@@ -115,28 +115,6 @@ void lat_sistema_fecha(lat_mv *mv) {
 void proceso_al_activarse(int sig) {
     proceso_detenido = 1;
 }
-
-    /* SIGHUP        1       Term    Hangup detected on controlling terminal
-                                     or death of controlling process
-       SIGINT        2       Term    Interrupt from keyboard
-       SIGQUIT       3       Core    Quit from keyboard
-       SIGILL        4       Core    Illegal Instruction
-       SIGABRT       6       Core    Abort signal from abort(3)
-       SIGFPE        8       Core    Floating point exception
-       SIGKILL       9       Term    Kill signal
-       SIGSEGV      11       Core    Invalid memory reference
-       SIGPIPE      13       Term    Broken pipe: write to pipe with no
-                                     readers
-       SIGALRM      14       Term    Timer signal from alarm(2)
-       SIGTERM      15       Term    Termination signal
-       SIGUSR1   30,10,16    Term    User-defined signal 1
-       SIGUSR2   31,12,17    Term    User-defined signal 2
-       SIGCHLD   20,17,18    Ign     Child stopped or terminated
-       SIGCONT   19,18,25    Cont    Continue if stopped
-       SIGSTOP   17,19,23    Stop    Stop process
-       SIGTSTP   18,20,24    Stop    Stop typed at terminal
-       SIGTTIN   21,21,26    Stop    Terminal input for background process
-       SIGTTOU   22,22,27    Stop    Terminal output for background process */
 
 void lat_sistema_avisar(lat_mv *mv) {
     lat_objeto *a = lat_desapilar(mv);
@@ -153,6 +131,35 @@ void lat_sistema_salir(lat_mv *mv) {
   exit(0);
 }
 
+void lat_sistema_cwd(lat_mv *mv) {
+   char dir[1024];
+   getcwd(dir, sizeof(dir));
+   if (dir!=NULL) {
+      lat_apilar(mv, lat_cadena_nueva(mv, strdup(dir)));
+   } else {
+      lat_apilar(mv, mv->objeto_nulo);
+   };
+}
+
+void lat_sistema_iraxy(lat_mv *mv) {
+   lat_objeto *x = lat_desapilar(mv);
+   lat_objeto *y = lat_desapilar(mv);
+   int yx = __numerico(y), xx = __numerico(x);
+   printf("%c[%d;%df",0x1B, yx, xx);
+   fflush(stdout);
+}
+
+void lat_sistema_usuario(lat_mv *mv) {
+   char *user = getenv("USER");
+   lat_objeto *tmp;
+   if (user!=NULL || user) {
+      tmp = lat_cadena_nueva(mv, user);
+   } else {
+      tmp = mv->objeto_nulo;
+   }
+   lat_apilar(mv, tmp);
+}
+
 static const lat_CReg libsistema[] = {
     {"dormir", lat_sistema_dormir, 1},
     {"ejecutar", lat_sistema_ejecutar, 1},
@@ -160,6 +167,9 @@ static const lat_CReg libsistema[] = {
     {"fecha", lat_sistema_fecha, 1},
     {"salir", lat_sistema_salir, 0},
     {"avisar", lat_sistema_avisar, 1},
+    {"cwd", lat_sistema_cwd, 0},
+    {"iraxy", lat_sistema_iraxy, 2},
+    {"usuario", lat_sistema_usuario, 0},
     {NULL, NULL}};
 
 void lat_importar_lib_sistema(lat_mv *mv) {
