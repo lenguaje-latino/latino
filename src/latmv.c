@@ -805,9 +805,9 @@ void lat_llamar_funcion(lat_mv *mv, lat_objeto *func) {
         lat_objeto *pos = lat_desapilar(mv);
         lat_objeto *lst = lat_desapilar(mv);
         lat_objeto *exp = lat_desapilar(mv);        
-	if(!__obj_comparar(lst, exp)){
-          lat_error("Linea %d, %d: Referencia circular detectada.", exp->num_linea,
-                      exp->num_columna);
+	      if(!__obj_comparar(lst, exp)){
+          lat_error("Linea %d, %d: Referencia circular detectada.", lst->num_linea,
+                      lst->num_columna);
         }
         if (lst->tipo == T_DICT) {          
           __dic_asignar(__dic(lst), __cadena(pos), exp);
@@ -891,8 +891,8 @@ void lat_llamar_funcion(lat_mv *mv, lat_objeto *func) {
           dic = lat_tope(mv);
         }
         if(!__obj_comparar(dic, val)){
-          lat_error("Linea %d, %d: Referencia circular detectada.", val->num_linea,
-                    val->num_columna);
+          lat_error("Linea %d, %d: Referencia circular detectada.", dic->num_linea,
+                    dic->num_columna);
         }
         char *_k = NULL;
         if (key->tipo == T_NUMERIC) {
@@ -905,12 +905,12 @@ void lat_llamar_funcion(lat_mv *mv, lat_objeto *func) {
       case STORE_ATTR: {
         lat_objeto *attr = (lat_objeto *)cur.meta;
         lat_objeto *obj = lat_desapilar(mv);
-        lat_objeto *val = lat_desapilar(mv);
-        if(!__obj_comparar(obj, val)){
-          lat_error("Linea %d, %d: Referencia circular detectada.", val->num_linea,
-                    val->num_columna);
-        }
+        lat_objeto *val = lat_desapilar(mv);        
         if (obj->tipo == T_DICT) {          
+          if(!__obj_comparar(obj, val)){
+          lat_error("Linea %d, %d: Referencia circular detectada.", obj->num_linea,
+                      obj->num_columna);
+          }
           __dic_asignar(__dic(obj), __cadena(attr), val);
         }
       } break;

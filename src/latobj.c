@@ -350,7 +350,7 @@ bool __obj_es_igual(lat_objeto *lhs, lat_objeto *rhs) {
 
 int __obj_comparar(lat_objeto *lhs, lat_objeto *rhs) {
   int res = 1;
-  if (lhs->tipo != rhs->tipo) {
+  if (lhs->tipo != rhs->tipo || lhs->tipo == T_DICT || rhs->tipo == T_DICT) {
     char *buffer = lat_obj2cstring(lhs);
     char *buffer2 = lat_obj2cstring(rhs);
     res = strcmp(buffer, buffer2);
@@ -373,11 +373,7 @@ int __obj_comparar(lat_objeto *lhs, lat_objeto *rhs) {
   if (lhs->tipo == T_LIST) {
     res = __lista_comparar(__lista(lhs), __lista(rhs));
     goto RESPUESTA;
-  }
-  if (lhs->tipo == T_DICT) {
-    res = memcmp(lhs, rhs, sizeof(lhs));
-    goto RESPUESTA;
-  }
+  }  
 RESPUESTA:
   if (res < 0) {
     return -1;
