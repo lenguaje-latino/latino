@@ -186,7 +186,52 @@ void lat_dic_longitud(lat_mv *mv) {
   lat_gc_agregar(mv, tmp);
 }
 
+void lat_dic_llaves(lat_mv *mv){
+  lat_objeto *o = lat_desapilar(mv);
+  hash_map *m = __dic(o);
+  lista *lst = __lista_crear();
+  int i;
+  for (i = 0; i < 256; i++) {
+    lista *list = m->buckets[i];
+    if (list != NULL) {
+      LIST_FOREACH(list, primero, siguiente, cur) {
+        if (cur->valor != NULL) {
+          char *str_key = ((hash_val *)cur->valor)->llave;
+          __lista_agregar(lst, lat_cadena_nueva(mv, strdup(str_key)));
+        }
+      }
+    }
+  }
+  lat_objeto *tmp = lat_lista_nueva(mv, lst);
+  lat_apilar(mv, tmp);
+  lat_gc_agregar(mv, tmp);
+}
+
+void lat_dic_valores(lat_mv *mv){
+  lat_objeto *o = lat_desapilar(mv);
+  hash_map *m = __dic(o);
+  lista *lst = __lista_crear();
+  int i;
+  for (i = 0; i < 256; i++) {
+    lista *list = m->buckets[i];
+    if (list != NULL) {
+      LIST_FOREACH(list, primero, siguiente, cur) {
+        if (cur->valor != NULL) {
+          lat_objeto *val = (lat_objeto *)((hash_val *)cur->valor)->valor;
+          __lista_agregar(lst, __obj_clonar(mv, val));
+        }
+      }
+    }
+  }
+  lat_objeto *tmp = lat_lista_nueva(mv, lst);
+  lat_apilar(mv, tmp);
+  lat_gc_agregar(mv, tmp);
+}
+
 static const lat_CReg lib_dic[] = {{"longitud", lat_dic_longitud, 1},
+                                   {"llaves", lat_dic_llaves, 1},
+                                   {"valores", lat_dic_valores, 1},
+                                   {"vals", lat_dic_valores, 1},
                                    {NULL, NULL}};
 
 void lat_importar_lib_dic(lat_mv *mv) {

@@ -401,6 +401,7 @@ static const lat_CReg lib_lista[] = {
     {"eliminar_indice", lat_lista_eliminar_indice, 2},
     {"longitud", lat_lista_longitud, 1},
     {"indice", lat_lista_indice, 2},
+    {"encontrar", lat_lista_indice, 2},
     {"comparar", lat_lista_comparar, 2},
     {"insertar", lat_lista_insertar, 3},
     {"eliminar", lat_lista_eliminar, 2},
