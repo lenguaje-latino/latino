@@ -160,7 +160,7 @@ char *__str_analizar(const char *s, size_t len) {
 
 char *__str_decimal_a_cadena(double d) {
   char *buffer = __memoria_asignar(NULL, 32);
-  snprintf(buffer, 32, "%.32g", d);
+  snprintf(buffer, 32, LAT_NUMERIC_FMT, d);
   return buffer;
 }
 
@@ -799,7 +799,7 @@ void lat_cadena_formato(lat_mv *mv) {
       } break;
       case 'd': {
         lat_objeto *dec = __lista_extraer_inicio(params);
-        sprintf(buff, "%.32g", lat_obj2double(dec));
+        sprintf(buff, LAT_NUMERIC_FMT, lat_obj2double(dec));
       } break;
       case 's': {
         lat_objeto *str = __lista_extraer_inicio(params);

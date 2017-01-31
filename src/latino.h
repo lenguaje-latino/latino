@@ -136,6 +136,8 @@ extern char *filename;
 
 #define UNUSED(x) (void)(x)
 
+#define LAT_NUMERIC_FMT "%.16g"
+
 /** Interface con flex */
 typedef struct YYLTYPE {
   int first_line;
