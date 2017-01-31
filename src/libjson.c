@@ -175,7 +175,7 @@ void lat_json_codificar(lat_mv *mv) {
   lat_objeto *a = lat_desapilar(mv);
   lat_objeto *tmp = mv->objeto_nulo;
   json_t *j = __latino_a_json(mv, a);
-  char *s = json_dumps(j, 0);
+  char *s = json_dumps(j, JSON_ALLOW_NUL);
   tmp = lat_cadena_nueva(mv, strdup(s));
   lat_apilar(mv, tmp);
   lat_gc_agregar(mv, tmp);
@@ -195,7 +195,7 @@ void lat_json_formato(lat_mv *mv) {
   lat_objeto *tmp = mv->objeto_nulo;
   if (root) {
     int flags = JSON_INDENT(spaces);
-    char *buf = json_dumps(root, flags);
+    char *buf = json_dumps(root, (flags & JSON_ALLOW_NUL));
     tmp = lat_cadena_nueva(mv, buf);
     json_decref(root);
   }
