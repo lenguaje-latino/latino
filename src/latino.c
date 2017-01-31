@@ -272,6 +272,7 @@ static void lat_repl(lat_mv *mv) {
   ast *tmp = NULL;
   int status;
   mv->REPL = true;
+  mv->nombre_archivo = "REPL";
   linenoiseHistoryLoad(dir_history);
   linenoiseSetCompletionCallback(completion);
   while (leer_linea(buf) != -1) {
@@ -328,7 +329,7 @@ int main(int argc, char *argv[]) {
       printf("Error: Se requiere una cadena para ejecución.\n");
       return EXIT_FAILURE;
     }
-    mv->nombre_archivo = NULL;
+    mv->nombre_archivo = "CADENA";
     mv->REPL = false;
     int status;
     char *cmd = __memoria_asignar(NULL, MAX_STR_LENGTH);

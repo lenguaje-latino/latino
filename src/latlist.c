@@ -283,6 +283,7 @@ void lat_lista_agregar(lat_mv *mv) {
   lat_objeto *elem = lat_desapilar(mv);
   lat_objeto *lst = lat_desapilar(mv);  
   if(!__obj_comparar(lst, elem)){
+    filename = lst->nombre_archivo;
     lat_error("Linea %d, %d: Referencia circular detectada.", lst->num_linea,
               lst->num_columna);
   }  
@@ -293,10 +294,12 @@ void lat_lista_extender(lat_mv *mv) {
   lat_objeto *l2 = lat_desapilar(mv);
   lat_objeto *lst = lat_desapilar(mv);
   if (lst->tipo != T_LIST) {
+    filename = lst->nombre_archivo;
     lat_error("Linea %d, %d: %s", lst->num_linea, lst->num_columna,
               "El objeto no es una lista");
   }
   if (l2->tipo != T_LIST) {
+    filename = lst->nombre_archivo;
     lat_error("Linea %d, %d: %s", l2->num_linea, l2->num_columna,
               "El objeto no es una lista");
   }
@@ -311,6 +314,7 @@ void lat_lista_eliminar_indice(lat_mv *mv) {
   lista *lst = __lista(a);
   int pos = __numerico(b);
   if (pos < 0 || pos >= __lista_longitud(lst)) {
+    filename = a->nombre_archivo;
     lat_error("Linea %d, %d: %s", a->num_linea, a->num_columna,
               "Indice fuera de rango");
   }

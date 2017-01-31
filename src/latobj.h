@@ -101,6 +101,7 @@ typedef struct lat_objeto {
   int num_inst;
   char *nombre_cfun;
   lat_datos_objeto datos; /**< Informacion del objeto */
+  char *nombre_archivo;
 } lat_objeto;
 
 struct lat_llave_valor {

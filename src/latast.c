@@ -193,8 +193,7 @@ void ast_liberar(ast *a) {
         ast_liberar(fun->parametros);
       if (fun->sentencias)
         ast_liberar(fun->sentencias);
-      if(fun->nombre)
-        ast_liberar(fun->nombre);
+      ast_liberar(fun->nombre);
       break;
     }
     case NODO_LISTA_ASIGNAR_ELEMENTO: {
@@ -276,15 +275,16 @@ static int nodo_analizar(lat_mv *mv, ast *node, lat_bytecode *bcode, int i) {
     }
   } break;
   case NODO_IDENTIFICADOR: {
-    /*GET: Obtiene el valor de la variable en la tabla de simbolos*/
+    /*GET: Obtiene el valor de la variable en la tabla de simbolos */
     lat_objeto *o = lat_cadena_nueva(mv, strdup(node->valor->val.cadena));
     o->num_linea = node->num_linea;
     o->num_columna = node->num_columna;
     o->es_constante = node->valor->es_constante;
+    o->nombre_archivo = mv->nombre_archivo;
     dbc(LOAD_NAME, 0, 0, o);
   } break;
   case NODO_ASIGNACION: {
-    /*SET: Asigna el valor de la variable en la tabla de simbolos*/
+    /*SET: Asigna el valor de la variable en la tabla de simbolos */
     pn(mv, node->izq);
     if (node->der->tipo == NODO_ATRIBUTO) {
       // pn(mv, node->der);
@@ -294,6 +294,7 @@ static int nodo_analizar(lat_mv *mv, ast *node, lat_bytecode *bcode, int i) {
       o->num_linea = node->der->der->num_linea;
       o->num_columna = node->der->der->num_columna;
       o->es_constante = node->der->der->valor->es_constante;
+      o->nombre_archivo = mv->nombre_archivo;
       dbc(STORE_ATTR, 0, 0, o);
     } else {
       lat_objeto *o =
@@ -301,6 +302,7 @@ static int nodo_analizar(lat_mv *mv, ast *node, lat_bytecode *bcode, int i) {
       o->num_linea = node->der->num_linea;
       o->num_columna = node->der->num_columna;
       o->es_constante = node->der->valor->es_constante;
+      o->nombre_archivo = mv->nombre_archivo;
       dbc(STORE_NAME, 0, 0, o);
     }
   } break;
@@ -323,6 +325,7 @@ static int nodo_analizar(lat_mv *mv, ast *node, lat_bytecode *bcode, int i) {
       o = mv->objeto_nulo;
     o->num_linea = node->num_linea;
     o->num_columna = node->num_columna;
+    o->nombre_archivo = mv->nombre_archivo;
     dbc(LOAD_CONST, 0, 0, o);
   } break;
   case NODO_MAS_UNARIO: {
@@ -337,6 +340,7 @@ static int nodo_analizar(lat_mv *mv, ast *node, lat_bytecode *bcode, int i) {
     o->num_linea = node->num_linea;
     o->num_columna = node->num_columna;
     o->es_constante = node->izq->valor->es_constante;
+    o->nombre_archivo = mv->nombre_archivo;
     dbc(INC, 0, 0, o);
   } break;
   case NODO_DEC: {
@@ -344,6 +348,7 @@ static int nodo_analizar(lat_mv *mv, ast *node, lat_bytecode *bcode, int i) {
     o->num_linea = node->num_linea;
     o->num_columna = node->num_columna;
     o->es_constante = node->izq->valor->es_constante;
+    o->nombre_archivo = mv->nombre_archivo;
     dbc(DEC, 0, 0, o);
   } break;
   case NODO_SUMA: {
@@ -502,12 +507,17 @@ static int nodo_analizar(lat_mv *mv, ast *node, lat_bytecode *bcode, int i) {
     o->num_linea = node->der->num_linea;
     o->num_columna = node->der->num_columna;
     o->es_constante = node->der->valor->es_constante;
+    o->nombre_archivo = mv->nombre_archivo;
     dbc(LOAD_ATTR, 0, 0, o);
   } break;
   case NODO_FUNCION_PARAMETROS: {
     if (node->izq) {
       lat_objeto *o =
           lat_cadena_nueva(mv, strdup(node->izq->valor->val.cadena));
+      o->num_linea = node->izq->num_linea;
+      o->num_columna = node->izq->num_columna;
+      o->es_constante = node->izq->valor->es_constante;
+      o->nombre_archivo = mv->nombre_archivo;
       dbc(STORE_NAME, 0, 0, o);
     }
     if (node->der) {
@@ -530,12 +540,14 @@ static int nodo_analizar(lat_mv *mv, ast *node, lat_bytecode *bcode, int i) {
     dbc(MAKE_FUNCTION, fi + 1, 0, f);
     funcion_bcode = NULL;
     fi = 0;
-    lat_objeto *o = NULL;    
-    o = lat_cadena_nueva(mv, strdup(fun->nombre->valor->val.cadena));
+    lat_objeto *o =
+        lat_cadena_nueva(mv, strdup(fun->nombre->valor->val.cadena));
     o->num_linea = fun->nombre->num_linea;
     o->num_columna = fun->nombre->num_columna;
-    o->num_params = __contar_num_parargs(fun->parametros, NODO_FUNCION_PARAMETROS);
-    o->nombre_cfun = fun->nombre->valor->val.cadena;        
+    o->num_params =
+        __contar_num_parargs(fun->parametros, NODO_FUNCION_PARAMETROS);
+    o->nombre_cfun = fun->nombre->valor->val.cadena;
+    o->nombre_archivo = mv->nombre_archivo;
     dbc(STORE_NAME, 0, 0, o);
     if(0 == strcmp(o->nombre_cfun, "anonima")){
         lat_objeto *anon = __obj_clonar(mv, o);
@@ -543,7 +555,7 @@ static int nodo_analizar(lat_mv *mv, ast *node, lat_bytecode *bcode, int i) {
     }
     if (0 == strcmp(o->datos.cadena, "menu")) {
       mv->menu = true;
-    }    
+    }
   } break;
   case NODO_LISTA: {
     int num_params = 0;

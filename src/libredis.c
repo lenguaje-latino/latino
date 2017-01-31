@@ -44,9 +44,11 @@ void lat_redis_conectar(lat_mv *mv) {
   if (redis == NULL || redis->err) {
     if (redis) {
       redisFree(redis);
+      filename = servidor->nombre_archivo;
       lat_error("Linea %d, %d: %s", servidor->num_linea,
                       servidor->num_columna, "error en conexión.");
     } else {
+      filename = servidor->nombre_archivo;
       lat_error("Linea %d, %d: %s", servidor->num_linea,
                       servidor->num_columna, "error en contexto redis.");
     }

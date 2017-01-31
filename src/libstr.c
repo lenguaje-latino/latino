@@ -662,15 +662,20 @@ void lat_cadena_invertir(lat_mv *mv) {
 
 void lat_cadena_ejecutar(lat_mv *mv) {
   int status;
-  char *codigo = strdup(__cadena(lat_desapilar(mv)));
+  lat_objeto *o = lat_desapilar(mv);
+  char *codigo = strdup(__cadena(o));  
+  char *tmp_name = mv->nombre_archivo;
+  mv->nombre_archivo = "CADENA";
   lat_objeto *func =
       ast_analizar_arbol(mv, lat_analizar_expresion(codigo, &status));
   if (status == 0) {
     lat_llamar_funcion(mv, func);
     //__obj_eliminar(mv, func);
-  } else {
+  } else {  
+    filename = o->nombre_archivo;
     lat_error("Error al ejecutar cadena...");
   }
+  mv->nombre_archivo = tmp_name;  
 }
 
 void lat_cadena_regex(lat_mv *mv) {
@@ -680,6 +685,7 @@ void lat_cadena_regex(lat_mv *mv) {
   int reti;
   reti = regcomp(&regex, __cadena(cadena_regex), REG_EXTENDED);
   if (reti) {
+    filename = cadena->nombre_archivo;
     lat_error("Linea %d, %d: %s", cadena->num_linea, cadena->num_columna,
               "error al compilar regex.");
   }
@@ -689,6 +695,7 @@ void lat_cadena_regex(lat_mv *mv) {
   } else if (reti == REG_NOMATCH) {
     lat_apilar(mv, mv->objeto_falso);
   } else {
+    filename = cadena->nombre_archivo;
     lat_error("Linea %d, %d: %s", cadena->num_linea, cadena->num_columna,
               "error en el match regex.");
   }
@@ -703,6 +710,7 @@ void lat_cadena_match(lat_mv *mv) {
   regmatch_t groupArray[maxGroups];
   char *cursor;
   if (regcomp(&regexCompiled, __cadena(regexString), REG_EXTENDED)) {
+    filename = source->nombre_archivo;
     lat_error("Linea %d, %d: %s", source->num_linea, source->num_columna,
               "error en el match regex.");
   };
@@ -772,6 +780,7 @@ void lat_cadena_formato(lat_mv *mv) {
     } else {
       char buff[1024];
       if (++arg > top) {
+        filename = ofmt->nombre_archivo;
         lat_error("Linea %d, %d: %s", ofmt->num_linea, ofmt->num_columna,
                   "Numero de argumentos invalido para el formato.");
       }
@@ -797,6 +806,7 @@ void lat_cadena_formato(lat_mv *mv) {
         sprintf(buff, "%s", lat_obj2cstring(str));
       } break;
       default: {
+        filename = ofmt->nombre_archivo;
         lat_error("Linea %d, %d: %s", ofmt->num_linea, ofmt->num_columna,
                   "Opcion de formato invalida.");
       }

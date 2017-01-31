@@ -43,10 +43,12 @@ char *__str_decimal_a_cadena(double d);
 void __obj_asignar_contexto(lat_objeto *ns, lat_objeto *name, lat_objeto *o) {
   // printf("lat_asignar_contexto_objeto: %s\n", lat_obtener_cadena(name));
   if (ns->tipo != T_CONTEXT) {
+    filename = ns->nombre_archivo;
     lat_error("Objeto no es un contexto");
   } else {
     hash_map *h = ns->datos.contexto;
     if (strlen(__cadena(name)) > MAX_ID_LENGTH) {
+      filename = ns->nombre_archivo;
       lat_error("Linea %d, %d: Longitud maxima de (%i) excedida para un "
                 "identificador",
                 name->num_linea, name->num_columna, MAX_ID_LENGTH);
@@ -57,6 +59,7 @@ void __obj_asignar_contexto(lat_objeto *ns, lat_objeto *name, lat_objeto *o) {
 
 lat_objeto *__obj_obtener_contexto(lat_objeto *ns, lat_objeto *name) {
   if (ns->tipo != T_CONTEXT) {
+    filename = ns->nombre_archivo;
     lat_error("Objeto no es un contexto");
   } else {
     hash_map *h = ns->datos.contexto;
@@ -282,6 +285,7 @@ bool __logico(lat_objeto *o) {
   if (o->tipo == T_BOOL) {
     return o->datos.logico;
   }
+  filename = o->nombre_archivo;
   lat_error("Linea %d, %d: %s", o->num_linea, o->num_columna,
             "El parametro debe de ser un valor logico (verdadero o falso)");
   return false;
@@ -291,6 +295,7 @@ double __numerico(lat_objeto *o) {
   if (o->tipo == T_NUMERIC) {
     return o->datos.numerico;
   }
+  filename = o->nombre_archivo;
   lat_error("Linea %d, %d: %s", o->num_linea, o->num_columna,
             "El parametro debe de ser un decimal");
   return 0;
@@ -300,6 +305,7 @@ char *__cadena(lat_objeto *o) {
   if (o->tipo == T_STR) {
     return o->datos.cadena;
   }
+  filename = o->nombre_archivo;
   lat_error("Linea %d, %d: %s", o->num_linea, o->num_columna,
             "El parametro debe de ser una cadena");
   return 0;
@@ -309,6 +315,7 @@ lista *__lista(lat_objeto *o) {
   if (o->tipo == T_LIST) {
     return o->datos.lista;
   }
+  filename = o->nombre_archivo;
   lat_error("Linea %d, %d: %s", o->num_linea, o->num_columna,
             "El parametro debe de ser una lista");
   return NULL;
@@ -318,6 +325,7 @@ hash_map *__dic(lat_objeto *o) {
   if (o->tipo == T_DICT) {
     return o->datos.dic;
   }
+  filename = o->nombre_archivo;
   lat_error("Linea %d, %d: %s", o->num_linea, o->num_columna,
             "El parametro debe de ser un diccionario");
   return NULL;
@@ -327,6 +335,7 @@ void *__cdato(lat_objeto *o) {
   if (o->tipo == T_CDATA) {
     return o->datos.fun_usuario;
   }
+  filename = o->nombre_archivo;
   lat_error("Linea %d, %d: %s", o->num_linea, o->num_columna,
             "El parametro debe de ser un dato de c (void *)");
   return NULL;
@@ -407,6 +416,7 @@ bool lat_obj2bool(lat_objeto *o) {
   case T_DICT:
     return __dic_longitud(__dic(o)) == 0 ? false : true;
   default:
+    filename = o->nombre_archivo;
     lat_error("Linea %d, %d: %s", o->num_linea, o->num_columna,
               "Conversion de tipo de dato incompatible");
     break;
@@ -443,10 +453,12 @@ double lat_obj2double(lat_objeto *o) {
     return __dic_longitud(__dic(o));
     break;
   default:
+    filename = o->nombre_archivo;
     lat_error("Linea %d, %d: %s", o->num_linea, o->num_columna,
               "Conversion de tipo de dato incompatible");
     break;
   }
+  filename = o->nombre_archivo;
   lat_error("Linea %d, %d: %s", o->num_linea, o->num_columna,
             "Conversion de tipo de dato incompatible");
   return 0;
