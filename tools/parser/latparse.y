@@ -107,7 +107,7 @@ int yylex (YYSTYPE * yylval_param,YYLTYPE * yylloc_param ,yyscan_t yyscanner);
 %type <node> logical_not_expression logical_and_expression logical_or_expression equality_expression
 %type <node> multiplicative_expression additive_expression concat_expression
 %type <node> statement statement_list unary_expression ternary_expression incdec_statement
-%type <node> iteration_statement jump_statement function_definition
+%type <node> iteration_statement jump_statement function_definition function_anonymous
 %type <node> argument_expression_list declaration primary_expression
 %type <node> constant_expression function_call selection_statement parameter_list
 %type <node> list_new list_items
@@ -233,6 +233,7 @@ expression
         | list_new
         | dict_new
         | variable_access
+        | function_anonymous
         ;
 
 program
@@ -376,6 +377,12 @@ jump_statement
 function_definition
     : FUNCION IDENTIFICADOR '(' parameter_list ')' statement_list FIN {
         $$ = ast_nuevo_funcion($2, $4, $6);
+    }
+    ;
+
+function_anonymous
+    : FUNCION '(' parameter_list ')' statement_list FIN {
+        $$ = ast_nuevo_funcion(ast_nuevo_identificador("anonima", @1.first_line, @1.first_column, false), $3, $5);
     }
     ;
 

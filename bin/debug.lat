@@ -4,5 +4,6 @@ Menu propiedades del proyecto-> Debugging -> Command Arguments. Agregar
 $(SolutionDir)..\ejemplos\debug.lat
 */
 
-hola = {}
-hola.dv = hola
+hola = [ funcion (a, b) retorno a+b fin, funcion (a, b) retorno a*b fin ]
+imprimir(hola[0](1,2))
+imprimir(hola[1](1,2))
