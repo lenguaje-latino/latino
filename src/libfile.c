@@ -72,6 +72,7 @@ void lat_archivo_lineas(lat_mv *mv) {
   char *path = __cadena(o);
   fp = fopen(path, "r");
   if (fp == NULL) {
+    filename = o->nombre_archivo;
     lat_error("Linea %d, %d: %s", o->num_linea, o->num_columna,
                     "No se pudo abrir el archivo\n");
   }
@@ -120,13 +121,15 @@ void lat_archivo_escribir(lat_mv *mv) {
     fwrite(cad, 1, lon, fp);
     fclose(fp);
   } else {
+    filename = o->nombre_archivo;
     lat_error("Linea %d, %d: %s %s\n", o->num_linea, o->num_columna,
                     "No se pudo escribir en el archivo", __cadena(o));
   }
 }
 
 void lat_archivo_ejecutar(lat_mv *mv) {
-  char *input = __cadena(lat_desapilar(mv));
+  lat_objeto *o = lat_desapilar(mv);
+  char *input = __cadena(o);
   char *dot = strrchr(input, '.');
   char *extension;
   if (!dot || dot == input) {
@@ -138,13 +141,17 @@ void lat_archivo_ejecutar(lat_mv *mv) {
     int status;
     ast *tree = lat_analizar_archivo(input, &status);
     if (!tree) {
+      filename = o->nombre_archivo;
       lat_error("Al leer el archivo: %s", input);
     }
+    mv->REPL = false;
+    mv->nombre_archivo = input;
     lat_objeto *func = ast_analizar_arbol(mv, tree);
     if (status == 0) {
       lat_llamar_funcion(mv, func);
       //__obj_eliminar(mv, func);
     } else {
+      filename = o->nombre_archivo;
       lat_error("Error al ejeuctar archivo: %s\n", input);
     }
   }

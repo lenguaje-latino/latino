@@ -137,6 +137,7 @@ void lat_imprimirf(lat_mv *mv) {
     } else {
       char buff[1024];
       if (++arg > top) {
+        filename = ofmt->nombre_archivo;
         lat_error("Linea %d, %d: %s", ofmt->num_linea, ofmt->num_columna,
                   "Numero de argumentos invalido para el formato.");
       }
@@ -162,6 +163,7 @@ void lat_imprimirf(lat_mv *mv) {
         sprintf(buff, "%s", lat_obj2cstring(str));
       } break;
       default: {
+        filename = ofmt->nombre_archivo;
         lat_error("Linea %d, %d: %s", ofmt->num_linea, ofmt->num_columna,
                   "Opcion de formato invalida.");
       }
@@ -187,18 +189,21 @@ void lat_incluir(lat_mv *mv) {
   // buscar en ruta actual
   lat_objeto *mod =
       lat_cadena_nueva(mv, strdup(strcat(dir_actual, archivo_ext)));
+  char *tmp_name = mv->nombre_archivo;
   if (__es_legible(__cadena(mod))) {
     // if (!__lista_contiene_valor(modulos, mod)) {
     // printf("buscar con terminacion .lat, buscar en ruta actual: %s\n",
     // __cadena(mod));
     //__lista_agregar(modulos, mod);
-    ast *nodo = lat_analizar_archivo(__cadena(mod), &status);
-    if (status == 0 && nodo != NULL) {
+      mv->nombre_archivo = __cadena(mod);
+    ast *nodo = lat_analizar_archivo(__cadena(mod), &status);    
+    if (status == 0 && nodo != NULL) {      
       lat_objeto *funmod = ast_analizar_arbol(mv, nodo);
       lat_llamar_funcion(mv, funmod);
       //FIX: Memory leak
       //ast_liberar(nodo);
       lat_gc_agregar(mv, funmod);
+      mv->nombre_archivo = tmp_name;
       return;
     }
     /*}else{
@@ -217,13 +222,15 @@ void lat_incluir(lat_mv *mv) {
     // if (__es_legible(__cadena(mod_lib))) {
     if (!__lista_contiene_valor(modulos, mod_lib)) {
       __lista_agregar(modulos, mod_lib);
-      ast *nodo = lat_analizar_archivo(__cadena(mod_lib), &status);
+      mv->nombre_archivo = __cadena(mod_lib);
+      ast *nodo = lat_analizar_archivo(__cadena(mod_lib), &status);      
       if (status == 0 && nodo != NULL) {
         lat_objeto *funmod_lib = ast_analizar_arbol(mv, nodo);
         lat_llamar_funcion(mv, funmod_lib);
         //FIX: Memory leak
         //ast_liberar(nodo);
         lat_gc_agregar(mv, funmod_lib);
+        mv->nombre_archivo = tmp_name;
         return;
       }
       /*}else{
@@ -232,6 +239,7 @@ void lat_incluir(lat_mv *mv) {
     }
     lat_gc_agregar(mv, mod_lib);
   }
+  filename = o->nombre_archivo;
   lat_error("Linea %d, %d: %s '%s'", o->num_linea, o->num_columna,
             "No se pudo incluir el modulo", __cadena(o));
 }

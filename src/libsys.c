@@ -105,6 +105,7 @@ void lat_sistema_fecha(lat_mv *mv) {
   } else if (!strcmp(num, "estacion")) {
     tmp = lat_numerico_nuevo(mv, tipo->tm_isdst); // verano/inv
   } else {
+    filename = tiempo->nombre_archivo;
     lat_error("Linea %d, %d: %s", tiempo->num_linea, tiempo->num_columna,
                     "el formato de tiempo indicado no existe.");
   }

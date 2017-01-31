@@ -77,6 +77,7 @@ void lat_curl_peticion(lat_mv *mv) {
       return;
    } else if (res != CURLE_OK) {
       curl_easy_cleanup(curl);
+      filename = o->nombre_archivo;
       lat_error("Linea %d, %d: %s", o->num_linea, o->num_columna,
                       curl_easy_strerror(res));
     }
@@ -100,6 +101,7 @@ void lat_curl_escape(lat_mv *mv) {
       lat_gc_agregar(mv, tmp);
     }
   } else {
+    filename = a->nombre_archivo;
     lat_error("Linea %d, %d: %s", a->num_linea, a->num_columna,
                     "se esperaba una cadena mayor");
   }

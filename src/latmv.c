@@ -93,6 +93,7 @@ void lat_importar_lib_redis(lat_mv *mv);
 void lat_importar_lib_sistema(lat_mv *mv);
 void lat_importar_lib_dic(lat_mv *mv);
 void lat_importar_lib_gtk(lat_mv *mv);
+void lat_importar_lib_lat(lat_mv *mv);
 
 const char *__obtener_bytecode_nombre(int inst) { return bycode_nombre[inst]; }
 
@@ -131,6 +132,7 @@ static void __dividir(lat_mv *mv) {
   lat_objeto *b = lat_desapilar(mv);
   lat_objeto *a = lat_desapilar(mv);
   if (lat_obj2double(b) == 0) {
+    filename = b->nombre_archivo;
     lat_error("Linea %d, %d: %s", b->num_linea, b->num_columna,
               "Division entre cero");
   }
@@ -144,6 +146,7 @@ static void __modulo(lat_mv *mv) {
   lat_objeto *b = lat_desapilar(mv);
   lat_objeto *a = lat_desapilar(mv);
   if (lat_obj2double(b) == 0) {
+    filename = b->nombre_archivo;
     lat_error("Linea %d, %d: %s", b->num_linea, b->num_columna,
               "Modulo entre cero");
   }
@@ -389,6 +392,7 @@ lat_mv *lat_mv_crear() {
   lat_importar_lib_sistema(mv);
   lat_importar_lib_dic(mv);
   lat_importar_lib_gtk(mv);
+  lat_importar_lib_lat(mv);  
   return mv;
 }
 
@@ -614,8 +618,7 @@ void lat_llamar_funcion(lat_mv *mv, lat_objeto *func) {
         // asigna el numero de parametros
         if (name->nombre_cfun) {
           val->num_params = name->num_params;
-          // val->nombre_cfun = strdup(name->nombre_cfun);
-          val->nombre_cfun = name->nombre_cfun;
+          val->nombre_cfun = name->nombre_cfun;          
         }
         __obj_asignar_contexto(ctx, name, val);
       } break;
@@ -634,6 +637,7 @@ void lat_llamar_funcion(lat_mv *mv, lat_objeto *func) {
         Lat_DECREF(tmp);
         if (name->es_constante) {
           if (tmp != NULL) {
+            filename = name->nombre_archivo;
             lat_error(
                 "Linea %d, %d: Intento de reasignar valor a constante '%s'",
                 name->num_linea, name->num_columna, __cadena(name));
@@ -642,8 +646,8 @@ void lat_llamar_funcion(lat_mv *mv, lat_objeto *func) {
         // asigna el numero de parametros
         if (name->nombre_cfun) {
           val->num_params = name->num_params;
-          // val->nombre_cfun = strdup(name->nombre_cfun);
           val->nombre_cfun = name->nombre_cfun;
+          val->nombre_archivo = name->nombre_archivo;
         }
         __obj_asignar_contexto(ctx, name, val);
       } break;
@@ -658,13 +662,15 @@ void lat_llamar_funcion(lat_mv *mv, lat_objeto *func) {
         if (val == NULL) {
           ctx = lat_obtener_global_ctx(mv);
           val = __obj_obtener_contexto(ctx, name);
-          if (val == NULL) {            
+          if (val == NULL) {
+            filename = name->nombre_archivo;
             lat_error("Linea %d, %d: Variable \"%s\" indefinida",
                       name->num_linea, name->num_columna, __cadena(name));
           }
         }
         val->num_linea = name->num_linea;
         val->num_columna = name->num_columna;
+        val->nombre_archivo = name->nombre_archivo;
         lat_apilar(mv, val);
       } break;
       case POP_JUMP_IF_FALSE: {
@@ -697,9 +703,10 @@ void lat_llamar_funcion(lat_mv *mv, lat_objeto *func) {
           }
           if (fun->num_params == -1) {
             // funcion es var_arg: apilamos el numero de argumentos
-            lat_objeto *params = lat_numerico_nuevo(mv, num_args);  
+            lat_objeto *params = lat_numerico_nuevo(mv, num_args);
             lat_apilar(mv, params);
           } else if (num_args != fun->num_params) {
+            filename = fun->nombre_archivo;
             lat_error("Linea %d, %d: Numero invalido de argumentos en "
                       "funcion '%s'. se esperaban %i valores.\n",
                       fun->num_linea, fun->num_columna, fun->nombre_cfun,
@@ -708,6 +715,7 @@ void lat_llamar_funcion(lat_mv *mv, lat_objeto *func) {
         }
         mv->num_callf++;
         if (mv->num_callf >= MAX_CALL_FUNCTION) {
+          filename = fun->nombre_archivo;
           lat_error("Linea %d, %d: Numero maximo de llamadas a funciones "
                     "recursivas excedido en '%s'\n",
                     fun->num_linea, fun->num_columna, fun->nombre_cfun);
@@ -771,6 +779,7 @@ void lat_llamar_funcion(lat_mv *mv, lat_objeto *func) {
             break;
           } else {
             if (next.ins == CALL_FUNCTION) {
+              filename = attr->nombre_archivo;
               lat_error("Linea %d, %d: No se encontro la funcion %s.",
                         attr->num_linea, attr->num_columna, __cadena(attr));
             } else {
@@ -805,7 +814,8 @@ void lat_llamar_funcion(lat_mv *mv, lat_objeto *func) {
         lat_objeto *pos = lat_desapilar(mv);
         lat_objeto *lst = lat_desapilar(mv);
         lat_objeto *exp = lat_desapilar(mv);        
-	      if(!__obj_comparar(lst, exp)){
+	if(!__obj_comparar(lst, exp)){
+          filename = lst->nombre_archivo;
           lat_error("Linea %d, %d: Referencia circular detectada.", lst->num_linea,
                       lst->num_columna);
         }
@@ -817,6 +827,7 @@ void lat_llamar_funcion(lat_mv *mv, lat_objeto *func) {
         if (lst->tipo == T_STR) {
           char *slst = __cadena(lst);
           if (ipos < 0 || ipos >= strlen(slst)) {
+            filename = pos->nombre_archivo;
             lat_error("Linea %d, %d: Indice fuera de rango.", pos->num_linea,
                       pos->num_columna);
           }
@@ -829,6 +840,7 @@ void lat_llamar_funcion(lat_mv *mv, lat_objeto *func) {
         }
         if (lst->tipo == T_LIST) {
           if (ipos < 0 || ipos >= __lista_longitud(__lista(lst))) {
+            filename = pos->nombre_archivo;
             lat_error("Linea %d, %d: Indice fuera de rango.", pos->num_linea,
                       pos->num_columna);
           }
@@ -878,7 +890,6 @@ void lat_llamar_funcion(lat_mv *mv, lat_objeto *func) {
         lat_apilar(mv, o);
       } break;
       case BUILD_MAP: {
-        // lat_objeto *o = (lat_objeto *)cur.meta;
         lat_objeto *o = lat_dic_nuevo(mv, __dic_crear());
         lat_apilar(mv, o);
       } break;
@@ -891,6 +902,7 @@ void lat_llamar_funcion(lat_mv *mv, lat_objeto *func) {
           dic = lat_tope(mv);
         }
         if(!__obj_comparar(dic, val)){
+          filename = dic->nombre_archivo;
           lat_error("Linea %d, %d: Referencia circular detectada.", dic->num_linea,
                     dic->num_columna);
         }
@@ -908,7 +920,8 @@ void lat_llamar_funcion(lat_mv *mv, lat_objeto *func) {
         lat_objeto *val = lat_desapilar(mv);        
         if (obj->tipo == T_DICT) {          
           if(!__obj_comparar(obj, val)){
-          lat_error("Linea %d, %d: Referencia circular detectada.", obj->num_linea,
+            filename = obj->nombre_archivo;
+            lat_error("Linea %d, %d: Referencia circular detectada.", obj->num_linea,
                       obj->num_columna);
           }
           __dic_asignar(__dic(obj), __cadena(attr), val);
@@ -927,6 +940,7 @@ void lat_llamar_funcion(lat_mv *mv, lat_objeto *func) {
     // printf("%s\n", "llamando c funcion");
     ((void (*)(lat_mv *))(func->datos.fun_usuario))(mv);
   } else {
+    filename = func->nombre_archivo;
     lat_error("Linea %d, %d: %s", func->num_linea, func->num_columna,
               "El objeto no es una funcion");
   }

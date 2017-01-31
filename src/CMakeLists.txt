@@ -48,7 +48,7 @@ SET(SOURCES
     latino.c latast.c latmv.c latobj.c latmem.c
     latlist.c latdic.c latgc.c latlex.c latparse.c
     libstr.c libcast.c libmath.c libfile.c libsys.c
-    libcurl.c libjson.c libredis.c libbase.c
+    libcurl.c libjson.c libredis.c libbase.c liblat.c
     linenoise/utf8.c linenoise/linenoise.c
     libgtk.c
     )

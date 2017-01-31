@@ -4,14 +4,3 @@ Menu propiedades del proyecto-> Debugging -> Command Arguments. Agregar
 $(SolutionDir)..\ejemplos\debug.lat
 */
 
-x = funcion (a,b) 
-		si b == 0 
-			b=1 
-		fin 
-		retorno a / b
-	fin
-
-hola = [ funcion (a, b) retorno a+b fin, funcion (a, b) retorno a*b fin ]
-imprimir(hola[0](1,2))
-imprimir(hola[1](1,2))
-imprimir(x(1,2))
