@@ -8,3 +8,6 @@ d = { "uno" : 1, "dos" : 2, "tres" : 3 }
 escribir(dic.llaves(d))
 escribir(dic.vals(d))
 escribir(dic.valores(d))
+
+VERSION = 0.6
+imprimir(VERSION)

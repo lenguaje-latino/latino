@@ -156,7 +156,7 @@ void lat_imprimirf(lat_mv *mv) {
       } break;
       case 'd': {
         lat_objeto *dec = __lista_extraer_inicio(params);
-        sprintf(buff, "%.32g", lat_obj2double(dec));
+        sprintf(buff, LAT_NUMERIC_FMT, lat_obj2double(dec));
       } break;
       case 's': {
         lat_objeto *str = __lista_extraer_inicio(params);
