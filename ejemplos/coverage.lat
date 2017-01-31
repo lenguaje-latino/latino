@@ -88,13 +88,6 @@ funcion operacion(op, a, b)
 	fin
 fin
 
-funcion fibo_rec(n)
-    si ( n < 2 )
-        retorno n
-    fin
-    retorno fibo_rec(n-1) + fibo_rec(n-2)
-fin
-
 escribir(operacion("+", 1, 2))
 escribir(operacion("-", 1, 2))
 escribir(operacion("*", 1, 2))
@@ -114,6 +107,13 @@ escribir(operacion("&&", 1, 1))
 escribir(operacion("||", 1, 0))
 escribir(operacion("!", 1))
 escribir(operacion("..", "hola", "mundo"))
+
+funcion fibo_rec(n)
+    si ( n < 2 )
+        retorno n
+    fin
+    retorno fibo_rec(n-1) + fibo_rec(n-2)
+fin
 
 escribir(fibo_rec(10))
 
