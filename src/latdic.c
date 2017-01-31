@@ -31,7 +31,7 @@ THE SOFTWARE.
 #include "latlist.h"
 #include "latmem.h"
 
-#define LIB_DIC_NAME "diccionario"
+#define LIB_DIC_NAME "dic"
 
 char * __str_reemplazar(char *str, const char *orig, const char *rep);
 
