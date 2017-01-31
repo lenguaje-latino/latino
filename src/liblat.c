@@ -4,6 +4,8 @@
 
 #define LIB_LAT_NAME "lat"
 
+char *__tipo(int tipo);
+
 void lat_lat_mostrar(lat_mv *mv){
     lat_objeto *o = lat_desapilar(mv);
     printf("Tipo : %s\n", __tipo(o->tipo));

@@ -4,3 +4,7 @@ Menu propiedades del proyecto-> Debugging -> Command Arguments. Agregar
 $(SolutionDir)..\ejemplos\debug.lat
 */
 
+d = { "uno" : 1, "dos" : 2, "tres" : 3 }
+escribir(dic.llaves(d))
+escribir(dic.vals(d))
+escribir(dic.valores(d))
