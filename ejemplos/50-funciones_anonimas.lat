@@ -1,0 +1,15 @@
+//asignamos una funcion anonima a una variable
+x = funcion (a,b) 
+		si b == 0 
+			b=1 
+		fin 
+		retorno a / b
+	fin
+
+//igual las podemos agregar a una lista
+hola = [ funcion (a, b) retorno a+b fin, funcion (a, b) retorno a*b fin ]
+
+//ejecutamos cada funcion
+imprimir(hola[0](1,2))	//suma
+imprimir(hola[1](1,2))	//multiplica
+imprimir(x(1,2))	//divide
