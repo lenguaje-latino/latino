@@ -193,7 +193,8 @@ void ast_liberar(ast *a) {
         ast_liberar(fun->parametros);
       if (fun->sentencias)
         ast_liberar(fun->sentencias);
-      ast_liberar(fun->nombre);
+      if(fun->nombre)
+        ast_liberar(fun->nombre);
       break;
     }
     case NODO_LISTA_ASIGNAR_ELEMENTO: {
@@ -529,17 +530,20 @@ static int nodo_analizar(lat_mv *mv, ast *node, lat_bytecode *bcode, int i) {
     dbc(MAKE_FUNCTION, fi + 1, 0, f);
     funcion_bcode = NULL;
     fi = 0;
-    lat_objeto *o =
-        lat_cadena_nueva(mv, strdup(fun->nombre->valor->val.cadena));
+    lat_objeto *o = NULL;    
+    o = lat_cadena_nueva(mv, strdup(fun->nombre->valor->val.cadena));
     o->num_linea = fun->nombre->num_linea;
     o->num_columna = fun->nombre->num_columna;
-    o->num_params =
-        __contar_num_parargs(fun->parametros, NODO_FUNCION_PARAMETROS);
-    o->nombre_cfun = fun->nombre->valor->val.cadena;
+    o->num_params = __contar_num_parargs(fun->parametros, NODO_FUNCION_PARAMETROS);
+    o->nombre_cfun = fun->nombre->valor->val.cadena;        
     dbc(STORE_NAME, 0, 0, o);
+    if(0 == strcmp(o->nombre_cfun, "anonima")){
+        lat_objeto *anon = __obj_clonar(mv, o);
+        dbc(LOAD_NAME, 0, 0, anon);
+    }
     if (0 == strcmp(o->datos.cadena, "menu")) {
       mv->menu = true;
-    }
+    }    
   } break;
   case NODO_LISTA: {
     int num_params = 0;
