@@ -195,7 +195,7 @@ void lat_json_formato(lat_mv *mv) {
   lat_objeto *tmp = mv->objeto_nulo;
   if (root) {
     int flags = JSON_INDENT(spaces);
-    char *buf = json_dumps(root, (flags & JSON_ALLOW_NUL));
+    char *buf = json_dumps(root, flags);
     tmp = lat_cadena_nueva(mv, buf);
     json_decref(root);
   }
