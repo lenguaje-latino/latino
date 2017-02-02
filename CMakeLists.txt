@@ -2,11 +2,11 @@ CMAKE_MINIMUM_REQUIRED(VERSION 2.6)
 set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${CMAKE_CURRENT_LIST_DIR}/cmake/Modules/")
 
 if(NOT CMAKE_CONFIGURATION_TYPES AND NOT CMAKE_BUILD_TYPE) # Default to a Release build
-    set(CMAKE_BUILD_TYPE Release CACHE STRING "Choose the type of build [Release Debug]" FORCE)
+        set(CMAKE_BUILD_TYPE Release CACHE STRING "Choose the type of build [Release Debug]" FORCE)
 endif()
 
 if(CMAKE_COMPILER_IS_GNUCXX)
-    target_link_libraries(${PROJECT_TEST_NAME} gcov)
+        target_link_libraries(${PROJECT_TEST_NAME} gcov)
 endif()
 
 find_path(GLIB_INCLUDE_DIR NAMES glib.h PATH_SUFFIXES glib-2.0)
@@ -15,14 +15,13 @@ PROJECT(latino)
 
 ADD_SUBDIRECTORY(src)
 IF(UNIX)
-  execute_process(COMMAND bash ${CMAKE_CURRENT_LIST_DIR}/tools/install_deps.sh)
-  execute_process(COMMAND bash ${CMAKE_CURRENT_LIST_DIR}/tools/key.sh)
+        execute_process(COMMAND bash ${CMAKE_CURRENT_LIST_DIR}/tools/key.sh)
 ELSE(UNIX)
-  IF(MSVC)
-      ADD_SUBDIRECTORY(jansson)
-      ADD_SUBDIRECTORY(curl)
-      #ADD_SUBDIRECTORY(hiredis)
-  ENDIF(MSVC)
+        IF(MSVC)
+                ADD_SUBDIRECTORY(jansson)
+                ADD_SUBDIRECTORY(curl)
+                #ADD_SUBDIRECTORY(hiredis)
+        ENDIF(MSVC)
 ENDIF(UNIX)
 
 enable_testing ()
@@ -64,12 +63,12 @@ add_test (NAME 21-operador_ternario COMMAND latino ejemplos/21-operador_ternario
 
 set(GCOV "gcov")
 if(DEFINED ENV{GCOV})
-  set(GCOV $ENV{GCOV})
+        set(GCOV $ENV{GCOV})
 endif()
 add_custom_target(coverage
-  COMMAND lcov --gcov-tool ${GCOV} --capture --directory . --output-file coverage.info
-  COMMAND lcov --gcov-tool ${GCOV} --remove coverage.info "/usr/*" "*/test/*" --output-file coverage.info
-  COMMAND lcov --gcov-tool ${GCOV} --list coverage.info
-  COMMAND genhtml coverage.info --output-directory ./coverage
-  WORKING_DIRECTORY ${CMAKE_BINARY_DIR}
-  VERBATIM)
+        COMMAND lcov --gcov-tool ${GCOV} --capture --directory . --output-file coverage.info
+        COMMAND lcov --gcov-tool ${GCOV} --remove coverage.info "/usr/*" "*/test/*" --output-file coverage.info
+        COMMAND lcov --gcov-tool ${GCOV} --list coverage.info
+        COMMAND genhtml coverage.info --output-directory ./coverage
+        WORKING_DIRECTORY ${CMAKE_BINARY_DIR}
+VERBATIM)

@@ -32,35 +32,35 @@ THE SOFTWARE.
 #include "latmv.h"
 
 void *__memoria_asignar(lat_mv *mv, size_t size) {
-  // void* ptr = calloc(1, size);
-  void *ptr = calloc(size + 1, sizeof(char));
-  if (ptr == NULL)
-    lat_error("Memoria virtual agotada\n");
-  // printf("+++ memoria asignada: %zu, %p\n", size, &value);
-  if (mv)
-    mv->memoria_usada += __memoria_tamanio(ptr);
-  return ptr;
+        // void* ptr = calloc(1, size);
+        void *ptr = calloc(size + 1, sizeof(char));
+        if (ptr == NULL)
+        lat_error("Memoria virtual agotada\n");
+        // printf("+++ memoria asignada: %zu, %p\n", size, &value);
+        if (mv)
+        mv->memoria_usada += __memoria_tamanio(ptr);
+        return ptr;
 }
 
 size_t __memoria_tamanio(void *ptr) { return malloc_size(ptr); }
 
 void *__memoria_reasignar(void *ptr, size_t size) {
-  // size_t mem_ini = __memoria_tamanio(ptr);
-  void *value = realloc(ptr, size);
-  if (value == NULL)
-    lat_error("Memoria virtual agotada\n");
-  // printf("memoria inicial: %zu memoria nueva: %zu, %p\n", mem_ini,
-  // __memoria_tamanio(value), &value);
-  return value;
+        // size_t mem_ini = __memoria_tamanio(ptr);
+        void *value = realloc(ptr, size);
+        if (value == NULL)
+        lat_error("Memoria virtual agotada\n");
+        // printf("memoria inicial: %zu memoria nueva: %zu, %p\n", mem_ini,
+        // __memoria_tamanio(value), &value);
+        return value;
 }
 
 void __memoria_liberar(lat_mv *mv, void *ptr) {
-  if (ptr != NULL) //&& __memoria_tamanio(ptr) > 0
-  {
-    // printf("--- memoria liberada: %zu, %p\n", __memoria_tamanio(ptr), ptr);
-    if (mv != NULL) {
-      mv->memoria_usada -= __memoria_tamanio(ptr);
-    }
-    free(ptr);
-  }
+        if (ptr != NULL) //&& __memoria_tamanio(ptr) > 0
+        {
+                // printf("--- memoria liberada: %zu, %p\n", __memoria_tamanio(ptr), ptr);
+                if (mv != NULL) {
+                        mv->memoria_usada -= __memoria_tamanio(ptr);
+                }
+                free(ptr);
+        }
 }

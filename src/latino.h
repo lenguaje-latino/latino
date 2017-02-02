@@ -57,17 +57,17 @@ THE SOFTWARE.
 #define LAT_VERSION_PARCHE "1"
 /** Version de Latino */
 #define LAT_VERSION                                                            \
-  "Latino " LAT_VERSION_MAYOR "." LAT_VERSION_MENOR "." LAT_VERSION_PARCHE
+"Latino " LAT_VERSION_MAYOR "." LAT_VERSION_MENOR "." LAT_VERSION_PARCHE
 /** Derechos de Latino */
 #define LAT_DERECHOS                                                           \
-  LAT_VERSION "\nTodos los derechos reservados (C) 2015-2017. Latinoamerica"
+LAT_VERSION "\nTodos los derechos reservados (C) 2015-2017. Latinoamerica"
 
 /** Define el manejo de excepciones en Latino */
 #define LAT_THROW(L, c) longjmp((c)->b, 1)
 #define LAT_TRY(L, c, a)                                                       \
-  if (setjmp((c)->b) == 0) {                                                   \
-    a                                                                          \
-  }
+if (setjmp((c)->b) == 0) {                                                   \
+        a                                                                          \
+}
 #define lat_jmpbuf jmp_buf
 
 /** Indica si se desea debuguear el parser de bison */
@@ -79,13 +79,13 @@ extern int parse_silent;
 // generado en
 // http://www.patorjk.com/software/taag/#p=display&f=Graffiti&t=latino
 /**
- Dibuja el logo
- */
+Dibuja el logo
+*/
 #define LAT_LOGO                                                               \
-  "\n.__          __  .__               \n|  | _____ _/  |_|__| ____   ____  " \
-  "\n|  | \\__  \\\\   __\\  |/    \\ /  _ \\ \n|  |__/ __ \\|  | |  |   |  "  \
-  "(  <_> )\n|____(____  /__| |__|___|  /\\____/ \n          \\/             " \
-  "\\/        \n"
+"\n.__          __  .__               \n|  | _____ _/  |_|__| ____   ____  " \
+"\n|  | \\__  \\\\   __\\  |/    \\ /  _ \\ \n|  |__/ __ \\|  | |  |   |  "  \
+"(  <_> )\n|____(____  /__| |__|___|  /\\____/ \n          \\/             " \
+"\\/        \n"
 
 /** Afirmar (asset), sirve para testear una condicion */
 #define lat_afirmar(cond) ((void)(false && (cond)))
@@ -94,16 +94,16 @@ extern char *filename;
 
 /* Envia un mensaje de error */
 #define lat_error(M, ...)                                                      \
-  {                                                                            \
-    if (filename) {                                                            \
-      fprintf(stderr, "\033[1;31merror\033[0m " M                              \
-                      " en archivo \033[1;36m%s\033[0m.\n",                    \
-              ##__VA_ARGS__, filename);                                        \
-    } else {                                                                   \
-      fprintf(stderr, "\033[1;31merror\033[0m " M "\n", ##__VA_ARGS__);        \
-    }                                                                          \
-    exit(1);                                                                   \
-  }
+{                                                                            \
+        if (filename) {                                                            \
+                fprintf(stderr, "\033[1;31merror\033[0m " M                              \
+                " en archivo \033[1;36m%s\033[0m.\n",                    \
+                ##__VA_ARGS__, filename);                                        \
+        } else {                                                                   \
+                fprintf(stderr, "\033[1;31merror\033[0m " M "\n", ##__VA_ARGS__);        \
+        }                                                                          \
+        exit(1);                                                                   \
+}
 
 /** Maximo numero de size_t */
 #ifdef SIZE_MAX
@@ -140,11 +140,11 @@ extern char *filename;
 
 /** Interface con flex */
 typedef struct YYLTYPE {
-  int first_line;
-  int first_column;
-  int last_line;
-  int last_column;
-  char *file_name;
+        int first_line;
+        int first_column;
+        int last_line;
+        int last_column;
+        char *file_name;
 } YYLTYPE;
 
 /** Establece que se definio una interface con Flex */
@@ -154,18 +154,18 @@ typedef struct YYLTYPE {
 #define YY_NO_UNISTD_H 1
 
 /** Analiza una cadena como expresion
-  *
-  * \param expr: cadena a analizar
-  * \return ast: Nodo AST
-  *
-  */
+*
+* \param expr: cadena a analizar
+* \return ast: Nodo AST
+*
+*/
 ast *lat_analizar_expresion(char *expr, int *status);
 
 /** Analiza un archivo
-  *
-  * \param ruta: Ruta del archivo a analizar
-  * \return ast: Nodo AST
-  *
-  */
+*
+* \param ruta: Ruta del archivo a analizar
+* \return ast: Nodo AST
+*
+*/
 ast *lat_analizar_archivo(char *ruta, int *status);
 #endif /* _LATINO_H_ */
