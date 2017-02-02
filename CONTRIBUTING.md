@@ -9,14 +9,17 @@ Deberá tomar en cuenta estos puntos muy importantes para que su problema report
 
 
 
-# Estandares de programación
+# Sugerencia de estándares de programación
 
-A continuación se describen algunas sugerencias a seguir para la codificación en C / C++
+A continuación se describen algunas sugerencias a seguir para la codificación en C / C++:
+
+Indentar código en tabulador tamaño 8 (predeterminado).
+
 
 ### If-else if-else
 
-Utilizar identado de 4 espacios, incluir la llave que abre ({) en la misma linea 
-de la instrucción de la siguiente manera:
+Incluir la llave que abre ({) en la misma linea 
+de la instrucción, separar  de la siguiente manera:
 
 ```c
 if (x == y) {
@@ -54,7 +57,7 @@ if (condition) {
 }
 ```
 
-### Do
+### Do-While
 
 
 ```c
@@ -102,7 +105,7 @@ void function(int x) {
 }
 ```
 
-También trate de tener un orden en los parámetros:
+También trate de tener un orden en los parámetros, separando entre espacio parámetro por parámetro:
 ```c
 void function(int a, char *x, int b) { ...
 ```
@@ -141,9 +144,9 @@ Use un espacio alrededor (en cada lado) en operadores binarios y ternarios:
 ```c
 	=  +  -  <  >  *  /  %  |  &  ^  <=  >=  ==  !=  ?  :
 ```
-Pero no use espacios después de operadores unarios:
+Pero no use espacios después de operadores unarios (un operador solo):
 ```c
-	&  *  +  -  ~  !  
+	*  +  -  ~  ! &
 ```
 No use espacios antes ni despúes de incrementos y decrementos de operadores unarios:
 ```c
@@ -159,11 +162,14 @@ Elimine los espacios al final de la línea.
 Use un espacio entre el inicio a la condición y de la condición al incremento, ejemplo erróneo:
 ```c
 for(int i=0;i<10;i++){
+	// código
+}
 ```
 
 Deberá ir de esta forma:
 ```c
 for (int i=0; i<10; i++) {
+
 ```
 
 
