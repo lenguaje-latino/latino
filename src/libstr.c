@@ -578,196 +578,195 @@ void lat_cadena_subcadena(lat_mv *mv) {
         lat_objeto *c = lat_desapilar(mv);
         lat_objeto *b = lat_desapilar(mv);
         lat_objeto *a = lat_desapilar(mv);
-        lat_objeto *tmp = lat_cadena_nueva(
-                mv, __str_subcadena(__cadena(a), __numerico(b), __numerico(c)));
-                lat_apilar(mv, tmp);
-                lat_gc_agregar(mv, tmp);
-        }
+        lat_objeto *tmp = lat_cadena_nueva(mv, __str_subcadena(__cadena(a), __numerico(b), __numerico(c)));
+        lat_apilar(mv, tmp);
+        lat_gc_agregar(mv, tmp);
+}
 
-        void lat_cadena_minusculas(lat_mv *mv) {
-                lat_objeto *a = lat_desapilar(mv);
-                lat_objeto *tmp = lat_cadena_nueva(mv, __str_minusculas(__cadena(a)));
-                lat_apilar(mv, tmp);
-                lat_gc_agregar(mv, tmp);
-        }
+void lat_cadena_minusculas(lat_mv *mv) {
+        lat_objeto *a = lat_desapilar(mv);
+        lat_objeto *tmp = lat_cadena_nueva(mv, __str_minusculas(__cadena(a)));
+        lat_apilar(mv, tmp);
+        lat_gc_agregar(mv, tmp);
+}
 
-        void lat_cadena_mayusculas(lat_mv *mv) {
-                lat_objeto *a = lat_desapilar(mv);
-                lat_objeto *tmp = lat_cadena_nueva(mv, __str_mayusculas(__cadena(a)));
-                lat_apilar(mv, tmp);
-                lat_gc_agregar(mv, tmp);
-        }
+void lat_cadena_mayusculas(lat_mv *mv) {
+        lat_objeto *a = lat_desapilar(mv);
+        lat_objeto *tmp = lat_cadena_nueva(mv, __str_mayusculas(__cadena(a)));
+        lat_apilar(mv, tmp);
+        lat_gc_agregar(mv, tmp);
+}
 
-        void lat_cadena_recortar(lat_mv *mv) {
-                lat_objeto *a = lat_desapilar(mv);
-                lat_objeto *tmp = lat_cadena_nueva(mv, __str_quitar_espacios(__cadena(a)));
-                lat_apilar(mv, tmp);
-                lat_gc_agregar(mv, tmp);
-        }
+void lat_cadena_recortar(lat_mv *mv) {
+        lat_objeto *a = lat_desapilar(mv);
+        lat_objeto *tmp = lat_cadena_nueva(mv, __str_quitar_espacios(__cadena(a)));
+        lat_apilar(mv, tmp);
+        lat_gc_agregar(mv, tmp);
+}
 
-        void lat_cadena_es_numerico(lat_mv *mv) {
-                lat_objeto *a = lat_desapilar(mv);
-                char *ptr;
-                strtod(__cadena(a), &ptr);
-                if (strcmp(ptr, "") == 0) {
-                        lat_apilar(mv, mv->objeto_verdadero);
-                } else {
-                        lat_apilar(mv, mv->objeto_falso);
+void lat_cadena_es_numerico(lat_mv *mv) {
+        lat_objeto *a = lat_desapilar(mv);
+        char *ptr;
+        strtod(__cadena(a), &ptr);
+        if (strcmp(ptr, "") == 0) {
+                lat_apilar(mv, mv->objeto_verdadero);
+        } else {
+                lat_apilar(mv, mv->objeto_falso);
+        }
+}
+
+void lat_cadena_es_alfa(lat_mv *mv) {
+        lat_objeto *a = lat_desapilar(mv);
+        char *cad = __cadena(a);
+        bool res = true;
+        for (int i = 0; i < strlen(cad); i++) {
+                if (!isalnum(cad[i])) {
+                        res = false;
+                        break;
                 }
         }
+        if (res) {
+                lat_apilar(mv, mv->objeto_verdadero);
+        } else {
+                lat_apilar(mv, mv->objeto_falso);
+        }
+}
 
-        void lat_cadena_es_alfa(lat_mv *mv) {
-                lat_objeto *a = lat_desapilar(mv);
-                char *cad = __cadena(a);
-                bool res = true;
-                for (int i = 0; i < strlen(cad); i++) {
-                        if (!isalnum(cad[i])) {
-                                res = false;
-                                break;
-                        }
-                }
-                if (res) {
-                        lat_apilar(mv, mv->objeto_verdadero);
-                } else {
-                        lat_apilar(mv, mv->objeto_falso);
+void lat_cadena_separar(lat_mv *mv) {
+        lat_objeto *b = lat_desapilar(mv);
+        lat_objeto *a = lat_desapilar(mv);
+        char *sep = " "; // separador default
+        if (b->tipo != T_NULL) {
+                sep = __cadena(b);
+                if (strlen(sep) == 0) {
+                        sep = " ";
                 }
         }
-
-        void lat_cadena_separar(lat_mv *mv) {
-                lat_objeto *b = lat_desapilar(mv);
-                lat_objeto *a = lat_desapilar(mv);
-                char *sep = " "; // separador default
-                if (b->tipo != T_NULL) {
-                        sep = __cadena(b);
-                        if (strlen(sep) == 0) {
-                                sep = " ";
-                        }
-                }
-                char *str = strdup(__cadena(a));
-                lista *lst = __lista_crear();
-                char *tok = strtok(str, sep);
+        char *str = strdup(__cadena(a));
+        lista *lst = __lista_crear();
+        char *tok = strtok(str, sep);
+        if (tok) {
+                __lista_agregar(lst, lat_cadena_nueva(mv, strdup(tok)));
+        }
+        while (tok != NULL) {
+                tok = strtok(NULL, sep);
                 if (tok) {
                         __lista_agregar(lst, lat_cadena_nueva(mv, strdup(tok)));
                 }
-                while (tok != NULL) {
-                        tok = strtok(NULL, sep);
-                        if (tok) {
-                                __lista_agregar(lst, lat_cadena_nueva(mv, strdup(tok)));
-                        }
-                }
-                lat_objeto *tmp = lat_lista_nueva(mv, lst);
-                lat_apilar(mv, tmp);
-                lat_gc_agregar(mv, tmp);
         }
+        lat_objeto *tmp = lat_lista_nueva(mv, lst);
+        lat_apilar(mv, tmp);
+        lat_gc_agregar(mv, tmp);
+}
 
-        void lat_cadena_invertir(lat_mv *mv) {
-                // TODO: Pendiente implementacion para multibyte
-                lat_objeto *a = lat_desapilar(mv);
-                char *orig = __cadena(a);
-                int i = strlen(orig) - 1;
-                char *dest = __memoria_asignar(mv, strlen(orig) + 1);
-                int j = 0;
-                for (; i >= 0; i--) {
-                        dest[j] = orig[i];
-                        j++;
-                }
-                dest[strlen(orig)] = '\0';
-                lat_objeto *tmp = lat_cadena_nueva(mv, dest);
-                lat_apilar(mv, tmp);
-                lat_gc_agregar(mv, tmp);
+void lat_cadena_invertir(lat_mv *mv) {
+        // TODO: Pendiente implementacion para multibyte
+        lat_objeto *a = lat_desapilar(mv);
+        char *orig = __cadena(a);
+        int i = strlen(orig) - 1;
+        char *dest = __memoria_asignar(mv, strlen(orig) + 1);
+        int j = 0;
+        for (; i >= 0; i--) {
+                dest[j] = orig[i];
+                j++;
         }
+        dest[strlen(orig)] = '\0';
+        lat_objeto *tmp = lat_cadena_nueva(mv, dest);
+        lat_apilar(mv, tmp);
+        lat_gc_agregar(mv, tmp);
+}
 
-        void lat_cadena_ejecutar(lat_mv *mv) {
-                int status;
-                lat_objeto *o = lat_desapilar(mv);
-                char *codigo = strdup(__cadena(o));
-                char *tmp_name = mv->nombre_archivo;
-                mv->nombre_archivo = "CADENA";
-                lat_objeto *func =
-                ast_analizar_arbol(mv, lat_analizar_expresion(codigo, &status));
-                if (status == 0) {
-                        lat_llamar_funcion(mv, func);
-                        //__obj_eliminar(mv, func);
-                } else {
-                        filename = o->nombre_archivo;
-                        lat_error("Error al ejecutar cadena...");
-                }
-                mv->nombre_archivo = tmp_name;
+void lat_cadena_ejecutar(lat_mv *mv) {
+        int status;
+        lat_objeto *o = lat_desapilar(mv);
+        char *codigo = strdup(__cadena(o));
+        char *tmp_name = mv->nombre_archivo;
+        mv->nombre_archivo = "CADENA";
+        lat_objeto *func =
+        ast_analizar_arbol(mv, lat_analizar_expresion(codigo, &status));
+        if (status == 0) {
+                lat_llamar_funcion(mv, func);
+                //__obj_eliminar(mv, func);
+        } else {
+                filename = o->nombre_archivo;
+                lat_error("Error al ejecutar cadena...");
         }
+        mv->nombre_archivo = tmp_name;
+}
 
-        void lat_cadena_regex(lat_mv *mv) {
-                lat_objeto *cadena_regex = lat_desapilar(mv);
-                lat_objeto *cadena = lat_desapilar(mv);
-                regex_t regex;
-                int reti;
-                reti = regcomp(&regex, __cadena(cadena_regex), REG_EXTENDED);
-                if (reti) {
-                        filename = cadena->nombre_archivo;
-                        lat_error("Linea %d, %d: %s", cadena->num_linea, cadena->num_columna,
-                        "error al compilar regex.");
-                }
-                reti = regexec(&regex, __cadena(cadena), 0, NULL, 0);
-                if (!reti) {
-                        lat_apilar(mv, mv->objeto_verdadero);
-                } else if (reti == REG_NOMATCH) {
-                        lat_apilar(mv, mv->objeto_falso);
-                } else {
-                        filename = cadena->nombre_archivo;
-                        lat_error("Linea %d, %d: %s", cadena->num_linea, cadena->num_columna,
-                        "error en el match regex.");
-                }
-                regfree(&regex);
+void lat_cadena_regex(lat_mv *mv) {
+        lat_objeto *cadena_regex = lat_desapilar(mv);
+        lat_objeto *cadena = lat_desapilar(mv);
+        regex_t regex;
+        int reti;
+        reti = regcomp(&regex, __cadena(cadena_regex), REG_EXTENDED);
+        if (reti) {
+                filename = cadena->nombre_archivo;
+                lat_error("Linea %d, %d: %s", cadena->num_linea, cadena->num_columna,
+                "error al compilar regex.");
         }
+        reti = regexec(&regex, __cadena(cadena), 0, NULL, 0);
+        if (!reti) {
+                lat_apilar(mv, mv->objeto_verdadero);
+        } else if (reti == REG_NOMATCH) {
+                lat_apilar(mv, mv->objeto_falso);
+        } else {
+                filename = cadena->nombre_archivo;
+                lat_error("Linea %d, %d: %s", cadena->num_linea, cadena->num_columna,
+                "error en el match regex.");
+        }
+        regfree(&regex);
+}
 
-        void lat_cadena_match(lat_mv *mv) {
-                lat_objeto *regexString = lat_desapilar(mv);
-                lat_objeto *source = lat_desapilar(mv);
-                char maxMatches = 50, maxGroups = 50;
-                regex_t regexCompiled;
-                regmatch_t groupArray[maxGroups];
-                char *cursor;
-                if (regcomp(&regexCompiled, __cadena(regexString), REG_EXTENDED)) {
-                        filename = source->nombre_archivo;
-                        lat_error("Linea %d, %d: %s", source->num_linea, source->num_columna,
-                        "error en el match regex.");
-                };
-                cursor = __cadena(source);
-                lat_objeto *l_matches = lat_lista_nueva(mv, __lista_crear());
-                for (int m = 0; m < maxMatches; m++) {
-                        if (regexec(&regexCompiled, cursor, maxGroups, groupArray, 0))
-                        break; // No more matches
-                        unsigned int offset = 0;
-                        lat_objeto *l_groups = lat_lista_nueva(mv, __lista_crear());
-                        for (int g = 0; g < maxGroups; g++) {
-                                if (groupArray[g].rm_so == (size_t)-1)
-                                break; // No more groups
-                                if (g == 0)
-                                offset = groupArray[g].rm_eo;
-                                char cursorCopy[strlen(cursor) + 1];
-                                strcpy(cursorCopy, cursor);
-                                cursorCopy[groupArray[g].rm_eo] = 0;
-                                /*printf("Match %u, Group %u: [%2u-%2u]: %s\n", m, g, groupArray[g].rm_so,
-                                groupArray[g].rm_eo, cursorCopy + groupArray[g].rm_so);*/
-                                int len = groupArray[g].rm_eo - groupArray[g].rm_so;
-                                /*if (len <= 0) {
-                                lat_apilar(mv, mv->objeto_nulo);
-                                regfree(&regexCompiled);
-                                return;
-                        }*/
-                        char *str = __memoria_asignar(mv, len + 1);
-                        strcpy(str, cursorCopy + groupArray[g].rm_so);
-                        str[len] = '\0';
-                        if (strcmp("", str)) {
-                                __lista_agregar(__lista(l_groups), lat_cadena_nueva(mv, str));
-                        }
-                }
-                cursor += offset;
-                if (__lista_longitud(l_groups->datos.lista) > 0) {
-                        __lista_agregar(__lista(l_matches), l_groups);
+void lat_cadena_match(lat_mv *mv) {
+        lat_objeto *regexString = lat_desapilar(mv);
+        lat_objeto *source = lat_desapilar(mv);
+        char maxMatches = 50, maxGroups = 50;
+        regex_t regexCompiled;
+        regmatch_t groupArray[maxGroups];
+        char *cursor;
+        if (regcomp(&regexCompiled, __cadena(regexString), REG_EXTENDED)) {
+                filename = source->nombre_archivo;
+                lat_error("Linea %d, %d: %s", source->num_linea, source->num_columna,
+                "error en el match regex.");
+        };
+        cursor = __cadena(source);
+        lat_objeto *l_matches = lat_lista_nueva(mv, __lista_crear());
+        for (int m = 0; m < maxMatches; m++) {
+                if (regexec(&regexCompiled, cursor, maxGroups, groupArray, 0))
+                break; // No more matches
+                unsigned int offset = 0;
+                lat_objeto *l_groups = lat_lista_nueva(mv, __lista_crear());
+                for (int g = 0; g < maxGroups; g++) {
+                        if (groupArray[g].rm_so == (size_t)-1)
+                        break; // No more groups
+                        if (g == 0)
+                        offset = groupArray[g].rm_eo;
+                        char cursorCopy[strlen(cursor) + 1];
+                        strcpy(cursorCopy, cursor);
+                        cursorCopy[groupArray[g].rm_eo] = 0;
+                        /*printf("Match %u, Group %u: [%2u-%2u]: %s\n", m, g, groupArray[g].rm_so,
+                        groupArray[g].rm_eo, cursorCopy + groupArray[g].rm_so);*/
+                        int len = groupArray[g].rm_eo - groupArray[g].rm_so;
+                        /*if (len <= 0) {
+                        lat_apilar(mv, mv->objeto_nulo);
+                        regfree(&regexCompiled);
+                        return;
+                }*/
+                char *str = __memoria_asignar(mv, len + 1);
+                strcpy(str, cursorCopy + groupArray[g].rm_so);
+                str[len] = '\0';
+                if (strcmp("", str)) {
+                        __lista_agregar(__lista(l_groups), lat_cadena_nueva(mv, str));
                 }
         }
-        lat_apilar(mv, l_matches);
-        regfree(&regexCompiled);
+        cursor += offset;
+        if (__lista_longitud(l_groups->datos.lista) > 0) {
+                __lista_agregar(__lista(l_matches), l_groups);
+        }
+}
+lat_apilar(mv, l_matches);
+regfree(&regexCompiled);
 }
 
 void lat_cadena_formato(lat_mv *mv) {
