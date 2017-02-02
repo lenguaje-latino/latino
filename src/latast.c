@@ -243,6 +243,26 @@ static ast *__transformar_elegir(ast *nodo_elegir) {
   return nSi;
 }
 
+static void __liberar_elegir(ast *a){
+  if (a) {
+    switch (a->tipo) {
+    case NODO_SI: {
+      nodo_si *nsi = (nodo_si *)a;
+      __memoria_liberar(NULL, nsi->condicion);
+      __liberar_elegir(nsi->entonces);
+      if (nsi->_sino){
+        __liberar_elegir(nsi->_sino);
+      }
+      __memoria_liberar(NULL, a);
+      break;
+    }
+    default:{
+      ;
+    }
+  }
+  }
+}
+
 static int __contar_num_parargs(ast *node, nodo_tipo nt) {
   ast *tmp;
   int num_params = 0;
@@ -455,29 +475,26 @@ static int nodo_analizar(lat_mv *mv, ast *node, lat_bytecode *bcode, int i) {
     // transformar nodo elegir en nodos si
     ast *nSi = __transformar_elegir(node);
     pn(mv, nSi);
+    __liberar_elegir(nSi);
+    /*pn(mv, node->izq);
+    pn(mv, node->der);*/
   } break;
   case NODO_MIENTRAS: {
-    // dbc(SETUP_LOOP, 0, 0, NULL);
     temp[0] = i;
     pn(mv, node->izq);
     temp[1] = i;
     dbc(NOP, 0, 0, NULL);
     pn(mv, node->der);
     dbc(JUMP_ABSOLUTE, (temp[0] - 1), 0, NULL);
-    // dbc(POP_BLOCK, 0, 0, NULL);
     bcode[temp[1]] = lat_bc(POP_JUMP_IF_FALSE, (i - 1), 0, NULL);
-    // dbc(POP_BLOCK, 0, 0, NULL);
   } break;
   case NODO_REPETIR: {
-    // dbc(SETUP_LOOP, 0, 0, NULL);
     temp[0] = i;
     pn(mv, node->der);
     pn(mv, node->izq);
     temp[1] = i;
     dbc(NOP, 0, 0, NULL);
-    // dbc(POP_BLOCK, 0, 0, NULL);
     bcode[temp[1]] = lat_bc(POP_JUMP_IF_FALSE, (temp[0] - 1), 0, NULL);
-    // dbc(POP_BLOCK, 0, 0, NULL);
   } break;
   case NODO_FUNCION_LLAMADA: {
     // argumentos
@@ -563,8 +580,6 @@ static int nodo_analizar(lat_mv *mv, ast *node, lat_bytecode *bcode, int i) {
       pn(mv, node->izq);
       num_params = __contar_num_parargs(node->izq, NODO_LISTA_AGREGAR_ELEMENTO);
     }
-    // FIX: Memory leak
-    // lat_objeto *o = lat_lista_nueva(mv, __lista_crear());
     dbc(BUILD_LIST, num_params, 0, NULL);
   } break;
   case NODO_LISTA_AGREGAR_ELEMENTO: {
@@ -631,7 +646,7 @@ void __mostrar_bytecode(lat_bytecode *bcode) {
   int pos;
   for (pos = 0, cur = inslist[pos]; cur.ins && cur.ins != HALT;
        cur = inslist[++pos]) {
-    char *buffer = __memoria_asignar(NULL, MAX_STR_LENGTH);
+    char *buffer = NULL;
     printf("%i\t", pos);
     switch (cur.ins) {
     case HALT:

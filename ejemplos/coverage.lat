@@ -154,7 +154,7 @@ lista.eliminar_indice(e, 4)
 
 f.uno = 10
 imprimir(f.cuatro)
-imprimir(diccionario.longitud(f))
+imprimir(dic.longitud(f))
 imprimir(f.seis[0])
 
 str = "hola mundo"
