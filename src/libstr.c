@@ -489,45 +489,62 @@ void lat_cadena_longitud(lat_mv *mv) {
   lat_gc_agregar(mv, tmp);
 }
 
-char *reemplazar_lat(char *orig, char *rep, char *with) {
-  char *result, *ins, *tmp;
-  int len_rep, len_with, len_front, count;
-  if (!orig && !rep)
-    return NULL;
-  len_rep = strlen(rep);
-  if (len_rep == 0)
-    return NULL;
-  if (!with)
-    with = "";
-  len_with = strlen(with);
-  ins = orig;
-  for (count = 0; (tmp = strstr(ins, rep)) != NULL; ++count) {
-    ins = tmp + len_rep;
-  }
-  tmp = result = malloc(strlen(orig) + (len_with - len_rep) * count + 1);
-  if (!result)
-    return NULL;
-  while (count--) {
-    ins = strstr(orig, rep);
-    len_front = ins - orig;
-    tmp = strncpy(tmp, orig, len_front) + len_front;
-    tmp = strcpy(tmp, with) + len_with;
-    orig += len_front + len_rep; // move to next "end of rep"
-  }
-  strcpy(tmp, orig);
-  return result;
-  free(result);
-  free(tmp);
+char *reemplazar_lat(char *orig, char *rep, char *with, int veces) {
+        char *result, *ins, *tmp;
+        int len_rep, len_with, len_front, count;
+        if (!orig && !rep)
+        return NULL;
+        len_rep = strlen(rep);
+        if (len_rep == 0)
+        return NULL;
+        if (!with)
+        with = "";
+        len_with = strlen(with);
+        ins = orig;
+        for (count = 0; (tmp = strstr(ins, rep)) != NULL; ++count) {
+                if (veces != 0){
+                        if (count == veces) {
+                                break;
+                         };
+                 };
+                ins = tmp + len_rep;
+        }
+        tmp = result = malloc(strlen(orig) + (len_with - len_rep) * count + 1);
+        if (!result) {
+                free(result);
+                free(tmp);
+                return NULL;
+        };
+        while (count--) {
+                ins = strstr(orig, rep);
+                len_front = ins - orig;
+                tmp = strncpy(tmp, orig, len_front) + len_front;
+                tmp = strcpy(tmp, with) + len_with;
+                orig += len_front + len_rep; // move to next "end of rep"
+        }
+        strcpy(tmp, orig);
+        return result;
+        free(result);
+        free(tmp);
 }
 
 void lat_cadena_reemplazar(lat_mv *mv) {
-  lat_objeto *c = lat_desapilar(mv);
-  lat_objeto *b = lat_desapilar(mv);
-  lat_objeto *a = lat_desapilar(mv);
-  char *cadena_final = reemplazar_lat(__cadena(a), __cadena(b), __cadena(c));
-  lat_objeto *r = lat_cadena_nueva(mv, cadena_final);
-  lat_apilar(mv, r);
-  lat_gc_agregar(mv, r);
+        lat_objeto *d = lat_desapilar(mv);
+        lat_objeto *c = lat_desapilar(mv);
+        lat_objeto *b = lat_desapilar(mv);
+        lat_objeto *a = lat_desapilar(mv);
+        int num = 0;
+        if (d->tipo != T_NULL) {
+                num = __numerico(d);
+        }
+        char *cadena_final = reemplazar_lat(__cadena(a), __cadena(b), __cadena(c), num);
+        if (cadena_final != NULL) {
+                lat_objeto *r = lat_cadena_nueva(mv, cadena_final);
+                lat_apilar(mv, r);
+                lat_gc_agregar(mv, r);
+        } else {
+                lat_apilar(mv, mv->objeto_nulo);
+        }
   /*
   char *bf = __str_analizar_fmt(__cadena(b), strlen(__cadena(b)));
   char *cf = __str_analizar_fmt(__cadena(c), strlen(__cadena(c)));
@@ -663,7 +680,7 @@ void lat_cadena_invertir(lat_mv *mv) {
 void lat_cadena_ejecutar(lat_mv *mv) {
   int status;
   lat_objeto *o = lat_desapilar(mv);
-  char *codigo = strdup(__cadena(o));  
+  char *codigo = strdup(__cadena(o));
   char *tmp_name = mv->nombre_archivo;
   mv->nombre_archivo = "CADENA";
   lat_objeto *func =
@@ -671,11 +688,11 @@ void lat_cadena_ejecutar(lat_mv *mv) {
   if (status == 0) {
     lat_llamar_funcion(mv, func);
     //__obj_eliminar(mv, func);
-  } else {  
+  } else {
     filename = o->nombre_archivo;
     lat_error("Error al ejecutar cadena...");
   }
-  mv->nombre_archivo = tmp_name;  
+  mv->nombre_archivo = tmp_name;
 }
 
 void lat_cadena_regex(lat_mv *mv) {
@@ -845,7 +862,7 @@ static const lat_CReg lib_cadena[] = {
     {"insertar", lat_cadena_insertar, 3},
     {"rellenar_izquierda", lat_cadena_rellenar_izquierda, 3},
     {"rellenar_derecha", lat_cadena_rellenar_derecha, 3},
-    {"reemplazar", lat_cadena_reemplazar, 3},
+    {"reemplazar", lat_cadena_reemplazar, 4},
     {"subcadena", lat_cadena_subcadena, 3},
     {"formato", lat_cadena_formato, -1}, // para funciones var_arg se envia -1
     {NULL, NULL}};
