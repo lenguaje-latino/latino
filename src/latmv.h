@@ -25,10 +25,10 @@ THE SOFTWARE.
 #define _VM_H_
 
 /** \file mv.h
-  *
-  * Contiene funciones para el manejo de la maquina virtual
-  *
-  */
+*
+* Contiene funciones para el manejo de la maquina virtual
+*
+*/
 
 #include <math.h>
 
@@ -90,171 +90,170 @@ typedef struct lat_mv lat_mv;
 typedef void (*lat_CFuncion)(lat_mv *mv);
 
 typedef struct lat_CReg {
-  const char *nombre;
-  lat_CFuncion func;
-  int num_params;
+        const char *nombre;
+        lat_CFuncion func;
+        int num_params;
 } lat_CReg;
 
 /**\brief Estructura que almacena las instrucciones bytecode de la MV */
 typedef struct lat_bytecode {
-  int ins;    /**< Instruccion */
-  int a;      /**< registro a */
-  int b;      /**< registro b */
-  void *meta; /**< datos */
+        int ins;    /**< Instruccion */
+        int a;      /**< registro a */
+        int b;      /**< registro b */
+        void *meta; /**< datos */
 } lat_bytecode;
 
 /**\brief Define una funcion de usuario */
 typedef struct lat_function {
-  lat_bytecode *bcode; /**< Instrucciones de la funcion */
+        lat_bytecode *bcode; /**< Instrucciones de la funcion */
 } lat_function;
 
 /**\brief Define la maquina virtual (MV) */
 typedef struct lat_mv {
-  lat_objeto *modulos;
-  lat_objeto *gc_objetos;
-  lat_objeto *otros_objetos;
-  lat_objeto *pila;               //< pila de la maquina virtual
-  lat_objeto *contexto_pila[256]; //< Arreglo para el contexto actual
-  lat_objeto *objeto_verdadero;   //< Valor logico verdadero
-  lat_objeto *objeto_falso;       //< Valor logico falso
-  lat_objeto *objeto_nulo;
-  lat_objeto *argv;
-  int argc;
-  int apuntador_ctx;    //< Apuntador para el contexto de la pila
-  int num_callf;        //< Numero de llamadas a funcion recursivas
-  size_t memoria_usada; //< Tamanio de memoria creado dinamicamente
-  bool menu;
-  bool REPL; //< Indica si esta corriendo REPL
-  char *nombre_archivo;
+        lat_objeto *modulos;
+        lat_objeto *gc_objetos;
+        lat_objeto *otros_objetos;
+        lat_objeto *pila;               //< pila de la maquina virtual
+        lat_objeto *contexto_pila[256]; //< Arreglo para el contexto actual
+        lat_objeto *objeto_verdadero;   //< Valor logico verdadero
+        lat_objeto *objeto_falso;       //< Valor logico falso
+        lat_objeto *objeto_nulo;
+        lat_objeto *argv;
+        int argc;
+        int apuntador_ctx;    //< Apuntador para el contexto de la pila
+        int num_callf;        //< Numero de llamadas a funcion recursivas
+        size_t memoria_usada; //< Tamanio de memoria creado dinamicamente
+        bool menu;
+        bool REPL; //< Indica si esta corriendo REPL
+        char *nombre_archivo;
 } lat_mv;
 
 /**\brief Busca un elemento en la lista
-  *
-  *\param l: Apuntador a la lista
-  *\param data: Apuntador a objeto buscado
-  *\return int: Retorna 1 si se encontro el objeto 0 en caso contrario
-  */
+*
+*\param l: Apuntador a la lista
+*\param data: Apuntador a objeto buscado
+*\return int: Retorna 1 si se encontro el objeto 0 en caso contrario
+*/
 bool __lista_contiene_valor(lista *l, void *data);
 
 /**\brief Obtiene el nombre del bytecode
-  *
-  *\param inst: Instruccion bytecode
-  */
+*
+*\param inst: Instruccion bytecode
+*/
 const char *__obtener_bytecode_nombre(int inst);
 
 /**\brief Envia a consola el valor del objeto
-  *
-  *\param mv: Apuntador a la MV
-  */
+*
+*\param mv: Apuntador a la MV
+*/
 void __imprimir_objeto(lat_mv *mv, lat_objeto *in, bool fmt);
 
 /**\brief Obtiene un elemento de la lista en la posicion indicada
-  *
-  *\param mv: Apuntador a la MV
-  *\param l: Apuntador a la lista
-  */
+*
+*\param mv: Apuntador a la MV
+*\param l: Apuntador a la lista
+*/
 lat_objeto *__lista_obtener_elemento(lista *list, int pos);
 
 /**\brief Obtiene un nodo de la lista en la posicion indicada
-  *
-  *\param lista: Apuntador a la lista
-  *\param pos: Posicion en la lista
-  *\return lista_nodo: Apuntador al nodo de la lista
-  */
+*
+*\param lista: Apuntador a la lista
+*\param pos: Posicion en la lista
+*\return lista_nodo: Apuntador al nodo de la lista
+*/
 lista_nodo *__lista_obtener_nodo(lista *list, int pos);
 
 /**\brief Crea la maquina virtual (MV)
-  *
-  *\return lat_mv: Apuntador a la MV
-  */
+*
+*\return lat_mv: Apuntador a la MV
+*/
 lat_mv *lat_mv_crear();
 
 /**\brief Destruye la memoria asignada por la maquina virtual (MV)
-  *
-  *\param lat_mv: Apuntador a la MV
-  */
+*
+*\param lat_mv: Apuntador a la MV
+*/
 void lat_destruir_mv(lat_mv *mv);
 
 /**\brief inserta un objeto en la pila de la MV
-  *
-  *\param mv: Apuntador a la MV
-  *\param o: Apuntador a objeto
-  */
+*
+*\param mv: Apuntador a la MV
+*\param o: Apuntador a objeto
+*/
 void lat_apilar(lat_mv *mv, lat_objeto *o);
 
 /**\brief Extrae un objeto de la pila de la MV
-  *
-  *\param mv: Apuntador a la MV
-  *\return lat_objeto: Apuntador a objeto
-  */
+*
+*\param mv: Apuntador a la MV
+*\return lat_objeto: Apuntador a objeto
+*/
 lat_objeto *lat_desapilar(lat_mv *mv);
 
 /**\brief Extrae el contexto de la pila de la MV
-  *
-  *\param mv: Apuntador a la MV
-  *\return lat_objeto: Apuntador al contexto
-  */
+*
+*\param mv: Apuntador a la MV
+*\return lat_objeto: Apuntador al contexto
+*/
 lat_objeto *lat_obtener_contexto(lat_mv *mv);
 
 lat_objeto *lat_obtener_global_ctx(lat_mv *mv);
 
 /**\brief Define una funcion creada por el usuario
-  *
-  *\param mv: Apuntador a la MV
-  *\param inslist: Lista de instrucciones de la funcion
-  *\return lat_objeto: Apuntador a un objeto tipo funcion
-  */
-lat_objeto *lat_definir_funcion(lat_mv *mv, lat_bytecode *inslist,
-                                int num_inst);
+*
+*\param mv: Apuntador a la MV
+*\param inslist: Lista de instrucciones de la funcion
+*\return lat_objeto: Apuntador a un objeto tipo funcion
+*/
+lat_objeto *lat_definir_funcion(lat_mv *mv, lat_bytecode *inslist, int num_inst);
 
 /**\brief Define una funcion creada en C
-  *
-  *\param mv: Apuntador a la MV
-  *\param *function: Apuntador a la funcion definida en C
-  *\return lat_objeto: Apuntador a un objeto tipo cfuncion
-  */
+*
+*\param mv: Apuntador a la MV
+*\param *function: Apuntador a la funcion definida en C
+*\return lat_objeto: Apuntador a un objeto tipo cfuncion
+*/
 lat_objeto *lat_definir_cfuncion(lat_mv *mv, lat_CFuncion func);
 
 /**\brief Envia a consola el valor del objeto
-  *
-  *\param mv: Apuntador a la MV
-  */
+*
+*\param mv: Apuntador a la MV
+*/
 void lat_imprimir(lat_mv *mv);
 
 /**\brief Ejecuta una cadena de codigo Latino
-  *
-  *\param mv: Apuntador a la MV
-  */
+*
+*\param mv: Apuntador a la MV
+*/
 void lat_cadena_ejecutar(lat_mv *mv);
 
 /**\brief Determina si una cadena es decimal
-  *
-  *\param mv: Apuntador a la MV
-  */
+*
+*\param mv: Apuntador a la MV
+*/
 void lat_es_decimal(lat_mv *mv);
 
 /**\brief Formatea un decimal con el numero de caracteres decimales que se
-  *especifique
-  *
-  *\param mv: Apuntador a la MV
-  */
+*especifique
+*
+*\param mv: Apuntador a la MV
+*/
 void lat_formato_numero(lat_mv *mv);
 
 /**\brief Crea un objeto bytecode
-  *
-  *\param i: Tipo de instruccion
-  *\param a: Registro a
-  *\param b: Registro b
-  *\param meta: Datos
-  *\return lat_bytecode: Objeto bytecode
-  */
+*
+*\param i: Tipo de instruccion
+*\param a: Registro a
+*\param b: Registro b
+*\param meta: Datos
+*\return lat_bytecode: Objeto bytecode
+*/
 lat_bytecode lat_bc(int i, int a, int b, void *meta);
 
 /**\brief Ejecuta una funcion
-  *
-  *\param mv: Apuntador a la MV
-  *\param func: Apuntador a funcion a ejecutar
-  */
+*
+*\param mv: Apuntador a la MV
+*\param func: Apuntador a funcion a ejecutar
+*/
 void lat_llamar_funcion(lat_mv *mv, lat_objeto *func);
 
 // void lat_json_codificar(lat_mv* mv);

@@ -2,5 +2,3 @@ git submodule update --init --recursive
 ./tools/fix
 cmake .
 make
-make install
-

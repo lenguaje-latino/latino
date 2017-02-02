@@ -36,32 +36,32 @@ THE SOFTWARE.
 */
 
 /** Asigna memoria dinamicamente (malloc)
-  *
-  * \param size: Tamanio de memoria solicitado
-  *
-  */
+*
+* \param size: Tamanio de memoria solicitado
+*
+*/
 void *__memoria_asignar(lat_mv *mv, size_t size);
 
 /** Regresa el tamanio de la memoria ocupada por un apuntador void
-  *
-  * \param ptr: Apuntador a la memoria
-  *
-  */
+*
+* \param ptr: Apuntador a la memoria
+*
+*/
 size_t __memoria_tamanio(void *ptr);
 
 /** Reasigna memoria dinamicamente (realloc)
-  *
-  * \param ptr: Apuntador a la memoria actual
-  * \param size: Tamanio nuevo de memoria solicitado
-  *
-  */
+*
+* \param ptr: Apuntador a la memoria actual
+* \param size: Tamanio nuevo de memoria solicitado
+*
+*/
 void *__memoria_reasignar(void *ptr, size_t size);
 
 /** Libera la memoria (free)
-  *
-  * \param ptr: Apuntador a la memoria a liberar
-  *
-  */
+*
+* \param ptr: Apuntador a la memoria a liberar
+*
+*/
 void __memoria_liberar(lat_mv *mv, void *ptr);
 
 #endif /* !_LIBMEM_H_ */

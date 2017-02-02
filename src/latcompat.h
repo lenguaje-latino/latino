@@ -60,7 +60,7 @@ THE SOFTWARE.
 
 void sleep_ms(int milliseconds);
 
-/** Determina el compilador*/
+/** Determina el compilador */
 #if defined(__GNUC__)
 #define __lat_noret void __attribute__((noreturn))
 #elif defined(_MSC_VER)
