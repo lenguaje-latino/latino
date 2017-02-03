@@ -1,0 +1,17 @@
+#!/bin/bash
+if [[ $1 ]]; then
+  case $1 in
+  "debug"|"Debug")
+    tip="Debug" ;;
+  "release"|"Release")
+    tip="Release" ;;
+  esac
+  alias compilar='make clean; rm CMakeCache.txt; cmake -DCMAKE_BUILD_TYPE=${tip} -G "Unix Makefiles" .; make'
+  alias instalar='sudo make install'
+  alias tipo='echo ${tip}'
+fi
+
+<<comentario
+  cambia el tipo de compilación:
+  source tools/jc release
+comentario
