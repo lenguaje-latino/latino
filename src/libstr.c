@@ -834,6 +834,13 @@ void lat_cadena_formato(lat_mv *mv) {
         lat_apilar(mv, tmp);
 }
 
+void lat_cadena_char(lat_mv *mv) {
+        lat_objeto *a = lat_desapilar(mv);
+        char txt[1024];
+        sprintf(txt, "%c", (int)lat_obj2double(a));
+        lat_apilar(mv, lat_cadena_nueva(mv, txt));
+}
+
 static const lat_CReg lib_cadena[] = {
         {"esta_vacia", lat_cadena_esta_vacia, 1},
         {"longitud", lat_cadena_longitud, 1},
@@ -864,6 +871,7 @@ static const lat_CReg lib_cadena[] = {
         {"reemplazar", lat_cadena_reemplazar, 4},
         {"subcadena", lat_cadena_subcadena, 3},
         {"formato", lat_cadena_formato, -1}, // para funciones var_arg se envia -1
+        {"char", lat_cadena_char, 1},
         {NULL, NULL}
 };
 
