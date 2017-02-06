@@ -807,7 +807,7 @@ void lat_cadena_formato(lat_mv *mv) {
                                 } break;
                                 case 'i': {
                                         lat_objeto *ent = __lista_extraer_inicio(params);
-                                        sprintf(buff, "%i", (int)lat_obj2double(ent));
+                                        sprintf(buff, "%li", (long int)lat_obj2double(ent));
                                 } break;
                                 case 'f': {
                                         lat_objeto *dec = __lista_extraer_inicio(params);
