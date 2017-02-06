@@ -157,6 +157,18 @@ void lat_sistema_usuario(lat_mv *mv) {
         lat_apilar(mv, tmp);
 }
 
+void lat_sistema_entorno(lat_mv *mv) {
+        lat_objeto *a = lat_desapilar(mv);
+        char *env = getenv(__cadena(a));
+        lat_objeto *tmp;
+        if (env) {
+                tmp = lat_cadena_nueva(mv, env);
+        } else {
+                tmp = mv->objeto_nulo;
+        }
+        lat_apilar(mv, tmp);
+}
+
 static const lat_CReg libsistema[] = {
         {"dormir", lat_sistema_dormir, 1},
         {"ejecutar", lat_sistema_ejecutar, 1},
@@ -166,6 +178,7 @@ static const lat_CReg libsistema[] = {
         {"cwd", lat_sistema_cwd, 0},
         {"iraxy", lat_sistema_iraxy, 2},
         {"usuario", lat_sistema_usuario, 0},
+        {"entorno", lat_sistema_entorno, 1},
         {NULL, NULL}
 };
 
