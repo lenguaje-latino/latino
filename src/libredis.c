@@ -97,14 +97,18 @@ void lat_redis_asignar(lat_mv *mv) {
 
 void lat_redis_hasignar(lat_mv *mv) {
         lat_objeto *cadena = lat_desapilar(mv);
-        lat_objeto *llave = lat_desapilar(mv);
-        lat_objeto *hash = lat_desapilar(mv);
-        lat_objeto *o = lat_desapilar(mv);
-        redisContext *conexion = __cdato(o);
-        redisReply *respuesta;
-        respuesta = redisCommand(conexion, "HSET %s %s %s", __cadena(hash),
-        __cadena(llave), __cadena(cadena));
-        freeReplyObject(respuesta);
+	lat_objeto *llave = lat_desapilar(mv);
+	lat_objeto *hash = lat_desapilar(mv);
+	lat_objeto *o = lat_desapilar(mv);
+	redisContext *conexion = __cdato(o);
+	redisReply *respuesta;
+	respuesta = redisCommand(conexion, "HSET %s %s %s", __cadena(hash), __cadena(llave), __cadena(cadena));
+	freeReplyObject(respuesta);
+	if (respuesta->integer) {
+		lat_apilar(mv, mv->objeto_verdadero);
+	} else {
+		lat_apilar(mv, mv->objeto_falso);
+	};
 }
 
 void lat_redis_obtener(lat_mv *mv) {
