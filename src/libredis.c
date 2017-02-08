@@ -36,11 +36,17 @@ THE SOFTWARE.
 void lat_redis_conectar(lat_mv *mv) {
         lat_objeto *puerto = lat_desapilar(mv);
         lat_objeto *servidor = lat_desapilar(mv);
+        char *ip = "127.0.0.1";
+        int port = 6379;
+        if (puerto->tipo != T_NULL) {
+                port = __numerico(puerto);
+        };
+        if (servidor->tipo != T_NULL) {
+                ip = __cadena(servidor);
+        };
         redisContext *redis;
-        const char *servidor2 = __cadena(servidor);
-        int puerto2 = __numerico(puerto);
         struct timeval timeout = {1, 500000}; // 1.5 segundos
-        redis = redisConnectWithTimeout(servidor2, puerto2, timeout);
+        redis = redisConnectWithTimeout(ip, port, timeout);
         if (redis == NULL || redis->err) {
                 if (redis) {
                         redisFree(redis);
@@ -51,8 +57,8 @@ void lat_redis_conectar(lat_mv *mv) {
                         filename = servidor->nombre_archivo;
                         lat_error("Linea %d, %d: %s", servidor->num_linea,
                         servidor->num_columna, "error en contexto redis.");
-                }
-        }
+                };
+        };
         //encapsulo el dato (struct) de redis
         lat_objeto *cref = lat_cdato_nuevo(mv, redis);
         lat_apilar(mv, cref);

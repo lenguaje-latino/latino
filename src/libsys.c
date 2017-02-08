@@ -27,6 +27,7 @@ THE SOFTWARE.
 #include <string.h>
 #include <time.h>
 #include <signal.h>
+//#include <pthread.h> // en prueba
 
 #include "latcompat.h"
 #include "latgc.h"
@@ -169,6 +170,30 @@ void lat_sistema_entorno(lat_mv *mv) {
         lat_apilar(mv, tmp);
 }
 
+/* en prueba
+void *tarea1() {
+        int i;
+        scanf("%i", &i);
+	printf("\nTAREA 1: Escribiste el número %i\n", i);
+	return NULL;
+}
+
+
+void lat_sistema_tarea_nueva(lat_mv *mv) {
+        lat_objeto *a = lat_desapilar(mv);
+        pthread_t proceso = __numerico(a);
+        pthread_create(&proceso, NULL, tarea1, NULL);
+        lat_objeto *cref = lat_numerico_nuevo(mv, proceso);
+        lat_apilar(mv, cref);
+}
+
+void lat_sistema_tarea_iniciar(lat_mv *mv) {
+        lat_objeto *a = lat_desapilar(mv);
+        pthread_t proceso = __numerico(a);
+        pthread_join(proceso, NULL);
+}
+*/
+
 static const lat_CReg libsistema[] = {
         {"dormir", lat_sistema_dormir, 1},
         {"ejecutar", lat_sistema_ejecutar, 1},
@@ -179,6 +204,8 @@ static const lat_CReg libsistema[] = {
         {"iraxy", lat_sistema_iraxy, 2},
         {"usuario", lat_sistema_usuario, 0},
         {"entorno", lat_sistema_entorno, 1},
+        /*{"tarea_nueva", lat_sistema_tarea_nueva, 1},
+        {"tarea_iniciar", lat_sistema_tarea_iniciar, 1}, */
         {NULL, NULL}
 };
 
