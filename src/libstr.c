@@ -492,13 +492,16 @@ void lat_cadena_longitud(lat_mv *mv) {
 char *reemplazar_lat(char *orig, char *rep, char *with, int veces) {
         char *result, *ins, *tmp;
         int len_rep, len_with, len_front, count;
-        if (!orig && !rep)
-        return NULL;
+        if (!orig && !rep) {
+                return NULL;
+        };
         len_rep = strlen(rep);
-        if (len_rep == 0)
-        return NULL;
-        if (!with)
-        with = "";
+        if (len_rep == 0) {
+                return NULL;
+        };
+        if (!with) {
+                with = "";
+        };
         len_with = strlen(with);
         ins = orig;
         for (count = 0; (tmp = strstr(ins, rep)) != NULL; ++count) {
