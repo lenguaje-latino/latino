@@ -13,6 +13,7 @@
 Latino es un lenguaje de programación creado en C, inspirado en [Lua](https://www.lua.org/) y [Python](https://www.python.org), este proyecto nace de la necesidad de incrementar la educación de nivel básico y avanzado, para que niños, como adolescentes y adultos también se motiven a entrar en el mundo de la programación y desarrollar aplicaciones en la sintaxis de su idioma, también Latino es para desarrolladores que les gustaría programar en español ya que Latino es completamente funcional en cualquier [API](https://es.m.wikipedia.org/wiki/Interfaz_de_programaci%C3%B3n_de_aplicaciones) en raw.
 
 ¿Y por qué un lenguaje de programación más?
+
 Si bien se sabe, que ya hay muchos lenguajes de programación en inglés, hay algunos que ya existen en español, ¿Qué diferencia hay con Latino? **Latino es aún más simple**: en otros lenguajes tendrás que usar variables diferentes al terminar cada ciclo(mientras, desde), condiciones(si), entre otras. Con Latino, no tendrás que preocuparte en usar un `Fin-Si`, entre otras, cualquier condición terminará con `fin`, y claro, estamos orientados a una programación aún más fácil que otras, **no quiere decir que estará limitada**, no. _¿Pero cuántas veces te molestó usar mayúsculas en cada función? ¿Cuántas veces te molestó que otro lenguaje tiene demasiadas reglas para organizar el código?_ **en Latino no habrá tantas reglas de código para empezar a programar**.
 
 ¿Cuántos de ustedes no batallaron con el inglés?
