@@ -78,6 +78,16 @@ char *__str_analizar_fmt(const char *s, size_t len) {
                                         c = '\t';
                                         i++;
                                         goto save;
+                                        case 'v':
+                                        c = '\v';
+                                        i++;
+                                        goto save;
+                                        case '0':
+                                        if (s[i+2] == '3' && s[i+3] == '3') {
+                                                c = 27;
+                                                i+=3;
+                                                goto save;
+                                        };
                                         case '\\':
                                         c = '\\';
                                         i++;
@@ -859,7 +869,7 @@ static const lat_CReg lib_cadena[] = {
         {"comparar", lat_cadena_comparar, 2},
         {"contiene", lat_cadena_contiene, 2},
         {"termina_con", lat_cadena_termina_con, 2},
-        {"es_igual", lat_cadena_es_igual, 2},
+	{"es_igual", lat_cadena_es_igual, 2},
         {"indice", lat_cadena_indice, 2},
         {"encontrar", lat_cadena_indice, 2},
         {"ultimo_indice", lat_cadena_ultimo_indice, 2},
