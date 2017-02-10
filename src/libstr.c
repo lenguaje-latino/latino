@@ -37,11 +37,23 @@ THE SOFTWARE.
 
 int __lista_obtener_indice(lista *list, void *data);
 
+int oct(int octalNumber) {
+        int decimalNumber = 0, i = 0;
+        while(octalNumber != 0) {
+                decimalNumber += (octalNumber%10) * pow(8,i);
+                ++i;
+                octalNumber/=10;
+        }
+        i = 1;
+        return decimalNumber;
+}
+
 char *__str_analizar_fmt(const char *s, size_t len) {
         char *ret = __memoria_asignar(NULL, len + 1);
         int i = 0;
         int j = 0;
         int c = '@';
+        int num, let=0;
         for (i = 0; i < ((int)len); i++) {
                 switch (s[i]) {
                         case '\\': {
@@ -83,8 +95,20 @@ char *__str_analizar_fmt(const char *s, size_t len) {
                                         i++;
                                         goto save;
                                         case '0':
-                                        if (s[i+2] == '3' && s[i+3] == '3') {
-                                                c = 27;
+                                        if (isdigit(s[i+2]) && isdigit(s[i+3])) {
+                                                for (num = 1; num<sizeof(s) && num<4; num++) {
+                                                        let = (10 * let) + ((int)s[num]-48);
+                                                }
+                                                c = oct(let);
+                                                i+=3;
+                                                goto save;
+                                        };
+                                        case '1':
+                                        if (isdigit(s[i+2]) && isdigit(s[i+3])) {
+                                                for (num = 1; num<sizeof(s) && num<4; num++) {
+                                                        let = (10 * let) + ((int)s[num]-48);
+                                                }
+                                                c = oct(let);
                                                 i+=3;
                                                 goto save;
                                         };
