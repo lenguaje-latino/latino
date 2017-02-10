@@ -321,6 +321,7 @@ int main(int argc, char *argv[]) {
                         pe = true;
                 } else {
                         pf = true;
+                        break;
                 }
         }
         lat_mv *mv = lat_mv_crear();
