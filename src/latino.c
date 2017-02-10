@@ -311,6 +311,10 @@ int main(int argc, char *argv[]) {
         int pe = false;
         int pf = false;
         for (i = 1; i < argc; i++) {
+                if (strstr(argv[1], ".lat") || argv[1][0] != '-') {
+                        pf = true;
+                        break;
+                }
                 if (strcmp(argv[i], "-v") == 0) {
                         lat_version();
                         return EXIT_SUCCESS;
@@ -319,8 +323,6 @@ int main(int argc, char *argv[]) {
                         return EXIT_SUCCESS;
                 } else if (strcmp(argv[i], "-e") == 0) {
                         pe = true;
-                } else {
-                        pf = true;
                 }
         }
         lat_mv *mv = lat_mv_crear();
