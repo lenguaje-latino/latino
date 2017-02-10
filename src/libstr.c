@@ -100,6 +100,7 @@ char *__str_analizar_fmt(const char *s, size_t len) {
                                                         let = (10 * let) + ((int)s[num]-48);
                                                 }
                                                 c = oct(let);
+						let=0;
                                                 i+=3;
                                                 goto save;
                                         };
@@ -109,6 +110,7 @@ char *__str_analizar_fmt(const char *s, size_t len) {
                                                         let = (10 * let) + ((int)s[num]-48);
                                                 }
                                                 c = oct(let);
+						let=0;
                                                 i+=3;
                                                 goto save;
                                         };
