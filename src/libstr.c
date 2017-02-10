@@ -96,7 +96,7 @@ char *__str_analizar_fmt(const char *s, size_t len) {
                                         goto save;
                                         case '0':
                                         if (isdigit(s[i+2]) && isdigit(s[i+3])) {
-                                                for (num = 1; num<sizeof(s) && num<4; num++) {
+                                                for (num = i; num<strlen(s) && num<i+4; num++) {
                                                         let = (10 * let) + ((int)s[num]-48);
                                                 }
                                                 c = oct(let);
@@ -105,7 +105,7 @@ char *__str_analizar_fmt(const char *s, size_t len) {
                                         };
                                         case '1':
                                         if (isdigit(s[i+2]) && isdigit(s[i+3])) {
-                                                for (num = 1; num<sizeof(s) && num<4; num++) {
+                                                for (num = i; num<strlen(s) && num<i+4; num++) {
                                                         let = (10 * let) + ((int)s[num]-48);
                                                 }
                                                 c = oct(let);
