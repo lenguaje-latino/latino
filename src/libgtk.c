@@ -15,10 +15,8 @@ struct string {
 
 // toda funcion de latino necesita esta firma -> void nombre_funcion(lat_mv *mv)
 void lat_gtk_iniciar(lat_mv *mv) {
-        // le paso vacios los parametros requeridos
-        int argc;
-        char **argv;
-        gtk_init(&argc, &argv);
+        // le paso nulos los parametros requeridos
+        gtk_init(NULL, NULL);
 }
 
 void lat_gtk_ventana(lat_mv *mv) {
