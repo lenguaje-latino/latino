@@ -4,10 +4,12 @@ Menu propiedades del proyecto-> Debugging -> Command Arguments. Agregar
 $(SolutionDir)..\ejemplos\debug.lat
 */
 
-d = { "uno" : 1, "dos" : 2, "tres" : 3 }
-escribir(dic.llaves(d))
-escribir(dic.vals(d))
-escribir(dic.valores(d))
+a=[1,2,3] // declaras a
+b=[4,5,6] // declaras b
+c=lista.crear(3)
 
-VERSION = 0.6
-imprimir(VERSION)
+desde(i=0; i<c; i++) // al comparar con una lista estamos indicando su longitud
+	c[i]=a[i]+b[i]
+fin
+
+escribir(c)
