@@ -735,35 +735,36 @@ void lat_cadena_ejecutar(lat_mv *mv) {
 
 void lat_cadena_regex(lat_mv *mv) {
         lat_objeto *cadena_regex = lat_desapilar(mv);
-        lat_objeto *_cadena = lat_desapilar(mv);
-        char cadena[2048];
-        if (_cadena->tipo == T_NUMERIC) {
-                sprintf(cadena, "%.16g", __numerico(_cadena));
-        } else if (_cadena->tipo == T_STR) {
-                strcpy(cadena, __cadena(_cadena));
+        lat_objeto *cad = lat_desapilar(mv);
+        char *tmp = malloc(strlen(__cadena(cad)) + 1);
+        if (cad->tipo == T_NUMERIC) {
+                sprintf(tmp, "%.16g", __numerico(cad));
+        } else if (cad->tipo == T_STR) {
+                strcpy(tmp, __cadena(cad));
         } else {
-                lat_error("Linea %d, %d: %s", _cadena->num_linea, _cadena->num_columna,
+                lat_error("Linea %d, %d: %s", cad->num_linea, cad->num_columna,
                 "se esperaba una cadena ó númerico.");
         };
         regex_t regex;
         int reti;
         reti = regcomp(&regex, __cadena(cadena_regex), REG_EXTENDED);
         if (reti) {
-                filename = _cadena->nombre_archivo;
-                lat_error("Linea %d, %d: %s", _cadena->num_linea, _cadena->num_columna,
+                filename = cad->nombre_archivo;
+                lat_error("Linea %d, %d: %s", cad->num_linea, cad->num_columna,
                 "error al compilar regex.");
         }
-        reti = regexec(&regex, cadena, 0, NULL, 0);
+        reti = regexec(&regex, tmp, 0, NULL, 0);
         if (!reti) {
                 lat_apilar(mv, mv->objeto_verdadero);
         } else if (reti == REG_NOMATCH) {
                 lat_apilar(mv, mv->objeto_falso);
         } else {
-                filename = _cadena->nombre_archivo;
-                lat_error("Linea %d, %d: %s", _cadena->num_linea, _cadena->num_columna,
+                filename = cad->nombre_archivo;
+                lat_error("Linea %d, %d: %s", cad->num_linea, cad->num_columna,
                 "error en el match regex.");
         }
         regfree(&regex);
+        free(tmp);
 }
 
 void lat_cadena_match(lat_mv *mv) {
