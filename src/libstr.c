@@ -736,10 +736,12 @@ void lat_cadena_ejecutar(lat_mv *mv) {
 void lat_cadena_regex(lat_mv *mv) {
         lat_objeto *cadena_regex = lat_desapilar(mv);
         lat_objeto *cad = lat_desapilar(mv);
-        char *tmp = malloc(strlen(__cadena(cad)) + 1);
+        char *tmp = NULL;
         if (cad->tipo == T_NUMERIC) {
+                tmp = malloc(64);
                 sprintf(tmp, "%.16g", __numerico(cad));
         } else if (cad->tipo == T_STR) {
+                tmp = malloc(strlen(__cadena(cad)) + 1);
                 strcpy(tmp, __cadena(cad));
         } else {
                 lat_error("Linea %d, %d: %s", cad->num_linea, cad->num_columna,
