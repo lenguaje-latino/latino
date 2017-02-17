@@ -10,6 +10,7 @@
 
 ![latino sublime](https://raw.githubusercontent.com/lenguaje-latino/latino-sublimetext-plugin/master/latino_sublime.png "latino sublime")
 
+
 Latino es un lenguaje de programación creado en C, inspirado en [Lua](https://www.lua.org/) y [Python](https://www.python.org), este proyecto nace de la necesidad de incrementar la educación de nivel básico y avanzado, para que niños, como adolescentes y adultos también se motiven a entrar en el mundo de la programación y desarrollar aplicaciones en la sintaxis de su idioma, también Latino es para desarrolladores que les gustaría programar en español ya que Latino es completamente funcional en cualquier [API](https://es.m.wikipedia.org/wiki/Interfaz_de_programaci%C3%B3n_de_aplicaciones) en raw.
 
 ¿Y por qué un lenguaje de programación más?
