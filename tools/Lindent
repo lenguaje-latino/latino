@@ -1,5 +1,5 @@
 #!/bin/sh
-PARAM="-npro -kr -i8 -ts8 -sob -l80 -ss -ncs -cp1"
+PARAM="-npro -kr -i4 -ts4 -sob -l80 -ss -ncs -cp1 -brf -pi4"
 RES=`indent --version`
 if [ "$RES" = "" ]; then
 	exit 1
