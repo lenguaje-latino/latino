@@ -394,6 +394,20 @@ void lat_lista_contiene(lat_mv *mv) {
         }
 }
 
+void lat_lista_crear(lat_mv *mv) {
+        lat_objeto *num = lat_desapilar(mv);        
+        int i = 0;
+        int cant = __numerico(num);
+        lista *lst = __lista_crear();
+                if(cant > 0){
+                        while(i<cant){
+                                __lista_agregar(lst, mv->objeto_nulo);
+                        i++;
+                }
+        }
+        lat_apilar(mv, lat_lista_nueva(mv, lst));
+}
+
 static const lat_CReg lib_lista[] = {
         {"invertir", lat_lista_invertir, 1},
         {"agregar", lat_lista_agregar, 2},
@@ -406,6 +420,7 @@ static const lat_CReg lib_lista[] = {
         {"insertar", lat_lista_insertar, 3},
         {"eliminar", lat_lista_eliminar, 2},
         {"contiene", lat_lista_contiene, 2},
+        {"crear", lat_lista_crear, 1},
         {NULL, NULL}
 };
 

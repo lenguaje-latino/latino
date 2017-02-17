@@ -4,12 +4,6 @@ Menu propiedades del proyecto-> Debugging -> Command Arguments. Agregar
 $(SolutionDir)..\ejemplos\debug.lat
 */
 
-a=[1,2,3] // declaras a
-b=[4,5,6] // declaras b
-c=lista.crear(3)
-
-desde(i=0; i<c; i++) // al comparar con una lista estamos indicando su longitud
-	c[i]=a[i]+b[i]
+si "1" ~= "^[0-9]$"
+    imprimir("OK")
 fin
-
-escribir(c)
