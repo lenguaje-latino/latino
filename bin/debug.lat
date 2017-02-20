@@ -4,10 +4,5 @@ Menu propiedades del proyecto-> Debugging -> Command Arguments. Agregar
 $(SolutionDir)..\ejemplos\debug.lat
 */
 
-si "1" ~= "^[0-9]$"
-    imprimir("OK")
-fin
-
-si 1 ~= "^[0-9]$"
-    imprimir("OK")
-fin
+num = 123456
+poner(num[1])
