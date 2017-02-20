@@ -57,7 +57,6 @@ THE SOFTWARE.
 #define __lat_sleep(seg) sleep_ms(seg * 1000)
 #endif
 
-
 void sleep_ms(int milliseconds);
 
 /** Determina el compilador */

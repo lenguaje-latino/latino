@@ -29,35 +29,35 @@ THE SOFTWARE.
 #include "latmv.h"
 #include "latobj.h"
 
-void lat_logico(lat_mv *mv) {
-        lat_objeto *o = lat_desapilar(mv);
-        lat_objeto *tmp =
-        lat_obj2bool(o) == true ? mv->objeto_verdadero : mv->objeto_falso;
-        lat_apilar(mv, tmp);
+void lat_logico(lat_mv * mv) {
+	lat_objeto *o = lat_desapilar(mv);
+	lat_objeto *tmp =
+		lat_obj2bool(o) == true ? mv->objeto_verdadero : mv->objeto_falso;
+	lat_apilar(mv, tmp);
 }
 
-void lat_numerico(lat_mv *mv) {
-        lat_objeto *o = lat_desapilar(mv);
-        lat_objeto *tmp = lat_numerico_nuevo(mv, lat_obj2double(o));
-        lat_apilar(mv, tmp);
-        lat_gc_agregar(mv, tmp);
+void lat_numerico(lat_mv * mv) {
+	lat_objeto *o = lat_desapilar(mv);
+	lat_objeto *tmp = lat_numerico_nuevo(mv, lat_obj2double(o));
+	lat_apilar(mv, tmp);
+	lat_gc_agregar(mv, tmp);
 }
 
-void lat_cadena(lat_mv *mv) {
-        lat_objeto *o = lat_desapilar(mv);
-        char *buf = lat_obj2cstring(o);
-        lat_objeto *tmp = lat_cadena_nueva(mv, buf);
-        lat_apilar(mv, tmp);
-        lat_gc_agregar(mv, tmp);
+void lat_cadena(lat_mv * mv) {
+	lat_objeto *o = lat_desapilar(mv);
+	char *buf = lat_obj2cstring(o);
+	lat_objeto *tmp = lat_cadena_nueva(mv, buf);
+	lat_apilar(mv, tmp);
+	lat_gc_agregar(mv, tmp);
 }
 
 static const lat_CReg lib_cast[] = {
-        {"logico", lat_logico, 1},
-        {"numerico", lat_numerico, 1},
-        {"cadena", lat_cadena, 1},
-        {NULL, NULL}
+	{"logico", lat_logico, 1},
+	{"numerico", lat_numerico, 1},
+	{"cadena", lat_cadena, 1},
+	{NULL, NULL}
 };
 
-void lat_importar_lib_cast(lat_mv *mv) {
-        lat_importar_lib(mv, LIB_CAST_NAME, lib_cast);
+void lat_importar_lib_cast(lat_mv * mv) {
+	lat_importar_lib(mv, LIB_CAST_NAME, lib_cast);
 }
