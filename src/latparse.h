@@ -31,10 +31,10 @@ This special exception was added by the Free Software Foundation in
 version 2.2 of Bison.  */
 
 #ifndef YY_YY_LATPARSE_H_INCLUDED
-# define YY_YY_LATPARSE_H_INCLUDED
+#define YY_YY_LATPARSE_H_INCLUDED
 /* Debug traces.  */
 #ifndef YYDEBUG
-# define YYDEBUG 0
+#define YYDEBUG 0
 #endif
 #if YYDEBUG
 extern int yydebug;
@@ -42,51 +42,50 @@ extern int yydebug;
 
 /* Token type.  */
 #ifndef YYTOKENTYPE
-# define YYTOKENTYPE
-enum yytokentype
-{
-        VERDADERO = 258,
-        FALSO = 259,
-        NULO = 260,
-        NUMERICO = 261,
-        CADENA = 262,
-        IDENTIFICADOR = 263,
-        SI = 264,
-        O_SI = 265,
-        FIN = 266,
-        SINO = 267,
-        MIENTRAS = 268,
-        REPETIR = 269,
-        ROMPER = 270,
-        CONTINUAR = 271,
-        HASTA = 272,
-        FUNCION = 273,
-        DESDE = 274,
-        KBOOL = 275,
-        RETORNO = 276,
-        ELEGIR = 277,
-        CASO = 278,
-        DEFECTO = 279,
-        ATRIBUTO = 280,
-        MAYOR_QUE = 281,
-        MENOR_QUE = 282,
-        MAYOR_IGUAL = 283,
-        MENOR_IGUAL = 284,
-        IGUAL_LOGICO = 285,
-        DIFERENTE = 286,
-        Y_LOGICO = 287,
-        O_LOGICO = 288,
-        INCREMENTO = 289,
-        DECREMENTO = 290,
-        CONCATENAR = 291,
-        CONCATENAR_IGUAL = 292,
-        MAS_IGUAL = 293,
-        MENOS_IGUAL = 294,
-        POR_IGUAL = 295,
-        ENTRE_IGUAL = 296,
-        MODULO_IGUAL = 297,
-        REGEX = 298,
-        GLOBAL = 299
+#define YYTOKENTYPE
+enum yytokentype {
+	VERDADERO = 258,
+	FALSO = 259,
+	NULO = 260,
+	NUMERICO = 261,
+	CADENA = 262,
+	IDENTIFICADOR = 263,
+	SI = 264,
+	O_SI = 265,
+	FIN = 266,
+	SINO = 267,
+	MIENTRAS = 268,
+	REPETIR = 269,
+	ROMPER = 270,
+	CONTINUAR = 271,
+	HASTA = 272,
+	FUNCION = 273,
+	DESDE = 274,
+	KBOOL = 275,
+	RETORNO = 276,
+	ELEGIR = 277,
+	CASO = 278,
+	DEFECTO = 279,
+	ATRIBUTO = 280,
+	MAYOR_QUE = 281,
+	MENOR_QUE = 282,
+	MAYOR_IGUAL = 283,
+	MENOR_IGUAL = 284,
+	IGUAL_LOGICO = 285,
+	DIFERENTE = 286,
+	Y_LOGICO = 287,
+	O_LOGICO = 288,
+	INCREMENTO = 289,
+	DECREMENTO = 290,
+	CONCATENAR = 291,
+	CONCATENAR_IGUAL = 292,
+	MAS_IGUAL = 293,
+	MENOS_IGUAL = 294,
+	POR_IGUAL = 295,
+	ENTRE_IGUAL = 296,
+	MODULO_IGUAL = 297,
+	REGEX = 298,
+	GLOBAL = 299
 };
 #endif
 /* Tokens.  */
@@ -138,19 +137,16 @@ enum yytokentype
 /* Location type.  */
 #if ! defined YYLTYPE && ! defined YYLTYPE_IS_DECLARED
 typedef struct YYLTYPE YYLTYPE;
-struct YYLTYPE
-{
-        int first_line;
-        int first_column;
-        int last_line;
-        int last_column;
+struct YYLTYPE {
+	int first_line;
+	int first_column;
+	int last_line;
+	int last_column;
 };
-# define YYLTYPE_IS_DECLARED 1
-# define YYLTYPE_IS_TRIVIAL 1
+#define YYLTYPE_IS_DECLARED 1
+#define YYLTYPE_IS_TRIVIAL 1
 #endif
 
-
-
-int yyparse (ast **root, void *scanner);
+int yyparse(ast ** root, void *scanner);
 
 #endif /* !YY_YY_LATPARSE_H_INCLUDED  */
