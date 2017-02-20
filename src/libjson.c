@@ -53,8 +53,7 @@ static lat_objeto *__json_a_latino(lat_mv * mv, json_t * element) {
 			lat_objeto *dic = lat_dic_nuevo(mv, __dic_crear());
 			json_object_foreach(element, key, value) {
 				// printf("key: %s\n", key);
-				__dic_asignar(__dic(dic), key,
-					      __json_a_latino(mv, value));
+				__dic_asignar(__dic(dic), key, __json_a_latino(mv, value));
 			}
 			return dic;
 		}
@@ -65,33 +64,29 @@ static lat_objeto *__json_a_latino(lat_mv * mv, json_t * element) {
 			for (i = 0; i < size; i++) {
 				value = json_array_get(element, i);
 				__lista_agregar(__lista(lst),
-						(void *)__json_a_latino(mv,
-									value));
+								(void *)__json_a_latino(mv, value));
 			}
 			return lst;
 		}
 		break;
 	case JSON_STRING:{
-			lat_objeto *str =
-			    lat_cadena_nueva(mv,
-					     strdup(json_string_value
-						    (element)));
+			lat_objeto *str = lat_cadena_nueva(mv,
+											   strdup(json_string_value
+													  (element)));
 			return str;
 		}
 		break;
 	case JSON_INTEGER:{
-			lat_objeto *dec =
-			    lat_numerico_nuevo(mv,
-					       (double)
-					       json_integer_value(element));
+			lat_objeto *dec = lat_numerico_nuevo(mv,
+												 (double)
+												 json_integer_value(element));
 			return dec;
 		}
 		break;
 	case JSON_REAL:{
-			lat_objeto *dec =
-			    lat_numerico_nuevo(mv,
-					       (double)
-					       json_real_value(element));
+			lat_objeto *dec = lat_numerico_nuevo(mv,
+												 (double)
+												 json_real_value(element));
 			return dec;
 		}
 		break;
@@ -105,8 +100,7 @@ static lat_objeto *__json_a_latino(lat_mv * mv, json_t * element) {
 		return mv->objeto_nulo;
 		break;
 	default:
-		fprintf(stderr, "unrecognized JSON type %d\n",
-			json_typeof(element));
+		fprintf(stderr, "unrecognized JSON type %d\n", json_typeof(element));
 	}
 	return NULL;
 }
@@ -120,11 +114,15 @@ static json_t *__latino_a_json(lat_mv * mv, lat_objeto * element) {
 			for (i = 0; i < 256; i++) {
 				lista *list = __dic(element)->buckets[i];
 				if (list != NULL) {
-					LIST_FOREACH(list, primero, siguiente,
-						     cur) {
+					LIST_FOREACH(list, primero, siguiente, cur) {
 						if (cur->valor != NULL) {
 							json_object_set(value,
-									((hash_val *) cur->valor)->llave, __latino_a_json(mv, (lat_objeto *) ((hash_val *) cur->valor)->valor));
+											((hash_val *) cur->valor)->llave,
+											__latino_a_json(mv,
+															(lat_objeto
+															 *) ((hash_val *)
+																 cur->
+																 valor)->valor));
 						}
 					}
 				}
@@ -138,10 +136,8 @@ static json_t *__latino_a_json(lat_mv * mv, lat_objeto * element) {
 			LIST_FOREACH(list, primero, siguiente, cur) {
 				if (cur->valor != NULL) {
 					json_array_append_new(value,
-							      __latino_a_json
-							      (mv,
-							       (lat_objeto *)
-							       cur->valor));
+										  __latino_a_json(mv, (lat_objeto *)
+														  cur->valor));
 				}
 			}
 			return value;
