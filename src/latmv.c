@@ -335,6 +335,9 @@ static void __no_logico(lat_mv *mv) {
 
 void lat_importar_lib(lat_mv *mv, const char *nombre_lib, const lat_CReg *funs) {
         lat_objeto *ctx = lat_obtener_contexto(mv);
+        if (nombre_lib == NULL) {
+            nombre_lib = "";
+        };
         if (strcmp(nombre_lib, "") == 0) {
                 /*alcance global o libreria base*/
                 for (; funs->nombre; funs++) {
