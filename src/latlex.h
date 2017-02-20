@@ -97,15 +97,15 @@ typedef unsigned int flex_uint32_t;
 /* The "const" storage-class-modifier is valid. */
 #define YY_USE_CONST
 
-#else	/* ! __cplusplus */
+#else /* ! __cplusplus */
 
 /* C99 requires __STDC__ to be defined as 1. */
 #if defined (__STDC__)
 
 #define YY_USE_CONST
 
-#endif	/* defined (__STDC__) */
-#endif	/* ! __cplusplus */
+#endif /* defined (__STDC__) */
+#endif /* ! __cplusplus */
 
 #ifdef YY_USE_CONST
 #define yyconst const
@@ -116,7 +116,7 @@ typedef unsigned int flex_uint32_t;
 /* An opaque pointer. */
 #ifndef YY_TYPEDEF_YY_SCANNER_T
 #define YY_TYPEDEF_YY_SCANNER_T
-typedef void* yyscan_t;
+typedef void *yyscan_t;
 #endif
 
 /* For convenience, these vars (plus the bison vars far below)
@@ -155,48 +155,47 @@ typedef size_t yy_size_t;
 
 #ifndef YY_STRUCT_YY_BUFFER_STATE
 #define YY_STRUCT_YY_BUFFER_STATE
-struct yy_buffer_state
-{
+struct yy_buffer_state {
 	FILE *yy_input_file;
 
-	char *yy_ch_buf;		/* input buffer */
-	char *yy_buf_pos;		/* current position in input buffer */
+	char *yy_ch_buf;			/* input buffer */
+	char *yy_buf_pos;			/* current position in input buffer */
 
 	/* Size of input buffer in bytes, not including room for EOB
-	* characters.
-	*/
+	 * characters.
+	 */
 	yy_size_t yy_buf_size;
 
 	/* Number of characters read into yy_ch_buf, not including EOB
-	* characters.
-	*/
+	 * characters.
+	 */
 	int yy_n_chars;
 
 	/* Whether we "own" the buffer - i.e., we know we created it,
-	* and can realloc() it to grow it, and should free() it to
-	* delete it.
-	*/
+	 * and can realloc() it to grow it, and should free() it to
+	 * delete it.
+	 */
 	int yy_is_our_buffer;
 
 	/* Whether this is an "interactive" input source; if so, and
-	* if we're using stdio for input, then we want to use getc()
-	* instead of fread(), to make sure we stop fetching input after
-	* each newline.
-	*/
+	 * if we're using stdio for input, then we want to use getc()
+	 * instead of fread(), to make sure we stop fetching input after
+	 * each newline.
+	 */
 	int yy_is_interactive;
 
 	/* Whether we're considered to be at the beginning of a line.
-	* If so, '^' rules will be active on the next match, otherwise
-	* not.
-	*/
+	 * If so, '^' rules will be active on the next match, otherwise
+	 * not.
+	 */
 	int yy_at_bol;
 
 	int yy_bs_lineno; /**< The line count. */
 	int yy_bs_column; /**< The column count. */
 
 	/* Whether to try to fill the input buffer when we reach the
-	* end of it.
-	*/
+	 * end of it.
+	 */
 	int yy_fill_buffer;
 
 	int yy_buffer_status;
@@ -204,21 +203,22 @@ struct yy_buffer_state
 };
 #endif /* !YY_STRUCT_YY_BUFFER_STATE */
 
-void yyrestart (FILE *input_file ,yyscan_t yyscanner );
-void yy_switch_to_buffer (YY_BUFFER_STATE new_buffer ,yyscan_t yyscanner );
-YY_BUFFER_STATE yy_create_buffer (FILE *file,int size ,yyscan_t yyscanner );
-void yy_delete_buffer (YY_BUFFER_STATE b ,yyscan_t yyscanner );
-void yy_flush_buffer (YY_BUFFER_STATE b ,yyscan_t yyscanner );
-void yypush_buffer_state (YY_BUFFER_STATE new_buffer ,yyscan_t yyscanner );
-void yypop_buffer_state (yyscan_t yyscanner );
+void yyrestart(FILE * input_file, yyscan_t yyscanner);
+void yy_switch_to_buffer(YY_BUFFER_STATE new_buffer, yyscan_t yyscanner);
+YY_BUFFER_STATE yy_create_buffer(FILE * file, int size, yyscan_t yyscanner);
+void yy_delete_buffer(YY_BUFFER_STATE b, yyscan_t yyscanner);
+void yy_flush_buffer(YY_BUFFER_STATE b, yyscan_t yyscanner);
+void yypush_buffer_state(YY_BUFFER_STATE new_buffer, yyscan_t yyscanner);
+void yypop_buffer_state(yyscan_t yyscanner);
 
-YY_BUFFER_STATE yy_scan_buffer (char *base,yy_size_t size ,yyscan_t yyscanner );
-YY_BUFFER_STATE yy_scan_string (yyconst char *yy_str ,yyscan_t yyscanner );
-YY_BUFFER_STATE yy_scan_bytes (yyconst char *bytes,yy_size_t len ,yyscan_t yyscanner );
+YY_BUFFER_STATE yy_scan_buffer(char *base, yy_size_t size, yyscan_t yyscanner);
+YY_BUFFER_STATE yy_scan_string(yyconst char *yy_str, yyscan_t yyscanner);
+YY_BUFFER_STATE yy_scan_bytes(yyconst char *bytes, yy_size_t len,
+							  yyscan_t yyscanner);
 
-void *yyalloc (yy_size_t ,yyscan_t yyscanner );
-void *yyrealloc (void *,yy_size_t ,yyscan_t yyscanner );
-void yyfree (void * ,yyscan_t yyscanner );
+void *yyalloc(yy_size_t, yyscan_t yyscanner);
+void *yyrealloc(void *, yy_size_t, yyscan_t yyscanner);
+void yyfree(void *, yyscan_t yyscanner);
 
 /* Begin user sect3 */
 
@@ -242,50 +242,50 @@ void yyfree (void * ,yyscan_t yyscanner );
 
 #define YY_EXTRA_TYPE struct lex_state *
 
-int yylex_init (yyscan_t* scanner);
+int yylex_init(yyscan_t * scanner);
 
-int yylex_init_extra (YY_EXTRA_TYPE user_defined,yyscan_t* scanner);
+int yylex_init_extra(YY_EXTRA_TYPE user_defined, yyscan_t * scanner);
 
 /* Accessor methods to globals.
 These are made visible to non-reentrant scanners for convenience. */
 
-int yylex_destroy (yyscan_t yyscanner );
+int yylex_destroy(yyscan_t yyscanner);
 
-int yyget_debug (yyscan_t yyscanner );
+int yyget_debug(yyscan_t yyscanner);
 
-void yyset_debug (int debug_flag ,yyscan_t yyscanner );
+void yyset_debug(int debug_flag, yyscan_t yyscanner);
 
-YY_EXTRA_TYPE yyget_extra (yyscan_t yyscanner );
+YY_EXTRA_TYPE yyget_extra(yyscan_t yyscanner);
 
-void yyset_extra (YY_EXTRA_TYPE user_defined ,yyscan_t yyscanner );
+void yyset_extra(YY_EXTRA_TYPE user_defined, yyscan_t yyscanner);
 
-FILE *yyget_in (yyscan_t yyscanner );
+FILE *yyget_in(yyscan_t yyscanner);
 
-void yyset_in  (FILE * _in_str ,yyscan_t yyscanner );
+void yyset_in(FILE * _in_str, yyscan_t yyscanner);
 
-FILE *yyget_out (yyscan_t yyscanner );
+FILE *yyget_out(yyscan_t yyscanner);
 
-void yyset_out  (FILE * _out_str ,yyscan_t yyscanner );
+void yyset_out(FILE * _out_str, yyscan_t yyscanner);
 
-yy_size_t yyget_leng (yyscan_t yyscanner );
+yy_size_t yyget_leng(yyscan_t yyscanner);
 
-char *yyget_text (yyscan_t yyscanner );
+char *yyget_text(yyscan_t yyscanner);
 
-int yyget_lineno (yyscan_t yyscanner );
+int yyget_lineno(yyscan_t yyscanner);
 
-void yyset_lineno (int _line_number ,yyscan_t yyscanner );
+void yyset_lineno(int _line_number, yyscan_t yyscanner);
 
-int yyget_column  (yyscan_t yyscanner );
+int yyget_column(yyscan_t yyscanner);
 
-void yyset_column (int _column_no ,yyscan_t yyscanner );
+void yyset_column(int _column_no, yyscan_t yyscanner);
 
-YYSTYPE * yyget_lval (yyscan_t yyscanner );
+YYSTYPE *yyget_lval(yyscan_t yyscanner);
 
-void yyset_lval (YYSTYPE * yylval_param ,yyscan_t yyscanner );
+void yyset_lval(YYSTYPE * yylval_param, yyscan_t yyscanner);
 
-YYLTYPE *yyget_lloc (yyscan_t yyscanner );
+YYLTYPE *yyget_lloc(yyscan_t yyscanner);
 
-void yyset_lloc (YYLTYPE * yylloc_param ,yyscan_t yyscanner );
+void yyset_lloc(YYLTYPE * yylloc_param, yyscan_t yyscanner);
 
 /* Macros after this point can all be overridden by user definitions in
 * section 1.
@@ -293,18 +293,18 @@ void yyset_lloc (YYLTYPE * yylloc_param ,yyscan_t yyscanner );
 
 #ifndef YY_SKIP_YYWRAP
 #ifdef __cplusplus
-extern "C" int yywrap (yyscan_t yyscanner );
+extern "C" int yywrap(yyscan_t yyscanner);
 #else
-extern int yywrap (yyscan_t yyscanner );
+extern int yywrap(yyscan_t yyscanner);
 #endif
 #endif
 
 #ifndef yytext_ptr
-static void yy_flex_strncpy (char *,yyconst char *,int ,yyscan_t yyscanner);
+static void yy_flex_strncpy(char *, yyconst char *, int, yyscan_t yyscanner);
 #endif
 
 #ifdef YY_NEED_STRLEN
-static int yy_flex_strlen (yyconst char * ,yyscan_t yyscanner);
+static int yy_flex_strlen(yyconst char *, yyscan_t yyscanner);
 #endif
 
 #ifndef YY_NO_INPUT
@@ -332,8 +332,8 @@ static int yy_flex_strlen (yyconst char * ,yyscan_t yyscanner);
 #ifndef YY_DECL
 #define YY_DECL_IS_OURS 1
 
-extern int yylex \
-(YYSTYPE * yylval_param,YYLTYPE * yylloc_param ,yyscan_t yyscanner);
+extern int yylex
+	(YYSTYPE * yylval_param, YYLTYPE * yylloc_param, yyscan_t yyscanner);
 
 #define YY_DECL int yylex \
 (YYSTYPE * yylval_param, YYLTYPE * yylloc_param , yyscan_t yyscanner)
@@ -354,7 +354,6 @@ extern int yylex \
 #endif
 
 #line 147 "latlex.l"
-
 
 #line 360 "latlex.h"
 #undef yyIN_HEADER

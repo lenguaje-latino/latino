@@ -58,13 +58,13 @@ THE SOFTWARE.
 * \param o: Objeto a agregar
 *
 */
-void lat_gc_agregar(lat_mv *mv, lat_objeto *o);
+void lat_gc_agregar(lat_mv * mv, lat_objeto * o);
 
 /** Ejecuta la limpieza de objetos basura
 *
 * \param vm: Apuntador a Maquina Virtual
 *
 */
-void lat_gc_limpiar(lat_mv *mv);
+void lat_gc_limpiar(lat_mv * mv);
 
 #endif /* _GC_H_ */

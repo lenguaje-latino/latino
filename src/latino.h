@@ -140,11 +140,11 @@ extern char *filename;
 
 /** Interface con flex */
 typedef struct YYLTYPE {
-        int first_line;
-        int first_column;
-        int last_line;
-        int last_column;
-        char *file_name;
+	int first_line;
+	int first_column;
+	int last_line;
+	int last_column;
+	char *file_name;
 } YYLTYPE;
 
 /** Establece que se definio una interface con Flex */
