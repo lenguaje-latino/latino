@@ -907,7 +907,7 @@ static const lat_CReg lib_cadena[] = {
         {"comparar", lat_cadena_comparar, 2},
         {"contiene", lat_cadena_contiene, 2},
         {"termina_con", lat_cadena_termina_con, 2},
-	{"es_igual", lat_cadena_es_igual, 2},
+        {"es_igual", lat_cadena_es_igual, 2},
         {"indice", lat_cadena_indice, 2},
         {"encontrar", lat_cadena_indice, 2},
         {"ultimo_indice", lat_cadena_ultimo_indice, 2},

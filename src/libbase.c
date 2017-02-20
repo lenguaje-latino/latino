@@ -35,8 +35,6 @@ THE SOFTWARE.
 #include "latmem.h"
 #include "latmv.h"
 
-#define LIB_BASE_NAME ""
-
 char *__str_analizar_fmt(const char *s, size_t len);
 char *__str_analizar(const char *s, size_t len);
 
@@ -97,7 +95,7 @@ char *__tipo(int tipo) {
 
 void lat_imprimir(lat_mv *mv) {
         lat_objeto *f = lat_desapilar(mv);
-        bool fmt = false;
+        bool fmt = true;
         if (f == NULL) {
                 printf("nulo");
         } else {
@@ -108,6 +106,7 @@ void lat_imprimir(lat_mv *mv) {
                 __imprimir_objeto(mv, o, fmt);
         }
         printf("\n");
+        fflush(stdout);
 }
 
 void lat_imprimirf(lat_mv *mv) {
@@ -173,6 +172,7 @@ void lat_imprimirf(lat_mv *mv) {
         }
         lat_objeto *f = lat_cadena_nueva(mv, b);
         __imprimir_objeto(mv, f, true);
+        fflush(stdout);
 }
 
 void lat_incluir(lat_mv *mv) {
@@ -308,8 +308,8 @@ double lat_tonumber(lat_objeto *o) {
 
 void lat_alogico(lat_mv *mv) {
         lat_objeto *o = lat_desapilar(mv);
-        lat_objeto *tmp =
-        lat_obj2bool(o) == true ? mv->objeto_verdadero : mv->objeto_falso;
+        lat_objeto *tmp;
+        tmp = lat_obj2bool(o) == true ? mv->objeto_verdadero : mv->objeto_falso;
         lat_apilar(mv, tmp);
 }
 
@@ -338,9 +338,7 @@ void lat_salir(lat_mv *mv) {
 }
 
 static const lat_CReg lib_base[] = {
-        {"escribir", lat_imprimir, 2},
-        {"escribirf", lat_imprimirf, -1},
-        {"imprimir", lat_imprimir, 2},
+        {"poner", lat_imprimir, 2},
         {"imprimirf", lat_imprimirf, -1},
         {"acadena", lat_acadena, 1},
         {"anumero", lat_anumero, 1},
@@ -354,5 +352,5 @@ static const lat_CReg lib_base[] = {
 };
 
 void lat_importar_lib_base(lat_mv *mv) {
-        lat_importar_lib(mv, LIB_BASE_NAME, lib_base);
+        lat_importar_lib(mv, NULL, lib_base);
 }
