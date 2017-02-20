@@ -40,7 +40,7 @@ THE SOFTWARE.
 * \param size: Tamanio de memoria solicitado
 *
 */
-void *__memoria_asignar(lat_mv *mv, size_t size);
+void *__memoria_asignar(lat_mv * mv, size_t size);
 
 /** Regresa el tamanio de la memoria ocupada por un apuntador void
 *
@@ -62,6 +62,6 @@ void *__memoria_reasignar(void *ptr, size_t size);
 * \param ptr: Apuntador a la memoria a liberar
 *
 */
-void __memoria_liberar(lat_mv *mv, void *ptr);
+void __memoria_liberar(lat_mv * mv, void *ptr);
 
 #endif /* !_LIBMEM_H_ */
