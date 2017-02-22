@@ -1,11 +1,11 @@
-escribir("Digita el número veinte.")
+poner("Digita el número veinte.")
 digito = leer()
 
 # Declarando número
 numero = 20
 
 si(digito == numero)
-    escribir("Lo has puesto correctamente")
+    poner("Lo has puesto correctamente")
 sino
-    escribir("Vuelvelo a escribir")
+    poner("Vuelvelo a escribir")
 fin

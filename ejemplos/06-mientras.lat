@@ -1,20 +1,20 @@
-escribir("------------------------------")
-escribir("---condicion con parentesis---")
-escribir("------------------------------")
+poner("------------------------------")
+poner("---condicion con parentesis---")
+poner("------------------------------")
 i = 0
 mientras (i < 10)
     si (i == 5)
-        escribir("cinco")
+        poner("cinco")
     sino
-        escribir(i)
+        poner(i)
     fin
     i = i + 1
 fin
-escribir("------------------------------")
-escribir("---condicion sin parentesis---")
-escribir("------------------------------")
+poner("------------------------------")
+poner("---condicion sin parentesis---")
+poner("------------------------------")
 i = 0
 mientras i < 10
-    escribir(i)
+    poner(i)
     i++     #esto es lo mismo que i = i + 1
 fin

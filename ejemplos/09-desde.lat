@@ -1,10 +1,10 @@
-/*escribir("0 a 9:")
+/*poner("0 a 9:")
 desde(i=0; i<10; i++)
-    escribir(i)
+    poner(i)
 fin
 */
 
-escribir("10 a 1:")
+poner("10 a 1:")
 desde(i=10; i>0; i--)
-    escribir(i)    
+    poner(i)    
 fin

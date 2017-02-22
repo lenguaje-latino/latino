@@ -37,12 +37,12 @@ fin
 #imprimir la serie de 45 provoca desborde de la pila (stack overflow)
 imprimir ("version recursiva")
 desde (i=0; i < 15; i++)
-    imprimir(i .. ": " .. fibo_rec(i))
+    poner(i .. ": " .. fibo_rec(i))
 fin
 
-imprimir("version iterativa")
+poner("version iterativa")
 desde (i=0; i <= 45; i++)
-    imprimir(i .. ": " .. fibo_iter(i))
+    poner(i .. ": " .. fibo_iter(i))
 fin
 
 #ejemplo salida:

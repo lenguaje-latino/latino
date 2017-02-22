@@ -4,13 +4,13 @@ funcion num_aleatorio()
 	//numero = aleatorio(0, 3)
 	numero = mate.aleatorio(0, 3)
 	si numero == 0
-		imprimir("Te tocó el número 0")
+		poner("Te tocó el número 0")
 	osi numero == 1
-		imprimir("Te tocó el número 1")
+		poner("Te tocó el número 1")
 	osi numero == 2
-		imprimir("Te tocó el número 2")
+		poner("Te tocó el número 2")
 	osi numero == 3
-		imprimir("Te tocó el número 3")
+		poner("Te tocó el número 3")
 	fin
 fin
 
@@ -19,9 +19,9 @@ funcion menu(a, b)
 		//numero = aleatorio(0, 1)
 		numero = mate.aleatorio(0, 1)
 		si (numero == 0)
-			imprimir("Tocó el número 0 para el argumento " .. b[0])
+			poner("Tocó el número 0 para el argumento " .. b[0])
 		osi (numero == 1)
-			imprimir("Tocó el número 1 para el argumento " .. b[0])
+			poner("Tocó el número 1 para el argumento " .. b[0])
 		fin
 	sino
 		num_aleatorio()

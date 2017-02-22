@@ -10,6 +10,6 @@ x = funcion (a,b)
 hola = [ funcion (a, b) retorno a+b fin, funcion (a, b) retorno a*b fin ]
 
 //ejecutamos cada funcion
-imprimir(hola[0](1,2))	//suma
-imprimir(hola[1](1,2))	//multiplica
-imprimir(x(1,2))	//divide
+poner(hola[0](1,2))	//suma
+poner(hola[1](1,2))	//multiplica
+poner(x(1,2))	//divide
