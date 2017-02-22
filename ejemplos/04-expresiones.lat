@@ -1,67 +1,67 @@
 i = 1
 d = 10.05
 
-escribir("############## suma ###############")
+poner("############## suma ###############")
 #entero + entero
-escribir(i + i)  #a 1 se le suma 1 da como resultado 2
+poner(i + i)  #a 1 se le suma 1 da como resultado 2
 
 #entero + decimal
-escribir(i + d) #a 1 se le suma 10.05 da como resultado 11.05
+poner(i + d) #a 1 se le suma 10.05 da como resultado 11.05
 
 #decimal + entero
-escribir(d + i) #da como resultado el decimal 11.05
+poner(d + i) #da como resultado el decimal 11.05
 
 #decimal + decimal
-escribir(d + d) #da como resultado el decimal 20.1
+poner(d + d) #da como resultado el decimal 20.1
 
-escribir("############## resta ###############")
+poner("############## resta ###############")
 #entero - entero
-escribir(i - (-1))  #a 1 se le resta -1 da como resultado 2
+poner(i - (-1))  #a 1 se le resta -1 da como resultado 2
 
 #entero - decimal
-escribir(i - d) #a 1 se le suma 10.05 da como resultado -9.05
+poner(i - d) #a 1 se le suma 10.05 da como resultado -9.05
 
 #decimal - entero
-escribir(d - i) #da como resultado el decimal 9.05
+poner(d - i) #da como resultado el decimal 9.05
 
 #decimal - decimal
-escribir(d - 0.05) #da como resultado el decimal 10
+poner(d - 0.05) #da como resultado el decimal 10
 
-escribir("############## multiplicacion ###############")
+poner("############## multiplicacion ###############")
 #entero * entero
-escribir(i * i) #da como resultado el decimal 1
+poner(i * i) #da como resultado el decimal 1
 
 #entero * decimal
-escribir(i * d) #da como resultado el decimal 10.05
+poner(i * d) #da como resultado el decimal 10.05
 
 #decimal * entero
-escribir(d * i) #da como resultado el decimal 10.05
+poner(d * i) #da como resultado el decimal 10.05
 
 #decimal * decimal
-escribir(d * 0.5) #da como resultado el decimal 5.025
+poner(d * 0.5) #da como resultado el decimal 5.025
 
-escribir("############## division ###############")
+poner("############## division ###############")
 #entero / entero
-escribir(i / i) #da como resultado el entero 1
+poner(i / i) #da como resultado el entero 1
 
 #entero / decimal
-escribir(i / d) #da como resultado el decimal 0.099502487562189
+poner(i / d) #da como resultado el decimal 0.099502487562189
 
 #decimal / entero
-escribir(d / i) #da como resultado el decimal 10.05
+poner(d / i) #da como resultado el decimal 10.05
 
 #decimal / decimal
-escribir(d / 0.5) #da como resultado el decimal 20.1
+poner(d / 0.5) #da como resultado el decimal 20.1
 
-escribir("############## modulo ###############")
+poner("############## modulo ###############")
 #entero % entero
-escribir(i % i) #da como resultado el entero 0
+poner(i % i) #da como resultado el entero 0
 
 #entero % decimal
-escribir(i % d) #da como resultado el entero 1
+poner(i % d) #da como resultado el entero 1
 
 #decimal % entero
-escribir(d % i) #da como resultado el decimal 0.05
+poner(d % i) #da como resultado el decimal 0.05
 
 #decimal % decimal
-escribir(d % 0.5) #da como resultado el decimal 0.05
+poner(d % 0.5) #da como resultado el decimal 0.05

@@ -2,12 +2,12 @@
 #regresa una lista de lineas
 //lineas = leer_lineas("../ejemplos/36-separar.lat")
 lineas = archivo.lineas("../ejemplos/36-separar.lat")
-escribir(lineas)
+poner(lineas)
 
-//escribir(lineas.longitud())
-escribir(lista.longitud(lineas))
+//poner(lineas.longitud())
+poner(lista.longitud(lineas))
 #recorrer la lista
 //desde (i=0; i < lineas.longitud(); i++)
 desde (i=0; i < lista.longitud(lineas); i++)
-  escribir(i .. " :" .. lineas[i])
+  poner(i .. " :" .. lineas[i])
 fin

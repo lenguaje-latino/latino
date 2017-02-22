@@ -6,6 +6,6 @@
  *
  */
 funcion menu(argc, argv)
-    escribir("recibiendo " .. argc .. " parametros:")
-    escribir(argv)
+    poner("recibiendo " .. argc .. " parametros:")
+    poner(argv)
 fin

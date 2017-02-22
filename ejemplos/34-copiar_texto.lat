@@ -1,10 +1,10 @@
 opciones = "Selecciona tu opción:
 \t1) Copiar archivo.
 \t2) Copiar cadena."
-imprimir("¡Hola latino! Vamos a crear un archivo desde una cadena u otro archivo.\n\nEscribe un archivo ó cadena:", 1)
+poner("¡Hola latino! Vamos a crear un archivo desde una cadena u otro archivo.\n\nEscribe un archivo ó cadena:", 1)
 copia = leer()
 limpiar()
-imprimir(opciones, 1)
+poner(opciones, 1)
 opcion = leer()
 elegir(opcion)
 	caso 1:
@@ -13,12 +13,12 @@ elegir(opcion)
 	caso 2:
 		accion = copia
 	defecto:
-		imprimir("Opción inválida.")
+		poner("Opción inválida.")
 		retorno 0
 fin
-escribir("Escribe el nombre del nuevo archivo ó de un archivo ya existente para añadir el texto")
+poner("Escribe el nombre del nuevo archivo ó de un archivo ya existente para añadir el texto")
 archivo_nuevo = leer()
 //copiar_texto(accion, archivo_nuevo)
 archivo.copiar(accion, archivo_nuevo)
 limpiar()
-imprimir("\a¡Copia finalizada!", 1)
+poner("\a¡Copia finalizada!", 1)

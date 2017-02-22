@@ -1,19 +1,19 @@
 #Error variable "x" no definida
-#escribir(x)
+#poner(x)
 #ejemplos de declaracion de variables validas
 l=cierto
-escribir(l)
+poner(l)
 e=10
-escribir(e)
+poner(e)
 d=1.5
-escribir(d)
+poner(d)
 c='a'
-escribir(c)
+poner(c)
 s="hola latino"
-escribir(s)
+poner(s)
 s='ahora esta es una literal "hola latino"'
-escribir(s)
+poner(s)
 #una constante se define con MAYUSCULAS
 PI=3.1416
-escribir(PI)
+poner(PI)
 #PI=3.14 #error al intentar cambiar el valor

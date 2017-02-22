@@ -1,8 +1,8 @@
 #muestra un mensaje despues de N milisegundos
 funcion alarma(tiempo)
     sis.dormir(tiempo)
-    escribir("despierta...")
+    poner("despierta...")
 fin
-escribir("estoy durmiendo...")
+poner("estoy durmiendo...")
 #espera 10 segundos y muestra el mensaje
 alarma(10)

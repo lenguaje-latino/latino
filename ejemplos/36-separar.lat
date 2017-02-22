@@ -2,16 +2,16 @@
 frutas = "melon sandia mango"
 //lst = separar(frutas)
 lst = cadena.separar(frutas)
-escribir(lst)
+poner(lst)
 
 #separar por comas
 frutas = "melon, sandia, mango"
 //lst = separar(frutas, ",")
 lst = cadena.separar(frutas, ",")
-escribir(lst)
+poner(lst)
 
 #si no se encuentra el separador regresa la misma cadena
 frutas = "melon, sandia, mango"
 //lst = separar(frutas, "|")
 lst = cadena.separar(frutas, "|")
-escribir(lst)
+poner(lst)
