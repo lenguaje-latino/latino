@@ -4,17 +4,39 @@ Menu propiedades del proyecto-> Debugging -> Command Arguments. Agregar
 $(SolutionDir)..\ejemplos\debug.lat
 */
 
-a = {}
-//permitir numeros como llave
-a[12] = "lechita"
-a[100] = "lechita"
-poner(a)
-poner(a[-1])	//error
+things = ['a', 'b', 'c', 'd']
+poner( things[1])
+#b
+things[1] = 'z'
+poner( things[1])
+#z
+#things
+#['a', 'z', 'c', 'd']
 
-a = []
-a[0] = "lechita"
-a[1] = "hola"
-//a[5] = "mundo"
-poner(a)
-//poner(a[5])	//error 
-poner(a[-1])
+
+stuff = {'name': 'Zed', 'age': 39, 'height': 6 * 12 + 2}
+poner( stuff['name'])
+#Zed
+poner( stuff['age'])
+#39
+poner( stuff['height'])
+#74
+stuff['city'] = "San Francisco"
+poner( stuff['city'])
+#San Francisco
+
+stuff[1] = "Wow"
+stuff[2] = "Neato"
+poner( stuff[1])
+#Wow
+poner( stuff[2])
+#Neato
+#stuff
+#{'city': 'San Francisco', 2: 'Neato', 'name': 'Zed', 1: 'Wow', 'age': 39, 'height': 74}
+
+/*
+del stuff['city']
+del stuff[1]
+del stuff[2]*/
+#stuff
+#{'name': 'Zed', 'age': 39, 'height': 74}
