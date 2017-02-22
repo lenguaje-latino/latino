@@ -78,39 +78,80 @@ void lat_sistema_pipe(lat_mv * mv) {
 	lat_gc_agregar(mv, tmp);
 }
 
+char *__analizar_formato_fecha(char *str, char *mem) {
+    time_t raw;
+    struct tm *tiempo;
+    time(&raw);
+    tiempo = localtime(&raw);
+    char *fmt = mem;
+    for (int i=0; i<strlen(str); i++) {
+        if (str[i] == '%' && str[i-1] != '\\') {
+            switch(str[i+1]) {
+                case 'a':
+                    sprintf(fmt, "%s%i", fmt, (tiempo->tm_year+1900));
+                    i++;
+                    break;
+                case 'm':
+                    if (str[i+2] == 'm') {
+                        sprintf(fmt, "%s%i", fmt, (tiempo->tm_mon+1));
+                        i=i+2;
+                        break;
+                    } else if (str[i+2] == 'n') {
+                        sprintf(fmt, "%s%i", fmt, tiempo->tm_min);
+                        i=i+2;
+                        break;
+                    } else {
+                        sprintf(fmt, "%s%c", fmt, str[i]);
+                    }
+                case 'h':
+                    sprintf(fmt, "%s%i", fmt, tiempo->tm_hour);
+                    i++;
+                    break;
+                case 's':
+                    sprintf(fmt, "%s%i", fmt, tiempo->tm_sec);
+                    i++;
+                    break;
+                case 'd':
+                    if (str[i+2] == 'm') {
+                        sprintf(fmt, "%s%i", fmt, tiempo->tm_mday);
+                        i=i+2;
+                        break;
+                    } else if (str[i+2] == 's') {
+                        sprintf(fmt, "%s%i", fmt, tiempo->tm_wday);
+                        i=i+2;
+                        break;
+                    } else if (str[i+2] == 'a') {
+                        sprintf(fmt, "%s%i", fmt, tiempo->tm_yday);
+                        i=i+2;
+                        break;
+                    } else {
+                        sprintf(fmt, "%s%c", fmt, str[i]);
+                    }
+                case 'e':
+                    sprintf(fmt, "%s%i", fmt, tiempo->tm_isdst);
+                    i++;
+                    break;
+                default:
+                    sprintf(fmt, "%s%c", fmt, str[i]);
+                }
+            } else {
+                if (str[i] == '\\') {
+                    sprintf(fmt, "%s%c", fmt, str[i+1]);
+                    i++;
+                } else {
+                    sprintf(fmt, "%s%c", fmt, str[i]);
+                }
+            }
+    }
+    return fmt;
+}
+
 void lat_sistema_fecha(lat_mv * mv) {
 	lat_objeto *tiempo = lat_desapilar(mv);
-	char *num = __cadena(tiempo);
-	time_t raw;
-	struct tm *tipo;
-	time(&raw);
-	tipo = localtime(&raw);
-	lat_objeto *tmp = mv->objeto_nulo;
-	if (!strcmp(num, "seg")) {
-		tmp = lat_numerico_nuevo(mv, tipo->tm_sec);	//segundos
-	} else if (!strcmp(num, "min")) {
-		tmp = lat_numerico_nuevo(mv, tipo->tm_min);
-	} else if (!strcmp(num, "hora")) {
-		tmp = lat_numerico_nuevo(mv, tipo->tm_hour);
-	} else if (!strcmp(num, "d_mes")) {
-		tmp = lat_numerico_nuevo(mv, tipo->tm_mday);	// dia del mes
-	} else if (!strcmp(num, "mes")) {
-		tmp = lat_numerico_nuevo(mv, tipo->tm_mon);
-	} else if (!strcmp(num, "año")) {
-		tmp = lat_numerico_nuevo(mv, tipo->tm_year + 1900);
-	} else if (!strcmp(num, "d_sem")) {
-		tmp = lat_numerico_nuevo(mv, tipo->tm_wday);	// día de la sem.
-	} else if (!strcmp(num, "d_año")) {
-		tmp = lat_numerico_nuevo(mv, tipo->tm_yday);	// día del año
-	} else if (!strcmp(num, "estacion")) {
-		tmp = lat_numerico_nuevo(mv, tipo->tm_isdst);	// verano/inv
-	} else {
-		filename = tiempo->nombre_archivo;
-		lat_error("Linea %d, %d: %s", tiempo->num_linea, tiempo->num_columna,
-				  "el formato de tiempo indicado no existe.");
-	}
-	lat_apilar(mv, tmp);
-	lat_gc_agregar(mv, tmp);
+    char *mem = malloc(strlen(__cadena(tiempo) + 1));
+    char *fecha = __analizar_formato_fecha(__cadena(tiempo), mem);
+	lat_apilar(mv, lat_cadena_nueva(mv, fecha));
+	free(mem);
 }
 
 void proceso_al_activarse(int sig) {
