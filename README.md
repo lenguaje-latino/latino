@@ -109,8 +109,8 @@ https://www.microsoft.com/es-ES/download/details.aspx?id=48145
 
 
 ###Documentacion (borrador)
-https://robincoello.gitbooks.io/latino/content/inicio.html
-http://lenguaje-latino.org/doc/index.php
+1. https://robincoello.gitbooks.io/latino/content/inicio.html
+2. http://lenguaje-latino.org/doc/index.php
 
 
 ### COMPILAR
