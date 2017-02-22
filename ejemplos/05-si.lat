@@ -1,49 +1,49 @@
 #valor logico directo
 si(verdadero)
-    escribir("es verdadero")
+    poner("es verdadero")
 fin
 
 #asignado a una variable, tambien se acepta la palabra clave "cierto"
-escribir("---------------------------------------------------------------------")
-escribir("se agrega la palabra clave cierto para referirse a un valor verdadero")
-escribir("---------------------------------------------------------------------")
+poner("---------------------------------------------------------------------")
+poner("se agrega la palabra clave cierto para referirse a un valor verdadero")
+poner("---------------------------------------------------------------------")
 b = cierto
 si b
-    escribir("cierto tambien es verdadero")
+    poner("cierto tambien es verdadero")
 fin
-escribir("---------------------------------------------------------------------")
+poner("---------------------------------------------------------------------")
 
 #si-sino
 b = falso
 si(b)
-    escribir("verdad")
+    poner("verdad")
 sino
-    escribir("falsedad")
+    poner("falsedad")
 fin
 
 #si anidado
 i = 10
 si(i == 0)
-    escribir(0)
+    poner(0)
 sino
     si(i > 0)
-        escribir(1)
+        poner(1)
     sino
-        escribir(-1)
+        poner(-1)
     fin
 fin
 
 si(verdadero)
-    escribir("hola latino")
+    poner("hola latino")
 fin
 
-escribir("----------------------------------------------------")
-escribir("condicion sin parentesis permitida")
-escribir("----------------------------------------------------")
+poner("----------------------------------------------------")
+poner("condicion sin parentesis permitida")
+poner("----------------------------------------------------")
 num = 10
 si num < 0
-    escribir("es negativo")
+    poner("es negativo")
 sino
-    escribir("es positivo")
+    poner("es positivo")
 fin
-escribir("----------------------------------------------------")
+poner("----------------------------------------------------")

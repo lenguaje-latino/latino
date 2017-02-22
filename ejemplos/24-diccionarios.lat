@@ -4,25 +4,25 @@ dic = { "Chilindrina": "Maria Antonieta de las Nieves",
 
 #mandamos a consola el diccionario o podemos obtener su representacion en cadena
 //str = dic.cadena()
-//escribir(str)
-escribir(dic)
+//poner(str)
+poner(dic)
 
 #cambiamos un elemento
 dic["Chilindrina"] = "Maria Antonieta"
-escribir("")
-escribir(dic)
+poner("")
+poner(dic)
 
 #cambiamos un elemento que no existe, "lo inserta"
 dic["CH"] = "Chapulin Colorado"
-escribir("")
-escribir(dic)
+poner("")
+poner(dic)
 
 dic["CH"] = "Chapulin C."
-escribir(dic.CH)
+poner(dic.CH)
 
 #obtenemos la longitud del diccionario
-//escribir("Num de elementos: " .. dic.longitud)
-escribir("Num de elementos: " .. diccionario.longitud(dic))
+//poner("Num de elementos: " .. dic.longitud)
+poner("Num de elementos: " .. diccionario.longitud(dic))
 
 #ejemplo de request de la api de telegram
 true = verdadero
@@ -60,19 +60,19 @@ dic = {
 
 
 
-#escribir(dic.ok)
-#escribir(dic.result)
-#escribir(dic.result[0])
-#escribir(dic.result[0].message)
-escribir(dic.result[0].message.text)
-escribir(dic.result[0].message.xyz)  //cadena vacia
+#poner(dic.ok)
+#poner(dic.result)
+#poner(dic.result[0])
+#poner(dic.result[0].message)
+poner(dic.result[0].message.text)
+poner(dic.result[0].message.xyz)  //cadena vacia
 
 msg = dic.result[0].message
-escribir(msg["xyz"])
+poner(msg["xyz"])
 
 /*
 #obtenemos el valor de un elemento que no existe
-escribir("")
+poner("")
 ch = dic["CH2"] #Error: Linea 25, 10: No se encontro la llave 'CH2' en el diccionario..
-escribir(ch)
+poner(ch)
 */

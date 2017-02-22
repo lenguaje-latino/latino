@@ -1,11 +1,11 @@
 #se pueden crear disparadores (triggers) en latino
 #accion para /test
 funcion test_accion (arg1)
-  escribir("test_accion: " .. arg1)
+  poner("test_accion: " .. arg1)
 fin
 #accion para /id
 funcion id_accion (arg1)
-  escribir("id_accion: " .. arg1)
+  poner("id_accion: " .. arg1)
 fin
 
 #listado de disparadores

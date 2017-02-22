@@ -14,13 +14,13 @@ funcion factorial(n)
     x = 1
     #realiza el calculo de x desde el valor i = 2 hasta que sea igual a n
     #i++ -> suma 1 a la variable i
-    //escribir("n vale: " .. n)
+    //poner("n vale: " .. n)
     desde(i = 2 ; i <= n; i++)
         x = x * i
-        //escribir("x vale: " .. x)
+        //poner("x vale: " .. x)
     fin
-    //escribir("x vale: " .. x)
+    //poner("x vale: " .. x)
     retorno x
 fin
 
-escribir("el factorial de 5 es: " .. factorial(5))
+poner("el factorial de 5 es: " .. factorial(5))

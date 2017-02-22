@@ -18,6 +18,6 @@ funcion min(a,b)
     fin
 fin
 
-imprimir(promedio(3, 5)) #4
-imprimir(max(3, 5)) #5
-imprimir(min(3, 5)) #3
+poner(promedio(3, 5)) #4
+poner(max(3, 5)) #5
+poner(min(3, 5)) #3
