@@ -841,7 +841,11 @@ void lat_llamar_funcion(lat_mv *mv, lat_objeto *func) {
                               obj->num_linea, obj->num_columna);
                 }
                 if (obj->tipo == T_DICT) {
-                    __dic_asignar(__dic(obj), __cadena(pos), exp);
+                    char *llave = NULL;
+                    if(pos->tipo == T_NUMERIC || pos->tipo == T_STR){
+                        llave = lat_obj2cstring(pos);
+                    }
+                    __dic_asignar(__dic(obj), llave, exp);
                     break;
                 }
                 int ipos = __numerico(pos);
@@ -853,11 +857,13 @@ void lat_llamar_funcion(lat_mv *mv, lat_objeto *func) {
                         pos->datos.numerico = ipos;
                     }
                     // printf("ipos: %i\n", ipos);
-                    if (ipos > len) {
-                        lat_objeto *dd = lat_dic_nuevo(mv, __dic_crear());
-                        __dic_asignar(__dic(dd), lat_obj2cstring(pos), exp);
-                        __lista_agregar(ll, dd);
+                    if(ipos == len){
+                        __lista_agregar(ll, exp);
                         break;
+                    }
+                    if(ipos < 0 || ipos > len){
+                        lat_error("Linea %d, %d: Indice fuera de rango.",
+                                  pos->num_linea, pos->num_columna);
                     }
                     __lista_modificar_elemento(__lista(obj), exp, ipos);
                 }
@@ -898,7 +904,13 @@ void lat_llamar_funcion(lat_mv *mv, lat_objeto *func) {
                     break;
                 }
                 if (obj->tipo == T_LIST) {
-                    if (ipos < 0 || ipos >= __lista_longitud(__lista(obj))) {
+                    lista *ll = __lista(obj);
+                    int len = __lista_longitud(ll);
+                    if (ipos < 0) {
+                        ipos = ipos + len;
+                        pos->datos.numerico = ipos;
+                    }
+                    if(ipos < 0 || ipos >= len){                    
                         o = lat_cadena_nueva(mv, strdup(""));
                         lat_apilar(mv, o);
                         break;
