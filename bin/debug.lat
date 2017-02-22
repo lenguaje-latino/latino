@@ -4,5 +4,17 @@ Menu propiedades del proyecto-> Debugging -> Command Arguments. Agregar
 $(SolutionDir)..\ejemplos\debug.lat
 */
 
-num = 123456
-poner(num[1])
+a = {}
+//permitir numeros como llave
+a[12] = "lechita"
+a[100] = "lechita"
+poner(a)
+poner(a[-1])	//error
+
+a = []
+a[0] = "lechita"
+a[1] = "hola"
+//a[5] = "mundo"
+poner(a)
+//poner(a[5])	//error 
+poner(a[-1])
