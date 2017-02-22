@@ -1,19 +1,19 @@
 //ver ejemplo en lua
 //https://www.tutorialspoint.com/lua/lua_repeat_until_loop.htm
-escribir("------------------------------")
-escribir("---condicion con parentesis---")
-escribir("------------------------------")
+poner("------------------------------")
+poner("---condicion con parentesis---")
+poner("------------------------------")
 i = 0
 repetir
-    escribir(i)
+    poner(i)
     i++
 hasta (i >= 10) //se repite si la condicion es falsa
 
-escribir("------------------------------")
-escribir("---condicion sin parentesis---")
-escribir("------------------------------")
+poner("------------------------------")
+poner("---condicion sin parentesis---")
+poner("------------------------------")
 i = 0
 repetir
-    escribir(i)
+    poner(i)
     i++
 hasta i == 10 //se repite si la condicion es falsa

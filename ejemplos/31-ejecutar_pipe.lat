@@ -1,6 +1,6 @@
 cmd = "echo 'hola mundo'"
 //salida = ejecutar_pipe(cmd)
 salida = sis.pipe(cmd)
-escribir("salida: ")
-escribir("---------------------------------------------------")
-escribir(salida)
+poner("salida: ")
+poner("---------------------------------------------------")
+poner(salida)

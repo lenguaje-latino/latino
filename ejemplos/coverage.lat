@@ -4,51 +4,51 @@ c = nulo
 d = "hola mundo"
 
 si b
-	escribir("v")
+	poner("v")
 sino
-	escribir("f")
+	poner("f")
 fin
 
 b = verdadero
 si b
-	escribir("v")
+	poner("v")
 sino
-	escribir("f")
+	poner("f")
 fin
 
 elegir(a)
 	caso 1:
-		escribir("a vale 1")
+		poner("a vale 1")
 	caso 10:
-		escribir("a vale 10")
+		poner("a vale 10")
 	defecto:
-		escribir("a NO vale ni 1 ni 10")
+		poner("a NO vale ni 1 ni 10")
 fin
 
 a = 15
 elegir(a)
 	caso 1:
-		escribir("a vale 1")
+		poner("a vale 1")
 	caso 10:
-		escribir("a vale 10")
+		poner("a vale 10")
 	defecto:
-		escribir("a NO vale ni 1 ni 10")
+		poner("a NO vale ni 1 ni 10")
 fin
 
 mientras a > 0
-	escribir(a)
+	poner(a)
 	a--
 fin
 
 global i = 0
 repetir
-    escribir(i)
+    poner(i)
     i++
 hasta (i >= 10)
 
 a=10
 desde(i=0; i < a; i++)
-	escribir(i)
+	poner(i)
 fin
 
 funcion operacion(op, a, b)
@@ -88,25 +88,25 @@ funcion operacion(op, a, b)
 	fin
 fin
 
-escribir(operacion("+", 1, 2))
-escribir(operacion("-", 1, 2))
-escribir(operacion("*", 1, 2))
-escribir(operacion("/", 1, 2))
-escribir(operacion("%", 1, 2))
-escribir(operacion(">", 1, 2))
-escribir(operacion(">=", 1, 2))
-escribir(operacion("<", 1, 2))
-escribir(operacion("<=", 1, 2))
-escribir(operacion("==", 1, 2))
-escribir(operacion("==", 2, "2"))
-escribir(operacion("!=", 1, 2))
-escribir(operacion("!=", 2, "2"))
-escribir(operacion("!=", "1", "2"))
-escribir(operacion("~=", "hola mundo", "^hola"))
-escribir(operacion("&&", 1, 1))
-escribir(operacion("||", 1, 0))
-escribir(operacion("!", 1))
-escribir(operacion("..", "hola", "mundo"))
+poner(operacion("+", 1, 2))
+poner(operacion("-", 1, 2))
+poner(operacion("*", 1, 2))
+poner(operacion("/", 1, 2))
+poner(operacion("%", 1, 2))
+poner(operacion(">", 1, 2))
+poner(operacion(">=", 1, 2))
+poner(operacion("<", 1, 2))
+poner(operacion("<=", 1, 2))
+poner(operacion("==", 1, 2))
+poner(operacion("==", 2, "2"))
+poner(operacion("!=", 1, 2))
+poner(operacion("!=", 2, "2"))
+poner(operacion("!=", "1", "2"))
+poner(operacion("~=", "hola mundo", "^hola"))
+poner(operacion("&&", 1, 1))
+poner(operacion("||", 1, 0))
+poner(operacion("!", 1))
+poner(operacion("..", "hola", "mundo"))
 
 funcion fibo_rec(n)
     si ( n < 2 )
@@ -115,12 +115,12 @@ funcion fibo_rec(n)
     retorno fibo_rec(n-1) + fibo_rec(n-2)
 fin
 
-escribir(fibo_rec(10))
+poner(fibo_rec(10))
 
 e = [1, 2, 3]
 f = {"uno" :  1, "dos" : 2, "tres" : 3, "cinco" : "5", "seis": [1,2,3,4,5,6]}
 g = -(a)
-escribir(g)
+poner(g)
 
 e[0] = "a"
 
@@ -128,22 +128,22 @@ h = lista.invertir(e)
 lista.agregar(e, 4)
 lista.extender(e, h)
 lista.eliminar_indice(e, 0)
-imprimir(lista.longitud(e))
+poner(lista.longitud(e))
 j = lista.indice(e, 1)
 
-escribir(lista.comparar(h, e))
-escribir(lista.comparar(e, e))
-escribir(lista.comparar(e, h))
+poner(lista.comparar(h, e))
+poner(lista.comparar(e, e))
+poner(lista.comparar(e, h))
 
 lista.insertar(e, 0, 0)
 lista.eliminar(e, 0)
 lista.eliminar(e, e[lista.longitud(e)-1])
-escribir(lista.contiene(e, 3))
-escribir(lista.contiene(e, 99))
+poner(lista.contiene(e, 3))
+poner(lista.contiene(e, 99))
 
-escribir(e)
-escribir(h)
-escribir(h[0])
+poner(e)
+poner(h)
+poner(h[0])
 
 k = []
 lista.agregar(k, 1)
@@ -153,11 +153,11 @@ lista.insertar(k, "-", 1)
 lista.eliminar_indice(e, 4)
 
 f.uno = 10
-imprimir(f.cuatro)
-imprimir(dic.longitud(f))
-imprimir(f.seis[0])
+poner(f.cuatro)
+poner(dic.longitud(f))
+poner(f.seis[0])
 
 str = "hola mundo"
-imprimir(str[0])
+poner(str[0])
 
 imprimirf("%s %s\n", "hola", "mundo")

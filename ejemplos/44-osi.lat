@@ -39,36 +39,36 @@ c = -1
 //osi ninguna
 
 si a >= 3
-   escribir("mayor o igual a 3")
+   poner("mayor o igual a 3")
 sino
   si b <= 1
-     escribir("menor o igual a 1")
+     poner("menor o igual a 1")
   sino
      si c == 2 && c >= 0 || a > 3
-       escribir("igual a 2")
+       poner("igual a 2")
      sino
-       escribir("ninguna")
+       poner("ninguna")
      fin
   fin
 fin
 
 
 si a >= 3
-   escribir("osi mayor o igual a 3")
+   poner("osi mayor o igual a 3")
 osi b <= 1
-   escribir("osi menor o igual a 1")
+   poner("osi menor o igual a 1")
 osi c == 2 && c >= 0 || a > 3
-   escribir("osi igual a 2")
+   poner("osi igual a 2")
 sino
-  escribir("osi ninguna")
+  poner("osi ninguna")
 fin
 
 //sino opcional
 si a >= 3
-   escribir("osi mayor o igual a 3")
+   poner("osi mayor o igual a 3")
 osi b <= 1
-   escribir("osi menor o igual a 1")
+   poner("osi menor o igual a 1")
 osi c == 2 && c >= 0 || a > 3
-   escribir("osi igual a 2")
+   poner("osi igual a 2")
 fin
 //salida:(ninguna opcion)

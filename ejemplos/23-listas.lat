@@ -6,25 +6,25 @@ vacia = []
 #Podemos acceder a cada uno de los elementos de la lista escribiendo el nombre de
 #la lista e indicando el índice del elemento entre corchetes.
 #Ten en cuenta que el índice del primer elemento de la lista es 0:
-escribir(numeros[1])
+poner(numeros[1])
 #salida: 2
 
 #También podemos utilizar este operador para modificar un elemento de la lista si lo
 #colocamos en la parte izquierda de una asignación:
 numeros[0] = 99
-escribir(numeros)
+poner(numeros)
 #salida:  [99, 2, 3, 4, 5]
 
 #agrega un elemento a la lista
 //agregar(numeros, 6)
 lista.agregar(numeros, 6)
-escribir(numeros)
+poner(numeros)
 #salida:  [99, 2, 3, 4, 5, 6]
 
 #se valida que el valor este en el rango del numero de elementos
-#escribir(numeros[-1])
+#poner(numeros[-1])
 #salida: Indice fuera de rango
-#escribir(numeros[5])
+#poner(numeros[5])
 #salida: Indice fuera de rango
 
 #listas multiples
@@ -32,96 +32,96 @@ m = [[1,2,3],
      ['a', 'b', 'c'],
      ['alpha', 'beta', 'gamma']]
 
-escribir(m)
+poner(m)
 
-escribir("--------------------------------------------------------------------")
-escribir("Ejemplo de listas")
-escribir("--------------------------------------------------------------------")
+poner("--------------------------------------------------------------------")
+poner("Ejemplo de listas")
+poner("--------------------------------------------------------------------")
 
 lst = [123, 'xyz', 'zara', 'abc']
-escribir("Lista inicial: " .. lst)
+poner("Lista inicial: " .. lst)
 //lst.agregar(2009)  #agregar(aList, 2009)
 lista.agregar(lst, 2009)
 //agregar(lst, "ultimo elemento")
 lista.agregar(lst, "ultimo elemento")
-escribir("Lista actualizada: " .. lst)
+poner("Lista actualizada: " .. lst)
 lst[0] = 321
-escribir("Lista actualizada: " .. lst)
-escribir("Lista en 1: " .. lst[1])
-#escribir("Longitud: " .. longitud(lst))
-//escribir("Longitud: " .. lst.longitud())
-escribir("Longitud: " .. lista.longitud(lst))
+poner("Lista actualizada: " .. lst)
+poner("Lista en 1: " .. lst[1])
+#poner("Longitud: " .. longitud(lst))
+//poner("Longitud: " .. lst.longitud())
+poner("Longitud: " .. lista.longitud(lst))
 list1 = [123, 'xyz']
 list2 = ['456', 'abc']
 list3 = [456, 'abc', 786]
 list4 = ['123', 'xyz']
-escribir(list1)
-escribir(list2)
-escribir(list3)
-escribir(list4)
-/*escribir(comparar(list1, list2))
-escribir(list2.comparar(list1))
-escribir(comparar(list2, list3))
-escribir(comparar(list1, list4))
-escribir(comparar(list1, [123, 'xyz']))*/
-escribir(lista.comparar(list1, list2))
-escribir(lista.comparar(list2, list1))
-escribir(lista.comparar(list2, list3))
-escribir(lista.comparar(list1, list4))
-escribir(lista.comparar(list1, [123, 'xyz']))
+poner(list1)
+poner(list2)
+poner(list3)
+poner(list4)
+/*poner(comparar(list1, list2))
+poner(list2.comparar(list1))
+poner(comparar(list2, list3))
+poner(comparar(list1, list4))
+poner(comparar(list1, [123, 'xyz']))*/
+poner(lista.comparar(list1, list2))
+poner(lista.comparar(list2, list1))
+poner(lista.comparar(list2, list3))
+poner(lista.comparar(list1, list4))
+poner(lista.comparar(list1, [123, 'xyz']))
 //list1.extender(list2)
 lista.extender(list1, list2)
-escribir(list1)
+poner(list1)
 //extender(list3, list4)
 lista.extender(list3, list4)
-escribir(list3)
+poner(list3)
 //HACER: Pendiente
-//escribir(list3.indice(786))
-//escribir(lista.indice(list3, 786))
+//poner(list3.indice(786))
+//poner(lista.indice(list3, 786))
 //list3.insertar("xxx", 0) #inicio
 lista.insertar(list3, "xxx", 0) #inicio
-escribir(list3)
+poner(list3)
 //list3.insertar("zzz", 6) #fin
 lista.insertar(list3, "zzz", 6) #fin
-escribir(list3)
+poner(list3)
 //list3.insertar("yyy", 3) #en medio
 lista.insertar(list3, "yyy", 3) #en medio
-escribir(list3)
+poner(list3)
 /*list3.eliminar(786)
-escribir(list3)
+poner(list3)
 list3.eliminar('123')
-escribir(list3)
+poner(list3)
 list3.eliminar('aaa')
-escribir(list3)*/
+poner(list3)*/
 lista.eliminar(list3, 786)
-escribir(list3)
+poner(list3)
 lista.eliminar(list3, '123')
-escribir(list3)
+poner(list3)
 lista.eliminar(list3, 'aaa')
-escribir(list3)
+poner(list3)
 
 /*list3.eliminar_indice(0)
-escribir(list3)
+poner(list3)
 list3.eliminar_indice(4)
-escribir(list3)*/
+poner(list3)*/
 lista.eliminar_indice(list3, 0)
-escribir(list3)
+poner(list3)
 lista.eliminar_indice(list3, 4)
-escribir(list3)
+poner(list3)
 
 #list3.eliminar_indice(4)   #indice fuera de rango
 //list5 = list3.invertir_lista()
 list5 = lista.invertir(list3)
-escribir(list5)
-//escribir(comparar(['123', 'xyz'], [123, 'xyz']))
-escribir(lista.comparar(['123', 'xyz'], [123, 'xyz']))
-escribir(list1)
-//escribir(comparar(list1, [123, 'xyz']))
-escribir(lista.comparar(list1, [123, 'xyz']))
+poner(list5)
+//poner(comparar(['123', 'xyz'], [123, 'xyz']))
+poner(lista.comparar(['123', 'xyz'], [123, 'xyz']))
+poner(list1)
+//poner(comparar(list1, [123, 'xyz']))
+poner(lista.comparar(list1, [123, 'xyz']))
 
-escribir("--------------------------------------------------------------------")
-escribir("Ejemplo de matrices con listas")
-escribir("--------------------------------------------------------------------")
+poner("--------------------------------------------------------------------")
+poner("Ejemplo de matrices con listas")
+poner("--------------------------------------------------------------------")
 m1 = [[1,2,3],
      [4,5,6],
      [7,8,9]]
@@ -130,35 +130,35 @@ m2 = [[9,8,7],
      [6,5,4],
      [3,2,1]]
 
-escribir("Matriz m1: ")
-escribir(m1)
-escribir("Matriz m2: ")
-escribir(m2)
+poner("Matriz m1: ")
+poner(m1)
+poner("Matriz m2: ")
+poner(m2)
 
-escribir("Elemento m1[0]: " .. m1[0])
-escribir("Elemento m1[1][1]: " .. m1[1][1])
+poner("Elemento m1[0]: " .. m1[0])
+poner("Elemento m1[1][1]: " .. m1[1][1])
 
 m1[0] = [3, 2, 1]
-escribir("Se cambia m1[0]: ")
-escribir(m1)
+poner("Se cambia m1[0]: ")
+poner(m1)
 
 m1[1][1] = 25
-escribir("Se cambia m1[1][1]: ")
-escribir(m1)
+poner("Se cambia m1[1][1]: ")
+poner(m1)
 
 m1[0] = m2[1]
-escribir("Se cambia m1[0]: ")
-escribir(m1)
+poner("Se cambia m1[0]: ")
+poner(m1)
 
 m1[1][1] = m2[1][1] * 100
-escribir("Se cambia m1[1][1]: ")
-escribir(m1)
-escribir("m2 no se modifico: ")
-escribir(m2)
+poner("Se cambia m1[1][1]: ")
+poner(m1)
+poner("m2 no se modifico: ")
+poner(m2)
 
-escribir("--------------------------------------------------------------------")
-escribir("Ejemplo de matrices multidimensionales")
-escribir("--------------------------------------------------------------------")
+poner("--------------------------------------------------------------------")
+poner("Ejemplo de matrices multidimensionales")
+poner("--------------------------------------------------------------------")
 mm = [[[1,2,3,7],
      [4,5,6,7],
      [7,8,9,7]],
@@ -172,21 +172,21 @@ mm = [[[1,2,3,7],
 i = 0
 j = 1
 k = 2
-escribir(mm)
-escribir("mm en i:")
-escribir(mm[i])
-escribir("mm en i, j:")
-escribir(mm[i][j])
-escribir("mm en i, j ,k:")
-escribir(mm[i][j][k])
+poner(mm)
+poner("mm en i:")
+poner(mm[i])
+poner("mm en i, j:")
+poner(mm[i][j])
+poner("mm en i, j ,k:")
+poner(mm[i][j][k])
 
 
-escribir("--------------------------------------------------------------------")
-escribir("Iterar sobre una lista / matriz")
-escribir("--------------------------------------------------------------------")
+poner("--------------------------------------------------------------------")
+poner("Iterar sobre una lista / matriz")
+poner("--------------------------------------------------------------------")
 //desde (i=0; i < list1.longitud(); i++)
 desde (i=0; i < lista.longitud(list1); i++)
-  escribir("lista en " .. i .. " es: " .. list1[i])
+  poner("lista en " .. i .. " es: " .. list1[i])
 fin
 
 #Para recorrer una matriz se anidan dos ciclos desde
@@ -194,6 +194,6 @@ fin
 //  desde (j=0; j < m1[0].longitud(); j++) #aqui tomamos la longitud del primer elemento es decir la lista interna
 desde (i=0; i < lista.longitud(m1); i++)  # longitud(m1) = 3 ya que es una lista que a su vez contiene 3 listas
   desde (j=0; j < lista.longitud(m1[0]); j++) #aqui tomamos la longitud del primer elemento es decir la lista
-    escribir("lista en " .. i .. ", " .. j .. " es: " .. m1[i][j])
+    poner("lista en " .. i .. ", " .. j .. " es: " .. m1[i][j])
   fin
 fin

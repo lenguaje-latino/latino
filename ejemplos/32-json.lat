@@ -2,18 +2,18 @@ str = '{"ok":true,"result":[{"update_id":558904697, "message":{"message_id":4507
 #convierte una cadena json a un objeto latino
 //dic = json_decodificar(str)
 dic = json.decodificar(str)
-escribir("dic: " .. dic)
+poner("dic: " .. dic)
 #accedo a un valor del objeto
-escribir("dic.result[0].message.text: " .. dic.result[0].message.text)
+poner("dic.result[0].message.text: " .. dic.result[0].message.text)
 #convierte un objeto latino a una cadena json
 //str = json_codificar(dic)
 str = json.codificar(dic)
-escribir("str: " .. str)
+poner("str: " .. str)
 
 url = "https://raw.githubusercontent.com/yagop/node-telegram-bot-api/master/package.json"
 //str = peticion(url)
 str = curl.peticion(url)
-escribir(str)
+poner(str)
 //jsn = json_decodificar(str)
 jsn = json.decodificar(str)
-escribir(jsn)
+poner(jsn)
