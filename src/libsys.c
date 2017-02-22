@@ -117,7 +117,7 @@ char *__analizar_formato_fecha(char *str, char *mem) {
                         i=i+2;
                         break;
                     } else if (str[i+2] == 's') {
-                        sprintf(fmt, "%s%i", fmt, tiempo->tm_wday);
+                        sprintf(fmt, "%s%i", fmt, (tiempo->tm_wday+1));
                         i=i+2;
                         break;
                     } else if (str[i+2] == 'a') {
