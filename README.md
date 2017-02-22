@@ -107,6 +107,12 @@ Puedes comprobar si hay versiones nuevas de paquetes para Fedora y Ubuntu en la 
 Puede requerir el framework de C++, descarguelo desde la pagina oficial de Microsoft:
 https://www.microsoft.com/es-ES/download/details.aspx?id=48145
 
+
+###Documentacion (borrador)
+https://robincoello.gitbooks.io/latino/content/inicio.html
+http://lenguaje-latino.org/doc/index.php
+
+
 ### COMPILAR
 
 ---
