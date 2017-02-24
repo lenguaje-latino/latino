@@ -36,6 +36,7 @@ THE SOFTWARE.
 #include "latmem.h"
 #include "latmv.h"
 
+#define BUF_SIZE 1024
 #define LIB_SISTEMA_NAME "sis"
 volatile sig_atomic_t proceso_detenido;
 
@@ -170,7 +171,7 @@ void lat_sistema_avisar(lat_mv * mv) {
 }
 
 void lat_sistema_cwd(lat_mv * mv) {
-	char dir[1024];
+	char dir[BUF_SIZE];
 	getcwd(dir, sizeof(dir));
 	if (dir != NULL) {
 		lat_apilar(mv, lat_cadena_nueva(mv, strdup(dir)));
@@ -210,6 +211,37 @@ void lat_sistema_entorno(lat_mv * mv) {
 	lat_apilar(mv, tmp);
 }
 
+void lat_sistema_stdin(lat_mv * mv) {
+	lat_objeto *var = NULL;
+    char buffer[BUF_SIZE];
+    size_t contenidoTamanio = 1;
+    char *contenido = malloc(sizeof(char) * BUF_SIZE);
+    if(contenido == NULL) {
+		lat_error("Linea %d, %d: %s", var->num_linea, var->num_columna,
+				  "error al asignar memoria.");
+    }
+    contenido[0] = '\0';
+    if(fgets(buffer, BUF_SIZE, stdin)) {
+        contenidoTamanio += strlen(buffer);
+        contenido = realloc(contenido, contenidoTamanio);
+        if(contenido == NULL) {
+			free(contenido);
+			lat_error("Linea %d, %d: %s", var->num_linea, var->num_columna,
+					  "error al reasignar memoria.");
+        }
+        strcat(contenido, buffer);
+    }
+
+    if(ferror(stdin)) {
+        free(contenido);
+		lat_error("Linea %d, %d: %s", var->num_linea, var->num_columna,
+				  "error al leer stdin.");
+    }
+	var = lat_cadena_nueva(mv, strdup(contenido));
+    lat_apilar(mv, var);
+    free(contenido);
+}
+
 /* en prueba
 void *tarea1() {
         int i;
@@ -243,8 +275,9 @@ static const lat_CReg libsistema[] = {
 	{"iraxy", lat_sistema_iraxy, 2},
 	{"usuario", lat_sistema_usuario, 0},
 	{"entorno", lat_sistema_entorno, 1},
+    {"stdin", lat_sistema_stdin, 0},
 	/*{"tarea_nueva", lat_sistema_tarea_nueva, 1},
-	   {"tarea_iniciar", lat_sistema_tarea_iniciar, 1}, */
+	{"tarea_iniciar", lat_sistema_tarea_iniciar, 1}, */
 	{NULL, NULL}
 };
 
