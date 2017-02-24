@@ -79,12 +79,14 @@ void lat_sistema_pipe(lat_mv * mv) {
 	lat_gc_agregar(mv, tmp);
 }
 
-char *__analizar_formato_fecha(char *str, char *mem) {
+char *__analizar_formato_fecha(char *str) {
+    if (!str) { return NULL; };
     time_t raw;
     struct tm *tiempo;
     time(&raw);
     tiempo = localtime(&raw);
-    char *fmt = mem;
+    char *fmt = malloc(strlen(str) + 1);
+    sprintf(fmt, "%c", 0);
     for (int i=0; i<strlen(str); i++) {
         if (str[i] == '%' && str[i-1] != '\\') {
             switch(str[i+1]) {
@@ -103,6 +105,7 @@ char *__analizar_formato_fecha(char *str, char *mem) {
                         break;
                     } else {
                         sprintf(fmt, "%s%c", fmt, str[i]);
+                        break;
                     }
                 case 'h':
                     sprintf(fmt, "%s%i", fmt, tiempo->tm_hour);
@@ -127,6 +130,7 @@ char *__analizar_formato_fecha(char *str, char *mem) {
                         break;
                     } else {
                         sprintf(fmt, "%s%c", fmt, str[i]);
+                        break;
                     }
                 case 'e':
                     sprintf(fmt, "%s%i", fmt, tiempo->tm_isdst);
@@ -134,6 +138,7 @@ char *__analizar_formato_fecha(char *str, char *mem) {
                     break;
                 default:
                     sprintf(fmt, "%s%c", fmt, str[i]);
+                    break;
                 }
             } else {
                 if (str[i] == '\\') {
@@ -148,11 +153,20 @@ char *__analizar_formato_fecha(char *str, char *mem) {
 }
 
 void lat_sistema_fecha(lat_mv * mv) {
-	lat_objeto *tiempo = lat_desapilar(mv);
-    char *mem = malloc(strlen(__cadena(tiempo) + 1));
-    char *fecha = __analizar_formato_fecha(__cadena(tiempo), mem);
-	lat_apilar(mv, lat_cadena_nueva(mv, fecha));
-	free(mem);
+	lat_objeto *_formato_str = lat_desapilar(mv);
+	lat_objeto *tmp;
+	char *formato = "%dm/%mm/%a";
+	if (_formato_str->tipo != T_NULL) {
+		formato = __cadena(_formato_str);
+	}
+	char *fecha = __analizar_formato_fecha(formato);
+	if (!fecha) {
+		tmp = mv->objeto_nulo;
+	} else {
+		tmp = lat_cadena_nueva(mv, strdup(fecha));
+	}
+	lat_apilar(mv, tmp);
+	free(fecha);
 }
 
 void proceso_al_activarse(int sig) {
