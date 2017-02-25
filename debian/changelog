@@ -1,0 +1,830 @@
+jenkins-debian-glue (0.18.2) unstable; urgency=medium
+
+  [ Will DeBerry ]
+  * [8fe6778] Don't override filter regexs
+
+ -- Michael Prokop <mika@debian.org>  Tue, 24 Jan 2017 22:13:48 +0100
+
+jenkins-debian-glue (0.18.1) unstable; urgency=medium
+
+  [ André Draszik ]
+  * jdg-debc: works for foreign architecture packages
+  * build-and-provide-package: fix a typo wrt freight
+  * build-and-provide-package: don't create freight dirs unnecessarily
+  * build-and-provide-package: use mktemp rather than PID for directory
+    name
+  * build-and-provide-package: make sure to remove pbuilderrc
+
+  [ Michael Prokop ]
+  * generate-svn-snapshot: avoid mergeWithUpstream failure with recent
+    subversion versions
+  * puppet: ensure display-url-api plugin is installed
+  * puppet: warn users of automated installations regarding missing
+    jenkins plugin dependencies
+  * build-and-provide-package: enable builtin support for eatmydata in
+    pbuilder
+  * Include .buildinfo files in list of artifact files. Thanks to
+    Christoph Berg <myon@debian.org>
+  * Don't fail when hitting .buildinfo files in reprepro's incoming stage
+  * Bump debhelper compat version to v9
+
+ -- Michael Prokop <mika@debian.org>  Fri, 18 Nov 2016 11:29:55 +0100
+
+jenkins-debian-glue (0.18.0) unstable; urgency=medium
+
+  [ Michael Prokop ]
+  * [f9b1fc8] puppet: update list of Jenkis plugins to satisfy
+    dependencies. Thanks to youam the bug report
+  * [db59998] puppet: update dependencies for git, ws-cleanup + ssh-agent
+    Jenkins plugins
+  * [96fe9fe] puppet: install antisamy-markup-formatter plugin for HTML
+    markup support
+  * [16f0ba5] Adjust runtime detection to properly work with LXC hosts.
+    Thanks to Ondřej Surý
+  * [59e1a99] Avoid dpkg-architecture usage for identifying host
+    architecture. Thanks to Guillem Jover for feedback
+  * [737e4e9] generate-git-snapshot: do not fail with branch specifier
+    being a commit ID. Thanks to Jan Alexander Steffens
+    <jan.steffens@gmail.com> for bugreport + patch
+  * [0f436f2] Bump Standards-Version to 3.9.8
+
+  [ Antoine Delvaux ]
+  * [c1e13b9] Adding SKIP_MISSING_BINARY_REMOVAL to prevent removal of
+    binary packages not belonging to the currently built source package.
+
+  [ Sebastian Damm ]
+  * [09a78f2] generate-git-snapshot: support DCH_CHANGELOG_FILE to change
+    path for git-dch
+
+  [ Alexis Bezverkhyy ]
+  * [6561c54] take into account .udebs in remove_packages()
+
+ -- Michael Prokop <mika@debian.org>  Tue, 04 Oct 2016 14:20:23 +0200
+
+jenkins-debian-glue (0.17.0) unstable; urgency=medium
+
+  [ Michael Prokop ]
+  * [f33c054] Update copyright information (hello 2016)
+  * [ea83f07] Support usage of a reprepro wrapper script via REPREPRO_CMD
+  * [8c422f0] build-and-provide-package: support RELEASE_REPOSITORIES
+  * [5a6c4d6] Support choosing distribution/codename via
+    $RELEASE_DISTRIBUTION
+  * [12a45c5] Vcs-Git header: replace git with more secure https version
+  * [8e81ada] Bump Standards-Version to 3.9.7
+
+  [ Cyril Brulebois ]
+  * [d3a0dc3] puppet: end sources.list snippets with newlines.
+
+  [ Adrian Vondendriesch ]
+  * [a490dbb] Fix permissions of keyring.gpg in D20releaserepo.
+
+ -- Michael Prokop <mika@debian.org>  Mon, 14 Mar 2016 21:33:44 +0100
+
+jenkins-debian-glue (0.16.0) unstable; urgency=medium
+
+  [ Kane ]
+  * [1e15d10] Allow customization of generated timestamp in package
+    version
+  * [59a3171] Add an option for enforcing Git commit in package version
+
+  [ Michael Prokop ]
+  * [4f81b3e] Support skipping cowbuilder updates via
+    SKIP_COWBUILDER_UPDATE=true
+  * [d00f953] reprepro: use --ignore=surprisingbinary to support automatic
+    debug symbols
+  * [2614b20] reprepro: processincoming doesn't handle
+    --ignore=surprisingbinary yet. Thanks to Christoph Berg
+    <myon@debian.org> (see #808558)
+  * [0d872a2] pbuilder-hookdir/C10shell: support pbuilder >=0.216
+
+  [ Christian Hofstaedtler ]
+  * [b07e121] Fix TAP format pep8_tap output
+
+ -- Michael Prokop <mika@debian.org>  Thu, 07 Jan 2016 11:11:38 +0100
+
+jenkins-debian-glue (0.15.2) unstable; urgency=medium
+
+  * [6d02e56] generate-git-snapshot: support git-buildpackage >=0.6.24.
+    Thanks to Daniele E. Domenichelli <daniele.domenichelli@gmail.com> for
+    the bug report (Closes: #799183)
+
+ -- Michael Prokop <mika@debian.org>  Thu, 17 Sep 2015 11:41:48 +0200
+
+jenkins-debian-glue (0.15.1) unstable; urgency=medium
+
+  [ Victor Seva ]
+  * [129b226] tap_tool_dispatcher: add --file-list option
+  * [8aa6aab] tap_tool_dispatcher: support BASE_BIN to control location of
+    *_tap scripts
+
+  [ Michael Prokop ]
+  * [254809c] tap_tool_dispatcher: fix command line handling for file-
+    list. Thanks to Victor Seva <linuxmaniac@torreviejawireless.org>
+  * [08710a4] B20autopkgtest: fix order of adt-run tests on command line.
+    Thanks to Axel Beckert <abe@debian.org> for spotting the issue +
+    Martin Pitt <mpitt@debian.org> for helping resolve this issue
+
+ -- Michael Prokop <mika@debian.org>  Thu, 10 Sep 2015 22:14:57 +0200
+
+jenkins-debian-glue (0.15.0) unstable; urgency=medium
+
+  * [220f87e] Support eatmydata (automatically enabled if host +
+    distribution needs match) + ccache
+  * [a1cba38] Rename global REPOSITORY to DEFAULT_REPOSITORY to support
+    overwriting it on demand (Closes #94) Thanks to Jean Baptiste Favre
+    for the bug report
+  * [469a1ed] Ensure that eatmydata version on host is recent enough
+  * [fdd0c85] Use debian-archive-keyring when building for recent Debian
+    on Ubuntu (Closes #130)
+  * [89d3400] Update informational message regarding sub-directory
+    checkout for Git (Closes #107)
+
+ -- Michael Prokop <mika@debian.org>  Fri, 28 Aug 2015 16:19:06 +0200
+
+jenkins-debian-glue (0.14.2) unstable; urgency=medium
+
+  * [a12c01d] Explicitly set umask to avoid running into cowbuilder bug
+    #531885. Thanks to Christoph Berg <myon@debian.org>
+  * [a410fbb] Drop /var/cache/pbuilder/build from default bindmounts.
+    Thanks to Philipp Hahn <hahn@univention.de> for the bug report and
+    analysis
+
+ -- Michael Prokop <mika@debian.org>  Thu, 27 Aug 2015 23:29:43 +0200
+
+jenkins-debian-glue (0.14.1) unstable; urgency=medium
+
+  * [b9b7c13] Get rid of cowbuilder environment if creating it failed
+  * [3da4c8a] Support disabling specific tap tool checks (Closes #132)
+  * [d414549] Conflict with old jenkins-debian-glue-buildenv-* to fix
+    upgrade issues
+  * [4025da3] Support parallel from moreutils as alternative to GNU
+    parallel
+  * [1862af3] Drop jenkins-debian-glue-buildenv-* from Provides
+  * [e5a39b4] tap_tool_dispatcher: keep existing behaviour by not removing
+    empty directories
+  * [38b3c1c] The package is named libperl-critic-perl, not perlcritic.
+    Thanks to Victor Seva <vseva@sipwise.com>
+  * [740c8b9] Do not skip dist_and_arch_settings in PROVIDE_ONLY mode
+  * [4b60635] tap_tool_dispatcher: fix path for checkbashism_tap check
+  * [9bb89c8] Replace my business mail address with my debian.org one
+  * [f7235ed] libperl-critic-perl in Depends is unneeded, Recommends is
+    enough
+
+ -- Michael Prokop <mika@debian.org>  Mon, 24 Aug 2015 22:08:32 +0200
+
+jenkins-debian-glue (0.14.0) unstable; urgency=medium
+
+  The "free the racoons AKA DebConf15" release
+
+  [ Franco (nextime) Lanza ]
+  * [b9c9cfd] Add pbuilder USENETWORK=yes option also to cowbuilder_run
+
+  [ Michael Prokop ]
+  * [3d79c45] Support execution of external autopkgtests via ADT=external
+    + ADT_RUNNER=... Thanks to Alexander Wirt for idea and feedback
+  * [108abe2] build-and-provide-package: be more specific when selecting
+    *.dsc + *.changes. Thanks to Christoph Berg for the hint
+  * [a00c865] Use adt-run's --output-dir option if available. Thanks to
+    Axel Beckert for the hint
+  * [f70b5fb] Get rid of unreferenced files in release process
+  * [026ace2] B20autopkgtest: do not fail build when skipping tests.
+    Thanks to Jan Alexander Steffens <jan.steffens@gmail.com> for
+    reporting
+  * [9c37df2] Improve parallel build support to not fail with concurrent
+    update operations. Thanks to Christian Hofstaedtler
+    <christian@hofstaedtler.name> for testing + feedback and Victor Seva
+    <linuxmaniac@torreviejawireless.org> for helping with the actual
+    implementation
+  * [6446c02] Use /var/run/lock/ for cowbuilder lockfiles to fix
+    permission issues
+  * [8e88422] Reduce number of binary packages (Closes #131) Thanks to
+    Christian Hofstaedtler <christian@hofstaedtler.name>
+  * [1a1102c] Update debian/copyright
+  * [0aebca1] Get rid of generate-reprepro-codename lockfile
+  * [e9e533c] Get rid of mount bind for autopkgtest (Closes #123) Thanks
+    to Christoph Berg <myon@debian.org>
+
+  [ Victor Seva ]
+  * [d27c6c6] tap: add shellcheck support
+
+  [ Walter Kleynscheldt ]
+  * [0e0dacd] Add override option USE_ORIG_VERSION to keep the changelog
+    version
+
+  [ Antoine Musso ]
+  * [ee9d99c] Support muting command printing in shell scripts
+
+ -- Michael Prokop <mika@debian.org>  Sat, 22 Aug 2015 12:57:37 +0200
+
+jenkins-debian-glue (0.13.0) unstable; urgency=medium
+
+  [ Antoine Musso ]
+  * [17c3778] generate-git-snapshot: replace distribution dashes in
+    version
+
+  [ Victor Seva ]
+  * [92ee917] repository_checker: add --version-remove-epoch option
+  * [9e42ce5] repository_checker: add option to skip packages from validate
+  * [34094e5] repository_checker: fix 9e42ce57180f5b7 missing $
+
+  [ Michael Prokop ]
+  * [5b7c490] generate-svn-snapshot: execute `svn upgrade` only with svn
+    >=1.7. Thanks to Christian Schneider <christian@chrisn.dtdns.net> for
+    the bug report and initial patch
+  * [26fee0c] generate-svn-snapshot: always generate changes file. Thanks
+    to Christian Schneider <christian@chrisn.dtdns.net> for the bug report
+    and patch
+  * [ba809b2] generate-svn-snapshot: support $SBP_OPTS to control svn-
+    buildpackage behaviour + add -nc to its default options. Thanks to
+    Christian Schneider <christian@chrisn.dtdns.net> for the patch
+  * [c50e9f0] generate-svn-snapshot: use UNRELEASED for snapshots builds.
+    Thanks to Christian Schneider <christian@chrisn.dtdns.net> for the
+    patch
+  * [7dd7133] generate-svn-snapshot: don't try to sign snapshot build
+    during release builds. Thanks to Christian Schneider
+    <christian@chrisn.dtdns.net> for the patch
+  * [ca53ec4] generate-git-snapshot: support overwriting DBP_EXTRA_OPTS +
+    adjust coding style
+  * [d0c30f2] Support listing Debian package content via new script jdg-
+    debc (Closes #119)
+
+  [ Franco (nextime) Lanza / Daniel Reurich  ]
+  * [5cb9bd6] Add git format deb pkgs support thanks to Daniel Reurich for
+    Devuan
+  * [9cf2086] Add a per-package way to set USENETWORK=yes to pbuilderrc
+
+ -- Michael Prokop <mika@debian.org>  Wed, 03 Jun 2015 14:34:13 +0200
+
+jenkins-debian-glue (0.12.0) unstable; urgency=medium
+
+  [ Michael Prokop ]
+  * [9eb6edb] piuparts_tap: check for broken symlinks + installation
+    errors, provide options to skip checks
+  * [e2ec2ec] generate-reprepro-codename: avoid endless loop on wrong usage
+  * [e4e2f7b] adtsummary_tap: support output of recent versions of
+    autopkgtest
+  * [b52fc1a] piuparts_wrapper: support setting tmpdir directory
+  * [ef89da8] Do not remove packages when running through dput wrapper.
+    Thanks to Yurii Vlasenko <yuriy@fastvisual.com>
+  * [f3381b5] Improve and finalize foreign arch build support via qemu-
+    debootstrap
+  * [3dd4a13] Support overwriting DEBBUILDOPTS + new variable
+    FORCE_BINARY_ONLY. Thanks to Franco Lanza <nextime@nexlab.it> for the
+    initial patch in PR #114
+  * [74712ff] Support signing source packages via $KEY_ID. Thanks to
+    Franco Lanza <nextime@nexlab.it> for the inspiration in PR #114
+  * [6ef2570] Enable COMPONENTS workaround for Ubuntu cowdancer issue only
+    when building *for* (not *on*) Ubuntu. Thanks to Yurii Vlasenko for
+    reporting and feedback (gh #113)
+  * [d9cc2bc] Support ADJUST_DISTRIBUTION_ONTHEFLY to set distribution in
+    binary builds. Thanks to Yurii Vlasenko for reporting and feedback
+
+  [ Bernhard Miklautz ]
+  * [1f8d499] generate-git-snapshot: fix typo
+  * [7e2484a] generate-git-snapshot: combine dch opts
+  * [c300281] generate-git-snapshot: add DCH_LOG_RESTRICTION
+
+  [ Sylvestre Ledru ]
+  * [3498d6c] generate-svn-snapshot: always call svn upgrade
+
+  [ Yurii Vlasenko ]
+  * [fa728cf] added support for uploading using dput
+
+  [ Franco Lanza ]
+  * [060e227] Added support for binary only build and qemu foreign arch
+    build
+
+ -- Michael Prokop <mika@debian.org>  Thu, 09 Apr 2015 12:02:23 +0200
+
+jenkins-debian-glue (0.11.0) unstable; urgency=medium
+
+  [ Christian Hofstaedtler ]
+  * [73593ab] checkbashism_tap: ignore non-shell-script files
+
+  [ Michael Prokop ]
+  * [98632ac] Bring .mailmap up2date, incl. usage instructions
+  * [6b282e0] build-and-provide-package: support skipping binary removal
+    via SKIP_BINARY_REMOVAL=true
+  * [ad174b4] build-and-provide-package: fix broken SKIP_BINARY_REMOVAL
+    test. Thanks to Christian Hofstaedtler <christian@hofstaedtler.name>
+    for the bug report
+  * [017756f] generate-git-snapshot: support $SKIP_BRANCH_AND_TAG_HANDLING
+    and detect Gerrit pushes
+  * [b0acd6c] Support Gerrit integration without direct connection to
+    Gerrit events
+  * [4c5d644] puppet: support Google Computer Engine
+  * [30fd6bb] Gerrit support: assume *-source job gets triggered with full
+    gerrit params
+  * [bad7831] build-and-provide-package: drop unused base_version handling
+  * [f9b9c84] build-and-provide-package: support setting custom reprepro
+    options via REPREPRO_OPTS
+  * [4404d28] Bump Standards-Version to 3.9.6
+
+  [ Mathieu Parent ]
+  * [2934b08] Ensure correct version comparison
+
+ -- Michael Prokop <mika@debian.org>  Mon, 20 Oct 2014 10:13:18 +0200
+
+jenkins-debian-glue (0.10.0) unstable; urgency=medium
+
+   The "have fun with pep8 checks" release
+
+  [ Michael Prokop ]
+  * [ed2b47a] New script pep8_tap to check python code via pep8
+  * [f9cfb58] Recommends pep8 >= 1.4.6~ as we depend on its '--format'
+    option
+  * [e4172ea] generate-git-snapshot: fail if git-dch doesn't support
+    --distribution but $DIST is set
+  * [99353c1] jenkins-debian-glue-buildenv-taptools: it's libperl-critic-
+    perl, not perlcritic
+  * [0767dd5] pep8_tap: adjust Encoding handling for ruby1.8
+  * [a1f0576] Fix script name of pep8_tap
+  * [cea1830] pep8_tap: further fix for encoding issue with ruby1.8
+  * [b756c64] Clarify Depends/Recommends of jenkins-debian-glue-buildenv-
+    taptools
+
+  [ Christian Hofstaedtler ]
+  * [cfdec26] Allow overriding the source package dist
+  * [22ac5fa] Install pep8_tap tool
+  * [1f796f0] pep8_tap: improve formatting
+  * [325f1dd] pep8_tap: fix counter
+  * [5dc4fe0] pep8_tap: Fix crash with invalid encoded source data
+  * [870f61a] pep8_tap: ignore non-Python files
+  * [f9a139d] tap_tool_dispatcher: run all tools in parallel
+  * [5d33d21] pep8_tap: don't re-enable default-disabled checkers
+
+ -- Michael Prokop <mika@debian.org>  Wed, 04 Jun 2014 16:56:34 +0200
+
+jenkins-debian-glue (0.9.0) unstable; urgency=medium
+
+  The "lunch break" release
+
+  [ Patrick Schoenfeld ]
+  * [08248d6] Pass DIST and ARCH to cowbuilder call
+
+  [ Edwin Fine ]
+  * [29611c6] Empty 'distribution' and 'architecture' env vars now do not
+    break script when calling cowbuilder.
+
+  [ Michael Prokop ]
+  * [e116dbb] puppet: allow DIST + ARCH in sudo configuration
+  * [dbdea39] generate-git-snapshot: Support PRE_DCH_HOOK variable for
+    custom scripts. Thanks to Rudolph Bott <bott@sipgate.de> for the patch
+  * [811aef7] debian/copyright: fix Upstream-Name header
+  * [36cca60] Support skipping adt tests by setting ADT=skip. Thanks to
+    Christoph Berg
+  * [4020157] lintian-junit-report: do not use "--" as option separator
+  * [757c0cc] Adjust Recommends for REPOSITORY_EXTRA feature + minor style
+    improvements
+  * [578bb8d] puppet: Enable "Raw HTML" option and move systemMessage into
+    View
+  * [ac5dd5b] Bump Dependency on openjdk-6-jre-headless to openjdk-7-jre-
+    headless
+
+  [ Jean Baptiste Favre ]
+  * [a9ab5cc] No need to source /etc/jenkins/debian-glue twice in the same
+    script
+
+  [ Lukas Anzinger ]
+  * [b37d310] generate-reprepro-codename: Accept origin and suite as
+    command line arguments.
+
+  [ Mathieu Parent ]
+  * [4c329b3] Don't use --git-export-dir
+
+  [ Andrey Elmanov ]
+  * [0a4191c] Allow adding extra repositories for resolving dependencies
+
+ -- Michael Prokop <mika@debian.org>  Fri, 16 May 2014 12:56:48 +0200
+
+jenkins-debian-glue (0.8.1) unstable; urgency=medium
+
+  * [01b8a46] Revert "build-and-provide-package: use -b for package builds
+    that shouldn't include sources" [Closes: #88] Thanks to Christoph Berg
+    <christoph.berg@credativ.de> for feedback
+
+ -- Michael Prokop <mika@debian.org>  Fri, 14 Feb 2014 10:58:19 +0100
+
+jenkins-debian-glue (0.8.0) unstable; urgency=medium
+
+  The "happy fosdem" release.
+
+  [ Michael Prokop ]
+  * [68f0960] generate-reprepro-codename: refer to
+    /etc/jenkins/debian_glue
+  * [14f3559] Lock access to conf/incoming file
+  * [003fe99] build-and-provide-package: get rid of dependency on dcmd
+  * [f618f4d] Rework new gbp.conf handling
+  * [cbe7f6f] Provide yaml setup files for usage with jenkins-job-builder
+  * [e19a25e] freight: support sudo for creating directories/conffile,
+    extend config, quote all variables
+  * [a68c8c8] jjb: adjust lintian call for binary job + make
+    repository_checker dynamic
+  * [21a4d4c] Provide simple gateway service between GitHub + (internal)
+    Jenkins system
+  * [ced37f6] Add fakeroot to Depends
+  * [a7e01d3] generate-*-snapshot: provide user friendly error message if
+    debian/changelog is missing
+  * [b231c3e] generate-reprepro-codename: lock access to
+    conf/distributions
+  * [534e761] puppet: install ttf-dejavu package to fix java headless
+    issue
+  * [8da4508] puppet: install timestamper plugin
+  * [649c708] build-and-provide-package: use -b for package builds that
+    shouldn't include sources
+  * [c98acbf] Bump Standards-Version to 3.9.5
+
+  [ Antoine Musso ]
+  * [6bf804a] piuparts_wrapper: only expand scriptsdir when it is set
+
+  [ Carl Fürstenberg ]
+  * [9d5366f] Allow debian-glue to read gbp.conf
+
+  [ Lukas Anzinger ]
+  * [be40e3c] Don't include sources in sources.list, they're not needed
+    for building
+  * [4fa841e] The given $REPOS variable may also point to a suite, not
+    only a codename
+  * [4ab1301] Dynamically parse list of components from Release file
+  * [b1e42c1] Make it possible to verify our own reprepro repositories by
+    providing a pubkey
+
+ -- Michael Prokop <mika@debian.org>  Mon, 03 Feb 2014 14:51:01 +0100
+
+jenkins-debian-glue (0.7.1) unstable; urgency=low
+
+  * [80057b0] Drop jenkins-debian-glue-repoenv package + add dependency on
+    "reprepro | freight" to jenkins-debian-glue instead
+  * [7588e3e] Add jenkins-debian-glue-buildenv-git to Recommends
+
+ -- Michael Prokop <mika@debian.org>  Thu, 24 Oct 2013 13:42:46 +0200
+
+jenkins-debian-glue (0.7.0) unstable; urgency=low
+
+  The "I told you so" release ¯\_(ツ)_/¯
+
+  [ Michael Prokop ]
+  * New features:
+    - [73ccc32] New script remove-reprepro-codename (misc further
+      improvements and additions in [123fed8] [723e5db] [bdc0a0d])
+    - [5930014] Support keeping the build environment via DEB_KEEP_BUILD_ENV
+    - [1237b99] Support providing a custom pbuilder configuration file via
+      PBUILDER_CONFIG
+    - [e5225b1] piuparts_wrapper: support setting custom debootstrap options
+      via DEBOOTSTRAP_OPTIONS
+    - [6d197dd] Support POST_BUILD_HOOK at the end of the build process
+
+  * Misc improvements and bugfixes:
+    - [d1e90b2] piuparts_wrapper: make sure we have the sbin directories in
+      our PATH
+    - [512eb37] generate-git-snapshot: explicitly check for beginning of
+      line when retrieving version information
+    - [8cac20f] Provide basic project information via README.md
+    - [976acb9] Adjust debian/docs for README rename
+    - [3b12d46] Make lintian-junit-report ruby 1.8 safe
+    - [63d6c47] Rework generate-git-snapshot to make sure quilt can't break
+      the build. Thanks to Raphael Hertzog <hertzog@debian.org> for his dpkg
+      related feedback
+    - [d759c0d] Remove *_source.changes file generated by dpkg-buildpackage
+      in --source job
+    - [5d465bf] build-and-provide-package: Look only for the "real"
+      debian/control file. Thanks to Christoph Berg for the bugreport and fix
+    - [ab03545] generate-*-snapshot: provide hint if the 'source' directory
+      hasn't been configured
+    - [9d3a3d4] Make sure to also support linux-any as valid Architecture
+      field. Thanks to Jean Baptiste Favre
+    - [f02f0e1] Add jenkins-debian-glue-repoenv to Recommends and default
+      installation list
+    - [acd1257] Drop trailing dot in package descriptions of
+      jenkins-debian-glue-{repoenv,buildenv}
+
+  * Puppet related changes:
+    - [c73c341] install git-client plugin explicitly in version 1.1.2
+    - [fd1ce1f] support forcing plugin installation allowing us to
+      install latest git-client plugin
+    - [68578ef] install scm-api plugin, required for git plugin
+
+  [ Calvin Walton ]
+  * [9ac44d1] cd to workspace in generate-git-snapshot when running
+    dpkg-source
+
+  [ Sylvestre Ledru ]
+  * [105fa47] PRE_SOURCE_HOOK handling in generate-*-snapshot scripts:
+    match behaviour and do not test if file exits
+
+  [ Sławomir Bocheński ]
+  * lintian-junit-report related changes:
+    - [21b8527] Allow passing options to lintian
+    - [7a974f4] Accept multiple file arguments
+    - [536c2a4] Convert output to XML after parsing
+    - [c491fd8] Simplify matching error/warning lines
+    - [af173af] Name test cases after lintian tags
+    - [6667cda] Split lintian output between test cases
+    - [ee33f72] Fix reported total time for TCs
+    - [a4bb3b1] Use REXML to generate XML output
+    - [b6d83d6] Support for marking tests skipped
+  * [f10fdda] Create .mailmap
+
+  [ Ulrich Dangel ]
+  * [fe363dd] lintian-junit-report: quote XML strings
+
+  [ Edwin Fine ]
+  * [ac7d608] Add support for user-defined BINDMOUNTs
+  * [321b149] Force local apt repos to be trusted
+
+  [ Yoann Dubreuil ]
+  * [600499e] Speed up pbuilder: disable building of manual
+    pages with a hook script
+  * [8d10e82] Add execute permissions to D10-man-db
+
+  [ Antoine Musso ]
+  * [841b4b2] piuparts_wrapper: quote scriptsdir in piuparts cmd
+  * [08b9a5d] piuparts_wrapper: unset scripts dir when non existent
+
+  [ Bernhard Miklautz ]
+  * [8893a6f] Added a virtual package for repo only slaves
+    (jenkins-debian-glue-repoenv, and jenkins-debian-glue-repoenv
+    for build environments without repository)
+
+ -- Michael Prokop <mika@debian.org>  Wed, 23 Oct 2013 20:32:29 +0200
+
+jenkins-debian-glue (0.6.0) unstable; urgency=low
+
+  The "nothing is better than a children's smile" release ／人◕‿◕人＼
+
+  [ Michael Prokop ]
+  * Feature related changes:
+  - [55709c2] build-and-provide-package: new variable SKIP_PACKAGE_FROM_REMOVAL
+    to skip specific packages from removal [Closes gh#50]
+
+  * Bugfix related changes:
+    - [fdb9b22] Depend on subversion-tools (<= 1.6.18dfsg-1) *or* svn2cl
+    - [ede0fb0] generate-git-snapshot: force switching back to previous
+      branch
+    - [00d1e85] generate-reprepro-codename: do not fail build if chown of
+      reprepro conf fails [Closes gh#53]
+    - [694b926] generate-*-snapshot: do not fail if PRE_SOURCE_HOOK is unset
+    - [1f211d5] generate-git-snapshot: use --git-ignore-branch as default
+      build option for gbp [Closes gh#47]
+    - [7a573b8] build-and-provide-package: do not fail if
+      REMOVE_FROM_RELEASE is unset
+    - [db1bb37] jenkins_debian_glue.pp: depend on default-jre-headless
+      package. Thanks to Cyril Brulebois for the bug report
+    - [bd6d573] piuparts_tap: explicitly set Encoding::UTF_8 for Ruby 1.9.
+      Thanks to Christian Hofstaedtler <ch@zeha.at> for feedback
+
+  * Deployment related changes:
+    - [b75a45e] provide fallback for EC2 IP retrieval
+    - [7495221] install git-client plugin by default
+    - [b098b7c] allow DEB_* environment variables in sudo configuration
+    - [b4e73e0] use wget instead of curl as fallback for public IP retrieval
+    - [35e87f9] do not install xunit plugin by default.
+      Thanks to Sylvestre Ledru <sylvestre.ledru@scilab-enterprises.com>
+    - [5d84958] limit amount of retries for wget-ing EC2 info to 3
+    - [1f7226d] update CopyArtifact configuration
+
+  * Misc changes:
+    - [fedc856] Ship examples/debian_glue as /etc/jenkins/debian_glue
+      default configuration file [Closes: gh#49]
+    - [1cb24b3] piuparts_wrapper: run with --scriptsdir=/etc/piuparts/scripts/
+      by default. Thanks to Holger Levsen for the hint
+    - [6e8f6df] invoke 'reprepro include' cmdline with --ignore=uploaders.
+      Thanks to anarcat for the bug report and suggestion [Closes: gh#36]
+    - [83e779a] generate-reprepro-codename: drop default
+      DebIndices/DscIndices settings. Thanks to anarcat for the bug report
+      and suggestion
+    - [8f33c0c] generate-reprepro-codename: drop AlsoAcceptFor default
+      setting. Thanks to anarcat
+
+  [ Stanislav Bogatyrev ]
+  * [2cf5563] Use release repo for all builds with same release parameter.
+
+  [ Antoine Beaupré ]
+  * [6faa90d] use a more sensible default for DEBEMAIL
+
+  [ Sylvestre Ledru ]
+  * [521e0cf] Add the management of a PRE_SOURCE_HOOK variable. If set,
+    the script pointed by PRE_SOURCE_HOOK will be executed before the .dsc
+    creation
+
+  [ Patrick Schoenfeld ]
+  * [2a8b22e] Allow removal of packages from releases
+  * [586207e] Bugfix: Make dpkg-source ignore .git in more cases
+
+  [ Slawomir Bochenski ]
+  * [d98f440] Change timestamp format used in version string
+
+ -- Michael Prokop <mika@grml.org>  Mon, 10 Jun 2013 23:26:58 +0200
+
+jenkins-debian-glue (0.5.0) unstable; urgency=low
+
+  [ Michael Prokop ]
+  * [00dc44d] piuparts_wrapper: use --skip-logrotatefiles-test if
+    available
+  * [fd81e82] git post-receive hook: use $server variable instead of
+    jenkins.grml.org
+  * [de10cec] git post-receive hook: provide curl usage example
+  * [f6a3ab9] generate-git-snapshot: use dpkg-source's -I switch without
+    any arguments. Thanks to yanfalies for the bugreport
+  * [ea73944] replace signal numbers in trap with their according signal
+    names
+  * [11fd8db] Drop "possible bashism" from source/git/post-receive
+  * [e814cfe] tap_tool_dispatcher: ignore .git directory as well
+  * [b56f16b] tap_tool_dispatcher: use .tap suffix for output files
+  * [85a8250] generate-git-snapshot: make sure we're building the
+    requested version via dpkg-source
+  * [1418a32] generate-git-snapshot: support $branch as alternative to
+    $tag
+  * [7f55630] refactor generate-git-snapshot
+  * [f5852ad] Update copyright information in LICENSE file
+  * [95a35fe] support autopkgtest
+  * [747fda3] generate-git-snapshot: prepend "origin" when checking out a
+    $branch. Thanks to Stefan Schlesinger <sts@ono.at> for the bug report
+    and testing
+  * [e240dcc] Support configuration of release repository via
+    $RELEASE_REPOSITORY. Thanks to Marcel Beck <nexeck@outlook.com> for
+    the initial patch in pull-request 34 which triggered development of
+    this feature
+  * [6b1e196] Provide configuration example for REPOSITORY in default
+    config
+  * [b690dbb] Bump Standards-Version to 3.9.4
+
+  [ Yury Vidineev ]
+  * [09cfda3] Depends of sudo or sudo-ldap
+
+  [ Marcelo Martins ]
+  * [015b2fb] Added a variable to also allow one to overwrite the git-
+    buildpackage options. If variable not set it just falls back to the
+    original options.
+
+  [ Marcel Beck ]
+  * [bd87c78] Do not checkout HEAD, checkout the Branch that is given in
+    jenkins
+
+  [ Stefan Schlesinger ]
+  * [42cb68c] Adding freight support to build-and-provide-package
+
+  [ Stanislav Bogatyrev ]
+  * [8abadb7] Add UDebComponents. Needed by some packages.
+
+ -- Michael Prokop <mika@debian.org>  Tue, 05 Feb 2013 14:18:43 +0100
+
+jenkins-debian-glue (0.4.0) unstable; urgency=low
+
+  The "upgrade tests ftw" release ／人◕‿◕人＼
+
+  [ Patrick Schoenfeld ]
+  * [201ec1e] generate-git-snapshot: Allow skipping of git-dch
+
+  [ Michael Prokop ]
+  * New features:
+    - [abc1949] New package jenkins-debian-glue-buildenv-taptools
+    - [87bb207] Initial piuparts support with new package
+      jenkins-debian-glue-buildenv-piuparts
+  * Minor updates:
+    - [3872b18] generate-git-snapshot: Do not fail if SKIP_DCH is
+      unset; use 'true' for checking for SKIP_DCH; inform user about it
+  * Puppet deployment:
+    - [714c019] apply.sh: use ";" as separator in sed cmdline as
+      hash string might contain "/"
+    - [67bdc6e] deploy jenkins-debian-glue-buildenv-taptools +
+      jenkins-debian-glue-buildenv-piuparts
+    - [b8cf4a5] enable piuparts, debootstrap + piuparts_wrapper in
+      /etc/sudoers.d/jenkins
+    - [b2c0c83] deploy TAP Jenkins plugin
+    - [cd2bcf9] provide description in *-source and *-binaries job,
+      including how to access the repos
+    - [647ebb0] provide jenkins-debian-glue-piuparts Jenkins job
+
+ -- Michael Prokop <mika@grml.org>  Fri, 31 Aug 2012 15:07:13 +0200
+
+jenkins-debian-glue (0.3.0) unstable; urgency=low
+
+  The "Le prénom" release
+
+  * [f85d9b4] deployment: ship /var/lib/jenkins/config.xml and user
+    jenkins-debian-glue with custom password
+  * [377d53a] Add support for JUnit reports via lintian in automated
+    deployment
+  * [ff72534] README: drop docs, point to http://jenkins-debian-glue.org/
+  * [2a13a53] Drop img/ (provided through website now)
+  * [e901557] Use seed for password hashing. Thanks to Peter Palfrader
+    <weasel@debian.org> for bringing this up while reviewing the script
+  * [3b1e604] repository_checker: support --validate-incoming
+  * [65dbf08] Do not modify debian/changelog if building from a tag
+  * [465be62] run reprepro's processincoming cmdline also with
+    --ignore=wrongdistribution + --waitforlock option. Thanks to Axel
+    Beckert <abe@deuxchevaux.org> for the hint
+  * [76e101f] incoming repos: allow all kinds of distributions listed in
+    packages enter the repos. Thanks to Bernhard R. Link
+    <brlink@debian.org> for the hint regarding "Default:"
+  * [daecb07] Drop sudo wrappers for release repositories
+  * [0f87451] incoming repos: use release name as Default
+  * [69e6730] puppet: build master branch in jenkins-debian-glue-source
+
+ -- Michael Prokop <mika@grml.org>  Tue, 21 Aug 2012 20:44:23 +0200
+
+jenkins-debian-glue (0.2.0) unstable; urgency=low
+
+  The "wisdom tooth removal" release ٩(͡๏̯͡๏)۶
+
+  [ Michael Prokop ]
+  * Bugfix related changes:
+    - [9fdd9fd] Check out temporary branch based on GIT_COMMIT to make
+      git-dch happy
+    - [3a304b1] create_local_branch: make check for remotes/origin/$BRANCH
+      more explicit. Thanks to Axel Beckert
+    - [672aa36] Also remove source package from REPOS
+    - [57ba7e0] Set ARCH/BASE/DIST in dist_and_arch_settings() also for
+      PROVIDE_ONLY runs
+    - [de56110] remove_missing_binary_packages: make check for missing
+      package match whole words
+    - [a00449e] Enable cowbuilder_run() for all architectures
+    - [a12b28a] Always include $distribution in cow base name [closes #17]
+      Thanks to Christoph Berg for the suggestion
+    - [456305e] Call generate-reprepro-codename in reprepro_wrapper + update
+      README accordingly. Thanks to Christoph Berg <myon@debian.org> for
+      idea + patch
+    - [7903737] Invoke all generate-reprepro-codename commands through
+      $SUDO_CMD
+
+  * Major changes:
+    - [f68b0fe] Drop userContent support
+    - [24ad13f] Drop $sources support and default with $BASE_PATH to
+      $WORKSPACE
+    - [8279e90] Drop the deprecated scripts generate-local-repository +
+      include-in-repos
+
+  * New features:
+    - [2593cc8] trigger_jenkins: support sending tags to a release dashboard
+      + iterate over all modified projects
+    - [d1b43a7] include-in-repos: allow overwriting $BASE_DIR, default to
+      working directory
+    - [96f3cb6] Support overriding cowbuilder's base.cow via COWBUILDER_BASE
+      and refactor code
+    - [f6550e9] New script repository_checker
+    - [c37a20a] Install repository_checker in jenkins-debian-glue package
+    - [c27e896] Add official Ubuntu support
+    - [6b43ea6] Initial deployment script + puppet recipe for automatic
+      installation
+    - [af494a8] Adjust path of puppet file for master branch
+    - [33b4195] Puppet deployment script: support EC2 by returning its
+      public IP address
+
+  * Minor updates:
+    - [d236f1a] Do not use Grml-specific defaults for DEBEMAIL and
+      generate-local-repository's Release file
+    - [a271c48] Do not execute dist_and_arch_settings() if PROVIDE_ONLY
+      is set
+    - [dd3c1db] Adjust identify_sourcefile to not mention ArtifactDeployer
+      any longer
+    - [20ef6f3] Apply wrap-and-sort on Debian package
+    - [3e55f3e] debian package description: fix typo
+    - [043002d] Execute wrap-and-sort with -a option to wrap all
+      {Build-,}Depends
+    - [0c2a33e] Limit package removal of binary packages to .deb files only
+    - [101fb3b] Source /etc/jenkins/debian_glue in generate-*-snapshot
+
+  * Documentation related changes:
+    - [00ccf25] Update list of contributors
+    - [f1f3d78] Update list of Known TODOs
+    - [14e8b79] Mention Debian packages
+    - [c2f8835] Document how to find console output of Jenkins jobs
+    - [0f3b985] Clarify best practices, current development + cover
+      some FAQs, closes #9
+    - [9c52b4b] Minor syntax fixes and rewordings
+    - [1bcac3d] Document COWBUILDER_BASE and COWBUILDER_DIST
+    - [0c907e0] Mention the "Delete workspace before build starts"
+      option for the binary job
+
+  [ Christoph Berg ]
+  * [06be70c] Update svn setup instructions.
+  * [6f21ae0] Remove duplicate signal from trap call.
+  * [757ce4a] Add a workaround for SOURCE_PACKAGE
+  * [8a8c98c] Reset current directory in identify_build_type
+  * [0893665] Remove a stray newline in README.org.
+
+  [ Axel Beckert ]
+  * [fc8638f] git-buildpackage refuse to operate on a single git commit,
+    too
+  * [aaa1298] Fix README about DCH_OPTS and DCH_EXTRA_OPTS
+  * [f144899] arch:all packages don't need ${shlibs:Depends}
+
+ -- Michael Prokop <mika@grml.org>  Sat, 18 Aug 2012 13:33:23 +0200
+
+jenkins-debian-glue (0.1.1) unstable; urgency=low
+
+  * [8092cc5] generate-git-snapshot: use git-dch's auto mode as default
+  * [e35e50e] generate-git-snapshot: do not checkout branch but always
+    $GIT_COMMIT
+  * [644aef6] generate-git-snapshot: use plain dch if handling UNRELEASED
+    version
+
+ -- Michael Prokop <mika@grml.org>  Thu, 26 Jul 2012 14:09:51 +0200
+
+jenkins-debian-glue (0.1.0) unstable; urgency=low
+
+  * Initial release.
+
+ -- Michael Prokop <mika@grml.org>  Wed, 25 Jul 2012 17:32:53 +0200
+

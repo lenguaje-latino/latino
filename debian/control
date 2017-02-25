@@ -1,0 +1,11 @@
+Source: latino
+Package: latino
+Section: x11
+Priority: optional
+Maintainer: Josip Rodin <joy-mg@debian.org>
+Build-Depends: debhelper (>=9), xlibs-dev, libgtk1.2-dev, libglib1.2-dev
+Architecture: any
+Depends: ${shlibs:Depends}, ${misc:Depends}
+Suggests: file
+Description: fully GUI-configurable, two-pane X file manager
+  gentoo is a two-pane file manager for the X Window System. gentoo lets the
