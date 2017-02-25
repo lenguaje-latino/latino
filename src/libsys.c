@@ -80,76 +80,78 @@ void lat_sistema_pipe(lat_mv * mv) {
 }
 
 char *__analizar_formato_fecha(char *str) {
-    if (!str) { return NULL; };
-    time_t raw;
-    struct tm *tiempo;
-    time(&raw);
-    tiempo = localtime(&raw);
-    char *fmt = malloc(strlen(str) + 1);
-    sprintf(fmt, "%c", 0);
-    for (int i=0; i<strlen(str); i++) {
-        if (str[i] == '%' && str[i-1] != '\\') {
-            switch(str[i+1]) {
-                case 'a':
-                    sprintf(fmt, "%s%i", fmt, (tiempo->tm_year+1900));
-                    i++;
-                    break;
-                case 'm':
-                    if (str[i+2] == 'm') {
-                        sprintf(fmt, "%s%i", fmt, (tiempo->tm_mon+1));
-                        i=i+2;
-                        break;
-                    } else if (str[i+2] == 'n') {
-                        sprintf(fmt, "%s%i", fmt, tiempo->tm_min);
-                        i=i+2;
-                        break;
-                    } else {
-                        sprintf(fmt, "%s%c", fmt, str[i]);
-                        break;
-                    }
-                case 'h':
-                    sprintf(fmt, "%s%i", fmt, tiempo->tm_hour);
-                    i++;
-                    break;
-                case 's':
-                    sprintf(fmt, "%s%i", fmt, tiempo->tm_sec);
-                    i++;
-                    break;
-                case 'd':
-                    if (str[i+2] == 'm') {
-                        sprintf(fmt, "%s%i", fmt, tiempo->tm_mday);
-                        i=i+2;
-                        break;
-                    } else if (str[i+2] == 's') {
-                        sprintf(fmt, "%s%i", fmt, (tiempo->tm_wday));
-                        i=i+2;
-                        break;
-                    } else if (str[i+2] == 'a') {
-                        sprintf(fmt, "%s%i", fmt, tiempo->tm_yday);
-                        i=i+2;
-                        break;
-                    } else {
-                        sprintf(fmt, "%s%c", fmt, str[i]);
-                        break;
-                    }
-                case 'e':
-                    sprintf(fmt, "%s%i", fmt, tiempo->tm_isdst);
-                    i++;
-                    break;
-                default:
-                    sprintf(fmt, "%s%c", fmt, str[i]);
-                    break;
-                }
-            } else {
-                if (str[i] == '\\') {
-                    sprintf(fmt, "%s%c", fmt, str[i+1]);
-                    i++;
-                } else {
-                    sprintf(fmt, "%s%c", fmt, str[i]);
-                }
-            }
-    }
-    return fmt;
+	if (!str) {
+		return NULL;
+	};
+	time_t raw;
+	struct tm *tiempo;
+	time(&raw);
+	tiempo = localtime(&raw);
+	char *fmt = malloc(strlen(str) + 1);
+	sprintf(fmt, "%c", 0);
+	for (int i = 0; i < strlen(str); i++) {
+		if (str[i] == '%' && str[i - 1] != '\\') {
+			switch (str[i + 1]) {
+			case 'a':
+				sprintf(fmt, "%s%i", fmt, (tiempo->tm_year + 1900));
+				i++;
+				break;
+			case 'm':
+				if (str[i + 2] == 'm') {
+					sprintf(fmt, "%s%i", fmt, (tiempo->tm_mon + 1));
+					i = i + 2;
+					break;
+				} else if (str[i + 2] == 'n') {
+					sprintf(fmt, "%s%i", fmt, tiempo->tm_min);
+					i = i + 2;
+					break;
+				} else {
+					sprintf(fmt, "%s%c", fmt, str[i]);
+					break;
+				}
+			case 'h':
+				sprintf(fmt, "%s%i", fmt, tiempo->tm_hour);
+				i++;
+				break;
+			case 's':
+				sprintf(fmt, "%s%i", fmt, tiempo->tm_sec);
+				i++;
+				break;
+			case 'd':
+				if (str[i + 2] == 'm') {
+					sprintf(fmt, "%s%i", fmt, tiempo->tm_mday);
+					i = i + 2;
+					break;
+				} else if (str[i + 2] == 's') {
+					sprintf(fmt, "%s%i", fmt, (tiempo->tm_wday));
+					i = i + 2;
+					break;
+				} else if (str[i + 2] == 'a') {
+					sprintf(fmt, "%s%i", fmt, tiempo->tm_yday);
+					i = i + 2;
+					break;
+				} else {
+					sprintf(fmt, "%s%c", fmt, str[i]);
+					break;
+				}
+			case 'e':
+				sprintf(fmt, "%s%i", fmt, tiempo->tm_isdst);
+				i++;
+				break;
+			default:
+				sprintf(fmt, "%s%c", fmt, str[i]);
+				break;
+			}
+		} else {
+			if (str[i] == '\\') {
+				sprintf(fmt, "%s%c", fmt, str[i + 1]);
+				i++;
+			} else {
+				sprintf(fmt, "%s%c", fmt, str[i]);
+			}
+		}
+	}
+	return fmt;
 }
 
 void lat_sistema_fecha(lat_mv * mv) {
@@ -226,56 +228,67 @@ void lat_sistema_entorno(lat_mv * mv) {
 }
 
 void lat_sistema_stdin(lat_mv * mv) {
+	fd_set readfds;
+	FD_ZERO(&readfds);
+	FD_SET(STDIN_FILENO, &readfds);
+	struct timeval timeout;
+	timeout.tv_sec = 0;
+	timeout.tv_usec = 0;
+	if (!select(1, &readfds, NULL, NULL, &timeout)) {
+		lat_apilar(mv, mv->objeto_nulo);
+		return;
+	}
 	lat_objeto *var = NULL;
-    char buffer[BUF_SIZE];
-    size_t contenidoTamanio = 1;
-    char *contenido = malloc(sizeof(char) * BUF_SIZE);
-    if(contenido == NULL) {
+	char buffer[BUF_SIZE];
+	size_t contenidoTamanio = 1;
+	char *contenido = malloc(sizeof(char) * BUF_SIZE);
+	if (contenido == NULL) {
 		lat_error("Linea %d, %d: %s", var->num_linea, var->num_columna,
 				  "error al asignar memoria.");
-    }
-    contenido[0] = '\0';
-    if(fgets(buffer, BUF_SIZE, stdin)) {
-        contenidoTamanio += strlen(buffer);
-        contenido = realloc(contenido, contenidoTamanio);
-        if(contenido == NULL) {
+	}
+	contenido[0] = '\0';
+
+	if (fgets(buffer, BUF_SIZE, stdin)) {
+		contenidoTamanio += strlen(buffer);
+		contenido = realloc(contenido, contenidoTamanio);
+		if (contenido == NULL) {
 			free(contenido);
 			lat_error("Linea %d, %d: %s", var->num_linea, var->num_columna,
 					  "error al reasignar memoria.");
-        }
-        strcat(contenido, buffer);
-    }
+		}
+		strcat(contenido, buffer);
+	}
 
-    if(ferror(stdin)) {
-        free(contenido);
+	if (ferror(stdin)) {
+		free(contenido);
 		lat_error("Linea %d, %d: %s", var->num_linea, var->num_columna,
 				  "error al leer stdin.");
-    }
+	}
 	var = lat_cadena_nueva(mv, strdup(contenido));
-    lat_apilar(mv, var);
-    free(contenido);
+	lat_apilar(mv, var);
+	free(contenido);
 }
 
 /* en prueba
 void *tarea1() {
-        int i;
-        scanf("%i", &i);
-	printf("\nTAREA 1: Escribiste el número %i\n", i);
-	return NULL;
+int i;
+scanf("%i", &i);
+printf("\nTAREA 1: Escribiste el número %i\n", i);
+return NULL;
 }
 
 void lat_sistema_tarea_nueva(lat_mv *mv) {
-        lat_objeto *a = lat_desapilar(mv);
-        pthread_t proceso = __numerico(a);
-        pthread_create(&proceso, NULL, tarea1, NULL);
-        lat_objeto *cref = lat_numerico_nuevo(mv, proceso);
-        lat_apilar(mv, cref);
+lat_objeto *a = lat_desapilar(mv);
+pthread_t proceso = __numerico(a);
+pthread_create(&proceso, NULL, tarea1, NULL);
+lat_objeto *cref = lat_numerico_nuevo(mv, proceso);
+lat_apilar(mv, cref);
 }
 
 void lat_sistema_tarea_iniciar(lat_mv *mv) {
-        lat_objeto *a = lat_desapilar(mv);
-        pthread_t proceso = __numerico(a);
-        pthread_join(proceso, NULL);
+lat_objeto *a = lat_desapilar(mv);
+pthread_t proceso = __numerico(a);
+pthread_join(proceso, NULL);
 }
 */
 
@@ -289,9 +302,9 @@ static const lat_CReg libsistema[] = {
 	{"iraxy", lat_sistema_iraxy, 2},
 	{"usuario", lat_sistema_usuario, 0},
 	{"entorno", lat_sistema_entorno, 1},
-    {"stdin", lat_sistema_stdin, 0},
+	{"stdin", lat_sistema_stdin, 0},
 	/*{"tarea_nueva", lat_sistema_tarea_nueva, 1},
-	{"tarea_iniciar", lat_sistema_tarea_iniciar, 1}, */
+	   {"tarea_iniciar", lat_sistema_tarea_iniciar, 1}, */
 	{NULL, NULL}
 };
 
