@@ -121,8 +121,8 @@ static json_t *__latino_a_json(lat_mv * mv, lat_objeto * element) {
 											__latino_a_json(mv,
 															(lat_objeto
 															 *) ((hash_val *)
-																 cur->
-																 valor)->valor));
+																 cur->valor)->
+															valor));
 						}
 					}
 				}
@@ -204,6 +204,10 @@ void lat_json_codificar(lat_mv * mv) {
 
 void lat_json_formato(lat_mv * mv) {
 	lat_objeto *a = lat_desapilar(mv);
+	if (a->tipo == T_NULL) {
+		lat_apilar(mv, mv->objeto_nulo);
+		return;
+	}
 	int spaces = 4;
 	char *str = NULL;
 	json_t *root = NULL;
