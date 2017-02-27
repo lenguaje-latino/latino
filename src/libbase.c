@@ -340,7 +340,18 @@ void lat_acadena(lat_mv * mv) {
 }
 
 void lat_salir(lat_mv * mv) {
-	exit(0);
+	lat_objeto *tipo_salida = lat_desapilar(mv);
+	if (tipo_salida->tipo != T_NULL) {
+		exit(__numerico(tipo_salida));
+	} else {
+		exit(0);
+	}
+}
+
+void lat_error_interno(lat_mv *mv) {
+	lat_objeto *error = lat_desapilar(mv);
+	char *error_str = __str_analizar_fmt(__cadena(error), strlen(__cadena(error)));
+	fprintf(stderr, "%s", error_str);
 }
 
 static const lat_CReg lib_base[] = {
@@ -353,7 +364,8 @@ static const lat_CReg lib_base[] = {
 	{"leer", lat_leer, 0},
 	{"limpiar", lat_limpiar, 0},
 	{"tipo", lat_tipo, 1},
-	{"salir", lat_salir, 0},
+	{"salir", lat_salir, 1},
+	{"error", lat_error_interno, 1},
 	{NULL, NULL}
 };
 
