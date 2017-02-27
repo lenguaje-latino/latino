@@ -87,21 +87,28 @@ char *__analizar_formato_fecha(char *str) {
 	struct tm *tiempo;
 	time(&raw);
 	tiempo = localtime(&raw);
-	char *fmt = malloc(strlen(str) + 1);
+	long int buf_str = strlen(str)+1;
+	char *fmt = malloc(buf_str);
 	sprintf(fmt, "%c", 0);
 	for (int i = 0; i < strlen(str); i++) {
 		if (str[i] == '%' && str[i - 1] != '\\') {
 			switch (str[i + 1]) {
 			case 'a':
+				buf_str = buf_str+4;
+				fmt = realloc(fmt, buf_str);
 				sprintf(fmt, "%s%i", fmt, (tiempo->tm_year + 1900));
 				i++;
 				break;
 			case 'm':
 				if (str[i + 2] == 'm') {
+					buf_str = buf_str+2;
+					fmt = realloc(fmt, buf_str);
 					sprintf(fmt, "%s%i", fmt, (tiempo->tm_mon + 1));
 					i = i + 2;
 					break;
 				} else if (str[i + 2] == 'n') {
+					buf_str = buf_str+2;
+					fmt = realloc(fmt, buf_str);
 					sprintf(fmt, "%s%i", fmt, tiempo->tm_min);
 					i = i + 2;
 					break;
@@ -110,23 +117,33 @@ char *__analizar_formato_fecha(char *str) {
 					break;
 				}
 			case 'h':
+				buf_str = buf_str+2;
+				fmt = realloc(fmt, buf_str);
 				sprintf(fmt, "%s%i", fmt, tiempo->tm_hour);
 				i++;
 				break;
 			case 's':
+				buf_str = buf_str+2;
+				fmt = realloc(fmt, buf_str);
 				sprintf(fmt, "%s%i", fmt, tiempo->tm_sec);
 				i++;
 				break;
 			case 'd':
 				if (str[i + 2] == 'm') {
+					buf_str = buf_str+2;
+					fmt = realloc(fmt, buf_str);
 					sprintf(fmt, "%s%i", fmt, tiempo->tm_mday);
 					i = i + 2;
 					break;
 				} else if (str[i + 2] == 's') {
+					buf_str = buf_str+1;
+					fmt = realloc(fmt, buf_str);
 					sprintf(fmt, "%s%i", fmt, (tiempo->tm_wday));
 					i = i + 2;
 					break;
 				} else if (str[i + 2] == 'a') {
+					buf_str = buf_str+3;
+					fmt = realloc(fmt, buf_str);
 					sprintf(fmt, "%s%i", fmt, tiempo->tm_yday);
 					i = i + 2;
 					break;
