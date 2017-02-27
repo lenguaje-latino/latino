@@ -349,9 +349,70 @@ void lat_salir(lat_mv * mv) {
 }
 
 void lat_error_interno(lat_mv *mv) {
-	lat_objeto *error = lat_desapilar(mv);
-	char *error_str = __str_analizar_fmt(__cadena(error), strlen(__cadena(error)));
-	fprintf(stderr, "%s", error_str);
+	lat_objeto *num_params = lat_desapilar(mv);
+	int top = __numerico(num_params);
+	int arg = 1;
+	int i = 0;
+	lista *params = __lista_crear();
+	while (i < top) {
+		__lista_insertar_inicio(params, lat_desapilar(mv));
+		i++;
+	}
+	lat_objeto *ofmt = __lista_extraer_inicio(params);
+	if (ofmt == NULL) {
+		fprintf(stderr, "%s\n", "nulo");
+		return;
+	}
+	char *strfrmt = __cadena(ofmt);
+	char *strfrmt_end = strfrmt + strlen(strfrmt);
+	char *b = __memoria_asignar(mv, MAX_STR_LENGTH);
+	while (strfrmt < strfrmt_end) {
+		if (*strfrmt != '%') {
+			sprintf(b, "%s%c", b, *strfrmt++);
+		} else if (*++strfrmt == '%') {
+			sprintf(b, "%s%c", b, *strfrmt++);
+		} else {
+			char buff[1024];
+			if (++arg > top) {
+				filename = ofmt->nombre_archivo;
+				lat_error("Linea %d, %d: %s", ofmt->num_linea,
+						  ofmt->num_columna,
+						  "Numero de argumentos invalido para el formato de stderr.");
+			}
+			switch (*strfrmt++) {
+			case 'c':{
+					lat_objeto *cr = __lista_extraer_inicio(params);
+					sprintf(buff, "%c", (int)lat_obj2double(cr));
+				} break;
+			case 'i':{
+					lat_objeto *ent = __lista_extraer_inicio(params);
+					sprintf(buff, "%i", (int)lat_obj2double(ent));
+				} break;
+			case 'f':{
+					lat_objeto *dec = __lista_extraer_inicio(params);
+					sprintf(buff, "%f", (float)lat_obj2double(dec));
+				} break;
+			case 'd':{
+					lat_objeto *dec = __lista_extraer_inicio(params);
+					sprintf(buff, LAT_NUMERIC_FMT, lat_obj2double(dec));
+				}
+				break;
+			case 's':{
+					lat_objeto *str = __lista_extraer_inicio(params);
+					sprintf(buff, "%s", lat_obj2cstring(str));
+				}
+				break;
+			default:{
+					filename = ofmt->nombre_archivo;
+					lat_error("Linea %d, %d: %s", ofmt->num_linea,
+							  ofmt->num_columna, "Opcion de formato invalida.");
+				}
+			}
+    		strcat(b, buff);
+		}
+	}
+	char *str = __str_analizar_fmt(b, strlen(b));
+	fprintf(stderr, "%s", str);
 }
 
 static const lat_CReg lib_base[] = {
