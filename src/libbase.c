@@ -426,7 +426,7 @@ static const lat_CReg lib_base[] = {
 	{"limpiar", lat_limpiar, 0},
 	{"tipo", lat_tipo, 1},
 	{"salir", lat_salir, 1},
-	{"error", lat_error_interno, 1},
+	{"error", lat_error_interno, -1},
 	{NULL, NULL}
 };
 
