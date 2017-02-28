@@ -53,6 +53,9 @@ sudo dnf install bison flex cmake gcc g++ libjansson-dev libcurl4-openssl-dev li
 
 ## INSTALAR
 
+<img src ="doc/debian.png" />
+
+
 ### Instalar en Linux
 
 Cualquier versión/distribución de linux
