@@ -13,7 +13,6 @@ sudo apt-get update && apt-get install bison flex cmake gcc g++ libjansson-dev l
 ```
 
 
-
 ## INSTALAR
 
 ```bash
