@@ -8,8 +8,11 @@
 1. Descargue el instalador 
 2. Ejecute el instalador
 
+
 |Versión|Instalador|
+
 |0.9.0| [Instalador] (https://github.com/primitivorm/latino/releases/download/v0.9.0/setupWindows.exe )|
+
 |0.8.11| [Instalador] ( https://github.com/primitivorm/latino/releases/download/v0.8.11/setup_windows.exe )|
 
 
@@ -33,3 +36,6 @@ Latino se desistala como cualquier otro programa
 http://lenguaje-latino.org/foro/windows/
 
 ####Cualquier aportación o sugerencia es bienvenida.
+
+
+## Cómo instalar el Bash de Ubuntu en Windows 10 Anniversary
