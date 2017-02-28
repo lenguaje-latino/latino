@@ -2,9 +2,9 @@
 <img src ="https://raw.githubusercontent.com/primitivorm/latino/master/logo/banner-300x.png" /><br>http://lenguaje-latino.org/
 </p>
 
+<img src ="doc/debian.png" />
 
-
-## Dependencias
+## Dependencias para instalar en DEBIAN
 Antes de instalar latino, vamos a instalar todos paquetes necesarios: 
 
 ```
