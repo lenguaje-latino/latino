@@ -52,5 +52,11 @@ http://opensource.org/licenses/MIT
 | [Fedora](instalacion_fedora.md) |
 -----------------------------------
 
+<b>Mac</b>
+
+| [Mac](instalacion_mac.md) |
+------------------------------------------
+
+
 
 ####Cualquier aportación o sugerencia es bienvenida.
