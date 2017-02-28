@@ -38,4 +38,3 @@ http://lenguaje-latino.org/foro/windows/
 ####Cualquier aportación o sugerencia es bienvenida.
 
 
-## Cómo instalar el Bash de Ubuntu en Windows 10 Anniversary
