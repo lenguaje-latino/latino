@@ -108,6 +108,11 @@ Pirmero debes saber donde esta instalado
  sudo apt remove latino
  # Ubuntu 14.x.x hacía atrás
  sudo apt-get remove latino
- ```
+ 
+
+## Ayuda en nuestro foro 
+
+http://lenguaje-latino.org/foro/debian/
+
 
 ####Cualquier aportación o sugerencia es bienvenida.

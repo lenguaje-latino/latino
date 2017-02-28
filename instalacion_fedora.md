@@ -2,6 +2,8 @@
 <img src ="https://raw.githubusercontent.com/primitivorm/latino/master/logo/banner-300x.png" /><br>http://lenguaje-latino.org/
 </p>
 
+<img src ="doc/fedora.png" />
+
 ## Dependencias
 Antes de instalar latino, vamos a instalar todos paquetes necesarios: 
 
@@ -84,5 +86,8 @@ Pirmero debes saber donde esta instalado
 
  ```
 
+## Ayuda en nuestro foro 
+
+http://lenguaje-latino.org/foro/fedora/
 
 ####Cualquier aportación o sugerencia es bienvenida.
