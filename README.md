@@ -37,19 +37,11 @@ http://opensource.org/licenses/MIT
 
 ## INSTALAR
 
-<img src ="doc/win.png" />
-
-[Instalar en windows](instalacion_windows.md)
 
 
-<img src ="doc/debian.png" />
-
-[Instalar en Debian](instalacion_debian.md)
-
-
-<img src ="doc/fedora.png" />
-
-[Instalar en Fedora](instalacion_fedora.md)
+* [Instalar en windows](instalacion_windows.md)
+* [Instalar en Debian](instalacion_debian.md)
+* [Instalar en Fedora](instalacion_fedora.md)
 
 
 
