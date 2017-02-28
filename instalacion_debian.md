@@ -9,13 +9,12 @@ Antes de instalar latino, vamos a instalar todos paquetes necesarios:
 
 ```
 # Debian/Ubuntu o basados
-sudo apt-get update && apt-get install bison flex cmake gcc g++ libjansson-dev libcurl4-openssl-dev libhiredis-dev redis-server curl libgtk-3-dev
+sudo apt-get update && apt-get install bison flex cmake gcc g++ libjansson-dev libcurl4-openssl-dev libhiredis-dev redis-server curl libgtk-3-dev libreadline-dev libpthread-stubs0-dev
 ```
 
 
 
 ## INSTALAR
-
 
 ```bash
  git clone --recursive https://github.com/primitivorm/latino
