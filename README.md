@@ -37,12 +37,20 @@ http://opensource.org/licenses/MIT
 
 ## INSTALAR
 
+### Sistema operativo
 
+<b>Windows</b>
 
-* [Instalar en windows](instalacion_windows.md)
-* [Instalar en Debian](instalacion_debian.md)
-* [Instalar en Fedora](instalacion_fedora.md)
+| [Windows](instalacion_windows.md)|
+------------------------------------
 
+<b>Linux</b>
+
+| [Debian/Ubuntu](instalacion_debian.md) |
+------------------------------------------
+
+| [Fedora](instalacion_fedora.md) |
+-----------------------------------
 
 
 ####Cualquier aportación o sugerencia es bienvenida.
