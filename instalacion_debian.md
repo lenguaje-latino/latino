@@ -1,10 +1,10 @@
 <p align="center">
 <img src ="https://raw.githubusercontent.com/primitivorm/latino/master/logo/banner-300x.png" /><br>http://lenguaje-latino.org/
 </p>
-
 <img src ="doc/debian.png" />
 
 ## Dependencias para instalar en DEBIAN
+
 Antes de instalar latino, vamos a instalar todos paquetes necesarios: 
 
 ```
@@ -15,6 +15,7 @@ sudo apt-get update && apt-get install bison flex cmake gcc g++ libjansson-dev l
 
 
 ## INSTALAR
+
 
 ```bash
  git clone --recursive https://github.com/primitivorm/latino
@@ -52,20 +53,21 @@ Instalación en Ubuntu, DEBIAN, Mint o derivativos:
 
 ---
 
-|Requiere | Versión | SO |
-| :---    |    ---: |:---|
-| bison   |    3.04 |Linux|
-| flex    |  2.5.39 |Linux|
-| cmake   |   3.3.1 |Linux|
-| gcc     |   4.9.3 |Linux|
-| g++     |   4.9.3 |Linux|
-| libjansson-dev |   2.9   |Linux|
-| libcurl4-openssl-dev |  |Linux|
-| libhiredis-dev |  |Linux|
-| redis-server |  |Linux|
-| curl    | 7.47.0 |Linux|
-| libgtk-3-dev |  3.0 | Linux |
-| libreadline-dev libpthread-stubs0-dev |   | Linux |
+|Requiere               | Versión
+| :---------------------|--------:
+| bison                 |  3.04
+| flex                  |  2.5.39
+| cmake                 |  3.3.1
+| gcc                   |  4.9.3
+| g++                   |  4.9.3
+| libjansson-dev        |  2.9 
+| libcurl4-openssl-dev  |  *
+| libhiredis-dev        |  *
+| redis-server          |  *
+| curl                  |  7.47.0
+| libgtk-3-dev          |  3.0-2
+| libreadline-dev       |  7.0-2
+| libpthread-stubs0-dev |  0.3-4
 
 --
 
