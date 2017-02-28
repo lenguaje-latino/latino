@@ -23,8 +23,6 @@ sudo apt-get update && apt-get install bison flex cmake gcc g++ libjansson-dev l
  sudo make install
 ```
 
-
-
 ###Documentacion (borrador)
 1. https://robincoello.gitbooks.io/latino/content/inicio.html
 2. http://lenguaje-latino.org/doc/index.php
