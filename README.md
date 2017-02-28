@@ -54,15 +54,15 @@ sudo dnf install bison flex cmake gcc g++ libjansson-dev libcurl4-openssl-dev li
 ## INSTALAR
 
 <img src ="doc/win.png" />
-[Debian](instalacion_windows.md)
+[Instalar en windows](instalacion_windows.md)
 
 
 <img src ="doc/debian.png" />
-[Debian](instalacion_debian.md)
+[Instalar en Debian](instalacion_debian.md)
 
 
 <img src ="doc/fedora.png" />
-[Debian](instalacion_fedora.md)
+[Instalar en Fedora](instalacion_fedora.md)
 
 
 
