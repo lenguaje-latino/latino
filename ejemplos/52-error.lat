@@ -1,0 +1,9 @@
+fun div(a, b)
+    si b==0
+        error("Division entre 0")
+    fin
+    ret a / b
+fin
+
+div(10,0)
+printf("%s", "aqui no llega")
