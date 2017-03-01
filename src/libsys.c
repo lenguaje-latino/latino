@@ -286,6 +286,26 @@ void lat_sistema_stdin(lat_mv * mv) {
 	free(contenido);
 }
 
+void lat_sistema_fork(lat_mv *mv) {
+	lat_objeto *error = NULL;
+	bool pid_ok = false;
+	pid_t pid = fork();
+    if (pid == 0) {
+        pid_ok = true;
+	} else if (pid > 0) {
+		pid_ok = true;
+	}
+	if (!pid_ok) {
+		lat_error("Linea %d, %d: %s", error->num_linea, error->num_columna,
+				  "error en fork.");
+	} else {
+		lat_objeto *datos = lat_lista_nueva(mv, __lista_crear());
+		__lista_agregar(__lista(datos), lat_numerico_nuevo(mv, pid));
+		__lista_agregar(__lista(datos), lat_numerico_nuevo(mv, getpid()));
+		lat_apilar(mv, datos);
+	}
+}
+
 /* en prueba
 void *tarea1() {
 int i;
@@ -320,6 +340,7 @@ static const lat_CReg libsistema[] = {
 	{"usuario", lat_sistema_usuario, 0},
 	{"entorno", lat_sistema_entorno, 1},
 	{"stdin", lat_sistema_stdin, 0},
+	{"fork", lat_sistema_fork, 0},
 	/*{"tarea_nueva", lat_sistema_tarea_nueva, 1},
 	   {"tarea_iniciar", lat_sistema_tarea_iniciar, 1}, */
 	{NULL, NULL}
