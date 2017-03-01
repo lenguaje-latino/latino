@@ -1,0 +1,5 @@
+#absolute path
+#cargarlib("/home/latino/src/latino-backup/latino_libc/convertir/libconvertir.so", "latV_importar_lat_cast")
+paquete.cargar("libconvertir.so", "latV_abrir_lat_cast")
+x = convertir.numerico("3.1416")
+escribir("x: " .. x)

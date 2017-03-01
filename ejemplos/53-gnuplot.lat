@@ -1,0 +1,7 @@
+//requiere los siguientes paquetes
+//sudo apt-get install gnuplot plotutils
+funcion latplot(f, t)
+    sis.ejecutar('gnuplot -e "plot ' .. f .. '; pause '.. t .. ';"')
+fin
+
+latplot("sin(x) * cos(x/2)", 100)
