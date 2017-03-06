@@ -38,7 +38,7 @@ THE SOFTWARE.
 
 #define BUF_SIZE 1024
 #define LIB_SISTEMA_NAME "sis"
-volatile sig_atomic_t proceso_detenido;
+volatile sig_atomic_t senial;
 
 void sleep_ms(int milliseconds)	// cross-platform sleep function
 {
@@ -54,17 +54,17 @@ void sleep_ms(int milliseconds)	// cross-platform sleep function
 #endif
 }
 
-void lat_sistema_ejecutar(lat_mv * mv) {
+void lat_sis_ejecutar(lat_mv * mv) {
 	lat_objeto *cmd = lat_desapilar(mv);
 	system(__cadena(cmd));
 }
 
-void lat_sistema_dormir(lat_mv * mv) {
+void lat_sis_dormir(lat_mv * mv) {
 	lat_objeto *mili_segundos = lat_desapilar(mv);
 	__lat_sleep(__numerico(mili_segundos));
 }
 
-void lat_sistema_pipe(lat_mv * mv) {
+void lat_sis_pipe(lat_mv * mv) {
 	lat_objeto *cmd = lat_desapilar(mv);
 	FILE *fp = __lat_popen(mv, __cadena(cmd), "r");
 	size_t rlen = MAX_BUFFERSIZE;
@@ -171,7 +171,7 @@ char *__analizar_formato_fecha(char *str) {
 	return fmt;
 }
 
-void lat_sistema_fecha(lat_mv * mv) {
+void lat_sis_fecha(lat_mv * mv) {
 	lat_objeto *_formato_str = lat_desapilar(mv);
 	lat_objeto *tmp;
 	char *formato = "%dm/%mm/%a";
@@ -189,21 +189,20 @@ void lat_sistema_fecha(lat_mv * mv) {
 }
 
 void proceso_al_activarse(int sig) {
-	proceso_detenido = 1;
+	senial = sig;
 }
 
-void lat_sistema_avisar(lat_mv * mv) {
+void lat_sis_sig(lat_mv * mv) {
 	lat_objeto *a = lat_desapilar(mv);
 	signal(__numerico(a), proceso_al_activarse);
-	if (!proceso_detenido) {
+	if (!senial) {
 		lat_apilar(mv, mv->objeto_falso);
-		return;
 	} else {
-		lat_apilar(mv, mv->objeto_verdadero);
+		lat_apilar(mv, lat_numerico_nuevo(mv, senial));
 	};
 }
 
-void lat_sistema_cwd(lat_mv * mv) {
+void lat_sis_cwd(lat_mv * mv) {
 	char dir[BUF_SIZE];
 	getcwd(dir, sizeof(dir));
 	if (dir != NULL) {
@@ -213,7 +212,7 @@ void lat_sistema_cwd(lat_mv * mv) {
 	};
 }
 
-void lat_sistema_iraxy(lat_mv * mv) {
+void lat_sis_iraxy(lat_mv * mv) {
 	lat_objeto *x = lat_desapilar(mv);
 	lat_objeto *y = lat_desapilar(mv);
 	int yx = __numerico(y), xx = __numerico(x);
@@ -221,7 +220,7 @@ void lat_sistema_iraxy(lat_mv * mv) {
 	fflush(stdout);
 }
 
-void lat_sistema_usuario(lat_mv * mv) {
+void lat_sis_usuario(lat_mv * mv) {
 	char *user = getenv("USER");
 	lat_objeto *tmp;
 	if (user != NULL || user) {
@@ -232,7 +231,7 @@ void lat_sistema_usuario(lat_mv * mv) {
 	lat_apilar(mv, tmp);
 }
 
-void lat_sistema_entorno(lat_mv * mv) {
+void lat_sis_obtent(lat_mv * mv) {
 	lat_objeto *a = lat_desapilar(mv);
 	char *env = getenv(__cadena(a));
 	lat_objeto *tmp;
@@ -244,7 +243,45 @@ void lat_sistema_entorno(lat_mv * mv) {
 	lat_apilar(mv, tmp);
 }
 
-void lat_sistema_stdin(lat_mv * mv) {
+void lat_sis_nvent(lat_mv * mv) {
+	lat_objeto *c = lat_desapilar(mv);
+	lat_objeto *b = lat_desapilar(mv);
+	lat_objeto *a = lat_desapilar(mv);
+	bool nvenv = setenv(__cadena(a), __cadena(b), lat_obj2bool(c));
+	lat_objeto *tmp;
+	if (nvenv == false) {
+		tmp = mv->objeto_verdadero;
+	} else {
+		tmp = mv->objeto_falso;
+	}
+	lat_apilar(mv, tmp);
+}
+
+void lat_sis_rement(lat_mv * mv) {
+	lat_objeto *a = lat_desapilar(mv);
+	bool elmenv = unsetenv(__cadena(a));
+	lat_objeto *tmp;
+	if (elmenv == 0) {
+		tmp = mv->objeto_verdadero;
+	} else {
+		tmp = mv->objeto_falso;
+	}
+	lat_apilar(mv, tmp);
+}
+
+void lat_sis_ponent(lat_mv * mv) {
+	lat_objeto *a = lat_desapilar(mv);
+	bool ponent = putenv(__cadena(a));
+	lat_objeto *tmp;
+	if (ponent == 0) {
+		tmp = mv->objeto_verdadero;
+	} else {
+		tmp = mv->objeto_falso;
+	}
+	lat_apilar(mv, tmp);
+}
+
+void lat_sis_stdin(lat_mv * mv) {
 	fd_set readfds;
 	FD_ZERO(&readfds);
 	FD_SET(STDIN_FILENO, &readfds);
@@ -286,7 +323,7 @@ void lat_sistema_stdin(lat_mv * mv) {
 	free(contenido);
 }
 
-void lat_sistema_fork(lat_mv *mv) {
+void lat_sis_fork(lat_mv *mv) {
 	lat_objeto *error = NULL;
 	bool pid_ok = false;
 	pid_t pid = fork();
@@ -314,7 +351,7 @@ printf("\nTAREA 1: Escribiste el número %i\n", i);
 return NULL;
 }
 
-void lat_sistema_tarea_nueva(lat_mv *mv) {
+void lat_sis_tarea_nueva(lat_mv *mv) {
 lat_objeto *a = lat_desapilar(mv);
 pthread_t proceso = __numerico(a);
 pthread_create(&proceso, NULL, tarea1, NULL);
@@ -322,7 +359,7 @@ lat_objeto *cref = lat_numerico_nuevo(mv, proceso);
 lat_apilar(mv, cref);
 }
 
-void lat_sistema_tarea_iniciar(lat_mv *mv) {
+void lat_sis_tarea_iniciar(lat_mv *mv) {
 lat_objeto *a = lat_desapilar(mv);
 pthread_t proceso = __numerico(a);
 pthread_join(proceso, NULL);
@@ -330,19 +367,22 @@ pthread_join(proceso, NULL);
 */
 
 static const lat_CReg libsistema[] = {
-	{"dormir", lat_sistema_dormir, 1},
-	{"ejecutar", lat_sistema_ejecutar, 1},
-	{"pipe", lat_sistema_pipe, 1},
-	{"fecha", lat_sistema_fecha, 1},
-	{"avisar", lat_sistema_avisar, 1},
-	{"cwd", lat_sistema_cwd, 0},
-	{"iraxy", lat_sistema_iraxy, 2},
-	{"usuario", lat_sistema_usuario, 0},
-	{"entorno", lat_sistema_entorno, 1},
-	{"stdin", lat_sistema_stdin, 0},
-	{"fork", lat_sistema_fork, 0},
-	/*{"tarea_nueva", lat_sistema_tarea_nueva, 1},
-	   {"tarea_iniciar", lat_sistema_tarea_iniciar, 1}, */
+	{"dormir", lat_sis_dormir, 1},
+	{"ejecutar", lat_sis_ejecutar, 1},
+	{"pipe", lat_sis_pipe, 1},
+	{"tiempo", lat_sis_fecha, 1},
+	{"sig", lat_sis_sig, 1},
+	{"cwd", lat_sis_cwd, 0},
+	{"iraxy", lat_sis_iraxy, 2},
+	{"usuario", lat_sis_usuario, 0},
+	{"obtent", lat_sis_obtent, 1},
+	{"nvent", lat_sis_nvent, 3},
+	{"rement", lat_sis_rement, 1},
+	{"ponent", lat_sis_ponent, 1},
+	{"stdin", lat_sis_stdin, 0},
+	{"fork", lat_sis_fork, 0},
+	/*{"tarea_nueva", lat_sis_tarea_nueva, 1},
+	   {"tarea_iniciar", lat_sis_tarea_iniciar, 1}, */
 	{NULL, NULL}
 };
 
