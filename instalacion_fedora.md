@@ -88,6 +88,6 @@ Pirmero debes saber donde esta instalado
 
 ## Ayuda en nuestro foro 
 
-http://lenguaje-latino.org/foro/fedora/
+http://lenguaje-latino.org/foro/fedora-centos/
 
-####Cualquier aportación o sugerencia es bienvenida.
+#### Cualquier aportación o sugerencia es bienvenida.
