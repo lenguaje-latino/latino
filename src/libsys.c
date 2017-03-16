@@ -211,15 +211,6 @@ void lat_sis_cwd(lat_mv * mv) {
 		lat_apilar(mv, mv->objeto_nulo);
 	};
 }
-void lat_sis_ra(lat_mv * mv) {
-	char dir[BUF_SIZE];
-	getcwd(dir, sizeof(dir));
-	if (dir != NULL) {
-		lat_apilar(mv, lat_cadena_nueva(mv, strdup(dir)));
-	} else {
-		lat_apilar(mv, mv->objeto_nulo);
-	};
-}
 
 void lat_sis_iraxy(lat_mv * mv) {
 	lat_objeto *x = lat_desapilar(mv);
@@ -382,7 +373,7 @@ static const lat_CReg libsistema[] = {
 	{"tiempo", lat_sis_fecha, 1},
 	{"sig", lat_sis_sig, 1},
 	{"cwd", lat_sis_cwd, 0},
-	{"ra", lat_sis_ra, 0},
+	{"ruta", lat_sis_cwd, 0},
 	{"iraxy", lat_sis_iraxy, 2},
 	{"usuario", lat_sis_usuario, 0},
 	{"obtent", lat_sis_obtent, 1},
