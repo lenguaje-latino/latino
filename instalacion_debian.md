@@ -1,7 +1,7 @@
 <p align="center">
-<img src ="https://raw.githubusercontent.com/primitivorm/latino/master/logo/banner-300x.png" /><br>http://lenguaje-latino.org/
+<img src ="https://raw.githubusercontent.com/primitivorm/latino/master/logo/banner-300x.png" /><br>http://lenguaje-latino.org/<br><br>
+<img src ="https://www.debian-tutorials.com/wp-content/uploads/2013/03/debian-banner.png" />
 </p>
-<img src ="doc/debian.png" />
 
 ## Dependencias para instalar en DEBIAN
 
@@ -9,22 +9,30 @@ Antes de instalar latino, vamos a instalar todos paquetes necesarios:
 
 ```
 # Debian/Ubuntu o basados
-sudo apt-get update && apt-get install bison flex cmake gcc g++ libjansson-dev libcurl4-openssl-dev libhiredis-dev redis-server curl libgtk-3-dev libreadline-dev libpthread-stubs0-dev
+sudo apt-get update; apt-get install bison flex cmake gcc g++ libjansson-dev libcurl4-openssl-dev libhiredis-dev redis-server curl libgtk-3-dev libreadline-dev libpthread-stubs0-dev
 ```
 
-## INSTALAR
+## Clonar
 
 
 ```bash
  git clone --recursive https://github.com/primitivorm/latino
  cd latino
  git submodule update --init --recursive
+```
+
+## Compilar e instalar
+
+Para compilarlo hay dos formas, puedes elegir la que desees:<br><br>
+#1
+```bash
  cmake .
  make
  sudo make install
-```
+ ```
 
-Ó aún más simple:
+#2
+
 ```bash
  sudo ./configure
  sudo make install
@@ -42,9 +50,9 @@ Instalación en Ubuntu, DEBIAN, Mint o derivativos:
 ```
 
 
-###Documentacion (borrador)
+### Documentacion (borrador)
 1. https://robincoello.gitbooks.io/latino/content/inicio.html
-2. http://lenguaje-latino.org/doc/index.php
+2. http://documentacion.lenguaje-latino.org/
 
 
 ### COMPILAR
@@ -84,31 +92,16 @@ Puedes ver un video de como proceder aca https://youtu.be/Q5xGm_Bp22k
 Pirmero debes saber donde esta instalado
 
  ```bash
- whereis latino
+sudo rm -f $(which latino)
  ```
-
- Te dará algo parecido a esto:
-
- ```bash
- latino: /usr/local/bin/latino
-
- ```
-
- Ahora que sabemos dónde está solamente lo borramos:
- ```bash
- sudo rm /usr/local/bin/latino
-
- ```
+ 
 
 #### 3- Opción
 
  **Sólo debian/ubuntu. si instalaste paquete deb
  
  ```bash
- # Ubuntu 16.x.x en adelante
- sudo apt remove latino
- # Ubuntu 14.x.x hacía atrás
- sudo apt-get remove latino```
+ sudo apt-get remove --purge latino -y```
 ```
 
 
