@@ -35,7 +35,7 @@ THE SOFTWARE.
 #include "latparse.h"
 #include "linenoise/linenoise.h"
 
-#define HISTORY_FILE ".lat_history"
+#define HISTORY_FILE ".lat_historico"
 
 /*
 Para depurar en visual studio:
