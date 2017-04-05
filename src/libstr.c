@@ -902,7 +902,30 @@ void lat_cadena_char(lat_mv * mv) {
 	lat_apilar(mv, lat_cadena_nueva(mv, txt));
 }
 
+void lat_cadena_byte(lat_mv *mv) {
+	lat_objeto *posicion = lat_desapilar(mv);
+	lat_objeto *str = lat_desapilar(mv);
+	char *stringp = __cadena(str);
+	long int num_posicion = 0;
+	if (posicion->tipo != T_NULL) {
+		long int posicion_tmp = __numerico(posicion);
+		if (posicion_tmp == 0) {
+			num_posicion = (strlen(stringp)-1);
+		} else if (posicion_tmp < 0) {
+			num_posicion = (strlen(stringp)-1) - (posicion_tmp*-1);
+		} else {
+			num_posicion = posicion_tmp;
+		}
+	};
+	if (num_posicion > (strlen(stringp)-1)) {
+		lat_apilar(mv, mv->objeto_nulo);
+	} else {
+		lat_apilar(mv, lat_numerico_nuevo(mv, (int)stringp[num_posicion]));
+	}
+}
+
 static const lat_CReg lib_cadena[] = {
+    {"byte", lat_cadena_byte, 2},
 	{"esta_vacia", lat_cadena_esta_vacia, 1},
 	{"longitud", lat_cadena_longitud, 1},
 	{"minusculas", lat_cadena_minusculas, 1},
