@@ -896,36 +896,41 @@ void lat_cadena_formato(lat_mv * mv) {
 }
 
 void lat_cadena_char(lat_mv * mv) {
-	lat_objeto *a = lat_desapilar(mv);
-	char txt[1024];
-	sprintf(txt, "%c", (int)lat_obj2double(a));
-	lat_apilar(mv, lat_cadena_nueva(mv, txt));
+	lat_objeto *arg = lat_desapilar(mv);
+	if (arg->tipo == T_LIST) {
+		lista *lst = __lista(arg);
+		long int lng = __lista_longitud(lst);
+		char *str_chars = malloc(lng+1);
+		sprintf(str_chars, "%c", 0);
+		for (long int i=0; i<lng; i++) {
+			lat_objeto *tmp1 = __lista_obtener_elemento(lst, i);
+			sprintf(str_chars, "%s%c", str_chars, (char)__numerico(tmp1));
+		}
+		lat_apilar(mv, lat_cadena_nueva(mv, strdup(str_chars)));
+		free(str_chars);
+	} else if (arg->tipo == T_NUMERIC) {
+		char txt[1024];
+		sprintf(txt, "%c", (int)lat_obj2double(arg));
+		lat_apilar(mv, lat_cadena_nueva(mv, txt));
+	}
 }
 
-void lat_cadena_byte(lat_mv *mv) {
-	lat_objeto *posicion = lat_desapilar(mv);
+void lat_cadena_bytes(lat_mv *mv) {
 	lat_objeto *str = lat_desapilar(mv);
-	char *stringp = __cadena(str);
-	long int num_posicion = 0;
-	if (posicion->tipo != T_NULL) {
-		long int posicion_tmp = __numerico(posicion);
-		if (posicion_tmp == 0) {
-			num_posicion = (strlen(stringp)-1);
-		} else if (posicion_tmp < 0) {
-			num_posicion = (strlen(stringp)-1) - (posicion_tmp*-1);
-		} else {
-			num_posicion = posicion_tmp;
-		}
-	};
-	if (num_posicion > (strlen(stringp)-1)) {
+	if (str->tipo == T_NULL) {
 		lat_apilar(mv, mv->objeto_nulo);
 	} else {
-		lat_apilar(mv, lat_numerico_nuevo(mv, (int)stringp[num_posicion]));
+		char *stringp = __cadena(str);
+		lat_objeto *decs = lat_lista_nueva(mv, __lista_crear());
+		for (int i=0; i<strlen(stringp); i++) {
+			__lista_agregar(__lista(decs), lat_numerico_nuevo(mv, (int)stringp[i]));
+		}
+		lat_apilar(mv, decs);
 	}
 }
 
 static const lat_CReg lib_cadena[] = {
-    {"byte", lat_cadena_byte, 2},
+    {"bytes", lat_cadena_bytes, 1},
 	{"esta_vacia", lat_cadena_esta_vacia, 1},
 	{"longitud", lat_cadena_longitud, 1},
 	{"minusculas", lat_cadena_minusculas, 1},
