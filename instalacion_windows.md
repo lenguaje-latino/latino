@@ -9,11 +9,10 @@
 2. Ejecute el instalador
 
 
-|Versión|Instalador|
-
-|0.9.0| [Instalador] (https://github.com/primitivorm/latino/releases/download/v0.9.0/setupWindows.exe )|
-
-|0.8.11| [Instalador] ( https://github.com/primitivorm/latino/releases/download/v0.8.11/setup_windows.exe )|
+| Versión | Instalador |
+|---------|------------|
+|  0.9.0  | [Instalador](https://github.com/primitivorm/latino/releases/download/v0.9.0/setupWindows.exe)
+|  0.8.11 | [Instalador]( https://github.com/primitivorm/latino/releases/download/v0.8.11/setup_windows.exe)
 
 
 
