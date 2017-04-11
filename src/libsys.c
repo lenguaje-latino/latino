@@ -343,34 +343,35 @@ void lat_sis_fork(lat_mv *mv) {
 	}
 }
 
-/* en prueba
-void *tarea1() {
-int i;
-scanf("%i", &i);
-printf("\nTAREA 1: Escribiste el número %i\n", i);
-return NULL;
+void lat_sis_tiempo(lat_mv *mv) {
+	lat_objeto *unixt = lat_desapilar(mv);
+	lat_objeto *_formato_str = lat_desapilar(mv);
+	time_t unix_time = time(NULL);
+	if (_formato_str->tipo == T_NULL) {
+		lat_apilar(mv, lat_numerico_nuevo(mv, unix_time));
+	} else {
+		const char *ftmstr = __cadena(_formato_str);
+		if (unixt->tipo != T_NULL) {
+			unix_time = __numerico(unixt);
+		};
+		struct tm estructura;
+		long unsigned int buf = strlen(ftmstr)*15;
+		char res[buf];
+		localtime_r(&unix_time, &estructura);
+		if (!strftime(res, sizeof(res), ftmstr, &estructura)) {
+			lat_apilar(mv, mv->objeto_nulo);
+		} else {
+			lat_apilar(mv, lat_cadena_nueva(mv, strdup(res)));
+		}
+	}
 }
-
-void lat_sis_tarea_nueva(lat_mv *mv) {
-lat_objeto *a = lat_desapilar(mv);
-pthread_t proceso = __numerico(a);
-pthread_create(&proceso, NULL, tarea1, NULL);
-lat_objeto *cref = lat_numerico_nuevo(mv, proceso);
-lat_apilar(mv, cref);
-}
-
-void lat_sis_tarea_iniciar(lat_mv *mv) {
-lat_objeto *a = lat_desapilar(mv);
-pthread_t proceso = __numerico(a);
-pthread_join(proceso, NULL);
-}
-*/
 
 static const lat_CReg libsistema[] = {
 	{"dormir", lat_sis_dormir, 1},
 	{"ejecutar", lat_sis_ejecutar, 1},
 	{"pipe", lat_sis_pipe, 1},
-	{"tiempo", lat_sis_fecha, 1},
+    {"tiempo", lat_sis_tiempo, 2},
+	{"fecha", lat_sis_fecha, 1},
 	{"sig", lat_sis_sig, 1},
 	{"cwd", lat_sis_cwd, 0},
 	{"ruta", lat_sis_cwd, 0},
@@ -382,8 +383,6 @@ static const lat_CReg libsistema[] = {
 	{"ponent", lat_sis_ponent, 1},
 	{"stdin", lat_sis_stdin, 0},
 	{"fork", lat_sis_fork, 0},
-	/*{"tarea_nueva", lat_sis_tarea_nueva, 1},
-	   {"tarea_iniciar", lat_sis_tarea_iniciar, 1}, */
 	{NULL, NULL}
 };
 
