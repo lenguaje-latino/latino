@@ -776,41 +776,63 @@ void lat_cadena_regex(lat_mv * mv) {
 	free(tmp);
 }
 
-void lat_cadena_match(lat_mv * mv) {
+void lat_cadena_match(lat_mv *mv) {
 	lat_objeto *regexString = lat_desapilar(mv);
 	lat_objeto *source = lat_desapilar(mv);
 	char maxMatches = 50, maxGroups = 50;
 	regex_t regexCompiled;
 	regmatch_t groupArray[maxGroups];
 	char *cursor;
-	if (regcomp(&regexCompiled, __cadena(regexString), REG_EXTENDED)) {
-		filename = source->nombre_archivo;
-		lat_error("Linea %d, %d: %s", source->num_linea, source->num_columna,
-				  "error en el match regex.");
+	int retorno = regcomp(&regexCompiled, __cadena(regexString), REG_EXTENDED);
+	if (retorno) {
+		switch(retorno) {
+			case REG_BADPAT:
+			lat_error("Linea %d, %d: %s", source->num_linea, source->num_columna, "error en el regex: expresión regular inválida.");
+			case REG_ECOLLATE:
+			lat_error("Linea %d, %d: %s", source->num_linea, source->num_columna, "error en el regex: elemento de referencia inválido.");
+			case REG_ECTYPE:
+			lat_error("Linea %d, %d: %s", source->num_linea, source->num_columna, "error en el regex: tipo de carácteres inválidos.");
+			case REG_EESCAPE:
+			lat_error("Linea %d, %d: %s", source->num_linea, source->num_columna, "error en el regex: '\\' olvidado en el regex");
+			case REG_ESUBREG:
+			lat_error("Linea %d, %d: %s", source->num_linea, source->num_columna, "error en el regex: número en \\ dígito no válido.");
+			case REG_EBRACK:
+			lat_error("Linea %d, %d: %s", source->num_linea, source->num_columna, "error en el regex: [] sin balance.");
+			case REG_EPAREN:
+			lat_error("Linea %d, %d: %s", source->num_linea, source->num_columna, "error en el regex: \\( \\) ó ( ) sin balance.");
+			case REG_EBRACE:
+			lat_error("Linea %d, %d: %s", source->num_linea, source->num_columna, "error en el regex: \\{ \\} sin balance.");
+			case REG_BADBR:
+			lat_error("Linea %d, %d: %s", source->num_linea, source->num_columna, "error en el regex: contenido de \\{\\} inválido, no es un número, o es un número demasiado grande, o más de dos números, o quizá el primero es mayor que el segundo.");
+			case REG_ERANGE:
+			lat_error("Linea %d, %d: %s", source->num_linea, source->num_columna, "error en el regex: el final no es válido con el rango de la expresión.");
+			case REG_ESPACE:
+			lat_error("Linea %d, %d: %s", source->num_linea, source->num_columna, "error en el regex: sin memoria.");
+			case REG_BADRPT:
+			lat_error("Linea %d, %d: %s", source->num_linea, source->num_columna, "error en el regex: ?, * o + no está siendo usado en una expresión regular válida.");
+			case REG_ENOSYS:
+			lat_error("Linea %d, %d: %s", source->num_linea, source->num_columna, "error en el regex: la implementación no admite esta función.");
+		};
 	};
 	cursor = __cadena(source);
 	lat_objeto *l_matches = lat_lista_nueva(mv, __lista_crear());
 	for (int m = 0; m < maxMatches; m++) {
-		if (regexec(&regexCompiled, cursor, maxGroups, groupArray, 0))
-			break;				// No more matches
+		if (regexec(&regexCompiled, cursor, maxGroups, groupArray, 0)) {
+			break;
+		};
 		unsigned int offset = 0;
 		lat_objeto *l_groups = lat_lista_nueva(mv, __lista_crear());
 		for (int g = 0; g < maxGroups; g++) {
-			if (groupArray[g].rm_so == (size_t) - 1)
-				break;			// No more groups
-			if (g == 0)
+			if (groupArray[g].rm_so == (size_t) - 1) {
+				break;
+			};
+			if (g == 0) {
 				offset = groupArray[g].rm_eo;
+			};
 			char cursorCopy[strlen(cursor) + 1];
 			strcpy(cursorCopy, cursor);
 			cursorCopy[groupArray[g].rm_eo] = 0;
-			/*printf("Match %u, Group %u: [%2u-%2u]: %s\n", m, g, groupArray[g].rm_so,
-			   groupArray[g].rm_eo, cursorCopy + groupArray[g].rm_so); */
 			int len = groupArray[g].rm_eo - groupArray[g].rm_so;
-			/*if (len <= 0) {
-			   lat_apilar(mv, mv->objeto_nulo);
-			   regfree(&regexCompiled);
-			   return;
-			   } */
 			char *str = __memoria_asignar(mv, len + 1);
 			strcpy(str, cursorCopy + groupArray[g].rm_so);
 			str[len] = '\0';
