@@ -79,9 +79,8 @@ void lat_curl_peticion(lat_mv * mv) {
 			return;
 		} else if (res != CURLE_OK) {
 			curl_easy_cleanup(curl);
-			filename = o->nombre_archivo;
-			lat_error("Linea %d, %d: %s", o->num_linea, o->num_columna,
-					  curl_easy_strerror(res));
+			lat_apilar(mv, mv->objeto_nulo);
+			return;
 		}
 		tmp = lat_cadena_nueva(mv, strdup(s.ptr));
 		curl_easy_cleanup(curl);
