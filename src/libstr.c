@@ -50,10 +50,7 @@ int oct(int octalNumber) {
 
 char *__str_analizar_fmt(const char *s, size_t len) {
 	char *ret = __memoria_asignar(NULL, len + 1);
-	int i = 0;
-	int j = 0;
-	int c = '@';
-	int num, let = 0;
+	int i=0, j=0, let=0, c=48;
 	for (i = 0; i < ((int)len); i++) {
 		switch (s[i]) {
 		case '\\':{
@@ -94,26 +91,6 @@ char *__str_analizar_fmt(const char *s, size_t len) {
 					c = '\v';
 					i++;
 					goto save;
-				case '0':
-					if (isdigit(s[i + 2]) && isdigit(s[i + 3])) {
-						for (num = i + 1; num < strlen(s) && num < i + 4; num++) {
-							let = (10 * let) + ((int)s[num] - 48);
-						}
-						c = oct(let);
-						let = 0;
-						i += 3;
-						goto save;
-					};
-				case '1':
-					if (isdigit(s[i + 2]) && isdigit(s[i + 3])) {
-						for (num = i + 1; num < strlen(s) && num < i + 4; num++) {
-							let = (10 * let) + ((int)s[num] - 48);
-						}
-						c = oct(let);
-						let = 0;
-						i += 3;
-						goto save;
-					};
 				case '\\':
 					c = '\\';
 					i++;
@@ -131,8 +108,18 @@ char *__str_analizar_fmt(const char *s, size_t len) {
 						i++;
 					}
 				default:
-					c = s[i];
-					break;
+					if isdigit(s[i+1]) {
+						while (isdigit(s[i+1])) {
+							let = (10 * let) + ((int)s[i+1] - 48);
+							i+=1;
+						};
+						c = oct(let);
+						let=0;
+						goto save;
+					} else {
+						c = s[i];
+						break;
+					}
 				}
 			}
 			break;
