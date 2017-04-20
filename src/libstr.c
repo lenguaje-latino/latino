@@ -567,7 +567,7 @@ void lat_cadena_reemplazar(lat_mv * mv) {
 		num = __numerico(d);
 	}
 	char *cadena_final =
-		reemplazar_lat(__cadena(a), __cadena(b), __cadena(c), num);
+		reemplazar_lat(__cadena(a), __str_analizar_fmt(__cadena(b), strlen(__cadena(b))), __str_analizar_fmt(__cadena(c), strlen(__cadena(c))), num);
 	if (cadena_final != NULL) {
 		lat_objeto *r = lat_cadena_nueva(mv, cadena_final);
 		lat_apilar(mv, r);
@@ -770,7 +770,7 @@ void lat_cadena_match(lat_mv *mv) {
 	regex_t regexCompiled;
 	regmatch_t groupArray[maxGroups];
 	char *cursor;
-	int retorno = regcomp(&regexCompiled, __cadena(regexString), REG_EXTENDED);
+	int retorno = regcomp(&regexCompiled, __str_analizar_fmt(__cadena(regexString), strlen(__cadena(regexString))), REG_EXTENDED);
 	if (retorno) {
 		switch(retorno) {
 			case REG_BADPAT:
