@@ -408,6 +408,38 @@ void lat_lista_crear(lat_mv * mv) {
 	lat_apilar(mv, lat_lista_nueva(mv, lst));
 }
 
+void lat_lista_concatenar(lat_mv *mv) {
+	lat_objeto *separador = lat_desapilar(mv);
+	lat_objeto *list_ = lat_desapilar(mv);
+	long int mem = 64; // incluyo en el valor de la memoria 64 espacios por si acaso son númericos
+	char *texto = malloc(mem); // inicio la asignación de memoria
+	char *sep = " "; // el separador por defecto será " " (un espacio)
+	if (separador->tipo != T_NULL) {
+		sep = __cadena(separador); // si no es nulo, ponemos el separador que indique el usuario en el segundo argumento
+	};
+	char *sep_elegido = sep;
+	lista *lst = __lista(list_); // creamos la lista
+	texto[0] = '\0'; // iniciamos el valor 0 de texto como nulo
+	long int lng = __lista_longitud(lst); // creo la longitud de la lista para no tener que llamarla a cada ciclo
+	for (long int i=0; i<lng; i++) {
+		sep_elegido = i==0?"":sep; // si i es igual a 0, no ingresará nada, en cambio,
+		lat_objeto *tmp1 = __lista_obtener_elemento(lst, i); // obtengo el elemento
+		if (tmp1->tipo == T_STR) { // si es cadena...
+			mem+=strlen(__cadena(tmp1)+1); // aumentaré el valor de la memoria a la longitud de la cadena + 1
+			texto = realloc(texto, mem); // asigno la memoria nuevamente sin borrar su valor
+			sprintf(texto, "%s%s%s", texto, sep_elegido, __cadena(tmp1)); // imprimo el contenido que ya tiene texto en su misma variable con el separador
+		} else if (tmp1->tipo == T_NUMERIC) {
+			sprintf(texto, "%s%s%.16g", texto, sep_elegido, __numerico(tmp1)); // si es número, no reservo más memoria y sigo metiendo el valor
+		}
+	}
+	if (*texto == '\0') { // ahora regreso al valor de texto, y lo comparo con el primer valor que asigne, si es nulo...
+		lat_apilar(mv, mv->objeto_nulo); // retorna nulo.
+	} else {
+		lat_apilar(mv, lat_cadena_nueva(mv, strdup(texto))); // sino, la lista concatenada
+	}
+	free(texto);
+}
+
 static const lat_CReg lib_lista[] = {
 	{"invertir", lat_lista_invertir, 1},
 	{"agregar", lat_lista_agregar, 2},
@@ -420,6 +452,7 @@ static const lat_CReg lib_lista[] = {
 	{"insertar", lat_lista_insertar, 3},
 	{"eliminar", lat_lista_eliminar, 2},
 	{"contiene", lat_lista_contiene, 2},
+	{"concatenar", lat_lista_concatenar, 2},
 	{"crear", lat_lista_crear, 1},
 	{NULL, NULL}
 };
