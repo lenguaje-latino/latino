@@ -1,4 +1,4 @@
-# Issues
+# Errores o bugs en Latino
 Deberá tomar en cuenta estos puntos muy importantes para que su problema reportado sea arreglado inmediatamente y nos facilite el entendimiento:
 - Mandar el código donde está obteniendo el error.
 - Si su error incluye "backtrace", favor de enviarlo.
@@ -9,12 +9,18 @@ Deberá tomar en cuenta estos puntos muy importantes para que su problema report
 
 
 
-# Sugerencia de estándares de programación
+# Estándares de programación y requisitos
 
 A continuación se describen algunas sugerencias a seguir para la codificación en C / C++:
 
-Indentar código en tabulador tamaño 8 (predeterminado).
+- Indentar código en tabulador tamaño 4.
+- Palabras reservadas en inglés (como match, regex, json, etc) deberán ser usadas como tal, pero NO palabras no reservadas como string, print, time, etc.
+- La memoria reservada deberá ser liberada cuando se deje de usar si es posible.
+- La memoria que reserves no deberá ser mayor al doble de lo que en realidad se necesitará.
+- Deberás indicar en la descripción todos los detalles de esa función, y dejar libre la edición por los contribuidores de Latino, en caso de que no tengas el tiempo necesario de reparar algo en tu código, así nosotros te ayudaremos y daremos crédito en tu ayuda.
+- Los comentarios no son obligatorios, pero será de buena ayuda que los pongas explicando qué haces en caso.
 
+## Sugerencia de estándares de programación en C Latino
 
 ### If-else if-else
 
@@ -31,29 +37,34 @@ if (x == y) {
 }
 ```
 
-No es necesario usar llaves cuando se trata de una sola instrucción:
+Recuerda que no es necesario usar llaves cuando se trata de una sola instrucción:
 
 ```c
-if (condition)
-    action();
+if (condicion)
+    instruccion();
 ```
 y
 
 ```c
-if (condition)
-    do_this();
+if (condicion)
+    instruccion();
 else
-    do_that();
+    instruccion();
+```
+Pero para mejor órden, usa las instrucciones de esta manera sólo si es en una línea:
+
+```c
+if (condicion) { instruccion(); };
 ```
 
 Lo anterior no aplica si solo una parte de la sentencia (if) contiene una sola instrucción:
 
 ```c
-if (condition) {
-    do_this();
-    do_that();
+if (condicion) {
+    instruccion();
+    instruccion2();
 } else {
-    otherwise();
+    otra_instruccion();
 }
 ```
 
@@ -63,7 +74,7 @@ if (condition) {
 ```c
 do {
     /* codigo */
-} while (condition);
+} while (condicion);
 ```
 
 ### While
@@ -78,7 +89,7 @@ while (condicion) {
 Tabular switch, case's y código a diferentes alturas:
 
 ```c
-switch (suffix) {
+switch (valor) {
     case 'G':
     case 'g':
         /* codigo */
@@ -100,14 +111,14 @@ switch (suffix) {
 Iniciar la llave que abre en la siguiente línea:
 
 ```c
-void function(int x) {
+void funcion(int x) {
     /* cuerpo de la función */
 }
 ```
 
 También trate de tener un orden en los parámetros, separando entre espacio parámetro por parámetro:
 ```c
-void function(int a, char *x, int b) { ...
+void funcion(int a, char *x, int b) { ...
 ```
 
 ### Espacios
@@ -117,7 +128,7 @@ Utilice un espacio después de las siguientes palabras reservadas:
 if, switch, case, for, do, while
 ```
 
-Pero no con sizeof, typeof, defined, alignof, or `__attribute__`
+Pero no con sizeof, typeof, defined, alignof, o `__attribute__`
 
 ```c
 s = sizeof(struct file);
@@ -137,7 +148,7 @@ Cuando declaren un apuntador o una función que regrese un apuntador, de prefere
 use el '*' adjunto al nombre de la variable y no adjunto al tipo de dato:
 ```c
 	char *linux_banner;
-	unsigned long long memparse(char *ptr, char **retptr);
+	unsigned long long memoria_parser(char *ptr, char **retptr);
 	char *match_strdup(substring_t *s);
 ```
 Use un espacio alrededor (en cada lado) en operadores binarios y ternarios:
@@ -154,7 +165,7 @@ No use espacios antes ni despúes de incrementos y decrementos de operadores una
 ```
 No use espacios alrededor de miembros de las estructuras '.' y '->' 
 ```c
-	my_object->accion();
+	mi_objeto->accion();
 ```
 Elimine los espacios al final de la línea.
 
@@ -187,3 +198,5 @@ No use los comentarios al estilo C99
 // ...
 // ...
 ```
+
+
