@@ -11,7 +11,7 @@ Deberá tomar en cuenta estos puntos muy importantes para que su problema report
 
 # Estándares de programación y requisitos
 
-A continuación se describen algunas sugerencias a seguir para la codificación en C / C++:
+A continuación se describen algunas sugerencias a seguir para la codificación y flexibilidad en C:
 
 - Indentar código en tabulador tamaño 4.
 - Palabras reservadas en inglés (como match, regex, json, etc) deberán ser usadas como tal, pero NO palabras no reservadas como string, print, time, etc.
@@ -19,6 +19,7 @@ A continuación se describen algunas sugerencias a seguir para la codificación 
 - La memoria que reserves no deberá ser mayor al doble de lo que en realidad se necesitará.
 - Deberás indicar en la descripción todos los detalles de esa función, y dejar libre la edición por los contribuidores de Latino, en caso de que no tengas el tiempo necesario de reparar algo en tu código, así nosotros te ayudaremos y daremos crédito en tu ayuda.
 - Los comentarios no son obligatorios, pero será de buena ayuda que los pongas explicando qué haces en caso.
+- El estilo de programación Linux es usado en Latino.
 
 ## Sugerencia de estándares de programación en C Latino
 
