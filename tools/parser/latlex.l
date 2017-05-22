@@ -12,7 +12,7 @@
   /*
  The MIT License (MIT)
 
- Copyright (c) 2015 - 2016. Latino
+ Copyright (c) Latino - Lenguaje de Programacion
 
  Permission is hereby granted, free of charge, to any person obtaining a copy
  of this software and associated documentation files (the "Software"), to deal
@@ -37,7 +37,6 @@
 #include <string.h>
 #include <stdlib.h>
 
-#include "latino.h"
 #include "latast.h"
 #include "latparse.h"
 
@@ -87,9 +86,11 @@ EXP ([Ee][-+]?[0-9]+)
 "?" |
 ":" |
 "!" |
+"^" |
 "="     { return yytext[0]; }
 
  /* operadores de comparacion y demas*/
+"..."	  { yylval->node = latA_nodo(NODO_VAR_ARGS, NULL, NULL, yylloc->first_line, yylloc->first_column); return VAR_ARGS; }
 ">="    { return MAYOR_IGUAL; }
 "<="    { return MENOR_IGUAL; }
 "!="    { return DIFERENTE; }
@@ -122,9 +123,9 @@ EXP ([Ee][-+]?[0-9]+)
 "hasta"     { return HASTA; }
 "funcion"|"fun"   { return FUNCION; }
 "desde"     { return DESDE; }
-"cierto"|"verdadero" { yylval->node = ast_nuevo_logico(1, yylloc->first_line, yylloc->first_column); return VERDADERO; }
-"falso"     { yylval->node = ast_nuevo_logico(0, yylloc->first_line, yylloc->first_column); return FALSO; }
-"nulo"      { yylval->node = ast_nuevo_nulo(NULL, yylloc->first_line, yylloc->first_column); return NULO; }
+"cierto"|"verdadero" { return VERDADERO; }
+"falso"     { return FALSO; }
+"nulo"      { return NULO; }
 "retorno"|"retornar"|"ret"   { return RETORNO; }
 "elegir"    { return ELEGIR; }
 "caso"      { return CASO; }
@@ -132,11 +133,11 @@ EXP ([Ee][-+]?[0-9]+)
 "global"    { return GLOBAL; }
 
  /* names */
-[_A-Z]*             { yylval->node = ast_nuevo_identificador(yytext, yylloc->first_line, yylloc->first_column, 1); return IDENTIFICADOR; }
-[_a-zA-Z][_a-zA-Z0-9]* { yylval->node = ast_nuevo_identificador(yytext, yylloc->first_line, yylloc->first_column, 0); return IDENTIFICADOR; }
-[0-9]+|[0-9]+"."[0-9]*{EXP}?|"."[0-9]+{EXP}?       { yylval->node = ast_nuevo_numerico(strtod(yytext, NULL), yylloc->first_line, yylloc->first_column); return NUMERICO; }
-\"([^\\\"]|\\.)*\"     { yytext[strlen(yytext) - 1] = '\0'; yylval->node = ast_nuevo_cadena(yytext+1, yylloc->first_line, yylloc->first_column); return CADENA; }
-'([^\\\']|\\.)*'       { yytext[strlen(yytext) - 1] = '\0'; yylval->node = ast_nuevo_cadena(yytext+1, yylloc->first_line, yylloc->first_column); return CADENA; }
+[_A-Z]*             { yylval->node = latA_var(yytext, yylloc->first_line, yylloc->first_column, 1); return IDENTIFICADOR; }
+[_a-zA-Z][_a-zA-Z0-9]* { yylval->node = latA_var(yytext, yylloc->first_line, yylloc->first_column, 0); return IDENTIFICADOR; }
+[0-9]+|[0-9]+"."[0-9]*{EXP}?|"."[0-9]+{EXP}?       { yylval->node = latA_numerico(strtod(yytext, NULL), yylloc->first_line, yylloc->first_column); return NUMERICO; }
+\"([^\\\"]|\\.)*\"     { yytext[strlen(yytext) - 1] = '\0'; yylval->node = latA_cadena(yytext+1, yylloc->first_line, yylloc->first_column); return CADENA; }
+'([^\\\']|\\.)*'       { yytext[strlen(yytext) - 1] = '\0'; yylval->node = latA_literal(yytext+1, yylloc->first_line, yylloc->first_column); return CADENA; }
 "#".*                  { ; }  /* comentario de una linea estilo python */
 "//".*                 { ; }  /* comentario de una linea estilo c/c++ */
 "/*"([^*]|(\*+[^*/]))*\*+\/ { ; } /* comentarios multilinea estilo c/c++ */

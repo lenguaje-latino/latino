@@ -1,7 +1,7 @@
 /*
 The MIT License (MIT)
 
-Copyright (c) 2015 - 2016. Latino
+Copyright (c) Latino - Lenguaje de Programacion
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -20,443 +20,193 @@ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
 LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
-*/
+ */
+
+#define LATINO_CORE
 
 #include "latlist.h"
+#include "latdo.h"
 #include "latgc.h"
 #include "latino.h"
 #include "latmem.h"
 
-#define LIB_LISTA_NAME "lista"
-
-lista *__lista_crear() {
-	// printf("__lista_crear\n");
-	return __memoria_asignar(NULL, sizeof(lista));
+LATINO_API lista *latL_crear(lat_mv *mv) {
+    // lista *l = (lista *)malloc(sizeof(lista));
+    lista *l = latM_asignar(mv, sizeof(lista));
+    l->longitud = 0;
+    l->primero = NULL;
+    l->ultimo = NULL;
+    return l;
 }
 
-void __lista_destruir(lista * list) {
-	LIST_FOREACH(list, primero, siguiente, cur) {
-		if (cur->anterior) {
-			__memoria_liberar(NULL, cur->anterior);
-		}
-	}
-	__memoria_liberar(NULL, list->ultimo);
-	__memoria_liberar(NULL, list);
+LATINO_API void latL_destruir(lat_mv *mv, lista *list) {
+
+    LIST_FOREACH(list, primero, siguiente, cur) {
+        if (cur->anterior) {
+            latM_liberar(mv, cur->anterior);
+        }
+    }
+    latM_liberar(mv, list->ultimo);
+    latM_liberar(mv, list);
 }
 
-void __lista_limpiar(lista * list) {
-	LIST_FOREACH(list, primero, siguiente, cur) {
-		__memoria_liberar(NULL, cur->valor);
-	}
+LATINO_API void latL_limpiar(lat_mv *mv, lista *list) {
+
+    LIST_FOREACH(list, primero, siguiente, cur) {
+        latM_liberar(mv, cur->valor);
+    }
 }
 
-void __lista_limpiar_destruir(lista * list) {
-	__lista_limpiar(list);
-	__lista_destruir(list);
+LATINO_API void latL_limpiar_destruir(lat_mv *mv, lista *list) {
+    latL_limpiar(mv, list);
+    latL_destruir(mv, list);
 }
 
-void __lista_agregar(lista * list, void *value) {
-	lista_nodo *node = __memoria_asignar(NULL, sizeof(lista_nodo));
-	node->valor = value;
-	if (list->ultimo == NULL) {
-		list->primero = node;
-		list->ultimo = node;
-	} else {
-		list->ultimo->siguiente = node;
-		node->anterior = list->ultimo;
-		list->ultimo = node;
-	}
-	list->longitud++;
+LATINO_API void latL_agregar(lat_mv *mv, lista *list, void *value) {
+    nodo_lista *node = latM_asignar(mv, sizeof(nodo_lista));
+    node->valor = value;
+    node->siguiente = NULL;
+    node->anterior = NULL;
+    if (list->ultimo == NULL) {
+        list->primero = node;
+        list->ultimo = node;
+    } else {
+        list->ultimo->siguiente = node;
+        node->anterior = list->ultimo;
+        list->ultimo = node;
+    }
+    list->longitud++;
 }
 
-void *__lista_desapilar(lista * list) {
-	lista_nodo *node = list->ultimo;
-	return node != NULL ? __lista_eliminar_elemento(list, node) : NULL;
+LATINO_API void *latL_desapilar(lat_mv *mv, lista *list) {
+    nodo_lista *node = list->ultimo;
+    return node != NULL ? latL_eliminar_nodo(mv, list, node) : NULL;
 }
 
-void __lista_insertar_inicio(lista * list, void *value) {
-	lista_nodo *node = __memoria_asignar(NULL, sizeof(lista_nodo));
-	node->valor = value;
-	if (list->primero == NULL) {
-		list->primero = node;
-		list->ultimo = node;
-	} else {
-		node->siguiente = list->primero;
-		list->primero->anterior = node;
-		list->primero = node;
-	}
-	list->longitud++;
+LATINO_API void latL_insertar_inicio(lat_mv *mv, lista *list, void *value) {
+    // nodo_lista *node = (nodo_lista *)malloc(sizeof(nodo_lista));
+    nodo_lista *node = latM_asignar(mv, sizeof(nodo_lista));
+    node->valor = value;
+    if (list->primero == NULL) {
+        list->primero = node;
+        list->ultimo = node;
+    } else {
+        node->siguiente = list->primero;
+        list->primero->anterior = node;
+        list->primero = node;
+    }
+    list->longitud++;
 }
 
-void *__lista_extraer_inicio(lista * list) {
-	lista_nodo *node = list->primero;
-	return node != NULL ? __lista_eliminar_elemento(list, node) : NULL;
+LATINO_API void *latL_extraer_inicio(lat_mv *mv, lista *list) {
+    nodo_lista *node = list->primero;
+    return node != NULL ? latL_eliminar_nodo(mv, list, node) : NULL;
 }
 
-void *__lista_eliminar_elemento(lista * list, lista_nodo * node) {
-	void *result = NULL;
-	if (node == list->primero && node == list->ultimo) {
-		list->primero = NULL;
-		list->ultimo = NULL;
-	} else if (node == list->primero) {
-		list->primero = node->siguiente;
-		list->primero->anterior = NULL;
-	} else if (node == list->ultimo) {
-		list->ultimo = node->anterior;
-		list->ultimo->siguiente = NULL;
-	} else {
-		lista_nodo *after = node->siguiente;
-		lista_nodo *before = node->anterior;
-		after->anterior = before;
-		before->siguiente = after;
-	}
-	list->longitud--;
-	result = node->valor;
-	__memoria_liberar(NULL, node);
-	return result;
+LATINO_API void *latL_eliminar_nodo(lat_mv *mv, lista *list, nodo_lista *node) {
+    void *result = NULL;
+    if (node == list->primero && node == list->ultimo) {
+        list->primero = NULL;
+        list->ultimo = NULL;
+    } else if (node == list->primero) {
+        list->primero = node->siguiente;
+        list->primero->anterior = NULL;
+    } else if (node == list->ultimo) {
+        list->ultimo = node->anterior;
+        list->ultimo->siguiente = NULL;
+    } else {
+        nodo_lista *after = node->siguiente;
+        nodo_lista *before = node->anterior;
+        after->anterior = before;
+        before->siguiente = after;
+    }
+    list->longitud--;
+    result = node->valor;
+    latM_liberar(mv, node);
+    return result;
 }
 
-char *__lista_a_cadena(lista * list) {
-	char *valor = __memoria_asignar(NULL, MAX_STR_LENGTH);
-	strcat(valor, "[");
-	LIST_FOREACH(list, primero, siguiente, cur) {
-		lat_objeto *o = ((lat_objeto *) cur->valor);
-		char *tmp = lat_obj2cstring(o);
-		if (o->tipo == T_STR) {
-			if (strstr(__cadena(o), "\"") != NULL) {
-				strcat(valor, "'");
-			} else {
-				strcat(valor, "\"");
-			}
-		}
-		strcat(valor, tmp);
-		__memoria_liberar(NULL, tmp);
-		if (o->tipo == T_STR) {
-			if (strstr(__cadena(o), "\"") != NULL) {
-				strcat(valor, "'");
-			} else {
-				strcat(valor, "\"");
-			}
-		}
-		if (cur != list->ultimo) {
-			strcat(valor, ", ");
-		}
-	}
-	strcat(valor, "]");
-	valor[strlen(valor)] = '\0';
-	return valor;
+LATINO_API void latL_extender(lat_mv *mv, lista *list1, lista *list2) {
+
+    LIST_FOREACH(list2, primero, siguiente, cur) {
+        latL_agregar(mv, list1, cur->valor);
+    }
 }
 
-void __lista_modificar_elemento(lista * list, void *data, int pos) {
-	int i = 0;
-	if (pos < 0 || pos >= __lista_longitud(list)) {
-		lat_error("Indice fuera de rango");
-	}
-	LIST_FOREACH(list, primero, siguiente, cur) {
-		if (i == pos) {
-			cur->valor = data;
-		}
-		i++;
-	}
+LATINO_API bool latL_contiene_valor(lat_mv *mv, lista *list, void *data) {
+    lat_objeto *bus = (lat_objeto *)data;
+
+    LIST_FOREACH(list, primero, siguiente, cur) {
+        lat_objeto *tmp = (lat_objeto *)cur->valor;
+        if (latO_comparar(mv, tmp, bus) == 0) {
+            return true;
+        }
+    }
+    return false;
 }
 
-int __lista_comparar(lista * lhs, lista * rhs) {
-	int res = 0;
-	int len1 = __lista_longitud(lhs);
-	int len2 = __lista_longitud(rhs);
-	if (len1 < len2) {
-		return -1;
-	}
-	if (len1 > len2) {
-		return 1;
-	}
-	int i;
-	for (i = 0; i < len1; i++) {
-		lat_objeto *tmp1 = __lista_obtener_elemento(lhs, i);
-		lat_objeto *tmp2 = __lista_obtener_elemento(rhs, i);
-		res = __obj_comparar(tmp1, tmp2);
-		if (res < 0) {
-			return -1;
-		}
-		if (res > 0) {
-			return 1;
-		}
-	}
-	return res;
+LATINO_API lat_objeto *latL_obtener_elemento(lat_mv *mv, lista *list, int pos) {
+    if (pos < 0 || pos >= latL_longitud(list)) {
+        latC_error(mv, "Indice fuera de rango");
+    }
+    int i = 0;
+
+    LIST_FOREACH(list, primero, siguiente, cur) {
+        if (i == pos) {
+            return (lat_objeto *)cur->valor;
+        }
+        i++;
+    }
+    return latO_nulo;
 }
 
-void __lista_extender(lista * list1, lista * list2) {
-	LIST_FOREACH(list2, primero, siguiente, cur) {
-		__lista_agregar(list1, cur->valor);
-	}
+LATINO_API nodo_lista *latL_obtener_nodo(lat_mv *mv, lista *list, int pos) {
+    if (pos < 0 || pos >= latL_longitud(list)) {
+        latC_error(mv, "Indice fuera de rango");
+    }
+    int i = 0;
+
+    LIST_FOREACH(list, primero, siguiente, cur) {
+        if (i == pos) {
+            return cur;
+        }
+        i++;
+    }
+    return NULL;
 }
 
-bool __lista_contiene_valor(lista * list, void *data) {
-	lat_objeto *bus = (lat_objeto *) data;
-	LIST_FOREACH(list, primero, siguiente, cur) {
-		lat_objeto *tmp = (lat_objeto *) cur->valor;
-		if (__obj_comparar(tmp, bus) == 0) {
-			return true;
-		}
-	}
-	return false;
-}
+LATINO_API void latL_insertar_elemento(lat_mv *mv, lista *list, void *data,
+                                       int pos) {
+    // FIXME: Memory leak and for performance
+    int len = latL_longitud(list);
+    if (pos < 0 || pos > len) {
+        latC_error(mv, "Indice fuera de rango");
+    }
+    if (pos == 0) {
+        latL_insertar_inicio(mv, list, data);
+        return;
+    }
+    if (pos == len) {
+        latL_agregar(mv, list, data);
+        return;
+    }
+    lista *tmp1 = latL_crear(mv);
+    lista *tmp2 = latL_crear(mv);
+    int i = 0;
 
-lat_objeto *__lista_obtener_elemento(lista * list, int pos) {
-	if (pos < 0 || pos >= __lista_longitud(list)) {
-		lat_error("Indice fuera de rango");
-	}
-	int i = 0;
-	LIST_FOREACH(list, primero, siguiente, cur) {
-		if (i == pos) {
-			return (lat_objeto *) cur->valor;
-		}
-		i++;
-	}
-	return NULL;
-}
-
-lista_nodo *__lista_obtener_nodo(lista * list, int pos) {
-	if (pos < 0 || pos >= __lista_longitud(list)) {
-		lat_error("Indice fuera de rango");
-	}
-	int i = 0;
-	LIST_FOREACH(list, primero, siguiente, cur) {
-		if (i == pos) {
-			return cur;
-		}
-		i++;
-	}
-	return NULL;
-}
-
-int __lista_obtener_indice(lista * list, void *data) {
-	int i = 0;
-	lat_objeto *find = (lat_objeto *) data;
-	LIST_FOREACH(list, primero, siguiente, cur) {
-		// if (memcmp(cur->valor, data, sizeof(cur->valor)) == 0)
-		lat_objeto *tmp = (lat_objeto *) cur->valor;
-		if (__obj_es_igual(find, tmp)) {
-			return i;
-		}
-		i++;
-	}
-	return -1;
-}
-
-void __lista_insertar_elemento(lista * list, void *data, int pos) {
-	// FIXME: Memory leak and for performance
-	int len = __lista_longitud(list);
-	if (pos < 0 || pos > len)	// permite insertar al ultimo
-	{
-		lat_error("Indice fuera de rango");
-	}
-	if (pos == 0) {
-		__lista_insertar_inicio(list, data);
-		return;
-	}
-	if (pos == len) {
-		__lista_agregar(list, data);
-		return;
-	}
-	lista *tmp1 = __lista_crear();
-	lista *tmp2 = __lista_crear();
-	int i = 0;
-	LIST_FOREACH(list, primero, siguiente, cur) {
-		if (i < pos) {
-			__lista_agregar(tmp1, cur->valor);
-		} else {
-			__lista_agregar(tmp2, cur->valor);
-		}
-		i++;
-	}
-	lista *new = __lista_crear();
-	__lista_extender(new, tmp1);
-	__lista_agregar(new, data);
-	__lista_extender(new, tmp2);
-	*list = *new;
-	__memoria_liberar(NULL, tmp1);
-	__memoria_liberar(NULL, tmp2);
-}
-
-void lat_lista_agregar(lat_mv * mv) {
-	lat_objeto *elem = lat_desapilar(mv);
-	lat_objeto *lst = lat_desapilar(mv);
-	if (!__obj_comparar(lst, elem)) {
-		filename = lst->nombre_archivo;
-		lat_error("Linea %d, %d: Referencia circular detectada.",
-				  lst->num_linea, lst->num_columna);
-	}
-	__lista_agregar(__lista(lst), elem);
-}
-
-void lat_lista_extender(lat_mv * mv) {
-	lat_objeto *l2 = lat_desapilar(mv);
-	lat_objeto *lst = lat_desapilar(mv);
-	if (lst->tipo != T_LIST) {
-		filename = lst->nombre_archivo;
-		lat_error("Linea %d, %d: %s", lst->num_linea, lst->num_columna,
-				  "El objeto no es una lista");
-	}
-	if (l2->tipo != T_LIST) {
-		filename = lst->nombre_archivo;
-		lat_error("Linea %d, %d: %s", l2->num_linea, l2->num_columna,
-				  "El objeto no es una lista");
-	}
-	lista *_lst2 = __lista(l2);
-	lista *_lst = __lista(lst);
-	__lista_extender(_lst, _lst2);
-}
-
-void lat_lista_eliminar_indice(lat_mv * mv) {
-	lat_objeto *b = lat_desapilar(mv);
-	lat_objeto *a = lat_desapilar(mv);
-	lista *lst = __lista(a);
-	int pos = __numerico(b);
-	if (pos < 0 || pos >= __lista_longitud(lst)) {
-		filename = a->nombre_archivo;
-		lat_error("Linea %d, %d: %s", a->num_linea, a->num_columna,
-				  "Indice fuera de rango");
-	}
-	if (pos >= 0) {
-		lista_nodo *nt = __lista_obtener_nodo(lst, pos);
-		__lista_eliminar_elemento(lst, nt);
-	}
-}
-
-void lat_lista_invertir(lat_mv * mv) {
-	lat_objeto *a = lat_desapilar(mv);
-	lista *lst = __lista(a);
-	lista *new = __lista_crear();
-	// FIXME: For performance
-	int i;
-	int len = __lista_longitud(lst) - 1;
-	for (i = len; i >= 0; i--) {
-		__lista_agregar(new, __lista_obtener_elemento(lst, i));
-	}
-	lat_objeto *tmp = lat_lista_nueva(mv, new);
-	lat_apilar(mv, tmp);
-	lat_gc_agregar(mv, tmp);
-}
-
-void lat_lista_longitud(lat_mv * mv) {
-	lat_objeto *o = lat_desapilar(mv);
-	lat_objeto *tmp = lat_numerico_nuevo(mv, __lista_longitud(__lista(o)));
-	lat_apilar(mv, tmp);
-	lat_gc_agregar(mv, tmp);
-}
-void lat_lista_comparar(lat_mv * mv) {
-	lat_objeto *b = lat_desapilar(mv);
-	lat_objeto *a = lat_desapilar(mv);
-	lat_objeto *tmp =
-		lat_numerico_nuevo(mv, __lista_comparar(__lista(a), __lista(b)));
-	lat_apilar(mv, tmp);
-	lat_gc_agregar(mv, tmp);
-}
-
-void lat_lista_insertar(lat_mv * mv) {
-	lat_objeto *c = lat_desapilar(mv);
-	lat_objeto *b = lat_desapilar(mv);
-	lat_objeto *a = lat_desapilar(mv);
-	__lista_insertar_elemento(__lista(a), b, __numerico(c));
-}
-
-void lat_lista_eliminar(lat_mv * mv) {
-	lat_objeto *b = lat_desapilar(mv);
-	lat_objeto *a = lat_desapilar(mv);
-	lista *lst = __lista(a);
-	int i = __lista_obtener_indice(lst, b);
-	if (i >= 0) {
-		lista_nodo *nt = __lista_obtener_nodo(lst, i);
-		__lista_eliminar_elemento(lst, nt);
-	}
-}
-
-void lat_lista_indice(lat_mv * mv) {
-	lat_objeto *b = lat_desapilar(mv);
-	lat_objeto *a = lat_desapilar(mv);
-	lista *lst = __lista(a);
-	int i = __lista_obtener_indice(lst, b);
-	lat_objeto *tmp = lat_numerico_nuevo(mv, (double)i);
-	lat_apilar(mv, tmp);
-	lat_gc_agregar(mv, tmp);
-}
-
-void lat_lista_contiene(lat_mv * mv) {
-	lat_objeto *b = lat_desapilar(mv);
-	lat_objeto *a = lat_desapilar(mv);
-	lista *lst = __lista(a);
-	bool contiene = __lista_contiene_valor(lst, b);
-	if (contiene) {
-		lat_apilar(mv, mv->objeto_verdadero);
-	} else {
-		lat_apilar(mv, mv->objeto_falso);
-	}
-}
-
-void lat_lista_crear(lat_mv * mv) {
-	lat_objeto *num = lat_desapilar(mv);
-	int i = 0;
-	int cant = __numerico(num);
-	lista *lst = __lista_crear();
-	if (cant > 0) {
-		while (i < cant) {
-			__lista_agregar(lst, mv->objeto_nulo);
-			i++;
-		}
-	}
-	lat_apilar(mv, lat_lista_nueva(mv, lst));
-}
-
-void lat_lista_concatenar(lat_mv *mv) {
-	lat_objeto *separador = lat_desapilar(mv);
-	lat_objeto *list_ = lat_desapilar(mv);
-	long int mem = 64; // incluyo en el valor de la memoria 64 espacios por si acaso son númericos
-	char *texto = malloc(mem); // inicio la asignación de memoria
-	char *sep = " "; // el separador por defecto será " " (un espacio)
-	if (separador->tipo != T_NULL) {
-		sep = __cadena(separador); // si no es nulo, ponemos el separador que indique el usuario en el segundo argumento
-	};
-	char *sep_elegido = sep;
-	lista *lst = __lista(list_); // creamos la lista
-	texto[0] = '\0'; // iniciamos el valor 0 de texto como nulo
-	long int lng = __lista_longitud(lst); // creo la longitud de la lista para no tener que llamarla a cada ciclo
-	for (long int i=0; i<lng; i++) {
-		sep_elegido = i==0?"":sep; // si i es igual a 0, no ingresará nada, en cambio,
-		lat_objeto *tmp1 = __lista_obtener_elemento(lst, i); // obtengo el elemento
-		if (tmp1->tipo == T_STR) { // si es cadena...
-			mem+=strlen(__cadena(tmp1)+1); // aumentaré el valor de la memoria a la longitud de la cadena + 1
-			texto = realloc(texto, mem); // asigno la memoria nuevamente sin borrar su valor
-			sprintf(texto, "%s%s%s", texto, sep_elegido, __cadena(tmp1)); // imprimo el contenido que ya tiene texto en su misma variable con el separador
-		} else if (tmp1->tipo == T_NUMERIC) {
-			sprintf(texto, "%s%s%.16g", texto, sep_elegido, __numerico(tmp1)); // si es número, no reservo más memoria y sigo metiendo el valor
-		}
-	}
-	if (*texto == '\0') { // ahora regreso al valor de texto, y lo comparo con el primer valor que asigne, si es nulo...
-		lat_apilar(mv, mv->objeto_nulo); // retorna nulo.
-	} else {
-		lat_apilar(mv, lat_cadena_nueva(mv, strdup(texto))); // sino, la lista concatenada
-	}
-	free(texto);
-}
-
-static const lat_CReg lib_lista[] = {
-	{"invertir", lat_lista_invertir, 1},
-	{"agregar", lat_lista_agregar, 2},
-	{"extender", lat_lista_extender, 2},
-	{"eliminar_indice", lat_lista_eliminar_indice, 2},
-	{"longitud", lat_lista_longitud, 1},
-	{"indice", lat_lista_indice, 2},
-	{"encontrar", lat_lista_indice, 2},
-	{"comparar", lat_lista_comparar, 2},
-	{"insertar", lat_lista_insertar, 3},
-	{"eliminar", lat_lista_eliminar, 2},
-	{"contiene", lat_lista_contiene, 2},
-	{"concatenar", lat_lista_concatenar, 2},
-	{"crear", lat_lista_crear, 1},
-	{NULL, NULL}
-};
-
-void lat_importar_lib_lista(lat_mv * mv) {
-	lat_importar_lib(mv, LIB_LISTA_NAME, lib_lista);
+    LIST_FOREACH(list, primero, siguiente, cur) {
+        if (i < pos) {
+            latL_agregar(mv, tmp1, cur->valor);
+        } else {
+            latL_agregar(mv, tmp2, cur->valor);
+        }
+        i++;
+    }
+    lista *nl = latL_crear(mv);
+    latL_extender(mv, nl, tmp1);
+    latL_agregar(mv, nl, data);
+    latL_extender(mv, nl, tmp2);
+    *list = *nl;
+    latM_liberar(mv, tmp1);
+    latM_liberar(mv, tmp2);
 }
