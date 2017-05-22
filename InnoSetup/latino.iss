@@ -44,7 +44,6 @@ Source: "..\visualstudio\bin\Release\latino.exe"; DestDir: "{app}"; Flags: ignor
 Source: "..\InnoSetup\*.dll"; DestDir: "{app}"; Flags: ignoreversion
 Source: "..\InnoSetup\*.lib"; DestDir: "{app}"; Flags: ignoreversion
 Source: "..\InnoSetup\*.ico"; DestDir: "{app}"; Flags: ignoreversion
-Source: "..\src\*.h"; DestDir: "{app}\include\"; Flags: ignoreversion
 Source: "..\include\*.h"; DestDir: "{app}\include\"; Flags: ignoreversion
 
 ; NOTE: Don't use "Flags: ignoreversion" on any shared system files
