@@ -1,4 +1,48 @@
-incluir("json")     //paquete.cargar("liblatino-json.so", "latC_abrir_liblatino_json")
+//una funcion varargs se crea con ... en su ultimo parametro
+funcion mi_concatenar(arg1, arg2, ...)
+    //obtenemos los parametros varargs
+    args = [...]
+    //concatenamos los primeros 2 argumentos
+    r= arg1 .. arg2
+    desde (i=0; i < args; i++)
+        r = r .. args[i]
+    fin
+    retornar r
+fin
+//enviamos N parametros
+msg = mi_concatenar("hola ", "mundo ", "este ", "es ", "un ", "mensaje ", "largo...")
+escribir(msg)   //imprime: "hola mundo este es un mensaje largo..."
+
+//otro ejemplo
+funcion sumar(...)
+    args = [...]
+    r=0
+    desde (i=0; i < args; i++)
+        r = r + args[i]
+    fin
+    retornar r
+fin
+x = sumar(1,2,3,4,5)
+imprimir(x)     //imprime: "15"
+
+//una funcion multi-retorno es aquella que regresa N parametros
+funcion multi_retorno(msg)
+    #proceso el mensaje
+    //mas codigo
+    //regreso un valor exitoso y un mensaje, puede retornar mas mensajes
+    retornar verdadero, "el mensaje se envio correctamente"
+fin
+
+//asignacion multiple de variables
+correcto, mensaje = multi_retorno("hola amigos")
+
+si correcto
+    //imprime: "el mensaje se envio correctamente"
+    escribir(mensaje)
+fin
+
+
+/*incluir("json")     //paquete.cargar("liblatino-json.so", "latC_abrir_liblatino_json")
 
 poner("convertimos de una cadena json a un objeto de latino:")
 cad = '{"ok":true,"result":[{"update_id":558904697, "message":{"message_id":4507,"from":{"id":189041244,"first_name":"Bruno Ric (K)","username":"Jarriz"},"chat":{"id":189041244,"first_name":"Bruno Ric (K)","username":"Jarriz","type":"private"},"date":1475275449,"text":"hola latinos!!!"}}]}'
@@ -93,3 +137,4 @@ poner("PING:\t\t"..ping)
 
 // terminamos la conexión
 redis.desconectar(conexion)
+*/
