@@ -1,5 +1,5 @@
 CMAKE_MINIMUM_REQUIRED(VERSION 2.8)
-set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${CMAKE_CURRENT_LIST_DIR}/cmake/")
+set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${CMAKE_CURRENT_LIST_DIR}/cmake/Modules/")
 
 if(NOT CMAKE_CONFIGURATION_TYPES AND NOT CMAKE_BUILD_TYPE) # Default to a Release build
     set(CMAKE_BUILD_TYPE Release CACHE STRING "Choose the type of build [Release Debug]" FORCE)
@@ -15,14 +15,8 @@ PROJECT(latino)
 
 ADD_SUBDIRECTORY(src)
 IF(UNIX)
-  #execute_process(COMMAND bash ${CMAKE_CURRENT_LIST_DIR}/tools/install_deps.sh)
-  #execute_process(COMMAND bash ${CMAKE_CURRENT_LIST_DIR}/tools/key.sh)
-ELSE(UNIX)
-  IF(MSVC)
-      #ADD_SUBDIRECTORY(jansson)
-      #ADD_SUBDIRECTORY(curl)
-      #ADD_SUBDIRECTORY(hiredis)
-  ENDIF(MSVC)
+  execute_process(COMMAND bash ${CMAKE_CURRENT_LIST_DIR}/tools/install_deps.sh)
+  execute_process(COMMAND bash ${CMAKE_CURRENT_LIST_DIR}/tools/key.sh)
 ENDIF(UNIX)
 
 enable_testing ()
