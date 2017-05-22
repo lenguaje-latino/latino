@@ -2,7 +2,7 @@
 ; SEE THE DOCUMENTATION FOR DETAILS ON CREATING INNO SETUP SCRIPT FILES!
 
 #define MyAppName "Latino"
-#define MyAppVersion "0.9.0"
+#define MyAppVersion "1.0.0"
 #define MyAppPublisher "Lenguaje Latino"
 #define MyAppURL "http://lenguaje-latino.org/"
 #define MyAppExeName "latino.exe"
@@ -21,10 +21,10 @@ AppSupportURL={#MyAppURL}
 AppUpdatesURL={#MyAppURL}
 DefaultDirName={pf}\{#MyAppName}
 DisableProgramGroupPage=yes
-LicenseFile=C:\src\latino\LICENCIA.txt
-OutputDir=C:\src\latino\InnoSetup
+LicenseFile="..\LICENCIA.txt"
+OutputDir="..\InnoSetup"
 OutputBaseFilename=setup
-SetupIconFile=C:\src\latino\InnoSetup\latino.ico
+SetupIconFile="..\InnoSetup\latino.ico"
 Compression=lzma
 SolidCompression=yes
 ChangesEnvironment=yes
@@ -39,10 +39,14 @@ Name: "spanish"; MessagesFile: "compiler:Languages\Spanish.isl"
 Name: "desktopicon"; Description: "{cm:CreateDesktopIcon}"; GroupDescription: "{cm:AdditionalIcons}"; Flags: unchecked
 
 [Files]
-Source: "C:\src\latino\visualstudio\bin\Release\latino.exe"; DestDir: "{app}"; Flags: ignoreversion
-Source: "C:\src\latino\ejemplos\*"; DestDir: "{app}\ejemplos\"; Flags: ignoreversion recursesubdirs createallsubdirs
-Source: "C:\src\latino\InnoSetup\*.dll"; DestDir: "{app}"; Flags: ignoreversion
-Source: "C:\src\latino\InnoSetup\*.ico"; DestDir: "{app}"; Flags: ignoreversion
+Source: "..\visualstudio\bin\Release\latino.exe"; DestDir: "{app}"; Flags: ignoreversion
+;Source: "..\ejemplos\*"; DestDir: "{app}\ejemplos\"; Flags: ignoreversion recursesubdirs createallsubdirs
+Source: "..\InnoSetup\*.dll"; DestDir: "{app}"; Flags: ignoreversion
+Source: "..\InnoSetup\*.lib"; DestDir: "{app}"; Flags: ignoreversion
+Source: "..\InnoSetup\*.ico"; DestDir: "{app}"; Flags: ignoreversion
+Source: "..\src\*.h"; DestDir: "{app}\include\"; Flags: ignoreversion
+Source: "..\include\*.h"; DestDir: "{app}\include\"; Flags: ignoreversion
+
 ; NOTE: Don't use "Flags: ignoreversion" on any shared system files
 
 [Icons]

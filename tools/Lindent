@@ -1,5 +1,5 @@
-#!/bin/bash
-PARAM="-npro -kr -i4 -ts4 -sob -l80 -ss -ncs -cp1 -brf -pi4"
+#!/bin/sh
+PARAM="-npro -kr -i8 -ts8 -sob -l80 -ss -ncs -cp1"
 RES=`indent --version`
 if [ "$RES" = "" ]; then
 	exit 1
@@ -18,9 +18,4 @@ elif [ $V1 -eq 2 ]; then
     fi
   fi
 fi
-PARAMS=$(echo "$@" | sed 's/--no-backup//g')
-PARAMS=$(echo "$PARAMS" | sed 's/-nbk//g')
-indent $PARAM $PARAMS
-if [[ $(echo $@ | grep "\-\-no\-backup") || $(echo $@ | grep "\-nbk") ]] && [[ ! "$(find \~ 2>/dev/null)" ]]; then
-	rm *\~
-fi
+indent $PARAM "$@"

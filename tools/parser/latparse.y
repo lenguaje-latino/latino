@@ -3,7 +3,7 @@
 /*
 The MIT License (MIT)
 
-Copyright (c) 2015 - 2016. Latino
+Copyright (c) Latino - Lenguaje de Programacion
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -56,12 +56,10 @@ int yylex (YYSTYPE * yylval_param,YYLTYPE * yylloc_param ,yyscan_t yyscanner);
 %parse-param {void *scanner}
 
 /* declare tokens */
-%token <node> VERDADERO
-%token <node> FALSO
-%token <node> NULO
 %token <node> NUMERICO
 %token <node> CADENA
 %token <node> IDENTIFICADOR
+%token <node> VAR_ARGS
 
 %token
     SI
@@ -75,12 +73,14 @@ int yylex (YYSTYPE * yylval_param,YYLTYPE * yylloc_param ,yyscan_t yyscanner);
     HASTA
     FUNCION
     DESDE
-    KBOOL
     RETORNO
     ELEGIR
     CASO
     DEFECTO
     ATRIBUTO
+    VERDADERO
+    FALSO
+    NULO
 
 %token
     MAYOR_QUE
@@ -129,6 +129,7 @@ int yylex (YYSTYPE * yylval_param,YYLTYPE * yylloc_param ,yyscan_t yyscanner);
 %left IGUAL_LOGICO MAYOR_IGUAL MAYOR_QUE MENOR_IGUAL MENOR_QUE DIFERENTE REGEX
 %left '+' '-'
 %left '*' '/' '%' '!'
+%left '^'
 
 %start program
 
@@ -141,79 +142,83 @@ constant_expression
 
 primary_expression
     : IDENTIFICADOR
-    | VERDADERO
-    | FALSO
-    | NULO
+    | VERDADERO { $$ = latA_logico(1, @1.first_line, @1.first_column);}
+    | FALSO { $$ = latA_logico(0, @1.first_line, @1.first_column);}
+    | NULO { $$ = latA_nulo(NULL, @1.first_line, @1.first_column);}
     ;
 
 unary_expression
     : '-' expression %prec '*' {
-        $$ = ast_reducir_constantes(NODO_MENOS_UNARIO, $2, NULL);
+        $$ = latA_nodo(NODO_MENOS_UNARIO, $2, NULL, @1.first_line, @1.first_column);
         if($$ == NULL) YYABORT;
     }
     | '+' expression %prec '*' {
-        $$ = ast_reducir_constantes(NODO_MAS_UNARIO, $2, NULL);
+        $$ = latA_nodo(NODO_MAS_UNARIO, $2, NULL, @1.first_line, @1.first_column);
         if($$ == NULL) YYABORT;
     }
     ;
 
 multiplicative_expression
-    : expression '*' expression {
-        $$ = ast_reducir_constantes(NODO_MULTIPLICACION, $1, $3);
+    : expression '^' expression {
+        $$ = latA_nodo(NODO_POTENCIA, $1, $3, @2.first_line, @2.first_column);
+        if($$ == NULL) YYABORT;
+    }
+    | expression '*' expression {
+        $$ = latA_nodo(NODO_MULTIPLICACION, $1, $3, @2.first_line, @2.first_column);
         if($$ == NULL) YYABORT;
     }
     | expression '/' expression {
-        $$ = ast_reducir_constantes(NODO_DIVISION, $1, $3);
+        $$ = latA_nodo(NODO_DIVISION, $1, $3, @2.first_line, @2.first_column);
         if($$ == NULL) YYABORT;
     }
     | expression '%' expression %prec '*' {
-        $$ = ast_reducir_constantes(NODO_MODULO, $1, $3);
+        $$ = latA_nodo(NODO_MODULO, $1, $3, @2.first_line, @2.first_column);
         if($$ == NULL) YYABORT;
     }
     ;
 
 additive_expression
     : expression '-' expression {
-        $$ = ast_reducir_constantes(NODO_RESTA, $1, $3);
+        $$ = latA_nodo(NODO_RESTA, $1, $3, @2.first_line, @2.first_column);
         if($$ == NULL) YYABORT;
     }
     | expression '+' expression {
-        $$ = ast_reducir_constantes(NODO_SUMA, $1, $3);
+        $$ = latA_nodo(NODO_SUMA, $1, $3, @2.first_line, @2.first_column);
         if($$ == NULL) YYABORT;
     }
     ;
 
 relational_expression
-    : expression MAYOR_QUE expression { $$ = ast_nuevo(NODO_MAYOR_QUE, $1, $3); }
-    | expression MENOR_QUE expression { $$ = ast_nuevo(NODO_MENOR_QUE, $1, $3); }
-    | expression MAYOR_IGUAL expression { $$ = ast_nuevo(NODO_MAYOR_IGUAL, $1, $3); }
-    | expression MENOR_IGUAL expression { $$ = ast_nuevo(NODO_MENOR_IGUAL, $1, $3); }
+    : expression MAYOR_QUE expression { $$ = latA_nodo(NODO_MAYOR_QUE, $1, $3, @2.first_line, @2.first_column); }
+    | expression MENOR_QUE expression { $$ = latA_nodo(NODO_MENOR_QUE, $1, $3, @2.first_line, @2.first_column); }
+    | expression MAYOR_IGUAL expression { $$ = latA_nodo(NODO_MAYOR_IGUAL, $1, $3, @2.first_line, @2.first_column); }
+    | expression MENOR_IGUAL expression { $$ = latA_nodo(NODO_MENOR_IGUAL, $1, $3, @2.first_line, @2.first_column); }
     ;
 
 equality_expression
-    : expression DIFERENTE expression { $$ = ast_nuevo(NODO_DESIGUALDAD, $1, $3); }
-    | expression IGUAL_LOGICO expression { $$ = ast_nuevo(NODO_IGUALDAD, $1, $3); }
-    | expression REGEX expression { $$ = ast_nuevo(NODO_REGEX, $1, $3); }
+    : expression DIFERENTE expression { $$ = latA_nodo(NODO_DESIGUALDAD, $1, $3, @2.first_line, @2.first_column); }
+    | expression IGUAL_LOGICO expression { $$ = latA_nodo(NODO_IGUALDAD, $1, $3, @2.first_line, @2.first_column); }
+    | expression REGEX expression { $$ = latA_nodo(NODO_REGEX, $1, $3, @2.first_line, @2.first_column); }
     ;
 
 logical_not_expression
-    : '!' expression %prec '*' { $$ = ast_nuevo(NODO_NO, $2, NULL); }
+    : '!' expression %prec '*' { $$ = latA_nodo(NODO_NO, $2, NULL, @2.first_line, @2.first_column); }
     ;
 
 logical_and_expression
-    : expression Y_LOGICO expression { $$ = ast_nuevo(NODO_Y, $1, $3); }
+    : expression Y_LOGICO expression { $$ = latA_nodo(NODO_Y, $1, $3, @2.first_line, @2.first_column); }
 	  ;
 
 logical_or_expression
-	  : expression O_LOGICO expression { $$ = ast_nuevo(NODO_O, $1, $3); }
+	  : expression O_LOGICO expression { $$ = latA_nodo(NODO_O, $1, $3, @2.first_line, @2.first_column); }
 	  ;
 
 ternary_expression
-    : expression '\?' expression ':' expression  { $$ = ast_nuevo_si($1, $3, $5); }
+    : expression '\?' expression ':' expression  { $$ = latA_si($1, $3, $5); }
     ;
 
 concat_expression
-    : expression CONCATENAR expression { $$ = ast_nuevo(NODO_CONCATENAR, $1, $3); }
+    : expression CONCATENAR expression { $$ = latA_nodo(NODO_CONCATENAR, $1, $3, @2.first_line, @2.first_column); }
     ;
 
 expression
@@ -234,6 +239,9 @@ expression
         | dict_new
         | variable_access
         | function_anonymous
+        | ternary_expression
+        | incdec_statement
+        | VAR_ARGS { $$ = latA_nodo(NODO_LOAD_VAR_ARGS , NULL, NULL, 0, 0); }
         ;
 
 program
@@ -246,12 +254,12 @@ program
 statement_list
     : statement statement_list {
         if($2){
-            $$ = ast_nuevo(NODO_BLOQUE, $1, $2);
+            $$ = latA_nodo(NODO_BLOQUE, $1, $2, @1.first_line, @1.first_column);
         }
     }
     | statement {
         if($1){
-          $$ = ast_nuevo(NODO_BLOQUE, $1, NULL);
+          $$ = latA_nodo(NODO_BLOQUE, $1, NULL, @1.first_line, @1.first_column);
         }
     }
     | error statement_list { yyerrok; yyclearin;}
@@ -265,81 +273,87 @@ statement
     | jump_statement
     | function_definition
     | function_call
+    | incdec_statement
     ;
 
 incdec_statement
-    : variable_access INCREMENTO { $$ = ast_nuevo(NODO_INC, $1, NULL); }
-    | variable_access DECREMENTO { $$ = ast_nuevo(NODO_DEC, $1, NULL); }
+    : variable_access INCREMENTO { $$ = latA_nodo(NODO_INC, $1, NULL, @2.first_line, @2.first_column); }
+    | variable_access DECREMENTO { $$ = latA_nodo(NODO_DEC, $1, NULL, @2.first_line, @2.first_column); }
     ;
 
 variable_access
     : IDENTIFICADOR
     | field_designator
+    | function_call
     ;
 
 field_designator
-    : variable_access ATRIBUTO IDENTIFICADOR { $$ = ast_nuevo(NODO_ATRIBUTO, $1, $3); }
-    | variable_access '[' expression ']' { $$ = ast_nuevo(NODO_LISTA_OBTENER_ELEMENTO, $3, $1); }
+    : variable_access ATRIBUTO IDENTIFICADOR { $$ = latA_nodo(NODO_ATRIBUTO, $1, $3, @3.first_line, @3.first_column); }
+    | variable_access '[' expression ']' { $$ = latA_nodo(NODO_LISTA_OBTENER_ELEMENTO, $3, $1, @3.first_line, @3.first_column); }
     ;
 
 global_declaration
     : GLOBAL declaration {
-        $$ = ast_nuevo(NODO_GLOBAL, $2, NULL);
+        $$ = latA_nodo(NODO_GLOBAL, $2, NULL, @1.first_line, @1.first_column);
     }
     | GLOBAL function_definition {
-        $$ = ast_nuevo(NODO_GLOBAL, $2, NULL);
+        $$ = latA_nodo(NODO_GLOBAL, $2, NULL, @1.first_line, @1.first_column);
     }
     ;
 
-
 declaration
-    : variable_access '=' expression { $$ = ast_nuevo_asignacion($3, $1); }
-    | variable_access '=' ternary_expression { $$ = ast_nuevo_asignacion($3, $1); }
-    | variable_access '[' expression ']' '=' expression { $$ = ast_nuevo_asignacion_lista_elem($6, $1, $3); }
-    | variable_access CONCATENAR_IGUAL expression { $$ = ast_nuevo_asignacion((ast_nuevo(NODO_CONCATENAR, $1, $3)), $1); }
-    | variable_access MAS_IGUAL expression { $$ = ast_nuevo_asignacion((ast_nuevo(NODO_SUMA, $1, $3)), $1); }
-    | variable_access MENOS_IGUAL expression { $$ = ast_nuevo_asignacion((ast_nuevo(NODO_RESTA, $1, $3)), $1); }
-    | variable_access POR_IGUAL expression { $$ = ast_nuevo_asignacion((ast_nuevo(NODO_MULTIPLICACION, $1, $3)), $1); }
-    | variable_access ENTRE_IGUAL expression { $$ = ast_nuevo_asignacion((ast_nuevo(NODO_DIVISION, $1, $3)), $1); }
-    | variable_access MODULO_IGUAL expression { $$ = ast_nuevo_asignacion((ast_nuevo(NODO_MODULO, $1, $3)), $1); }
-    | incdec_statement
-;
+    : variable_access '=' expression { $$ = latA_asign($3, $1); }
+    | variable_access CONCATENAR_IGUAL expression { $$ = latA_asign(
+        (latA_nodo(NODO_CONCATENAR, $1, $3, @2.first_line, @2.first_column)), $1); }
+    | variable_access MAS_IGUAL expression { $$ = latA_asign(
+        (latA_nodo(NODO_SUMA, $1, $3, @2.first_line, @2.first_column)), $1); }
+    | variable_access MENOS_IGUAL expression { $$ = latA_asign(
+        (latA_nodo(NODO_RESTA, $1, $3, @2.first_line, @2.first_column)), $1); }
+    | variable_access POR_IGUAL expression { $$ = latA_asign(
+        (latA_nodo(NODO_MULTIPLICACION, $1, $3, @2.first_line, @2.first_column)), $1); }
+    | variable_access ENTRE_IGUAL expression { $$ = latA_asign(
+        (latA_nodo(NODO_DIVISION, $1, $3, @2.first_line, @2.first_column)), $1); }
+    | variable_access MODULO_IGUAL expression { $$ = latA_asign(
+        (latA_nodo(NODO_MODULO, $1, $3, @2.first_line, @2.first_column)), $1); }
+    | parameter_list '=' argument_expression_list { $$ = latA_asign($3, $1); }
+    | variable_access '[' expression ']' '=' expression { $$ = latA_asign_le($6, $1, $3); }
+    ;
 
 labeled_statements
     : labeled_statement_case labeled_statements {
-        $$ = ast_nuevo(NODO_CASOS, $1, $2);
+        $$ = latA_nodo(NODO_CASOS, $1, $2, @1.first_line, @1.first_column);
     }
     | labeled_statement_case {
-        $$ = ast_nuevo(NODO_CASOS, $1, NULL);
+        $$ = latA_nodo(NODO_CASOS, $1, NULL, @1.first_line, @1.first_column);
     }
     | labeled_statement_default {
-        $$ = ast_nuevo(NODO_CASOS, $1, NULL);
+        $$ = latA_nodo(NODO_CASOS, $1, NULL, @1.first_line, @1.first_column);
     }
     ;
 
 labeled_statement_case
     :
     CASO constant_expression ':' statement_list {
-        $$ = ast_nuevo(NODO_CASO, $2, $4);
+        $$ = latA_nodo(NODO_CASO, $2, $4, @1.first_line, @1.first_column);
     }
     ;
 
 labeled_statement_default
     :
     DEFECTO ':' statement_list {
-        $$ = ast_nuevo(NODO_DEFECTO, NULL, $3);
+        $$ = latA_nodo(NODO_DEFECTO, NULL, $3, @1.first_line, @1.first_column);
     }
     ;
 
 selection_statement:
     SI expression statement_list FIN {
-        $$ = ast_nuevo_si($2, $3, NULL); }
+        $$ = latA_si($2, $3, NULL); }
     | SI expression statement_list SINO statement_list FIN {
-        $$ = ast_nuevo_si($2, $3, $5); }
+        $$ = latA_si($2, $3, $5); }
     | SI expression statement_list osi_statements FIN {
-        $$ = ast_nuevo_si($2, $3, $4); }
+        $$ = latA_si($2, $3, $4); }
     | ELEGIR expression labeled_statements FIN {
-        $$ = ast_nuevo(NODO_ELEGIR, $2, $3);
+        $$ = latA_nodo(NODO_ELEGIR, $2, $3, @1.first_line, @1.first_column);
     }
     ;
 
@@ -350,90 +364,121 @@ osi_statements:
 
 osi_statement:
     O_SI expression statement_list {
-          $$ = ast_nuevo_si($2, $3, NULL);
+          $$ = latA_si($2, $3, NULL);
     }
     | O_SI expression statement_list SINO statement_list {
-          $$ = ast_nuevo_si($2, $3, $5);
+          $$ = latA_si($2, $3, $5);
     }
     | O_SI expression statement_list osi_statements {
-          $$ = ast_nuevo_si($2, $3, $4);
+          $$ = latA_si($2, $3, $4);
     }
     ;
 
 iteration_statement
     : MIENTRAS expression statement_list FIN {
-        $$ = ast_nuevo_mientras($2, $3); }
+        $$ = latA_mientras($2, $3); }
     | REPETIR statement_list HASTA expression {
-        $$ = ast_nuevo_hacer($4, $2); }
-    | DESDE '(' declaration ';' expression ';' declaration ')'
+        $$ = latA_hacer($4, $2); }
+    | DESDE '(' declaration ';' expression ';' statement ')'
         statement_list  FIN {
-        $$ = ast_nuevo_desde($3, $5, $7, $9); }
+        $$ = latA_desde($3, $5, $7, $9); }
     ;
 
 jump_statement
-    : RETORNO expression { $$ = ast_nuevo(NODO_RETORNO, $2, NULL); }
+    : RETORNO expression { $$ = latA_nodo(NODO_RETORNO, $2, NULL, @1.first_line, @1.first_column); }
+    | RETORNO argument_expression_list { $$ = latA_nodo(NODO_RETORNO, $2, NULL, @1.first_line, @1.first_column); }
     ;
 
 function_definition
     : FUNCION IDENTIFICADOR '(' parameter_list ')' statement_list FIN {
-        $$ = ast_nuevo_funcion($2, $4, $6);
+        $$ = latA_funcion($2, $4, $6, @2.first_line, @2.first_column);
     }
     ;
 
 function_anonymous
     : FUNCION '(' parameter_list ')' statement_list FIN {
-        $$ = ast_nuevo_funcion(ast_nuevo_identificador("anonima", @1.first_line, @1.first_column, false), $3, $5);
+        $$ = latA_funcion(latA_var("anonima", @1.first_line, @1.first_column, false), $3, $5, @1.first_line, @1.first_column);
     }
     ;
 
 function_call
-    : variable_access '(' argument_expression_list ')' { $$ = ast_nuevo(NODO_FUNCION_LLAMADA, $1, $3); }
+    : variable_access '(' argument_expression_list ')' { $$ = latA_nodo(NODO_FUNCION_LLAMADA, $1, $3, @1.first_line, @1.first_column); }
     ;
 
 argument_expression_list
     : /* empty */ { $$ = NULL; }
-    | expression { $$ = ast_nuevo(NODO_FUNCION_ARGUMENTOS, $1, NULL); }
-    | expression ',' argument_expression_list { $$ = ast_nuevo(NODO_FUNCION_ARGUMENTOS, $1, $3); }
+    | expression { $$ = latA_nodo(NODO_FUNCION_ARGUMENTOS, $1, NULL, @1.first_line, @1.first_column); }
+    | expression ',' argument_expression_list {
+        /*printf("%s: %i\n", "list_items", $1->tipo);*/
+        if($1->tipo == NODO_FUNCION_LLAMADA){
+            printf("\033[1;31m%s:%d:%d:\033[0m %s\n", filename, @1.first_line, @1.first_column, "Llamado a funcion debe de ser el ultimo parametro");
+            YYABORT;
+        }
+        if($1->tipo == NODO_VAR_ARGS){
+            printf("\033[1;31m%s:%d:%d:\033[0m %s\n", filename, @1.first_line, @1.first_column, "Parametro VAR_ARGS (...) debe de ser el ultimo parametro");
+            YYABORT;
+        }
+        $$ = latA_nodo(NODO_FUNCION_ARGUMENTOS, $1, $3, @1.first_line, @1.first_column);
+    }
     ;
 
 parameter_list
     : /* empty */ { $$ = NULL; }
-    | IDENTIFICADOR { $$ = ast_nuevo(NODO_FUNCION_PARAMETROS, $1, NULL); }
-    | parameter_list ',' IDENTIFICADOR { $$ = ast_nuevo(NODO_FUNCION_PARAMETROS, $3, $1); }
+    | IDENTIFICADOR { $$ = latA_nodo(NODO_FUNCION_PARAMETROS, $1, NULL, @1.first_line, @1.first_column); }
+    | VAR_ARGS { $$ = latA_nodo(NODO_FUNCION_PARAMETROS, $1, NULL, 0, 0); }
+    | parameter_list ',' IDENTIFICADOR {
+        if($1->izq->tipo == NODO_VAR_ARGS){
+            printf("\033[1;31m%s:%d:%d:\033[0m %s\n", @3.file_name, @3.first_line, @3.first_column, "Parametro VAR_ARGS (...) debe de ser el ultimo parametro");
+            YYABORT;
+        }
+        $$ = latA_nodo(NODO_FUNCION_PARAMETROS, $3, $1, @3.first_line, @3.first_column); }
+    | parameter_list ',' VAR_ARGS { $$ = latA_nodo(NODO_FUNCION_PARAMETROS, $3, $1, 0, 0); }
     ;
 
 list_new
-    : '[' list_items ']' { $$ = ast_nuevo(NODO_LISTA, $2, NULL); }
+    : '[' list_items ']' { $$ = latA_nodo(NODO_LISTA, $2, NULL, @1.first_line, @1.first_column); }
     ;
 
 list_items
     : /* empty */ { $$ = NULL; }
-    | expression { $$ = ast_nuevo(NODO_LISTA_AGREGAR_ELEMENTO, $1, NULL); }
-    | list_items ',' expression { $$ = ast_nuevo(NODO_LISTA_AGREGAR_ELEMENTO, $3, $1); }
+    | expression { $$ = latA_nodo(NODO_LISTA_AGREGAR_ELEMENTO, $1, NULL, @1.first_line, @1.first_column); }
+    | expression ',' list_items {
+        /*printf("%s: %i\n", "list_items", $1->tipo);*/
+        if($1->tipo == NODO_FUNCION_LLAMADA){
+            printf("\033[1;31m%s:%d:%d:\033[0m %s\n", filename, @1.first_line, @1.first_column, "Llamado a funcion debe de ser el ultimo parametro");
+            YYABORT;
+        }
+        if($1->tipo == NODO_LOAD_VAR_ARGS){
+            printf("\033[1;31m%s:%d:%d:\033[0m %s\n", filename, @1.first_line, @1.first_column, "Parametro VAR_ARGS (...) debe de ser el ultimo parametro");
+            YYABORT;
+        }
+        $$ = latA_nodo(NODO_LISTA_AGREGAR_ELEMENTO, $1, $3, @3.first_line, @3.first_column);
+    }
     ;
 
 dict_new
-    : '{' dict_items '}' { $$ = ast_nuevo(NODO_DICCIONARIO, $2, NULL); }
+    : '{' dict_items '}' { $$ = latA_nodo(NODO_DICCIONARIO, $2, NULL, @2.first_line, @2.first_column); }
     ;
 
 dict_items
     : /* empty */ { $$ = NULL; }
-    | dict_item { $$ = ast_nuevo(NODO_DICC_AGREGAR_ELEMENTO, $1, NULL); }
-    | dict_items ',' dict_item { $$ = ast_nuevo(NODO_DICC_AGREGAR_ELEMENTO, $3, $1); }
+    | dict_item { $$ = latA_nodo(NODO_DICC_AGREGAR_ELEMENTO, $1, NULL, @1.first_line, @1.first_column); }
+    | dict_items ',' dict_item { $$ = latA_nodo(NODO_DICC_AGREGAR_ELEMENTO, $3, $1, @3.first_line, @3.first_column); }
     ;
 
 dict_item
     : { /* empty */ $$ = NULL; }
-    | expression ':' expression { $$ = ast_nuevo(NODO_DICC_ELEMENTO, $1, $3); }
+    | expression ':' expression { $$ = latA_nodo(NODO_DICC_ELEMENTO, $1, $3, @1.first_line, @1.first_column); }
     ;
 
 %%
 
 //se define para analisis sintactico (bison)
 int yyerror(struct YYLTYPE *yylloc_param, void *scanner, struct ast **root,
-            const char *s) {
+const char *s) {
   if(!parse_silent){
-      lat_error("Linea %d, %d: %s", yylloc_param->first_line, yylloc_param->first_column,  s);
+      fprintf(stderr, "\033[1;31m%s:%d:%d:\033[0m %s\n", yylloc_param->file_name,
+        yylloc_param->first_line, yylloc_param->first_column,  s);
   }
   return 0;
 }
