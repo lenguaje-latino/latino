@@ -5,7 +5,7 @@
 <img src ="doc/fedora.png" />
 
 ## Dependencias
-Antes de instalar latino, vamos a instalar todos paquetes necesarios: 
+Antes de instalar latino, vamos a instalar todos paquetes necesarios:
 
 
 ```
@@ -29,7 +29,7 @@ sudo dnf install bison flex cmake gcc g++ libjansson-dev libcurl4-openssl-dev li
 
 Puedes comprobar si hay versiones nuevas de paquetes para Fedora y Ubuntu en la sección [RELEASES](https://github.com/primitivorm/latino/releases)
 
-###Documentacion (borrador)
+### Documentacion (borrador)
 1. https://robincoello.gitbooks.io/latino/content/inicio.html
 2. http://lenguaje-latino.org/doc/index.php
 
@@ -86,7 +86,7 @@ Pirmero debes saber donde esta instalado
 
  ```
 
-## Ayuda en nuestro foro 
+## Ayuda en nuestro foro
 
 http://lenguaje-latino.org/foro/fedora-centos/
 
