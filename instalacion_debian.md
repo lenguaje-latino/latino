@@ -50,8 +50,8 @@ Instalación en Ubuntu, DEBIAN, Mint o derivativos:
 ```
 
 
-### Documentacion (borrador)
-1. https://robincoello.gitbooks.io/latino/content/inicio.html
+### Documentacion 
+1. http://manual.lenguaje-latino.org/
 2. http://documentacion.lenguaje-latino.org/
 
 
