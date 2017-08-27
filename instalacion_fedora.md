@@ -29,9 +29,9 @@ sudo dnf install bison flex cmake gcc g++ libjansson-dev libcurl4-openssl-dev li
 
 Puedes comprobar si hay versiones nuevas de paquetes para Fedora y Ubuntu en la sección [RELEASES](https://github.com/primitivorm/latino/releases)
 
-### Documentacion (borrador)
-1. https://robincoello.gitbooks.io/latino/content/inicio.html
-2. http://lenguaje-latino.org/doc/index.php
+### Documentacion 
+1. http://manual.lenguaje-latino.org/
+2. http://documentacion.lenguaje-latino.org/
 
 
 ### COMPILAR
