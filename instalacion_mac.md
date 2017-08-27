@@ -84,12 +84,15 @@ Pirmero debes saber donde esta instalado
 #### 3- Opción
 
  **Sólo debian/ubuntu. si instalaste paquete deb
- ```bash
+ 
+ ```
+ bash
  # Ubuntu 16.x.x en adelante
  sudo apt remove latino
  # Ubuntu 14.x.x hacía atrás
  sudo apt-get remove latino
- 
+ ```
+  
 
 ## Ayuda en nuestro foro 
 
