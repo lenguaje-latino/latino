@@ -5,7 +5,7 @@
 <img src ="doc/fedora.png" />
 
 ## Dependencias
-Antes de instalar latino, vamos a instalar todos paquetes necesarios: 
+Antes de instalar latino, vamos a instalar todos paquetes necesarios:
 
 
 ```
@@ -86,7 +86,7 @@ Pirmero debes saber donde esta instalado
 
  ```
 
-## Ayuda en nuestro foro 
+## Ayuda en nuestro foro
 
 http://lenguaje-latino.org/foro/fedora-centos/
 

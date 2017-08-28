@@ -1,10 +1,10 @@
-#Estandares de programación
+# Estandares de programación
 
 A continuación se describen algunas sugerencias a seguir para la codificación en C / C++
 
-###if-else
+### if-else
 
-Utilizar identado de 4 espacios, incluir la llave que abre ({) en la misma linea 
+Utilizar identado de 4 espacios, incluir la llave que abre ({) en la misma linea
 de la instrucción de la siguiente manera:
 
 ```
@@ -43,7 +43,7 @@ if (condition) {
 }
 ```
 
-###do
+### do
 
 
 ```
@@ -52,7 +52,7 @@ do {
 } while (condition);
 ```
 
-###while
+### while
 
 ```
 while (condicion) {
@@ -60,7 +60,7 @@ while (condicion) {
 }
 ```
 
-###switch
+### switch
 Alinear los case's a la misma altura de la intrucción switch:
 
 ```
@@ -82,7 +82,7 @@ default:
 }
 ```
 
-###Funcciones
+### Funcciones
 Para el caso unico de las funciones iniciar la llave que abre en la siguiente línea:
 
 ```
@@ -92,7 +92,7 @@ int function(int x)
 }
 ```
 
-###Espacios
+### Espacios
 Utilice un espacio después de las siguientes palabras reservadas:
 
 ```
@@ -134,18 +134,18 @@ No use espacios antes ni despúes de incrementos y decrementos de operadores una
 ```
 	++  --
 ```
-No use espacios alrededor de miembros de las estructuras '.' y '->' 
+No use espacios alrededor de miembros de las estructuras '.' y '->'
 ```
 	my_object->accion();
 ```
 Elimine los espacios al final de la línea.
 
-###Comentarios
-Use los comentarios al estilo Linux C89: 
+### Comentarios
+Use los comentarios al estilo Linux C89:
 ```
 	/* ... */
 ```
-No use los comentarios al estilo C99 
+No use los comentarios al estilo C99
 ```
-	// ... 
+	// ...
 ```
