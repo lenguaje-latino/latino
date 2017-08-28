@@ -5,7 +5,7 @@
 <img src ="doc/win.png" />
 
 ### Instalar en Windows
-1. Descargue el instalador 
+1. Descargue el instalador
 2. Ejecute el instalador
 
 
@@ -30,10 +30,8 @@ https://www.microsoft.com/es-ES/download/details.aspx?id=48145
 Latino se desistala como cualquier otro programa
 
 
-## Ayuda en nuestro foro 
+## Ayuda en nuestro foro
 
 http://lenguaje-latino.org/foro/windows/
 
-####Cualquier aportación o sugerencia es bienvenida.
-
-
+#### Cualquier aportación o sugerencia es bienvenida.

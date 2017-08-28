@@ -1,11 +1,11 @@
-#Arquitectura del lenguaje de programación latino
+# Arquitectura del lenguaje de programación latino
 
-##Introducción
+## Introducción
 Un intérprete es un procesador del lenguaje que analiza un programa escrito en
 un lenguaje de alto nivel y si es correcto lo ejecuta directamente en el lenguaje
 de la máquina en que se está ejecutando el intérprete.
 
-##Ventajas de los intérpretes
+## Ventajas de los intérpretes
 __Fexibilidad:__ los lenguajes interpretativos suelen ser más flexibles y permiten
 realizar acciones más complejas a menudo imposibles o muy difíciles de procesar
 para un compilador.
@@ -18,7 +18,7 @@ __Rapidez en el desarrollo:__ Los programadores que utilizan un lenguaje
 interpretado suelen conseguir mayor eficiencia de programación que los que
 programan en lenguajes compilables.
 
-##Estructura de un intérprete
+## Estructura de un intérprete
 La DIFERENTE principal entre un compilador y un intérprete estriba en la ausencia
 de una etapa de generación de código, que sustituye por un componente de ejecución
 de código.
@@ -45,7 +45,7 @@ __latino.h:__ Contiene las configuraciones del lenguaje.
 
 __latino.c:__ Contiene la llamada principal del interprete del lenguaje.
 
-##Definición de la sintaxis
+## Definición de la sintaxis
 En esta sección se describirá la gramática libre de contexto del lenguaje latino,
 o simplemente gramática.
 Una gramática describe naturalmente la estructura gerarquica de la mayoria de
