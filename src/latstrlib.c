@@ -932,6 +932,7 @@ void str_bytes(lat_mv *mv) {
 }
 
 static const lat_CReg libstr[] = {
+    {"char", str_char, 1},
     {"bytes", str_bytes, 1},
     {"esta_vacia", str_esta_vacia, 1},
     {"longitud", str_longitud, 1},
