@@ -93,7 +93,7 @@ extern int parse_silent;
     "      "                                                                   \
     "\\/        \n"
 
-#define HISTORY_FILE ".lat_history"
+#define HISTORY_FILE ".lat_historial"
 
 /** Afirmar (asset), sirve para testear una condicion */
 #define latC_afirmar(cond) ((void)(false && (cond)))

@@ -36,7 +36,7 @@ THE SOFTWARE.
 #include "latmv.h"
 
 #define LIB_SISTEMA_NAME "sis"
-volatile sig_atomic_t proceso_detenido;
+volatile sig_atomic_t senial;
 
 void sleep_ms(int milliseconds) // cross-platform sleep function
 {
@@ -107,16 +107,39 @@ static void latSO_fecha(lat_mv *mv) {
     latC_apilar(mv, tmp);
 }
 
-static void proceso_al_activarse(int sig) { proceso_detenido = 1; }
+void latSO_tiempo(lat_mv *mv) {
+    lat_objeto *unixt = latC_desapilar(mv);
+    lat_objeto *_formato_str = latC_desapilar(mv);
+    time_t unix_time = time(NULL);
+    if (_formato_str->tipo == T_NULL) {
+        latC_apilar_double(mv, unix_time);
+    } else {
+        const char *ftmstr = latC_checar_cadena(mv, _formato_str);
+        if (unixt->tipo != T_NULL) {
+            unix_time = latC_checar_numerico(mv, unixt);
+        };
+        struct tm estructura;
+        long unsigned int buf = strlen(ftmstr) * 15;
+        char res[buf];
+        localtime_r(&unix_time, &estructura);
+        if (!strftime(res, sizeof(res), ftmstr, &estructura)) {
+            latC_apilar(mv, latO_nulo);
+        } else {
+            latC_apilar_string(mv, res);
+        }
+    }
+}
+
+static void proceso_al_activarse(int sig) { senial = sig; }
 
 static void latSO_avisar(lat_mv *mv) {
     lat_objeto *a = latC_desapilar(mv);
     signal(latC_checar_numerico(mv, a), proceso_al_activarse);
-    if (!proceso_detenido) {
+    if (!senial) {
         latC_apilar(mv, latO_falso);
         return;
     } else {
-        latC_apilar(mv, latO_verdadero);
+        latC_apilar(mv, latC_crear_numerico(mv, senial));
     };
 }
 
@@ -151,12 +174,37 @@ static void latSO_usuario(lat_mv *mv) {
     latC_apilar(mv, tmp);
 }
 
-static const lat_CReg libsistema[] = {
-    {"dormir", latSO_dormir, 1},   {"ejecutar", latSO_ejecutar, 1},
-    {"pipe", latSO_pipe, 1},       {"fecha", latSO_fecha, 1},
-    {"salir", latSO_salir, 0},     {"avisar", latSO_avisar, 1},
-    {"cwd", latSO_cwd, 0},         {"iraxy", latSO_iraxy, 2},
-    {"usuario", latSO_usuario, 0}, {NULL, NULL}};
+void latSO_fork(lat_mv *mv) {
+    bool pid_ok = false;
+    pid_t pid = fork();
+    if (pid == 0) {
+        pid_ok = true;
+    } else if (pid > 0) {
+        pid_ok = true;
+    }
+    if (!pid_ok) {
+        latC_error(mv, "error en fork");
+    } else {
+        lat_objeto *datos = latC_crear_lista(mv, latL_crear(mv));
+        latL_agregar(mv, latC_checar_lista(mv, datos),
+                     latC_crear_numerico(mv, pid));
+        latL_agregar(mv, latC_checar_lista(mv, datos),
+                     latC_crear_numerico(mv, getpid()));
+        latC_apilar(mv, datos);
+    }
+}
+
+static const lat_CReg libsistema[] = {{"dormir", latSO_dormir, 1},
+                                      {"ejecutar", latSO_ejecutar, 1},
+                                      {"pipe", latSO_pipe, 1},
+                                      {"fecha", latSO_fecha, 1},
+                                      {"salir", latSO_salir, 0},
+                                      {"avisar", latSO_avisar, 1},
+                                      {"cwd", latSO_cwd, 0},
+                                      {"iraxy", latSO_iraxy, 2},
+                                      {"tiempo", latSO_tiempo, 2},
+                                      {"usuario", latSO_usuario, 0},
+                                      {NULL, NULL}};
 
 void latC_abrir_liblatino_syslib(lat_mv *mv) {
     latC_abrir_liblatino(mv, LIB_SISTEMA_NAME, libsistema);

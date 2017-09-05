@@ -2188,11 +2188,11 @@ yyreduce:
   case 103:
 #line 411 "latparse.y" /* yacc.c:1646  */
     {
-        /*printf("%s: %i\n", "list_items", $1->tipo);*/
-        if((yyvsp[-2].node)->tipo == NODO_FUNCION_LLAMADA){
-            printf("\033[1;31m%s:%d:%d:\033[0m %s\n", filename, (yylsp[-2]).first_line, (yylsp[-2]).first_column, "Llamado a funcion debe de ser el ultimo parametro");
+        /*
+        if($1->tipo == NODO_FUNCION_LLAMADA){
+            printf("\033[1;31m%s:%d:%d:\033[0m %s\n", filename, @1.first_line, @1.first_column, "Llamado a funcion debe de ser el ultimo parametro");
             YYABORT;
-        }
+        }*/
         if((yyvsp[-2].node)->tipo == NODO_VAR_ARGS){
             printf("\033[1;31m%s:%d:%d:\033[0m %s\n", filename, (yylsp[-2]).first_line, (yylsp[-2]).first_column, "Parametro VAR_ARGS (...) debe de ser el ultimo parametro");
             YYABORT;
@@ -2258,11 +2258,11 @@ yyreduce:
   case 112:
 #line 445 "latparse.y" /* yacc.c:1646  */
     {
-        /*printf("%s: %i\n", "list_items", $1->tipo);*/
-        if((yyvsp[-2].node)->tipo == NODO_FUNCION_LLAMADA){
-            printf("\033[1;31m%s:%d:%d:\033[0m %s\n", filename, (yylsp[-2]).first_line, (yylsp[-2]).first_column, "Llamado a funcion debe de ser el ultimo parametro");
+        /*
+        if($1->tipo == NODO_FUNCION_LLAMADA){
+            printf("\033[1;31m%s:%d:%d:\033[0m %s\n", filename, @1.first_line, @1.first_column, "Llamado a funcion debe de ser el ultimo parametro");
             YYABORT;
-        }
+        }*/
         if((yyvsp[-2].node)->tipo == NODO_LOAD_VAR_ARGS){
             printf("\033[1;31m%s:%d:%d:\033[0m %s\n", filename, (yylsp[-2]).first_line, (yylsp[-2]).first_column, "Parametro VAR_ARGS (...) debe de ser el ultimo parametro");
             YYABORT;

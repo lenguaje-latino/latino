@@ -144,6 +144,8 @@ int main(int argc, char *argv[]) {
                 latC_apilar(mv, num);
                 latC_apilar(mv, mv->global->argv);
                 lat_objeto *newMain = latC_crear_funcion(mv, bc, ninst + 2);
+                newMain->es_vararg = 0;
+                newMain->nparams = 2;
                 status = latC_llamar_funcion(mv, newMain);
                 latO_destruir(mv, newMain);
             } else {

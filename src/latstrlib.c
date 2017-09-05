@@ -41,10 +41,7 @@ static int oct(int octalNumber) {
 
 char *analizar_fmt(const char *s, size_t len) {
     char *ret = malloc(len + 1);
-    int i = 0;
-    int j = 0;
-    int c = '@';
-    int num, let = 0;
+    int i = 0, j = 0, let = 0, c = 48;
     for (i = 0; i < ((int)len); i++) {
         switch (s[i]) {
             case '\\': {
@@ -85,28 +82,6 @@ char *analizar_fmt(const char *s, size_t len) {
                         c = '\v';
                         i++;
                         goto save;
-                    case '0':
-                        if (isdigit(s[i + 2]) && isdigit(s[i + 3])) {
-                            for (num = i + 1; num < strlen(s) && num < i + 4;
-                                 num++) {
-                                let = (10 * let) + ((int)s[num] - 48);
-                            }
-                            c = oct(let);
-                            let = 0;
-                            i += 3;
-                            goto save;
-                        };
-                    case '1':
-                        if (isdigit(s[i + 2]) && isdigit(s[i + 3])) {
-                            for (num = i + 1; num < strlen(s) && num < i + 4;
-                                 num++) {
-                                let = (10 * let) + ((int)s[num] - 48);
-                            }
-                            c = oct(let);
-                            let = 0;
-                            i += 3;
-                            goto save;
-                        };
                     case '\\':
                         c = '\\';
                         i++;
@@ -124,8 +99,20 @@ char *analizar_fmt(const char *s, size_t len) {
                             i++;
                         }
                     default:
-                        c = s[i];
-                        break;
+                        if
+                            isdigit(s[i + 1]) {
+                                while (isdigit(s[i + 1])) {
+                                    let = (10 * let) + ((int)s[i + 1] - 48);
+                                    i += 1;
+                                };
+                                c = oct(let);
+                                let = 0;
+                                goto save;
+                            }
+                        else {
+                            c = s[i];
+                            break;
+                        }
                 }
             } break;
             default:
@@ -307,7 +294,7 @@ char *rellenar_derecha(char *base, char *c, int n) {
 }
 
 char *reemplazar(char *o_string, char *s_string, char *r_string) {
-	char *buffer = malloc(MAX_STR_LENGTH);
+    char *buffer = malloc(MAX_STR_LENGTH);
     char *ch;
     if (!(ch = strstr(o_string, s_string))) {
         strcpy(buffer, o_string);
@@ -521,24 +508,35 @@ void str_longitud(lat_mv *mv) {
     latC_apilar(mv, tmp);
 }
 
-char *reemplazar_lat(char *orig, char *rep, char *with) {
+char *reemplazar_lat(char *orig, char *rep, char *with, int veces) {
     char *result, *ins, *tmp;
     int len_rep, len_with, len_front, count;
-    if (!orig && !rep)
+    if (!orig && !rep) {
         return NULL;
+    };
     len_rep = strlen(rep);
-    if (len_rep == 0)
+    if (len_rep == 0) {
         return NULL;
-    if (!with)
+    };
+    if (!with) {
         with = "";
+    };
     len_with = strlen(with);
     ins = orig;
     for (count = 0; (tmp = strstr(ins, rep)) != NULL; ++count) {
+        if (veces != 0) {
+            if (count == veces) {
+                break;
+            };
+        };
         ins = tmp + len_rep;
     }
     tmp = result = malloc(strlen(orig) + (len_with - len_rep) * count + 1);
-    if (!result)
+    if (!result) {
+        free(result);
+        free(tmp);
         return NULL;
+    };
     while (count--) {
         ins = strstr(orig, rep);
         len_front = ins - orig;
@@ -553,12 +551,24 @@ char *reemplazar_lat(char *orig, char *rep, char *with) {
 }
 
 void str_reemplazar(lat_mv *mv) {
+    lat_objeto *d = latC_desapilar(mv);
     lat_objeto *c = latC_desapilar(mv);
     lat_objeto *b = latC_desapilar(mv);
     lat_objeto *a = latC_desapilar(mv);
+    int num = 0;
+    if (d->tipo != T_NULL) {
+        if (d->tipo != T_NULL) {
+            num = latC_checar_numerico(mv, d);
+            num = latC_checar_numerico(mv, d);
+        }
+    }
     char *cadena_final =
-        reemplazar_lat(latC_checar_cadena(mv, a), latC_checar_cadena(mv, b),
-                       latC_checar_cadena(mv, c));
+        reemplazar_lat(latC_checar_cadena(mv, a),
+                       analizar_fmt(latC_checar_cadena(mv, b),
+                                    strlen(latC_checar_cadena(mv, b))),
+                       analizar_fmt(latC_checar_cadena(mv, c),
+                                    strlen(latC_checar_cadena(mv, c))),
+                       num);
     lat_objeto *r = latC_crear_cadena(mv, cadena_final);
     latC_apilar(mv, r);
 }
@@ -732,22 +742,76 @@ void str_match(lat_mv *mv) {
     regex_t regexCompiled;
     regmatch_t groupArray[50];
     char *cursor;
-    if (regcomp(&regexCompiled, latC_checar_cadena(mv, regexString),
-                REG_EXTENDED)) {
-        latC_error(mv, "Error en el match regex");
+    int retorno = regcomp(&regexCompiled, latC_checar_cadena(mv, regexString),
+                          REG_EXTENDED);
+    if (retorno) {
+        switch (retorno) {
+            case REG_BADPAT:
+                latC_error(mv,
+                           "error en el regex: expresión regular inválida.");
+                break;
+            case REG_ECOLLATE:
+                latC_error(
+                    mv, "error en el regex: elemento de referencia inválido.");
+                break;
+            case REG_ECTYPE:
+                latC_error(mv,
+                           "error en el regex: tipo de carácteres inválidos.");
+                break;
+            case REG_EESCAPE:
+                latC_error(mv,
+                           "error en el regex: número en \\ dígito no válido.");
+                break;
+            case REG_EBRACK:
+                latC_error(mv, "error en el regex: [] sin balance.");
+                break;
+            case REG_EPAREN:
+                latC_error(mv, "error en el regex: \\( \\) ó ( ) sin balance.");
+                break;
+            case REG_EBRACE:
+                latC_error(mv, "error en el regex: \\{ \\} sin balance.");
+                break;
+            case REG_BADBR:
+                latC_error(mv, "error en el regex: contenido de \\{\\} "
+                               "inválido, no es un número, o es un número "
+                               "demasiado grande, o más de dos números, o "
+                               "quizá el primero es mayor que el segundo.");
+                break;
+            case REG_ERANGE:
+                latC_error(mv, "error en el regex: el final no es válido con "
+                               "el rango de la expresión.");
+                break;
+            case REG_ESPACE:
+                latC_error(mv, "error en el regex: sin memoria.");
+                break;
+            case REG_BADRPT:
+                latC_error(mv, "error en el regex: ?, * o + no está siendo "
+                               "usado en una expresión regular válida.");
+                break;
+            case REG_ENOSYS:
+                latC_error(mv, "error en el regex: la implementación no admite "
+                               "esta función.");
+                break;
+            default:
+                latC_error(mv, "error en el regex: error desconocido.");
+                break;
+        }
     };
     cursor = latC_checar_cadena(mv, source);
     lat_objeto *l_matches = latC_crear_lista(mv, latL_crear(mv));
     for (int m = 0; m < maxMatches; m++) {
-        if (regexec(&regexCompiled, cursor, maxGroups, groupArray, 0))
+        if (regexec(&regexCompiled, cursor, maxGroups, groupArray, 0)) {
             break; // No more matches
+        }
         unsigned int offset = 0;
         lat_objeto *l_groups = latC_crear_lista(mv, latL_crear(mv));
         for (int g = 0; g < maxGroups; g++) {
-            if (groupArray[g].rm_so == (size_t)-1)
+            if (groupArray[g].rm_so == (size_t)-1) {
                 break; // No more groups
-            if (g == 0)
+            }
+            if (g == 0) {
                 offset = groupArray[g].rm_eo;
+            }
             char *cursorCopy = malloc(strlen(cursor) + 1);
             strcpy(cursorCopy, cursor);
             cursorCopy[groupArray[g].rm_eo] = 0;
@@ -831,7 +895,44 @@ void str_formato(lat_mv *mv) {
     free(b);
 }
 
+void str_char(lat_mv *mv) {
+    lat_objeto *arg = latC_desapilar(mv);
+    if (arg->tipo == T_LIST) {
+        lista *lst = latC_checar_lista(mv, arg);
+        long int lng = latL_longitud(lst);
+        char *str_chars = malloc(lng + 1);
+        sprintf(str_chars, "%c", 0);
+        for (long int i = 0; i < lng; i++) {
+            lat_objeto *tmp1 = latL_obtener_elemento(mv, lst, i);
+            sprintf(str_chars, "%s%c", str_chars,
+                    (char)latC_checar_numerico(mv, tmp1));
+        }
+        latC_apilar_string(mv, str_chars);
+        free(str_chars);
+    } else if (arg->tipo == T_NUMERIC) {
+        char txt[1024];
+        sprintf(txt, "%c", (int)latC_checar_numerico(mv, arg));
+        latC_apilar_string(mv, txt);
+    }
+}
+
+void str_bytes(lat_mv *mv) {
+    lat_objeto *str = latC_desapilar(mv);
+    if (str->tipo == T_NULL) {
+        latC_apilar(mv, latO_nulo);
+    } else {
+        char *stringp = latC_checar_cadena(mv, str);
+        lat_objeto *decs = latC_crear_lista(mv, latL_crear(mv));
+        for (int i = 0; i < strlen(stringp); i++) {
+            latL_agregar(mv, latC_checar_lista(mv, decs),
+                         latC_crear_numerico(mv, (int)stringp[i]));
+        }
+        latC_apilar(mv, decs);
+    }
+}
+
 static const lat_CReg libstr[] = {
+    {"bytes", str_bytes, 1},
     {"esta_vacia", str_esta_vacia, 1},
     {"longitud", str_longitud, 1},
     {"minusculas", str_minusculas, 1},
