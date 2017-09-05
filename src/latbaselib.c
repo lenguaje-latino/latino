@@ -119,23 +119,25 @@ static void base_incluir(lat_mv *mv) {
     }
     // busca en ruta del archivo que incluye
     int pos = ultima_pos(mv->nombre_archivo, PATH_SEP);
-    char *prepath = malloc(MAX_PATH_LENGTH);
-    prepath = subcadena(mv->nombre_archivo, 0, pos + 1);
-    lat_objeto *modcurr = latC_crear_cadena(mv, strcat(prepath, archivo_ext));
-    tmp_name = mv->nombre_archivo;
-    if (eslegible(latC_checar_cadena(mv, modcurr))) {
-        mv->nombre_archivo = latC_checar_cadena(mv, modcurr);
-        ast *nodo =
-            latA_analizar_arch(latC_checar_cadena(mv, modcurr), &status);
-        if (status == 0 && nodo != NULL) {
-            lat_objeto *funmod = latC_analizar(mv, nodo);
-            status = latC_llamar_funcion(mv, funmod);
-            latA_destruir(nodo);
-            mv->nombre_archivo = tmp_name;
-            return;
+    if (pos > -1) {
+        char *prepath = calloc(1, MAX_PATH_LENGTH);
+        strcat(prepath, subcadena(mv->nombre_archivo, 0, pos + 1));
+        lat_objeto *modcurr =
+            latC_crear_cadena(mv, strcat(prepath, archivo_ext));
+        tmp_name = mv->nombre_archivo;
+        if (eslegible(latC_checar_cadena(mv, modcurr))) {
+            mv->nombre_archivo = latC_checar_cadena(mv, modcurr);
+            ast *nodo =
+                latA_analizar_arch(latC_checar_cadena(mv, modcurr), &status);
+            if (status == 0 && nodo != NULL) {
+                lat_objeto *funmod = latC_analizar(mv, nodo);
+                status = latC_llamar_funcion(mv, funmod);
+                latA_destruir(nodo);
+                mv->nombre_archivo = tmp_name;
+                return;
+            }
         }
     }
-
     // buscar en $LATINO_LIB
     char *latino_lib = getenv("LATINO_LIB");
     if (latino_lib != NULL) {
@@ -180,7 +182,7 @@ static void base_incluir(lat_mv *mv) {
 }
 
 static void base_leer(lat_mv *mv) {
-    char *str = malloc(MAX_INPUT_SIZE);
+    char *str = calloc(1, MAX_INPUT_SIZE);
     str = latC_leer_linea(NULL);
     int i = strlen(str) - 1;
     if (str[i] == '\n') {

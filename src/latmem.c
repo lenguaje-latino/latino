@@ -65,6 +65,7 @@ void latM_liberar(lat_mv *mv, void *ptr) {
             // printf("--- memoria liberada: %zu, %p\n", tam, ptr);
             mv->memoria_usada -= latM_tamanio(ptr);
         }
+        ptr = NULL;
         free(ptr);
     }
 }

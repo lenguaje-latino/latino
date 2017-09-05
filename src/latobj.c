@@ -569,7 +569,6 @@ LATINO_API lat_objeto *latC_crear_dic(lat_mv *mv, hash_map *dic) {
 }
 
 LATINO_API lat_objeto *latC_crear_cdato(lat_mv *mv, void *ptr) {
-    // printf("latC_crear_cadena: %s\n", p);
     lat_objeto *ret = latO_crear(mv);
     setPtr(ret, ptr);
     return ret;
