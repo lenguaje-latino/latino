@@ -41,20 +41,20 @@ http://opensource.org/licenses/MIT
 
 <b>Windows</b>
 
-| [Windows](instalacion_windows.md)|
+| [Windows](doc/instalacion_windows.md)|
 |----------------------------------|
 
 <b>Linux</b>
 
-| [Debian/Ubuntu](instalacion_debian.md) |
+| [Debian/Ubuntu](doc/instalacion_debian.md) |
 |----------------------------------------|
 
-| [Fedora](instalacion_fedora.md) |
+| [Fedora](doc/instalacion_fedora.md) |
 |---------------------------------|
 
 <b>Mac</b>
 
-| [Mac](instalacion_mac.md) |
+| [Mac](doc/instalacion_mac.md) |
 |---------------------------|
 
 
