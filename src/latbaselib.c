@@ -89,6 +89,9 @@ void base_imprimirf(lat_mv *mv) {
     latO_imprimir(mv, str, true);
 }
 
+int ultima_pos(char *base, char *str);
+char *subcadena(const char *str, int beg, int n);
+
 static void base_incluir(lat_mv *mv) {
     lat_objeto *o = latC_desapilar(mv);
     char *libname = latC_checar_cadena(mv, o);
@@ -114,6 +117,25 @@ static void base_incluir(lat_mv *mv) {
             return;
         }
     }
+    // busca en ruta del archivo que incluye
+    int pos = ultima_pos(mv->nombre_archivo, PATH_SEP);
+    char *prepath = malloc(MAX_PATH_LENGTH);
+    prepath = subcadena(mv->nombre_archivo, 0, pos + 1);
+    lat_objeto *modcurr = latC_crear_cadena(mv, strcat(prepath, archivo_ext));
+    tmp_name = mv->nombre_archivo;
+    if (eslegible(latC_checar_cadena(mv, modcurr))) {
+        mv->nombre_archivo = latC_checar_cadena(mv, modcurr);
+        ast *nodo =
+            latA_analizar_arch(latC_checar_cadena(mv, modcurr), &status);
+        if (status == 0 && nodo != NULL) {
+            lat_objeto *funmod = latC_analizar(mv, nodo);
+            status = latC_llamar_funcion(mv, funmod);
+            latA_destruir(nodo);
+            mv->nombre_archivo = tmp_name;
+            return;
+        }
+    }
+
     // buscar en $LATINO_LIB
     char *latino_lib = getenv("LATINO_LIB");
     if (latino_lib != NULL) {

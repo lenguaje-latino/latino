@@ -409,11 +409,11 @@ argument_expression_list
     : /* empty */ { $$ = NULL; }
     | expression { $$ = latA_nodo(NODO_FUNCION_ARGUMENTOS, $1, NULL, @1.first_line, @1.first_column); }
     | expression ',' argument_expression_list {
-        /*printf("%s: %i\n", "list_items", $1->tipo);*/
+        /*
         if($1->tipo == NODO_FUNCION_LLAMADA){
             printf("\033[1;31m%s:%d:%d:\033[0m %s\n", filename, @1.first_line, @1.first_column, "Llamado a funcion debe de ser el ultimo parametro");
             YYABORT;
-        }
+        }*/
         if($1->tipo == NODO_VAR_ARGS){
             printf("\033[1;31m%s:%d:%d:\033[0m %s\n", filename, @1.first_line, @1.first_column, "Parametro VAR_ARGS (...) debe de ser el ultimo parametro");
             YYABORT;
@@ -443,11 +443,11 @@ list_items
     : /* empty */ { $$ = NULL; }
     | expression { $$ = latA_nodo(NODO_LISTA_AGREGAR_ELEMENTO, $1, NULL, @1.first_line, @1.first_column); }
     | expression ',' list_items {
-        /*printf("%s: %i\n", "list_items", $1->tipo);*/
+        /*
         if($1->tipo == NODO_FUNCION_LLAMADA){
             printf("\033[1;31m%s:%d:%d:\033[0m %s\n", filename, @1.first_line, @1.first_column, "Llamado a funcion debe de ser el ultimo parametro");
             YYABORT;
-        }
+        }*/
         if($1->tipo == NODO_LOAD_VAR_ARGS){
             printf("\033[1;31m%s:%d:%d:\033[0m %s\n", filename, @1.first_line, @1.first_column, "Parametro VAR_ARGS (...) debe de ser el ultimo parametro");
             YYABORT;

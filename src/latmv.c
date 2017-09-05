@@ -732,6 +732,9 @@ int latMV_funcion_correr(lat_mv *mv, lat_objeto *func) {
                     }
                     // printf("CALL_FUNCTION: %s\n", fun->nombre);
                     int nparams = fun->nparams;
+                    /*printf("num_args: %i\n", num_args);
+                    printf("nparams: %i\n", nparams);
+                    imprimir_pila(mv);*/
                     while (mv->ptrpila < nparams) {
                         latC_apilar(mv, latO_nulo);
                         num_args++;
@@ -761,10 +764,10 @@ int latMV_funcion_correr(lat_mv *mv, lat_objeto *func) {
                             }
                         } else {
                             // T_FUN y no varargs
-                            latC_error(
-                                mv,
-                                "Numero invalido de argumentos en funcion '%s'",
-                                fun->nombre);
+                            latC_error(mv,
+                                       "Numero invalido de argumentos en "
+                                       "funcion '%s'",
+                                       fun->nombre);
                         }
                     } else {
                         if (mv->prev_args > 0) {
