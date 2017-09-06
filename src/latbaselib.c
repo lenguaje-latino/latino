@@ -205,8 +205,7 @@ static void base_limpiar(lat_mv *mv) { system(latC_clear); }
 
 static void base_tipo(lat_mv *mv) {
     lat_objeto *a = latC_desapilar(mv);
-    lat_objeto *tmp = latC_crear_cadena(mv, tipo(a->tipo));
-    latC_apilar(mv, tmp);
+    latC_apilar_string(mv, tipo(a->tipo));
 }
 
 static void base_alogico(lat_mv *mv) {

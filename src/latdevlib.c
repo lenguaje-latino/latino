@@ -41,7 +41,12 @@ static void dev_mostrar(lat_mv *mv) {
     free(tmp);
 }
 
-static const lat_CReg liblat[] = {{"mostrar", dev_mostrar, 1}, {NULL, NULL}};
+void imprimir_pila(lat_mv *mv);
+static void dev_imprimir_pila(lat_mv *mv) { imprimir_pila(mv); }
+
+static const lat_CReg liblat[] = {{"mostrar", dev_mostrar, 1},
+                                  {"imprimir_pila", dev_imprimir_pila, 0},
+                                  {NULL, NULL, 0}};
 
 void latC_abrir_liblatino_devlib(lat_mv *mv) {
     latC_abrir_liblatino(mv, LIB_LAT_NAME, liblat);

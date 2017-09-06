@@ -501,7 +501,7 @@ union yyalloc
 /* YYFINAL -- State number of the termination state.  */
 #define YYFINAL  71
 /* YYLAST -- Last index in YYTABLE.  */
-#define YYLAST   770
+#define YYLAST   742
 
 /* YYNTOKENS -- Number of terminals.  */
 #define YYNTOKENS  63
@@ -560,18 +560,18 @@ static const yytype_uint8 yytranslate[] =
   /* YYRLINE[YYN] -- Source line where rule number YYN was defined.  */
 static const yytype_uint16 yyrline[] =
 {
-       0,   139,   139,   140,   144,   145,   146,   147,   151,   155,
-     162,   166,   170,   174,   181,   185,   192,   193,   194,   195,
-     199,   200,   201,   205,   209,   213,   217,   221,   225,   226,
-     227,   228,   229,   230,   231,   232,   233,   234,   235,   236,
-     237,   238,   239,   240,   241,   242,   243,   244,   248,   251,
-     255,   260,   265,   269,   270,   271,   272,   273,   274,   275,
-     276,   280,   281,   285,   286,   287,   291,   292,   296,   299,
-     305,   306,   308,   310,   312,   314,   316,   318,   319,   323,
-     326,   329,   336,   343,   349,   351,   353,   355,   361,   362,
-     366,   369,   372,   378,   380,   382,   388,   389,   393,   399,
-     405,   409,   410,   411,   426,   427,   428,   429,   435,   439,
-     443,   444,   445,   460,   464,   465,   466,   470,   471
+       0,   140,   140,   141,   145,   146,   147,   148,   152,   156,
+     163,   167,   171,   175,   182,   186,   193,   194,   195,   196,
+     200,   201,   202,   206,   210,   214,   218,   222,   226,   227,
+     228,   229,   230,   231,   232,   233,   234,   235,   236,   237,
+     238,   239,   240,   241,   242,   243,   244,   245,   249,   252,
+     256,   261,   266,   270,   271,   272,   273,   274,   275,   276,
+     277,   281,   282,   286,   287,   288,   292,   293,   297,   300,
+     306,   307,   309,   311,   313,   315,   317,   319,   320,   324,
+     327,   330,   337,   344,   350,   352,   354,   356,   362,   363,
+     367,   370,   373,   379,   381,   383,   389,   390,   394,   400,
+     406,   410,   411,   412,   422,   423,   424,   425,   431,   435,
+     439,   440,   441,   451,   455,   456,   457,   461,   462
 };
 #endif
 
@@ -650,7 +650,7 @@ static const yytype_int16 yypact[] =
      346,   121,    64,   117,   109,  -166,  -166,   689,   689,   689,
      689,   689,   689,   689,   402,    87,   534,  -166,  -166,  -166,
     -166,   -19,  -166,   346,  -166,   346,   346,  -166,   307,   307,
-     307,   307,   307,   307,   274,   274,   717,   307,   -24,   -24,
+     307,   307,   307,   307,   274,   274,   689,   307,   -24,   -24,
       44,    44,    44,    91,   660,   346,  -166,   140,   128,  -166,
      567,  -166,   689,   -13,   346,  -166,    77,   140,  -166,  -166,
     -166,   103,   140,  -166,   689,  -166,   346,   246,   141,  -166,
@@ -785,10 +785,7 @@ static const yytype_int16 yytable[] =
      111,     0,   112,   113,   186,    97,    98,    99,   100,   101,
      102,   103,   104,     0,     0,   105,     0,     0,     0,     0,
        0,     0,   106,     0,     0,   107,   108,   109,   110,   111,
-       0,   112,   113,    97,    98,    99,   100,   101,   102,   103,
-     104,     0,     0,     0,     0,     0,     0,     0,     0,     0,
-     106,     0,     0,   107,   108,   109,   110,   111,     0,   112,
-     113
+       0,   112,   113
 };
 
 static const yytype_int16 yycheck[] =
@@ -867,10 +864,7 @@ static const yytype_int16 yycheck[] =
       50,    -1,    52,    53,    54,    26,    27,    28,    29,    30,
       31,    32,    33,    -1,    -1,    36,    -1,    -1,    -1,    -1,
       -1,    -1,    43,    -1,    -1,    46,    47,    48,    49,    50,
-      -1,    52,    53,    26,    27,    28,    29,    30,    31,    32,
-      33,    -1,    -1,    -1,    -1,    -1,    -1,    -1,    -1,    -1,
-      43,    -1,    -1,    46,    47,    48,    49,    50,    -1,    52,
-      53
+      -1,    52,    53
 };
 
   /* YYSTOS[STATE-NUM] -- The (internal number of the) accessing
@@ -1712,604 +1706,594 @@ yyreduce:
   switch (yyn)
     {
         case 5:
-#line 145 "latparse.y" /* yacc.c:1646  */
+#line 146 "latparse.y" /* yacc.c:1646  */
     { (yyval.node) = latA_logico(1, (yylsp[0]).first_line, (yylsp[0]).first_column);}
-#line 1718 "latparse.c" /* yacc.c:1646  */
+#line 1712 "latparse.c" /* yacc.c:1646  */
     break;
 
   case 6:
-#line 146 "latparse.y" /* yacc.c:1646  */
+#line 147 "latparse.y" /* yacc.c:1646  */
     { (yyval.node) = latA_logico(0, (yylsp[0]).first_line, (yylsp[0]).first_column);}
-#line 1724 "latparse.c" /* yacc.c:1646  */
+#line 1718 "latparse.c" /* yacc.c:1646  */
     break;
 
   case 7:
-#line 147 "latparse.y" /* yacc.c:1646  */
+#line 148 "latparse.y" /* yacc.c:1646  */
     { (yyval.node) = latA_nulo(NULL, (yylsp[0]).first_line, (yylsp[0]).first_column);}
-#line 1730 "latparse.c" /* yacc.c:1646  */
+#line 1724 "latparse.c" /* yacc.c:1646  */
     break;
 
   case 8:
-#line 151 "latparse.y" /* yacc.c:1646  */
+#line 152 "latparse.y" /* yacc.c:1646  */
     {
         (yyval.node) = latA_nodo(NODO_MENOS_UNARIO, (yyvsp[0].node), NULL, (yylsp[-1]).first_line, (yylsp[-1]).first_column);
         if((yyval.node) == NULL) YYABORT;
     }
-#line 1739 "latparse.c" /* yacc.c:1646  */
+#line 1733 "latparse.c" /* yacc.c:1646  */
     break;
 
   case 9:
-#line 155 "latparse.y" /* yacc.c:1646  */
+#line 156 "latparse.y" /* yacc.c:1646  */
     {
         (yyval.node) = latA_nodo(NODO_MAS_UNARIO, (yyvsp[0].node), NULL, (yylsp[-1]).first_line, (yylsp[-1]).first_column);
         if((yyval.node) == NULL) YYABORT;
     }
-#line 1748 "latparse.c" /* yacc.c:1646  */
+#line 1742 "latparse.c" /* yacc.c:1646  */
     break;
 
   case 10:
-#line 162 "latparse.y" /* yacc.c:1646  */
+#line 163 "latparse.y" /* yacc.c:1646  */
     {
         (yyval.node) = latA_nodo(NODO_POTENCIA, (yyvsp[-2].node), (yyvsp[0].node), (yylsp[-1]).first_line, (yylsp[-1]).first_column);
         if((yyval.node) == NULL) YYABORT;
     }
-#line 1757 "latparse.c" /* yacc.c:1646  */
+#line 1751 "latparse.c" /* yacc.c:1646  */
     break;
 
   case 11:
-#line 166 "latparse.y" /* yacc.c:1646  */
+#line 167 "latparse.y" /* yacc.c:1646  */
     {
         (yyval.node) = latA_nodo(NODO_MULTIPLICACION, (yyvsp[-2].node), (yyvsp[0].node), (yylsp[-1]).first_line, (yylsp[-1]).first_column);
         if((yyval.node) == NULL) YYABORT;
     }
-#line 1766 "latparse.c" /* yacc.c:1646  */
+#line 1760 "latparse.c" /* yacc.c:1646  */
     break;
 
   case 12:
-#line 170 "latparse.y" /* yacc.c:1646  */
+#line 171 "latparse.y" /* yacc.c:1646  */
     {
         (yyval.node) = latA_nodo(NODO_DIVISION, (yyvsp[-2].node), (yyvsp[0].node), (yylsp[-1]).first_line, (yylsp[-1]).first_column);
         if((yyval.node) == NULL) YYABORT;
     }
-#line 1775 "latparse.c" /* yacc.c:1646  */
+#line 1769 "latparse.c" /* yacc.c:1646  */
     break;
 
   case 13:
-#line 174 "latparse.y" /* yacc.c:1646  */
+#line 175 "latparse.y" /* yacc.c:1646  */
     {
         (yyval.node) = latA_nodo(NODO_MODULO, (yyvsp[-2].node), (yyvsp[0].node), (yylsp[-1]).first_line, (yylsp[-1]).first_column);
         if((yyval.node) == NULL) YYABORT;
     }
-#line 1784 "latparse.c" /* yacc.c:1646  */
+#line 1778 "latparse.c" /* yacc.c:1646  */
     break;
 
   case 14:
-#line 181 "latparse.y" /* yacc.c:1646  */
+#line 182 "latparse.y" /* yacc.c:1646  */
     {
         (yyval.node) = latA_nodo(NODO_RESTA, (yyvsp[-2].node), (yyvsp[0].node), (yylsp[-1]).first_line, (yylsp[-1]).first_column);
         if((yyval.node) == NULL) YYABORT;
     }
-#line 1793 "latparse.c" /* yacc.c:1646  */
+#line 1787 "latparse.c" /* yacc.c:1646  */
     break;
 
   case 15:
-#line 185 "latparse.y" /* yacc.c:1646  */
+#line 186 "latparse.y" /* yacc.c:1646  */
     {
         (yyval.node) = latA_nodo(NODO_SUMA, (yyvsp[-2].node), (yyvsp[0].node), (yylsp[-1]).first_line, (yylsp[-1]).first_column);
         if((yyval.node) == NULL) YYABORT;
     }
-#line 1802 "latparse.c" /* yacc.c:1646  */
+#line 1796 "latparse.c" /* yacc.c:1646  */
     break;
 
   case 16:
-#line 192 "latparse.y" /* yacc.c:1646  */
+#line 193 "latparse.y" /* yacc.c:1646  */
     { (yyval.node) = latA_nodo(NODO_MAYOR_QUE, (yyvsp[-2].node), (yyvsp[0].node), (yylsp[-1]).first_line, (yylsp[-1]).first_column); }
-#line 1808 "latparse.c" /* yacc.c:1646  */
+#line 1802 "latparse.c" /* yacc.c:1646  */
     break;
 
   case 17:
-#line 193 "latparse.y" /* yacc.c:1646  */
+#line 194 "latparse.y" /* yacc.c:1646  */
     { (yyval.node) = latA_nodo(NODO_MENOR_QUE, (yyvsp[-2].node), (yyvsp[0].node), (yylsp[-1]).first_line, (yylsp[-1]).first_column); }
-#line 1814 "latparse.c" /* yacc.c:1646  */
+#line 1808 "latparse.c" /* yacc.c:1646  */
     break;
 
   case 18:
-#line 194 "latparse.y" /* yacc.c:1646  */
+#line 195 "latparse.y" /* yacc.c:1646  */
     { (yyval.node) = latA_nodo(NODO_MAYOR_IGUAL, (yyvsp[-2].node), (yyvsp[0].node), (yylsp[-1]).first_line, (yylsp[-1]).first_column); }
-#line 1820 "latparse.c" /* yacc.c:1646  */
+#line 1814 "latparse.c" /* yacc.c:1646  */
     break;
 
   case 19:
-#line 195 "latparse.y" /* yacc.c:1646  */
+#line 196 "latparse.y" /* yacc.c:1646  */
     { (yyval.node) = latA_nodo(NODO_MENOR_IGUAL, (yyvsp[-2].node), (yyvsp[0].node), (yylsp[-1]).first_line, (yylsp[-1]).first_column); }
-#line 1826 "latparse.c" /* yacc.c:1646  */
+#line 1820 "latparse.c" /* yacc.c:1646  */
     break;
 
   case 20:
-#line 199 "latparse.y" /* yacc.c:1646  */
+#line 200 "latparse.y" /* yacc.c:1646  */
     { (yyval.node) = latA_nodo(NODO_DESIGUALDAD, (yyvsp[-2].node), (yyvsp[0].node), (yylsp[-1]).first_line, (yylsp[-1]).first_column); }
-#line 1832 "latparse.c" /* yacc.c:1646  */
+#line 1826 "latparse.c" /* yacc.c:1646  */
     break;
 
   case 21:
-#line 200 "latparse.y" /* yacc.c:1646  */
+#line 201 "latparse.y" /* yacc.c:1646  */
     { (yyval.node) = latA_nodo(NODO_IGUALDAD, (yyvsp[-2].node), (yyvsp[0].node), (yylsp[-1]).first_line, (yylsp[-1]).first_column); }
-#line 1838 "latparse.c" /* yacc.c:1646  */
+#line 1832 "latparse.c" /* yacc.c:1646  */
     break;
 
   case 22:
-#line 201 "latparse.y" /* yacc.c:1646  */
+#line 202 "latparse.y" /* yacc.c:1646  */
     { (yyval.node) = latA_nodo(NODO_REGEX, (yyvsp[-2].node), (yyvsp[0].node), (yylsp[-1]).first_line, (yylsp[-1]).first_column); }
-#line 1844 "latparse.c" /* yacc.c:1646  */
+#line 1838 "latparse.c" /* yacc.c:1646  */
     break;
 
   case 23:
-#line 205 "latparse.y" /* yacc.c:1646  */
+#line 206 "latparse.y" /* yacc.c:1646  */
     { (yyval.node) = latA_nodo(NODO_NO, (yyvsp[0].node), NULL, (yylsp[0]).first_line, (yylsp[0]).first_column); }
-#line 1850 "latparse.c" /* yacc.c:1646  */
+#line 1844 "latparse.c" /* yacc.c:1646  */
     break;
 
   case 24:
-#line 209 "latparse.y" /* yacc.c:1646  */
+#line 210 "latparse.y" /* yacc.c:1646  */
     { (yyval.node) = latA_nodo(NODO_Y, (yyvsp[-2].node), (yyvsp[0].node), (yylsp[-1]).first_line, (yylsp[-1]).first_column); }
-#line 1856 "latparse.c" /* yacc.c:1646  */
+#line 1850 "latparse.c" /* yacc.c:1646  */
     break;
 
   case 25:
-#line 213 "latparse.y" /* yacc.c:1646  */
+#line 214 "latparse.y" /* yacc.c:1646  */
     { (yyval.node) = latA_nodo(NODO_O, (yyvsp[-2].node), (yyvsp[0].node), (yylsp[-1]).first_line, (yylsp[-1]).first_column); }
-#line 1862 "latparse.c" /* yacc.c:1646  */
+#line 1856 "latparse.c" /* yacc.c:1646  */
     break;
 
   case 26:
-#line 217 "latparse.y" /* yacc.c:1646  */
+#line 218 "latparse.y" /* yacc.c:1646  */
     { (yyval.node) = latA_si((yyvsp[-4].node), (yyvsp[-2].node), (yyvsp[0].node)); }
-#line 1868 "latparse.c" /* yacc.c:1646  */
+#line 1862 "latparse.c" /* yacc.c:1646  */
     break;
 
   case 27:
-#line 221 "latparse.y" /* yacc.c:1646  */
+#line 222 "latparse.y" /* yacc.c:1646  */
     { (yyval.node) = latA_nodo(NODO_CONCATENAR, (yyvsp[-2].node), (yyvsp[0].node), (yylsp[-1]).first_line, (yylsp[-1]).first_column); }
-#line 1874 "latparse.c" /* yacc.c:1646  */
+#line 1868 "latparse.c" /* yacc.c:1646  */
     break;
 
   case 28:
-#line 225 "latparse.y" /* yacc.c:1646  */
+#line 226 "latparse.y" /* yacc.c:1646  */
     { (yyval.node) = (yyvsp[-1].node); }
-#line 1880 "latparse.c" /* yacc.c:1646  */
+#line 1874 "latparse.c" /* yacc.c:1646  */
     break;
 
   case 47:
-#line 244 "latparse.y" /* yacc.c:1646  */
+#line 245 "latparse.y" /* yacc.c:1646  */
     { (yyval.node) = latA_nodo(NODO_LOAD_VAR_ARGS , NULL, NULL, 0, 0); }
-#line 1886 "latparse.c" /* yacc.c:1646  */
+#line 1880 "latparse.c" /* yacc.c:1646  */
     break;
 
   case 48:
-#line 248 "latparse.y" /* yacc.c:1646  */
+#line 249 "latparse.y" /* yacc.c:1646  */
     { /* empty */
         *root = NULL;
     }
-#line 1894 "latparse.c" /* yacc.c:1646  */
+#line 1888 "latparse.c" /* yacc.c:1646  */
     break;
 
   case 49:
-#line 251 "latparse.y" /* yacc.c:1646  */
+#line 252 "latparse.y" /* yacc.c:1646  */
     { *root = (yyvsp[0].node); }
-#line 1900 "latparse.c" /* yacc.c:1646  */
+#line 1894 "latparse.c" /* yacc.c:1646  */
     break;
 
   case 50:
-#line 255 "latparse.y" /* yacc.c:1646  */
+#line 256 "latparse.y" /* yacc.c:1646  */
     {
         if((yyvsp[0].node)){
             (yyval.node) = latA_nodo(NODO_BLOQUE, (yyvsp[-1].node), (yyvsp[0].node), (yylsp[-1]).first_line, (yylsp[-1]).first_column);
         }
     }
-#line 1910 "latparse.c" /* yacc.c:1646  */
+#line 1904 "latparse.c" /* yacc.c:1646  */
     break;
 
   case 51:
-#line 260 "latparse.y" /* yacc.c:1646  */
+#line 261 "latparse.y" /* yacc.c:1646  */
     {
         if((yyvsp[0].node)){
           (yyval.node) = latA_nodo(NODO_BLOQUE, (yyvsp[0].node), NULL, (yylsp[0]).first_line, (yylsp[0]).first_column);
         }
     }
-#line 1920 "latparse.c" /* yacc.c:1646  */
+#line 1914 "latparse.c" /* yacc.c:1646  */
     break;
 
   case 52:
-#line 265 "latparse.y" /* yacc.c:1646  */
+#line 266 "latparse.y" /* yacc.c:1646  */
     { yyerrok; yyclearin;}
-#line 1926 "latparse.c" /* yacc.c:1646  */
+#line 1920 "latparse.c" /* yacc.c:1646  */
     break;
 
   case 61:
-#line 280 "latparse.y" /* yacc.c:1646  */
+#line 281 "latparse.y" /* yacc.c:1646  */
     { (yyval.node) = latA_nodo(NODO_INC, (yyvsp[-1].node), NULL, (yylsp[0]).first_line, (yylsp[0]).first_column); }
-#line 1932 "latparse.c" /* yacc.c:1646  */
+#line 1926 "latparse.c" /* yacc.c:1646  */
     break;
 
   case 62:
-#line 281 "latparse.y" /* yacc.c:1646  */
+#line 282 "latparse.y" /* yacc.c:1646  */
     { (yyval.node) = latA_nodo(NODO_DEC, (yyvsp[-1].node), NULL, (yylsp[0]).first_line, (yylsp[0]).first_column); }
-#line 1938 "latparse.c" /* yacc.c:1646  */
+#line 1932 "latparse.c" /* yacc.c:1646  */
     break;
 
   case 66:
-#line 291 "latparse.y" /* yacc.c:1646  */
+#line 292 "latparse.y" /* yacc.c:1646  */
     { (yyval.node) = latA_nodo(NODO_ATRIBUTO, (yyvsp[-2].node), (yyvsp[0].node), (yylsp[0]).first_line, (yylsp[0]).first_column); }
-#line 1944 "latparse.c" /* yacc.c:1646  */
+#line 1938 "latparse.c" /* yacc.c:1646  */
     break;
 
   case 67:
-#line 292 "latparse.y" /* yacc.c:1646  */
+#line 293 "latparse.y" /* yacc.c:1646  */
     { (yyval.node) = latA_nodo(NODO_LISTA_OBTENER_ELEMENTO, (yyvsp[-1].node), (yyvsp[-3].node), (yylsp[-1]).first_line, (yylsp[-1]).first_column); }
-#line 1950 "latparse.c" /* yacc.c:1646  */
+#line 1944 "latparse.c" /* yacc.c:1646  */
     break;
 
   case 68:
-#line 296 "latparse.y" /* yacc.c:1646  */
+#line 297 "latparse.y" /* yacc.c:1646  */
     {
         (yyval.node) = latA_nodo(NODO_GLOBAL, (yyvsp[0].node), NULL, (yylsp[-1]).first_line, (yylsp[-1]).first_column);
     }
-#line 1958 "latparse.c" /* yacc.c:1646  */
+#line 1952 "latparse.c" /* yacc.c:1646  */
     break;
 
   case 69:
-#line 299 "latparse.y" /* yacc.c:1646  */
+#line 300 "latparse.y" /* yacc.c:1646  */
     {
         (yyval.node) = latA_nodo(NODO_GLOBAL, (yyvsp[0].node), NULL, (yylsp[-1]).first_line, (yylsp[-1]).first_column);
     }
-#line 1966 "latparse.c" /* yacc.c:1646  */
+#line 1960 "latparse.c" /* yacc.c:1646  */
     break;
 
   case 70:
-#line 305 "latparse.y" /* yacc.c:1646  */
+#line 306 "latparse.y" /* yacc.c:1646  */
     { (yyval.node) = latA_asign((yyvsp[0].node), (yyvsp[-2].node)); }
-#line 1972 "latparse.c" /* yacc.c:1646  */
+#line 1966 "latparse.c" /* yacc.c:1646  */
     break;
 
   case 71:
-#line 306 "latparse.y" /* yacc.c:1646  */
+#line 307 "latparse.y" /* yacc.c:1646  */
     { (yyval.node) = latA_asign(
         (latA_nodo(NODO_CONCATENAR, (yyvsp[-2].node), (yyvsp[0].node), (yylsp[-1]).first_line, (yylsp[-1]).first_column)), (yyvsp[-2].node)); }
-#line 1979 "latparse.c" /* yacc.c:1646  */
+#line 1973 "latparse.c" /* yacc.c:1646  */
     break;
 
   case 72:
-#line 308 "latparse.y" /* yacc.c:1646  */
+#line 309 "latparse.y" /* yacc.c:1646  */
     { (yyval.node) = latA_asign(
         (latA_nodo(NODO_SUMA, (yyvsp[-2].node), (yyvsp[0].node), (yylsp[-1]).first_line, (yylsp[-1]).first_column)), (yyvsp[-2].node)); }
-#line 1986 "latparse.c" /* yacc.c:1646  */
+#line 1980 "latparse.c" /* yacc.c:1646  */
     break;
 
   case 73:
-#line 310 "latparse.y" /* yacc.c:1646  */
+#line 311 "latparse.y" /* yacc.c:1646  */
     { (yyval.node) = latA_asign(
         (latA_nodo(NODO_RESTA, (yyvsp[-2].node), (yyvsp[0].node), (yylsp[-1]).first_line, (yylsp[-1]).first_column)), (yyvsp[-2].node)); }
-#line 1993 "latparse.c" /* yacc.c:1646  */
+#line 1987 "latparse.c" /* yacc.c:1646  */
     break;
 
   case 74:
-#line 312 "latparse.y" /* yacc.c:1646  */
+#line 313 "latparse.y" /* yacc.c:1646  */
     { (yyval.node) = latA_asign(
         (latA_nodo(NODO_MULTIPLICACION, (yyvsp[-2].node), (yyvsp[0].node), (yylsp[-1]).first_line, (yylsp[-1]).first_column)), (yyvsp[-2].node)); }
-#line 2000 "latparse.c" /* yacc.c:1646  */
+#line 1994 "latparse.c" /* yacc.c:1646  */
     break;
 
   case 75:
-#line 314 "latparse.y" /* yacc.c:1646  */
+#line 315 "latparse.y" /* yacc.c:1646  */
     { (yyval.node) = latA_asign(
         (latA_nodo(NODO_DIVISION, (yyvsp[-2].node), (yyvsp[0].node), (yylsp[-1]).first_line, (yylsp[-1]).first_column)), (yyvsp[-2].node)); }
-#line 2007 "latparse.c" /* yacc.c:1646  */
+#line 2001 "latparse.c" /* yacc.c:1646  */
     break;
 
   case 76:
-#line 316 "latparse.y" /* yacc.c:1646  */
+#line 317 "latparse.y" /* yacc.c:1646  */
     { (yyval.node) = latA_asign(
         (latA_nodo(NODO_MODULO, (yyvsp[-2].node), (yyvsp[0].node), (yylsp[-1]).first_line, (yylsp[-1]).first_column)), (yyvsp[-2].node)); }
-#line 2014 "latparse.c" /* yacc.c:1646  */
+#line 2008 "latparse.c" /* yacc.c:1646  */
     break;
 
   case 77:
-#line 318 "latparse.y" /* yacc.c:1646  */
+#line 319 "latparse.y" /* yacc.c:1646  */
     { (yyval.node) = latA_asign((yyvsp[0].node), (yyvsp[-2].node)); }
-#line 2020 "latparse.c" /* yacc.c:1646  */
+#line 2014 "latparse.c" /* yacc.c:1646  */
     break;
 
   case 78:
-#line 319 "latparse.y" /* yacc.c:1646  */
+#line 320 "latparse.y" /* yacc.c:1646  */
     { (yyval.node) = latA_asign_le((yyvsp[0].node), (yyvsp[-5].node), (yyvsp[-3].node)); }
-#line 2026 "latparse.c" /* yacc.c:1646  */
+#line 2020 "latparse.c" /* yacc.c:1646  */
     break;
 
   case 79:
-#line 323 "latparse.y" /* yacc.c:1646  */
+#line 324 "latparse.y" /* yacc.c:1646  */
     {
         (yyval.node) = latA_nodo(NODO_CASOS, (yyvsp[-1].node), (yyvsp[0].node), (yylsp[-1]).first_line, (yylsp[-1]).first_column);
     }
-#line 2034 "latparse.c" /* yacc.c:1646  */
+#line 2028 "latparse.c" /* yacc.c:1646  */
     break;
 
   case 80:
-#line 326 "latparse.y" /* yacc.c:1646  */
+#line 327 "latparse.y" /* yacc.c:1646  */
     {
         (yyval.node) = latA_nodo(NODO_CASOS, (yyvsp[0].node), NULL, (yylsp[0]).first_line, (yylsp[0]).first_column);
     }
-#line 2042 "latparse.c" /* yacc.c:1646  */
+#line 2036 "latparse.c" /* yacc.c:1646  */
     break;
 
   case 81:
-#line 329 "latparse.y" /* yacc.c:1646  */
+#line 330 "latparse.y" /* yacc.c:1646  */
     {
         (yyval.node) = latA_nodo(NODO_CASOS, (yyvsp[0].node), NULL, (yylsp[0]).first_line, (yylsp[0]).first_column);
     }
-#line 2050 "latparse.c" /* yacc.c:1646  */
+#line 2044 "latparse.c" /* yacc.c:1646  */
     break;
 
   case 82:
-#line 336 "latparse.y" /* yacc.c:1646  */
+#line 337 "latparse.y" /* yacc.c:1646  */
     {
         (yyval.node) = latA_nodo(NODO_CASO, (yyvsp[-2].node), (yyvsp[0].node), (yylsp[-3]).first_line, (yylsp[-3]).first_column);
     }
-#line 2058 "latparse.c" /* yacc.c:1646  */
+#line 2052 "latparse.c" /* yacc.c:1646  */
     break;
 
   case 83:
-#line 343 "latparse.y" /* yacc.c:1646  */
+#line 344 "latparse.y" /* yacc.c:1646  */
     {
         (yyval.node) = latA_nodo(NODO_DEFECTO, NULL, (yyvsp[0].node), (yylsp[-2]).first_line, (yylsp[-2]).first_column);
     }
-#line 2066 "latparse.c" /* yacc.c:1646  */
+#line 2060 "latparse.c" /* yacc.c:1646  */
     break;
 
   case 84:
-#line 349 "latparse.y" /* yacc.c:1646  */
+#line 350 "latparse.y" /* yacc.c:1646  */
     {
         (yyval.node) = latA_si((yyvsp[-2].node), (yyvsp[-1].node), NULL); }
-#line 2073 "latparse.c" /* yacc.c:1646  */
+#line 2067 "latparse.c" /* yacc.c:1646  */
     break;
 
   case 85:
-#line 351 "latparse.y" /* yacc.c:1646  */
+#line 352 "latparse.y" /* yacc.c:1646  */
     {
         (yyval.node) = latA_si((yyvsp[-4].node), (yyvsp[-3].node), (yyvsp[-1].node)); }
-#line 2080 "latparse.c" /* yacc.c:1646  */
+#line 2074 "latparse.c" /* yacc.c:1646  */
     break;
 
   case 86:
-#line 353 "latparse.y" /* yacc.c:1646  */
+#line 354 "latparse.y" /* yacc.c:1646  */
     {
         (yyval.node) = latA_si((yyvsp[-3].node), (yyvsp[-2].node), (yyvsp[-1].node)); }
-#line 2087 "latparse.c" /* yacc.c:1646  */
+#line 2081 "latparse.c" /* yacc.c:1646  */
     break;
 
   case 87:
-#line 355 "latparse.y" /* yacc.c:1646  */
+#line 356 "latparse.y" /* yacc.c:1646  */
     {
         (yyval.node) = latA_nodo(NODO_ELEGIR, (yyvsp[-2].node), (yyvsp[-1].node), (yylsp[-3]).first_line, (yylsp[-3]).first_column);
     }
-#line 2095 "latparse.c" /* yacc.c:1646  */
+#line 2089 "latparse.c" /* yacc.c:1646  */
     break;
 
   case 90:
-#line 366 "latparse.y" /* yacc.c:1646  */
+#line 367 "latparse.y" /* yacc.c:1646  */
     {
           (yyval.node) = latA_si((yyvsp[-1].node), (yyvsp[0].node), NULL);
     }
-#line 2103 "latparse.c" /* yacc.c:1646  */
+#line 2097 "latparse.c" /* yacc.c:1646  */
     break;
 
   case 91:
-#line 369 "latparse.y" /* yacc.c:1646  */
+#line 370 "latparse.y" /* yacc.c:1646  */
     {
           (yyval.node) = latA_si((yyvsp[-3].node), (yyvsp[-2].node), (yyvsp[0].node));
     }
-#line 2111 "latparse.c" /* yacc.c:1646  */
+#line 2105 "latparse.c" /* yacc.c:1646  */
     break;
 
   case 92:
-#line 372 "latparse.y" /* yacc.c:1646  */
+#line 373 "latparse.y" /* yacc.c:1646  */
     {
           (yyval.node) = latA_si((yyvsp[-2].node), (yyvsp[-1].node), (yyvsp[0].node));
     }
-#line 2119 "latparse.c" /* yacc.c:1646  */
+#line 2113 "latparse.c" /* yacc.c:1646  */
     break;
 
   case 93:
-#line 378 "latparse.y" /* yacc.c:1646  */
+#line 379 "latparse.y" /* yacc.c:1646  */
     {
         (yyval.node) = latA_mientras((yyvsp[-2].node), (yyvsp[-1].node)); }
-#line 2126 "latparse.c" /* yacc.c:1646  */
+#line 2120 "latparse.c" /* yacc.c:1646  */
     break;
 
   case 94:
-#line 380 "latparse.y" /* yacc.c:1646  */
+#line 381 "latparse.y" /* yacc.c:1646  */
     {
         (yyval.node) = latA_hacer((yyvsp[0].node), (yyvsp[-2].node)); }
-#line 2133 "latparse.c" /* yacc.c:1646  */
+#line 2127 "latparse.c" /* yacc.c:1646  */
     break;
 
   case 95:
-#line 383 "latparse.y" /* yacc.c:1646  */
+#line 384 "latparse.y" /* yacc.c:1646  */
     {
         (yyval.node) = latA_desde((yyvsp[-7].node), (yyvsp[-5].node), (yyvsp[-3].node), (yyvsp[-1].node)); }
-#line 2140 "latparse.c" /* yacc.c:1646  */
+#line 2134 "latparse.c" /* yacc.c:1646  */
     break;
 
   case 96:
-#line 388 "latparse.y" /* yacc.c:1646  */
+#line 389 "latparse.y" /* yacc.c:1646  */
+    { (yyval.node) = latA_nodo(NODO_RETORNO, (yyvsp[0].node), NULL, (yylsp[-1]).first_line, (yylsp[-1]).first_column); }
+#line 2140 "latparse.c" /* yacc.c:1646  */
+    break;
+
+  case 97:
+#line 390 "latparse.y" /* yacc.c:1646  */
     { (yyval.node) = latA_nodo(NODO_RETORNO, (yyvsp[0].node), NULL, (yylsp[-1]).first_line, (yylsp[-1]).first_column); }
 #line 2146 "latparse.c" /* yacc.c:1646  */
     break;
 
-  case 97:
-#line 389 "latparse.y" /* yacc.c:1646  */
-    { (yyval.node) = latA_nodo(NODO_RETORNO, (yyvsp[0].node), NULL, (yylsp[-1]).first_line, (yylsp[-1]).first_column); }
-#line 2152 "latparse.c" /* yacc.c:1646  */
-    break;
-
   case 98:
-#line 393 "latparse.y" /* yacc.c:1646  */
+#line 394 "latparse.y" /* yacc.c:1646  */
     {
         (yyval.node) = latA_funcion((yyvsp[-5].node), (yyvsp[-3].node), (yyvsp[-1].node), (yylsp[-5]).first_line, (yylsp[-5]).first_column);
     }
-#line 2160 "latparse.c" /* yacc.c:1646  */
+#line 2154 "latparse.c" /* yacc.c:1646  */
     break;
 
   case 99:
-#line 399 "latparse.y" /* yacc.c:1646  */
+#line 400 "latparse.y" /* yacc.c:1646  */
     {
         (yyval.node) = latA_funcion(latA_var("anonima", (yylsp[-5]).first_line, (yylsp[-5]).first_column, false), (yyvsp[-3].node), (yyvsp[-1].node), (yylsp[-5]).first_line, (yylsp[-5]).first_column);
     }
-#line 2168 "latparse.c" /* yacc.c:1646  */
+#line 2162 "latparse.c" /* yacc.c:1646  */
     break;
 
   case 100:
-#line 405 "latparse.y" /* yacc.c:1646  */
+#line 406 "latparse.y" /* yacc.c:1646  */
     { (yyval.node) = latA_nodo(NODO_FUNCION_LLAMADA, (yyvsp[-3].node), (yyvsp[-1].node), (yylsp[-3]).first_line, (yylsp[-3]).first_column); }
-#line 2174 "latparse.c" /* yacc.c:1646  */
+#line 2168 "latparse.c" /* yacc.c:1646  */
     break;
 
   case 101:
-#line 409 "latparse.y" /* yacc.c:1646  */
+#line 410 "latparse.y" /* yacc.c:1646  */
     { (yyval.node) = NULL; }
-#line 2180 "latparse.c" /* yacc.c:1646  */
+#line 2174 "latparse.c" /* yacc.c:1646  */
     break;
 
   case 102:
-#line 410 "latparse.y" /* yacc.c:1646  */
+#line 411 "latparse.y" /* yacc.c:1646  */
     { (yyval.node) = latA_nodo(NODO_FUNCION_ARGUMENTOS, (yyvsp[0].node), NULL, (yylsp[0]).first_line, (yylsp[0]).first_column); }
-#line 2186 "latparse.c" /* yacc.c:1646  */
+#line 2180 "latparse.c" /* yacc.c:1646  */
     break;
 
   case 103:
-#line 411 "latparse.y" /* yacc.c:1646  */
+#line 412 "latparse.y" /* yacc.c:1646  */
     {
-        /*
-        if($1->tipo == NODO_FUNCION_LLAMADA){
-            printf("\033[1;31m%s:%d:%d:\033[0m %s\n", filename, @1.first_line, @1.first_column, "Llamado a funcion debe de ser el ultimo parametro");
-            YYABORT;
-        }*/
         if((yyvsp[-2].node)->tipo == NODO_VAR_ARGS){
             printf("\033[1;31m%s:%d:%d:\033[0m %s\n", filename, (yylsp[-2]).first_line, (yylsp[-2]).first_column, "Parametro VAR_ARGS (...) debe de ser el ultimo parametro");
             YYABORT;
         }
         (yyval.node) = latA_nodo(NODO_FUNCION_ARGUMENTOS, (yyvsp[-2].node), (yyvsp[0].node), (yylsp[-2]).first_line, (yylsp[-2]).first_column);
     }
-#line 2203 "latparse.c" /* yacc.c:1646  */
+#line 2192 "latparse.c" /* yacc.c:1646  */
     break;
 
   case 104:
-#line 426 "latparse.y" /* yacc.c:1646  */
+#line 422 "latparse.y" /* yacc.c:1646  */
     { (yyval.node) = NULL; }
-#line 2209 "latparse.c" /* yacc.c:1646  */
+#line 2198 "latparse.c" /* yacc.c:1646  */
     break;
 
   case 105:
-#line 427 "latparse.y" /* yacc.c:1646  */
+#line 423 "latparse.y" /* yacc.c:1646  */
     { (yyval.node) = latA_nodo(NODO_FUNCION_PARAMETROS, (yyvsp[0].node), NULL, (yylsp[0]).first_line, (yylsp[0]).first_column); }
-#line 2215 "latparse.c" /* yacc.c:1646  */
+#line 2204 "latparse.c" /* yacc.c:1646  */
     break;
 
   case 106:
-#line 428 "latparse.y" /* yacc.c:1646  */
+#line 424 "latparse.y" /* yacc.c:1646  */
     { (yyval.node) = latA_nodo(NODO_FUNCION_PARAMETROS, (yyvsp[0].node), NULL, 0, 0); }
-#line 2221 "latparse.c" /* yacc.c:1646  */
+#line 2210 "latparse.c" /* yacc.c:1646  */
     break;
 
   case 107:
-#line 429 "latparse.y" /* yacc.c:1646  */
+#line 425 "latparse.y" /* yacc.c:1646  */
     {
         if((yyvsp[-2].node)->izq->tipo == NODO_VAR_ARGS){
             printf("\033[1;31m%s:%d:%d:\033[0m %s\n", (yylsp[0]).file_name, (yylsp[0]).first_line, (yylsp[0]).first_column, "Parametro VAR_ARGS (...) debe de ser el ultimo parametro");
             YYABORT;
         }
         (yyval.node) = latA_nodo(NODO_FUNCION_PARAMETROS, (yyvsp[0].node), (yyvsp[-2].node), (yylsp[0]).first_line, (yylsp[0]).first_column); }
-#line 2232 "latparse.c" /* yacc.c:1646  */
+#line 2221 "latparse.c" /* yacc.c:1646  */
     break;
 
   case 108:
-#line 435 "latparse.y" /* yacc.c:1646  */
+#line 431 "latparse.y" /* yacc.c:1646  */
     { (yyval.node) = latA_nodo(NODO_FUNCION_PARAMETROS, (yyvsp[0].node), (yyvsp[-2].node), 0, 0); }
-#line 2238 "latparse.c" /* yacc.c:1646  */
+#line 2227 "latparse.c" /* yacc.c:1646  */
     break;
 
   case 109:
-#line 439 "latparse.y" /* yacc.c:1646  */
+#line 435 "latparse.y" /* yacc.c:1646  */
     { (yyval.node) = latA_nodo(NODO_LISTA, (yyvsp[-1].node), NULL, (yylsp[-2]).first_line, (yylsp[-2]).first_column); }
-#line 2244 "latparse.c" /* yacc.c:1646  */
+#line 2233 "latparse.c" /* yacc.c:1646  */
     break;
 
   case 110:
-#line 443 "latparse.y" /* yacc.c:1646  */
+#line 439 "latparse.y" /* yacc.c:1646  */
     { (yyval.node) = NULL; }
-#line 2250 "latparse.c" /* yacc.c:1646  */
+#line 2239 "latparse.c" /* yacc.c:1646  */
     break;
 
   case 111:
-#line 444 "latparse.y" /* yacc.c:1646  */
+#line 440 "latparse.y" /* yacc.c:1646  */
     { (yyval.node) = latA_nodo(NODO_LISTA_AGREGAR_ELEMENTO, (yyvsp[0].node), NULL, (yylsp[0]).first_line, (yylsp[0]).first_column); }
-#line 2256 "latparse.c" /* yacc.c:1646  */
+#line 2245 "latparse.c" /* yacc.c:1646  */
     break;
 
   case 112:
-#line 445 "latparse.y" /* yacc.c:1646  */
+#line 441 "latparse.y" /* yacc.c:1646  */
     {
-        /*
-        if($1->tipo == NODO_FUNCION_LLAMADA){
-            printf("\033[1;31m%s:%d:%d:\033[0m %s\n", filename, @1.first_line, @1.first_column, "Llamado a funcion debe de ser el ultimo parametro");
-            YYABORT;
-        }*/
         if((yyvsp[-2].node)->tipo == NODO_LOAD_VAR_ARGS){
             printf("\033[1;31m%s:%d:%d:\033[0m %s\n", filename, (yylsp[-2]).first_line, (yylsp[-2]).first_column, "Parametro VAR_ARGS (...) debe de ser el ultimo parametro");
             YYABORT;
         }
         (yyval.node) = latA_nodo(NODO_LISTA_AGREGAR_ELEMENTO, (yyvsp[-2].node), (yyvsp[0].node), (yylsp[0]).first_line, (yylsp[0]).first_column);
     }
-#line 2273 "latparse.c" /* yacc.c:1646  */
+#line 2257 "latparse.c" /* yacc.c:1646  */
     break;
 
   case 113:
-#line 460 "latparse.y" /* yacc.c:1646  */
+#line 451 "latparse.y" /* yacc.c:1646  */
     { (yyval.node) = latA_nodo(NODO_DICCIONARIO, (yyvsp[-1].node), NULL, (yylsp[-1]).first_line, (yylsp[-1]).first_column); }
-#line 2279 "latparse.c" /* yacc.c:1646  */
+#line 2263 "latparse.c" /* yacc.c:1646  */
     break;
 
   case 114:
-#line 464 "latparse.y" /* yacc.c:1646  */
+#line 455 "latparse.y" /* yacc.c:1646  */
     { (yyval.node) = NULL; }
-#line 2285 "latparse.c" /* yacc.c:1646  */
+#line 2269 "latparse.c" /* yacc.c:1646  */
     break;
 
   case 115:
-#line 465 "latparse.y" /* yacc.c:1646  */
+#line 456 "latparse.y" /* yacc.c:1646  */
     { (yyval.node) = latA_nodo(NODO_DICC_AGREGAR_ELEMENTO, (yyvsp[0].node), NULL, (yylsp[0]).first_line, (yylsp[0]).first_column); }
-#line 2291 "latparse.c" /* yacc.c:1646  */
+#line 2275 "latparse.c" /* yacc.c:1646  */
     break;
 
   case 116:
-#line 466 "latparse.y" /* yacc.c:1646  */
+#line 457 "latparse.y" /* yacc.c:1646  */
     { (yyval.node) = latA_nodo(NODO_DICC_AGREGAR_ELEMENTO, (yyvsp[0].node), (yyvsp[-2].node), (yylsp[0]).first_line, (yylsp[0]).first_column); }
-#line 2297 "latparse.c" /* yacc.c:1646  */
+#line 2281 "latparse.c" /* yacc.c:1646  */
     break;
 
   case 117:
-#line 470 "latparse.y" /* yacc.c:1646  */
+#line 461 "latparse.y" /* yacc.c:1646  */
     { /* empty */ (yyval.node) = NULL; }
-#line 2303 "latparse.c" /* yacc.c:1646  */
+#line 2287 "latparse.c" /* yacc.c:1646  */
     break;
 
   case 118:
-#line 471 "latparse.y" /* yacc.c:1646  */
+#line 462 "latparse.y" /* yacc.c:1646  */
     { (yyval.node) = latA_nodo(NODO_DICC_ELEMENTO, (yyvsp[-2].node), (yyvsp[0].node), (yylsp[-2]).first_line, (yylsp[-2]).first_column); }
-#line 2309 "latparse.c" /* yacc.c:1646  */
+#line 2293 "latparse.c" /* yacc.c:1646  */
     break;
 
 
-#line 2313 "latparse.c" /* yacc.c:1646  */
+#line 2297 "latparse.c" /* yacc.c:1646  */
       default: break;
     }
   /* User semantic actions sometimes alter yychar, and that requires
@@ -2544,7 +2528,7 @@ yyreturn:
 #endif
   return yyresult;
 }
-#line 474 "latparse.y" /* yacc.c:1906  */
+#line 465 "latparse.y" /* yacc.c:1906  */
 
 
 //se define para analisis sintactico (bison)
