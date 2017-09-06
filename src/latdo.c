@@ -392,8 +392,8 @@ static int ast_analizar(lat_mv *mv, ast *nodo, lat_bytecode *codigo, int i) {
             pn(mv, nodo->izq);
             int num_args =
                 contar_num_parargs(nodo->izq, NODO_FUNCION_ARGUMENTOS);
-            dbc(RETURN_VALUE, num_args, 0, NULL, nodo->izq->nlin,
-                nodo->izq->ncol, mv->nombre_archivo);
+            dbc(RETURN_VALUE, num_args == 0 ? 1 : num_args, 0, NULL,
+                nodo->izq->nlin, nodo->izq->ncol, mv->nombre_archivo);
         } break;
         case NODO_FUNCION_ARGUMENTOS: {
             if (nodo->izq) {

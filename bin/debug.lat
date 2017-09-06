@@ -1,3 +1,53 @@
+funcion fibo_iter(n)
+    si ( n < 2 )
+        retorno n
+    fin
+    prevPrev = 0
+    prev = 1
+    res = 0
+    i = 2
+    mientras( i <= n)
+        res = prev + prevPrev
+        prevPrev = prev
+        prev = res
+        i = i + 1
+    fin
+    retorno res
+fin
+res = "fibo_iter: "
+res ..= fibo_iter(8)
+poner(res)
+/*
+funcion fibo_rec(n)
+    si ( n < 2 )
+        retorno n
+    fin
+    retorno fibo_rec(n-1) + fibo_rec(n-2)
+fin
+
+poner(fibo_rec(6))
+
+
+fun fret (a, b)
+  ret a+b
+fin
+fun fnoret(a,b)
+  x=a+b
+fin
+fun fmultiret(a,b)
+  ret a, b
+fin
+//fret(1,2)   //LOAD_CONST      1
+//val = fret(1,2)   //ADJUST_STACK      1 -> STORE_NAME val
+//val1, val2 = fret(1,2)  //ADJUST_STACK    2 ->  STORE_NAME val2 -> STORE_NAME val1
+//poner(val1)
+//poner(val2)
+fmultiret(1,2)
+poner(fmultiret(1,2))
+poner(fnoret(1,2))   //aqui regresa el 3 <-resultado de fret
+poner(fnoret(1,2))   //aqui manda error porque no hay valores en la pila
+*/
+/*
 //una funcion varargs se crea con ... en su ultimo parametro
 funcion mi_concatenar(arg1, arg2, ...)
     //obtenemos los parametros varargs
@@ -40,101 +90,4 @@ si correcto
     //imprime: "el mensaje se envio correctamente"
     escribir(mensaje)
 fin
-
-
-/*incluir("json")     //paquete.cargar("liblatino-json.so", "latC_abrir_liblatino_json")
-
-poner("convertimos de una cadena json a un objeto de latino:")
-cad = '{"ok":true,"result":[{"update_id":558904697, "message":{"message_id":4507,"from":{"id":189041244,"first_name":"Bruno Ric (K)","username":"Jarriz"},"chat":{"id":189041244,"first_name":"Bruno Ric (K)","username":"Jarriz","type":"private"},"date":1475275449,"text":"hola latinos!!!"}}]}'
-d = json.decodificar(cad)
-poner(d)
-
-poner("\nconvertimos un diccionario de latino a cadena json:")
-dlat = { "uno" : 1, "dos" : 2, "tres" : ["esta" , "es", "una", "lista"]}
-cad = json.codificar(dlat)
-poner(cad)
-
-mod = incluir("modulo")
-x = mod.sumatoria(1,2)
-poner(x)
-
-//necesario para agregar la libreria dinamica
-incluir("curl")
-
-//se realiza una peticion a www.telegramforo.com y se muestra contenido
-resp = curl.peticion("www.telegramforo.com")
-poner(resp)
-
-//se codifica un texto y se realiza una busqueda en google
-busqueda = "perros y gatos"
-resp = curl.peticion("https://www.google.com.mx/search?q=" .. curl.escape(busqueda))
-poner(resp)
-
-//necesario para agregar la libreria dinamica
-incluir("redis")
-//se conecta con el servicio de redis corriendo en el puerto 6379
-conexion = redis.conectar("127.0.0.1", 6379)
-# Redis de 1 llave
-poner("#### Valores de 1 llave ####")
-//asignamos una clave
-redis.asignar(conexion, "Latino", "Hola amigos latinos")
-
-//asignamos un entero a otra llave
-redis.asignar(conexion, "entero", "0")
-
-// obtenemos los valores Redis de 1 llave
-cadena = redis.obtener(conexion, "Latino")
-entero  = redis.obtener(conexion, "entero")
-
-// Devolvemos los valores Redis de 1 llave
-poner("El valor de la cadena es:\t"..cadena)
-poner("El valor del entero es:\t\t"..entero)
-
-// le aumentamos 1 al entero y lo declaramos
-nuevo_valor = redis.aumentar(conexion, "entero")
-poner("Ahora el entero vale:\t\t"..nuevo_valor)
-// le incrementamos el valor que desees, en este caso es 5
-nuevo_valor = redis.incrementar(conexion, "entero", 5)
-poner("Se le incrementa 5 al entero:\t"..nuevo_valor)
-
-// borramos las llaves
-redis.borrar(conexion, "Latino")
-redis.borrar(conexion, "entero")
-
-//////////////////\\\\\\\\\\\\\\\\\\\\
-
-# Redis de 2 llaves
-poner("\n#### Valores de 2 llaves ####")
-//asignamos una clave
-redis.hasignar(conexion, "latino", "saludo", "Hola amigo Latino")
-
-//asignamos un entero a otra llave
-redis.hasignar(conexion, "entero", "valor", "0")
-
-// obtenemos los valores Redis de 1 llave
-cadena = redis.hobtener(conexion, "latino", "saludo")
-entero  = redis.hobtener(conexion, "entero", "valor")
-
-// Devolvemos los valores Redis de 1 llave
-poner("El valor de la cadena es:\t"..cadena)
-poner("El valor del entero es:\t\t"..entero)
-
-// le aumentamos 1 al entero y lo declaramos
-nuevo_valor = redis.haumentar(conexion, "entero", "valor")
-poner("Ahora el entero vale:\t\t"..nuevo_valor)
-// le incrementamos el valor que desees, en este caso es 5
-nuevo_valor = redis.hincrementar(conexion, "entero", "valor", 5)
-poner("Se le incrementa 5 al entero:\t"..nuevo_valor)
-
-// borramos las llaves
-redis.hborrar(conexion, "latino", "saludo")
-redis.hborrar(conexion, "entero", "valor")
-
-// Prueba del servicio Redis
-poner("\n### Devolución del ping ###")
-ping = redis.ping(conexion)
-poner("PING:\t\t"..ping)
-
-// terminamos la conexión
-redis.desconectar(conexion)
 */

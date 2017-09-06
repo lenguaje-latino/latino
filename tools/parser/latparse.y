@@ -124,7 +124,8 @@ int yylex (YYSTYPE * yylval_param,YYLTYPE * yylloc_param ,yyscan_t yyscanner);
  *
  */
 %right '='
-%left CONCATENAR CONCATENAR_IGUAL
+%right CONCATENAR
+%left CONCATENAR_IGUAL
 %left Y_LOGICO O_LOGICO
 %left IGUAL_LOGICO MAYOR_IGUAL MAYOR_QUE MENOR_IGUAL MENOR_QUE DIFERENTE REGEX
 %left '+' '-'
@@ -409,11 +410,6 @@ argument_expression_list
     : /* empty */ { $$ = NULL; }
     | expression { $$ = latA_nodo(NODO_FUNCION_ARGUMENTOS, $1, NULL, @1.first_line, @1.first_column); }
     | expression ',' argument_expression_list {
-        /*
-        if($1->tipo == NODO_FUNCION_LLAMADA){
-            printf("\033[1;31m%s:%d:%d:\033[0m %s\n", filename, @1.first_line, @1.first_column, "Llamado a funcion debe de ser el ultimo parametro");
-            YYABORT;
-        }*/
         if($1->tipo == NODO_VAR_ARGS){
             printf("\033[1;31m%s:%d:%d:\033[0m %s\n", filename, @1.first_line, @1.first_column, "Parametro VAR_ARGS (...) debe de ser el ultimo parametro");
             YYABORT;
@@ -443,11 +439,6 @@ list_items
     : /* empty */ { $$ = NULL; }
     | expression { $$ = latA_nodo(NODO_LISTA_AGREGAR_ELEMENTO, $1, NULL, @1.first_line, @1.first_column); }
     | expression ',' list_items {
-        /*
-        if($1->tipo == NODO_FUNCION_LLAMADA){
-            printf("\033[1;31m%s:%d:%d:\033[0m %s\n", filename, @1.first_line, @1.first_column, "Llamado a funcion debe de ser el ultimo parametro");
-            YYABORT;
-        }*/
         if($1->tipo == NODO_LOAD_VAR_ARGS){
             printf("\033[1;31m%s:%d:%d:\033[0m %s\n", filename, @1.first_line, @1.first_column, "Parametro VAR_ARGS (...) debe de ser el ultimo parametro");
             YYABORT;

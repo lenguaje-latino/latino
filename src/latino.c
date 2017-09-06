@@ -159,6 +159,6 @@ int main(int argc, char *argv[]) {
         lat_version();
         latR_REPL(mv);
     }
-    latC_destruir_mv(mv);
+    // latC_destruir_mv(mv);
     return EXIT_SUCCESS;
 }

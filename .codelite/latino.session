@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<Session Name="/home/latino/src/latino-c/latino.workspace">
-  <int Value="6" Name="m_selectedTab"/>
-  <wxString Value="/home/latino/src/latino-c/latino.workspace" Name="m_workspaceName"/>
+<Session Name="/home/latino/src/latino/latino.workspace">
+  <int Value="10" Name="m_selectedTab"/>
+  <wxString Value="/home/latino/src/latino/latino.workspace" Name="m_workspaceName"/>
   <TabInfoArray Name="TabInfoArray">
     <TabInfo>
       <wxString Value="/home/latino/src/latino-c/src/latino.c" Name="FileName"/>
@@ -12,56 +12,91 @@
     </TabInfo>
     <TabInfo>
       <wxString Value="/home/latino/src/latino-c/src/latmv.c" Name="FileName"/>
-      <int Value="732" Name="FirstVisibleLine"/>
+      <int Value="729" Name="FirstVisibleLine"/>
       <int Value="730" Name="CurrentLine"/>
       <wxArrayString Name="Bookmarks"/>
       <IntVector Name="CollapsedFolds"/>
     </TabInfo>
     <TabInfo>
       <wxString Value="/home/latino/src/latino-c/src/latdo.c" Name="FileName"/>
-      <int Value="182" Name="FirstVisibleLine"/>
+      <int Value="179" Name="FirstVisibleLine"/>
       <int Value="180" Name="CurrentLine"/>
       <wxArrayString Name="Bookmarks"/>
       <IntVector Name="CollapsedFolds"/>
     </TabInfo>
     <TabInfo>
       <wxString Value="/home/latino/src/latino-c/src/latbaselib.c" Name="FileName"/>
-      <int Value="149" Name="FirstVisibleLine"/>
+      <int Value="146" Name="FirstVisibleLine"/>
       <int Value="147" Name="CurrentLine"/>
       <wxArrayString Name="Bookmarks"/>
       <IntVector Name="CollapsedFolds"/>
     </TabInfo>
     <TabInfo>
       <wxString Value="/home/latino/src/latino-c/src/latpaqlib.c" Name="FileName"/>
-      <int Value="68" Name="FirstVisibleLine"/>
+      <int Value="65" Name="FirstVisibleLine"/>
       <int Value="66" Name="CurrentLine"/>
       <wxArrayString Name="Bookmarks"/>
       <IntVector Name="CollapsedFolds"/>
     </TabInfo>
     <TabInfo>
       <wxString Value="/home/latino/src/latino-c/src/latlistlib.c" Name="FileName"/>
-      <int Value="42" Name="FirstVisibleLine"/>
+      <int Value="39" Name="FirstVisibleLine"/>
       <int Value="40" Name="CurrentLine"/>
       <wxArrayString Name="Bookmarks"/>
       <IntVector Name="CollapsedFolds"/>
     </TabInfo>
     <TabInfo>
       <wxString Value="/home/latino/src/latino-c/src/latobj.c" Name="FileName"/>
-      <int Value="227" Name="FirstVisibleLine"/>
-      <int Value="225" Name="CurrentLine"/>
+      <int Value="224" Name="FirstVisibleLine"/>
+      <int Value="236" Name="CurrentLine"/>
       <wxArrayString Name="Bookmarks"/>
       <IntVector Name="CollapsedFolds"/>
     </TabInfo>
     <TabInfo>
       <wxString Value="/home/latino/src/latino-c/src/latfilelib.c" Name="FileName"/>
-      <int Value="30" Name="FirstVisibleLine"/>
+      <int Value="27" Name="FirstVisibleLine"/>
       <int Value="28" Name="CurrentLine"/>
+      <wxArrayString Name="Bookmarks"/>
+      <IntVector Name="CollapsedFolds"/>
+    </TabInfo>
+    <TabInfo>
+      <wxString Value="/home/latino/src/latino/src/latino.c" Name="FileName"/>
+      <int Value="147" Name="FirstVisibleLine"/>
+      <int Value="151" Name="CurrentLine"/>
+      <wxArrayString Name="Bookmarks"/>
+      <IntVector Name="CollapsedFolds"/>
+    </TabInfo>
+    <TabInfo>
+      <wxString Value="/home/latino/src/latino/src/latdo.c" Name="FileName"/>
+      <int Value="715" Name="FirstVisibleLine"/>
+      <int Value="722" Name="CurrentLine"/>
+      <wxArrayString Name="Bookmarks"/>
+      <IntVector Name="CollapsedFolds"/>
+    </TabInfo>
+    <TabInfo>
+      <wxString Value="/home/latino/src/latino/src/latmv.c" Name="FileName"/>
+      <int Value="730" Name="FirstVisibleLine"/>
+      <int Value="741" Name="CurrentLine"/>
+      <wxArrayString Name="Bookmarks"/>
+      <IntVector Name="CollapsedFolds"/>
+    </TabInfo>
+    <TabInfo>
+      <wxString Value="/home/latino/src/latino-c/src/latgc.c" Name="FileName"/>
+      <int Value="43" Name="FirstVisibleLine"/>
+      <int Value="44" Name="CurrentLine"/>
+      <wxArrayString Name="Bookmarks"/>
+      <IntVector Name="CollapsedFolds"/>
+    </TabInfo>
+    <TabInfo>
+      <wxString Value="/home/latino/src/latino/src/latgc.c" Name="FileName"/>
+      <int Value="27" Name="FirstVisibleLine"/>
+      <int Value="36" Name="CurrentLine"/>
       <wxArrayString Name="Bookmarks"/>
       <IntVector Name="CollapsedFolds"/>
     </TabInfo>
   </TabInfoArray>
   <SerializedObject Name="m_breakpoints">
-    <long Value="9" Name="Count"/>
+    <long Value="10" Name="Count"/>
     <SerializedObject Name="Breakpoint0">
       <wxString Value="/home/latino/src/latino-c/src/latbaselib.c" Name="file"/>
       <int Value="137" Name="lineno"/>
@@ -159,6 +194,22 @@
       <int Value="0" Name="origin"/>
     </SerializedObject>
     <SerializedObject Name="Breakpoint6">
+      <wxString Value="/home/latino/src/latino/src/latmv.c" Name="file"/>
+      <int Value="741" Name="lineno"/>
+      <wxString Value="" Name="function_name"/>
+      <wxString Value="" Name="memory_address"/>
+      <int Value="1" Name="bp_type"/>
+      <int Value="0" Name="watchpoint_type"/>
+      <wxString Value="" Name="watchpt_data"/>
+      <CData Name="commandlist"/>
+      <bool Value="0" Name="regex"/>
+      <bool Value="0" Name="is_temp"/>
+      <bool Value="1" Name="is_enabled"/>
+      <int Value="0" Name="ignore_number"/>
+      <wxString Value="" Name="conditions"/>
+      <int Value="0" Name="origin"/>
+    </SerializedObject>
+    <SerializedObject Name="Breakpoint7">
       <wxString Value="/home/primi/src/latino-c/src/latdo.c" Name="file"/>
       <int Value="112" Name="lineno"/>
       <wxString Value="" Name="function_name"/>
@@ -174,7 +225,7 @@
       <wxString Value="" Name="conditions"/>
       <int Value="0" Name="origin"/>
     </SerializedObject>
-    <SerializedObject Name="Breakpoint7">
+    <SerializedObject Name="Breakpoint8">
       <wxString Value="/home/primi/src/latino-c/src/latmv.c" Name="file"/>
       <int Value="807" Name="lineno"/>
       <wxString Value="" Name="function_name"/>
@@ -190,7 +241,7 @@
       <wxString Value="" Name="conditions"/>
       <int Value="0" Name="origin"/>
     </SerializedObject>
-    <SerializedObject Name="Breakpoint8">
+    <SerializedObject Name="Breakpoint9">
       <wxString Value="/home/primi/src/latino-c/src/latmv.c" Name="file"/>
       <int Value="842" Name="lineno"/>
       <wxString Value="" Name="function_name"/>

@@ -37,7 +37,7 @@ SET(SRC_LIB latino.c latlex.c latparse.c latast.c latmem.c
 latdic.c latdo.c latlist.c latmv.c latobj.c latpaqlib.c latrepl.c latgc.c
 #librerias
 latbaselib.c latstrlib.c latlistlib.c latdiclib.c latfilelib.c
-latmathlib.c latsyslib.c latpaqlib.c
+latmathlib.c latsyslib.c latpaqlib.c latdevlib.c
 #extra
 linenoise/utf8.c linenoise/linenoise.c)
 
