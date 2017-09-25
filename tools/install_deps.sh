@@ -20,10 +20,12 @@ packages_all=( # Aquí indicamos los programas (generales) que se van a instalar
 
 packages_debian=( # Aquí nomás los de Debian, Ubuntu o derivados
 	"build-essential"
+  "libreadline-dev"
     )
 
 packages_fedora=( # Aquí de Fedora o derivados
 	"build-essentials"
+  "readline-devel"
 	"kernel-devel"
 	"jsoncpp"
     )
