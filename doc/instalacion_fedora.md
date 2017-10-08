@@ -2,21 +2,18 @@
 <img src ="https://raw.githubusercontent.com/primitivorm/latino/master/logo/banner-300x.png" /><br>http://lenguaje-latino.org/
 </p>
 
-<img src ="doc/fedora.png" />
+<img src ="fedora.png" />
 
 ## Dependencias
 Antes de instalar latino, vamos a instalar todos paquetes necesarios:
-
 
 ```
 # Fedora ó basados
 
 sudo dnf install bison flex cmake gcc g++ libjansson-dev libcurl4-openssl-dev libhiredis-dev redis-server curl jansson-devel groupinstall "Development Tools" "Development Libraries" groupinstall "RPM Development Tools" redhat-lsb libgtk-3-dev
-
 ```
 
 ## INSTALAR
-
 
 ```bash
  git clone --recursive https://github.com/primitivorm/latino
@@ -29,14 +26,11 @@ sudo dnf install bison flex cmake gcc g++ libjansson-dev libcurl4-openssl-dev li
 
 Puedes comprobar si hay versiones nuevas de paquetes para Fedora y Ubuntu en la sección [RELEASES](https://github.com/primitivorm/latino/releases)
 
-### Documentacion 
+### Documentacion
 1. http://manual.lenguaje-latino.org/
 2. http://documentacion.lenguaje-latino.org/
 
-
 ### COMPILAR
-
----
 
 |Requiere | Versión | SO |
 | :---    |    ---: |:---|
@@ -53,7 +47,6 @@ Puedes comprobar si hay versiones nuevas de paquetes para Fedora y Ubuntu en la 
 | libgtk-3-dev |  3.0 | Linux |
 | kernel-devel| |Solo Fedora|
 | jsoncpp| |Solo Fedora|
---
 
 ### DESINSTALAR
 
@@ -77,17 +70,15 @@ Pirmero debes saber donde esta instalado
 
  ```bash
  latino: /usr/local/bin/latino
-
  ```
 
  Ahora que sabemos dónde está solamente lo borramos:
  ```bash
  sudo rm /usr/local/bin/latino
-
  ```
 
-## Ayuda en nuestro foro
+## Ayuda en nuestro foro:
 
 http://lenguaje-latino.org/foro/fedora-centos/
 
-#### Cualquier aportación o sugerencia es bienvenida.
+Cualquier aportación o sugerencia es bienvenida.
