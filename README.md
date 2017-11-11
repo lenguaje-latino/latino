@@ -107,7 +107,7 @@ Tipos de dato
 | latino           | tipo de dato en C |
 | ---------------- |:-----------------:|
 | logico           |       bool        |
-| númerico         |      double       |
+| numérico         |      double       |
 | cadena o literal |      `char*`      |
 | lista (arreglo)  |      struct       |
 | diccionario      |      struct       |
