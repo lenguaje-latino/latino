@@ -16,7 +16,7 @@ addons:
       - gettext
       - libc6-dev
 before_install:
-    - pip install --user cpp-coveralls
+    - pip2 install --user cpp-coveralls
     - if [ $TRAVIS_OS_NAME == "linux" ]; then
         export CC="gcc-4.8";
         export CXX="g++-4.8";
