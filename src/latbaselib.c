@@ -112,7 +112,7 @@ static void base_incluir(lat_mv *mv) {
         if (status == 0 && nodo != NULL) {
             lat_objeto *funmod = latC_analizar(mv, nodo);
             status = latC_llamar_funcion(mv, funmod);
-            latA_destruir(nodo);
+            // latA_destruir(nodo);
             mv->nombre_archivo = tmp_name;
             return;
         }
@@ -132,7 +132,7 @@ static void base_incluir(lat_mv *mv) {
             if (status == 0 && nodo != NULL) {
                 lat_objeto *funmod = latC_analizar(mv, nodo);
                 status = latC_llamar_funcion(mv, funmod);
-                latA_destruir(nodo);
+                // latA_destruir(nodo);
                 mv->nombre_archivo = tmp_name;
                 return;
             }
@@ -153,7 +153,7 @@ static void base_incluir(lat_mv *mv) {
             if (status == 0 && nodo != NULL) {
                 lat_objeto *funmod_lib = latC_analizar(mv, nodo);
                 status = latC_llamar_funcion(mv, funmod_lib);
-                latA_destruir(nodo);
+                // latA_destruir(nodo);
                 mv->nombre_archivo = tmp_name;
                 return;
             }
