@@ -157,7 +157,7 @@ extern int parse_silent;
 
 /* maquina virutal */
 typedef struct lat_mv lat_mv;
-// typedef struct lat_objeto lat_objeto;
+typedef struct _lat_objeto lat_objeto;
 typedef struct lat_funcion lat_funcion;
 
 typedef void (*lat_CFuncion)(lat_mv *mv);
