@@ -99,8 +99,7 @@ char *analizar_fmt(const char *s, size_t len) {
                             i++;
                         }
                     default:
-                        if
-                            isdigit(s[i + 1]) {
+                        if(isdigit(s[i + 1])) {
                                 while (isdigit(s[i + 1])) {
                                     let = (10 * let) + ((int)s[i + 1] - 48);
                                     i += 1;
@@ -788,9 +787,11 @@ void str_match(lat_mv *mv) {
                 latC_error(mv, "error en el regex: ?, * o + no está siendo "
                                "usado en una expresión regular válida.");
                 break;
+#ifndef _WIN32
             case REG_ENOSYS:
                 latC_error(mv, "error en el regex: la implementación no admite "
                                "esta función.");
+#endif // !_WIN32
                 break;
             default:
                 latC_error(mv, "error en el regex: error desconocido.");
