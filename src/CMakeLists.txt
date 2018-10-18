@@ -27,6 +27,16 @@ else ()
     SET(CMAKE_C_FLAGS_DEBUG "${CMAKE_C_FLAGS} -D_GNU_SOURCE -g -O0 -Wall -std=c11 -rdynamic -ldl")
 endif ()
 
+set(TARGET_ARCH_REGEX "^.*-march[= ]([^ ]+).*$")
+string(REGEX MATCH "${TARGET_ARCH_REGEX}" TARGET_ARCH_MATCH ${CMAKE_C_FLAGS} ${CMAKE_CXX_FLAGS})
+if (TARGET_ARCH_MATCH)
+    string(REGEX REPLACE "${TARGET_ARCH_REGEX}" "\\1" TARGET_ARCH ${CMAKE_C_FLAGS} ${CMAKE_CXX_FLAGS})
+else()
+    set(TARGET_ARCH ${CMAKE_HOST_SYSTEM_PROCESSOR})
+endif()
+
+message(STATUS "TARGET_ARCH: ${TARGET_ARCH}")
+
 ADD_DEFINITIONS(-D_DEBUG -D__STDC_CONSTANT_MACROS -D__STDC_FORMAT_MACROS -D__STDC_LIMIT_MACROS)
 ADD_SUBDIRECTORY(linenoise)
 
@@ -43,7 +53,8 @@ linenoise/utf8.c linenoise/linenoise.c)
 
 SET(SRC_LATINO ${SRC_LIB})
 
-SET(EXECUTABLE_OUTPUT_PATH ${PROJECT_BINARY_DIR}/bin)
+#SET(EXECUTABLE_OUTPUT_PATH ${PROJECT_BINARY_DIR}/bin)
+#SET(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${PROJECT_BINARY_DIR}/bin)
 
 ADD_EXECUTABLE(latino ${SRC_LATINO} ${SRC_LIB})
 TARGET_LINK_LIBRARIES(latino LINK_PUBLIC ${CMAKE_DL_LIBS})
@@ -51,7 +62,7 @@ TARGET_LINK_LIBRARIES(latino LINK_PUBLIC ${CMAKE_DL_LIBS})
 IF(MSVC)
     TARGET_LINK_LIBRARIES(latino regex)
     set (LATINO_DEF latino.def )
-	link_libraries(regex)
+	  link_libraries(regex)
 ENDIF(MSVC)
 
 # Create dynamic library
@@ -59,9 +70,13 @@ add_library ( liblatino SHARED ${SRC_LIB} ${LATINO_DEF})
 set_target_properties ( liblatino PROPERTIES OUTPUT_NAME latino CLEAN_DIRECT_OUTPUT 1 )
 
 if ( LATINO_BUILD_AS_DLL )
-	target_link_libraries ( liblatino regex )
+	  target_link_libraries ( liblatino regex )
     set_target_properties ( liblatino PROPERTIES COMPILE_DEFINITIONS LATINO_BUILD_AS_DLL )
 endif ( )
+
+#Create static library
+add_library(liblatino_static STATIC ${SRC_LIB})
+target_link_libraries(liblatino_static ${LIBS})
 
 IF(UNIX)
   INSTALL(TARGETS latino DESTINATION ${INSTALL_BIN})
@@ -79,6 +94,11 @@ IF(UNIX)
   INSTALL (FILES ../include/latmem.h DESTINATION ${INSTALL_INCLUDE} COMPONENT Header)
   INSTALL (FILES ../include/latmv.h DESTINATION ${INSTALL_INCLUDE} COMPONENT Header)
   INSTALL (FILES ../include/latobj.h DESTINATION ${INSTALL_INCLUDE} COMPONENT Header)
+#ELSE()
+#https://stackoverflow.com/questions/13556885/how-to-change-the-executable-output-directory-for-win32-builds-in-cmake
+#  add_custom_command(target latino
+#          POST_BUILD
+#          COMMAND ${CMAKE_COMMAND} -E copy ${EXAMPLE_BIN_NAME} ${PROJECT_BINARY_DIR}/.)
 ENDIF(UNIX)
 
 #crear paquete .deb https://cmake.org/Wiki/CMake/CPack/Examples/Linux/DEB
