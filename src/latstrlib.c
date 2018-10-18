@@ -99,16 +99,15 @@ char *analizar_fmt(const char *s, size_t len) {
                             i++;
                         }
                     default:
-                        if(isdigit(s[i + 1])) {
-                                while (isdigit(s[i + 1])) {
-                                    let = (10 * let) + ((int)s[i + 1] - 48);
-                                    i += 1;
-                                };
-                                c = oct(let);
-                                let = 0;
-                                goto save;
-                            }
-                        else {
+                        if (isdigit(s[i + 1])) {
+                            while (isdigit(s[i + 1])) {
+                                let = (10 * let) + ((int)s[i + 1] - 48);
+                                i += 1;
+                            };
+                            c = oct(let);
+                            let = 0;
+                            goto save;
+                        } else {
                             c = s[i];
                             break;
                         }

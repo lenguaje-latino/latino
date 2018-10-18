@@ -704,8 +704,13 @@ LATINO_API void latC_error(lat_mv *mv, const char *fmt, ...) {
     vsprintf(buffer, fmt, args);
     va_end(args);
     char *info = malloc(MAX_INPUT_SIZE);
-    snprintf(info, MAX_INPUT_SIZE, "\033[1;31m%s:%d:%d:\033[0m ",
-             mv->nombre_archivo, mv->nlin, mv->ncol);
+#ifdef WIN32
+	snprintf(info, MAX_INPUT_SIZE, "%s:%d:%d: ",
+		mv->nombre_archivo, mv->nlin, mv->ncol);
+#else
+	snprintf(info, MAX_INPUT_SIZE, "\033[1;31m%s:%d:%d:\033[0m ",
+		mv->nombre_archivo, mv->nlin, mv->ncol);
+#endif // WIN32    
     latC_apilar(mv, latC_crear_cadena(mv, info));
     latC_apilar(mv, latC_crear_cadena(mv, buffer));
     str_concatenar(mv);
