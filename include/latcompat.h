@@ -43,6 +43,7 @@ THE SOFTWARE.
 #define latC_clear "@cls"
 #define latC_sleep(mili) Sleep(mili * 1000)
 #define latC_leer_linea(x) fgets(x, MAX_INPUT_SIZE, stdin)
+#define LAT_ERROR_FMT "%s:%d:%d: %s\n"
 /* Visual Leak Detector for Visual C++ */
 //#include <vld.h>
 #endif /* _WIN32 */
@@ -62,6 +63,7 @@ THE SOFTWARE.
 #define latC_clear "clear"
 #define latC_sleep(seg) sleep_ms(seg * 1000)
 #define latC_leer_linea(x) readline(NULL)
+#define LAT_ERROR_FMT "\033[1;31m%s:%d:%d:\033[0m %s\n"
 #endif /* __linux__ */
 
 /** Determina el compilador*/

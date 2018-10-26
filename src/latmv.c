@@ -417,12 +417,12 @@ void imprimir_pila(lat_mv *mv) {
 
 void checar_pila(lat_mv *mv) {
     if (mv->ptrpila >= MAX_STACK_SIZE) {
-        printf("\033[1;31m%s:%d:%d:\033[0m %s\n", mv->nombre_archivo, mv->nlin,
-               mv->ncol, "Desborde de la pila");
+		printf(LAT_ERROR_FMT, mv->nombre_archivo, mv->nlin,
+			mv->ncol, "Desborde de la pila");
         exit(EXIT_FAILURE);
     }
     if (mv->ptrpila <= 0) {
-        printf("\033[1;31m%s:%d:%d:\033[0m %s\n", mv->nombre_archivo, mv->nlin,
+        printf(LAT_ERROR_FMT, mv->nombre_archivo, mv->nlin,
                mv->ncol, "Pila vacia");
         exit(EXIT_FAILURE);
     }
@@ -797,6 +797,7 @@ int latMV_funcion_correr(lat_mv *mv, lat_objeto *func) {
                         mv->ptrprevio = 1; // restore stack
                     }
                     mv->prev_args = latMV_funcion_correr(mv, fun);
+					mv->numejec--;
                     if (mv->prev_args == 0 && next.ins == ADJUST_STACK &&
                         fun->tipo != T_CFUN) {
                         latC_error(mv,
@@ -815,8 +816,7 @@ int latMV_funcion_correr(lat_mv *mv, lat_objeto *func) {
                         latO_asignar_ctx(mv, ctx, "varargs",
                                          latC_crear_lista(mv, latL_crear(mv)));
                     }
-                    latM_liberar(mv, fun);
-                    mv->numejec--;
+                    latM_liberar(mv, fun);                    
                     if (apilar) {
                         desapilar_contexto(mv);
 #if HABILITAR_GC

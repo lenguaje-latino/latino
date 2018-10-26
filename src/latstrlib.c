@@ -270,19 +270,20 @@ char *insertar(char *dest, char *src, int pos) {
 }
 
 char *rellenar_izquierda(char *base, char *c, int n) {
-    char *ret = malloc(MAX_STR_LENGTH);
-    int len = strlen(base);
+	//FIXME: Windows
+	int len = strlen(base);
+    char *ret = malloc(len+n+1);    
     int i, final = len - 1;
     for (i = 0; i < (n - final); i++) {
-        ret = strcat(ret, c);
+		ret = strcat(ret, c);
     }
     ret = strcat(ret, base);
     return ret;
 }
 
 char *rellenar_derecha(char *base, char *c, int n) {
-    char *ret = malloc(MAX_STR_LENGTH);
-    int len = strlen(base);
+	int len = strlen(base);
+	char *ret = malloc(len+n+1);    
     strcpy(ret, base);
     int i, final = len - 1;
     for (i = 0; i < (n - final); i++) {
@@ -301,7 +302,7 @@ char *reemplazar(char *o_string, char *s_string, char *r_string) {
     strncpy(buffer, o_string, ch - o_string);
     buffer[ch - o_string] = 0;
     sprintf(buffer + (ch - o_string), "%s%s", r_string, ch + strlen(s_string));
-    // printf("REEMPLAZAR: %s\n", buffer);
+    // printf("reemplazar: %s\n", buffer);
     return buffer;
 }
 
@@ -668,8 +669,7 @@ void str_separar(lat_mv *mv) {
 }
 
 void str_invertir(lat_mv *mv) {
-    // TODO: Pendiente implementacion para multibyte
-    // printf("%s\n", "latM_asignar");
+    // FIXME: Pendiente implementacion para multibyte
     lat_objeto *a = latC_desapilar(mv);
     char *orig = latC_checar_cadena(mv, a);
     int i = strlen(orig) - 1;
@@ -860,7 +860,7 @@ void str_formato(lat_mv *mv) {
         } else if (*++strfrmt == '%') {
             sprintf(b, "%s%c", b, *strfrmt++);
         } else {
-            char buff[1024];
+            char buff[MAX_STR_LENGTH];
             if (++arg > top) {
                 latC_error(mv, "Numero de argumentos invalido para el formato");
             }
