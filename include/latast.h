@@ -28,7 +28,7 @@ THE SOFTWARE.
 #include <stdbool.h>
 
 /**\brief Muestra las instrucciones que se generan con el AST */
-#define DEPURAR_AST 0
+#define DEPURAR_AST 1
 
 extern char *filename;
 

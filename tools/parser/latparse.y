@@ -411,7 +411,7 @@ argument_expression_list
     | expression { $$ = latA_nodo(NODO_FUNCION_ARGUMENTOS, $1, NULL, @1.first_line, @1.first_column); }
     | expression ',' argument_expression_list {
         if($1->tipo == NODO_VAR_ARGS){
-            printf("\033[1;31m%s:%d:%d:\033[0m %s\n", filename, @1.first_line, @1.first_column, "Parametro VAR_ARGS (...) debe de ser el ultimo parametro");
+            printf(LAT_ERROR_FMT, filename, @1.first_line, @1.first_column, "Parametro VAR_ARGS (...) debe de ser el ultimo parametro");
             YYABORT;
         }
         $$ = latA_nodo(NODO_FUNCION_ARGUMENTOS, $1, $3, @1.first_line, @1.first_column);
@@ -424,7 +424,7 @@ parameter_list
     | VAR_ARGS { $$ = latA_nodo(NODO_FUNCION_PARAMETROS, $1, NULL, 0, 0); }
     | parameter_list ',' IDENTIFICADOR {
         if($1->izq->tipo == NODO_VAR_ARGS){
-            printf("\033[1;31m%s:%d:%d:\033[0m %s\n", @3.file_name, @3.first_line, @3.first_column, "Parametro VAR_ARGS (...) debe de ser el ultimo parametro");
+            printf(LAT_ERROR_FMT, @3.file_name, @3.first_line, @3.first_column, "Parametro VAR_ARGS (...) debe de ser el ultimo parametro");
             YYABORT;
         }
         $$ = latA_nodo(NODO_FUNCION_PARAMETROS, $3, $1, @3.first_line, @3.first_column); }
@@ -440,7 +440,7 @@ list_items
     | expression { $$ = latA_nodo(NODO_LISTA_AGREGAR_ELEMENTO, $1, NULL, @1.first_line, @1.first_column); }
     | expression ',' list_items {
         if($1->tipo == NODO_LOAD_VAR_ARGS){
-            printf("\033[1;31m%s:%d:%d:\033[0m %s\n", filename, @1.first_line, @1.first_column, "Parametro VAR_ARGS (...) debe de ser el ultimo parametro");
+            printf(LAT_ERROR_FMT, filename, @1.first_line, @1.first_column, "Parametro VAR_ARGS (...) debe de ser el ultimo parametro");
             YYABORT;
         }
         $$ = latA_nodo(NODO_LISTA_AGREGAR_ELEMENTO, $1, $3, @3.first_line, @3.first_column);
@@ -468,7 +468,7 @@ dict_item
 int yyerror(struct YYLTYPE *yylloc_param, void *scanner, struct ast **root,
 const char *s) {
   if(!parse_silent){
-      fprintf(stderr, "\033[1;31m%s:%d:%d:\033[0m %s\n", yylloc_param->file_name,
+      fprintf(stderr, LAT_ERROR_FMT, yylloc_param->file_name,
         yylloc_param->first_line, yylloc_param->first_column,  s);
   }
   return 0;

@@ -524,18 +524,20 @@ void latS_resize(lat_mv *mv, int newsize) {
 LATINO_API lat_objeto *latC_crear_logico(lat_mv *mv, bool val) {
     // printf("lat_logico_crear: %i\n", val);
     lat_objeto *ret = latO_crear(mv);
-    ret->tipo = T_BOOL;
+    //ret->tipo = T_BOOL;
     ret->tam += sizeof(bool);
-    getLogico(ret) = val;
+    //getLogico(ret) = val;
+	setLogico(ret, val);
     return ret;
 }
 
 LATINO_API lat_objeto *latC_crear_numerico(lat_mv *mv, double val) {
     // printf("lat_decimal_crear: %.14g\n", val);
     lat_objeto *ret = latO_crear(mv);
-    ret->tipo = T_NUMERIC;
+    //ret->tipo = T_NUMERIC;
     ret->tam += sizeof(double);
-    getNumerico(ret) = val;
+    //getNumerico(ret) = val;
+	setNumerico(ret, val);
     // mv->memoria_usada += ret->tam;
     return ret;
 }
@@ -543,7 +545,7 @@ LATINO_API lat_objeto *latC_crear_numerico(lat_mv *mv, double val) {
 LATINO_API lat_objeto *latC_crear_cadena(lat_mv *mv, const char *p) {
     // printf("latC_crear_cadena: %s\n", p);
     lat_objeto *ret = latO_crear(mv);
-    ret->tipo = T_STR;
+    //ret->tipo = T_STR;
     ret->tam += strlen(p);
     setCadena(ret, latO_cadenaNueva(mv, p, strlen(p)));
     // mv->memoria_usada += ret->tam;
@@ -553,7 +555,7 @@ LATINO_API lat_objeto *latC_crear_cadena(lat_mv *mv, const char *p) {
 LATINO_API lat_objeto *latC_crear_lista(lat_mv *mv, lista *l) {
     // printf("latC_crear_lista\n");
     lat_objeto *ret = latO_crear(mv);
-    ret->tipo = T_LIST;
+    //ret->tipo = T_LIST;
     ret->tam += sizeof(lista);
     setLista(ret, l);
     return ret;
@@ -562,7 +564,7 @@ LATINO_API lat_objeto *latC_crear_lista(lat_mv *mv, lista *l) {
 LATINO_API lat_objeto *latC_crear_dic(lat_mv *mv, hash_map *dic) {
     // printf("latC_crear_dic\n");
     lat_objeto *ret = latO_crear(mv);
-    ret->tipo = T_DIC;
+    //ret->tipo = T_DIC;
     ret->tam += sizeof(hash_map);
     setDic(ret, dic);
     return ret;

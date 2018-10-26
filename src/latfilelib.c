@@ -154,7 +154,6 @@ static void file_copiar(lat_mv *mv) {
 static void file_eliminar(lat_mv *mv) {
     int status;
     lat_objeto *a = latC_desapilar(mv);
-
     status = remove(latC_checar_cadena(mv, a));
     if (status == 0) {
         latC_apilar(mv, latO_verdadero);
