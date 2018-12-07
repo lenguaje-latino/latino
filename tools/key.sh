@@ -10,7 +10,7 @@ if [[ `grep "lenguaje-latino" /etc/apt/sources.list` ]]; then
 fi
 echo "Hemos detectado  que estás usando Debian o derivadas"
 printf "%s \e[1;34m%s\e[0m %s\n" "Queremos añadir una llave para que cuando hagas" "apt upgrade" "se actualize Latino"
-echo -n "¿Deseas que añadirla? [S/n] "
+echo -n "¿Deseas añadirla? [S/n] "
 read -t 13 opt
 case $opt in
 

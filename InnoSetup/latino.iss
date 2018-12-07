@@ -21,10 +21,10 @@ AppSupportURL={#MyAppURL}
 AppUpdatesURL={#MyAppURL}
 DefaultDirName={pf}\{#MyAppName}
 DisableProgramGroupPage=yes
-LicenseFile="..\LICENCIA.txt"
+LicenseFile="..\LICENSE.txt"
 OutputDir="..\InnoSetup"
 OutputBaseFilename=setup
-SetupIconFile="..\InnoSetup\latino.ico"
+SetupIconFile="..\InnoSetup\bin\latino.ico"
 Compression=lzma
 SolidCompression=yes
 ChangesEnvironment=yes
@@ -39,31 +39,30 @@ Name: "spanish"; MessagesFile: "compiler:Languages\Spanish.isl"
 Name: "desktopicon"; Description: "{cm:CreateDesktopIcon}"; GroupDescription: "{cm:AdditionalIcons}"; Flags: unchecked
 
 [Files]
-Source: "..\visualstudio\bin\Release\latino.exe"; DestDir: "{app}"; Flags: ignoreversion
-;Source: "..\ejemplos\*"; DestDir: "{app}\ejemplos\"; Flags: ignoreversion recursesubdirs createallsubdirs
-Source: "..\InnoSetup\*.dll"; DestDir: "{app}"; Flags: ignoreversion
-Source: "..\InnoSetup\*.lib"; DestDir: "{app}"; Flags: ignoreversion
-Source: "..\InnoSetup\*.ico"; DestDir: "{app}"; Flags: ignoreversion
+Source: "..\InnoSetup\bin\*"; DestDir: "{app}\bin\"; Flags: ignoreversion
+Source: "..\InnoSetup\lib\*"; DestDir: "{app}\lib\"; Flags: ignoreversion
 Source: "..\include\*.h"; DestDir: "{app}\include\"; Flags: ignoreversion
+;Source: "..\ejemplos\*"; DestDir: "{app}\ejemplos\"; Flags: ignoreversion recursesubdirs createallsubdirs
 
 ; NOTE: Don't use "Flags: ignoreversion" on any shared system files
 
 [Icons]
-Name: "{commonprograms}\{#MyAppName}"; Filename: "{app}\{#MyAppExeName}"; IconFilename: "{app}\latino.ico"
-Name: "{commondesktop}\{#MyAppName}"; Filename: "{app}\{#MyAppExeName}"; IconFilename: "{app}\latino.ico"; Tasks: desktopicon
-
+Name: "{commonprograms}\{#MyAppName}"; Filename: "{app}\bin\{#MyAppExeName}"; IconFilename: "{app}\bin\latino.ico"
+Name: "{commondesktop}\{#MyAppName}"; Filename: "{app}\bin\{#MyAppExeName}"; IconFilename: "{app}\bin\latino.ico"; Tasks: desktopicon
 
 [Run]
-Filename: "{app}\{#MyAppExeName}"; Description: "{cm:LaunchProgram,{#StringChange(MyAppName, '&', '&&')}}"; Flags: nowait postinstall skipifsilent
+Filename: "{app}\bin\{#MyAppExeName}"; Description: "{cm:LaunchProgram,{#StringChange(MyAppName, '&', '&&')}}"; Flags: nowait postinstall skipifsilent
 
 [Registry]
-Root: HKLM; Subkey: "SYSTEM\CurrentControlSet\Control\Session Manager\Environment"; ValueType: expandsz; ValueName: "Path"; ValueData: "{olddata};{app}"
+Root: HKLM; Subkey: "SYSTEM\CurrentControlSet\Control\Session Manager\Environment"; ValueType: expandsz; ValueName: "Path"; ValueData: "{olddata};{app}\bin;{app}\lib"
+Root: HKCU; Subkey: "Environment"; ValueType:string; ValueName: "LATINO_PATH"; ValueData: "{app}"; Flags: preservestringtype
+Root: HKCU; Subkey: "Environment"; ValueType:string; ValueName: "LATINO_LIBC"; ValueData: "{app}\lib\"; Flags: preservestringtype
+Root: HKCU; Subkey: "Environment"; ValueType:string; ValueName: "LATINO_LIB"; ValueData: "{app}\stdlib\"; Flags: preservestringtype
 
 [Tasks]
 Name: modifypath; Description:{cm:AppAddPath};
 
 [Code]
-
 const
     ModPathName = 'modifypath';
     ModPathType = 'system';

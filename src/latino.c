@@ -150,7 +150,7 @@ int main(int argc, char *argv[]) {
                 latO_destruir(mv, newMain);
             } else {
                 status = latC_llamar_funcion(mv, mainFunc);
-                // printf("status: %i\n", status);
+                // printf("main status: %i\n", status);
                 latO_destruir(mv, mainFunc);
             }
         }
