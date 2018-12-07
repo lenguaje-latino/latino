@@ -40,7 +40,7 @@ typedef void (*lat_CFuncion)(lat_mv *mv);
 
 /**\brief Muestra las instrucciones que se van ejecutando con la Maquina Virtual
  */
-#define DEPURAR_MV 1
+#define DEPURAR_MV 0
 
 /**\brief op_codes de la maquina virtual */
 #define NOP 0
