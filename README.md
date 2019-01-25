@@ -476,5 +476,11 @@ si
 sino
 osi
 ```
+Manual Latino
+---
+```
+[ManualLatino.blogspot.com](https://manuallatino.blogspot.com)
+```
+
 
 Cualquier aportación o sugerencia es bienvenida.
