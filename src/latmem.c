@@ -43,7 +43,13 @@ void *latM_asignar(lat_mv *mv, size_t size) {
     return ptr;
 }
 
-size_t latM_tamanio(void *ptr) { return malloc_size(ptr); }
+size_t latM_tamanio(void *ptr) {
+#ifdef __APPLE__
+    return 0;
+#else
+    return malloc_size(ptr);
+#endif
+}
 
 void *latM_reasignar(lat_mv *mv, void *ptr, size_t size) {
     // size_t mem_ini = latM_tamanio(ptr);

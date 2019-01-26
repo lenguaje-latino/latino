@@ -786,11 +786,11 @@ void str_match(lat_mv *mv) {
                 latC_error(mv, "error en el regex: ?, * o + no está siendo "
                                "usado en una expresión regular válida.");
                 break;
-#ifndef _WIN32
+#ifdef __linux__
             case REG_ENOSYS:
                 latC_error(mv, "error en el regex: la implementación no admite "
                                "esta función.");
-#endif // !_WIN32
+#endif // si es Linux
                 break;
             default:
                 latC_error(mv, "error en el regex: error desconocido.");

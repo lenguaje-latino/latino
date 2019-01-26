@@ -48,6 +48,29 @@ THE SOFTWARE.
 //#include <vld.h>
 #endif /* _WIN32 */
 
+/* __MacOS__ */
+#ifdef __APPLE__
+#include "TargetConditionals.h"
+#include <GLUT/glut.h>
+#include <OpenGL/OpenGL.h>
+#include <dlfcn.h>
+#include <readline/history.h>
+#include <readline/readline.h>
+#include <regex.h>
+#include <time.h>
+#include <unistd.h>
+#define PATH_SET "~/"
+#define LAT_FUNC extern
+#define malloc_size(ptr)
+#define latC_popen(L, c, m) ((void)L, fflush(NULL), popen(c, m))
+#define latC_pclose(L, file) ((void)L, pclose(file))
+#define latC_clear "clear"
+#define latC_sleep(seg) sleep_ms(seg * 1000)
+#define latC_leer_linea(x) readline(NULL)
+#define LAT_ERROR_FMT "%s:%d:%d: %s\n"
+#endif
+/* --EndsMacOS-- */
+
 #ifdef __linux__
 #include <dlfcn.h>
 #include <readline/history.h>
