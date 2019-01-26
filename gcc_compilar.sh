@@ -7,3 +7,4 @@ export CMAKE_CXX_COMPILER=g++
 cmake -DCMAKE_BUILD_TYPE=Debug -G "Unix Makefiles" .
 make clean
 make
+make install
