@@ -50,9 +50,9 @@ THE SOFTWARE.
 
 /* __MacOS__ */
 #ifdef __APPLE__
-#include "TargetConditionals.h"
-#include <GLUT/glut.h>
-#include <OpenGL/OpenGL.h>
+//#include "TargetConditionals.h"
+//#include <GLUT/glut.h>
+//#include <OpenGL/OpenGL.h>
 #include <dlfcn.h>
 #include <readline/history.h>
 #include <readline/readline.h>
