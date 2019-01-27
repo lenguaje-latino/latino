@@ -43,6 +43,9 @@ A continuación menciono las principales características de este proyecto:
 
 [Plugins](https://github.com/lenguaje-latino)
 
+##ManualLatino
+[ManualLatino.blogspot.com](https://manuallatino.blogspot.com)
+
 
 DEFINICIÓN (lenguaje latino)
 ===
@@ -476,11 +479,5 @@ si
 sino
 osi
 ```
-Manual Latino
----
-```
-[ManualLatino.blogspot.com](https://manuallatino.blogspot.com)
-```
-
 
 Cualquier aportación o sugerencia es bienvenida.
