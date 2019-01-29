@@ -247,7 +247,7 @@ elegir(calificacion)
         escribir("Todavia pasas.")
     caso 'F':
         escribir("Estas reprobado.")
-    otro:
+    defecto:
         escribir("Calificación invalida.")
 fin
 #salida: Bien echo!
