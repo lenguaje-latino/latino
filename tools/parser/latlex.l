@@ -129,7 +129,7 @@ EXP ([Ee][-+]?[0-9]+)
 "retorno"|"retornar"|"ret"   { return RETORNO; }
 "elegir"    { return ELEGIR; }
 "caso"      { return CASO; }
-"defecto"   { return DEFECTO; }
+"otro"|"defecto"   { return DEFECTO; }
 "global"    { return GLOBAL; }
 
  /* names */
