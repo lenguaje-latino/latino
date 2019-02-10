@@ -32,7 +32,7 @@ THE SOFTWARE.
 #define LIB_BASE_NAME ""
 
 #ifdef __APPLE__
-    #define PATH_SEP "~/"
+#define PATH_SEP "~/"
 #endif
 
 char *analizar_fmt(const char *s, size_t len);
@@ -88,7 +88,7 @@ void base_poner(lat_mv *mv) {
 void str_formato(lat_mv *mv);
 
 void base_imprimirf(lat_mv *mv) {
-	//FIXME: Imprimir todos los formatos de C / C++
+    // FIXME: Imprimir todos los formatos de C / C++
     str_formato(mv);
     lat_objeto *str = latC_desapilar(mv);
     latO_imprimir(mv, str, true);
@@ -220,7 +220,7 @@ static void base_alogico(lat_mv *mv) {
 }
 
 static void base_anumero(lat_mv *mv) {
-	//FIXME: Error cuando la cadena contiene separadores de miles (,)
+    // FIXME: Error cuando la cadena contiene separadores de miles (,)
     lat_objeto *o = latC_desapilar(mv);
     double var = latC_adouble(mv, o);
     if (!var) {
