@@ -22,9 +22,9 @@ if (WIN32)
 else ()
     LINK_LIBRARIES(m)
     LINK_LIBRARIES(readline)
-    SET(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -D_GNU_SOURCE -Wall -std=c11 -rdynamic -ldl")
+    SET(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -D_GNU_SOURCE -Wall -std=c11 -rdynamic -ldl -fPIC")
     # -fprofile-arcs -ftest-coverage -coverage
-    SET(CMAKE_C_FLAGS_DEBUG "${CMAKE_C_FLAGS} -D_GNU_SOURCE -g -O0 -Wall -std=c11 -rdynamic -ldl")
+    SET(CMAKE_C_FLAGS_DEBUG "${CMAKE_C_FLAGS} -D_GNU_SOURCE -g -O0 -Wall -std=c11 -rdynamic -ldl -fPIC"")
 endif ()
 
 set(TARGET_ARCH_REGEX "^.*-march[= ]([^ ]+).*$")
