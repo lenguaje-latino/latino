@@ -31,7 +31,7 @@ THE SOFTWARE.
 
 #define LIB_BASE_NAME ""
 
-#ifdef _APPLE_
+#ifdef __APPLE__
 #define PATH_SEP "~/"
 #endif
 
