@@ -31,6 +31,10 @@ THE SOFTWARE.
 
 #define LIB_BASE_NAME ""
 
+#ifdef _APPLE_
+#define PATH_SEP "~/"
+#endif
+
 char *analizar_fmt(const char *s, size_t len);
 char *analizar(const char *s, size_t len);
 
