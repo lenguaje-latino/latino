@@ -28,15 +28,11 @@ THE SOFTWARE.
 
 #define LIB_CADENA_NAME "cadena"
 
-static int oct(int octalNumber) {
-    int decimalNumber = 0, i = 0;
-    while (octalNumber != 0) {
-        decimalNumber += (octalNumber % 10) * pow(8, i);
-        ++i;
-        octalNumber /= 10;
-    }
-    i = 1;
-    return decimalNumber;
+static int oct(int o) {
+    int d = 0, i = 0;
+	do { d += (o % 10) * pow(8, i); ++i; o /= 10; }
+	while (o != 0);
+	return d;
 }
 
 char *analizar_fmt(const char *s, size_t len) {
@@ -272,7 +268,7 @@ char *insertar(char *dest, char *src, int pos) {
 char *rellenar_izquierda(char *base, char *c, int n) {
 	//FIXME: Windows
 	int len = strlen(base);
-    char *ret = malloc(len+n+1);    
+    char *ret = malloc(len+n+1);
     int i, final = len - 1;
     for (i = 0; i < (n - final); i++) {
 		ret = strcat(ret, c);
@@ -283,7 +279,7 @@ char *rellenar_izquierda(char *base, char *c, int n) {
 
 char *rellenar_derecha(char *base, char *c, int n) {
 	int len = strlen(base);
-	char *ret = malloc(len+n+1);    
+	char *ret = malloc(len+n+1);
     strcpy(ret, base);
     int i, final = len - 1;
     for (i = 0; i < (n - final); i++) {
