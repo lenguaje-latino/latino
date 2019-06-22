@@ -175,6 +175,8 @@ static void base_incluir(lat_mv *mv) {
     strcat(libpath, libname);
 #ifdef _WIN32
     strcat(libpath, ".dll");
+#elif __APPLE__
+    strcat(libpath, ".dylib");
 #else
     strcat(libpath, ".so");
 #endif
