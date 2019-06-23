@@ -222,6 +222,8 @@ LATINO_API void *latC_checar_cptr(lat_mv *mv, lat_objeto *o);
 /* funciones para conversion entre tipos de dato de latino a C */
 LATINO_API bool latC_abool(lat_mv *mv, lat_objeto *o);
 LATINO_API double latC_adouble(lat_mv *mv, lat_objeto *o);
+LATINO_API int latC_aint(lat_mv *mv, lat_objeto *o);
+LATINO_API char latC_achar(lat_mv *mv, lat_objeto *o);
 LATINO_API char *latC_astring(lat_mv *mv, lat_objeto *o);
 
 /* funciones para el manejo de listas */

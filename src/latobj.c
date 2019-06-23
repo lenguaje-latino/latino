@@ -705,6 +705,87 @@ LATINO_API double latC_adouble(lat_mv *mv, lat_objeto *o) {
     return 0;
 }
 
+// FIXME:
+LATINO_API int latC_aint(lat_mv *mv, lat_objeto *o) {
+    switch (o->tipo) {
+        case T_NULL:
+            return 0;
+            break;
+        case T_BOOL:
+            return latC_checar_logico(mv, o) == false ? 0 : 1;
+            break;
+        case T_NUMERIC:
+            return latC_checar_entero(mv, o);
+            break;
+        case T_CHAR:
+            return latC_checar_caracter(mv, o);
+            break;
+        case T_STR: {
+            char *ptr;
+            double ret;
+            ret = strtod(latC_checar_cadena(mv, o), &ptr);
+            if (!strcmp(ptr, "")) {
+                return ret;
+            } else {
+                ret = (int)(latC_checar_cadena(mv, o)[0]);
+                return ret;
+            }
+        } break;
+        case T_LIST:
+            return latL_longitud(latC_checar_lista(mv, o));
+            break;
+        case T_DIC:
+            return latH_longitud(latC_checar_dic(mv, o));
+            break;
+        default:
+            latC_error(mv, "Conversion de tipo de dato incompatible");
+            break;
+    }
+    return 0;
+}
+
+// FIXME:
+LATINO_API char latC_achar(lat_mv *mv, lat_objeto *o) {
+    switch (o->tipo) {
+        case T_NULL:
+            return 0;
+            break;
+        case T_BOOL:
+            return latC_checar_logico(mv, o) == false ? 0 : 1;
+            break;
+        case T_NUMERIC:
+            return latC_checar_entero(mv, o);
+            break;
+        case T_INTEGER:
+            return latC_checar_entero(mv, o);
+            break;
+        case T_CHAR:
+            return latC_checar_caracter(mv, o);
+            break;
+        case T_STR: {
+            char *ptr;
+            double ret;
+            ret = strtod(latC_checar_cadena(mv, o), &ptr);
+            if (!strcmp(ptr, "")) {
+                return ret;
+            } else {
+                ret = (int)(latC_checar_cadena(mv, o)[0]);
+                return ret;
+            }
+        } break;
+        case T_LIST:
+            return latL_longitud(latC_checar_lista(mv, o));
+            break;
+        case T_DIC:
+            return latH_longitud(latC_checar_dic(mv, o));
+            break;
+        default:
+            latC_error(mv, "Conversion de tipo de dato incompatible");
+            break;
+    }
+    return 0;
+}
+
 LATINO_API char *latC_astring(lat_mv *mv, lat_objeto *o) {
     if (o == NULL || o->tipo == T_NULL) {
         return strdup("nulo");
@@ -714,6 +795,10 @@ LATINO_API char *latC_astring(lat_mv *mv, lat_objeto *o) {
         return strdup("contexto");
     } else if (o->tipo == T_NUMERIC) {
         return decimal_acadena(getNumerico(o));
+    } else if (o->tipo == T_INTEGER) {
+        return entero_acadena(getEntero(o));
+    } else if (o->tipo == T_CHAR) {
+        return (char)getCaracter(o);
     } else if (o->tipo == T_STR) {
         return strdup(latC_checar_cadena(mv, o));
     } else if (o->tipo == T_FUN) {

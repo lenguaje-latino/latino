@@ -31,6 +31,8 @@ EXPORTS
   latC_checar_cptr
   latC_abool
   latC_adouble
+  latC_aint
+  latC_achar
   latC_astring
   latC_abrir_liblatino
   latC_cargarlib
