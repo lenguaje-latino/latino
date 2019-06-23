@@ -543,6 +543,28 @@ LATINO_API lat_objeto *latC_crear_numerico(lat_mv *mv, double val) {
     return ret;
 }
 
+LATINO_API lat_objeto *latC_crear_entero(lat_mv *mv, int val) {
+    // printf("lat_decimal_crear: %.14g\n", val);
+    lat_objeto *ret = latO_crear(mv);
+    // ret->tipo = T_NUMERIC;
+    ret->tam += sizeof(int);
+    // getNumerico(ret) = val;
+    setEntero(ret, val);
+    // mv->memoria_usada += ret->tam;
+    return ret;
+}
+
+LATINO_API lat_objeto *latC_crear_caracter(lat_mv *mv, char val) {
+    // printf("lat_decimal_crear: %.14g\n", val);
+    lat_objeto *ret = latO_crear(mv);
+    // ret->tipo = T_NUMERIC;
+    ret->tam += sizeof(int);
+    // getNumerico(ret) = val;
+    setCaracter(ret, val);
+    // mv->memoria_usada += ret->tam;
+    return ret;
+}
+
 LATINO_API lat_objeto *latC_crear_cadena(lat_mv *mv, const char *p) {
     // printf("latC_crear_cadena: %s\n", p);
     lat_objeto *ret = latO_crear(mv);
