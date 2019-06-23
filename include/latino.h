@@ -130,9 +130,9 @@ extern int parse_silent;
 #define MAX_INPUT_SIZE 512
 /** Maximo numero de llamadas recursivas a fun */
 #ifdef __APPLE__
-    #define MAX_CALL_FUNCTION 1024
+#define MAX_CALL_FUNCTION 1024
 #else
-    #define MAX_CALL_FUNCTION 27
+#define MAX_CALL_FUNCTION 27
 #endif
 /** Maximo numero de caracteres para un identificador */
 #define MAX_ID_LENGTH 64
@@ -190,6 +190,8 @@ LATINO_API void latC_apilar(lat_mv *mv, lat_objeto *o);
 LATINO_API lat_objeto *latC_tope(lat_mv *mv);
 LATINO_API void latC_apilar_string(lat_mv *mv, const char *str);
 LATINO_API void latC_apilar_double(lat_mv *mv, double num);
+LATINO_API void latC_apilar_int(lat_mv *mv, int i);
+LATINO_API void latC_apilar_char(lat_mv *mv, char c);
 
 /* funciones para el manejo de errores y llamado de funciones */
 LATINO_API lat_objeto *latC_analizar(lat_mv *mv, ast *nodo);
@@ -199,6 +201,8 @@ LATINO_API void latC_error(lat_mv *mv, const char *fmt, ...);
 /* funciones para crear un objeto latino */
 LATINO_API lat_objeto *latC_crear_logico(lat_mv *mv, bool val);
 LATINO_API lat_objeto *latC_crear_numerico(lat_mv *mv, double val);
+LATINO_API lat_objeto *latC_crear_entero(lat_mv *mv, int val);
+LATINO_API lat_objeto *latC_crear_caracter(lat_mv *mv, char val);
 LATINO_API lat_objeto *latC_crear_cadena(lat_mv *mv, const char *val);
 LATINO_API lat_objeto *latC_crear_lista(lat_mv *mv, lista *l);
 LATINO_API lat_objeto *latC_crear_dic(lat_mv *mv, hash_map *dic);
@@ -210,6 +214,8 @@ LATINO_API lat_objeto *latC_crear_cfuncion(lat_mv *mv, lat_CFuncion func);
 /* funciones para obtener el objeto y envia error
  * en caso de que no corresponda el tipo */
 LATINO_API double latC_checar_numerico(lat_mv *mv, lat_objeto *o);
+LATINO_API int latC_checar_entero(lat_mv *mv, lat_objeto *o);
+LATINO_API char latC_checar_caracter(lat_mv *mv, lat_objeto *o);
 LATINO_API char *latC_checar_cadena(lat_mv *mv, lat_objeto *o);
 LATINO_API bool latC_checar_logico(lat_mv *mv, lat_objeto *o);
 LATINO_API lista *latC_checar_lista(lat_mv *mv, lat_objeto *o);
@@ -219,6 +225,8 @@ LATINO_API void *latC_checar_cptr(lat_mv *mv, lat_objeto *o);
 /* funciones para conversion entre tipos de dato de latino a C */
 LATINO_API bool latC_abool(lat_mv *mv, lat_objeto *o);
 LATINO_API double latC_adouble(lat_mv *mv, lat_objeto *o);
+LATINO_API int latC_aint(lat_mv *mv, lat_objeto *o);
+LATINO_API char latC_achar(lat_mv *mv, lat_objeto *o);
 LATINO_API char *latC_astring(lat_mv *mv, lat_objeto *o);
 
 /* funciones para el manejo de listas */

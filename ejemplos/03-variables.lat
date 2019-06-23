@@ -1,19 +1,43 @@
-#Error variable "x" no definida
-#poner(x)
-#ejemplos de declaracion de variables validas
+#!/usr/bin/env latino
+
+# Error variable "x" no definida
+# poner(x)
+
+/*
+**   Ejemplos de declaracion de variables validas
+*/
+
+# (Bool) booleano
 l=cierto
 poner(l)
+
+# (Int) integer, entero
 e=10
 poner(e)
+
+# (Float) flotante
 d=1.5
 poner(d)
+
+# (Char), character, caracter, cadena en Latino.
 c='a'
 poner(c)
+
+# (Char *), character, caracter con apuntador, cadena en Latino.
 s="hola latino"
 poner(s)
+
+# (Char *), character, caracter con apuntador, cadena en Latino.
 s='ahora esta es una literal "hola latino"'
 poner(s)
-#una constante se define con MAYUSCULAS
+
+# (Const Float) flotante constante: una constante se define con MAYUSCULAS
 PI=3.1416
-poner(PI)
-#PI=3.14 #error al intentar cambiar el valor
+poner(PI) // PI=3.14, no se puede volver a cambiar valor, es un valor constante.
+
+# Global, Latino, constante
+global _VERSION_ = "1.0"
+poner(_VERSION_)
+
+global _COPYRIGHT_ = "Copyright (C) 2015-2019"
+poner(_COPYRIGHT_)
