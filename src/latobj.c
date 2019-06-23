@@ -41,6 +41,7 @@ lat_objeto latO_falso_ = {.val.logico = 0, T_BOOL};
 char *minusculas(const char *str);
 char *logico_acadena(int i);
 char *decimal_acadena(double d);
+char *entero_acadena(int i);
 char *reemplazar(char *str, const char *orig, const char *rep);
 char *analizar_fmt(const char *s, size_t len);
 char *analizar(const char *s, size_t len);
