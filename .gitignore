@@ -42,3 +42,5 @@ history.txt
 compile_commands.json
 compiling_error.txt
 <scratch>
+src/latino
+src/liblatino.so
