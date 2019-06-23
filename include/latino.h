@@ -54,6 +54,8 @@ THE SOFTWARE.
 #include "latlist.h"
 #include "latmv.h"
 #include "latobj.h"
+/* Suprime warn_unused_result */ 
+#pragma GCC diagnostic ignored "-Wunused-result"
 
 /** Version mayor de Latino */
 #define LAT_VERSION_MAYOR "1"
