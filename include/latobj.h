@@ -70,6 +70,8 @@ typedef enum lat_tipo {
     T_CFUN,
     T_CPTR,
     T_CLASS, // 10
+    T_INTEGER,
+    T_CHAR,
 } lat_tipo;
 
 // typedef struct lat_objeto lat_objeto;
@@ -94,7 +96,9 @@ typedef union lat_gcobjeto lat_gcobjeto;
     lat_byte tipo;                                                             \
     lat_byte marked
 
-typedef struct lat_gcheader { lat_commonheader; } lat_gcheader;
+typedef struct lat_gcheader {
+    lat_commonheader;
+} lat_gcheader;
 
 #define LAT_USER_ALIGNMENT                                                     \
     union {                                                                    \
@@ -120,6 +124,8 @@ typedef union {
     void *cpointer;
     double numerico;
     bool logico;
+    int entero;
+    char caracter;
 } lat_valor;
 
 /** \brief Objeto
@@ -168,6 +174,18 @@ lat_objeto latO_falso_;
         lat_objeto *i_o = (obj);                                               \
         i_o->val.numerico = (v);                                               \
         i_o->tipo = T_NUMERIC;                                                 \
+    }
+#define setEntero(obj, v)                                                      \
+    {                                                                          \
+        lat_objeto *i_o = (obj);                                               \
+        i_o->val.entero = (v);                                                 \
+        i_o->tipo = T_INTEGER;                                                 \
+    }
+#define setCaracter(obj, v)                                                    \
+    {                                                                          \
+        lat_objeto *i_o = (obj);                                               \
+        i_o->val.caracter = (v);                                               \
+        i_o->tipo = T_CHAR;                                                    \
     }
 #define setCadena(obj, v)                                                      \
     {                                                                          \
@@ -241,6 +259,12 @@ lat_objeto latO_falso_;
             case T_NUMERIC:                                                    \
                 setNumerico(oo1, getNumerico(oo2));                            \
                 break;                                                         \
+            case T_INTEGER:                                                    \
+                setEntero(oo1, getEntero(oo2));                                \
+                break;                                                         \
+            case T_CHAR:                                                       \
+                setCaracter(oo1, getCaracter(oo2));                            \
+                break;                                                         \
             case T_STR:                                                        \
             case T_LIST:                                                       \
             case T_DIC:                                                        \
@@ -258,6 +282,8 @@ lat_objeto latO_falso_;
 #define isNulo(o) (getTipo(o) == T_NULL)
 #define isLogico(o) (getTipo(o) == T_BOOL)
 #define isNumerico(o) (getTipo(o) == T_NUMERIC)
+#define isEntero(o) (getTipo(o) == T_INTEGER)
+#define isCaracter(o) (getTipo(o) == T_CHAR)
 #define isCadena(o) (getTipo(o) == T_STR)
 #define isLista(o) (getTipo(o) == T_LIST)
 #define isDic(o) (getTipo(o) == T_DIC)
@@ -268,6 +294,8 @@ lat_objeto latO_falso_;
 #define getTipo(o) ((o)->tipo)
 #define getLogico(o) ((o)->val.logico)
 #define getNumerico(o) ((o)->val.numerico)
+#define getEntero(o) ((o)->val.entero)
+#define getCaracter(o) ((o)->val.caracter)
 #define getCadena(o) ((lat_cadena *)(o)->val.gc)
 #define getLista(o) ((lista *)(o)->val.gc)
 #define getDic(o) ((hash_map *)(o)->val.gc)
