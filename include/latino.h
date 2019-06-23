@@ -32,6 +32,9 @@ THE SOFTWARE.
 #include <locale.h>
 #ifdef __APPLE__
     #include <malloc/malloc.h>
+#elif(defined __WIN32__) || (defined _WIN32)
+    #define BUILD_REGEX_DLL 1
+    #include <malloc.h>
 #else
     #include <malloc.h>
 #endif

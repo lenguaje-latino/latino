@@ -1,0 +1,164 @@
+.\" Copyright (c) 2001-2003 The Open Group, All Rights Reserved 
+.TH "<regex.h>" P 2003 "IEEE/The Open Group" "POSIX Programmer's Manual"
+.\" <regex.h> 
+.SH NAME
+regex.h \- regular expression matching types
+.SH SYNOPSIS
+.LP
+\fB#include <regex.h>\fP
+.SH DESCRIPTION
+.LP
+The \fI<regex.h>\fP header shall define the structures and symbolic
+constants used by the \fIregcomp\fP(), \fIregexec\fP(), \fIregerror\fP(),
+and \fIregfree\fP() functions.
+.LP
+The structure type \fBregex_t\fP shall contain at least the following
+member:
+.sp
+.RS
+.nf
+
+\fBsize_t    re_nsub   \fP Number of parenthesized subexpressions. \fB
+\fP
+.fi
+.RE
+.LP
+The type \fBsize_t\fP shall be defined as described in \fI<sys/types.h>\fP
+\&.
+.LP
+The type \fBregoff_t\fP shall be defined as a signed integer type
+that can hold the largest value that can be stored in either
+a type \fBoff_t\fP or type \fBssize_t\fP. The structure type \fBregmatch_t\fP
+shall contain at least the following members:
+.sp
+.RS
+.nf
+
+\fBregoff_t    rm_so   \fP Byte offset from start of string \fB
+                    \fP to start of substring. \fB
+regoff_t    rm_eo   \fP Byte offset from start of string of the \fB
+                    \fP first character after the end of substring. \fB
+\fP
+.fi
+.RE
+.LP
+Values for the \fIcflags\fP parameter to the \fIregcomp\fP() function
+are as
+follows:
+.TP 7
+REG_EXTENDED
+Use Extended Regular Expressions.
+.TP 7
+REG_ICASE
+Ignore case in match.
+.TP 7
+REG_NOSUB
+Report only success or fail in \fIregexec\fP().
+.TP 7
+REG_NEWLINE
+Change the handling of <newline>.
+.sp
+.LP
+Values for the \fIeflags\fP parameter to the \fIregexec\fP() function
+are as
+follows:
+.TP 7
+REG_NOTBOL
+The circumflex character ( \fB'^'\fP ), when taken as a special character,
+does not match the beginning of
+\fIstring\fP.
+.TP 7
+REG_NOTEOL
+The dollar sign ( \fB'$'\fP ), when taken as a special character,
+does not match the end of \fIstring\fP.
+.sp
+.LP
+The following constants shall be defined as error return values:
+.TP 7
+REG_NOMATCH
+\fIregexec\fP() failed to match.
+.TP 7
+REG_BADPAT
+Invalid regular expression.
+.TP 7
+REG_ECOLLATE
+Invalid collating element referenced.
+.TP 7
+REG_ECTYPE
+Invalid character class type referenced.
+.TP 7
+REG_EESCAPE
+Trailing \fB'\\'\fP in pattern.
+.TP 7
+REG_ESUBREG
+Number in \\\fIdigit\fP invalid or in error.
+.TP 7
+REG_EBRACK
+\fB"[]"\fP imbalance.
+.TP 7
+REG_EPAREN
+\fB"\\(\\)"\fP or \fB"()"\fP imbalance.
+.TP 7
+REG_EBRACE
+\fB"\\{\\}"\fP imbalance.
+.TP 7
+REG_BADBR
+Content of \fB"\\{\\}"\fP invalid: not a number, number too large,
+more than two numbers, first larger than second.
+.TP 7
+REG_ERANGE
+Invalid endpoint in range expression.
+.TP 7
+REG_ESPACE
+Out of memory.
+.TP 7
+REG_BADRPT
+\fB'?'\fP , \fB'*'\fP , or \fB'+'\fP not preceded by valid regular
+expression.
+.TP 7
+REG_ENOSYS
+Reserved. 
+.sp
+.LP
+The following shall be declared as functions and may also be defined
+as macros. Function prototypes shall be provided.
+.sp
+.RS
+.nf
+
+\fBint    regcomp(regex_t *restrict, const char *restrict, int);
+size_t regerror(int, const regex_t *restrict, char *restrict, size_t);
+int    regexec(const regex_t *restrict, const char *restrict, size_t,
+           regmatch_t[restrict], int);
+void   regfree(regex_t *);
+\fP
+.fi
+.RE
+.LP
+The implementation may define additional macros or constants using
+names beginning with REG_.
+.LP
+\fIThe following sections are informative.\fP
+.SH APPLICATION USAGE
+.LP
+None.
+.SH RATIONALE
+.LP
+None.
+.SH FUTURE DIRECTIONS
+.LP
+None.
+.SH SEE ALSO
+.LP
+\fI<sys/types.h>\fP , the System Interfaces volume of IEEE\ Std\ 1003.1-2001,
+\fIregcomp\fP(), the Shell and Utilities volume of IEEE\ Std\ 1003.1-2001
+.SH COPYRIGHT
+Portions of this text are reprinted and reproduced in electronic form
+from IEEE Std 1003.1, 2003 Edition, Standard for Information Technology
+-- Portable Operating System Interface (POSIX), The Open Group Base
+Specifications Issue 6, Copyright (C) 2001-2003 by the Institute of
+Electrical and Electronics Engineers, Inc and The Open Group. In the
+event of any discrepancy between this version and the original IEEE and
+The Open Group Standard, the original IEEE and The Open Group Standard
+is the referee document. The original Standard can be obtained online at
+http://www.opengroup.org/unix/online.html .
