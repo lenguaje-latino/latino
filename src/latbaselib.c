@@ -190,7 +190,12 @@ static void base_incluir(lat_mv *mv) {
 
 static void base_leer(lat_mv *mv) {
     char *str = calloc(1, MAX_INPUT_SIZE);
+#if (defined __WIN32__) || (defined _WIN32)
+    str = latC_leer_linea(str);
+#else
     str = latC_leer_linea(NULL);
+#endif
+
     int i = strlen(str) - 1;
     if (str[i] == '\n') {
         str[i] = '\0';
