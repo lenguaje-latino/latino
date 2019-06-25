@@ -32,13 +32,6 @@ THE SOFTWARE.
 
 typedef unsigned char lat_byte;
 
-/*
-#include "latdic.h"
-#include "latlist.h"
-
-typedef struct lat_mv lat_mv;
-*/
-
 /** \file object.h
  *
  * Contiene las funciones para el manejo de objetos

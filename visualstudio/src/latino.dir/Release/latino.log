@@ -1,0 +1,277 @@
+﻿  Building Custom Rule C:/Users/ciber/src/latino/src/CMakeLists.txt
+  CMake does not need to re-run because C:/Users/ciber/src/latino/visualstudio/src/CMakeFiles/generate.stamp is up-to-date.
+  Compilador de optimización de C/C++ de Microsoft (R) versión 19.21.27702.2 para x64
+  (C) Microsoft Corporation. Todos los derechos reservados.
+  cl /c /I"C:\Users\ciber\src\latino\src\regex-2.7-src\src" /IC:\Users\ciber\src\latino\src\linenoise /IC:\Users\ciber\src\latino\src\..\include /W4 /WX- /diagnostics:column /O2 /Ob2 /D WIN32 /D _WINDOWS /D NDEBUG /D _CRT_SECURE_NO_WARNINGS /D _DEBUG /D __STDC_CONSTANT_MACROS /D __STDC_FORMAT_MACROS /D __STDC_LIMIT_MACROS /D "CMAKE_INTDIR=\"Release\"" /D _MBCS /Gm- /MD /GS /fp:precise /Zc:wchar_t /Zc:forScope /Zc:inline /Fo"latino.dir\Release\\" /Fd"latino.dir\Release\vc142.pdb" /Gd /TC /errorReport:prompt C:\Users\ciber\src\latino\src\latino.c C:\Users\ciber\src\latino\src\latlex.c C:\Users\ciber\src\latino\src\latparse.c C:\Users\ciber\src\latino\src\latast.c C:\Users\ciber\src\latino\src\latmem.c C:\Users\ciber\src\latino\src\latdic.c C:\Users\ciber\src\latino\src\latdo.c C:\Users\ciber\src\latino\src\latlist.c C:\Users\ciber\src\latino\src\latmv.c C:\Users\ciber\src\latino\src\latobj.c C:\Users\ciber\src\latino\src\latpaqlib.c C:\Users\ciber\src\latino\src\latrepl.c C:\Users\ciber\src\latino\src\latgc.c C:\Users\ciber\src\latino\src\latbaselib.c C:\Users\ciber\src\latino\src\latstrlib.c C:\Users\ciber\src\latino\src\latlistlib.c C:\Users\ciber\src\latino\src\latdiclib.c C:\Users\ciber\src\latino\src\latfilelib.c C:\Users\ciber\src\latino\src\latmathlib.c C:\Users\ciber\src\latino\src\latsyslib.c C:\Users\ciber\src\latino\src\latdevlib.c C:\Users\ciber\src\latino\src\linenoise\utf8.c C:\Users\ciber\src\latino\src\linenoise\linenoise.c
+  latino.c
+C:\Users\ciber\src\latino\include\latino.h(58,9): warning C4068:  pragma desconocida
+C:\Users\ciber\src\latino\src\latino.c(119,14): warning C4456:  la declaración de 'i' oculta la declaración local anterior
+  latlex.c
+  latparse.c
+C:\Users\ciber\src\latino\src\latino.c(81,9): message :  vea la declaración de 'i'
+C:\Users\ciber\src\latino\include\latino.h(58,9): warning C4068:  pragma desconocida
+latparse.c(1535,19): warning C4244:  '=': conversión de 'int' a 'yytype_int16'; posible pérdida de datos
+latparse.c(2468,3): warning C4127:  la expresión condicional es constante
+latparse.y(468,71): warning C4100:  'root': parámetro formal sin referencia
+  latast.c
+latparse.y(468,49): warning C4100:  'scanner': parámetro formal sin referencia
+  latmem.c
+C:\Users\ciber\src\latino\include\latino.h(58,9): warning C4068:  pragma desconocida
+  latdic.c
+C:\Users\ciber\src\latino\include\latino.h(58,9): warning C4068:  pragma desconocida
+  latdo.c
+C:\Users\ciber\src\latino\include\latino.h(58,9): warning C4068:  pragma desconocida
+C:\Users\ciber\src\latino\include\latino.h(58,9): warning C4068:  pragma desconocida
+C:\Users\ciber\src\latino\src\latdo.c(43,17): warning C4324:  'lat_longjmp': se rellenó la estructura debido al especificador de alineación
+C:\Users\ciber\src\latino\src\latdo.c(708,1): warning C4002:  hay demasiados argumentos para la invocación de macro "snprintf" de tipo función
+C:\Users\ciber\src\latino\src\latdo.c(707,1): warning C4473:  "_snprintf": no se pasaron suficientes argumentos para la cadena de formato
+C:\Users\ciber\src\latino\src\latdo.c(707,1): message :  los marcadores de posición y sus parámetros esperan 4 argumentos variádicos, pero se proporcionaron 1
+  latlist.c
+C:\Users\ciber\src\latino\src\latdo.c(707,1): message :  el argumento variádico 2 que falta es requerido por la cadena de formato '%d'
+  latmv.c
+C:\Users\ciber\src\latino\include\latino.h(58,9): warning C4068:  pragma desconocida
+C:\Users\ciber\src\latino\include\latino.h(58,9): warning C4068:  pragma desconocida
+C:\Users\ciber\src\latino\src\latmv.c(291,53): warning C4100:  'ctx': parámetro formal sin referencia
+C:\Users\ciber\src\latino\src\latmv.c(532,16): warning C4244:  '=': conversión de 'int' a 'lat_byte'; posible pérdida de datos
+C:\Users\ciber\src\latino\src\latmv.c(990,61): warning C4244:  '=': conversión de 'double' a 'int'; posible pérdida de datos
+C:\Users\ciber\src\latino\src\latmv.c(1010,58): warning C4244:  'función': conversión de 'double' a 'int'; posible pérdida de datos
+C:\Users\ciber\src\latino\src\latmv.c(1091,21): warning C4456:  la declaración de 'cur' oculta la declaración local anterior
+C:\Users\ciber\src\latino\src\latmv.c(552,22): message :  vea la declaración de 'cur'
+C:\Users\ciber\src\latino\src\latmv.c(1113,34): warning C4018:  '>': no coinciden signed/unsigned
+C:\Users\ciber\src\latino\src\latmv.c(1116,40): warning C4018:  '>=': no coinciden signed/unsigned
+C:\Users\ciber\src\latino\src\latmv.c(947,1): warning C4244:  'inicializando': conversión de 'double' a 'int'; posible pérdida de datos
+C:\Users\ciber\src\latino\src\latmv.c(1019,1): warning C4204:  se ha utilizado una extensión no estándar: inicializador de agregado no constante
+  latobj.c
+C:\Users\ciber\src\latino\src\latmv.c(1029,1): warning C4204:  se ha utilizado una extensión no estándar: inicializador de agregado no constante
+C:\Users\ciber\src\latino\include\latino.h(58,9): warning C4068:  pragma desconocida
+C:\Users\ciber\src\latino\src\latobj.c(116,18): warning C4018:  '>': no coinciden signed/unsigned
+C:\Users\ciber\src\latino\src\latobj.c(319,76): warning C4244:  '=': conversión de 'double' a 'int'; posible pérdida de datos
+C:\Users\ciber\src\latino\src\latobj.c(701,57): warning C4244:  'return': conversión de 'size_t' a 'double'; posible pérdida de datos
+C:\Users\ciber\src\latino\src\latobj.c(730,27): warning C4244:  'return': conversión de 'double' a 'int'; posible pérdida de datos
+C:\Users\ciber\src\latino\src\latobj.c(733,27): warning C4244:  'return': conversión de 'double' a 'int'; posible pérdida de datos
+C:\Users\ciber\src\latino\src\latobj.c(740,57): warning C4267:  'return': conversión de 'size_t' a 'int'; posible pérdida de datos
+C:\Users\ciber\src\latino\src\latobj.c(759,45): warning C4244:  'return': conversión de 'int' a 'char'; posible pérdida de datos
+C:\Users\ciber\src\latino\src\latobj.c(762,45): warning C4244:  'return': conversión de 'int' a 'char'; posible pérdida de datos
+C:\Users\ciber\src\latino\src\latobj.c(772,27): warning C4244:  'return': conversión de 'double' a 'char'; posible pérdida de datos
+C:\Users\ciber\src\latino\src\latobj.c(775,27): warning C4244:  'return': conversión de 'double' a 'char'; posible pérdida de datos
+C:\Users\ciber\src\latino\src\latobj.c(779,59): warning C4244:  'return': conversión de 'int' a 'char'; posible pérdida de datos
+C:\Users\ciber\src\latino\src\latobj.c(782,57): warning C4267:  'return': conversión de 'size_t' a 'char'; posible pérdida de datos
+  latpaqlib.c
+C:\Users\ciber\src\latino\src\latobj.c(803,36): warning C4047:  'return': 'char *' es distinto en los niveles de direccionamiento indirecto de 'char'
+  latrepl.c
+C:\Users\ciber\src\latino\include\latino.h(58,9): warning C4068:  pragma desconocida
+C:\Users\ciber\src\latino\include\latino.h(58,9): warning C4068:  pragma desconocida
+  latgc.c
+C:\Users\ciber\src\latino\src\latrepl.c(50,1): warning C4267:  'inicializando': conversión de 'size_t' a 'int'; posible pérdida de datos
+C:\Users\ciber\src\latino\include\latino.h(58,9): warning C4068:  pragma desconocida
+  latbaselib.c
+C:\Users\ciber\src\latino\src\latgc.c(102,32): warning C4100:  'mv': parámetro formal sin referencia
+C:\Users\ciber\src\latino\include\latino.h(58,9): warning C4068:  pragma desconocida
+C:\Users\ciber\src\latino\src\latbaselib.c(194,1): warning C4267:  'inicializando': conversión de 'size_t' a 'int'; posible pérdida de datos
+  latstrlib.c
+C:\Users\ciber\src\latino\src\latbaselib.c(211,34): warning C4100:  'mv': parámetro formal sin referencia
+C:\Users\ciber\src\latino\include\latino.h(58,9): warning C4068:  pragma desconocida
+C:\Users\ciber\src\latino\src\latstrlib.c(32,34): warning C4244:  '+=': conversión de 'double' a 'int'; posible pérdida de datos
+C:\Users\ciber\src\latino\src\latstrlib.c(88,35): warning C4244:  '=': conversión de 'int' a 'char'; posible pérdida de datos
+C:\Users\ciber\src\latino\src\latstrlib.c(94,39): warning C4244:  '=': conversión de 'int' a 'char'; posible pérdida de datos
+C:\Users\ciber\src\latino\src\latstrlib.c(118,19): warning C4244:  '=': conversión de 'int' a 'char'; posible pérdida de datos
+C:\Users\ciber\src\latino\src\latstrlib.c(137,35): warning C4244:  '=': conversión de 'int' a 'char'; posible pérdida de datos
+C:\Users\ciber\src\latino\src\latstrlib.c(141,35): warning C4244:  '=': conversión de 'int' a 'char'; posible pérdida de datos
+C:\Users\ciber\src\latino\src\latstrlib.c(145,35): warning C4244:  '=': conversión de 'int' a 'char'; posible pérdida de datos
+C:\Users\ciber\src\latino\src\latstrlib.c(151,39): warning C4244:  '=': conversión de 'int' a 'char'; posible pérdida de datos
+C:\Users\ciber\src\latino\src\latstrlib.c(164,19): warning C4244:  '=': conversión de 'int' a 'char'; posible pérdida de datos
+C:\Users\ciber\src\latino\src\latstrlib.c(199,1): warning C4267:  'inicializando': conversión de 'size_t' a 'int'; posible pérdida de datos
+C:\Users\ciber\src\latino\src\latstrlib.c(200,1): warning C4267:  'inicializando': conversión de 'size_t' a 'int'; posible pérdida de datos
+C:\Users\ciber\src\latino\src\latstrlib.c(217,32): warning C4244:  '=': conversión de '__int64' a 'int'; posible pérdida de datos
+C:\Users\ciber\src\latino\src\latstrlib.c(206,1): warning C4267:  'inicializando': conversión de 'size_t' a 'int'; posible pérdida de datos
+C:\Users\ciber\src\latino\src\latstrlib.c(231,1): warning C4267:  'inicializando': conversión de 'size_t' a 'int'; posible pérdida de datos
+C:\Users\ciber\src\latino\src\latstrlib.c(260,1): warning C4267:  'inicializando': conversión de 'size_t' a 'int'; posible pérdida de datos
+C:\Users\ciber\src\latino\src\latstrlib.c(261,1): warning C4267:  'inicializando': conversión de 'size_t' a 'int'; posible pérdida de datos
+C:\Users\ciber\src\latino\src\latstrlib.c(277,1): warning C4267:  'inicializando': conversión de 'size_t' a 'int'; posible pérdida de datos
+C:\Users\ciber\src\latino\src\latstrlib.c(288,1): warning C4267:  'inicializando': conversión de 'size_t' a 'int'; posible pérdida de datos
+C:\Users\ciber\src\latino\src\latstrlib.c(324,33): warning C4244:  '=': conversión de 'int' a 'char'; posible pérdida de datos
+C:\Users\ciber\src\latino\src\latstrlib.c(321,1): warning C4267:  'inicializando': conversión de 'size_t' a 'int'; posible pérdida de datos
+C:\Users\ciber\src\latino\src\latstrlib.c(335,33): warning C4244:  '=': conversión de 'int' a 'char'; posible pérdida de datos
+C:\Users\ciber\src\latino\src\latstrlib.c(332,1): warning C4267:  'inicializando': conversión de 'size_t' a 'int'; posible pérdida de datos
+C:\Users\ciber\src\latino\src\latstrlib.c(372,1): warning C4267:  'inicializando': conversión de 'size_t' a 'int'; posible pérdida de datos
+C:\Users\ciber\src\latino\src\latstrlib.c(434,28): warning C4244:  '=': conversión de '__int64' a 'int'; posible pérdida de datos
+C:\Users\ciber\src\latino\src\latstrlib.c(447,53): warning C4244:  'función': conversión de 'double' a 'int'; posible pérdida de datos
+C:\Users\ciber\src\latino\src\latstrlib.c(466,55): warning C4244:  'función': conversión de 'double' a 'int'; posible pérdida de datos
+C:\Users\ciber\src\latino\src\latstrlib.c(477,53): warning C4244:  'función': conversión de 'double' a 'int'; posible pérdida de datos
+C:\Users\ciber\src\latino\src\latstrlib.c(504,72): warning C4244:  'función': conversión de 'size_t' a 'double'; posible pérdida de datos
+C:\Users\ciber\src\latino\src\latstrlib.c(506,76): warning C4244:  'función': conversión de 'size_t' a 'double'; posible pérdida de datos
+C:\Users\ciber\src\latino\src\latstrlib.c(519,26): warning C4267:  '=': conversión de 'size_t' a 'int'; posible pérdida de datos
+C:\Users\ciber\src\latino\src\latstrlib.c(526,28): warning C4267:  '=': conversión de 'size_t' a 'int'; posible pérdida de datos
+C:\Users\ciber\src\latino\src\latstrlib.c(544,31): warning C4244:  '=': conversión de '__int64' a 'int'; posible pérdida de datos
+C:\Users\ciber\src\latino\src\latstrlib.c(563,46): warning C4244:  '=': conversión de 'double' a 'int'; posible pérdida de datos
+C:\Users\ciber\src\latino\src\latstrlib.c(564,46): warning C4244:  '=': conversión de 'double' a 'int'; posible pérdida de datos
+C:\Users\ciber\src\latino\src\latstrlib.c(594,77): warning C4244:  'función': conversión de 'double' a 'int'; posible pérdida de datos
+C:\Users\ciber\src\latino\src\latstrlib.c(595,50): warning C4244:  'función': conversión de 'double' a 'int'; posible pérdida de datos
+  latlistlib.c
+C:\Users\ciber\src\latino\src\latstrlib.c(678,1): warning C4267:  'inicializando': conversión de 'size_t' a 'int'; posible pérdida de datos
+C:\Users\ciber\src\latino\include\latino.h(58,9): warning C4068:  pragma desconocida
+C:\Users\ciber\src\latino\src\latlistlib.c(56,1): warning C4244:  'inicializando': conversión de 'double' a 'int'; posible pérdida de datos
+C:\Users\ciber\src\latino\src\latlistlib.c(101,55): warning C4244:  'función': conversión de 'double' a 'int'; posible pérdida de datos
+C:\Users\ciber\src\latino\src\latlistlib.c(139,1): warning C4244:  'inicializando': conversión de 'double' a 'int'; posible pérdida de datos
+  latdiclib.c
+C:\Users\ciber\src\latino\src\latlistlib.c(176,21): warning C4267:  '+=': conversión de 'size_t' a 'long'; posible pérdida de datos
+  latfilelib.c
+C:\Users\ciber\src\latino\include\latino.h(58,9): warning C4068:  pragma desconocida
+C:\Users\ciber\src\latino\include\latino.h(58,9): warning C4068:  pragma desconocida
+C:\Users\ciber\src\latino\src\latfilelib.c(35,18): warning C4245:  'return': conversión de 'int' en 'size_t'; no coinciden signed/unsigned
+C:\Users\ciber\src\latino\src\latfilelib.c(38,18): warning C4245:  'return': conversión de 'int' en 'size_t'; no coinciden signed/unsigned
+C:\Users\ciber\src\latino\src\latfilelib.c(41,18): warning C4245:  'return': conversión de 'int' en 'size_t'; no coinciden signed/unsigned
+  latmathlib.c
+C:\Users\ciber\src\latino\src\latfilelib.c(48,18): warning C4245:  'return': conversión de 'int' en 'size_t'; no coinciden signed/unsigned
+C:\Users\ciber\src\latino\include\latino.h(58,9): warning C4068:  pragma desconocida
+C:\Users\ciber\src\latino\src\latmathlib.c(165,45): warning C4244:  '=': conversión de 'double' a 'int'; posible pérdida de datos
+C:\Users\ciber\src\latino\src\latmathlib.c(166,47): warning C4244:  '=': conversión de 'double' a 'int'; posible pérdida de datos
+C:\Users\ciber\src\latino\src\latmathlib.c(170,51): warning C4244:  '=': conversión de 'double' a 'int'; posible pérdida de datos
+C:\Users\ciber\src\latino\src\latmathlib.c(171,53): warning C4244:  '=': conversión de 'double' a 'int'; posible pérdida de datos
+  latsyslib.c
+C:\Users\ciber\src\latino\src\latmathlib.c(173,21): warning C4244:  'función': conversión de 'time_t' a 'unsigned int'; posible pérdida de datos
+C:\Users\ciber\src\latino\include\latino.h(58,9): warning C4068:  pragma desconocida
+C:\Users\ciber\src\latino\src\latsyslib.c(62,5): warning C4244:  'función': conversión de 'double' a 'DWORD'; posible pérdida de datos
+C:\Users\ciber\src\latino\src\latsyslib.c(70,1): warning C4267:  'inicializando': conversión de 'size_t' a 'int'; posible pérdida de datos
+C:\Users\ciber\src\latino\src\latsyslib.c(115,41): warning C4244:  'función': conversión de 'time_t' a 'double'; posible pérdida de datos
+C:\Users\ciber\src\latino\src\latsyslib.c(119,56): warning C4244:  '=': conversión de 'double' a 'time_t'; posible pérdida de datos
+C:\Users\ciber\src\latino\src\latsyslib.c(140,39): warning C4244:  'función': conversión de 'double' a 'int'; posible pérdida de datos
+C:\Users\ciber\src\latino\src\latsyslib.c(149,33): warning C4100:  'mv': parámetro formal sin referencia
+  Generando código...
+  Compilando...
+  latdevlib.c
+C:\Users\ciber\src\latino\src\latsyslib.c(164,1): warning C4244:  'inicializando': conversión de 'double' a 'int'; posible pérdida de datos
+C:\Users\ciber\src\latino\src\latsyslib.c(164,1): warning C4244: C:\Users\ciber\src\latino\src\latstrlib.c(551) : warning C4702: no se puede tener acceso al código
+C:\Users\ciber\src\latino\src\latsyslib.c(164,1): warning C4244: C:\Users\ciber\src\latino\src\latstrlib.c(301) : warning C4706: asignación en la expresión condicional
+C:\Users\ciber\src\latino\src\latsyslib.c(164,1): warning C4244: C:\Users\ciber\src\latino\src\latmv.c(192) : warning C4702: no se puede tener acceso al código
+C:\Users\ciber\src\latino\src\latsyslib.c(164,1): warning C4244: C:\Users\ciber\src\latino\src\latmv.c(148) : warning C4702: no se puede tener acceso al código
+C:\Users\ciber\src\latino\src\latsyslib.c(164,1): warning C4244: C:\Users\ciber\src\latino\visualstudio\src\latparse.c(2419) : warning C4702: no se puede tener acceso al código
+C:\Users\ciber\src\latino\src\latsyslib.c(164,1): warning C4244: C:\Users\ciber\src\latino\visualstudio\src\latparse.c(2424) : warning C4702: no se puede tener acceso al código
+C:\Users\ciber\src\latino\src\latsyslib.c(164,1): warning C4244: C:\Users\ciber\src\latino\visualstudio\src\latparse.c(2425) : warning C4702: no se puede tener acceso al código
+  utf8.c
+  linenoise.c
+C:\Users\ciber\src\latino\include\latino.h(58,9): warning C4068:  pragma desconocida
+C:\Users\ciber\src\latino\src\linenoise\linenoise.c(733,47): warning C4100:  'prompt': parámetro formal sin referencia
+C:\Users\ciber\src\latino\src\linenoise\linenoise.c(761,13): warning C4244:  '=': conversión de 'int' a 'char'; posible pérdida de datos
+C:\Users\ciber\src\latino\src\linenoise\linenoise.c(795,26): warning C4267:  '=': conversión de 'size_t' a 'int'; posible pérdida de datos
+C:\Users\ciber\src\latino\src\linenoise\linenoise.c(851,15): warning C4456:  la declaración de 'ch' oculta la declaración local anterior
+C:\Users\ciber\src\latino\src\linenoise\linenoise.c(789,9): message :  vea la declaración de 'ch'
+C:\Users\ciber\src\latino\src\linenoise\linenoise.c(864,48): warning C4244:  'función': conversión de 'int' a 'char'; posible pérdida de datos
+C:\Users\ciber\src\latino\src\linenoise\linenoise.c(882,40): warning C4267:  '=': conversión de 'size_t' a 'int'; posible pérdida de datos
+C:\Users\ciber\src\latino\src\linenoise\linenoise.c(1062,52): warning C4267:  '=': conversión de 'size_t' a 'int'; posible pérdida de datos
+C:\Users\ciber\src\latino\src\linenoise\linenoise.c(1230,31): warning C4456:  la declaración de 'p' oculta la declaración local anterior
+C:\Users\ciber\src\latino\src\linenoise\linenoise.c(1220,29): message :  vea la declaración de 'p'
+C:\Users\ciber\src\latino\src\linenoise\linenoise.c(1232,44): warning C4267:  '=': conversión de 'size_t' a 'int'; posible pérdida de datos
+C:\Users\ciber\src\latino\src\linenoise\linenoise.c(1285,75): warning C4244:  '=': conversión de '__int64' a 'int'; posible pérdida de datos
+  Generando código...
+C:\Users\ciber\src\latino\src\linenoise\linenoise.c(1452,28): warning C4267:  '=': conversión de 'size_t' a 'int'; posible pérdida de datos
+     Creando biblioteca C:/Users/ciber/src/latino/visualstudio/src/Release/latino.lib y objeto C:/Users/ciber/src/latino/visualstudio/src/Release/latino.exp
+LINK : warning LNK4217: "latC_crear_mv" importa el símbolo "latmv.obj" definido en "latino.obj" en la función "main"
+LINK : warning LNK4286: "latC_apilar" importa el símbolo "latmv.obj" definido en "latdiclib.obj"
+LINK : warning LNK4286: "latC_apilar" importa el símbolo "latmv.obj" definido en "latfilelib.obj"
+LINK : warning LNK4286: "latC_apilar" importa el símbolo "latmv.obj" definido en "latmathlib.obj"
+LINK : warning LNK4286: "latC_apilar" importa el símbolo "latmv.obj" definido en "latsyslib.obj"
+LINK : warning LNK4217: "latC_apilar" importa el símbolo "latmv.obj" definido en "latino.obj" en la función "main"
+LINK : warning LNK4286: "latC_apilar" importa el símbolo "latmv.obj" definido en "latbaselib.obj"
+LINK : warning LNK4286: "latC_apilar" importa el símbolo "latmv.obj" definido en "latstrlib.obj"
+LINK : warning LNK4286: "latC_apilar" importa el símbolo "latmv.obj" definido en "latlistlib.obj"
+LINK : warning LNK4286: "latC_analizar" importa el símbolo "latdo.obj" definido en "latfilelib.obj"
+LINK : warning LNK4217: "latC_analizar" importa el símbolo "latdo.obj" definido en "latino.obj" en la función "main"
+LINK : warning LNK4286: "latC_analizar" importa el símbolo "latdo.obj" definido en "latrepl.obj"
+LINK : warning LNK4217: "latC_analizar" importa el símbolo "latdo.obj" definido en "latbaselib.obj" en la función "base_incluir"
+LINK : warning LNK4286: "latC_analizar" importa el símbolo "latdo.obj" definido en "latstrlib.obj"
+LINK : warning LNK4286: "latC_llamar_funcion" importa el símbolo "latdo.obj" definido en "latfilelib.obj"
+LINK : warning LNK4217: "latC_llamar_funcion" importa el símbolo "latdo.obj" definido en "latino.obj" en la función "main"
+LINK : warning LNK4286: "latC_llamar_funcion" importa el símbolo "latdo.obj" definido en "latrepl.obj"
+LINK : warning LNK4286: "latC_llamar_funcion" importa el símbolo "latdo.obj" definido en "latbaselib.obj"
+LINK : warning LNK4286: "latC_llamar_funcion" importa el símbolo "latdo.obj" definido en "latstrlib.obj"
+LINK : warning LNK4217: "latC_crear_numerico" importa el símbolo "latobj.obj" definido en "latdiclib.obj" en la función "dic_longitud"
+LINK : warning LNK4286: "latC_crear_numerico" importa el símbolo "latobj.obj" definido en "latmathlib.obj"
+LINK : warning LNK4286: "latC_crear_numerico" importa el símbolo "latobj.obj" definido en "latsyslib.obj"
+LINK : warning LNK4217: "latC_crear_numerico" importa el símbolo "latobj.obj" definido en "latino.obj" en la función "main"
+LINK : warning LNK4286: "latC_crear_numerico" importa el símbolo "latobj.obj" definido en "latbaselib.obj"
+LINK : warning LNK4286: "latC_crear_numerico" importa el símbolo "latobj.obj" definido en "latstrlib.obj"
+LINK : warning LNK4286: "latC_crear_numerico" importa el símbolo "latobj.obj" definido en "latlistlib.obj"
+LINK : warning LNK4217: "latC_crear_cadena" importa el símbolo "latobj.obj" definido en "latfilelib.obj" en la función "file_ejecutar"
+LINK : warning LNK4217: "latC_crear_cadena" importa el símbolo "latobj.obj" definido en "latsyslib.obj" en la función "latSO_fecha"
+LINK : warning LNK4217: "latC_crear_cadena" importa el símbolo "latobj.obj" definido en "latino.obj" en la función "main"
+LINK : warning LNK4217: "latC_crear_cadena" importa el símbolo "latobj.obj" definido en "latbaselib.obj" en la función "base_incluir"
+LINK : warning LNK4286: "latC_crear_cadena" importa el símbolo "latobj.obj" definido en "latstrlib.obj"
+LINK : warning LNK4217: "latC_crear_cadena" importa el símbolo "latobj.obj" definido en "latdiclib.obj" en la función "dic_llaves"
+LINK : warning LNK4217: "latC_crear_funcion" importa el símbolo "latmv.obj" definido en "latino.obj" en la función "main"
+LINK : warning LNK4286: "latC_checar_lista" importa el símbolo "latobj.obj" definido en "latfilelib.obj"
+LINK : warning LNK4217: "latC_checar_lista" importa el símbolo "latobj.obj" definido en "latino.obj" en la función "main"
+LINK : warning LNK4286: "latC_checar_lista" importa el símbolo "latobj.obj" definido en "latgc.obj"
+LINK : warning LNK4286: "latC_checar_lista" importa el símbolo "latobj.obj" definido en "latstrlib.obj"
+LINK : warning LNK4286: "latC_checar_lista" importa el símbolo "latobj.obj" definido en "latlistlib.obj"
+LINK : warning LNK4217: "latL_agregar" importa el símbolo "latlist.obj" definido en "latfilelib.obj" en la función "file_ejecutar"
+LINK : warning LNK4217: "latL_agregar" importa el símbolo "latlist.obj" definido en "latino.obj" en la función "main"
+LINK : warning LNK4286: "latL_agregar" importa el símbolo "latlist.obj" definido en "latstrlib.obj"
+LINK : warning LNK4286: "latL_agregar" importa el símbolo "latlist.obj" definido en "latlistlib.obj"
+LINK : warning LNK4217: "latL_agregar" importa el símbolo "latlist.obj" definido en "latdiclib.obj" en la función "dic_llaves"
+LINK : warning LNK4286: "latC_error" importa el símbolo "latdo.obj" definido en "latfilelib.obj"
+LINK : warning LNK4286: "latC_error" importa el símbolo "latdo.obj" definido en "latsyslib.obj"
+LINK : warning LNK4217: "latC_error" importa el símbolo "latdo.obj" definido en "latmem.obj" en la función "latM_asignar"
+LINK : warning LNK4286: "latC_error" importa el símbolo "latdo.obj" definido en "latbaselib.obj"
+LINK : warning LNK4286: "latC_error" importa el símbolo "latdo.obj" definido en "latstrlib.obj"
+LINK : warning LNK4286: "latC_error" importa el símbolo "latdo.obj" definido en "latlistlib.obj"
+LINK : warning LNK4217: "latL_limpiar_destruir" importa el símbolo "latlist.obj" definido en "latgc.obj" en la función "gc_recolectar"
+LINK : warning LNK4286: "latL_limpiar_destruir" importa el símbolo "latlist.obj" definido en "latstrlib.obj"
+LINK : warning LNK4286: "latC_abrir_liblatino" importa el símbolo "latmv.obj" definido en "latdevlib.obj"
+LINK : warning LNK4217: "latC_abrir_liblatino" importa el símbolo "latmv.obj" definido en "latdiclib.obj" en la función "dic_longitud"
+LINK : warning LNK4286: "latC_abrir_liblatino" importa el símbolo "latmv.obj" definido en "latfilelib.obj"
+LINK : warning LNK4286: "latC_abrir_liblatino" importa el símbolo "latmv.obj" definido en "latmathlib.obj"
+LINK : warning LNK4217: "latC_abrir_liblatino" importa el símbolo "latmv.obj" definido en "latsyslib.obj" en la función "latSO_fecha"
+LINK : warning LNK4217: "latC_abrir_liblatino" importa el símbolo "latmv.obj" definido en "latgc.obj" en la función "latC_abrir_liblatino_gc"
+LINK : warning LNK4217: "latC_abrir_liblatino" importa el símbolo "latmv.obj" definido en "latbaselib.obj" en la función "base_incluir"
+LINK : warning LNK4286: "latC_abrir_liblatino" importa el símbolo "latmv.obj" definido en "latstrlib.obj"
+LINK : warning LNK4286: "latC_abrir_liblatino" importa el símbolo "latmv.obj" definido en "latlistlib.obj"
+LINK : warning LNK4217: "latC_desapilar" importa el símbolo "latmv.obj" definido en "latfilelib.obj" en la función "file_lineas"
+LINK : warning LNK4286: "latC_desapilar" importa el símbolo "latmv.obj" definido en "latmathlib.obj"
+LINK : warning LNK4217: "latC_desapilar" importa el símbolo "latmv.obj" definido en "latsyslib.obj" en la función "latSO_salir"
+LINK : warning LNK4286: "latC_desapilar" importa el símbolo "latmv.obj" definido en "latdevlib.obj"
+LINK : warning LNK4217: "latC_desapilar" importa el símbolo "latmv.obj" definido en "latbaselib.obj" en la función "base_poner"
+LINK : warning LNK4286: "latC_desapilar" importa el símbolo "latmv.obj" definido en "latstrlib.obj"
+LINK : warning LNK4286: "latC_desapilar" importa el símbolo "latmv.obj" definido en "latlistlib.obj"
+LINK : warning LNK4286: "latC_desapilar" importa el símbolo "latmv.obj" definido en "latdiclib.obj"
+LINK : warning LNK4217: "latC_apilar_string" importa el símbolo "latmv.obj" definido en "latbaselib.obj" en la función "base_tipo"
+LINK : warning LNK4286: "latC_apilar_string" importa el símbolo "latmv.obj" definido en "latstrlib.obj"
+LINK : warning LNK4286: "latC_apilar_string" importa el símbolo "latmv.obj" definido en "latlistlib.obj"
+LINK : warning LNK4217: "latC_apilar_string" importa el símbolo "latmv.obj" definido en "latsyslib.obj" en la función "latSO_ejecutar"
+LINK : warning LNK4217: "latC_checar_cadena" importa el símbolo "latobj.obj" definido en "latsyslib.obj" en la función "latSO_dormir"
+LINK : warning LNK4217: "latC_checar_cadena" importa el símbolo "latobj.obj" definido en "latbaselib.obj" en la función "base_incluir"
+LINK : warning LNK4286: "latC_checar_cadena" importa el símbolo "latobj.obj" definido en "latstrlib.obj"
+LINK : warning LNK4286: "latC_checar_cadena" importa el símbolo "latobj.obj" definido en "latlistlib.obj"
+LINK : warning LNK4286: "latC_checar_cadena" importa el símbolo "latobj.obj" definido en "latfilelib.obj"
+LINK : warning LNK4217: "latC_abool" importa el símbolo "latobj.obj" definido en "latbaselib.obj" en la función "base_alogico"
+LINK : warning LNK4217: "latC_adouble" importa el símbolo "latobj.obj" definido en "latbaselib.obj" en la función "base_anumero"
+LINK : warning LNK4286: "latC_adouble" importa el símbolo "latobj.obj" definido en "latstrlib.obj"
+LINK : warning LNK4217: "latC_astring" importa el símbolo "latobj.obj" definido en "latbaselib.obj" en la función "base_acadena"
+LINK : warning LNK4286: "latC_astring" importa el símbolo "latobj.obj" definido en "latstrlib.obj"
+LINK : warning LNK4286: "latC_astring" importa el símbolo "latobj.obj" definido en "latdevlib.obj"
+LINK : warning LNK4217: "latC_cargarlib" importa el símbolo "latpaqlib.obj" definido en "latbaselib.obj" en la función "base_incluir"
+LINK : warning LNK4217: "latC_crear_lista" importa el símbolo "latobj.obj" definido en "latstrlib.obj" en la función "str_separar"
+LINK : warning LNK4286: "latC_crear_lista" importa el símbolo "latobj.obj" definido en "latlistlib.obj"
+LINK : warning LNK4286: "latC_crear_lista" importa el símbolo "latobj.obj" definido en "latdiclib.obj"
+LINK : warning LNK4286: "latC_crear_lista" importa el símbolo "latobj.obj" definido en "latfilelib.obj"
+LINK : warning LNK4217: "latC_checar_numerico" importa el símbolo "latobj.obj" definido en "latstrlib.obj" en la función "str_insertar"
+LINK : warning LNK4286: "latC_checar_numerico" importa el símbolo "latobj.obj" definido en "latlistlib.obj"
+LINK : warning LNK4286: "latC_checar_numerico" importa el símbolo "latobj.obj" definido en "latmathlib.obj"
+LINK : warning LNK4286: "latC_checar_numerico" importa el símbolo "latobj.obj" definido en "latsyslib.obj"
+LINK : warning LNK4217: "latC_checar_dic" importa el símbolo "latobj.obj" definido en "latstrlib.obj" en la función "str_longitud"
+LINK : warning LNK4286: "latC_checar_dic" importa el símbolo "latobj.obj" definido en "latdiclib.obj"
+LINK : warning LNK4217: "latL_crear" importa el símbolo "latlist.obj" definido en "latstrlib.obj" en la función "str_separar"
+LINK : warning LNK4286: "latL_crear" importa el símbolo "latlist.obj" definido en "latlistlib.obj"
+LINK : warning LNK4286: "latL_crear" importa el símbolo "latlist.obj" definido en "latdiclib.obj"
+LINK : warning LNK4286: "latL_crear" importa el símbolo "latlist.obj" definido en "latfilelib.obj"
+LINK : warning LNK4217: "latL_insertar_inicio" importa el símbolo "latlist.obj" definido en "latstrlib.obj" en la función "str_formato"
+LINK : warning LNK4217: "latL_extraer_inicio" importa el símbolo "latlist.obj" definido en "latstrlib.obj" en la función "str_formato"
+LINK : warning LNK4217: "latL_obtener_elemento" importa el símbolo "latlist.obj" definido en "latstrlib.obj" en la función "str_char"
+LINK : warning LNK4286: "latL_obtener_elemento" importa el símbolo "latlist.obj" definido en "latlistlib.obj"
+LINK : warning LNK4217: "latL_eliminar_nodo" importa el símbolo "latlist.obj" definido en "latlistlib.obj" en la función "lista_eliminar_indice"
+LINK : warning LNK4217: "latL_extender" importa el símbolo "latlist.obj" definido en "latlistlib.obj" en la función "lista_extender"
+LINK : warning LNK4217: "latL_contiene_valor" importa el símbolo "latlist.obj" definido en "latlistlib.obj" en la función "lista_contiene"
+LINK : warning LNK4217: "latL_obtener_nodo" importa el símbolo "latlist.obj" definido en "latlistlib.obj" en la función "lista_eliminar_indice"
+LINK : warning LNK4217: "latL_insertar_elemento" importa el símbolo "latlist.obj" definido en "latlistlib.obj" en la función "lista_insertar"
+LINK : warning LNK4217: "latC_apilar_double" importa el símbolo "latmv.obj" definido en "latsyslib.obj" en la función "latSO_tiempo"
+  latino.vcxproj -> C:\Users\ciber\src\latino\visualstudio\src\Release\latino.exe
