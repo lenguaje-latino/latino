@@ -41,6 +41,7 @@ lat_objeto latO_falso_ = {.val.logico = 0, T_BOOL};
 char *minusculas(const char *str);
 char *logico_acadena(int i);
 char *decimal_acadena(double d);
+char *entero_acadena(int i);
 char *reemplazar(char *str, const char *orig, const char *rep);
 char *analizar_fmt(const char *s, size_t len);
 char *analizar(const char *s, size_t len);
@@ -522,49 +523,50 @@ void latS_resize(lat_mv *mv, int newsize) {
 }
 
 LATINO_API lat_objeto *latC_crear_logico(lat_mv *mv, bool val) {
-    // printf("lat_logico_crear: %i\n", val);
     lat_objeto *ret = latO_crear(mv);
-    //ret->tipo = T_BOOL;
     ret->tam += sizeof(bool);
-    //getLogico(ret) = val;
-	setLogico(ret, val);
+    setLogico(ret, val);
     return ret;
 }
 
 LATINO_API lat_objeto *latC_crear_numerico(lat_mv *mv, double val) {
     // printf("lat_decimal_crear: %.14g\n", val);
     lat_objeto *ret = latO_crear(mv);
-    //ret->tipo = T_NUMERIC;
     ret->tam += sizeof(double);
-    //getNumerico(ret) = val;
-	setNumerico(ret, val);
-    // mv->memoria_usada += ret->tam;
+    setNumerico(ret, val);
+    return ret;
+}
+
+LATINO_API lat_objeto *latC_crear_entero(lat_mv *mv, int val) {
+    lat_objeto *ret = latO_crear(mv);
+    ret->tam += sizeof(int);
+    setEntero(ret, val);
+    return ret;
+}
+
+LATINO_API lat_objeto *latC_crear_caracter(lat_mv *mv, char val) {
+    lat_objeto *ret = latO_crear(mv);
+    ret->tam += sizeof(int);
+    setCaracter(ret, val);
     return ret;
 }
 
 LATINO_API lat_objeto *latC_crear_cadena(lat_mv *mv, const char *p) {
-    // printf("latC_crear_cadena: %s\n", p);
     lat_objeto *ret = latO_crear(mv);
-    //ret->tipo = T_STR;
     ret->tam += strlen(p);
     setCadena(ret, latO_cadenaNueva(mv, p, strlen(p)));
-    // mv->memoria_usada += ret->tam;
     return ret;
 }
 
 LATINO_API lat_objeto *latC_crear_lista(lat_mv *mv, lista *l) {
-    // printf("latC_crear_lista\n");
     lat_objeto *ret = latO_crear(mv);
-    //ret->tipo = T_LIST;
     ret->tam += sizeof(lista);
     setLista(ret, l);
     return ret;
 }
 
 LATINO_API lat_objeto *latC_crear_dic(lat_mv *mv, hash_map *dic) {
-    // printf("latC_crear_dic\n");
     lat_objeto *ret = latO_crear(mv);
-    //ret->tipo = T_DIC;
     ret->tam += sizeof(hash_map);
     setDic(ret, dic);
     return ret;
@@ -589,6 +591,22 @@ LATINO_API double latC_checar_numerico(lat_mv *mv, lat_objeto *o) {
         return getNumerico(o);
     }
     latC_error(mv, "El parametro debe de ser un decimal");
+    return 0;
+}
+
+LATINO_API int latC_checar_entero(lat_mv *mv, lat_objeto *o) {
+    if (o->tipo == T_INTEGER) {
+        return getEntero(o);
+    }
+    latC_error(mv, "El parametro debe de ser un entero");
+    return 0;
+}
+
+LATINO_API char latC_checar_caracter(lat_mv *mv, lat_objeto *o) {
+    if (o->tipo == T_CHAR) {
+        return getCaracter(o);
+    }
+    latC_error(mv, "El parametro debe de ser un caracter");
     return 0;
 }
 
@@ -689,6 +707,87 @@ LATINO_API double latC_adouble(lat_mv *mv, lat_objeto *o) {
     return 0;
 }
 
+// FIXME:
+LATINO_API int latC_aint(lat_mv *mv, lat_objeto *o) {
+    switch (o->tipo) {
+        case T_NULL:
+            return 0;
+            break;
+        case T_BOOL:
+            return latC_checar_logico(mv, o) == false ? 0 : 1;
+            break;
+        case T_NUMERIC:
+            return latC_checar_entero(mv, o);
+            break;
+        case T_CHAR:
+            return latC_checar_caracter(mv, o);
+            break;
+        case T_STR: {
+            char *ptr;
+            double ret;
+            ret = strtod(latC_checar_cadena(mv, o), &ptr);
+            if (!strcmp(ptr, "")) {
+                return ret;
+            } else {
+                ret = (int)(latC_checar_cadena(mv, o)[0]);
+                return ret;
+            }
+        } break;
+        case T_LIST:
+            return latL_longitud(latC_checar_lista(mv, o));
+            break;
+        case T_DIC:
+            return latH_longitud(latC_checar_dic(mv, o));
+            break;
+        default:
+            latC_error(mv, "Conversion de tipo de dato incompatible");
+            break;
+    }
+    return 0;
+}
+
+// FIXME:
+LATINO_API char latC_achar(lat_mv *mv, lat_objeto *o) {
+    switch (o->tipo) {
+        case T_NULL:
+            return 0;
+            break;
+        case T_BOOL:
+            return latC_checar_logico(mv, o) == false ? 0 : 1;
+            break;
+        case T_NUMERIC:
+            return latC_checar_entero(mv, o);
+            break;
+        case T_INTEGER:
+            return latC_checar_entero(mv, o);
+            break;
+        case T_CHAR:
+            return latC_checar_caracter(mv, o);
+            break;
+        case T_STR: {
+            char *ptr;
+            double ret;
+            ret = strtod(latC_checar_cadena(mv, o), &ptr);
+            if (!strcmp(ptr, "")) {
+                return ret;
+            } else {
+                ret = (int)(latC_checar_cadena(mv, o)[0]);
+                return ret;
+            }
+        } break;
+        case T_LIST:
+            return latL_longitud(latC_checar_lista(mv, o));
+            break;
+        case T_DIC:
+            return latH_longitud(latC_checar_dic(mv, o));
+            break;
+        default:
+            latC_error(mv, "Conversion de tipo de dato incompatible");
+            break;
+    }
+    return 0;
+}
+
 LATINO_API char *latC_astring(lat_mv *mv, lat_objeto *o) {
     if (o == NULL || o->tipo == T_NULL) {
         return strdup("nulo");
@@ -698,6 +797,10 @@ LATINO_API char *latC_astring(lat_mv *mv, lat_objeto *o) {
         return strdup("contexto");
     } else if (o->tipo == T_NUMERIC) {
         return decimal_acadena(getNumerico(o));
+    } else if (o->tipo == T_INTEGER) {
+        return entero_acadena(getEntero(o));
+    } else if (o->tipo == T_CHAR) {
+        return (char)getCaracter(o);
     } else if (o->tipo == T_STR) {
         return strdup(latC_checar_cadena(mv, o));
     } else if (o->tipo == T_FUN) {

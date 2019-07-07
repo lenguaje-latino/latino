@@ -490,6 +490,18 @@ LATINO_API void latC_apilar_double(lat_mv *mv, double num) {
     checar_pila(mv);
 }
 
+LATINO_API void latC_apilar_int(lat_mv *mv, int i) {
+    setEntero(mv->tope, i);
+    inc_pila(mv);
+    checar_pila(mv);
+}
+
+LATINO_API void latC_apilar_char(lat_mv *mv, char c) {
+    setCaracter(mv->tope, c);
+    inc_pila(mv);
+    checar_pila(mv);
+}
+
 LATINO_API void latC_apilar_string(lat_mv *mv, const char *str) {
     setCadena(mv->tope, getCadena(latC_crear_cadena(mv, str)));
     inc_pila(mv);

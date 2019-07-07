@@ -22,21 +22,18 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
  */
 
-/*/#include "pcre.h"*/
-
 #include "latino.h"
 
 #define LIB_CADENA_NAME "cadena"
 
-static int oct(int octalNumber) {
-    int decimalNumber = 0, i = 0;
-    while (octalNumber != 0) {
-        decimalNumber += (octalNumber % 10) * pow(8, i);
+static int oct(int o) {
+    int d = 0, i = 0;
+    do {
+        d += (o % 10) * pow(8, i);
         ++i;
-        octalNumber /= 10;
-    }
-    i = 1;
-    return decimalNumber;
+        o /= 10;
+    } while (o != 0);
+    return d;
 }
 
 char *analizar_fmt(const char *s, size_t len) {
@@ -178,6 +175,12 @@ char *decimal_acadena(double d) {
     return buffer;
 }
 
+char *entero_acadena(int i) {
+    char *buffer = calloc(1, 64);
+    snprintf(buffer, 64, "%i", i);
+    return buffer;
+}
+
 char *logico_acadena(int i) {
     char *buffer = malloc(10);
     if (i)
@@ -270,20 +273,20 @@ char *insertar(char *dest, char *src, int pos) {
 }
 
 char *rellenar_izquierda(char *base, char *c, int n) {
-	//FIXME: Windows
-	int len = strlen(base);
-    char *ret = malloc(len+n+1);    
+    // FIXME: Windows
+    int len = strlen(base);
+    char *ret = malloc(len + n + 1);
     int i, final = len - 1;
     for (i = 0; i < (n - final); i++) {
-		ret = strcat(ret, c);
+        ret = strcat(ret, c);
     }
     ret = strcat(ret, base);
     return ret;
 }
 
 char *rellenar_derecha(char *base, char *c, int n) {
-	int len = strlen(base);
-	char *ret = malloc(len+n+1);    
+    int len = strlen(base);
+    char *ret = malloc(len + n + 1);
     strcpy(ret, base);
     int i, final = len - 1;
     for (i = 0; i < (n - final); i++) {
@@ -885,7 +888,9 @@ void str_formato(lat_mv *mv) {
                     lat_objeto *str = latL_extraer_inicio(mv, params);
                     sprintf(buff, "%s", latC_astring(mv, str));
                 } break;
-                default: { latC_error(mv, "Opcion de formato invalida"); }
+                default: {
+                    latC_error(mv, "Opcion de formato invalida");
+                }
             }
             strcat(b, buff);
         }

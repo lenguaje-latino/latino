@@ -1,0 +1,10 @@
+﻿  Building Custom Rule C:/Users/ciber/src/latino/src/CMakeLists.txt
+  CMake does not need to re-run because C:/Users/ciber/src/latino/visualstudio/src/CMakeFiles/generate.stamp is up-to-date.
+  Compilador de optimización de C/C++ de Microsoft (R) versión 19.21.27702.2 para x64
+  (C) Microsoft Corporation. Todos los derechos reservados.
+  cl /c /I"C:\Users\ciber\src\latino\src\regex-2.7-src\src" /IC:\Users\ciber\src\latino\src\linenoise /IC:\Users\ciber\src\latino\src\..\include /Zi /W4 /WX- /diagnostics:column /Od /Ob0 /D WIN32 /D _WINDOWS /D _CRT_SECURE_NO_WARNINGS /D _DEBUG /D __STDC_CONSTANT_MACROS /D __STDC_FORMAT_MACROS /D __STDC_LIMIT_MACROS /D "CMAKE_INTDIR=\"Debug\"" /D _MBCS /Gm- /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Zc:inline /Fo"latino.dir\Debug\\" /Fd"latino.dir\Debug\vc142.pdb" /Gd /TC /errorReport:prompt C:\Users\ciber\src\latino\src\latbaselib.c
+  latbaselib.c
+C:\Users\ciber\src\latino\include\latino.h(58,9): warning C4068:  pragma desconocida
+C:\Users\ciber\src\latino\src\latbaselib.c(199,1): warning C4267:  'inicializando': conversión de 'size_t' a 'int'; posible pérdida de datos
+C:\Users\ciber\src\latino\src\latbaselib.c(216,34): warning C4100:  'mv': parámetro formal sin referencia
+  latino.vcxproj -> C:\Users\ciber\src\latino\visualstudio\src\Debug\latino.exe

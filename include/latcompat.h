@@ -26,7 +26,7 @@ THE SOFTWARE.
 #define _LATINO_COMPAT_H_
 
 /** Determina el sistema operativo*/
-#ifdef _WIN32
+#if (defined __WIN32__) || (defined _WIN32)
 #define LATINO_BUILD_AS_DLL
 #define PATH_SEP "\\"
 #define LAT_FUNC extern
@@ -88,6 +88,22 @@ THE SOFTWARE.
 #define latC_leer_linea(x) readline(NULL)
 #define LAT_ERROR_FMT "\033[1;31m%s:%d:%d:\033[0m %s\n"
 #endif /* __linux__ */
+
+#ifdef __CYGWIN__
+#include <dlfcn.h>
+#include <regex.h>
+#include <time.h>
+#include <unistd.h>
+#define PATH_SEP "/"
+#define LAT_FUNC __attribute__((visibility("hidden"))) extern
+#define malloc_size(ptr) malloc_usable_size(ptr)
+#define latC_popen(L, c, m) ((void)L, fflush(NULL), popen(c, m))
+#define latC_pclose(L, file) ((void)L, pclose(file))
+#define latC_clear "clear"
+#define latC_sleep(seg) sleep_ms(seg * 1000)
+#define latC_leer_linea(x) fgets(x, MAX_INPUT_SIZE, stdin)
+#define LAT_ERROR_FMT "\033[1;31m%s:%d:%d:\033[0m %s\n"
+#endif
 
 /** Determina el compilador*/
 #if defined(__GNUC__)
