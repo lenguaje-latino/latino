@@ -101,6 +101,10 @@ THE SOFTWARE.
 #include "latast.h"
 #include "latlex.h"
 
+#ifndef LAT_ERROR_FMT
+#define LAT_ERROR_FMT "%s:%d:%d: %s\n"
+#endif
+
 #ifdef __linux
 #include <libintl.h>
 #define YY_(Msgid) dgettext ("bison-runtime", Msgid)

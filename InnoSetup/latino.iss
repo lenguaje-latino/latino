@@ -41,6 +41,9 @@ Name: "desktopicon"; Description: "{cm:CreateDesktopIcon}"; GroupDescription: "{
 [Files]
 Source: "..\InnoSetup\bin\*"; DestDir: "{app}\bin\"; Flags: ignoreversion
 Source: "..\InnoSetup\lib\*"; DestDir: "{app}\lib\"; Flags: ignoreversion
+Source: "..\visualstudio\src\Debug\*"; DestDir: "{app}\bin\"; Flags: ignoreversion
+Source: "..\visualstudio\src\regex-2.7-src\src\Debug\*"; DestDir: "{app}\lib\"; Flags: ignoreversion
+Source: "..\visualstudio\src\linenoise\Debug\*"; DestDir: "{app}\lib\"; Flags: ignoreversion
 Source: "..\include\*.h"; DestDir: "{app}\include\"; Flags: ignoreversion
 ;Source: "..\ejemplos\*"; DestDir: "{app}\ejemplos\"; Flags: ignoreversion recursesubdirs createallsubdirs
 
