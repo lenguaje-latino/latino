@@ -13,7 +13,7 @@
 Puede requerir el framework de C++, descarguelo desde la pagina oficial de Microsoft:
 https://www.microsoft.com/es-ES/download/details.aspx?id=48145
 
-### Documentacion
+### Documentación
 * http://manual.lenguaje-latino.org/
 
 ### DESINSTALAR
