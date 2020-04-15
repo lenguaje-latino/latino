@@ -5,14 +5,9 @@
 <img src ="win.png" />
 
 ### Instalar en Windows
-|    Version Actual    |
-|----------------------|
-|  1.1.0  | [Instalador](https://github.com/MelvinG24/Latino/releases/download/v1.1.0/Latino-1.1.0-Win.exe) |
-
-|  Versiones anterios  |
-|----------------------|
 | Versión | Instalador |
 |---------|------------|
+|  1.1.0  | [Instalador](https://github.com/MelvinG24/Latino/releases/download/v1.1.0/Latino-1.1.0-Win.exe) |
 |  1.0.0  | [Instalador](https://github.com/primitivorm/latino/releases/download/v1.0/setupWindows.exe) |
 |  0.9.0  | [Instalador](https://github.com/primitivorm/latino/releases/download/v0.9.0/setupWindows.exe) |
 |  0.8.11 | [Instalador](https://github.com/primitivorm/latino/releases/download/v0.8.11/setup_windows.exe) |
