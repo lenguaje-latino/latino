@@ -12,10 +12,11 @@
 
 
 #### Nota:
-**En caso de que fuera necesario**
-Instalaremos el Xcode Command Tool
+**En caso de que fuera necesario** instalaremos el Xcode Command Tool
 * Primero se tiene que tener instalado Xcode
-    - Una vez lo tengamos instalado, procedemos a descargar e instalar Xcode Command Tool [desde aqui](https://developer.apple.com/download/more/)
+en caso de no tenerlo instalado lo podemos descargar [desde aqui](https://developer.apple.com/download/more/)
+(Necesitaremos una cuenta en Apple para poder acceder a la lista de descargas)
+    - Una vez lo tengamos instalado desde la misma pagina procedemos a buscar, descargar e instalar Xcode Command Tool
 
 ### Documentacion
 * http://manual.lenguaje-latino.org/
