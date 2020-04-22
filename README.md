@@ -19,6 +19,10 @@
     * [¿Por qué usar Latino?](#porQue)
     * [Instalar Latino](#inst)
     * [Ayuda y Documentación](#doc)
+    * [Sintaxis de Latino](#sintx)
+        * [Definición (Lenguaje Latino)](#def)
+            * [Comentarios](#comt)
+            * [Variables](#var)
 
 <a name="queEs"></a>
 # ¿Qué es lenguaje Latino?
@@ -30,18 +34,18 @@
 
 <a name="porQue"></a>
 # ¿Por qué usar Latino?
-*Latino* al ser un lenguaje de programación con sintaxis en Español nos provee de siertas ventajas a la hora de programar en el.
+*Latino* al ser un lenguaje de programación con sintaxis en Español nos provee de ciertas ventajas a la hora de programar en el.
 1. **Intuitivo**:
     > Su sintaxis en Español hace más fácil la comprensión del código, reduciendo así el tiempo de aprendizaje al programar.
 2. **Fácil**:
     > *Latino* tiene una sintaxis limpia y no requiere del uso de punto y coma (`;`) al final de cada código como en el caso se Java, Javascript, C/C++, entre otros.
 3. **Lenguaje de alto nivel**:
-    > Esto significa que es un lenguaje que se asemeja a la gramatica que usamos para leer y escribir. Sin embargo, los [lenguajes de bajo nivel](https://es.wikipedia.org/wiki/Lenguaje_de_bajo_nivel) son aquellos que entiende la máquina tales como el [código binario](https://es.wikipedia.org/wiki/Lenguaje_de_m%C3%A1quina) o el [Lenguaje ensamblador](https://es.wikipedia.org/wiki/Lenguaje_ensamblador).
+    > Esto significa que es un lenguaje que se asemeja a la gramática que usamos para leer y escribir. Sin embargo, los [lenguajes de bajo nivel](https://es.wikipedia.org/wiki/Lenguaje_de_bajo_nivel) son aquellos que entiende la máquina tales como el [código binario](https://es.wikipedia.org/wiki/Lenguaje_de_m%C3%A1quina) o el [Lenguaje ensamblador](https://es.wikipedia.org/wiki/Lenguaje_ensamblador).
 4. **Portátil**:
-    > Cuando escribes tu código en *Latino* este puede ser ejecutado en cualquier otra plataforma de manera facil y segura a diferencia de otros lenguajes de programación como es el caso de [Visual Basic](https://es.wikipedia.org/wiki/Visual_Basic) que solo opera en plataformas MS-Windows.
+    > Cuando escribes tu código en *Latino* este puede ser ejecutado en cualquier otra plataforma de manera fácil y segura a diferencia de otros lenguajes de programación como es el caso de [Visual Basic](https://es.wikipedia.org/wiki/Visual_Basic) que solo opera en plataformas MS-Windows.
 5. **Código abierto**:
     > Cualquiera puede descargar el código fuente de *Latino*, modificarlo, extender sus librerías y aportar en su desarrollo si así lo desea.
-
+---
 ![Captura_de_Pantalla-Latino](https://raw.githubusercontent.com/MelvinG24/Latino/master/.readme/imgs/latino_sublime.png)
 
 <a name="inst"></a>
@@ -60,14 +64,14 @@
 - [Chat en Telegram](https://t.me/joinchat/AAAAAD6l6_qIgQAAgu9DVQ)
 - [Manual Latino](https://manuallatino.blogspot.com)
 
-# DEFINICIÓN (lenguaje latino)
-
+<a name="sintx"></a>
+# Sintaxis de Latino
+<a name="def"></a>
+## Definición (lenguaje latino)
 A continuación se explica de manera general la definición del lenguaje de programación *Latino*
-
-Comentarios:
----
+<a name="comt"></a>
+### Comentarios:
 Los comentarios de una linea empezaran por el signo de gato `#` (como en python ) o `//` (como en C).
-
 ```
 #Este es un comentario estilo python
 //Este es un comentario estilo C
@@ -82,9 +86,8 @@ comentario
 multilínea
 */
 ```
-
-Variables:
----
+<a name="doc"></a>
+### Variables:
 Las variables son identificadores asociados a valores.
 
 ```
