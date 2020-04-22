@@ -1,6 +1,6 @@
 <p align="center">
     <a href="https://github.com/lenguaje-latino">
-        <img width="90%" align="center" src ="https://raw.githubusercontent.com/MelvingG24/Latino/master/.readme/imgs/banner-300x.png" />
+        <img width="90%" align="center" src ="https://raw.githubusercontent.com/MelvinG24/Latino/master/.readme/imgs/banner-300x.png" />
     </a>
 </p>
 
