@@ -174,7 +174,6 @@ escribir("El número " .. numero .. mensaje)
 ## VI. Estructuras de control:
 <a name="si"></a>
 ### si (if)
----
 Evalua una condición y si el resultado es `verdadero` ejecuta
 las instrucciones a continuación. Los paréntesis son opcionales en la condición.
 ```python
@@ -230,9 +229,9 @@ sino
     #codigo
 fin
 ```
+---
 <a name="elegir"></a>
 ### elegir (switch case)
----
 Evalúa una opción de múltiples posibles casos.
 La opción puede ser una expresión, en caso de que ninguna opción se cumpla en algún caso se ejecuta el código después de la palabra reservada `otro` o `defecto`.
 Los valores de los casos solo pueden ser numéricos o cadenas.
@@ -266,10 +265,9 @@ fin
 #salida: Bien echo!
 ```
 Notese que se tiene que repetir el caso para `B` y `C` por el momento no se permiten casos múltiples como una sola opción.
-
+---
 <a name="desde"></a>
 ### desde (for loop)
----
 Hace que una instrucción o bloque de instrucciones se repitan
 desde una condición inicial y mientras la condición se cumpla (es decir sea `verdadero`), en esta sentencia los paréntesis si son requeridos.
 ```python
@@ -295,9 +293,9 @@ desde(i=0; i < 50; i=i+10)
 fin
 #salida: 0 10 20 30 40
 ```
+---
 <a name="mientras"></a>
 ### mientras (do while)
----
 Hace que una instrucción o bloque de instrucciones se repitan
 mientras la condición sea `verdadero`, los paréntesis son opcionales en la condición.
 ```python
@@ -312,9 +310,9 @@ mientras i < 10
 fin
 #salida: 0 1 2 3 4 5 6 7 8 9
 ```
+---
 <a name="rept"></a>
 ### repetir-hasta (parecido al `repeat` de Lua)
----
 Hace que una instrucción o bloque de instrucciones
 se repitan mientra la condición sea `falso`,
 las instrucciones de código se ejecutan al menos una vez.
