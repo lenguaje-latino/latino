@@ -4,6 +4,13 @@
 | Versión | Instalador |
 |---|---|
 |  1.1.0  | [Instalador](https://github.com/MelvinG24/Latino/releases/download/v1.1.0/Latino-1.1.0-MacOS.pkg) |
+### Requerimientos minimos de sistema:
+|Componentes|Versión|
+|---|---|
+|Sistema:|Mac OS X Tiger (10.4)|
+|Procesador:|Intel x86/64 bits|
+
+Los procesadores PPC (Power PC) talvez como G5, G4, y G3 no son compatibles con *Latino*
 
 ### Nota:
 **En caso de que fuera necesario** instalaremos el Xcode Command Tool
