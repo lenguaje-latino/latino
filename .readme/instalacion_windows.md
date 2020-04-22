@@ -4,6 +4,13 @@
 | Versión | Instalador |
 |---|---|
 |  1.1.0  | [Instalador](https://github.com/MelvinG24/Latino/releases/download/v1.1.0/Latino-1.1.0-Win.exe) |
+### Requerimientos minimos de sistema:
+|Componentes|Versión|
+|---|---|
+|Sistema:|MS-Windows 7 (64-bit)|
+|Procesador:|Intel x86/64 bits|
+
+Los procesadores con arquitectura x86-32, no son compatibles con *Latino*
 
 ### Nota:
 Puede llegar a requerir el framework de C++.<br/>
