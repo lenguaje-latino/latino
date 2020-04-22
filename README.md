@@ -482,5 +482,5 @@ osi
 ```
 <a name="lic"></a>
 # Licensia
-Licenciado bajo la licencia [MIT](https://github.com/MelvinG24/Latino/blob/master/LICENSE.txt)
+Licenciado bajo la licencia [MIT](https://github.com/MelvinG24/Latino/blob/master/LICENSE.txt)<br/>
 Cualquier aportación o sugerencia es bienvenida.
