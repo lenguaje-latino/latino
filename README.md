@@ -28,7 +28,7 @@
         * [Tipos de datos](#datos)
         * [Operadores](#opds)
         * [Estructura de control](#estrCtrl)
-            * [Si (if)](#si)
+            * [si (if)](#si)
             * [elegir (switch case)](#elegir)
             * [desde (for loop)](#desde)
             * [mientras (do while)](#mientras)
