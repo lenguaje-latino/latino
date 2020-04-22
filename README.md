@@ -1,6 +1,6 @@
 <p align="center">
     <a href="https://github.com/lenguaje-latino">
-        <img width="90%" align="center" src ="https://raw.githubusercontent.com/MelvingG24/Latino/master/.readme/banner-300x.png" />
+        <img width="90%" align="center" src ="https://raw.githubusercontent.com/MelvingG24/Latino/master/.readme/imgs/banner-300x.png" />
     </a>
 </p>
 
@@ -26,7 +26,7 @@
 
 <a name="intro"></a>
 ### Vídeo introductorio de Latino (clic en la imagen)
-[![Watch the video](https://raw.githubusercontent.com/MelvinG24/Latino/master/.readme/latinoVideo.bmp)](https://youtu.be/ljQKPihnejU)
+[![Watch the video](https://raw.githubusercontent.com/MelvinG24/Latino/master/.readme/imgs/latinoVideo.bmp)](https://youtu.be/ljQKPihnejU)
 
 <a name="porQue"></a>
 # ¿Por qué usar Latino?
@@ -42,7 +42,7 @@
 5. **Código abierto**:
     - Cualquiera puede descargar el código fuente de *Latino*, modificarlo, extender sus librerías y aportar en su desarrollo si así lo desea.
 
-![Captura_de_Pantalla-Latino](https://raw.githubusercontent.com/MelvingG24/Latino/master/.readme/latino_sublime.png)
+![Captura_de_Pantalla-Latino](https://raw.githubusercontent.com/MelvingG24/Latino/master/.readme/imgs/latino_sublime.png)
 
 <a name="inst"></a>
 # Instalar Latino
@@ -55,10 +55,10 @@
 <a name="doc"></a>
 ## Ayuda y Documentación
 *Latino* dispone de un foro en su página web oficial, así como también un grupo en Telegram, Gitter y una documentación a la que puedes dirigirte en caso de cualquier duda.
-[Foros de Latino](http://lenguaje-latino.org/foro/)
-[Chat en Gitter](https://gitter.im/primitivorm/latino?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
-[Chat en Telegram](https://t.me/joinchat/AAAAAD6l6_qIgQAAgu9DVQ)
-[Manual Latino](https://manuallatino.blogspot.com)
+- [Foros de Latino](http://lenguaje-latino.org/foro/)
+- [Chat en Gitter](https://gitter.im/primitivorm/latino?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+- [Chat en Telegram](https://t.me/joinchat/AAAAAD6l6_qIgQAAgu9DVQ)
+- [Manual Latino](https://manuallatino.blogspot.com)
 
 
 DEFINICIÓN (lenguaje latino)
