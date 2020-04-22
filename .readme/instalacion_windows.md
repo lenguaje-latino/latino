@@ -1,22 +1,16 @@
-<p align="center">
-<img src ="https://raw.githubusercontent.com/primitivorm/latino/master/logo/banner-300x.png" /><br>http://lenguaje-latino.org/
-</p>
+<img width="50%" src ="https://raw.githubusercontent.com/MelvinG24/Latino/master/.readme/imgs/ms-windows.svg" />
 
-<img src ="win.png" />
-
-### Instalar en Windows
+# Instalar en Windows
 | Versión | Instalador |
-|---------|------------|
+|---|---|
 |  1.1.0  | [Instalador](https://github.com/MelvinG24/Latino/releases/download/v1.1.0/Latino-1.1.0-Win.exe) |
 
-#### Nota:
-Puede requerir el framework de C++, descarguelo desde la pagina oficial de Microsoft:
+### Nota:
+Puede llegar a requerir el framework de C++.<br/>
+Lo puede descarguar desde la pagina oficial de Microsoft:
 https://www.microsoft.com/es-ES/download/details.aspx?id=48145
 
-### Documentación
-* http://manual.lenguaje-latino.org/
-
-### DESINSTALAR
+# Desinstalar Latino
 Para desinstalar Latino procedemos con los siguientes pasos:
 * **Inicio >**
     - **Panel De Control >**
@@ -24,7 +18,8 @@ Para desinstalar Latino procedemos con los siguientes pasos:
         
 (llegado a este punto, solo tenemos que buscar el programa de Latino y darle a desinstalar)
 
-## Ayuda en nuestro foro:
-http://lenguaje-latino.org/foro/windows/
+# Ayuda y Documentación:
+[Foro de Latino para Windows](http://lenguaje-latino.org/foro/windows/)
+[Manual Latino](http://manual.lenguaje-latino.org/)
 
 Cualquier aportación o sugerencia es bienvenida.

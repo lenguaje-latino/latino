@@ -1,20 +1,14 @@
-<p align="center">
-<img src ="https://raw.githubusercontent.com/primitivorm/latino/master/logo/banner-300x.png" /><br>http://lenguaje-latino.org/
-</p>
+<img width="40%" src ="https://raw.githubusercontent.com/MelvinG24/Latino/master/.readme/imgs/fedora.svg" />
 
-<img src ="fedora.png" />
-
-## Dependencias
+# Dependencias
 Antes de instalar latino, vamos a instalar todos paquetes necesarios:
-
 ```
 # Fedora ó basados
 
 sudo dnf install bison flex cmake gcc g++ libjansson-dev libcurl4-openssl-dev libhiredis-dev redis-server curl jansson-devel groupinstall "Development Tools" "Development Libraries" groupinstall "RPM Development Tools" redhat-lsb libgtk-3-dev
 ```
 
-## INSTALAR
-
+# INSTALAR
 ```bash
  git clone --recursive https://github.com/primitivorm/latino
  cd latino
@@ -26,12 +20,7 @@ sudo dnf install bison flex cmake gcc g++ libjansson-dev libcurl4-openssl-dev li
 
 Puedes comprobar si hay versiones nuevas de paquetes para Fedora y Ubuntu en la sección [RELEASES](https://github.com/primitivorm/latino/releases)
 
-### Documentacion
-1. http://manual.lenguaje-latino.org/
-2. http://documentacion.lenguaje-latino.org/
-
-### COMPILAR
-
+### Compilar
 |Requiere | Versión | SO |
 | :---    |    ---: |:---|
 | bison   |    3.04 |Linux|
@@ -48,8 +37,7 @@ Puedes comprobar si hay versiones nuevas de paquetes para Fedora y Ubuntu en la 
 | kernel-devel| |Solo Fedora|
 | jsoncpp| |Solo Fedora|
 
-### DESINSTALAR
-
+# DESINSTALAR
 #### 1- Opción
 ```bash
 # Si instalaste con `sudo make install`:
@@ -57,7 +45,6 @@ sudo ./uninstall.sh
 ```
 
 #### 2- Opción
-
 Puedes ver un video de como proceder aca https://youtu.be/Q5xGm_Bp22k
 
 Pirmero debes saber donde esta instalado
@@ -67,18 +54,17 @@ Pirmero debes saber donde esta instalado
  ```
 
  Te dará algo parecido a esto:
-
  ```bash
  latino: /usr/local/bin/latino
  ```
-
+ 
  Ahora que sabemos dónde está solamente lo borramos:
  ```bash
  sudo rm /usr/local/bin/latino
  ```
 
-## Ayuda en nuestro foro:
-
-http://lenguaje-latino.org/foro/fedora-centos/
+# Ayuda y Documentación:
+[Foro de Latino para Mac](http://lenguaje-latino.org/foro/fedora-centos/)
+[Manual Latino](http://manual.lenguaje-latino.org/)
 
 Cualquier aportación o sugerencia es bienvenida.
