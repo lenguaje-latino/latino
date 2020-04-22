@@ -265,6 +265,7 @@ fin
 #salida: Bien echo!
 ```
 Notese que se tiene que repetir el caso para `B` y `C` por el momento no se permiten casos múltiples como una sola opción.
+
 ---
 <a name="desde"></a>
 ### desde (for loop)
