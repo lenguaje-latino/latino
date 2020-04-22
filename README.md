@@ -83,7 +83,7 @@
 # SINTAXIS DE LATINO
 A continuación se explica de manera general la definición del lenguaje de programación *Latino*
 <a name="comt"></a>
-## Comentarios:
+##  I. Comentarios:
 Los comentarios de una linea empezaran por el signo de gato `#` (como en python) o `//` (como en C).
 ```js
 #Este es un comentario estilo python
@@ -98,7 +98,7 @@ multilínea
 */
 ```
 <a name="var"></a>
-## Variables:
+## II. Variables:
 Las variables son identificadores asociados a valores.
 ```python
 nombre = "Juan Perez"
@@ -128,7 +128,7 @@ Mensaje = "¡Hasta la vista baby!"
 2. Empezar por un símbolo, ni tampoco que sea una palabra reservada.
 
 <a name="const"></a>
-## Constantes:
+## III. Constantes:
 Cuando se declara una constante, también se debe asignar el valor forzosamente.
 
 Las constantes se deben declarar en **mayúsculas**.
@@ -138,7 +138,7 @@ G = 9.8
 ```
 
 <a name="datos"></a>
-## Tipos de datos
+## IV. Tipos de datos
 | latino           | tipo de dato en C |
 | --- |:---:|
 | lógico           |       **bool**        |
@@ -148,7 +148,7 @@ G = 9.8
 | diccionario      |      **struct**       |
 
 <a name="opds"></a>
-## Operadores:
+## V. Operadores:
 A continuación se listan los operadores:
 | Categoría              | Operadores                             |
 | --- | --- |
@@ -171,9 +171,10 @@ escribir("El número " .. numero .. mensaje)
 #salida: El número -5 es negativo
 ```
 <a name="estrCtrl"></a>
-## Estructuras de control:
+## VI. Estructuras de control:
 <a name="si"></a>
 ### si (if)
+---
 Evalua una condición y si el resultado es `verdadero` ejecuta
 las instrucciones a continuación. Los paréntesis son opcionales en la condición.
 ```python
@@ -231,6 +232,7 @@ fin
 ```
 <a name="elegir"></a>
 ### elegir (switch case)
+---
 Evalúa una opción de múltiples posibles casos.
 La opción puede ser una expresión, en caso de que ninguna opción se cumpla en algún caso se ejecuta el código después de la palabra reservada `otro` o `defecto`.
 Los valores de los casos solo pueden ser numéricos o cadenas.
@@ -267,6 +269,7 @@ Notese que se tiene que repetir el caso para `B` y `C` por el momento no se perm
 
 <a name="desde"></a>
 ### desde (for loop)
+---
 Hace que una instrucción o bloque de instrucciones se repitan
 desde una condición inicial y mientras la condición se cumpla (es decir sea `verdadero`), en esta sentencia los paréntesis si son requeridos.
 ```python
@@ -294,6 +297,7 @@ fin
 ```
 <a name="mientras"></a>
 ### mientras (do while)
+---
 Hace que una instrucción o bloque de instrucciones se repitan
 mientras la condición sea `verdadero`, los paréntesis son opcionales en la condición.
 ```python
@@ -310,6 +314,7 @@ fin
 ```
 <a name="rept"></a>
 ### repetir-hasta (parecido al `repeat` de Lua)
+---
 Hace que una instrucción o bloque de instrucciones
 se repitan mientra la condición sea `falso`,
 las instrucciones de código se ejecutan al menos una vez.
@@ -338,7 +343,7 @@ fin
 #salida: 0 1 2 3 4   #se imprime solo hasta el 4
 ```
 <a name="fun"></a>
-## Funciones
+## VII. Funciones
 Una función consiste generalmente de una lista de sentencias a ejecutar, una lista de parámetros de entrada que regularán dicha acción.
 
 Las funciones se definen con la palabra reservada `funcion` o la forma corta `fun`.
@@ -393,7 +398,7 @@ parametro 3: 3
 3
 ```
 <a name="lista"></a>
-## Listas
+## VIII. Listas
 Una lista es un tipo de colección. Es equivalente a lo que en otros lenguajes se conoce por arreglos o vectores.
 
 Las listas pueden contener cualquier tipo de dato: lógico, númerico, literal, cadena, listas, diccionarios.
@@ -426,7 +431,7 @@ escribir(numeros[-1])
 #salida: 5
 ```
 <a name="dic"></a>
-## Diccionarios
+## IX. Diccionarios
 Los diccionarios, también llamados matrices asociativas, deben su nombre a que son colecciones que relacionan una clave y un valor, entre llaves y separado el valor de la clave con dos puntos.
 ```python
 #Diccionario de personajes y actores:
@@ -455,7 +460,7 @@ escribir(actores["Chilindrina"])
 #salida: Maria Antonieta
 ```
 <a name="plbrsRvds"></a>
-## Palabras reservadas hasta el momento
+## X. Palabras reservadas hasta el momento
 ```
 caso
 cierto | verdadero
