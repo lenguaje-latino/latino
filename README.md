@@ -1,6 +1,8 @@
-<a href="http://lenguaje-latino.org/" target="_blank">
-<img src ="https://raw.githubusercontent.com/primitivorm/latino/master/logo/banner-300x.png" />
-</a>
+<p align="center">
+    <a href="https://github.com/lenguaje-latino">
+        <img width="90%" align="center" src ="https://raw.githubusercontent.com/MelvingG24/Latino/master/.readme/banner-300x.png" />
+    </a>
+</p>
 
 [![https://t.me/joinchat/EBHu7z6l6_paWtcJgu9DVQ](https://img.shields.io/badge/Soporte-Telegram-green.svg?style=plastic)](https://t.me/joinchat/AAAAAD6l6_qIgQAAgu9DVQ)
 [![Join the chat at https://gitter.im/primitivorm/latino](https://badges.gitter.im/primitivorm/latino.svg)](https://gitter.im/primitivorm/latino?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
@@ -9,48 +11,60 @@
 <a href="http://lenguaje-latino.org"><img src="https://img.shields.io/npm/l/vue.svg" alt="License"></a>
 [![codecov.io](http://codecov.io/github/primitivorm/latino/coverage.svg?branch=master)](http://codecov.io/github/primitivorm/latino?branch=master)
 
-¿Qué es lenguaje Latino?
-===
+<a name="tabla"></a>
+# Tabla de contenidos
+* [Tabla de contenidos](#tabla)
+    * [¿Qué es lenguaje Latino?](#queEs)
+        * [Video introductorio](#intro)
+    * [¿Por qué usar Latino](#porQue)
+    * [Instalar Latino](#inst)
+    * [Ayuda y Documentación](#doc)
 
-`Latino` es un lenguaje de programación creado en [C](https://es.wikipedia.org/wiki/C_(lenguaje_de_programaci%C3%B3n)), inspirado en [Lua](https://www.lua.org/) y [Python](https://www.python.org), este proyecto nace de la necesidad de incrementar la educación de nivel básico y avanzado para que niños, adolescentes y adultos también se motiven a entrar en el mundo de la programación y desarrollar aplicaciones en la sintaxis de su idioma,   `Latino` es también para desarrolladores ya que `Latino` es completamente funcional con cualquier [API](https://es.m.wikipedia.org/wiki/Interfaz_de_programaci%C3%B3n_de_aplicaciones).
+<a name="queEs"></a>
+# ¿Qué es lenguaje Latino?
+*Latino* es un lenguaje de programación creado en [C](https://es.wikipedia.org/wiki/C_(lenguaje_de_programaci%C3%B3n)), inspirado en [Lua](https://www.lua.org/) y [Python](https://www.python.org). Éste proyecto nace de la necesidad de incrementar la educación de nivel básico y avanzado, para que niños, adolescentes y también adultos se motiven a entrar en el mundo de la programación y desarrollar aplicaciones en una sintaxis a su idioma. Además, *Latino* es también para desarrolladores que les gustaría programar en Español, ya que *Latino* es completamente funcional en cualquier [API](https://es.m.wikipedia.org/wiki/Interfaz_de_programaci%C3%B3n_de_aplicaciones) en raw.
 
-<a href="http://www.youtube.com/watch?feature=player_embedded&v=ljQKPihnejU&t=1s" target="_blank">
-<img src="https://i.ytimg.com/vi/ljQKPihnejU/2.jpg" alt="Ver introducción" width="320px" height="240px" border="10" />
-</a>
+<a name="intro"></a>
+### Vídeo introductorio de Latino (clic en la imagen)
+[![Watch the video](https://raw.githubusercontent.com/MelvinG24/Latino/master/.readme/latinoVideo.bmp)](https://youtu.be/ljQKPihnejU)
 
-A continuación menciono las principales características de este proyecto:
+<a name="porQue"></a>
+# ¿Por qué usar Latino?
+*Latino* al ser un lenguaje de programación con sintaxis en Español nos provee de siertas ventajas a la hora de programar en el.
+1. **Intuitivo**:
+    - Su sintaxis en Español hace más fácil la comprensión del código, reduciendo así el tiempo de aprendizaje al programar.
+2. **Fácil**:
+    - *Latino* tiene una sintaxis limpia y no requiere del uso de `;` al final de cada código como en el caso se Java, Javascript, C/C++, entre otros.
+3. **Lenguaje de alto nivel**:
+    - Esto significa que es un lenguaje que se asemeja a la gramatica que usamos para leer y escribir. Sin embargo, los [lenguajes de bajo nivel](https://es.wikipedia.org/wiki/Lenguaje_de_bajo_nivel) son aquellos que entiende la máquina tales como el [código binario](https://es.wikipedia.org/wiki/Lenguaje_de_m%C3%A1quina) o el [Lenguaje ensamblador](https://es.wikipedia.org/wiki/Lenguaje_ensamblador).
+4. **Portátil**:
+    - Cuando escribes tu código en *Latino* este puede ser ejecutado en cualquier otra plataforma de manera facil y segura a diferencia de otros lenguajes de programación como es el caso de [Visual Basic](https://es.wikipedia.org/wiki/Visual_Basic) que solo opera en plataformas MS-Windows.
+5. **Código abierto**:
+    - Cualquiera puede descargar el código fuente de *Latino*, modificarlo, extender sus librerías y aportar en su desarrollo si así lo desea.
 
-1. __Simplicidad:__ La sintaxis deberá de ser lo más parecido posible al lenguaje español.
-2. __Sencillo de aprender:__ Al ser simple aprenderás más rápido éste nuevo lenguaje.
-3. __Código abierto:__ Cualquiera puede descargar el código fuente del lenguaje, extender las librerías básicas y crear sus propias librerías si así lo desea.
-4. __Lenguaje de alto nível:__ Cuando escribas código no tendrás que preocuparte por detalles de bajo nivel, como manejar la memoria empleada en tu programa, `Latino` asignará la memoria adecuada e inmediatamente liberará esa memoria cuando ya no sea necesaria.
-5. __Portable:__ Cuando escribas tus programas en `Latino` podrás ejecutarlo en cualquier plataforma de manera segura y fácil.
-6. __Programación Procedural, Funcional y Orientado a Objetos.__
+![Captura_de_Pantalla-Latino](https://raw.githubusercontent.com/MelvingG24/Latino/master/.readme/latino_sublime.png)
 
-<a href="https://github.com/lenguaje-latino/latino-sublimetext-plugin" target="_blank">
-<img src ="https://raw.githubusercontent.com/lenguaje-latino/latino-sublimetext-plugin/master/latino_sublime.png" />
-</a>
+<a name="inst"></a>
+# Instalar Latino
+- [Windows](.readme/instalacion_windows.md)
+- [Debian/Ubuntu](.readme/instalacion_debian.md)
+- [Fedora](.readme/instalacion_fedora.md)
+- [Mac](.readme/instalacion_mac.md)
+- [Plugins](https://github.com/lenguaje-latino)
 
-## INSTALAR
-
-[Windows](doc/instalacion_windows.md)
-
-[Debian/Ubuntu](doc/instalacion_debian.md)
-
-[Fedora](doc/instalacion_fedora.md)
-
-[Mac](doc/instalacion_mac.md)
-
-[Plugins](https://github.com/lenguaje-latino)
-
-##ManualLatino
-[ManualLatino.blogspot.com](https://manuallatino.blogspot.com)
+<a name="doc"></a>
+## Ayuda y Documentación
+*Latino* dispone de un foro en su página web oficial, así como también un grupo en Telegram, Gitter y una documentación a la que puedes dirigirte en caso de cualquier duda.
+[Foros de Latino](http://lenguaje-latino.org/foro/)
+[Chat en Gitter](https://gitter.im/primitivorm/latino?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+[Chat en Telegram](https://t.me/joinchat/AAAAAD6l6_qIgQAAgu9DVQ)
+[Manual Latino](https://manuallatino.blogspot.com)
 
 
 DEFINICIÓN (lenguaje latino)
 ===
 
-A continuación se explica de manera general la definición del lenguaje de programación `Latino`
+A continuación se explica de manera general la definición del lenguaje de programación *Latino*
 
 Comentarios:
 ---
