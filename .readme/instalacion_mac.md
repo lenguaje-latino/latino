@@ -13,7 +13,7 @@ en caso de no tenerlo instalado lo podemos descargar [desde aquí](https://devel
     - Una vez lo tengamos instalado desde la misma página procedemos a descargar e instalar **Xcode Command Tool**
 
 # Ayuda y Documentación:
-[Foro de Latino para Mac](http://lenguaje-latino.org/foro/mac/)
+[Foro de Latino para Mac](http://lenguaje-latino.org/foro/mac/)<br/>
 [Manual Latino](http://manual.lenguaje-latino.org/)
 
 Cualquier aportación o sugerencia es bienvenida.

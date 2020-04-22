@@ -64,7 +64,7 @@ Pirmero debes saber donde esta instalado
  ```
 
 # Ayuda y Documentación:
-[Foro de Latino para Mac](http://lenguaje-latino.org/foro/fedora-centos/)
+[Foro de Latino para Mac](http://lenguaje-latino.org/foro/fedora-centos/)<br/>
 [Manual Latino](http://manual.lenguaje-latino.org/)
 
 Cualquier aportación o sugerencia es bienvenida.
