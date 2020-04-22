@@ -19,7 +19,7 @@ Para desinstalar Latino procedemos con los siguientes pasos:
 (llegado a este punto, solo tenemos que buscar el programa de Latino y darle a desinstalar)
 
 # Ayuda y Documentación:
-[Foro de Latino para Windows](http://lenguaje-latino.org/foro/windows/)
+[Foro de Latino para Windows](http://lenguaje-latino.org/foro/windows/)<br/>
 [Manual Latino](http://manual.lenguaje-latino.org/)
 
 Cualquier aportación o sugerencia es bienvenida.

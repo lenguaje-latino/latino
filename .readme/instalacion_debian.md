@@ -17,14 +17,14 @@ sudo apt-get install bison flex cmake gcc g++ libreadline-dev
 
 # Compilar e instalar
 Para compilarlo hay dos formas, puedes elegir la que desees:<br><br>
-#### I.
+##### I.
 ```bash
  cmake .
  make
  sudo make install
  ```
 
-#### II.
+##### II.
 ```bash
  sudo bash configure
  sudo make install
@@ -66,7 +66,7 @@ sudo rm -f $(which latino)
 ```
 
 # Ayuda y Documentación:
-[Foro de Latino para Mac](http://lenguaje-latino.org/foro/debian-ubuntu/)
+[Foro de Latino para Mac](http://lenguaje-latino.org/foro/debian-ubuntu/)<br/>
 [Manual Latino](http://manual.lenguaje-latino.org/)
 
 Cualquier aportación o sugerencia es bienvenida.
