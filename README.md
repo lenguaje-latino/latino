@@ -45,7 +45,7 @@
 
 <a name="intro"></a>
 ### Vídeo introductorio de Latino (clic en la imagen)
-[![Watch the video](https://raw.githubusercontent.com/MelvinG24/Latino/master/.readme/imgs/latinoVideo.bmp)](https://youtu.be/ljQKPihnejU)
+[![Video Introductorio de Latino](https://j.gifs.com/GvrEK0.gif)](https://youtu.be/ljQKPihnejU)
 
 <a name="porQue"></a>
 # ¿Por qué usar Latino?
