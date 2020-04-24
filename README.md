@@ -37,7 +37,7 @@
         * [Lista](#lista)
         * [Diccionarios](#dic)
         * [Palabras reservadas](#plbrsRvds)
-    * [Licensia](#lic)
+    * [Licencia](#lic)
 
 <a name="queEs"></a>
 # ¿Qué es lenguaje Latino?
@@ -481,6 +481,6 @@ sino
 osi
 ```
 <a name="lic"></a>
-# Licensia
+# Licencia
 Licenciado bajo la licencia [MIT](https://github.com/MelvinG24/Latino/blob/master/LICENSE.txt)<br/>
 Cualquier aportación o sugerencia es bienvenida.
