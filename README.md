@@ -37,7 +37,7 @@
         * [Lista](#lista)
         * [Diccionarios](#dic)
         * [Palabras reservadas](#plbrsRvds)
-    * [Licensia](#lic)
+    * [Licencia](#lic)
 
 <a name="queEs"></a>
 # ¿Qué es lenguaje Latino?
