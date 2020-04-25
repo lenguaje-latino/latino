@@ -10,7 +10,7 @@
 |Sistema:|MS-Windows 7 (64-bit)|
 |Procesador:|Intel x86/64 bits|
 
-Los procesadores con arquitectura x86-32, no son compatibles con *Latino*
+***Los procesadores con arquitectura x86-32, no son compatibles con *Latino*
 
 ### Nota:
 Puede llegar a requerir el framework de C++.<br/>
