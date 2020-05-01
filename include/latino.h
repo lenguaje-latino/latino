@@ -60,7 +60,7 @@ THE SOFTWARE.
 /** Version mayor de Latino */
 #define LAT_VERSION_MAYOR "1"
 /** Version menor de Latino */
-#define LAT_VERSION_MENOR "1"
+#define LAT_VERSION_MENOR "2"
 /** Version de correcion de errores */
 #define LAT_VERSION_PARCHE "0"
 /** Version de Latino */
