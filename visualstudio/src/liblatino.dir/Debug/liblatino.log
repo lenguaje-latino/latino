@@ -139,6 +139,7 @@ C:\Users\Layout\Desktop\Latino\src\linenoise\linenoise.c(864): warning C4244: 'f
 C:\Users\Layout\Desktop\Latino\src\linenoise\linenoise.c(1230): warning C4456: declaration of 'p' hides previous local declaration
   C:\Users\Layout\Desktop\Latino\src\linenoise\linenoise.c(1220): note: see declaration of 'p'
   Generating Code...
+  LINK : C:\Users\Layout\Desktop\Latino\visualstudio\src\Debug\latino.dll not found or not built by the last incremental link; performing full link
      Creating library C:/Users/Layout/Desktop/Latino/visualstudio/src/Debug/latino.lib and object C:/Users/Layout/Desktop/Latino/visualstudio/src/Debug/latino.exp
 latino.obj : warning LNK4217: locally defined symbol _latC_crear_mv imported in function _main
 latdiclib.obj : warning LNK4217: locally defined symbol _latC_apilar imported in function _dic_longitud
