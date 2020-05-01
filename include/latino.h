@@ -69,7 +69,7 @@ THE SOFTWARE.
 /** Derechos de Latino */
 #define LAT_DERECHOS                                                           \
     LAT_VERSION                                                                \
-    "\nTodos los derechos reservados (C) 2015-2019. Latinoamerica"
+    "\nTodos los derechos reservados (C) 2015-2020. Latinoamerica"
 
 #define LAT_ERRMEM 1
 #define LAT_ERRRUN 2
