@@ -25,9 +25,9 @@ Para desinstalar Latino procedemos con los siguientes pasos:
 2. Una vez nuestra imagen sea montada en nuestro escritorio hacemos doble-clic para abrir.
 3. Doble-clic en la carpeta llamada **Extras**.
 4. Abrimos nuestra Terminal en Mac.
-5. Escribimos **sudo sh ** (le dejamos un espacio al final).
-6. Agaramos y soltamos nuestro archivo **uninstall.sh** en nuestra Terminal.
-    Ejemplo:
+5. Escribimos **sudo sh** (le dejamos un espacio al final).
+6. Agaramos y soltamos nuestro archivo **uninstall.sh** en nuestra Terminal.<br/>
+    Ejemplo:<br/>
 	    **$ sudo sh /Volumes/Latino-XXX-Darwin/Extras/uninstall.sh**
 7. Presionamos **Enter** para correr el comando y procedemos con insertar nuestra contraseña de administrador.
 
