@@ -2,9 +2,10 @@
 ; SEE THE DOCUMENTATION FOR DETAILS ON CREATING INNO SETUP SCRIPT FILES!
 
 #define MyAppName "Latino"
-#define MyAppVersion "1.0.0"
+#define MyAppVersion "1.1.0"
 #define MyAppPublisher "Lenguaje Latino"
 #define MyAppURL "http://lenguaje-latino.org/"
+#define MyAppManual "https://manuallatino.blogspot.com"
 #define MyAppExeName "latino.exe"
 
 [Setup]
@@ -17,7 +18,7 @@ AppVersion={#MyAppVersion}
 ;AppVerName={#MyAppName} {#MyAppVersion}
 AppPublisher={#MyAppPublisher}
 AppPublisherURL={#MyAppURL}
-AppSupportURL={#MyAppURL}
+AppSupportURL={#MyAppManual}
 AppUpdatesURL={#MyAppURL}
 DefaultDirName={pf}\{#MyAppName}
 DisableProgramGroupPage=yes
@@ -41,9 +42,9 @@ Name: "desktopicon"; Description: "{cm:CreateDesktopIcon}"; GroupDescription: "{
 [Files]
 Source: "..\InnoSetup\bin\*"; DestDir: "{app}\bin\"; Flags: ignoreversion
 Source: "..\InnoSetup\lib\*"; DestDir: "{app}\lib\"; Flags: ignoreversion
-Source: "..\visualstudio\src\Debug\*"; DestDir: "{app}\bin\"; Flags: ignoreversion
-Source: "..\visualstudio\src\regex-2.7-src\src\Debug\*"; DestDir: "{app}\lib\"; Flags: ignoreversion
-Source: "..\visualstudio\src\linenoise\Debug\*"; DestDir: "{app}\lib\"; Flags: ignoreversion
+Source: "..\build\src\Release\*"; DestDir: "{app}\bin\"; Flags: ignoreversion
+Source: "..\build\src\regex-2.7-src\src\Release\*"; DestDir: "{app}\lib\"; Flags: ignoreversion
+Source: "..\build\src\linenoise\Release\*"; DestDir: "{app}\lib\"; Flags: ignoreversion
 Source: "..\include\*.h"; DestDir: "{app}\include\"; Flags: ignoreversion
 ;Source: "..\ejemplos\*"; DestDir: "{app}\ejemplos\"; Flags: ignoreversion recursesubdirs createallsubdirs
 
