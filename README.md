@@ -79,6 +79,7 @@
 - [Chat en Gitter](https://gitter.im/primitivorm/latino?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 - [Chat en Telegram](https://t.me/joinchat/AAAAAD6l6_qIgQAAgu9DVQ)
 - [Manual Latino](https://manuallatino.blogspot.com)
+- [API de Latino](https://manuallatinoapi.blogspot.com)
 
 <a name="sintx"></a>
 # SINTAXIS DE LATINO
