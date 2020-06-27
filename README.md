@@ -11,6 +11,7 @@
 <a href="http://lenguaje-latino.org"><img src="https://img.shields.io/npm/l/vue.svg" alt="License"></a>
 [![codecov.io](http://codecov.io/github/primitivorm/latino/coverage.svg?branch=master)](http://codecov.io/github/primitivorm/latino?branch=master)
 
+<<<<<<< HEAD
 <a name="tabla"></a>
 # Tabla de contenidos
 * [Tabla de contenidos](#tabla)
@@ -88,9 +89,68 @@ Los comentarios de una linea empezaran por el signo de gato `#` (como en python)
 ```js
 #Este es un comentario estilo python
 //Este es un comentario estilo C
+=======
+¿Qué es lenguaje Latino?
+===
+
+`Latino` es un lenguaje de programación creado en [C](https://es.wikipedia.org/wiki/C_(lenguaje_de_programaci%C3%B3n)), inspirado en [Lua](https://www.lua.org/) y [Python](https://www.python.org), este proyecto nace de la necesidad de incrementar la educación de nivel básico y avanzado para que niños, adolescentes y adultos también se motiven a entrar en el mundo de la programación y desarrollar aplicaciones en la sintaxis de su idioma,   `Latino` es también para desarrolladores ya que `Latino` es completamente funcional con cualquier [API](https://es.m.wikipedia.org/wiki/Interfaz_de_programaci%C3%B3n_de_aplicaciones) REST, y puedes crear tu propia librería de Latino.
+
+<a href="http://www.youtube.com/watch?feature=player_embedded&v=ljQKPihnejU&t=1s" target="_blank">
+<img src="https://i.ytimg.com/vi/ljQKPihnejU/2.jpg" alt="Ver introducción" width="320px" height="240px" border="10" />
+</a>
+
+A continuación menciono las principales características de este proyecto:
+
+1. __Simplicidad:__ La sintaxis deberá de ser lo más parecido posible al lenguaje español.
+2. __Sencillo de aprender:__ Al ser simple aprenderás más rápido éste nuevo lenguaje.
+3. __Código abierto:__ Cualquiera puede descargar el código fuente del lenguaje, extender las librerías básicas y crear sus propias librerías si así lo desea.
+4. __Lenguaje de alto nível:__ Cuando escribas código no tendrás que preocuparte por detalles de bajo nivel, como manejar la memoria empleada en tu programa, `Latino` asignará la memoria adecuada e inmediatamente liberará esa memoria cuando ya no sea necesaria.
+5. __Portable:__ Cuando escribas tus programas en `Latino` podrás ejecutarlo en cualquier plataforma de manera segura y fácil.
+6. __Programación Procedural, Funcional y Orientado a Objetos.__
+
+<a href="https://github.com/lenguaje-latino/latino-sublimetext-plugin" target="_blank">
+<img src ="https://raw.githubusercontent.com/lenguaje-latino/latino-sublimetext-plugin/master/latino_sublime.png" />
+</a>
+
+## INSTALAR
+
+[Windows](doc/instalacion_windows.md)
+
+[Debian/Ubuntu](doc/instalacion_debian.md)
+
+[Fedora](doc/instalacion_fedora.md)
+
+[Mac](doc/instalacion_mac.md)
+
+[Plugins](https://github.com/lenguaje-latino)
+
+## [Manual Latino](https://manuallatino.blogspot.com)
+
+
+DEFINICIÓN (lenguaje latino)
+===
+
+A continuación se explica de manera general la definición del lenguaje de programación `Latino`
+
+Comentarios:
+---
+Los comentarios de una linea empezaran por el signo de gato `#` (como en python ) o `//` (como en C).
+
+```Python
+# Este es un comentario estilo python
+```
+
+```C
+// Este es un comentario estilo C
+>>>>>>> master
 ```
 Los comentarios multilínea son al estilo C. inician con `/*` y terminan con `*/`.
+<<<<<<< HEAD
 ```c
+=======
+
+```C
+>>>>>>> master
 /*
 Este es un
 comentario
@@ -100,6 +160,7 @@ multilínea
 <a name="var"></a>
 ## II. Variables:
 Las variables son identificadores asociados a valores.
+<<<<<<< HEAD
 ```python
 nombre = "Juan Perez"
 calificacion = 10
@@ -112,13 +173,33 @@ Es posible asignar más de una variable en una sola línea de código
 a, b, c = 1, 2, 3   #a = 1  b = 2  c = 3
 a, b, c = 1, 2      #a = 1  b = 2  c = nulo
 a, b    = 1, 2, 3   #a = 1  b = 2  se descarta el valor 3
+=======
+
+```C
+nombre = "Juan Perez"
+calificacion = 10
+numeros = [1, 2, 3, 4, 5]  // Esto es una lista o arreglo.
+sueldos = { "Jesus" : 10000, "Maria" : 20000, "Jose" : 30000 } // Esto es un diccionario
+```
+
+Es posible asignar más de una variable en una sola línea de código
+```C
+a, b, c = 1, 2, 3   // a = 1  b = 2  c = 3
+a, b, c = 1, 2      // a = 1  b = 2  c = nulo
+a, b    = 1, 2, 3   // a = 1  b = 2  se descarta el valor 3
+>>>>>>> master
 ```
 <a name="puede"></a>
 ### __Un identificador puede:__
 1. Empezar por guión bajo `_` o letras `a-z ó A-Z`. No son validas las letras acentuadas ni la `ñ` como letras en los identificadores.
 2. Contener caracteres en mayúsculas y minúsculas.
 Latino  es sensible a mayúsculas y minúsculas. Por lo que los siguientes identificadores no son los mismos.
+<<<<<<< HEAD
 ```python
+=======
+
+```C
+>>>>>>> master
 mensaje = "Hola mundo"
 Mensaje = "¡Hasta la vista baby!"
 ```
@@ -131,8 +212,14 @@ Mensaje = "¡Hasta la vista baby!"
 ## III. Constantes:
 Cuando se declara una constante, también se debe asignar el valor forzosamente.
 
+<<<<<<< HEAD
 Las constantes se deben declarar en **mayúsculas**.
 ```python
+=======
+Las constantes se deben declarar en mayúsculas.
+
+```C
+>>>>>>> master
 PI = 3.14159
 G = 9.8
 ```
@@ -164,7 +251,12 @@ A continuación se listan los operadores:
 La precedencia de operadores es la misma que otros lenguajes de programación como C / Python / Lua.
 
 El operador ternario se puede usar para asignar valores basado en una condición, los paréntesis son requeridos para obtener el resultado esperado.
+<<<<<<< HEAD
 ```python
+=======
+
+```C
+>>>>>>> master
 numero = -5
 mensaje = (numero < 0) ? " es negativo" : " es positivo"
 escribir("El número " .. numero .. mensaje)
@@ -176,7 +268,12 @@ escribir("El número " .. numero .. mensaje)
 ### si (if)
 Evalua una condición y si el resultado es `verdadero` ejecuta
 las instrucciones a continuación. Los paréntesis son opcionales en la condición.
+<<<<<<< HEAD
 ```python
+=======
+
+```C
+>>>>>>> master
 si (condicion)
    // Código
 fin
@@ -189,7 +286,12 @@ fin
 ```
 
 En caso de que el resultado de la condición sea `falso` se deberá de ejecutar el código después de la palabra reservada `sino`.
+<<<<<<< HEAD
 ```python
+=======
+
+```C
+>>>>>>> master
 si condicion
    // Código
 sino
@@ -206,7 +308,12 @@ fin
 ```
 
 Es posible el anidamiento de las sentencias `si-sino` de la siguiente manera:
+<<<<<<< HEAD
 ```python
+=======
+
+```C
+>>>>>>> master
 si condicion
    // Código
 sino
@@ -218,7 +325,12 @@ sino
 fin
 ```
 Existe una forma más elegante de escribir el código anterior con la palabra reservada `osi`. En python es `elif expresion:`.
+<<<<<<< HEAD
 ```python
+=======
+
+```C
+>>>>>>> master
 si condicion1
     // Código
 osi condicion2
@@ -235,7 +347,12 @@ fin
 Evalúa una opción de múltiples posibles casos.
 La opción puede ser una expresión, en caso de que ninguna opción se cumpla en algún caso se ejecuta el código después de la palabra reservada `otro` o `defecto`.
 Los valores de los casos solo pueden ser numéricos o cadenas.
+<<<<<<< HEAD
 ```python
+=======
+
+```C
+>>>>>>> master
 elegir (opcion)
     caso valor1:
         // Código
@@ -271,7 +388,12 @@ Notese que se tiene que repetir el caso para `B` y `C` por el momento no se perm
 ### desde (for loop)
 Hace que una instrucción o bloque de instrucciones se repitan
 desde una condición inicial y mientras la condición se cumpla (es decir sea `verdadero`), en esta sentencia los paréntesis si son requeridos.
+<<<<<<< HEAD
 ```python
+=======
+
+```C
+>>>>>>> master
 desde (condicion_inicial; condicion; incremento)
      // Código
 fin
@@ -288,8 +410,14 @@ fin
 ```
 
 Se puede especificar un salto diferente cambiando la expresión de incremento.
+<<<<<<< HEAD
 ```python
 desde(i=0; i < 50; i=i+10)
+=======
+
+```C
+desde (i=0; i < 50; i=i+10)
+>>>>>>> master
     imprimir(i)
 fin
 // Salida: 0 10 20 30 40
@@ -299,7 +427,12 @@ fin
 ### mientras (do while)
 Hace que una instrucción o bloque de instrucciones se repitan
 mientras la condición sea `verdadero`, los paréntesis son opcionales en la condición.
+<<<<<<< HEAD
 ```python
+=======
+
+```C
+>>>>>>> master
 mientras (condicion)
     // Código
 fin
@@ -318,7 +451,12 @@ Hace que una instrucción o bloque de instrucciones
 se repitan mientra la condición sea `falso`,
 las instrucciones de código se ejecutan al menos una vez.
 Los paréntesis son opcionales en la condición.
+<<<<<<< HEAD
 ```python
+=======
+
+```C
+>>>>>>> master
 repetir
     // Código
 hasta (condicion)
@@ -332,8 +470,14 @@ hasta i == 10
 ```
 
 Se puede salir de los bucles (`desde`, `mientras` y `repetir`) con la palabra reservada `romper`.
+<<<<<<< HEAD
 ```python
 desde(i=0; i < 10; i++)
+=======
+
+```C
+desde (i=0; i < 10; i++)
+>>>>>>> master
     si (i == 5)        
         romper    // Se sale del ciclo desde
     fin
@@ -349,7 +493,12 @@ Las funciones se definen con la palabra reservada `funcion` o la forma corta `fu
 
 Se puede regresar el valor con la palabra clave `regresar`, `retornar` o la forma corta `ret`.
 La estructura de una función es la siguiente:
+<<<<<<< HEAD
 ```python
+=======
+
+```C
+>>>>>>> master
 funcion nombreFuncion (argumento1, argumento2)
     // Código
     retornar resultado
@@ -362,14 +511,25 @@ fin
 ```
 
 Para invocar (ejecutar) una función se hace con el nombre de la función y la lista de parámetros entre paréntesis.
+<<<<<<< HEAD
 ```python
 r = sumar(2, 3)  #se almacena el resultado en la variable r
+=======
+
+```C
+r = sumar(2, 3)  // Se almacena el resultado en la variable r
+>>>>>>> master
 escribir(r)
 // Salida: 5
 ```
 
 Se pueden crear funciones con un número variable de argumentos con `...` en el ultimo parámetro de la definición.
+<<<<<<< HEAD
 ```python
+=======
+
+```C
+>>>>>>> master
 funcion varArgs(arg1, arg2, ...)
   va = [...] // Se obtienen los parametros 3 en adelante como una lista y se asignan a la variable va
   escribir("parámetro 1: " .. arg1) // Imprime el parámetro 1
@@ -405,40 +565,67 @@ Una lista es un tipo de colección. Es equivalente a lo que en otros lenguajes s
 Las listas pueden contener cualquier tipo de dato: lógico, númerico, literal, cadena, listas, diccionarios.
 
 Crear una lista es tan sencillo como indicar entre corchetes y separados por comas los valores que queremos incluir en la lista.
+<<<<<<< HEAD
 ```python
 #declaracion de listas
+=======
+```C
+// Declaracion de listas
+>>>>>>> master
 numeros = [1, 2, 3, 4, 5]
 vacia = []
 ```
 
 Podemos acceder a cada uno de los elementos de la lista escribiendo el nombre de la lista e indicando el índice del elemento entre corchetes `[]`.
 Ten en cuenta que el índice del primer elemento de la lista es 0:
+<<<<<<< HEAD
 ```python
+=======
+```C
+>>>>>>> master
 escribir(numeros[1])
 // Salida: 2
 ```
 
 También podemos utilizar este operador para modificar un elemento de la lista si lo
 colocamos en la parte izquierda de una asignación:
+<<<<<<< HEAD
 ```python
+=======
+```C
+>>>>>>> master
 numeros[0] = 99
 escribir(numeros)
 // Salida: [99, 2, 3, 4, 5]
 ```
 
 Podemos utilizar también números negativos. Si se utiliza un número negativo como índice, esto se traduce en que el índice empieza a contar desde el final, hacia la izquierda; es decir, con [-1] accederíamos al último elemento de la lista, con [-2] al penúltimo, con [-3], al antepenúltimo, y así sucesivamente.
+<<<<<<< HEAD
 ```python
+=======
+```C
+>>>>>>> master
 escribir(numeros[-1])
 // Salida: 5
 ```
 <a name="dic"></a>
 ## IX. Diccionarios
 Los diccionarios, también llamados matrices asociativas, deben su nombre a que son colecciones que relacionan una clave y un valor, entre llaves y separado el valor de la clave con dos puntos.
+<<<<<<< HEAD
 ```python
 #Diccionario de personajes y actores:
 actores = { "Chilindrina": "Maria Antonieta de las Nieves",
      "El chavo del 8": "Roberto Gomez Bolaños",
      "Tres patines": "Leopoldo Fernandez" }
+=======
+```C
+// Diccionario de personajes y actores:
+actores = {
+	"Chilindrina": "Maria Antonieta de las Nieves",
+	"El chavo del 8": "Roberto Gomez Bolaños",
+	"Tres patines": "Leopoldo Fernandez"
+}
+>>>>>>> master
 ```
 
 El primer valor se trata de la clave y el segundo del valor asociado a la clave.
@@ -449,13 +636,21 @@ Si se modificara el objeto clave después de haber sido introducido en el diccio
 su hash también cambiaría y no podría ser encontrado.
 
 La diferencia principal entre los diccionarios y las listas es que a los valores almacenados en un diccionario se les accede no por su índice, porque de hecho no tienen orden, sino por su clave, utilizando corchetes `[]`.
+<<<<<<< HEAD
 ```python
+=======
+```C
+>>>>>>> master
 escribir(actores["Chilindrina"])
 // Salida: Maria Antonieta de las Nieves
 ```
 
 Al igual que en listas también se puede utilizar corchetes para reasignar valores.
+<<<<<<< HEAD
 ```python
+=======
+```C
+>>>>>>> master
 actores["Chilindrina"] = "Maria Antonieta"
 escribir(actores["Chilindrina"])
 // Salida: Maria Antonieta
