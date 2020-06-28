@@ -2,15 +2,9 @@
   "ExpandedNodes": [
     "",
     "\\.readme",
-<<<<<<< HEAD
-    "\\.readme\\imgs"
-  ],
-  "SelectedNode": "\\README.md",
-=======
     "\\.readme\\imgs",
     "\\include"
   ],
   "SelectedNode": "\\include\\latino.h",
->>>>>>> 11336ac9485c6d839841852720d6c6d0098511a2
   "PreviewInSolutionExplorer": false
 }

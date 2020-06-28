@@ -11,17 +11,10 @@
                 "_UNICODE"
             ],
             "windowsSdkVersion": "10.0.17763.0",
-<<<<<<< HEAD
-            "compilerPath": "/usr/bin/gcc",
-            "cStandard": "c11",
-            "cppStandard": "c++17",
-            "intelliSenseMode": "gcc-x64",
-=======
             "compilerPath": "C:/Program Files (x86)/Microsoft Visual Studio/2019/Community/VC/Tools/MSVC/14.21.27702/bin/Hostx64/x64/cl.exe",
             "cStandard": "c11",
             "cppStandard": "c++17",
             "intelliSenseMode": "msvc-x64",
->>>>>>> 11336ac9485c6d839841852720d6c6d0098511a2
             "compileCommands": "${workspaceFolder}/compile_commands.json"
         }
     ],
