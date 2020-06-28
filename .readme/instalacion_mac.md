@@ -19,6 +19,18 @@ en caso de no tenerlo instalado lo podemos descargar [desde aquí](https://devel
 (Necesitaremos una cuenta en Apple para poder acceder a la lista de descargas)
     - Una vez lo tengamos instalado desde la misma página procedemos a descargar e instalar **Xcode Command Tool**
 
+# Desinstalar Latino
+Para desinstalar Latino procedemos con los siguientes pasos:
+1. Doble-clic en nuestro paquete de instalación Latino-XXX-Darwin.pkg.
+2. Una vez nuestra imagen sea montada en nuestro escritorio hacemos doble-clic para abrir.
+3. Doble-clic en la carpeta llamada **Extras**.
+4. Abrimos nuestra Terminal en Mac.
+5. Escribimos **sudo sh** (le dejamos un espacio al final).
+6. Agaramos y soltamos nuestro archivo **uninstall.sh** en nuestra Terminal.<br/>
+    Ejemplo:<br/>
+	    **$ sudo sh /Volumes/Latino-XXX-Darwin/Extras/uninstall.sh**
+7. Presionamos **Enter** para correr el comando y procedemos con insertar nuestra contraseña de administrador.
+
 # Ayuda y Documentación:
 [Foro de Latino para Mac](http://lenguaje-latino.org/foro/mac/)<br/>
 [Manual Latino](http://manual.lenguaje-latino.org/)

@@ -60,7 +60,7 @@ THE SOFTWARE.
 /** Version mayor de Latino */
 #define LAT_VERSION_MAYOR "1"
 /** Version menor de Latino */
-#define LAT_VERSION_MENOR "1"
+#define LAT_VERSION_MENOR "2"
 /** Version de correcion de errores */
 #define LAT_VERSION_PARCHE "0"
 /** Version de Latino */
@@ -69,7 +69,7 @@ THE SOFTWARE.
 /** Derechos de Latino */
 #define LAT_DERECHOS                                                           \
     LAT_VERSION                                                                \
-    "\nTodos los derechos reservados (C) 2015-2019. Latinoamerica"
+    "\nTodos los derechos reservados (C) 2015-2020. Latinoamerica"
 
 #define LAT_ERRMEM 1
 #define LAT_ERRRUN 2

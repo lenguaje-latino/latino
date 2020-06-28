@@ -1,13 +1,23 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
+<<<<<<< HEAD
 <Project ToolsVersion="16.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
     <CustomBuild Include="C:\Users\ciber\src\latino\visualstudio\CMakeFiles\356fa9b67bd60e66375f2b1ab608e129\PACKAGE_force.rule">
+=======
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <CustomBuild Include="C:\Users\Layout\Desktop\Latino\visualstudio\CMakeFiles\21b97e94c24dee92722bda1dc6644a79\PACKAGE_force.rule">
+>>>>>>> 11336ac9485c6d839841852720d6c6d0098511a2
       <Filter>CMake Rules</Filter>
     </CustomBuild>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="CMake Rules">
+<<<<<<< HEAD
       <UniqueIdentifier>{70F29324-7D91-3064-AA79-682ACE6348B1}</UniqueIdentifier>
+=======
+      <UniqueIdentifier>{D595C31F-FB40-3755-B890-08B12A117AED}</UniqueIdentifier>
+>>>>>>> 11336ac9485c6d839841852720d6c6d0098511a2
     </Filter>
   </ItemGroup>
 </Project>

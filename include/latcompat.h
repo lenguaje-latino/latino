@@ -27,6 +27,7 @@ THE SOFTWARE.
 
 /** Determina el sistema operativo*/
 #if (defined __WIN32__) || (defined _WIN32)
+#define SISTEMAOPERATIVO "WIN32"
 #define LATINO_BUILD_AS_DLL
 #define PATH_SEP "\\"
 #define LAT_FUNC extern
@@ -53,6 +54,7 @@ THE SOFTWARE.
 //#include "TargetConditionals.h"
 //#include <GLUT/glut.h>
 //#include <OpenGL/OpenGL.h>
+#define SISTEMAOPERATIVO "APPLE"
 #include <dlfcn.h>
 #include <readline/history.h>
 #include <readline/readline.h>
@@ -72,6 +74,7 @@ THE SOFTWARE.
 /* --EndsMacOS-- */
 
 #ifdef __linux__
+#define SISTEMAOPERATIVO "LINUX"
 #include <dlfcn.h>
 #include <readline/history.h>
 #include <readline/readline.h>

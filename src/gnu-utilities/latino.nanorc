@@ -1,112 +1,112 @@
-## Sintaxis Latino en Nano
+##############################################################################
+#
+# Latino syntax highlighting for Nano.
+#
+# License: MIT
+#
+# Version: 2020-May-01
+#
+##############################################################################
+
+### Sintaxis Latino en Nano
 syntax "latino" "\.lat$"
+# Color de funciones personalizadas del usuario
+color blue "[a-zA-Z0-9\.]+[(]+.*+[)])"
+# Constantes
+color red "^[[:upper:]]+"
 
- # Color de funciones personalizadas del usuario
- color blue "[a-Z_0-9\.]+[(]+.*+[)]"
+##################################################################
 
- # Constantes
- color red "^[[:upper:]]+"
+# Palabras clave
+color magenta "\<(si|osi|sino|fin|romper|continuar|mientras|hacer|cuando|desde|nulo|retorno|caso|defecto|repetir|global|retornar)\>"
+color brightblue "funcion"
+color green "\<(verdadero|cierto|falso)\>"
+color brightmagenta "[[:space:]]+menu"
+color brightblue "elegir[(]+.*+[)]"
 
- ##################################################################
- # Palabras clave
- color magenta "\<(si|osi|sino|fin|romper|continuar|mientras|hacer|cuando|desde|nulo|retorno|caso|defecto|repetir|global|retornar)\>"
- color brightblue "funcion"
- color green "\<(verdadero|cierto|falso)\>"
- color brightmagenta "[[:space:]]+menu"
- color brightblue "elegir[(]+.*+[)]"
- ##################################################################
+##################################################################
 
- # libmath.c
- color brightblue "mate\.\<(acos|asen|atan|cos|cosh|sen|senh|tan|tanh|exp|log|log10|raiz|techo|piso|abs|atan2|pot|frexp|ldexp|aleatorio)\>[(]+.*+[)]"
- color brightblue "mate\.\<(acos|asen|atan|cos|cosh|sen|senh|tan|tanh|exp|log|log10|raiz|techo|piso|abs|atan2|pot|frexp|ldexp|aleatorio)\>[[:space:]]+[(]+.*+[)]"
- # libstr.c
- color brightblue "cadena\.\<(esta_vacia|longitud|minusculas|mayusculas|recortar|es_numerico|es_numero|es_alfa|invertir|ejecutar|concatenar|comparar|contiene|termina_con|es_igual|indice|ultimo_indice|eliminar|separar|inicia_con|regex|match|insertar|rellenar_izquierda|rellenar_derecha|reemplazar|subcadena)\>[(]+.*+[)]"
- color brightblue "cadena\.\<(esta_vacia|longitud|minusculas|mayusculas|recortar|es_numerico|es_numero|es_alfa|invertir|ejecutar|concatenar|comparar|contiene|termina_con|es_igual|indice|ultimo_indice|eliminar|separar|inicia_con|regex|match|insertar|rellenar_izquierda|rellenar_derecha|reemplazar|subcadena)\>[[:space:]]+[(]+.*+[)]"
-
+# libmath.c
+color brightblue "mate\.\<(acos|asen|atan|cos|cosh|sen|senh|tan|tanh|exp|log|log10|raiz|techo|piso|abs|atan2|pot|frexp|ldexp|aleatorio)\>[(]+.*+[)]"
+color brightblue "mate\.\<(acos|asen|atan|cos|cosh|sen|senh|tan|tanh|exp|log|log10|raiz|techo|piso|abs|atan2|pot|frexp|ldexp|aleatorio)\>[[:space:]]+[(]+.*+[)]"
+# libstr.c
+color brightblue "cadena\.\<(esta_vacia|longitud|minusculas|mayusculas|recortar|es_numerico|es_numero|es_alfa|invertir|ejecutar|concatenar|comparar|contiene|termina_con|es_igual|indice|ultimo_indice|eliminar|separar|inicia_con|regex|match|insertar|rellenar_izquierda|rellenar_derecha|reemplazar|subcadena)\>[(]+.*+[)]"
+color brightblue "cadena\.\<(esta_vacia|longitud|minusculas|mayusculas|recortar|es_numerico|es_numero|es_alfa|invertir|ejecutar|concatenar|comparar|contiene|termina_con|es_igual|indice|ultimo_indice|eliminar|separar|inicia_con|regex|match|insertar|rellenar_izquierda|rellenar_derecha|reemplazar|subcadena)\>[[:space:]]+[(]+.*+[)]"
 # libfile.c
 color brightblue "archivo\.\<(leer|lineas|ejecutar|poner|copiar)\>[(]+.*+[)]"
 color brightblue "archivo\.\<(leer|lineas|ejecutar|poner|copiar)\>[[:space:]]+[(]+.*+[)]"
+# libbase.c
+color brightblue "\<(poner|poner|acadena|anumero|alogico|leer|limpiar|tipo)\>[(]+.*+[)]"
+color brightblue "\<(poner|poner|acadena|anumero|alogico|leer|limpiar|tipo)\>[[:space:]]+[(]+.*+[)]"
+color cyan "incluir+[(]+.*+[)]|incluir+[[:space:]]+[(]+.*+[)]"
+# libcast.c
+color brightblue "convertir\.\<(numerico|logico|cadena)\>[(]+.*+[)]"
+color brightblue "convertir\.\<(numerico|logico|cadena)\>[[:space:]]+[(]+.*+[)]"
+# latlist.c
+color brightblue "lista\.\<(invertir|agregar|extender|eliminar_indice|longitud|indice|comparar|insertar|eliminar|contiene)\>[(]+.*+[)]"
+color brightblue "lista\.\<(invertir|agregar|extender|eliminar_indice|longitud|indice|comparar|insertar|eliminar|contiene)\>[[:space:]]+[(]+.*+[)]"
+# libcurl.c
+color brightblue "curl\.\<(peticion|sinescape|escape)\>[(]+.*+[)]"
+color brightblue "curl\.\<(peticion|sinescape|escape)\>[[:space:]]+[(]+.*+[)]"
+# libjson.c
+color brightblue "json\.\<(decodificar|codificar)\>[(]+.*+[)]"
+color brightblue "json\.\<(decodificar|codificar)\>[[:space:]]+[(]+.*+[)]"
+# libgtk.c
+color brightblue "gtk\.\<(iniciar|menu|ventanaNueva|titulo|mostrarTodo|cajaNueva|agregar|ventanaMagnitud|botonTexto|botonDestruir|llamarFuncion)\>[(]+.*+[)]"
+color brightblue "gtk\.\<(iniciar|menu|ventanaNueva|titulo|mostrarTodo|cajaNueva|agregar|ventanaMagnitud|botonTexto|botonDestruir|llamarFuncion)\>[[:space:]]+[(]+.*+[)]"
+# libredis.c
+color brightblue "redis\.\<(conectar|desconectar|ping|asignar|hasignar|obtener|hobtener|borrar|hborrar|aumentar|haumentar|incrementar|hincrementar|hllaves|llaves|smiembros|sagregar|sborrar)\>[(]+.*+[)]"
+color brightblue "redis\.\<(conectar|desconectar|ping|asignar|hasignar|obtener|hobtener|borrar|hborrar|aumentar|haumentar|incrementar|hincrementar|hllaves|llaves|smiembros|sagregar|sborrar)\>[[:space:]]+[(]+.*+[)]"
+# libsys.c
+color brightblue "sis\.\<(dormir|ejecutar|pipe|fecha|salir|avisar|operativo|op)\>[(]+.*+[)]"
+color brightblue "sis\.\<(dormir|ejecutar|pipe|fecha|salir|avisar|operativo|op)\>[[:space:]]+[(]+.*+[)]"
 
- # libbase.c
- color brightblue "\<(poner|poner|acadena|anumero|alogico|leer|limpiar|tipo)\>[(]+.*+[)]"
- color brightblue "\<(poner|poner|acadena|anumero|alogico|leer|limpiar|tipo)\>[[:space:]]+[(]+.*+[)]"
- color cyan "incluir+[(]+.*+[)]|incluir+[[:space:]]+[(]+.*+[)]"
+##################################################################
 
- # libcast.c
- color brightblue "convertir\.\<(numerico|logico|cadena)\>[(]+.*+[)]"
- color brightblue "convertir\.\<(numerico|logico|cadena)\>[[:space:]]+[(]+.*+[)]"
+# Numeros
+color brightyellow "\<([0-9]+)\>"
+# Operadores
+color yellow ":|\*|/|%|\+|-|\^|>|>=|<|=<|!=|=|&&|\|\|"
+# Simbolos
+color brightmagenta "(\(|\)|\[|\]|\{|\})"
+# Hexadecimales
+color brightgreen "0x[0-9a-fA-F]*"
+# Cierres de cadena
+color brightgreen	start="'" end="'"
+color brightgreen	start="\"" end="\""
 
- # latlist.c
- color brightblue "lista\.\<(invertir|agregar|extender|eliminar_indice|longitud|indice|comparar|insertar|eliminar|contiene)\>[(]+.*+[)]"
- color brightblue "lista\.\<(invertir|agregar|extender|eliminar_indice|longitud|indice|comparar|insertar|eliminar|contiene)\>[[:space:]]+[(]+.*+[)]"
+##################################################################
 
- # libcurl.c
- color brightblue "curl\.\<(peticion|sinescape|escape)\>[(]+.*+[)]"
- color brightblue "curl\.\<(peticion|sinescape|escape)\>[[:space:]]+[(]+.*+[)]"
+# concatenar, despúes de... o antes de..
+color brightwhite "\.\.\<([a-zA-Z0-9\.]+|[a-zA-Z0-9\.]+\.[a-zA-Z0-9\.]+)\>\.\."
+color brightwhite "\.\.\<([a-zA-Z0-9\.]+|[a-zA-Z0-9\.]+\.[a-zA-Z0-9\.]+)\>"
+# concatenar con funciones con variables ó númericos
+color brightwhite "\.\.\<([a-zA-Z0-9\.]+|[a-zA-Z0-9\.]+\.[a-zA-Z0-9\.]+)\>\([a-zA-Z0-9\.]+\)"
+color brightwhite "\.\.\<([a-zA-Z0-9\.]+|[a-zA-Z0-9\.]+\.[a-zA-Z0-9\.]+)\>\([a-zA-Z0-9\.]+\)\.\."
+# concatenar con funciones cerradas
+color brightwhite "\.\.\<([a-zA-Z0-9\.]+|[a-zA-Z0-9\.]+\.[a-zA-Z0-9\.]+)\>\(\)"
+color brightwhite "\.\.\<([a-zA-Z0-9\.]+|[a-zA-Z0-9\.]+\.[a-zA-Z0-9\.]+)\>\(\)\.\."
+# concatenar con funciones con cadena
+color brightwhite "\.\.\<([a-zA-Z0-9\.]+|[a-zA-Z0-9\.]+\.[a-zA-Z0-9\.]+)\>\(\".*\"\)"
+color brightwhite "\.\.\<([a-zA-Z0-9\.]+|[a-zA-Z0-9\.]+\.[a-zA-Z0-9\.]+)\>\(\".*\"\)\.\."
 
- # libjson.c
- color brightblue "json\.\<(decodificar|codificar)\>[(]+.*+[)]"
- color brightblue "json\.\<(decodificar|codificar)\>[[:space:]]+[(]+.*+[)]"
+# concatenar al inicio
+color brightwhite "\<([a-zA-Z0-9\.]+|[a-zA-Z0-9\.]+\.[a-zA-Z0-9\.]+)\>\.\."
+# concatenar con funciones con variables ó númericos
+color brightwhite "\<([a-zA-Z0-9\.]+|[a-zA-Z0-9\.]+\.[a-zA-Z0-9\.]+)\>\([a-zA-Z0-9\.]\)\.\."
+# concatenar con funciones cerradas
+color brightwhite "\<([a-zA-Z0-9\.]+|[a-zA-Z0-9\.]+\.[a-zA-Z0-9\.]+)\>\(\)\.\."
+# concatenar con funciones con cadena
+color brightwhite "\<([a-zA-Z0-9\.]+|[a-zA-Z0-9\.]+\.[a-zA-Z0-9\.]+)\>\(\".*\"\)\.\."
 
- # libgtk.c
- color brightblue "gtk\.\<(iniciar|menu|ventanaNueva|titulo|mostrarTodo|cajaNueva|agregar|ventanaMagnitud|botonTexto|botonDestruir|llamarFuncion)\>[(]+.*+[)]"
- color brightblue "gtk\.\<(iniciar|menu|ventanaNueva|titulo|mostrarTodo|cajaNueva|agregar|ventanaMagnitud|botonTexto|botonDestruir|llamarFuncion)\>[[:space:]]+[(]+.*+[)]"
+# Comentarios simples
+color brightred	"[[:blank:]]\/\/.*|^\/\/.*"
+color brightred	"^#.*|[[:blank:]]#.*"
 
- # libredis.c
- color brightblue "redis\.\<(conectar|desconectar|ping|asignar|hasignar|obtener|hobtener|borrar|hborrar|aumentar|haumentar|incrementar|hincrementar|hllaves|llaves|smiembros|sagregar|sborrar)\>[(]+.*+[)]"
- color brightblue "redis\.\<(conectar|desconectar|ping|asignar|hasignar|obtener|hobtener|borrar|hborrar|aumentar|haumentar|incrementar|hincrementar|hllaves|llaves|smiembros|sagregar|sborrar)\>[[:space:]]+[(]+.*+[)]"
+# Comentarios múltiples
+color brightred	start="\/\*"	end="\*\/"
 
- # libsys.c
- color brightblue "sis\.\<(dormir|ejecutar|pipe|fecha|salir|avisar)\>[(]+.*+[)]"
- color brightblue "sis\.\<(dormir|ejecutar|pipe|fecha|salir|avisar)\>[[:space:]]+[(]+.*+[)]"
-
- ##################################################################
- # Numeros
- color brightyellow "\<([0-9]+)\>"
-
- # Operadores
- color yellow ":|\*|/|%|\+|-|\^|>|>=|<|=<|!=|=|&&|\|\|"
-
- # Simbolos
- color brightmagenta "(\(|\)|\[|\]|\{|\})"
-
- # Hexadecimales
- color brightgreen "0x[0-9a-fA-F]*"
-
- # Cierres de cadena
- color brightgreen	start="'" end="'"
- color brightgreen	start="\"" end="\""
- ##################################################################
- # concatenar, despúes de... o antes de..
- color brightwhite "\.\.\<([a-Z_0-9\.]+|[a-Z_0-9\.]+\.[a-Z_0-9\.]+)\>\.\."
- color brightwhite "\.\.\<([a-Z_0-9\.]+|[a-Z_0-9\.]+\.[a-Z_0-9\.]+)\>"
-  # concatenar con funciones con variables ó númericos
-  color brightwhite "\.\.\<([a-Z_0-9\.]+|[a-Z_0-9\.]+\.[a-Z_0-9\.]+)\>\([a-Z_0-9\.]+\)"
-  color brightwhite "\.\.\<([a-Z_0-9\.]+|[a-Z_0-9\.]+\.[a-Z_0-9\.]+)\>\([a-Z_0-9\.]+\)\.\."
-  # concatenar con funciones cerradas
-  color brightwhite "\.\.\<([a-Z_0-9\.]+|[a-Z_0-9\.]+\.[a-Z_0-9\.]+)\>\(\)"
-  color brightwhite "\.\.\<([a-Z_0-9\.]+|[a-Z_0-9\.]+\.[a-Z_0-9\.]+)\>\(\)\.\."
-  # concatenar con funciones con cadena
-  color brightwhite "\.\.\<([a-Z_0-9\.]+|[a-Z_0-9\.]+\.[a-Z_0-9\.]+)\>\(\".*\"\)"
-  color brightwhite "\.\.\<([a-Z_0-9\.]+|[a-Z_0-9\.]+\.[a-Z_0-9\.]+)\>\(\".*\"\)\.\."
-
-  # concatenar al inicio
-  color brightwhite "\<([a-Z_0-9\.]+|[a-Z_0-9\.]+\.[a-Z_0-9\.]+)\>\.\."
-   # concatenar con funciones con variables ó númericos
-   color brightwhite "\<([a-Z_0-9\.]+|[a-Z_0-9\.]+\.[a-Z_0-9\.]+)\>\([a-Z_0-9\.]\)\.\."
-   # concatenar con funciones cerradas
-   color brightwhite "\<([a-Z_0-9\.]+|[a-Z_0-9\.]+\.[a-Z_0-9\.]+)\>\(\)\.\."
-   # concatenar con funciones con cadena
-   color brightwhite "\<([a-Z_0-9\.]+|[a-Z_0-9\.]+\.[a-Z_0-9\.]+)\>\(\".*\"\)\.\."
-
-   # Comentarios simples
-   color brightred	"[[:blank:]]\/\/.*|^\/\/.*"
-   color brightred	"^#.*|[[:blank:]]#.*"
-
-   # Comentarios múltiples
-   color brightred	start="\/\*"	end="\*\/"
-
- #Valid colors are "green", "red", "blue",
- #"white", "yellow", "cyan", "magenta" and
- #"black", with the optional prefix "bright"
- #for foreground colors.
+#Valid colors are "green", "red", "blue",
+#"white", "yellow", "cyan", "magenta" and
+#"black", with the optional prefix "bright"
+#for foreground colors.

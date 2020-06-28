@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 ﻿  Building Custom Rule C:/Users/ciber/src/latino/src/regex-2.7-src/src/CMakeLists.txt
   CMake does not need to re-run because C:/Users/ciber/src/latino/visualstudio/src/regex-2.7-src/src/CMakeFiles/generate.stamp is up-to-date.
   Compilador de optimización de C/C++ de Microsoft (R) versión 19.21.27702.2 para x64
@@ -83,3 +84,90 @@ C:\Users\ciber\src\latino\src\regex-2.7-src\src\regexec.c(1476,49): warning C426
 C:\Users\ciber\src\latino\src\regex-2.7-src\src\regexec.c(3036,17): warning C4189:  'err': la variable local se ha inicializado pero no se hace referencia a ella
 C:\Users\ciber\src\latino\src\regex-2.7-src\src\regexec.c(3036,17): warning C4189: C:\Users\ciber\src\latino\src\regex-2.7-src\src\regexec.c(2203) : warning C4701: posiblemente se utilizó la variable local 'local_sctx' sin inicializar
   regex2.vcxproj -> C:\Users\ciber\src\latino\visualstudio\src\regex-2.7-src\src\Debug\regex2.lib
+=======
+﻿  Building Custom Rule C:/Users/Layout/Desktop/Latino/src/regex-2.7-src/src/CMakeLists.txt
+  Microsoft (R) C/C++ Optimizing Compiler Version 19.16.27038 for x86
+  Copyright (C) Microsoft Corporation.  All rights reserved.
+  
+  cl /c /I"C:\Users\Layout\Desktop\Latino\src\regex-2.7-src\src" /Zi /W4 /WX- /diagnostics:classic /Od /Ob0 /Oy- /D WIN32 /D _WINDOWS /D _CRT_SECURE_NO_WARNINGS /D _DEBUG /D __STDC_CONSTANT_MACROS /D __STDC_FORMAT_MACROS /D __STDC_LIMIT_MACROS /D "CMAKE_INTDIR=\"Debug\"" /D _MBCS /Gm- /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Zc:inline /Fo"regex2.dir\Debug\\" /Fd"regex2.dir\Debug\regex2.pdb" /Gd /TC /analyze- /errorReport:prompt "C:\Users\Layout\Desktop\Latino\src\regex-2.7-src\src\regex.c"
+  
+  regex.c
+c:\users\layout\desktop\latino\src\regex-2.7-src\src\regex_internal.c(57): warning C4244: '=': conversion from 'const unsigned int' to 'unsigned char', possible loss of data
+c:\users\layout\desktop\latino\src\regex-2.7-src\src\regex_internal.c(175): warning C4244: '=': conversion from 'const unsigned int' to 'unsigned char', possible loss of data
+c:\users\layout\desktop\latino\src\regex-2.7-src\src\regex_internal.c(176): warning C4244: '=': conversion from 'const unsigned int' to 'unsigned char', possible loss of data
+c:\users\layout\desktop\latino\src\regex-2.7-src\src\regex_internal.c(530): warning C4244: '=': conversion from 'int' to 'unsigned char', possible loss of data
+c:\users\layout\desktop\latino\src\regex-2.7-src\src\regex_internal.c(532): warning C4244: '=': conversion from 'int' to 'unsigned char', possible loss of data
+c:\users\layout\desktop\latino\src\regex-2.7-src\src\regex_internal.c(678): warning C4189: 'prev_valid_len': local variable is initialized but not referenced
+c:\users\layout\desktop\latino\src\regex-2.7-src\src\regex_internal.c(854): warning C4244: 'return': conversion from 'int' to 'unsigned char', possible loss of data
+c:\users\layout\desktop\latino\src\regex-2.7-src\src\regex_internal.c(1399): warning C4189: 'type': local variable is initialized but not referenced
+c:\users\layout\desktop\latino\src\regex-2.7-src\src\regcomp.c(215): warning C4131: 're_compile_pattern': uses old-style declarator
+c:\users\layout\desktop\latino\src\regex-2.7-src\src\regcomp.c(215): warning C4273: 're_compile_pattern': inconsistent dll linkage
+  c:\users\layout\desktop\latino\src\regex-2.7-src\src\regex.h(482): note: see previous definition of 're_compile_pattern'
+c:\users\layout\desktop\latino\src\regex-2.7-src\src\regcomp.c(244): warning C4273: 're_syntax_options': inconsistent dll linkage
+  c:\users\layout\desktop\latino\src\regex-2.7-src\src\regex.h(214): note: see previous definition of 're_syntax_options'
+c:\users\layout\desktop\latino\src\regex-2.7-src\src\regcomp.c(256): warning C4131: 're_set_syntax': uses old-style declarator
+c:\users\layout\desktop\latino\src\regex-2.7-src\src\regcomp.c(256): warning C4273: 're_set_syntax': inconsistent dll linkage
+  c:\users\layout\desktop\latino\src\regex-2.7-src\src\regex.h(477): note: see previous definition of 're_set_syntax'
+c:\users\layout\desktop\latino\src\regex-2.7-src\src\regcomp.c(269): warning C4131: 're_compile_fastmap': uses old-style declarator
+c:\users\layout\desktop\latino\src\regex-2.7-src\src\regcomp.c(269): warning C4273: 're_compile_fastmap': inconsistent dll linkage
+  c:\users\layout\desktop\latino\src\regex-2.7-src\src\regex.h(489): note: see previous definition of 're_compile_fastmap'
+c:\users\layout\desktop\latino\src\regex-2.7-src\src\regcomp.c(448): warning C4131: 'regcomp': uses old-style declarator
+c:\users\layout\desktop\latino\src\regex-2.7-src\src\regcomp.c(448): warning C4273: 'regcomp': inconsistent dll linkage
+  c:\users\layout\desktop\latino\src\regex-2.7-src\src\regex.h(570): note: see previous definition of 'regcomp'
+c:\users\layout\desktop\latino\src\regex-2.7-src\src\regcomp.c(510): warning C4131: 'regerror': uses old-style declarator
+c:\users\layout\desktop\latino\src\regex-2.7-src\src\regcomp.c(510): warning C4273: 'regerror': inconsistent dll linkage
+  c:\users\layout\desktop\latino\src\regex-2.7-src\src\regex.h(579): note: see previous definition of 'regerror'
+c:\users\layout\desktop\latino\src\regex-2.7-src\src\regcomp.c(509): warning C4100: 'preg': unreferenced formal parameter
+c:\users\layout\desktop\latino\src\regex-2.7-src\src\regcomp.c(572): warning C4018: '<': signed/unsigned mismatch
+c:\users\layout\desktop\latino\src\regex-2.7-src\src\regcomp.c(575): warning C4018: '<': signed/unsigned mismatch
+c:\users\layout\desktop\latino\src\regex-2.7-src\src\regcomp.c(590): warning C4018: '<=': signed/unsigned mismatch
+c:\users\layout\desktop\latino\src\regex-2.7-src\src\regcomp.c(618): warning C4131: 'regfree': uses old-style declarator
+c:\users\layout\desktop\latino\src\regex-2.7-src\src\regcomp.c(618): warning C4273: 'regfree': inconsistent dll linkage
+  c:\users\layout\desktop\latino\src\regex-2.7-src\src\regex.h(582): note: see previous definition of 'regfree'
+c:\users\layout\desktop\latino\src\regex-2.7-src\src\regcomp.c(1107): warning C4018: '<': signed/unsigned mismatch
+c:\users\layout\desktop\latino\src\regex-2.7-src\src\regcomp.c(1110): warning C4018: '<': signed/unsigned mismatch
+c:\users\layout\desktop\latino\src\regex-2.7-src\src\regcomp.c(1113): warning C4389: '==': signed/unsigned mismatch
+c:\users\layout\desktop\latino\src\regex-2.7-src\src\regcomp.c(1327): warning C4100: 'extra': unreferenced formal parameter
+c:\users\layout\desktop\latino\src\regex-2.7-src\src\regcomp.c(1560): warning C4018: '<': signed/unsigned mismatch
+c:\users\layout\desktop\latino\src\regex-2.7-src\src\regcomp.c(1563): warning C4018: '<': signed/unsigned mismatch
+c:\users\layout\desktop\latino\src\regex-2.7-src\src\regcomp.c(1592): warning C4389: '==': signed/unsigned mismatch
+c:\users\layout\desktop\latino\src\regex-2.7-src\src\regcomp.c(3260): warning C4100: 'dfa': unreferenced formal parameter
+c:\users\layout\desktop\latino\src\regex-2.7-src\src\regcomp.c(3751): warning C4100: 'extra': unreferenced formal parameter
+c:\users\layout\desktop\latino\src\regex-2.7-src\src\regexec.c(222): warning C4131: 'regexec': uses old-style declarator
+c:\users\layout\desktop\latino\src\regex-2.7-src\src\regexec.c(222): warning C4273: 'regexec': inconsistent dll linkage
+  c:\users\layout\desktop\latino\src\regex-2.7-src\src\regex.h(574): note: see previous definition of 'regexec'
+c:\users\layout\desktop\latino\src\regex-2.7-src\src\regexec.c(230): warning C4189: 'dfa': local variable is initialized but not referenced
+c:\users\layout\desktop\latino\src\regex-2.7-src\src\regexec.c(308): warning C4131: 're_match': uses old-style declarator
+c:\users\layout\desktop\latino\src\regex-2.7-src\src\regexec.c(308): warning C4273: 're_match': inconsistent dll linkage
+  c:\users\layout\desktop\latino\src\regex-2.7-src\src\regex.h(512): note: see previous definition of 're_match'
+c:\users\layout\desktop\latino\src\regex-2.7-src\src\regexec.c(321): warning C4131: 're_search': uses old-style declarator
+c:\users\layout\desktop\latino\src\regex-2.7-src\src\regexec.c(321): warning C4273: 're_search': inconsistent dll linkage
+  c:\users\layout\desktop\latino\src\regex-2.7-src\src\regex.h(497): note: see previous definition of 're_search'
+c:\users\layout\desktop\latino\src\regex-2.7-src\src\regexec.c(334): warning C4131: 're_match_2': uses old-style declarator
+c:\users\layout\desktop\latino\src\regex-2.7-src\src\regexec.c(334): warning C4273: 're_match_2': inconsistent dll linkage
+  c:\users\layout\desktop\latino\src\regex-2.7-src\src\regex.h(517): note: see previous definition of 're_match_2'
+c:\users\layout\desktop\latino\src\regex-2.7-src\src\regexec.c(348): warning C4131: 're_search_2': uses old-style declarator
+c:\users\layout\desktop\latino\src\regex-2.7-src\src\regexec.c(348): warning C4273: 're_search_2': inconsistent dll linkage
+  c:\users\layout\desktop\latino\src\regex-2.7-src\src\regex.h(504): note: see previous definition of 're_search_2'
+c:\users\layout\desktop\latino\src\regex-2.7-src\src\regexec.c(363): warning C4131: 're_search_2_stub': uses old-style declarator
+c:\users\layout\desktop\latino\src\regex-2.7-src\src\regexec.c(412): warning C4131: 're_search_stub': uses old-style declarator
+c:\users\layout\desktop\latino\src\regex-2.7-src\src\regexec.c(421): warning C4189: 'dfa': local variable is initialized but not referenced
+c:\users\layout\desktop\latino\src\regex-2.7-src\src\regexec.c(501): warning C4131: 're_copy_regs': uses old-style declarator
+c:\users\layout\desktop\latino\src\regex-2.7-src\src\regexec.c(524): warning C4018: '>': signed/unsigned mismatch
+c:\users\layout\desktop\latino\src\regex-2.7-src\src\regexec.c(539): warning C4018: '>=': signed/unsigned mismatch
+c:\users\layout\desktop\latino\src\regex-2.7-src\src\regexec.c(549): warning C4018: '<': signed/unsigned mismatch
+c:\users\layout\desktop\latino\src\regex-2.7-src\src\regexec.c(570): warning C4131: 're_set_registers': uses old-style declarator
+c:\users\layout\desktop\latino\src\regex-2.7-src\src\regexec.c(570): warning C4273: 're_set_registers': inconsistent dll linkage
+  c:\users\layout\desktop\latino\src\regex-2.7-src\src\regex.h(535): note: see previous definition of 're_set_registers'
+c:\users\layout\desktop\latino\src\regex-2.7-src\src\regexec.c(622): warning C4131: 're_search_internal': uses old-style declarator
+c:\users\layout\desktop\latino\src\regex-2.7-src\src\regexec.c(684): warning C4244: '=': conversion from 'const unsigned int' to 'unsigned char', possible loss of data
+c:\users\layout\desktop\latino\src\regex-2.7-src\src\regexec.c(874): warning C4018: '<': signed/unsigned mismatch
+c:\users\layout\desktop\latino\src\regex-2.7-src\src\regexec.c(892): warning C4018: '<': signed/unsigned mismatch
+c:\users\layout\desktop\latino\src\regex-2.7-src\src\regexec.c(920): warning C4018: '<': signed/unsigned mismatch
+c:\users\layout\desktop\latino\src\regex-2.7-src\src\regexec.c(940): warning C4131: 'prune_impossible_nodes': uses old-style declarator
+c:\users\layout\desktop\latino\src\regex-2.7-src\src\regexec.c(1439): warning C4018: '<': signed/unsigned mismatch
+c:\users\layout\desktop\latino\src\regex-2.7-src\src\regexec.c(1442): warning C4389: '==': signed/unsigned mismatch
+c:\users\layout\desktop\latino\src\regex-2.7-src\src\regexec.c(3036): warning C4189: 'err': local variable is initialized but not referenced
+c:\users\layout\desktop\latino\src\regex-2.7-src\src\regexec.c(2203): warning C4701: potentially uninitialized local variable 'local_sctx' used
+  regex2.vcxproj -> C:\Users\Layout\Desktop\Latino\visualstudio\src\regex-2.7-src\src\Debug\regex2.lib
+>>>>>>> 11336ac9485c6d839841852720d6c6d0098511a2

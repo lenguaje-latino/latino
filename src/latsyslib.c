@@ -177,6 +177,17 @@ static void latSO_usuario(lat_mv *mv) {
     latC_apilar(mv, tmp);
 }
 
+static void latSO_operativo(lat_mv *mv){
+    lat_objeto *o = latC_desapilar(mv);
+    lat_objeto *v = latO_falso;
+    char *os = latC_checar_cadena(mv, o);
+    char *ox = SISTEMAOPERATIVO;
+    if (strcmp(ox,os)==0){
+        v = latO_verdadero;
+    }
+    latC_apilar(mv, v);
+}
+
 /*
 void latSO_fork(lat_mv *mv) {
     bool pid_ok = false;
@@ -209,6 +220,8 @@ static const lat_CReg libsistema[] = {{"dormir", latSO_dormir, 1},
                                       {"iraxy", latSO_iraxy, 2},
                                       {"tiempo", latSO_tiempo, 2},
                                       {"usuario", latSO_usuario, 0},
+                                      {"operativo", latSO_operativo, 1},
+                                      {"op", latSO_operativo, 1},
                                       {NULL, NULL}};
 
 void latC_abrir_liblatino_syslib(lat_mv *mv) {

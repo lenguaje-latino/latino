@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 ﻿  Building Custom Rule C:/Users/ciber/src/latino/src/linenoise/CMakeLists.txt
   CMake does not need to re-run because C:/Users/ciber/src/latino/visualstudio/src/linenoise/CMakeFiles/generate.stamp is up-to-date.
   Compilador de optimización de C/C++ de Microsoft (R) versión 19.21.27702.2 para x64
@@ -18,3 +19,20 @@ C:\Users\ciber\src\latino\src\linenoise\linenoise.c(1232,44): warning C4267:  '=
 C:\Users\ciber\src\latino\src\linenoise\linenoise.c(1285,75): warning C4244:  '=': conversión de '__int64' a 'int'; posible pérdida de datos
 C:\Users\ciber\src\latino\src\linenoise\linenoise.c(1452,28): warning C4267:  '=': conversión de 'size_t' a 'int'; posible pérdida de datos
   linenoise.vcxproj -> C:\Users\ciber\src\latino\visualstudio\src\linenoise\Debug\linenoise.lib
+=======
+﻿  Building Custom Rule C:/Users/Layout/Desktop/Latino/src/linenoise/CMakeLists.txt
+  Microsoft (R) C/C++ Optimizing Compiler Version 19.16.27038 for x86
+  Copyright (C) Microsoft Corporation.  All rights reserved.
+  
+  cl /c /Zi /W4 /WX- /diagnostics:classic /Od /Ob0 /Oy- /D WIN32 /D _WINDOWS /D _CRT_SECURE_NO_WARNINGS /D _DEBUG /D __STDC_CONSTANT_MACROS /D __STDC_FORMAT_MACROS /D __STDC_LIMIT_MACROS /D "CMAKE_INTDIR=\"Debug\"" /D _MBCS /Gm- /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Zc:inline /Fo"linenoise.dir\Debug\\" /Fd"linenoise.dir\Debug\linenoise.pdb" /Gd /TC /analyze- /errorReport:prompt C:\Users\Layout\Desktop\Latino\src\linenoise\linenoise.c
+  
+  linenoise.c
+C:\Users\Layout\Desktop\Latino\src\linenoise\linenoise.c(733): warning C4100: 'prompt': unreferenced formal parameter
+C:\Users\Layout\Desktop\Latino\src\linenoise\linenoise.c(761): warning C4244: '=': conversion from 'int' to 'char', possible loss of data
+C:\Users\Layout\Desktop\Latino\src\linenoise\linenoise.c(851): warning C4456: declaration of 'ch' hides previous local declaration
+  C:\Users\Layout\Desktop\Latino\src\linenoise\linenoise.c(789): note: see declaration of 'ch'
+C:\Users\Layout\Desktop\Latino\src\linenoise\linenoise.c(864): warning C4244: 'function': conversion from 'int' to 'char', possible loss of data
+C:\Users\Layout\Desktop\Latino\src\linenoise\linenoise.c(1230): warning C4456: declaration of 'p' hides previous local declaration
+  C:\Users\Layout\Desktop\Latino\src\linenoise\linenoise.c(1220): note: see declaration of 'p'
+  linenoise.vcxproj -> C:\Users\Layout\Desktop\Latino\visualstudio\src\linenoise\Debug\linenoise.lib
+>>>>>>> 11336ac9485c6d839841852720d6c6d0098511a2
