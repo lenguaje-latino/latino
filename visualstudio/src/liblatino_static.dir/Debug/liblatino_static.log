@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 ﻿  Building Custom Rule C:/Users/ciber/src/latino/src/CMakeLists.txt
   CMake does not need to re-run because C:/Users/ciber/src/latino/visualstudio/src/CMakeFiles/generate.stamp is up-to-date.
   Compilador de optimización de C/C++ de Microsoft (R) versión 19.21.27702.2 para x64
@@ -166,3 +167,147 @@ C:\Users\ciber\src\latino\src\linenoise\linenoise.c(1285,75): warning C4244:  '=
   Generando código...
 C:\Users\ciber\src\latino\src\linenoise\linenoise.c(1452,28): warning C4267:  '=': conversión de 'size_t' a 'int'; posible pérdida de datos
   liblatino_static.vcxproj -> C:\Users\ciber\src\latino\visualstudio\src\Debug\liblatino_static.lib
+=======
+﻿  Building Custom Rule C:/Users/Layout/Desktop/Latino/src/CMakeLists.txt
+  Microsoft (R) C/C++ Optimizing Compiler Version 19.16.27038 for x86
+  Copyright (C) Microsoft Corporation.  All rights reserved.
+  
+  cl /c /I"C:\Users\Layout\Desktop\Latino\src\regex-2.7-src\src" /IC:\Users\Layout\Desktop\Latino\src\linenoise /IC:\Users\Layout\Desktop\Latino\src\..\include /Zi /W4 /WX- /diagnostics:classic /Od /Ob0 /Oy- /D WIN32 /D _WINDOWS /D _CRT_SECURE_NO_WARNINGS /D _DEBUG /D __STDC_CONSTANT_MACROS /D __STDC_FORMAT_MACROS /D __STDC_LIMIT_MACROS /D "CMAKE_INTDIR=\"Debug\"" /D _MBCS /Gm- /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Zc:inline /Fo"liblatino_static.dir\Debug\\" /Fd"liblatino_static.dir\Debug\liblatino_static.pdb" /Gd /TC /analyze- /errorReport:prompt C:\Users\Layout\Desktop\Latino\src\latino.c C:\Users\Layout\Desktop\Latino\src\latlex.c C:\Users\Layout\Desktop\Latino\src\latparse.c C:\Users\Layout\Desktop\Latino\src\latast.c C:\Users\Layout\Desktop\Latino\src\latmem.c C:\Users\Layout\Desktop\Latino\src\latdic.c C:\Users\Layout\Desktop\Latino\src\latdo.c C:\Users\Layout\Desktop\Latino\src\latlist.c C:\Users\Layout\Desktop\Latino\src\latmv.c C:\Users\Layout\Desktop\Latino\src\latobj.c C:\Users\Layout\Desktop\Latino\src\latpaqlib.c C:\Users\Layout\Desktop\Latino\src\latrepl.c C:\Users\Layout\Desktop\Latino\src\latgc.c C:\Users\Layout\Desktop\Latino\src\latbaselib.c C:\Users\Layout\Desktop\Latino\src\latstrlib.c C:\Users\Layout\Desktop\Latino\src\latlistlib.c C:\Users\Layout\Desktop\Latino\src\latdiclib.c C:\Users\Layout\Desktop\Latino\src\latfilelib.c C:\Users\Layout\Desktop\Latino\src\latmathlib.c C:\Users\Layout\Desktop\Latino\src\latsyslib.c C:\Users\Layout\Desktop\Latino\src\latdevlib.c C:\Users\Layout\Desktop\Latino\src\linenoise\utf8.c C:\Users\Layout\Desktop\Latino\src\linenoise\linenoise.c
+  
+  latino.c
+c:\users\layout\desktop\latino\include\latino.h(58): warning C4068: unknown pragma
+C:\Users\Layout\Desktop\Latino\src\latino.c(119): warning C4456: declaration of 'i' hides previous local declaration
+  C:\Users\Layout\Desktop\Latino\src\latino.c(81): note: see declaration of 'i'
+  latlex.c
+  latparse.c
+c:\users\layout\desktop\latino\include\latino.h(58): warning C4068: unknown pragma
+latparse.c(1535): warning C4244: '=': conversion from 'int' to 'yytype_int16', possible loss of data
+latparse.c(2468): warning C4127: conditional expression is constant
+latparse.y(468): warning C4100: 'root': unreferenced formal parameter
+latparse.y(468): warning C4100: 'scanner': unreferenced formal parameter
+  latast.c
+c:\users\layout\desktop\latino\include\latino.h(58): warning C4068: unknown pragma
+  latmem.c
+c:\users\layout\desktop\latino\include\latino.h(58): warning C4068: unknown pragma
+  latdic.c
+c:\users\layout\desktop\latino\include\latino.h(58): warning C4068: unknown pragma
+  latdo.c
+c:\users\layout\desktop\latino\include\latino.h(58): warning C4068: unknown pragma
+C:\Users\Layout\Desktop\Latino\src\latdo.c(708): warning C4002: too many arguments for function-like macro invocation 'snprintf'
+C:\Users\Layout\Desktop\Latino\src\latdo.c(707): warning C4473: '_snprintf' : not enough arguments passed for format string
+  C:\Users\Layout\Desktop\Latino\src\latdo.c(707): note: placeholders and their parameters expect 4 variadic arguments, but 1 were provided
+  C:\Users\Layout\Desktop\Latino\src\latdo.c(707): note: the missing variadic argument 2 is required by format string '%d'
+  latlist.c
+c:\users\layout\desktop\latino\include\latino.h(58): warning C4068: unknown pragma
+  latmv.c
+c:\users\layout\desktop\latino\include\latino.h(58): warning C4068: unknown pragma
+C:\Users\Layout\Desktop\Latino\src\latmv.c(291): warning C4100: 'ctx': unreferenced formal parameter
+C:\Users\Layout\Desktop\Latino\src\latmv.c(532): warning C4244: '=': conversion from 'int' to 'lat_byte', possible loss of data
+C:\Users\Layout\Desktop\Latino\src\latmv.c(964): warning C4018: '>=': signed/unsigned mismatch
+C:\Users\Layout\Desktop\Latino\src\latmv.c(990): warning C4244: '=': conversion from 'double' to 'int', possible loss of data
+C:\Users\Layout\Desktop\Latino\src\latmv.c(1010): warning C4244: 'function': conversion from 'double' to 'int', possible loss of data
+C:\Users\Layout\Desktop\Latino\src\latmv.c(1014): warning C4018: '>=': signed/unsigned mismatch
+C:\Users\Layout\Desktop\Latino\src\latmv.c(1024): warning C4018: '>=': signed/unsigned mismatch
+C:\Users\Layout\Desktop\Latino\src\latmv.c(1091): warning C4456: declaration of 'cur' hides previous local declaration
+  C:\Users\Layout\Desktop\Latino\src\latmv.c(552): note: see declaration of 'cur'
+C:\Users\Layout\Desktop\Latino\src\latmv.c(1113): warning C4018: '>': signed/unsigned mismatch
+C:\Users\Layout\Desktop\Latino\src\latmv.c(1116): warning C4018: '>=': signed/unsigned mismatch
+C:\Users\Layout\Desktop\Latino\src\latmv.c(947): warning C4244: 'initializing': conversion from 'double' to 'int', possible loss of data
+C:\Users\Layout\Desktop\Latino\src\latmv.c(1019): warning C4204: nonstandard extension used: non-constant aggregate initializer
+C:\Users\Layout\Desktop\Latino\src\latmv.c(1029): warning C4204: nonstandard extension used: non-constant aggregate initializer
+  latobj.c
+c:\users\layout\desktop\latino\include\latino.h(58): warning C4068: unknown pragma
+C:\Users\Layout\Desktop\Latino\src\latobj.c(116): warning C4018: '>': signed/unsigned mismatch
+C:\Users\Layout\Desktop\Latino\src\latobj.c(319): warning C4244: '=': conversion from 'double' to 'int', possible loss of data
+C:\Users\Layout\Desktop\Latino\src\latobj.c(730): warning C4244: 'return': conversion from 'double' to 'int', possible loss of data
+C:\Users\Layout\Desktop\Latino\src\latobj.c(733): warning C4244: 'return': conversion from 'double' to 'int', possible loss of data
+C:\Users\Layout\Desktop\Latino\src\latobj.c(759): warning C4244: 'return': conversion from 'int' to 'char', possible loss of data
+C:\Users\Layout\Desktop\Latino\src\latobj.c(762): warning C4244: 'return': conversion from 'int' to 'char', possible loss of data
+C:\Users\Layout\Desktop\Latino\src\latobj.c(772): warning C4244: 'return': conversion from 'double' to 'char', possible loss of data
+C:\Users\Layout\Desktop\Latino\src\latobj.c(775): warning C4244: 'return': conversion from 'double' to 'char', possible loss of data
+C:\Users\Layout\Desktop\Latino\src\latobj.c(779): warning C4244: 'return': conversion from 'int' to 'char', possible loss of data
+C:\Users\Layout\Desktop\Latino\src\latobj.c(782): warning C4267: 'return': conversion from 'size_t' to 'char', possible loss of data
+C:\Users\Layout\Desktop\Latino\src\latobj.c(803): warning C4047: 'return': 'char *' differs in levels of indirection from 'char'
+  latpaqlib.c
+c:\users\layout\desktop\latino\include\latino.h(58): warning C4068: unknown pragma
+  latrepl.c
+c:\users\layout\desktop\latino\include\latino.h(58): warning C4068: unknown pragma
+  latgc.c
+c:\users\layout\desktop\latino\include\latino.h(58): warning C4068: unknown pragma
+C:\Users\Layout\Desktop\Latino\src\latgc.c(102): warning C4100: 'mv': unreferenced formal parameter
+  latbaselib.c
+c:\users\layout\desktop\latino\include\latino.h(58): warning C4068: unknown pragma
+C:\Users\Layout\Desktop\Latino\src\latbaselib.c(216): warning C4100: 'mv': unreferenced formal parameter
+  latstrlib.c
+c:\users\layout\desktop\latino\include\latino.h(58): warning C4068: unknown pragma
+C:\Users\Layout\Desktop\Latino\src\latstrlib.c(32): warning C4244: '+=': conversion from 'double' to 'int', possible loss of data
+C:\Users\Layout\Desktop\Latino\src\latstrlib.c(88): warning C4244: '=': conversion from 'int' to 'char', possible loss of data
+C:\Users\Layout\Desktop\Latino\src\latstrlib.c(94): warning C4244: '=': conversion from 'int' to 'char', possible loss of data
+C:\Users\Layout\Desktop\Latino\src\latstrlib.c(118): warning C4244: '=': conversion from 'int' to 'char', possible loss of data
+C:\Users\Layout\Desktop\Latino\src\latstrlib.c(137): warning C4244: '=': conversion from 'int' to 'char', possible loss of data
+C:\Users\Layout\Desktop\Latino\src\latstrlib.c(141): warning C4244: '=': conversion from 'int' to 'char', possible loss of data
+C:\Users\Layout\Desktop\Latino\src\latstrlib.c(145): warning C4244: '=': conversion from 'int' to 'char', possible loss of data
+C:\Users\Layout\Desktop\Latino\src\latstrlib.c(151): warning C4244: '=': conversion from 'int' to 'char', possible loss of data
+C:\Users\Layout\Desktop\Latino\src\latstrlib.c(164): warning C4244: '=': conversion from 'int' to 'char', possible loss of data
+C:\Users\Layout\Desktop\Latino\src\latstrlib.c(324): warning C4244: '=': conversion from 'int' to 'char', possible loss of data
+C:\Users\Layout\Desktop\Latino\src\latstrlib.c(335): warning C4244: '=': conversion from 'int' to 'char', possible loss of data
+C:\Users\Layout\Desktop\Latino\src\latstrlib.c(447): warning C4244: 'function': conversion from 'double' to 'int', possible loss of data
+C:\Users\Layout\Desktop\Latino\src\latstrlib.c(466): warning C4244: 'function': conversion from 'double' to 'int', possible loss of data
+C:\Users\Layout\Desktop\Latino\src\latstrlib.c(477): warning C4244: 'function': conversion from 'double' to 'int', possible loss of data
+C:\Users\Layout\Desktop\Latino\src\latstrlib.c(563): warning C4244: '=': conversion from 'double' to 'int', possible loss of data
+C:\Users\Layout\Desktop\Latino\src\latstrlib.c(564): warning C4244: '=': conversion from 'double' to 'int', possible loss of data
+C:\Users\Layout\Desktop\Latino\src\latstrlib.c(594): warning C4244: 'function': conversion from 'double' to 'int', possible loss of data
+C:\Users\Layout\Desktop\Latino\src\latstrlib.c(595): warning C4244: 'function': conversion from 'double' to 'int', possible loss of data
+C:\Users\Layout\Desktop\Latino\src\latstrlib.c(635): warning C4018: '<': signed/unsigned mismatch
+C:\Users\Layout\Desktop\Latino\src\latstrlib.c(931): warning C4018: '<': signed/unsigned mismatch
+  latlistlib.c
+c:\users\layout\desktop\latino\include\latino.h(58): warning C4068: unknown pragma
+C:\Users\Layout\Desktop\Latino\src\latlistlib.c(56): warning C4244: 'initializing': conversion from 'double' to 'int', possible loss of data
+C:\Users\Layout\Desktop\Latino\src\latlistlib.c(101): warning C4244: 'function': conversion from 'double' to 'int', possible loss of data
+C:\Users\Layout\Desktop\Latino\src\latlistlib.c(139): warning C4244: 'initializing': conversion from 'double' to 'int', possible loss of data
+  latdiclib.c
+c:\users\layout\desktop\latino\include\latino.h(58): warning C4068: unknown pragma
+  latfilelib.c
+c:\users\layout\desktop\latino\include\latino.h(58): warning C4068: unknown pragma
+C:\Users\Layout\Desktop\Latino\src\latfilelib.c(35): warning C4245: 'return': conversion from 'int' to 'size_t', signed/unsigned mismatch
+C:\Users\Layout\Desktop\Latino\src\latfilelib.c(38): warning C4245: 'return': conversion from 'int' to 'size_t', signed/unsigned mismatch
+C:\Users\Layout\Desktop\Latino\src\latfilelib.c(41): warning C4245: 'return': conversion from 'int' to 'size_t', signed/unsigned mismatch
+C:\Users\Layout\Desktop\Latino\src\latfilelib.c(48): warning C4245: 'return': conversion from 'int' to 'size_t', signed/unsigned mismatch
+  latmathlib.c
+c:\users\layout\desktop\latino\include\latino.h(58): warning C4068: unknown pragma
+C:\Users\Layout\Desktop\Latino\src\latmathlib.c(165): warning C4244: '=': conversion from 'double' to 'int', possible loss of data
+C:\Users\Layout\Desktop\Latino\src\latmathlib.c(166): warning C4244: '=': conversion from 'double' to 'int', possible loss of data
+C:\Users\Layout\Desktop\Latino\src\latmathlib.c(170): warning C4244: '=': conversion from 'double' to 'int', possible loss of data
+C:\Users\Layout\Desktop\Latino\src\latmathlib.c(171): warning C4244: '=': conversion from 'double' to 'int', possible loss of data
+C:\Users\Layout\Desktop\Latino\src\latmathlib.c(173): warning C4244: 'function': conversion from 'time_t' to 'unsigned int', possible loss of data
+  latsyslib.c
+c:\users\layout\desktop\latino\include\latino.h(58): warning C4068: unknown pragma
+C:\Users\Layout\Desktop\Latino\src\latsyslib.c(62): warning C4244: 'function': conversion from 'double' to 'DWORD', possible loss of data
+C:\Users\Layout\Desktop\Latino\src\latsyslib.c(115): warning C4244: 'function': conversion from 'time_t' to 'double', possible loss of data
+C:\Users\Layout\Desktop\Latino\src\latsyslib.c(119): warning C4244: '=': conversion from 'double' to 'time_t', possible loss of data
+C:\Users\Layout\Desktop\Latino\src\latsyslib.c(140): warning C4244: 'function': conversion from 'double' to 'int', possible loss of data
+C:\Users\Layout\Desktop\Latino\src\latsyslib.c(149): warning C4100: 'mv': unreferenced formal parameter
+C:\Users\Layout\Desktop\Latino\src\latsyslib.c(164): warning C4244: 'initializing': conversion from 'double' to 'int', possible loss of data
+  Generating Code...
+c:\users\layout\desktop\latino\src\latstrlib.c(301): warning C4706: assignment within conditional expression
+c:\users\layout\desktop\latino\src\latstrlib.c(551): warning C4702: unreachable code
+c:\users\layout\desktop\latino\src\latmv.c(192): warning C4702: unreachable code
+c:\users\layout\desktop\latino\src\latmv.c(148): warning C4702: unreachable code
+c:\users\layout\desktop\latino\visualstudio\src\latparse.c(2419): warning C4702: unreachable code
+c:\users\layout\desktop\latino\visualstudio\src\latparse.c(2424): warning C4702: unreachable code
+c:\users\layout\desktop\latino\visualstudio\src\latparse.c(2425): warning C4702: unreachable code
+  Compiling...
+  latdevlib.c
+c:\users\layout\desktop\latino\include\latino.h(58): warning C4068: unknown pragma
+  utf8.c
+  linenoise.c
+C:\Users\Layout\Desktop\Latino\src\linenoise\linenoise.c(733): warning C4100: 'prompt': unreferenced formal parameter
+C:\Users\Layout\Desktop\Latino\src\linenoise\linenoise.c(761): warning C4244: '=': conversion from 'int' to 'char', possible loss of data
+C:\Users\Layout\Desktop\Latino\src\linenoise\linenoise.c(851): warning C4456: declaration of 'ch' hides previous local declaration
+  C:\Users\Layout\Desktop\Latino\src\linenoise\linenoise.c(789): note: see declaration of 'ch'
+C:\Users\Layout\Desktop\Latino\src\linenoise\linenoise.c(864): warning C4244: 'function': conversion from 'int' to 'char', possible loss of data
+C:\Users\Layout\Desktop\Latino\src\linenoise\linenoise.c(1230): warning C4456: declaration of 'p' hides previous local declaration
+  C:\Users\Layout\Desktop\Latino\src\linenoise\linenoise.c(1220): note: see declaration of 'p'
+  Generating Code...
+  liblatino_static.vcxproj -> C:\Users\Layout\Desktop\Latino\visualstudio\src\Debug\liblatino_static.lib
+>>>>>>> 11336ac9485c6d839841852720d6c6d0098511a2

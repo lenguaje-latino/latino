@@ -1,7 +1,13 @@
 [Desktop Entry]
+<<<<<<< HEAD
 Version=0.9.0
 Name=Latino
 Comment=Ejecutable de Latino oficial v.0.9.0
+=======
+Version=1.2.0
+Name=Latino
+Comment=Ejecutable de Latino oficial v.1.2.0
+>>>>>>> 11336ac9485c6d839841852720d6c6d0098511a2
 Exec=/usr/bin/latino
 Icon=/usr/share/latino/desktop.png
 Terminal=true

@@ -4,6 +4,10 @@
     </a>
 </p>
 
+<<<<<<< HEAD
+=======
+![GitHub release (latest by date)](https://img.shields.io/github/v/release/Lenguaje-Latino/Latino)
+>>>>>>> 11336ac9485c6d839841852720d6c6d0098511a2
 [![https://t.me/joinchat/EBHu7z6l6_paWtcJgu9DVQ](https://img.shields.io/badge/Soporte-Telegram-green.svg?style=plastic)](https://t.me/joinchat/AAAAAD6l6_qIgQAAgu9DVQ)
 [![Join the chat at https://gitter.im/primitivorm/latino](https://badges.gitter.im/primitivorm/latino.svg)](https://gitter.im/primitivorm/latino?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 
@@ -12,6 +16,9 @@
 [![codecov.io](http://codecov.io/github/primitivorm/latino/coverage.svg?branch=master)](http://codecov.io/github/primitivorm/latino?branch=master)
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> 11336ac9485c6d839841852720d6c6d0098511a2
 <a name="tabla"></a>
 # Tabla de contenidos
 * [Tabla de contenidos](#tabla)
@@ -46,7 +53,11 @@
 
 <a name="intro"></a>
 ### Vídeo introductorio de Latino (clic en la imagen)
+<<<<<<< HEAD
 [![Watch the video](https://raw.githubusercontent.com/MelvinG24/Latino/master/.readme/imgs/latinoVideo.bmp)](https://youtu.be/ljQKPihnejU)
+=======
+[![Video Introductorio de Latino](https://j.gifs.com/GvrEK0.gif)](https://youtu.be/ljQKPihnejU)
+>>>>>>> 11336ac9485c6d839841852720d6c6d0098511a2
 
 <a name="porQue"></a>
 # ¿Por qué usar Latino?
@@ -79,6 +90,10 @@
 - [Chat en Gitter](https://gitter.im/primitivorm/latino?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 - [Chat en Telegram](https://t.me/joinchat/AAAAAD6l6_qIgQAAgu9DVQ)
 - [Manual Latino](https://manuallatino.blogspot.com)
+<<<<<<< HEAD
+=======
+- [API de Latino](https://manuallatinoapi.blogspot.com)
+>>>>>>> 11336ac9485c6d839841852720d6c6d0098511a2
 
 <a name="sintx"></a>
 # SINTAXIS DE LATINO
@@ -89,6 +104,7 @@ Los comentarios de una linea empezaran por el signo de gato `#` (como en python)
 ```js
 #Este es un comentario estilo python
 //Este es un comentario estilo C
+<<<<<<< HEAD
 =======
 ¿Qué es lenguaje Latino?
 ===
@@ -234,6 +250,67 @@ G = 9.8
 | lista (arreglo)  |      **struct**       |
 | diccionario      |      **struct**       |
 
+=======
+```
+Los comentarios multilínea son al estilo C. inician con `/*` y terminan con `*/`.
+```c
+/*
+Este es un
+comentario
+multilínea
+*/
+```
+<a name="var"></a>
+## II. Variables:
+Las variables son identificadores asociados a valores.
+```python
+nombre = "Juan Perez"
+calificacion = 10
+numeros = [1, 2, 3, 4, 5]  //esto es una lista ó arreglo.
+sueldos = { "Jesus" : 10000, "Maria" : 20000, "Jose" : 30000 } //esto es un diccionario
+```
+
+Es posible asignar más de una variable en una sola línea de código
+```python
+a, b, c = 1, 2, 3   #a = 1  b = 2  c = 3
+a, b, c = 1, 2      #a = 1  b = 2  c = nulo
+a, b    = 1, 2, 3   #a = 1  b = 2  se descarta el valor 3
+```
+<a name="puede"></a>
+### __Un identificador puede:__
+1. Empezar por guión bajo `_` o letras `a-z ó A-Z`. No son validas las letras acentuadas ni la `ñ` como letras en los identificadores.
+2. Contener caracteres en mayúsculas y minúsculas.
+Latino  es sensible a mayúsculas y minúsculas. Por lo que los siguientes identificadores no son los mismos.
+```python
+mensaje = "Hola mundo"
+Mensaje = "¡Hasta la vista baby!"
+```
+<a name="NOpuede"></a>
+### __Un identificador NO puede:__
+1. Empezar por un número.
+2. Empezar por un símbolo, ni tampoco que sea una palabra reservada.
+
+<a name="const"></a>
+## III. Constantes:
+Cuando se declara una constante, también se debe asignar el valor forzosamente.
+
+Las constantes se deben declarar en **mayúsculas**.
+```python
+PI = 3.14159
+G = 9.8
+```
+
+<a name="datos"></a>
+## IV. Tipos de datos
+| latino           | tipo de dato en C |
+| --- |:---:|
+| lógico           |       **bool**        |
+| numérico         |      **double**       |
+| cadena o literal |      **`char*`**      |
+| lista (arreglo)  |      **struct**       |
+| diccionario      |      **struct**       |
+
+>>>>>>> 11336ac9485c6d839841852720d6c6d0098511a2
 <a name="opds"></a>
 ## V. Operadores:
 A continuación se listan los operadores:
@@ -252,6 +329,7 @@ La precedencia de operadores es la misma que otros lenguajes de programación co
 
 El operador ternario se puede usar para asignar valores basado en una condición, los paréntesis son requeridos para obtener el resultado esperado.
 <<<<<<< HEAD
+<<<<<<< HEAD
 ```python
 =======
 
@@ -261,6 +339,13 @@ numero = -5
 mensaje = (numero < 0) ? " es negativo" : " es positivo"
 escribir("El número " .. numero .. mensaje)
 // Salida: El número -5 es negativo
+=======
+```python
+numero = -5
+mensaje = (numero < 0) ? " es negativo" : " es positivo"
+escribir("El número " .. numero .. mensaje)
+#salida: El número -5 es negativo
+>>>>>>> 11336ac9485c6d839841852720d6c6d0098511a2
 ```
 <a name="estrCtrl"></a>
 ## VI. Estructuras de control:
@@ -269,6 +354,7 @@ escribir("El número " .. numero .. mensaje)
 Evalua una condición y si el resultado es `verdadero` ejecuta
 las instrucciones a continuación. Los paréntesis son opcionales en la condición.
 <<<<<<< HEAD
+<<<<<<< HEAD
 ```python
 =======
 
@@ -276,12 +362,18 @@ las instrucciones a continuación. Los paréntesis son opcionales en la condici�
 >>>>>>> master
 si (condicion)
    // Código
+=======
+```python
+si (condicion)
+   #codigo
+>>>>>>> 11336ac9485c6d839841852720d6c6d0098511a2
 fin
 
 edad = 18
 si edad >= 18
     escribir("Eres mayor de edad, ya puedes votar.")
 fin
+<<<<<<< HEAD
 // Salida: Eres mayor de edad, ya puedes votar.
 ```
 
@@ -296,10 +388,22 @@ si condicion
    // Código
 sino
    // Código
+=======
+#salida: Eres mayor de edad, ya puedes votar.
+```
+
+En caso de que el resultado de la condición sea `falso` se deberá de ejecutar el código después de la palabra reservada `sino`.
+```python
+si condicion
+   #codigo
+sino
+   #codigo
+>>>>>>> 11336ac9485c6d839841852720d6c6d0098511a2
 fin
 
 edad = 5
 si edad >= 18
+<<<<<<< HEAD
     escribir("Eres mayor de edad, ya alcanzas el timbre, ya puedes votar.")
 sino
     escribir("Eres un niño, tienes que ir a la escuela.")
@@ -321,10 +425,29 @@ sino
         // Código
     sino
         // Código
+=======
+    escribir("Eres mayor de edad, ya puedes votar.")
+sino
+    escribir("Eres un niño, tienes que ir a la escuela.")
+fin
+#salida: Eres un niño, tienes que ir a la escuela.
+```
+
+Es posible el anidamiento de las sentencias `si-sino` de la siguiente manera:
+```python
+si condicion
+   #codigo
+sino
+    si condicion
+        #codigo
+    sino
+        #codigo
+>>>>>>> 11336ac9485c6d839841852720d6c6d0098511a2
     fin
 fin
 ```
 Existe una forma más elegante de escribir el código anterior con la palabra reservada `osi`. En python es `elif expresion:`.
+<<<<<<< HEAD
 <<<<<<< HEAD
 ```python
 =======
@@ -339,6 +462,17 @@ osi condicion3
     // Código
 sino
     // Código
+=======
+```python
+si condicion1
+    #codigo
+osi condicion2
+    #codigo
+osi condicion3
+    #codigo
+sino
+    #codigo
+>>>>>>> 11336ac9485c6d839841852720d6c6d0098511a2
 fin
 ```
 ---
@@ -347,6 +481,7 @@ fin
 Evalúa una opción de múltiples posibles casos.
 La opción puede ser una expresión, en caso de que ninguna opción se cumpla en algún caso se ejecuta el código después de la palabra reservada `otro` o `defecto`.
 Los valores de los casos solo pueden ser numéricos o cadenas.
+<<<<<<< HEAD
 <<<<<<< HEAD
 ```python
 =======
@@ -362,6 +497,18 @@ elegir (opcion)
         // Código
     defecto:
         // Código
+=======
+```python
+elegir (opcion)
+    caso valor1:
+        #codigo
+    caso valor2:
+        #codigo
+    caso valor3:
+        #codigo
+    defecto:
+        #codigo
+>>>>>>> 11336ac9485c6d839841852720d6c6d0098511a2
 fin
 
 calificacion = 'B'
@@ -379,7 +526,11 @@ elegir(calificacion)
     otro:
         escribir("Calificación invalida.")
 fin
+<<<<<<< HEAD
 // Salida: Bien echo!
+=======
+#salida: Bien echo!
+>>>>>>> 11336ac9485c6d839841852720d6c6d0098511a2
 ```
 Notese que se tiene que repetir el caso para `B` y `C` por el momento no se permiten casos múltiples como una sola opción.
 
@@ -389,6 +540,7 @@ Notese que se tiene que repetir el caso para `B` y `C` por el momento no se perm
 Hace que una instrucción o bloque de instrucciones se repitan
 desde una condición inicial y mientras la condición se cumpla (es decir sea `verdadero`), en esta sentencia los paréntesis si son requeridos.
 <<<<<<< HEAD
+<<<<<<< HEAD
 ```python
 =======
 
@@ -396,16 +548,26 @@ desde una condición inicial y mientras la condición se cumpla (es decir sea `v
 >>>>>>> master
 desde (condicion_inicial; condicion; incremento)
      // Código
+=======
+```python
+desde (condicion_inicial; condicion; incremento)
+     #codigo
+>>>>>>> 11336ac9485c6d839841852720d6c6d0098511a2
 fin
 
 desde (i=0; i <= 10; i++)
      escribir(i)
 fin
+<<<<<<< HEAD
 // Salida: 0 1 2 3 4 5 6 7 8 9 10
+=======
+#salida: 0 1 2 3 4 5 6 7 8 9 10
+>>>>>>> 11336ac9485c6d839841852720d6c6d0098511a2
 
 desde (i=10; i >= 0; i--)
      escribir(i)
 fin
+<<<<<<< HEAD
 // Salida: 10 9 8 7 6 5 4 3 2 1 0
 ```
 
@@ -421,12 +583,24 @@ desde (i=0; i < 50; i=i+10)
     imprimir(i)
 fin
 // Salida: 0 10 20 30 40
+=======
+#salida: 10 9 8 7 6 5 4 3 2 1 0
+```
+
+Se puede especificar un salto diferente cambiando la expresión de incremento.
+```python
+desde(i=0; i < 50; i=i+10)
+    imprimir(i)
+fin
+#salida: 0 10 20 30 40
+>>>>>>> 11336ac9485c6d839841852720d6c6d0098511a2
 ```
 ---
 <a name="mientras"></a>
 ### mientras (do while)
 Hace que una instrucción o bloque de instrucciones se repitan
 mientras la condición sea `verdadero`, los paréntesis son opcionales en la condición.
+<<<<<<< HEAD
 <<<<<<< HEAD
 ```python
 =======
@@ -435,14 +609,25 @@ mientras la condición sea `verdadero`, los paréntesis son opcionales en la con
 >>>>>>> master
 mientras (condicion)
     // Código
+=======
+```python
+mientras (condicion)
+    #codigo
+>>>>>>> 11336ac9485c6d839841852720d6c6d0098511a2
 fin
 
 i=0
 mientras i < 10
     escribir(i)
+<<<<<<< HEAD
     i++ // Incrementa el valor de i (suma 1 a i)
 fin
 // Salida: 0 1 2 3 4 5 6 7 8 9
+=======
+    i++ #incremento
+fin
+#salida: 0 1 2 3 4 5 6 7 8 9
+>>>>>>> 11336ac9485c6d839841852720d6c6d0098511a2
 ```
 ---
 <a name="rept"></a>
@@ -452,6 +637,7 @@ se repitan mientra la condición sea `falso`,
 las instrucciones de código se ejecutan al menos una vez.
 Los paréntesis son opcionales en la condición.
 <<<<<<< HEAD
+<<<<<<< HEAD
 ```python
 =======
 
@@ -460,10 +646,17 @@ Los paréntesis son opcionales en la condición.
 repetir
     // Código
 hasta (condicion)
+=======
+```python
+repetir
+    #codigo
+hasta condicion
+>>>>>>> 11336ac9485c6d839841852720d6c6d0098511a2
 
 i=0
 repetir
     escribir(i)
+<<<<<<< HEAD
     i++ // Incrementa el valor de i (suma 1 a i)
 hasta i == 10
 // Salida: 0 1 2 3 4 5 6 7 8 9
@@ -484,6 +677,22 @@ desde (i=0; i < 10; i++)
     imprimir(i)
 fin
 // Salida: 0 1 2 3 4, se imprime sólo hasta el 4
+=======
+    i++ #incremento
+hasta i == 10
+#salida: 0 1 2 3 4 5 6 7 8 9
+```
+
+Se puede salir de los bucles (`desde`, `mientras` y `repetir`) con la palabra reservada `romper`.
+```python
+desde(i=0; i < 10; i++)
+    si (i == 5)        
+        romper    #se sale del ciclo desde
+    fin
+    imprimir(i)
+fin
+#salida: 0 1 2 3 4   #se imprime solo hasta el 4
+>>>>>>> 11336ac9485c6d839841852720d6c6d0098511a2
 ```
 <a name="fun"></a>
 ## VII. Funciones
@@ -493,6 +702,7 @@ Las funciones se definen con la palabra reservada `funcion` o la forma corta `fu
 
 Se puede regresar el valor con la palabra clave `regresar`, `retornar` o la forma corta `ret`.
 La estructura de una función es la siguiente:
+<<<<<<< HEAD
 <<<<<<< HEAD
 ```python
 =======
@@ -505,12 +715,22 @@ funcion nombreFuncion (argumento1, argumento2)
 fin
 
 // La siguiente función suma dos números
+=======
+```python
+funcion nombreFuncion (argumento1, argumento2)
+    #codigo
+    retornar resultado
+fin
+
+#La siguiente función suma dos números
+>>>>>>> 11336ac9485c6d839841852720d6c6d0098511a2
 fun sumar(a, b)
   ret a + b
 fin
 ```
 
 Para invocar (ejecutar) una función se hace con el nombre de la función y la lista de parámetros entre paréntesis.
+<<<<<<< HEAD
 <<<<<<< HEAD
 ```python
 r = sumar(2, 3)  #se almacena el resultado en la variable r
@@ -557,6 +777,41 @@ escribir(r)
 ** parametro 3: 3
 ** 3
 */
+=======
+```python
+r = sumar(2, 3)  #se almacena el resultado en la variable r
+escribir(r)
+#salida: 5
+```
+
+Se pueden crear funciones con un número variable de argumentos con `...` en el ultimo parámetro de la definición.
+```python
+funcion varArgs(arg1, arg2, ...)
+  va = [...] #se obtienen los parametros 3 en adelante como una lista y se asignan a la variable va
+  escribir("parametro 1: " .. arg1) #imprime el parametro 1
+  escribir("parametro 2: " .. arg2) #imprime el parametro 2
+  escribir("parametro 3: " .. va[0]) #imprime el parametro 3
+  retornar arg1 + arg2
+fin
+
+#llamada a función varArgs con 2 elementos
+r = varArgs(1, 2)
+escribir(r)
+#salida:
+parametro 1: 1
+parametro 2: 2
+parametro 3: nulo
+3
+
+#llamada a funcion varArgs con 3 elementos
+r = varArgs(1, 2, 3)
+escribir(r)
+#salida:
+parametro 1: 1
+parametro 2: 2
+parametro 3: 3
+3
+>>>>>>> 11336ac9485c6d839841852720d6c6d0098511a2
 ```
 <a name="lista"></a>
 ## VIII. Listas
@@ -566,12 +821,17 @@ Las listas pueden contener cualquier tipo de dato: lógico, númerico, literal, 
 
 Crear una lista es tan sencillo como indicar entre corchetes y separados por comas los valores que queremos incluir en la lista.
 <<<<<<< HEAD
+<<<<<<< HEAD
 ```python
 #declaracion de listas
 =======
 ```C
 // Declaracion de listas
 >>>>>>> master
+=======
+```python
+#declaracion de listas
+>>>>>>> 11336ac9485c6d839841852720d6c6d0098511a2
 numeros = [1, 2, 3, 4, 5]
 vacia = []
 ```
@@ -579,16 +839,23 @@ vacia = []
 Podemos acceder a cada uno de los elementos de la lista escribiendo el nombre de la lista e indicando el índice del elemento entre corchetes `[]`.
 Ten en cuenta que el índice del primer elemento de la lista es 0:
 <<<<<<< HEAD
+<<<<<<< HEAD
 ```python
 =======
 ```C
 >>>>>>> master
 escribir(numeros[1])
 // Salida: 2
+=======
+```python
+escribir(numeros[1])
+#salida: 2
+>>>>>>> 11336ac9485c6d839841852720d6c6d0098511a2
 ```
 
 También podemos utilizar este operador para modificar un elemento de la lista si lo
 colocamos en la parte izquierda de una asignación:
+<<<<<<< HEAD
 <<<<<<< HEAD
 ```python
 =======
@@ -607,16 +874,32 @@ Podemos utilizar también números negativos. Si se utiliza un número negativo 
 >>>>>>> master
 escribir(numeros[-1])
 // Salida: 5
+=======
+```python
+numeros[0] = 99
+escribir(numeros)
+#salida: [99, 2, 3, 4, 5]
+```
+
+Podemos utilizar también números negativos. Si se utiliza un número negativo como índice, esto se traduce en que el índice empieza a contar desde el final, hacia la izquierda; es decir, con [-1] accederíamos al último elemento de la lista, con [-2] al penúltimo, con [-3], al antepenúltimo, y así sucesivamente.
+```python
+escribir(numeros[-1])
+#salida: 5
+>>>>>>> 11336ac9485c6d839841852720d6c6d0098511a2
 ```
 <a name="dic"></a>
 ## IX. Diccionarios
 Los diccionarios, también llamados matrices asociativas, deben su nombre a que son colecciones que relacionan una clave y un valor, entre llaves y separado el valor de la clave con dos puntos.
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> 11336ac9485c6d839841852720d6c6d0098511a2
 ```python
 #Diccionario de personajes y actores:
 actores = { "Chilindrina": "Maria Antonieta de las Nieves",
      "El chavo del 8": "Roberto Gomez Bolaños",
      "Tres patines": "Leopoldo Fernandez" }
+<<<<<<< HEAD
 =======
 ```C
 // Diccionario de personajes y actores:
@@ -626,6 +909,8 @@ actores = {
 	"Tres patines": "Leopoldo Fernandez"
 }
 >>>>>>> master
+=======
+>>>>>>> 11336ac9485c6d839841852720d6c6d0098511a2
 ```
 
 El primer valor se trata de la clave y el segundo del valor asociado a la clave.
@@ -636,6 +921,7 @@ Si se modificara el objeto clave después de haber sido introducido en el diccio
 su hash también cambiaría y no podría ser encontrado.
 
 La diferencia principal entre los diccionarios y las listas es que a los valores almacenados en un diccionario se les accede no por su índice, porque de hecho no tienen orden, sino por su clave, utilizando corchetes `[]`.
+<<<<<<< HEAD
 <<<<<<< HEAD
 ```python
 =======
@@ -654,6 +940,18 @@ Al igual que en listas también se puede utilizar corchetes para reasignar valor
 actores["Chilindrina"] = "Maria Antonieta"
 escribir(actores["Chilindrina"])
 // Salida: Maria Antonieta
+=======
+```python
+escribir(actores["Chilindrina"])
+#salida: Maria Antonieta de las Nieves
+```
+
+Al igual que en listas también se puede utilizar corchetes para reasignar valores.
+```python
+actores["Chilindrina"] = "Maria Antonieta"
+escribir(actores["Chilindrina"])
+#salida: Maria Antonieta
+>>>>>>> 11336ac9485c6d839841852720d6c6d0098511a2
 ```
 <a name="plbrsRvds"></a>
 ## X. Palabras reservadas hasta el momento

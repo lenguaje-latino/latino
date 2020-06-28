@@ -1,4 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
+<<<<<<< HEAD
 <Project DefaultTargets="Build" ToolsVersion="16.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
     <PreferredToolArchitecture>x64</PreferredToolArchitecture>
@@ -49,6 +50,55 @@
     <ConfigurationType>StaticLibrary</ConfigurationType>
     <CharacterSet>MultiByte</CharacterSet>
     <PlatformToolset>v142</PlatformToolset>
+=======
+<Project DefaultTargets="Build" ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="MinSizeRel|Win32">
+      <Configuration>MinSizeRel</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="RelWithDebInfo|Win32">
+      <Configuration>RelWithDebInfo</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{4F44FE0A-0137-36DC-9372-A33AFC5FCBFE}</ProjectGuid>
+    <Keyword>Win32Proj</Keyword>
+    <Platform>Win32</Platform>
+    <ProjectName>liblatino_static</ProjectName>
+    <VCProjectUpgraderObjectName>NoUpgrade</VCProjectUpgraderObjectName>
+    <WindowsTargetPlatformVersion>8.1</WindowsTargetPlatformVersion>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <CharacterSet>MultiByte</CharacterSet>
+    <PlatformToolset>v141</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <CharacterSet>MultiByte</CharacterSet>
+    <PlatformToolset>v141</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|Win32'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <CharacterSet>MultiByte</CharacterSet>
+    <PlatformToolset>v141</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|Win32'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <CharacterSet>MultiByte</CharacterSet>
+    <PlatformToolset>v141</PlatformToolset>
+>>>>>>> 11336ac9485c6d839841852720d6c6d0098511a2
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
   <ImportGroup Label="ExtensionSettings">
@@ -59,6 +109,7 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup>
     <_ProjectFileVersion>10.0.20506.1</_ProjectFileVersion>
+<<<<<<< HEAD
     <OutDir Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">C:\Users\ciber\src\latino\visualstudio\src\Debug\</OutDir>
     <IntDir Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">liblatino_static.dir\Debug\</IntDir>
     <TargetName Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">liblatino_static</TargetName>
@@ -80,6 +131,29 @@
     <ClCompile>
       <AdditionalIncludeDirectories>C:\Users\ciber\src\latino\src\regex-2.7-src\src;C:\Users\ciber\src\latino\src\linenoise;C:\Users\ciber\src\latino\src\..\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <AssemblerListingLocation>Debug/</AssemblerListingLocation>
+=======
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">C:\Users\Layout\Desktop\Latino\visualstudio\src\Debug\</OutDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">liblatino_static.dir\Debug\</IntDir>
+    <TargetName Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">liblatino_static</TargetName>
+    <TargetExt Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">.lib</TargetExt>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">C:\Users\Layout\Desktop\Latino\visualstudio\src\Release\</OutDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">liblatino_static.dir\Release\</IntDir>
+    <TargetName Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">liblatino_static</TargetName>
+    <TargetExt Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">.lib</TargetExt>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|Win32'">C:\Users\Layout\Desktop\Latino\visualstudio\src\MinSizeRel\</OutDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|Win32'">liblatino_static.dir\MinSizeRel\</IntDir>
+    <TargetName Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|Win32'">liblatino_static</TargetName>
+    <TargetExt Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|Win32'">.lib</TargetExt>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|Win32'">C:\Users\Layout\Desktop\Latino\visualstudio\src\RelWithDebInfo\</OutDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|Win32'">liblatino_static.dir\RelWithDebInfo\</IntDir>
+    <TargetName Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|Win32'">liblatino_static</TargetName>
+    <TargetExt Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|Win32'">.lib</TargetExt>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <AdditionalIncludeDirectories>C:\Users\Layout\Desktop\Latino\src\regex-2.7-src\src;C:\Users\Layout\Desktop\Latino\src\linenoise;C:\Users\Layout\Desktop\Latino\src\..\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AssemblerListingLocation>$(IntDir)</AssemblerListingLocation>
+>>>>>>> 11336ac9485c6d839841852720d6c6d0098511a2
       <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
       <CompileAs>CompileAsC</CompileAs>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
@@ -89,7 +163,12 @@
       <Optimization>Disabled</Optimization>
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
+<<<<<<< HEAD
       <SuppressStartupBanner></SuppressStartupBanner>
+=======
+      <SuppressStartupBanner>
+      </SuppressStartupBanner>
+>>>>>>> 11336ac9485c6d839841852720d6c6d0098511a2
       <UseFullPaths>false</UseFullPaths>
       <WarningLevel>Level4</WarningLevel>
       <PreprocessorDefinitions>WIN32;_WINDOWS;_CRT_SECURE_NO_WARNINGS;_DEBUG;__STDC_CONSTANT_MACROS;__STDC_FORMAT_MACROS;__STDC_LIMIT_MACROS;CMAKE_INTDIR="Debug";%(PreprocessorDefinitions)</PreprocessorDefinitions>
@@ -97,10 +176,17 @@
     </ClCompile>
     <ResourceCompile>
       <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;_CRT_SECURE_NO_WARNINGS;__STDC_CONSTANT_MACROS;__STDC_FORMAT_MACROS;__STDC_LIMIT_MACROS;CMAKE_INTDIR=\"Debug\";%(PreprocessorDefinitions)</PreprocessorDefinitions>
+<<<<<<< HEAD
       <AdditionalIncludeDirectories>C:\Users\ciber\src\latino\src\regex-2.7-src\src;C:\Users\ciber\src\latino\src\linenoise;C:\Users\ciber\src\latino\src\..\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ResourceCompile>
     <Midl>
       <AdditionalIncludeDirectories>C:\Users\ciber\src\latino\src\regex-2.7-src\src;C:\Users\ciber\src\latino\src\linenoise;C:\Users\ciber\src\latino\src\..\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+=======
+      <AdditionalIncludeDirectories>C:\Users\Layout\Desktop\Latino\src\regex-2.7-src\src;C:\Users\Layout\Desktop\Latino\src\linenoise;C:\Users\Layout\Desktop\Latino\src\..\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ResourceCompile>
+    <Midl>
+      <AdditionalIncludeDirectories>C:\Users\Layout\Desktop\Latino\src\regex-2.7-src\src;C:\Users\Layout\Desktop\Latino\src\linenoise;C:\Users\Layout\Desktop\Latino\src\..\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+>>>>>>> 11336ac9485c6d839841852720d6c6d0098511a2
       <OutputDirectory>$(ProjectDir)/$(IntDir)</OutputDirectory>
       <HeaderFileName>%(Filename).h</HeaderFileName>
       <TypeLibraryName>%(Filename).tlb</TypeLibraryName>
@@ -108,6 +194,7 @@
       <ProxyFileName>%(Filename)_p.c</ProxyFileName>
     </Midl>
     <Lib>
+<<<<<<< HEAD
       <AdditionalOptions>%(AdditionalOptions) /machine:x64</AdditionalOptions>
     </Lib>
   </ItemDefinitionGroup>
@@ -115,6 +202,15 @@
     <ClCompile>
       <AdditionalIncludeDirectories>C:\Users\ciber\src\latino\src\regex-2.7-src\src;C:\Users\ciber\src\latino\src\linenoise;C:\Users\ciber\src\latino\src\..\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <AssemblerListingLocation>Release/</AssemblerListingLocation>
+=======
+      <AdditionalOptions>%(AdditionalOptions) /machine:X86</AdditionalOptions>
+    </Lib>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <AdditionalIncludeDirectories>C:\Users\Layout\Desktop\Latino\src\regex-2.7-src\src;C:\Users\Layout\Desktop\Latino\src\linenoise;C:\Users\Layout\Desktop\Latino\src\..\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AssemblerListingLocation>$(IntDir)</AssemblerListingLocation>
+>>>>>>> 11336ac9485c6d839841852720d6c6d0098511a2
       <CompileAs>CompileAsC</CompileAs>
       <ExceptionHandling>
       </ExceptionHandling>
@@ -122,7 +218,12 @@
       <Optimization>MaxSpeed</Optimization>
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
+<<<<<<< HEAD
       <SuppressStartupBanner></SuppressStartupBanner>
+=======
+      <SuppressStartupBanner>
+      </SuppressStartupBanner>
+>>>>>>> 11336ac9485c6d839841852720d6c6d0098511a2
       <UseFullPaths>false</UseFullPaths>
       <WarningLevel>Level4</WarningLevel>
       <PreprocessorDefinitions>WIN32;_WINDOWS;NDEBUG;_CRT_SECURE_NO_WARNINGS;_DEBUG;__STDC_CONSTANT_MACROS;__STDC_FORMAT_MACROS;__STDC_LIMIT_MACROS;CMAKE_INTDIR="Release";%(PreprocessorDefinitions)</PreprocessorDefinitions>
@@ -132,10 +233,17 @@
     </ClCompile>
     <ResourceCompile>
       <PreprocessorDefinitions>WIN32;_WINDOWS;NDEBUG;_CRT_SECURE_NO_WARNINGS;_DEBUG;__STDC_CONSTANT_MACROS;__STDC_FORMAT_MACROS;__STDC_LIMIT_MACROS;CMAKE_INTDIR=\"Release\";%(PreprocessorDefinitions)</PreprocessorDefinitions>
+<<<<<<< HEAD
       <AdditionalIncludeDirectories>C:\Users\ciber\src\latino\src\regex-2.7-src\src;C:\Users\ciber\src\latino\src\linenoise;C:\Users\ciber\src\latino\src\..\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ResourceCompile>
     <Midl>
       <AdditionalIncludeDirectories>C:\Users\ciber\src\latino\src\regex-2.7-src\src;C:\Users\ciber\src\latino\src\linenoise;C:\Users\ciber\src\latino\src\..\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+=======
+      <AdditionalIncludeDirectories>C:\Users\Layout\Desktop\Latino\src\regex-2.7-src\src;C:\Users\Layout\Desktop\Latino\src\linenoise;C:\Users\Layout\Desktop\Latino\src\..\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ResourceCompile>
+    <Midl>
+      <AdditionalIncludeDirectories>C:\Users\Layout\Desktop\Latino\src\regex-2.7-src\src;C:\Users\Layout\Desktop\Latino\src\linenoise;C:\Users\Layout\Desktop\Latino\src\..\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+>>>>>>> 11336ac9485c6d839841852720d6c6d0098511a2
       <OutputDirectory>$(ProjectDir)/$(IntDir)</OutputDirectory>
       <HeaderFileName>%(Filename).h</HeaderFileName>
       <TypeLibraryName>%(Filename).tlb</TypeLibraryName>
@@ -143,6 +251,7 @@
       <ProxyFileName>%(Filename)_p.c</ProxyFileName>
     </Midl>
     <Lib>
+<<<<<<< HEAD
       <AdditionalOptions>%(AdditionalOptions) /machine:x64</AdditionalOptions>
     </Lib>
   </ItemDefinitionGroup>
@@ -150,6 +259,15 @@
     <ClCompile>
       <AdditionalIncludeDirectories>C:\Users\ciber\src\latino\src\regex-2.7-src\src;C:\Users\ciber\src\latino\src\linenoise;C:\Users\ciber\src\latino\src\..\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <AssemblerListingLocation>MinSizeRel/</AssemblerListingLocation>
+=======
+      <AdditionalOptions>%(AdditionalOptions) /machine:X86</AdditionalOptions>
+    </Lib>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|Win32'">
+    <ClCompile>
+      <AdditionalIncludeDirectories>C:\Users\Layout\Desktop\Latino\src\regex-2.7-src\src;C:\Users\Layout\Desktop\Latino\src\linenoise;C:\Users\Layout\Desktop\Latino\src\..\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AssemblerListingLocation>$(IntDir)</AssemblerListingLocation>
+>>>>>>> 11336ac9485c6d839841852720d6c6d0098511a2
       <CompileAs>CompileAsC</CompileAs>
       <ExceptionHandling>
       </ExceptionHandling>
@@ -157,7 +275,12 @@
       <Optimization>MinSpace</Optimization>
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
+<<<<<<< HEAD
       <SuppressStartupBanner></SuppressStartupBanner>
+=======
+      <SuppressStartupBanner>
+      </SuppressStartupBanner>
+>>>>>>> 11336ac9485c6d839841852720d6c6d0098511a2
       <UseFullPaths>false</UseFullPaths>
       <WarningLevel>Level4</WarningLevel>
       <PreprocessorDefinitions>WIN32;_WINDOWS;NDEBUG;_CRT_SECURE_NO_WARNINGS;_DEBUG;__STDC_CONSTANT_MACROS;__STDC_FORMAT_MACROS;__STDC_LIMIT_MACROS;CMAKE_INTDIR="MinSizeRel";%(PreprocessorDefinitions)</PreprocessorDefinitions>
@@ -167,10 +290,17 @@
     </ClCompile>
     <ResourceCompile>
       <PreprocessorDefinitions>WIN32;_WINDOWS;NDEBUG;_CRT_SECURE_NO_WARNINGS;_DEBUG;__STDC_CONSTANT_MACROS;__STDC_FORMAT_MACROS;__STDC_LIMIT_MACROS;CMAKE_INTDIR=\"MinSizeRel\";%(PreprocessorDefinitions)</PreprocessorDefinitions>
+<<<<<<< HEAD
       <AdditionalIncludeDirectories>C:\Users\ciber\src\latino\src\regex-2.7-src\src;C:\Users\ciber\src\latino\src\linenoise;C:\Users\ciber\src\latino\src\..\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ResourceCompile>
     <Midl>
       <AdditionalIncludeDirectories>C:\Users\ciber\src\latino\src\regex-2.7-src\src;C:\Users\ciber\src\latino\src\linenoise;C:\Users\ciber\src\latino\src\..\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+=======
+      <AdditionalIncludeDirectories>C:\Users\Layout\Desktop\Latino\src\regex-2.7-src\src;C:\Users\Layout\Desktop\Latino\src\linenoise;C:\Users\Layout\Desktop\Latino\src\..\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ResourceCompile>
+    <Midl>
+      <AdditionalIncludeDirectories>C:\Users\Layout\Desktop\Latino\src\regex-2.7-src\src;C:\Users\Layout\Desktop\Latino\src\linenoise;C:\Users\Layout\Desktop\Latino\src\..\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+>>>>>>> 11336ac9485c6d839841852720d6c6d0098511a2
       <OutputDirectory>$(ProjectDir)/$(IntDir)</OutputDirectory>
       <HeaderFileName>%(Filename).h</HeaderFileName>
       <TypeLibraryName>%(Filename).tlb</TypeLibraryName>
@@ -178,6 +308,7 @@
       <ProxyFileName>%(Filename)_p.c</ProxyFileName>
     </Midl>
     <Lib>
+<<<<<<< HEAD
       <AdditionalOptions>%(AdditionalOptions) /machine:x64</AdditionalOptions>
     </Lib>
   </ItemDefinitionGroup>
@@ -185,6 +316,15 @@
     <ClCompile>
       <AdditionalIncludeDirectories>C:\Users\ciber\src\latino\src\regex-2.7-src\src;C:\Users\ciber\src\latino\src\linenoise;C:\Users\ciber\src\latino\src\..\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <AssemblerListingLocation>RelWithDebInfo/</AssemblerListingLocation>
+=======
+      <AdditionalOptions>%(AdditionalOptions) /machine:X86</AdditionalOptions>
+    </Lib>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|Win32'">
+    <ClCompile>
+      <AdditionalIncludeDirectories>C:\Users\Layout\Desktop\Latino\src\regex-2.7-src\src;C:\Users\Layout\Desktop\Latino\src\linenoise;C:\Users\Layout\Desktop\Latino\src\..\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AssemblerListingLocation>$(IntDir)</AssemblerListingLocation>
+>>>>>>> 11336ac9485c6d839841852720d6c6d0098511a2
       <CompileAs>CompileAsC</CompileAs>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
       <ExceptionHandling>
@@ -193,7 +333,12 @@
       <Optimization>MaxSpeed</Optimization>
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
+<<<<<<< HEAD
       <SuppressStartupBanner></SuppressStartupBanner>
+=======
+      <SuppressStartupBanner>
+      </SuppressStartupBanner>
+>>>>>>> 11336ac9485c6d839841852720d6c6d0098511a2
       <UseFullPaths>false</UseFullPaths>
       <WarningLevel>Level4</WarningLevel>
       <PreprocessorDefinitions>WIN32;_WINDOWS;NDEBUG;_CRT_SECURE_NO_WARNINGS;_DEBUG;__STDC_CONSTANT_MACROS;__STDC_FORMAT_MACROS;__STDC_LIMIT_MACROS;CMAKE_INTDIR="RelWithDebInfo";%(PreprocessorDefinitions)</PreprocessorDefinitions>
@@ -201,10 +346,17 @@
     </ClCompile>
     <ResourceCompile>
       <PreprocessorDefinitions>WIN32;_WINDOWS;NDEBUG;_CRT_SECURE_NO_WARNINGS;_DEBUG;__STDC_CONSTANT_MACROS;__STDC_FORMAT_MACROS;__STDC_LIMIT_MACROS;CMAKE_INTDIR=\"RelWithDebInfo\";%(PreprocessorDefinitions)</PreprocessorDefinitions>
+<<<<<<< HEAD
       <AdditionalIncludeDirectories>C:\Users\ciber\src\latino\src\regex-2.7-src\src;C:\Users\ciber\src\latino\src\linenoise;C:\Users\ciber\src\latino\src\..\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ResourceCompile>
     <Midl>
       <AdditionalIncludeDirectories>C:\Users\ciber\src\latino\src\regex-2.7-src\src;C:\Users\ciber\src\latino\src\linenoise;C:\Users\ciber\src\latino\src\..\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+=======
+      <AdditionalIncludeDirectories>C:\Users\Layout\Desktop\Latino\src\regex-2.7-src\src;C:\Users\Layout\Desktop\Latino\src\linenoise;C:\Users\Layout\Desktop\Latino\src\..\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ResourceCompile>
+    <Midl>
+      <AdditionalIncludeDirectories>C:\Users\Layout\Desktop\Latino\src\regex-2.7-src\src;C:\Users\Layout\Desktop\Latino\src\linenoise;C:\Users\Layout\Desktop\Latino\src\..\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+>>>>>>> 11336ac9485c6d839841852720d6c6d0098511a2
       <OutputDirectory>$(ProjectDir)/$(IntDir)</OutputDirectory>
       <HeaderFileName>%(Filename).h</HeaderFileName>
       <TypeLibraryName>%(Filename).tlb</TypeLibraryName>
@@ -212,6 +364,7 @@
       <ProxyFileName>%(Filename)_p.c</ProxyFileName>
     </Midl>
     <Lib>
+<<<<<<< HEAD
       <AdditionalOptions>%(AdditionalOptions) /machine:x64</AdditionalOptions>
     </Lib>
   </ItemDefinitionGroup>
@@ -220,6 +373,16 @@
       <Message Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Building Custom Rule C:/Users/ciber/src/latino/src/CMakeLists.txt</Message>
       <Command Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">setlocal
 C:\bin\CMake\bin\cmake.exe -SC:/Users/ciber/src/latino -BC:/Users/ciber/src/latino/visualstudio --check-stamp-file C:/Users/ciber/src/latino/visualstudio/src/CMakeFiles/generate.stamp
+=======
+      <AdditionalOptions>%(AdditionalOptions) /machine:X86</AdditionalOptions>
+    </Lib>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <CustomBuild Include="C:\Users\Layout\Desktop\Latino\src\CMakeLists.txt">
+      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Building Custom Rule C:/Users/Layout/Desktop/Latino/src/CMakeLists.txt</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">setlocal
+"C:\Program Files\CMake\bin\cmake.exe" -SC:/Users/Layout/Desktop/Latino -BC:/Users/Layout/Desktop/Latino/visualstudio --check-stamp-file C:/Users/Layout/Desktop/Latino/visualstudio/src/CMakeFiles/generate.stamp
+>>>>>>> 11336ac9485c6d839841852720d6c6d0098511a2
 if %errorlevel% neq 0 goto :cmEnd
 :cmEnd
 endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
@@ -227,12 +390,21 @@ endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
 exit /b %1
 :cmDone
 if %errorlevel% neq 0 goto :VCEnd</Command>
+<<<<<<< HEAD
       <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">C:/Users/ciber/src/latino/src/CMakeLists.txt;C:\Users\ciber\src\latino\cmake\Modules\CPack.cmake;C:\Users\ciber\src\latino\src\CMakeLists.txt;C:\bin\CMake\share\cmake-3.14\Modules\CPackComponent.cmake;C:\bin\CMake\share\cmake-3.14\Templates\CPackConfig.cmake.in;C:\Users\ciber\src\latino\src\CMakeLists.txt;%(AdditionalInputs)</AdditionalInputs>
       <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">C:\Users\ciber\src\latino\visualstudio\src\CMakeFiles\generate.stamp</Outputs>
       <LinkObjects Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</LinkObjects>
       <Message Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Building Custom Rule C:/Users/ciber/src/latino/src/CMakeLists.txt</Message>
       <Command Condition="'$(Configuration)|$(Platform)'=='Release|x64'">setlocal
 C:\bin\CMake\bin\cmake.exe -SC:/Users/ciber/src/latino -BC:/Users/ciber/src/latino/visualstudio --check-stamp-file C:/Users/ciber/src/latino/visualstudio/src/CMakeFiles/generate.stamp
+=======
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">C:\Program Files\CMake\share\cmake-3.16\Modules\CPackComponent.cmake;C:\Program Files\CMake\share\cmake-3.16\Templates\CPackConfig.cmake.in;C:\Users\Layout\Desktop\Latino\cmake\Modules\CPack.cmake;%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">C:\Users\Layout\Desktop\Latino\visualstudio\src\CMakeFiles\generate.stamp</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</LinkObjects>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Building Custom Rule C:/Users/Layout/Desktop/Latino/src/CMakeLists.txt</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">setlocal
+"C:\Program Files\CMake\bin\cmake.exe" -SC:/Users/Layout/Desktop/Latino -BC:/Users/Layout/Desktop/Latino/visualstudio --check-stamp-file C:/Users/Layout/Desktop/Latino/visualstudio/src/CMakeFiles/generate.stamp
+>>>>>>> 11336ac9485c6d839841852720d6c6d0098511a2
 if %errorlevel% neq 0 goto :cmEnd
 :cmEnd
 endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
@@ -240,12 +412,21 @@ endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
 exit /b %1
 :cmDone
 if %errorlevel% neq 0 goto :VCEnd</Command>
+<<<<<<< HEAD
       <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">C:/Users/ciber/src/latino/src/CMakeLists.txt;C:\Users\ciber\src\latino\cmake\Modules\CPack.cmake;C:\Users\ciber\src\latino\src\CMakeLists.txt;C:\bin\CMake\share\cmake-3.14\Modules\CPackComponent.cmake;C:\bin\CMake\share\cmake-3.14\Templates\CPackConfig.cmake.in;C:\Users\ciber\src\latino\src\CMakeLists.txt;%(AdditionalInputs)</AdditionalInputs>
       <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">C:\Users\ciber\src\latino\visualstudio\src\CMakeFiles\generate.stamp</Outputs>
       <LinkObjects Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</LinkObjects>
       <Message Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">Building Custom Rule C:/Users/ciber/src/latino/src/CMakeLists.txt</Message>
       <Command Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">setlocal
 C:\bin\CMake\bin\cmake.exe -SC:/Users/ciber/src/latino -BC:/Users/ciber/src/latino/visualstudio --check-stamp-file C:/Users/ciber/src/latino/visualstudio/src/CMakeFiles/generate.stamp
+=======
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">C:\Program Files\CMake\share\cmake-3.16\Modules\CPackComponent.cmake;C:\Program Files\CMake\share\cmake-3.16\Templates\CPackConfig.cmake.in;C:\Users\Layout\Desktop\Latino\cmake\Modules\CPack.cmake;%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">C:\Users\Layout\Desktop\Latino\visualstudio\src\CMakeFiles\generate.stamp</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">false</LinkObjects>
+      <Message Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|Win32'">Building Custom Rule C:/Users/Layout/Desktop/Latino/src/CMakeLists.txt</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|Win32'">setlocal
+"C:\Program Files\CMake\bin\cmake.exe" -SC:/Users/Layout/Desktop/Latino -BC:/Users/Layout/Desktop/Latino/visualstudio --check-stamp-file C:/Users/Layout/Desktop/Latino/visualstudio/src/CMakeFiles/generate.stamp
+>>>>>>> 11336ac9485c6d839841852720d6c6d0098511a2
 if %errorlevel% neq 0 goto :cmEnd
 :cmEnd
 endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
@@ -253,12 +434,21 @@ endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
 exit /b %1
 :cmDone
 if %errorlevel% neq 0 goto :VCEnd</Command>
+<<<<<<< HEAD
       <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">C:/Users/ciber/src/latino/src/CMakeLists.txt;C:\Users\ciber\src\latino\cmake\Modules\CPack.cmake;C:\Users\ciber\src\latino\src\CMakeLists.txt;C:\bin\CMake\share\cmake-3.14\Modules\CPackComponent.cmake;C:\bin\CMake\share\cmake-3.14\Templates\CPackConfig.cmake.in;C:\Users\ciber\src\latino\src\CMakeLists.txt;%(AdditionalInputs)</AdditionalInputs>
       <Outputs Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">C:\Users\ciber\src\latino\visualstudio\src\CMakeFiles\generate.stamp</Outputs>
       <LinkObjects Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">false</LinkObjects>
       <Message Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">Building Custom Rule C:/Users/ciber/src/latino/src/CMakeLists.txt</Message>
       <Command Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">setlocal
 C:\bin\CMake\bin\cmake.exe -SC:/Users/ciber/src/latino -BC:/Users/ciber/src/latino/visualstudio --check-stamp-file C:/Users/ciber/src/latino/visualstudio/src/CMakeFiles/generate.stamp
+=======
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|Win32'">C:\Program Files\CMake\share\cmake-3.16\Modules\CPackComponent.cmake;C:\Program Files\CMake\share\cmake-3.16\Templates\CPackConfig.cmake.in;C:\Users\Layout\Desktop\Latino\cmake\Modules\CPack.cmake;%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|Win32'">C:\Users\Layout\Desktop\Latino\visualstudio\src\CMakeFiles\generate.stamp</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|Win32'">false</LinkObjects>
+      <Message Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|Win32'">Building Custom Rule C:/Users/Layout/Desktop/Latino/src/CMakeLists.txt</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|Win32'">setlocal
+"C:\Program Files\CMake\bin\cmake.exe" -SC:/Users/Layout/Desktop/Latino -BC:/Users/Layout/Desktop/Latino/visualstudio --check-stamp-file C:/Users/Layout/Desktop/Latino/visualstudio/src/CMakeFiles/generate.stamp
+>>>>>>> 11336ac9485c6d839841852720d6c6d0098511a2
 if %errorlevel% neq 0 goto :cmEnd
 :cmEnd
 endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
@@ -266,6 +456,7 @@ endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
 exit /b %1
 :cmDone
 if %errorlevel% neq 0 goto :VCEnd</Command>
+<<<<<<< HEAD
       <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">C:/Users/ciber/src/latino/src/CMakeLists.txt;C:\Users\ciber\src\latino\cmake\Modules\CPack.cmake;C:\Users\ciber\src\latino\src\CMakeLists.txt;C:\bin\CMake\share\cmake-3.14\Modules\CPackComponent.cmake;C:\bin\CMake\share\cmake-3.14\Templates\CPackConfig.cmake.in;C:\Users\ciber\src\latino\src\CMakeLists.txt;%(AdditionalInputs)</AdditionalInputs>
       <Outputs Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">C:\Users\ciber\src\latino\visualstudio\src\CMakeFiles\generate.stamp</Outputs>
       <LinkObjects Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">false</LinkObjects>
@@ -299,15 +490,56 @@ if %errorlevel% neq 0 goto :VCEnd</Command>
   <ItemGroup>
     <ProjectReference Include="C:\Users\ciber\src\latino\visualstudio\ZERO_CHECK.vcxproj">
       <Project>{EFC1E963-EF0A-336A-AFBC-9542D6B04179}</Project>
+=======
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|Win32'">C:\Program Files\CMake\share\cmake-3.16\Modules\CPackComponent.cmake;C:\Program Files\CMake\share\cmake-3.16\Templates\CPackConfig.cmake.in;C:\Users\Layout\Desktop\Latino\cmake\Modules\CPack.cmake;%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|Win32'">C:\Users\Layout\Desktop\Latino\visualstudio\src\CMakeFiles\generate.stamp</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|Win32'">false</LinkObjects>
+    </CustomBuild>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="C:\Users\Layout\Desktop\Latino\src\latino.c" />
+    <ClCompile Include="C:\Users\Layout\Desktop\Latino\src\latlex.c" />
+    <ClCompile Include="C:\Users\Layout\Desktop\Latino\src\latparse.c" />
+    <ClCompile Include="C:\Users\Layout\Desktop\Latino\src\latast.c" />
+    <ClCompile Include="C:\Users\Layout\Desktop\Latino\src\latmem.c" />
+    <ClCompile Include="C:\Users\Layout\Desktop\Latino\src\latdic.c" />
+    <ClCompile Include="C:\Users\Layout\Desktop\Latino\src\latdo.c" />
+    <ClCompile Include="C:\Users\Layout\Desktop\Latino\src\latlist.c" />
+    <ClCompile Include="C:\Users\Layout\Desktop\Latino\src\latmv.c" />
+    <ClCompile Include="C:\Users\Layout\Desktop\Latino\src\latobj.c" />
+    <ClCompile Include="C:\Users\Layout\Desktop\Latino\src\latpaqlib.c" />
+    <ClCompile Include="C:\Users\Layout\Desktop\Latino\src\latrepl.c" />
+    <ClCompile Include="C:\Users\Layout\Desktop\Latino\src\latgc.c" />
+    <ClCompile Include="C:\Users\Layout\Desktop\Latino\src\latbaselib.c" />
+    <ClCompile Include="C:\Users\Layout\Desktop\Latino\src\latstrlib.c" />
+    <ClCompile Include="C:\Users\Layout\Desktop\Latino\src\latlistlib.c" />
+    <ClCompile Include="C:\Users\Layout\Desktop\Latino\src\latdiclib.c" />
+    <ClCompile Include="C:\Users\Layout\Desktop\Latino\src\latfilelib.c" />
+    <ClCompile Include="C:\Users\Layout\Desktop\Latino\src\latmathlib.c" />
+    <ClCompile Include="C:\Users\Layout\Desktop\Latino\src\latsyslib.c" />
+    <ClCompile Include="C:\Users\Layout\Desktop\Latino\src\latdevlib.c" />
+    <ClCompile Include="C:\Users\Layout\Desktop\Latino\src\linenoise\utf8.c" />
+    <ClCompile Include="C:\Users\Layout\Desktop\Latino\src\linenoise\linenoise.c" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="C:\Users\Layout\Desktop\Latino\visualstudio\ZERO_CHECK.vcxproj">
+      <Project>{028B1569-BCE1-3C7C-A3AC-45D14029C3D5}</Project>
+>>>>>>> 11336ac9485c6d839841852720d6c6d0098511a2
       <Name>ZERO_CHECK</Name>
       <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </ProjectReference>
+<<<<<<< HEAD
     <ProjectReference Include="C:\Users\ciber\src\latino\visualstudio\src\regex-2.7-src\src\regex2.vcxproj">
       <Project>{97EC7075-DCF4-3099-91A0-7E53969691D7}</Project>
       <Name>regex2</Name>
       <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+=======
+    <ProjectReference Include="C:\Users\Layout\Desktop\Latino\visualstudio\src\regex-2.7-src\src\regex2.vcxproj">
+      <Project>{DCFCE55C-2648-3C4F-9DF0-B0F15B269BF5}</Project>
+      <Name>regex2</Name>
+>>>>>>> 11336ac9485c6d839841852720d6c6d0098511a2
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
