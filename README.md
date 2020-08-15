@@ -20,6 +20,7 @@
     * [¿Por qué usar Latino?](#porQue)
     * [Instalar Latino](#inst)
     * [Documentación](#doc)
+    * [Latino-Wiki](#wiKi)
     * [Otras Ayudas](#ayuda)
     * [SINTAXIS DE LATINO](#sintx)
         * [Comentarios](#comt)
@@ -77,6 +78,11 @@
 # Documentación
 Aprende sobre este lenguaje de programación visitando su documentación oficial en el siguiente enlace.
 - [Manual Latino](https://manual-latino.readthedocs.io/es/latest/)
+
+<a name="wiKi"></a>
+# Latino-Wiki
+Visita la Wiki de Latino aquí en GitHut para saber como colaborar en este proyecto y para aprender a como compilar Latino en cada sistema operativo.
+- [Latino-Wiki](https://github.com/MelvinG24/Latino/wiki)
 
 <a name="ayuda"></a>
 # Otras Ayuda

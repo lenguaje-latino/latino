@@ -867,7 +867,11 @@ void str_formato(lat_mv *mv) {
         } else if (*++strfrmt == '%') {
             sprintf(b, "%s%c", b, *strfrmt++);
         } else {
-            char buff[MAX_STR_LENGTH];
+            #ifdef _WIN32
+                char buff[MAX_BUFFERSIZE];
+            #else
+                char buff[MAX_STR_LENGTH];
+            #endif
             if (++arg > top) {
                 latC_error(mv, "Numero de argumentos invalido para el formato");
             }
