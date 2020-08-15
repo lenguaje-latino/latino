@@ -19,7 +19,8 @@
         * [Video introductorio](#intro)
     * [¿Por qué usar Latino?](#porQue)
     * [Instalar Latino](#inst)
-    * [Ayuda y Documentación](#doc)
+    * [Documentación](#doc)
+    * [Otras Ayudas](#ayuda)
     * [SINTAXIS DE LATINO](#sintx)
         * [Comentarios](#comt)
         * [Variables](#var)
@@ -73,13 +74,18 @@
 - [Plugins](https://github.com/lenguaje-latino)
 
 <a name="doc"></a>
-# Ayuda y Documentación
-*Latino* dispone de un foro en su página web oficial, así como también un grupo en Telegram, Gitter y una documentación a la que puedes dirigirte en caso de cualquier duda.
+# Documentación
+Aprende sobre este lenguaje de programación visitando su documentación oficial en el siguiente enlace.
+- [Manual Latino](https://manual-latino.readthedocs.io/es/latest/)
+
+<a name="ayuda"></a>
+# Otras Ayuda
+*Latino* dispone de un foro en su página web oficial, así como también un grupo en Telegram y Gitter, además de un canal en Youtube a las que puedes dirigirte en caso de cualquier duda.
 - [Foros de Latino](http://lenguaje-latino.org/foro/)
-- [Chat en Gitter](https://gitter.im/primitivorm/latino?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 - [Chat en Telegram](https://t.me/joinchat/AAAAAD6l6_qIgQAAgu9DVQ)
-- [Manual Latino](https://manuallatino.blogspot.com)
-- [API de Latino](https://manuallatinoapi.blogspot.com)
+- [Chat en Gitter](https://gitter.im/primitivorm/latino?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+- [Canal en Youtube](https://www.youtube.com/channel/UCLVTJpQn-TDbBSwR732kvnQ/featured)
+<!-- - [API de Latino](https://manuallatinoapi.blogspot.com) -->
 
 <a name="sintx"></a>
 # SINTAXIS DE LATINO

@@ -94,7 +94,7 @@ ast *latA_literal(const char *s, int nlin, int ncol) {
     a->tipo = NODO_VALOR;
     nodo_valor *val = (nodo_valor *)malloc(sizeof(nodo_valor));
     val->tipo = VALOR_CADENA;
-    val->val.cadena = strdup(s);
+    val->val.cadena = analizar_fmt(s, strlen(s));
     a->valor = val;
     a->nlin = nlin;
     a->ncol = ncol;

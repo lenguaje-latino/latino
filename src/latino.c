@@ -55,21 +55,21 @@ static void lat_logo() { printf("%s\n", LAT_LOGO); }
 static void lat_ayuda() {
     lat_logo();
     lat_version();
-    printf("%s\n", "Uso de latino: latino [opcion] [archivo]");
+    printf("%s\n", "-Uso de latino: latino [opcion] [archivo]");
     printf("\n");
     printf("%s\n", "Opciones:");
-    printf("%s\n", "-a           : Muestra la ayuda de Latino");
-    printf("%s\n", "-e           : Ejecuta una cadena de codigo");
-    printf("%s\n", "-v           : Muestra la version de Latino");
-    printf("%s\n", "archivo      : Nombre del archivo con extension .lat");
-    printf("%s\n", "Ctrl-C       : Para cerrar");
+    printf("%s\n", "-a | --ayuda     : Muestra la ayuda de Latino");
+    printf("%s\n", "-v | --version   : Muestra la version de Latino");
+    printf("%s\n", "-e               : Ejecuta una cadena de codigo");
+    printf("%s\n", "archivo          : Nombre del archivo con extension .lat");
+    printf("%s\n", "Ctrl + C         : Para cerrar");
     printf("\n");
     printf("%s\n", "Variables de entorno:");
     printf("%s\n", "_____________________");
-    printf("%s%s\n", "LATINO_PATH  : ", getenv("LATINO_PATH"));
-    printf("%s%s\n", "LATINO_LIB   : ", getenv("LATINO_LIB"));
-    printf("%s%s\n", "LATINO_LIBC   : ", getenv("LATINO_LIBC"));
-    printf("%s%s\n", "HOME         : ", getenv("HOME"));
+    printf("%s%s\n", "LATINO_PATH      : ", getenv("LATINO_PATH"));
+    printf("%s%s\n", "LATINO_LIB       : ", getenv("LATINO_LIB"));
+    printf("%s%s\n", "LATINO_LIBC      : ", getenv("LATINO_LIBC"));
+    printf("%s%s\n", "HOME             : ", getenv("HOME"));
 }
 
 int main(int argc, char *argv[]) {
@@ -88,10 +88,10 @@ int main(int argc, char *argv[]) {
             pf = true;
             break;
         }
-        if (!strcmp(argv[i], "-v")) {
+        if (!strcmp(argv[i], "-v") || !strcmp(argv[i], "--version")) {
             lat_version();
             return EXIT_SUCCESS;
-        } else if (!strcmp(argv[i], "-a") || !strcmp(argv[i], "--help")) {
+        } else if (!strcmp(argv[i], "-a") || !strcmp(argv[i], "--ayuda") || !strcmp(argv[i], "--help")) {
             lat_ayuda();
             return EXIT_SUCCESS;
         } else if (!strcmp(argv[i], "-e")) {

@@ -51,6 +51,10 @@ char *analizar_fmt(const char *s, size_t len) {
                         c = '\"';
                         i++;
                         goto save;
+                    case (int)39:
+                        c = '\'';
+                        i++;
+                        goto save;
                     case 'a':
                         c = '\a';
                         i++;
