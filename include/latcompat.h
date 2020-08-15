@@ -61,7 +61,7 @@ THE SOFTWARE.
 #include <regex.h>
 #include <time.h>
 #include <unistd.h>
-#define PATH_SET "~/"
+#define PATH_SEP "/"
 #define LAT_FUNC extern
 #define malloc_size(ptr)
 #define latC_popen(L, c, m) ((void)L, fflush(NULL), popen(c, m))

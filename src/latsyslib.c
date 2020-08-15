@@ -167,7 +167,11 @@ static void latSO_iraxy(lat_mv *mv) {
 }
 
 static void latSO_usuario(lat_mv *mv) {
+#ifdef _WIN32
+    char *user = getenv("username");
+#else
     char *user = getenv("USER");
+#endif
     lat_objeto *tmp;
     if (user != NULL || user) {
         tmp = latC_crear_cadena(mv, user);

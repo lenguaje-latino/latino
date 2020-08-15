@@ -3,8 +3,9 @@
     "",
     "\\.readme",
     "\\.readme\\imgs",
-    "\\include"
+    "\\include",
+    "\\src"
   ],
-  "SelectedNode": "\\include\\latino.h",
+  "SelectedNode": "\\src\\latbaselib.c",
   "PreviewInSolutionExplorer": false
 }
