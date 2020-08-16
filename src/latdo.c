@@ -703,10 +703,15 @@ LATINO_API void latC_error(lat_mv *mv, const char *fmt, ...) {
     va_start(args, fmt);
     vsprintf(buffer, fmt, args);
     va_end(args);
+#if (!defined _WIN32) // linux y mac
     char *info = malloc(MAX_INPUT_SIZE);
     snprintf(info, MAX_INPUT_SIZE, LAT_ERROR_FMT, mv->nombre_archivo, mv->nlin,
              mv->ncol);
     latC_apilar(mv, latC_crear_cadena(mv, info));
+#else
+    // windows
+    latC_apilar(mv, latC_crear_cadena(mv, ""));
+#endif
     latC_apilar(mv, latC_crear_cadena(mv, buffer));
     str_concatenar(mv);
     lat_objeto *err = latC_desapilar(mv);

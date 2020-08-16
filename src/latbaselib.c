@@ -245,7 +245,7 @@ static void base_acadena(lat_mv *mv) {
 static void base_error(lat_mv *mv) {
     str_formato(mv);
     lat_objeto *error = latC_desapilar(mv);
-    latC_error(mv, latC_checar_cadena(mv, error));
+    latC_error(mv, "%s", latC_checar_cadena(mv, error));
 }
 
 static const lat_CReg libbase[] = {
