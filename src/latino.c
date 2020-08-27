@@ -40,7 +40,12 @@ char *filename = NULL;
 void str_ejecutar(lat_mv *mv);
 
 /**
- * Muestra la version de latino en la consola
+ * Muestra solo la version de latino
+ */
+static void lat_versionSolo() { printf("%s\n", LAT_VERSION); }
+
+/**
+ * Muestra la version de latino y los derechos en la consola
  */
 static void lat_version() { printf("%s\n", LAT_DERECHOS); }
 
@@ -89,7 +94,7 @@ int main(int argc, char *argv[]) {
             break;
         }
         if (!strcmp(argv[i], "-v") || !strcmp(argv[i], "--version")) {
-            lat_version();
+            lat_versionSolo();
             return EXIT_SUCCESS;
         } else if (!strcmp(argv[i], "-a") || !strcmp(argv[i], "--ayuda") || !strcmp(argv[i], "--help")) {
             lat_ayuda();

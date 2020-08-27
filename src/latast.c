@@ -225,6 +225,11 @@ void latA_destruir(ast *a) {
     }
 }
 
+// ast *latA_romper(ast *ls) {
+//     int linea = ls->nlin;
+//     ////////////////////////////////////
+// }
+
 ast *latA_analizar_exp(char *expr, int *status) {
     // printf("latA_analizar_exp:\n%s\n", expr);
     ast *nodo = NULL;

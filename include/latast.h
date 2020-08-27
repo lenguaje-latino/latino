@@ -100,6 +100,7 @@ typedef enum {
     NODO_REGEX,
     NODO_VAR_ARGS,
     NODO_LOAD_VAR_ARGS,
+    NODO_ROMPER, /* 50 */
 } nodo_tipo;
 
 /** \brief Tipos de dato */
@@ -197,6 +198,7 @@ ast *latA_hacer(ast *cond, ast *stmts);
 ast *latA_desde(ast *dec, ast *cond, ast *inc, ast *stmts);
 ast *latA_funcion(ast *nombre, ast *params, ast *stmts, int nlin, int ncol);
 void latA_destruir(ast *a);
+ast *latA_romper(ast *ls);
 ast *latA_analizar_exp(char *expr, int *status);
 ast *latA_analizar_arch(char *ruta, int *status);
 

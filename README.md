@@ -48,7 +48,7 @@
 
 <a name="intro"></a>
 ### Vídeo introductorio de Latino (clic en la imagen)
-[![Video Introductorio de Latino](https://j.gifs.com/GvrEK0.gif)](https://youtu.be/ljQKPihnejU)
+[![Video Introductorio de Latino](https://j.gifs.com/GvrEK0.gif)](https://www.youtube.com/watch?v=LzA5FRt8Oqo)
 
 <a name="porQue"></a>
 # ¿Por qué usar Latino?
@@ -63,7 +63,9 @@
     > Cuando escribes tu código en *Latino* este puede ser ejecutado en cualquier otra plataforma de manera fácil y segura a diferencia de otros lenguajes de programación como es el caso de [Visual Basic](https://es.wikipedia.org/wiki/Visual_Basic) que solo opera en plataformas MS-Windows.
 5. **Código abierto**:
     > Cualquiera puede descargar el código fuente de *Latino*, modificarlo, extender sus librerías y aportar en su desarrollo si así lo desea.
+
 ---
+
 ![Captura_de_Pantalla-Latino](https://raw.githubusercontent.com/MelvinG24/Latino/master/.readme/imgs/latino_sublime.png)
 
 <a name="inst"></a>
@@ -243,7 +245,9 @@ sino
     #codigo
 fin
 ```
+
 ---
+
 <a name="elegir"></a>
 ### elegir (switch case)
 Evalúa una opción de múltiples posibles casos.
@@ -281,6 +285,7 @@ fin
 Notese que se tiene que repetir el caso para `B` y `C` por el momento no se permiten casos múltiples como una sola opción.
 
 ---
+
 <a name="desde"></a>
 ### desde (for loop)
 Hace que una instrucción o bloque de instrucciones se repitan
@@ -308,7 +313,9 @@ desde(i=0; i < 50; i=i+10)
 fin
 #salida: 0 10 20 30 40
 ```
+
 ---
+
 <a name="mientras"></a>
 ### mientras (do while)
 Hace que una instrucción o bloque de instrucciones se repitan
@@ -325,7 +332,9 @@ mientras i < 10
 fin
 #salida: 0 1 2 3 4 5 6 7 8 9
 ```
+
 ---
+
 <a name="rept"></a>
 ### repetir-hasta (parecido al `repeat` de Lua)
 Hace que una instrucción o bloque de instrucciones
@@ -476,7 +485,7 @@ escribir(actores["Chilindrina"])
 ## X. Palabras reservadas hasta el momento
 ```
 caso
-cierto | verdadero
+cierto  | verdadero
 defecto | otro
 desde
 elegir

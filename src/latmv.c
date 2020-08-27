@@ -84,7 +84,7 @@ static const char *const bycode_nombre[] = {
     "OP_PUSH",
     "OP_POP",
     "ADJUST_STACK",
-    "LOAD_VAR_ARGS",
+    "LOAD_VAR_ARGS", /*45*/
     "SET_LOCAL",
 };
 

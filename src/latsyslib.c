@@ -162,7 +162,14 @@ static void latSO_iraxy(lat_mv *mv) {
     lat_objeto *x = latC_desapilar(mv);
     lat_objeto *y = latC_desapilar(mv);
     int yx = latC_checar_numerico(mv, y), xx = latC_checar_numerico(mv, x);
+#ifdef _WIN32
+    HANDLE hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
+    COORD pos = {yx, xx};
+    SetConsoleCursorPosition(hConsole, pos);
+    WriteConsole(hConsole, NULL, NULL, NULL, NULL);
+#else
     printf("%c[%d;%df", 0x1B, yx, xx);
+#endif
     fflush(stdout);
 }
 

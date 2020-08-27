@@ -24,7 +24,7 @@
 mientras verdadero
   a = sis.avisar(2) // declaramos un tipo de señal, ver señales arriba, en  este caso usamos SIGINT
   si a // si retorna verdadero (pulsación de Ctrl-C), hará lo siguiente
-        imprimir("\nADIÓS",1)
-        sis.salir() // pedimos que salga al ejecutarse ctrl - C
+    imprimir("\nADIÓS",1)
+    sis.salir() // pedimos que salga al ejecutarse ctrl - C
   fin
 fin
