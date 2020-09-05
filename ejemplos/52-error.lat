@@ -6,4 +6,4 @@ fun div(a, b)
 fin
 
 div(10,0)
-printf("%s", "aqui no llega")
+imprimirf("%s", "aqui no llega")
