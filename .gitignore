@@ -15,6 +15,7 @@ codeblocks/
 codelite/
 mingw/
 visualstudio/
+Img-Orig/
 # .vs
 # .vscode
 .vagrant/

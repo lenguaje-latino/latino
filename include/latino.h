@@ -62,7 +62,7 @@ THE SOFTWARE.
 /** Version menor de Latino */
 #define LAT_VERSION_MENOR "2"
 /** Version de correcion de errores */
-#define LAT_VERSION_PARCHE "6"
+#define LAT_VERSION_PARCHE "7"
 /** Version de Latino */
 #define LAT_VERSION                                                            \
     "Latino " LAT_VERSION_MAYOR "." LAT_VERSION_MENOR "." LAT_VERSION_PARCHE
@@ -131,11 +131,7 @@ extern int parse_silent;
 /** Tamanio maximo de la entrada por teclado */
 #define MAX_INPUT_SIZE 512
 /** Maximo numero de llamadas recursivas a fun */
-#ifdef __APPLE__
 #define MAX_CALL_FUNCTION 1024
-#else
-#define MAX_CALL_FUNCTION 27
-#endif
 /** Maximo numero de caracteres para un identificador */
 #define MAX_ID_LENGTH 64
 /** Maximo numero de bits para un buffer */

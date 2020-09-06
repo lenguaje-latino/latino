@@ -177,7 +177,8 @@ static void file_crear(lat_mv *mv) {
 static void file_renombrar(lat_mv *mv) {
     lat_objeto *b = latC_desapilar(mv);
     lat_objeto *a = latC_desapilar(mv);
-    char *nuevo = latC_checar_cadena(mv, b);
+    char *nuevo = (char*)malloc(64);
+    strcpy(nuevo, latC_checar_cadena(mv, b));
     bool ret = rename(latC_checar_cadena(mv, a), nuevo);
     if (!ret) {
         latC_apilar(mv, latC_crear_cadena(mv, nuevo));
@@ -190,9 +191,11 @@ static void file_renombrar(lat_mv *mv) {
 static const lat_CReg libfile[] = {{"leer", file_leer, 1},
                                    {"lineas", file_lineas, 1},
                                    {"ejecutar", file_ejecutar, 1},
-                                   {"poner", file_escribir, 2},
+                                   {"escribir", file_escribir, 2},
+                                   //{"agregar", file_agregar,3},
                                    {"copiar", file_copiar, 2},
                                    {"eliminar", file_eliminar, 1},
+                                   {"borrar", file_eliminar, 1},
                                    {"crear", file_crear, 1},
                                    {"renombrar", file_renombrar, 2},
                                    {NULL, NULL}};
