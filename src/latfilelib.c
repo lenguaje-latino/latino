@@ -24,6 +24,10 @@ THE SOFTWARE.
 
 #include "latino.h"
 
+//Define en donde el comando Escribir escribira
+#define _inicio 0
+#define _final -1
+
 #define LIB_ARCHIVO_NAME "archivo"
 
 static size_t file_leerlinea(char **lineptr, size_t *n, FILE *stream) {
@@ -146,9 +150,22 @@ static void file_ejecutar(lat_mv *mv) {
 static void file_copiar(lat_mv *mv) {
     lat_objeto *b = latC_desapilar(mv);
     lat_objeto *a = latC_desapilar(mv);
-    FILE *archivo = fopen(latC_checar_cadena(mv, a), "a");
-    fprintf(archivo, "%s", latC_checar_cadena(mv, b));
-    fclose(archivo);
+    char *aa = latC_checar_cadena(mv, a);
+    char *bb = latC_checar_cadena(mv, b);
+    if (strcmp(aa, bb)==0) {
+        latC_error(mv, "Error al duplicar archivo '%s', nombre o ruta deven ser distintos", latC_checar_cadena(mv, b));
+    } else {
+        FILE *archivo, *copiar;
+        archivo = fopen(latC_checar_cadena(mv, a), "r");
+        copiar = fopen(latC_checar_cadena(mv, b), "w");
+        fprintf(copiar, "%s", archivo);
+        fclose(archivo);
+        fclose(copiar);
+    }
+    // FILE *archivo = fopen(latC_checar_cadena(mv, a), "a");
+    // // fprintf(archivo, "%s", latC_checar_cadena(mv, b));
+    // fprintf(latC_checar_cadena(mv, b), "%s", archivo);
+    // fclose(archivo);
 }
 
 static void file_eliminar(lat_mv *mv) {
@@ -188,12 +205,22 @@ static void file_renombrar(lat_mv *mv) {
     free(nuevo);
 }
 
+static void file_anexar(lat_mv *mv) {
+    lat_objeto *b = latC_desapilar(mv);
+    lat_objeto *a = latC_desapilar(mv);
+    FILE *archivo = fopen(latC_checar_cadena(mv, a), "a");
+    fprintf(archivo, "%s", latC_checar_cadena(mv, b));
+    fclose(archivo);
+}
+
 static const lat_CReg libfile[] = {{"leer", file_leer, 1},
                                    {"lineas", file_lineas, 1},
                                    {"ejecutar", file_ejecutar, 1},
                                    {"escribir", file_escribir, 2},
                                    //{"agregar", file_agregar,3},
                                    {"copiar", file_copiar, 2},
+                                   {"duplicar", file_copiar, 2},
+                                   {"anexar", file_anexar, 2},
                                    {"eliminar", file_eliminar, 1},
                                    {"borrar", file_eliminar, 1},
                                    {"crear", file_crear, 1},
