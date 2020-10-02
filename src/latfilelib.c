@@ -147,7 +147,7 @@ static void file_ejecutar(lat_mv *mv) {
     }
 }
 
-static void file_copiar(lat_mv *mv) {
+static void file_duplicar(lat_mv *mv) {
     lat_objeto *b = latC_desapilar(mv);
     lat_objeto *a = latC_desapilar(mv);
     char *aa = latC_checar_cadena(mv, a);
@@ -157,15 +157,12 @@ static void file_copiar(lat_mv *mv) {
     } else {
         FILE *archivo, *copiar;
         archivo = fopen(latC_checar_cadena(mv, a), "r");
-        copiar = fopen(latC_checar_cadena(mv, b), "w");
-        fprintf(copiar, "%s", archivo);
+        const char *txt = archivo;
         fclose(archivo);
+        copiar = fopen(latC_checar_cadena(mv, b), "wb");
+        fprintf(copiar, "%s", txt);
         fclose(copiar);
     }
-    // FILE *archivo = fopen(latC_checar_cadena(mv, a), "a");
-    // // fprintf(archivo, "%s", latC_checar_cadena(mv, b));
-    // fprintf(latC_checar_cadena(mv, b), "%s", archivo);
-    // fclose(archivo);
 }
 
 static void file_eliminar(lat_mv *mv) {
@@ -194,7 +191,7 @@ static void file_crear(lat_mv *mv) {
 static void file_renombrar(lat_mv *mv) {
     lat_objeto *b = latC_desapilar(mv);
     lat_objeto *a = latC_desapilar(mv);
-    char *nuevo = (char*)malloc(64);
+    char *nuevo = (char*)malloc(MAX_ID_LENGTH);
     strcpy(nuevo, latC_checar_cadena(mv, b));
     bool ret = rename(latC_checar_cadena(mv, a), nuevo);
     if (!ret) {
@@ -217,9 +214,9 @@ static const lat_CReg libfile[] = {{"leer", file_leer, 1},
                                    {"lineas", file_lineas, 1},
                                    {"ejecutar", file_ejecutar, 1},
                                    {"escribir", file_escribir, 2},
-                                   //{"agregar", file_agregar,3},
-                                   {"copiar", file_copiar, 2},
-                                   {"duplicar", file_copiar, 2},
+                                //    {"agregar", file_agregar,3},
+                                //    {"copiar", file_duplicar, 2},
+                                   {"duplicar", file_duplicar, 2},
                                    {"anexar", file_anexar, 2},
                                    {"eliminar", file_eliminar, 1},
                                    {"borrar", file_eliminar, 1},

@@ -2,10 +2,10 @@
 ; SEE THE DOCUMENTATION FOR DETAILS ON CREATING INNO SETUP SCRIPT FILES!
 
 #define MyAppName "Latino"
-#define MyAppVersion "1.2.7"
+#define MyAppVersion "1.2.9"
 ;#define MyAppVersion GetFileVersion ("..\..\build\src\Release\latino.exe")
-#define MyAppPublisher "Lenguaje-Latino.org"
-#define MyAppURL "http://lenguaje-latino.org/"
+#define MyAppPublisher "LenguajeLatino.org"
+#define MyAppURL "http://lenguajelatino.org/"
 #define MyAppSupURL "https://manual-latino.readthedocs.io/es/latest/"
 #define MyAppUpURL "https://github.com/lenguaje-latino/latino"
 #define MyAppExeName "latino.exe"

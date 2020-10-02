@@ -62,7 +62,7 @@ THE SOFTWARE.
 /** Version menor de Latino */
 #define LAT_VERSION_MENOR "2"
 /** Version de correcion de errores */
-#define LAT_VERSION_PARCHE "7a"
+#define LAT_VERSION_PARCHE "9"
 /** Version de Latino */
 #define LAT_VERSION                                                            \
     "Latino " LAT_VERSION_MAYOR "." LAT_VERSION_MENOR "." LAT_VERSION_PARCHE
@@ -125,7 +125,7 @@ extern int parse_silent;
 #define MAX_STR_LENGTH (1024 * 1024)
 /** Tamanio maximo de la pila de la maquina virtual */
 //#define MAX_STACK_SIZE (1024 * 8)
-#define MAX_STACK_SIZE (1024 * 16)
+#define MAX_STACK_SIZE (1024 * 8)
 /** Tamanio maximo de una ruta de derectorio */
 #define MAX_PATH_LENGTH 1024
 /** Tamanio maximo de la entrada por teclado */
