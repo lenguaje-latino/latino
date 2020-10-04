@@ -239,8 +239,7 @@ lat_objeto *latO_clonar(lat_mv *mv, lat_objeto *obj) {
             setCtx(ret, latH_clonar(mv, getCtx(obj)));
             break;
         case T_LIST:
-            ret = latC_crear_lista(mv,
-                                   latL_clonar(mv, latC_checar_lista(mv, obj)));
+            ret = latC_crear_lista(mv, latL_clonar(mv, latC_checar_lista(mv, obj)));
             break;
         case T_DIC:
             ret = latC_crear_dic(mv, latH_clonar(mv, latC_checar_dic(mv, obj)));

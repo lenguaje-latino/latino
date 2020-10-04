@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
+﻿<?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
@@ -499,11 +499,11 @@
 				<key>IDENTIFIER</key>
 				<string>com.lenguajelatino.pkg.Latino</string>
 				<key>NAME</key>
-				<string>Latino-1.2.0-Darwin</string>
+				<string>Latino-Darwin</string>
 				<key>OVERWRITE_PERMISSIONS</key>
 				<true/>
 				<key>VERSION</key>
-				<string>1.2.0</string>
+				<string>1.2.9</string>
 			</dict>
 			<key>UUID</key>
 			<string>94867483-85B5-4BA0-B558-E632315FFD41</string>
@@ -1025,7 +1025,7 @@
 				<key>OVERWRITE_PERMISSIONS</key>
 				<true/>
 				<key>VERSION</key>
-				<string>1.2.0</string>
+				<string>1.2.9</string>
 			</dict>
 			<key>TYPE</key>
 			<integer>0</integer>
@@ -1661,7 +1661,7 @@
 				<key>OVERWRITE_PERMISSIONS</key>
 				<true/>
 				<key>VERSION</key>
-				<string>1.2.0</string>
+				<string>1.2.9</string>
 			</dict>
 			<key>TYPE</key>
 			<integer>0</integer>
@@ -2762,8 +2762,8 @@
 				<key>BACKGROUND_PATH</key>
 				<dict>
 					<key>PATH</key>
-					<string>/Users/Manual_Latino/Documents/Latino/paquetes/MacOS/src/background.png</string>
-					<key>PATH_TYPE</key>
+					<string>/Users/Manual_Latino/Documents/Latino/instaladores/MacOS/src/background.png</string>
+				        <key>PATH_TYPE</key>
 					<integer>0</integer>
 				</dict>
 				<key>CUSTOM</key>
@@ -3006,7 +3006,7 @@
 						<key>VALUE</key>
 						<dict>
 							<key>PATH</key>
-							<string>/Users/Manual_Latino/Documents/Latino/paquetes/MacOS/src/license.rtf</string>
+							<string>/Users/Manual_Latino/Documents/Latino/instaladores/MacOS/src/license.rtf</string>
 							<key>PATH_TYPE</key>
 							<integer>0</integer>
 						</dict>
@@ -3017,7 +3017,7 @@
 						<key>VALUE</key>
 						<dict>
 							<key>PATH</key>
-							<string>/Users/Manual_Latino/Documents/Latino/paquetes/MacOS/src/licencia.rtf</string>
+							<string>/Users/Manual_Latino/Documents/Latino/instaladores/MacOS/src/licencia.rtf</string>
 							<key>PATH_TYPE</key>
 							<integer>0</integer>
 						</dict>
@@ -3036,7 +3036,7 @@
 						<key>VALUE</key>
 						<dict>
 							<key>PATH</key>
-							<string>/Users/Manual_Latino/Documents/Latino/paquetes/MacOS/src/readme.rtf</string>
+							<string>/Users/Manual_Latino/Documents/Latino/instaladores/MacOS/src/readme.rtf</string>
 							<key>PATH_TYPE</key>
 							<integer>0</integer>
 						</dict>
@@ -3047,7 +3047,7 @@
 						<key>VALUE</key>
 						<dict>
 							<key>PATH</key>
-							<string>/Users/Manual_Latino/Documents/Latino/paquetes/MacOS/src/leeme.rtf</string>
+							<string>/Users/Manual_Latino/Documents/Latino/instaladores/MacOS/src/leeme.rtf</string>
 							<key>PATH_TYPE</key>
 							<integer>0</integer>
 						</dict>
@@ -3062,7 +3062,7 @@
 						<key>LANGUAGE</key>
 						<string>Spanish</string>
 						<key>VALUE</key>
-						<string>Latino-1.2.0-Darwin</string>
+						<string>Latino-1.2.9-Darwin</string>
 					</dict>
 				</array>
 			</dict>
@@ -3377,7 +3377,7 @@
 				</dict>
 			</array>
 			<key>NAME</key>
-			<string>Latino-1.2.0-Darwin</string>
+			<string>Latino-1.2.9-Darwin</string>
 		</dict>
 	</dict>
 	<key>TYPE</key>

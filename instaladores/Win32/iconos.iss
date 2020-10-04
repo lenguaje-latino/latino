@@ -4,7 +4,7 @@ procedure WebImgClic(Sender: TObject);
 var
   ErrorCode: Integer;
 begin
-  ShellExecAsOriginalUser('open', 'https://lenguaje-latino.org/', '', '', SW_SHOWNORMAL, ewNoWait, ErrorCode);
+  ShellExecAsOriginalUser('open', 'https://lenguajelatino.org/', '', '', SW_SHOWNORMAL, ewNoWait, ErrorCode);
 end;
 
 //--------Clic-GitHub

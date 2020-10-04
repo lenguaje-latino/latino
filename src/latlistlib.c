@@ -97,8 +97,7 @@ static void lista_insertar(lat_mv *mv) {
     lat_objeto *c = latC_desapilar(mv);
     lat_objeto *b = latC_desapilar(mv);
     lat_objeto *a = latC_desapilar(mv);
-    latL_insertar_elemento(mv, latC_checar_lista(mv, a), b,
-                           latC_checar_numerico(mv, c));
+    latL_insertar_elemento(mv, latC_checar_lista(mv, a), latO_clonar(mv, b),latC_checar_numerico(mv, c));
 }
 
 static void lista_eliminar(lat_mv *mv) {
