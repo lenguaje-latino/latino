@@ -146,55 +146,27 @@ static void lista_crear(lat_mv *mv) {
     latC_apilar(mv, latC_crear_lista(mv, lst));
 }
 
-// void lista_concatenar(lat_mv *mv) {
-//     lat_objeto *separador = latC_desapilar(mv);
-//     lat_objeto *list_ = latC_desapilar(mv);
-//     long int mem = 64; // incluyo en el valor de la memoria 64 espacios por si
-//                        // acaso son númericos
-//     char *texto = malloc(mem); // inicio la asignación de memoria
-//     char *sep = " "; // el separador por defecto será " " (un espacio)
-//     if (separador->tipo != T_NULL) {
-//         sep = latC_checar_cadena(mv, separador); // si no es nulo, ponemos el
-//                                                  // separador que indique el
-//                                                  // usuario en el segundo
-//                                                  // argumento
-//     };
-//     char *sep_elegido = sep;
-//     lista *lst = latC_checar_lista(mv, list_); // creamos la lista
-//     texto[0] = '\0'; // iniciamos el valor 0 de texto como nulo
-//     long int lng = latL_longitud(lst); // creo la longitud de la lista para no
-//                                        // tener que llamarla a cada ciclo
-//     for (long int i = 0; i < lng; i++) {
-//         sep_elegido =
-//             i == 0 ? ""
-//                    : sep; // si i es igual a 0, no ingresará nada, en cambio,
-//         lat_objeto *tmp1 =
-//             latL_obtener_elemento(mv, lst, i); // obtengo el elemento
-//         if (tmp1->tipo == T_STR) {             // si es cadena...
-//             mem += strlen(latC_checar_cadena(mv, tmp1)) +
-//                    1; // aumentaré el valor de la memoria a la longitud de la
-//                       // cadena + 1
-//             texto = realloc(
-//                 texto, mem); // asigno la memoria nuevamente sin borrar su valor
-//             sprintf(texto, "%s%s%s", texto, sep_elegido,
-//                     latC_checar_cadena(
-//                         mv, tmp1)); // imprimo el contenido que ya tiene texto
-//                                     // en su misma variable con el separador
-//         } else if (tmp1->tipo == T_NUMERIC) {
-//             sprintf(texto, "%s%s%.16g", texto, sep_elegido,
-//                     latC_checar_numerico(
-//                         mv, tmp1)); // si es número, no reservo más memoria y
-//                                     // sigo metiendo el valor
-//         }
-//     }
-//     if (*texto == '\0') { // ahora regreso al valor de texto, y lo comparo con
-//                           // el primer valor que asigne, si es nulo...
-//         latC_apilar(mv, latO_nulo); // retorna nulo.
-//     } else {
-//         latC_apilar_string(mv, texto); // sino, la lista concatenada
-//     }
-//     free(texto);
-// }
+void lista_concatenar(lat_mv *mv) {
+    lat_objeto *l2 = latC_desapilar(mv);
+    lat_objeto *l1 = latC_desapilar(mv);
+
+    lista *nl = latL_crear(mv);
+    lista *lt1 = latC_checar_lista(mv, l1);
+    lista *lt2 = latC_checar_lista(mv, l2);
+
+    int i;
+    int len1 = latL_longitud(lt1), len2 = latL_longitud(lt2);
+
+    for (i = 0; i < len1; i++) {
+        latL_agregar(mv, nl, latL_obtener_elemento(mv, lt1, i));
+    }
+    for (i = 0; i < len2; i++) {
+        latL_agregar(mv, nl, latL_obtener_elemento(mv, lt2, i));
+    }
+
+    lat_objeto *tmp = latC_crear_lista(mv, nl);
+    latC_apilar(mv, tmp);
+}
 
 void lista_separar(lat_mv *mv) {
     lat_objeto *separador = latC_desapilar(mv);
@@ -258,7 +230,7 @@ static const lat_CReg liblist[] = {
     {"insertar", lista_insertar, 3},
     {"eliminar", lista_eliminar, 2},
     {"contiene", lista_contiene, 2},
-    // {"concatenar", lista_concatenar, 2},
+    {"concatenar", lista_concatenar, 2},
     {"crear", lista_crear, 1},
     {"separar", lista_separar, 2},
     {NULL, NULL}};
