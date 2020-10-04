@@ -2,34 +2,27 @@
 name: Reporte de Error (Bug report)
 about: Create a report to help us improve
 title: ''
-labels: bug
-assignees: ''
+labels: error
+assignees: 'MelvinG24'
 
 ---
 
-<!-- ⚠️⚠️  !No borrar éste encabezado! Plantilla de Reporte-de-Error ⚠️⚠️ -->
-<!-- Por favor, buscar antes si éste error ya fue publicado por otro usuario para evitar duplicaciones. -->
-<!-- Además, pruebe con la última versión de Latino para asegurar que su problema no fue solucionado ya -->
+### Reportando bug
+`no escribir en esta área y marcarlo al completar el issue.`
 
-<!-- Descripción del error-->
-De una breve descripción del error que le ocurre.
+* [ ] <i>Error global, no me deja correr Latino</i>.
+* [ ] <i>El error ocurre en una palabra reservada. Por ejemplo: `si` `osi` `sino` (escribir la palabra reservada en detalles)</i>.
+* [ ] <i>Es un error en una función específica (escribir la función en detalles)</i>.
+* [ ] <i>Es una falla de memoria (memory leak)</i>.
+* [ ] <i>El error solo ocurre en el REPL (al ejecutar `latino` sin parámetros)</i>.
 
+`no escribir en esta área y marcarlo al completar el issue.`
 
+<b>Más detalles</b>:
+<!-- descripción_aquí -->
 
-<!-- Captura de Pantalla -->
-Si aplica, proporcione una captura de pantalla del error que le ocurre.
-
-<!-- Información del Ordenador (por favor, complete las siguientes casillas): -->
- - OS: [e.g. Windows 10]
- - Versión de Latino [e.g. 1.0.0]
-
-<!-- Información Adicional -->
-Agregue cualquier otra información adicional sobre su problema.
-
-<!-- Código donde el error ocurre -->
-Si aplica, proporcione  el fragmento de código del cual Latino hace error
-
+<b>Código en donde ocurre</b>:
 ```c
-// pegar su código aquí
+// código_aquí
 
 ```

@@ -3,22 +3,23 @@ name: Solicitud de Característica (Feature request)
 about: Suggest an idea for this project
 title: ''
 labels: enhancement
-assignees: ''
+assignees: 'MelvinG24'
 
 ---
 
-<!-- ⚠️⚠️  !No borrar éste encabezado! Plantilla de Reporte-de-Característica⚠️⚠️ -->
-<!-- Por favor, buscar antes si esta solicitud ya fue publicado por otro usuario para evitar duplicaciones. -->
-<!-- Además, pruebe con la última versión de Latino para asegurar que su solicitud ya fue añadida -->
+### Reportando bug
+`no escribir en esta área y marcarlo al completar el issue.`
 
-<!-- ¿Su solicitud de característica acaso resuelve algún problema? Por favor, descríbalo -->
-De una breve descripción de su solicitud de característica. Eje.: Siempre me siento frustrado con...[]
+* [ ] <i>Solamente busco ayuda u orientación</i>.
+* [ ] <i>Sugerencia para Latino</i>.
 
-<!-- Describa el tipo de solución que le gustaría que se implementara -->
-De una breve descripción de lo que quiere que suceda cuando se use esa característica.
+`no escribir en esta área y marcarlo al completar el issue.`
 
-<!-- Describa cualquier alternativas que usted considere  -->
-De una breve descripción de cualquier alternativa a su solicitud que usted considera apropiada.
+<b>Más detalles</b>:
+<!-- descripción_aquí -->
 
-<!-- Información Adicional -->
-Agregue cualquier otra información adicional sobre su solicitud.
+<b>Código en donde ocurre</b>:
+```c
+// código_aquí
+
+```

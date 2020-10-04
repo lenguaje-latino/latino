@@ -89,7 +89,7 @@ Visita la Wiki de Latino aquí en GitHut para saber como colaborar en este proye
 <a name="ayuda"></a>
 # Otras Ayuda
 *Latino* dispone de un foro en su página web oficial, así como también un grupo en Telegram y Gitter, además de un canal en Youtube a las que puedes dirigirte en caso de cualquier duda.
-- [Foros de Latino](http://lenguaje-latino.org/foro/)
+- [Stack Overflow](https://es.stackoverflow.com/questions/tagged/latino)
 - [Chat en Telegram](https://t.me/joinchat/AAAAAD6l6_qIgQAAgu9DVQ)
 - [Chat en Gitter](https://gitter.im/primitivorm/latino?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 - [Canal en Youtube](https://www.youtube.com/channel/UCLVTJpQn-TDbBSwR732kvnQ/featured)
