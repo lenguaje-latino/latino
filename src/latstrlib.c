@@ -985,7 +985,7 @@ static const lat_CReg libstr[] = {
     {"insertar", str_insertar, 3},
     {"rellenar_izquierda", str_rellenar_izquierda, 3},
     {"rellenar_derecha", str_rellenar_derecha, 3},
-    {"reemplazar", str_reemplazar, 3},
+    {"reemplazar", str_reemplazar, 4},
     {"subcadena", str_subcadena, 3},
     {"formato", str_formato, FUNCION_VAR_ARGS}, // para funciones var_arg
     {NULL, NULL}};

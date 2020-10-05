@@ -62,7 +62,7 @@ THE SOFTWARE.
 /** Version menor de Latino */
 #define LAT_VERSION_MENOR "2"
 /** Version de correcion de errores */
-#define LAT_VERSION_PARCHE "14"
+#define LAT_VERSION_PARCHE "15"
 /** Version de Latino */
 #define LAT_VERSION                                                            \
     "Latino " LAT_VERSION_MAYOR "." LAT_VERSION_MENOR "." LAT_VERSION_PARCHE
