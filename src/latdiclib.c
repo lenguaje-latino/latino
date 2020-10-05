@@ -78,8 +78,34 @@ static void dic_valores(lat_mv *mv) {
     latC_apilar(mv, tmp);
 }
 
+static void dic_contiene(lat_mv *mv) {
+    lat_objeto *ll = latC_desapilar(mv);
+    lat_objeto *o = latC_desapilar(mv);
+    hash_map *m = latC_checar_dic(mv, o);
+    lat_objeto *tmp = latO_falso;
+    int i;
+    for (i = 0; i < 256; i++) {
+        lista *list = m->buckets[i];
+        if (list != NULL) {
+            if (list->longitud > 0) {
+                LIST_FOREACH(list, primero, siguiente, cur) {
+                    if (cur->valor != NULL) {
+                        char *str_key = ((hash_val *)cur->valor)->llave;
+                        if (strcmp(str_key, latC_checar_cadena(mv, ll)) == 0) {
+                            tmp = latO_verdadero;
+                            break;
+                        }
+                    }
+                }
+            }
+        }
+    }
+    latC_apilar(mv, tmp);
+}
+
 static const lat_CReg libdic[] = {{"longitud", dic_longitud, 1},
                                   {"llaves", dic_llaves, 1},
+                                  {"contiene", dic_contiene, 2},
                                   {"valores", dic_valores, 1},
                                   {"vals", dic_valores, 1},
                                   {NULL, NULL}};
