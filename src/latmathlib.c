@@ -190,8 +190,8 @@ static void mate_pi(lat_mv *mv) {
 static void mate_base(lat_mv *mv) {
     lat_objeto *b = latC_desapilar(mv);
     lat_objeto *a = latC_desapilar(mv);
-    lat_objeto *ap = latC_crear_numerico(mv, (latC_checar_numerico(mv, a) / 100));
-    lat_objeto *tmp = latC_crear_numerico(mv, (latC_checar_numerico(mv, b) / latC_checar_numerico(mv, ap)));
+    lat_objeto *bp = latC_crear_numerico(mv, (latC_checar_numerico(mv, b) / 100));
+    lat_objeto *tmp = latC_crear_numerico(mv, (latC_checar_numerico(mv, a) / latC_checar_numerico(mv, bp)));
     latC_apilar(mv, tmp);
 }
 
