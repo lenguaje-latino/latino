@@ -203,6 +203,13 @@ static void mate_parte(lat_mv *mv) {
     latC_apilar(mv, tmp);
 }
 
+static void mate_porc(lat_mv *mv) {
+    lat_objeto *b = latC_desapilar(mv);
+    lat_objeto *a = latC_desapilar(mv);
+    lat_objeto *tmp = latC_crear_numerico(mv, (latC_checar_numerico(mv, a) / latC_checar_numerico(mv, b)));
+    latC_apilar(mv, tmp);
+}
+
 static const lat_CReg libmate_[] = {
     {"acos", mate_acos, 1},        {"asen", mate_asin, 1},
     {"atan", mate_atan, 1},        {"cos", mate_cos, 1},
@@ -216,7 +223,8 @@ static const lat_CReg libmate_[] = {
     {"frexp", mate_frexp, 2},      {"ldexp", mate_ldexp, 2},
     {"aleatorio", mate_random, 2}, {"pi", mate_pi, 0},
     {"base", mate_base, 2},        {"parte", mate_parte, 2},
-    {NULL, NULL}};
+    {"porciento", mate_porc, 2},   {"porcentaje", mate_porc, 2},
+    {"porc", mate_porc, 2},        {NULL, NULL}};
 
 void latC_abrir_liblatino_mathlib(lat_mv *mv) {
     latC_abrir_liblatino(mv, LIB_MATE_NAME, libmate_);
