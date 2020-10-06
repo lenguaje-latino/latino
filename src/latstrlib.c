@@ -280,6 +280,9 @@ char *rellenar_izquierda(char *base, char *c, int n) {
     // FIXME: Windows
     int len = strlen(base);
     char *ret = malloc(len + n + 1);
+
+    strcpy(ret, "");
+    
     int i, final = len - 1;
     for (i = 0; i < (n - final); i++) {
         ret = strcat(ret, c);
