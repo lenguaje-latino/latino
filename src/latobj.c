@@ -46,8 +46,7 @@ char *reemplazar(char *str, const char *orig, const char *rep);
 char *analizar_fmt(const char *s, size_t len);
 char *analizar(const char *s, size_t len);
 
-void latO_asignar_ctx(lat_mv *mv, lat_objeto *ns, const char *name,
-                      lat_objeto *o) {
+void latO_asignar_ctx(lat_mv *mv, lat_objeto *ns, const char *name, lat_objeto *o) {
     if (ns->tipo != T_CONTEXT) {
         latC_error(mv, "Objeto no es un contexto");
     } else {
@@ -59,8 +58,7 @@ void latO_asignar_ctx(lat_mv *mv, lat_objeto *ns, const char *name,
     }
 }
 
-lat_objeto *latO_obtener_contexto(lat_mv *mv, lat_objeto *ns,
-                                  const char *name) {
+lat_objeto *latO_obtener_contexto(lat_mv *mv, lat_objeto *ns, const char *name) {
     if (ns->tipo != T_CONTEXT) {
         latC_error(mv, "Objeto no es un contexto");
     } else {
@@ -92,8 +90,7 @@ lat_objeto *latO_contexto_crear(lat_mv *mv) {
     return ret;
 }
 
-static lat_cadena *nuevaCad(lat_mv *mv, const char *str, size_t l,
-                            unsigned int h) {
+static lat_cadena *nuevaCad(lat_mv *mv, const char *str, size_t l, unsigned int h) {
     // printf("nuevaCad : %s\n", str);
     lat_cadena *ts;
     stringtable *tb;

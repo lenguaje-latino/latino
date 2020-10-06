@@ -187,6 +187,14 @@ static void mate_pi(lat_mv *mv) {
     latC_apilar(mv, ret);
 }
 
+static void mate_base(lat_mv *mv) {
+    lat_objeto *b = latC_desapilar(mv);
+    lat_objeto *a = latC_desapilar(mv);
+    lat_objeto *ap = latC_crear_numerico(mv, (latC_checar_numerico(mv, a) / 100));
+    lat_objeto *tmp = latC_crear_numerico(mv, (latC_checar_numerico(mv, b) / latC_checar_numerico(mv, ap)));
+    latC_apilar(mv, tmp);
+}
+
 static const lat_CReg libmate_[] = {
     {"acos", mate_acos, 1},        {"asen", mate_asin, 1},
     {"atan", mate_atan, 1},        {"cos", mate_cos, 1},
@@ -199,7 +207,7 @@ static const lat_CReg libmate_[] = {
     {"atan2", mate_atan2, 2},      {"pot", mate_pow, 2},
     {"frexp", mate_frexp, 2},      {"ldexp", mate_ldexp, 2},
     {"aleatorio", mate_random, 2}, {"pi", mate_pi, 0},
-    {NULL, NULL}};
+    {"base", mate_base, 2},        {NULL, NULL}};
 
 void latC_abrir_liblatino_mathlib(lat_mv *mv) {
     latC_abrir_liblatino(mv, LIB_MATE_NAME, libmate_);
