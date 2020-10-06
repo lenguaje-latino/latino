@@ -24,6 +24,9 @@ THE SOFTWARE.
 
 #include "latino.h"
 
+#undef PI
+#define PI 3.141592653589793
+
 #define LIB_MATE_NAME "mate"
 
 static void mate_acos(lat_mv *mv) {
@@ -176,6 +179,14 @@ static void mate_random(lat_mv *mv) {
     latC_apilar(mv, tmp);
 }
 
+static void mate_pi(lat_mv *mv) {
+    long double pi = PI;
+    lat_objeto *ret = latO_crear(mv);
+    ret->tam += sizeof(long double);
+    setNumerico(ret, pi);
+    latC_apilar(mv, ret);
+}
+
 static const lat_CReg libmate_[] = {
     {"acos", mate_acos, 1},        {"asen", mate_asin, 1},
     {"atan", mate_atan, 1},        {"cos", mate_cos, 1},
@@ -187,7 +198,8 @@ static const lat_CReg libmate_[] = {
     {"piso", mate_floor, 1},       {"abs", mate_abs, 1},
     {"atan2", mate_atan2, 2},      {"pot", mate_pow, 2},
     {"frexp", mate_frexp, 2},      {"ldexp", mate_ldexp, 2},
-    {"aleatorio", mate_random, 2}, {NULL, NULL}};
+    {"aleatorio", mate_random, 2}, {"pi", mate_pi, 0},
+    {NULL, NULL}};
 
 void latC_abrir_liblatino_mathlib(lat_mv *mv) {
     latC_abrir_liblatino(mv, LIB_MATE_NAME, libmate_);
