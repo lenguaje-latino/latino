@@ -53,6 +53,12 @@ static void mate_asin(lat_mv *mv) {
     latC_apilar(mv, tmp);
 }
 
+static void mate_asinh(lat_mv *mv) {
+    lat_objeto *a = latC_desapilar(mv);
+    lat_objeto *tmp = latC_crear_numerico(mv, asinh(latC_checar_numerico(mv, a)));
+    latC_apilar(mv, tmp);
+}
+
 static void mate_atan(lat_mv *mv) {
     lat_objeto *a = latC_desapilar(mv);
     lat_objeto *tmp = latC_crear_numerico(mv, atan(latC_checar_numerico(mv, a)));
@@ -252,7 +258,7 @@ static void mate_round(lat_mv *mv) {
 
 static const lat_CReg libmate_[] = {
     {"acos", mate_acos, 1},        {"acosh", mate_acosh, 1},
-    {"asen", mate_asin, 1},
+    {"asen", mate_asin, 1},        {"asenh", mate_asinh, 1},
     {"atan", mate_atan, 1},        {"cos", mate_cos, 1},
     {"cosh", mate_cosh, 1},        {"sen", mate_sin, 1},
     {"senh", mate_sinh, 1},        {"tan", mate_tan, 1},
