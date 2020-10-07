@@ -232,6 +232,12 @@ static void mate_porc(lat_mv *mv) {
     latC_apilar(mv, tmp);
 }
 
+static void mate_trunc(lat_mv *mv) {
+    lat_objeto *a = latC_desapilar(mv);
+    lat_objeto *tmp = latC_crear_numerico(mv, trunc(latC_checar_numerico(mv, a)));
+    latC_apilar(mv, tmp);
+}
+
 static const lat_CReg libmate_[] = {
     {"acos", mate_acos, 1},        {"asen", mate_asin, 1},
     {"atan", mate_atan, 1},        {"cos", mate_cos, 1},
@@ -243,6 +249,7 @@ static const lat_CReg libmate_[] = {
     {"piso", mate_floor, 1},       {"abs", mate_abs, 1},
     {"atan2", mate_atan2, 2},      {"pot", mate_pow, 2},
     {"frexp", mate_frexp, 2},      {"ldexp", mate_ldexp, 2},
+    {"trunc", mate_trunc, 1},
     {"aleatorio", mate_random, 2},
     {"pi", mate_pi, 0},            {"tau", mate_tau, 0},
     {"e", mate_e, 0},
