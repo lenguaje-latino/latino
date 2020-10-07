@@ -896,16 +896,16 @@ void str_formato(lat_mv *mv) {
                     sprintf(buff, LAT_NUMERIC_FMT, latC_adouble(mv, dec));
                 } break;
                 case 'o': {  //octal
-                    lat_objeto *ent = latL_extraer_inicio(mv, params);
-                    sprintf(buff, "%o", (int)latC_adouble(mv, ent));
+                    lat_objeto *oct = latL_extraer_inicio(mv, params);
+                    sprintf(buff, "%o", (int)latC_adouble(mv, oct));
                 } break;
                 case 'x': {  //hex
-                    lat_objeto *ent = latL_extraer_inicio(mv, params);
-                    sprintf(buff, "%x", (int)latC_adouble(mv, ent));
+                    lat_objeto *hex = latL_extraer_inicio(mv, params);
+                    sprintf(buff, "%x", (int)latC_adouble(mv, hex));
                 } break;
                 case 'e': {  //sci
-                    lat_objeto *ent = latL_extraer_inicio(mv, params);
-                    sprintf(buff, "%e", (int)latC_adouble(mv, ent));
+                    lat_objeto *sci = latL_extraer_inicio(mv, params);
+                    sprintf(buff, "%e", (int)latC_adouble(mv, sci));
                 } break;
                 case 's': {  //string
                     lat_objeto *str = latL_extraer_inicio(mv, params);

@@ -27,6 +27,9 @@ THE SOFTWARE.
 #undef PI
 #define PI 3.141592653589793
 
+#undef TAU
+#define TAU 6.283185307179586
+
 #define LIB_MATE_NAME "mate"
 
 static void mate_acos(lat_mv *mv) {
@@ -187,6 +190,14 @@ static void mate_pi(lat_mv *mv) {
     latC_apilar(mv, ret);
 }
 
+static void mate_tau(lat_mv *mv) {
+    long float tau = TAU;
+    lat_objeto *ret = latO_crear(mv);
+    ret->tam += sizeof(long float);
+    setNumerico(ret, tau);
+    latC_apilar(mv, ret);
+}
+
 static void mate_base(lat_mv *mv) {
     lat_objeto *b = latC_desapilar(mv);
     lat_objeto *a = latC_desapilar(mv);
@@ -221,7 +232,8 @@ static const lat_CReg libmate_[] = {
     {"piso", mate_floor, 1},       {"abs", mate_abs, 1},
     {"atan2", mate_atan2, 2},      {"pot", mate_pow, 2},
     {"frexp", mate_frexp, 2},      {"ldexp", mate_ldexp, 2},
-    {"aleatorio", mate_random, 2}, {"pi", mate_pi, 0},
+    {"aleatorio", mate_random, 2},
+    {"pi", mate_pi, 0},            {"tau", mate_tau, 0},
     {"base", mate_base, 2},        {"parte", mate_parte, 2},
     {"porciento", mate_porc, 2},   {"porcentaje", mate_porc, 2},
     {"porc", mate_porc, 2},        {NULL, NULL}};
