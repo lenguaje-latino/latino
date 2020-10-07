@@ -97,6 +97,12 @@ static void mate_cosh(lat_mv *mv) {
     latC_apilar(mv, tmp);
 }
 
+static void mate_cbrt(lat_mv *mv) {
+    lat_objeto *a = latC_desapilar(mv);
+    lat_objeto *tmp = latC_crear_numerico(mv, cbrt(latC_checar_numerico(mv, a)));
+    latC_apilar(mv, tmp);
+}
+
 static void mate_sin(lat_mv *mv) {
     lat_objeto *a = latC_desapilar(mv);
     lat_objeto *tmp = latC_crear_numerico(mv, sin(latC_checar_numerico(mv, a)));
@@ -263,6 +269,7 @@ static void mate_round(lat_mv *mv) {
 }
 
 static const lat_CReg libmate_[] = {
+    {"abs", mate_abs, 1},
     {"acos", mate_acos, 1},        {"acosh", mate_acosh, 1},
     {"asen", mate_asin, 1},        {"asenh", mate_asinh, 1},
     {"atan", mate_atan, 1},        {"atanh", mate_atanh, 1},
@@ -272,8 +279,8 @@ static const lat_CReg libmate_[] = {
     {"tan", mate_tan, 1},          {"tanh", mate_tanh, 1},
     {"exp", mate_exp, 1},
     {"log", mate_log, 1},          {"log10", mate_log10, 1},
-    {"raiz", mate_sqrt, 1},        {"techo", mate_ceil, 1},
-    {"piso", mate_floor, 1},       {"abs", mate_abs, 1},
+    {"raiz", mate_sqrt, 1},        {"raizc", mate_cbrt, 1},
+    {"techo", mate_ceil, 1},       {"piso", mate_floor, 1},
     {"pot", mate_pow, 2},
     {"frexp", mate_frexp, 2},      {"ldexp", mate_ldexp, 2},
     {"trunc", mate_trunc, 1},
