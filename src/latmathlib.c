@@ -30,6 +30,9 @@ THE SOFTWARE.
 #undef TAU
 #define TAU 6.283185307179586
 
+#undef Eu
+#define Eu 2.718281828459045
+
 #define LIB_MATE_NAME "mate"
 
 static void mate_acos(lat_mv *mv) {
@@ -198,6 +201,14 @@ static void mate_tau(lat_mv *mv) {
     latC_apilar(mv, ret);
 }
 
+static void mate_e(lat_mv *mv) {
+    long float eu = Eu;
+    lat_objeto *ret = latO_crear(mv);
+    ret->tam += sizeof(long float);
+    setNumerico(ret, eu);
+    latC_apilar(mv, ret);
+}
+
 static void mate_base(lat_mv *mv) {
     lat_objeto *b = latC_desapilar(mv);
     lat_objeto *a = latC_desapilar(mv);
@@ -234,6 +245,7 @@ static const lat_CReg libmate_[] = {
     {"frexp", mate_frexp, 2},      {"ldexp", mate_ldexp, 2},
     {"aleatorio", mate_random, 2},
     {"pi", mate_pi, 0},            {"tau", mate_tau, 0},
+    {"e", mate_e, 0},
     {"base", mate_base, 2},        {"parte", mate_parte, 2},
     {"porciento", mate_porc, 2},   {"porcentaje", mate_porc, 2},
     {"porc", mate_porc, 2},        {NULL, NULL}};
