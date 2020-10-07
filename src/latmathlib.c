@@ -35,6 +35,12 @@ THE SOFTWARE.
 
 #define LIB_MATE_NAME "mate"
 
+static void mate_abs(lat_mv *mv) {
+    lat_objeto *a = latC_desapilar(mv);
+    lat_objeto *tmp = latC_crear_numerico(mv, fabs(latC_checar_numerico(mv, a)));
+    latC_apilar(mv, tmp);
+}
+
 static void mate_acos(lat_mv *mv) {
     lat_objeto *a = latC_desapilar(mv);
     lat_objeto *tmp = latC_crear_numerico(mv, acos(latC_checar_numerico(mv, a)));
@@ -62,6 +68,20 @@ static void mate_asinh(lat_mv *mv) {
 static void mate_atan(lat_mv *mv) {
     lat_objeto *a = latC_desapilar(mv);
     lat_objeto *tmp = latC_crear_numerico(mv, atan(latC_checar_numerico(mv, a)));
+    latC_apilar(mv, tmp);
+}
+
+static void mate_atanh(lat_mv *mv) {
+    lat_objeto *a = latC_desapilar(mv);
+    lat_objeto *tmp = latC_crear_numerico(mv, atanh(latC_checar_numerico(mv, a)));
+    latC_apilar(mv, tmp);
+}
+
+static void mate_atan2(lat_mv *mv) {
+    lat_objeto *b = latC_desapilar(mv);
+    lat_objeto *a = latC_desapilar(mv);
+    lat_objeto *tmp = latC_crear_numerico(
+        mv, atan2(latC_checar_numerico(mv, a), latC_checar_numerico(mv, b)));
     latC_apilar(mv, tmp);
 }
 
@@ -136,20 +156,6 @@ static void mate_floor(lat_mv *mv) {
     lat_objeto *a = latC_desapilar(mv);
     lat_objeto *tmp =
         latC_crear_numerico(mv, floor(latC_checar_numerico(mv, a)));
-    latC_apilar(mv, tmp);
-}
-
-static void mate_abs(lat_mv *mv) {
-    lat_objeto *a = latC_desapilar(mv);
-    lat_objeto *tmp = latC_crear_numerico(mv, fabs(latC_checar_numerico(mv, a)));
-    latC_apilar(mv, tmp);
-}
-
-static void mate_atan2(lat_mv *mv) {
-    lat_objeto *b = latC_desapilar(mv);
-    lat_objeto *a = latC_desapilar(mv);
-    lat_objeto *tmp = latC_crear_numerico(
-        mv, atan2(latC_checar_numerico(mv, a), latC_checar_numerico(mv, b)));
     latC_apilar(mv, tmp);
 }
 
@@ -259,14 +265,16 @@ static void mate_round(lat_mv *mv) {
 static const lat_CReg libmate_[] = {
     {"acos", mate_acos, 1},        {"acosh", mate_acosh, 1},
     {"asen", mate_asin, 1},        {"asenh", mate_asinh, 1},
-    {"atan", mate_atan, 1},        {"cos", mate_cos, 1},
-    {"cosh", mate_cosh, 1},        {"sen", mate_sin, 1},
-    {"senh", mate_sinh, 1},        {"tan", mate_tan, 1},
-    {"tanh", mate_tanh, 1},        {"exp", mate_exp, 1},
+    {"atan", mate_atan, 1},        {"atanh", mate_atanh, 1},
+    {"atan2", mate_atan2, 2},
+    {"cos", mate_cos, 1},          {"cosh", mate_cosh, 1},
+    {"sen", mate_sin, 1},          {"senh", mate_sinh, 1},
+    {"tan", mate_tan, 1},          {"tanh", mate_tanh, 1},
+    {"exp", mate_exp, 1},
     {"log", mate_log, 1},          {"log10", mate_log10, 1},
     {"raiz", mate_sqrt, 1},        {"techo", mate_ceil, 1},
     {"piso", mate_floor, 1},       {"abs", mate_abs, 1},
-    {"atan2", mate_atan2, 2},      {"pot", mate_pow, 2},
+    {"pot", mate_pow, 2},
     {"frexp", mate_frexp, 2},      {"ldexp", mate_ldexp, 2},
     {"trunc", mate_trunc, 1},
     {"aleatorio", mate_random, 2},
