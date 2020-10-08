@@ -186,12 +186,14 @@ static void file_crear(lat_mv *mv) {
     } else {
         latC_apilar(mv, latO_falso);
     }
+    fclose(archivo);
 }
 
 static void file_renombrar(lat_mv *mv) {
     lat_objeto *b = latC_desapilar(mv);
     lat_objeto *a = latC_desapilar(mv);
     char *nuevo = (char*)malloc(MAX_ID_LENGTH);
+    strcpy(nuevo, "");
     strcpy(nuevo, latC_checar_cadena(mv, b));
     bool ret = rename(latC_checar_cadena(mv, a), nuevo);
     if (!ret) {
