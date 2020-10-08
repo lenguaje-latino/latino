@@ -194,44 +194,74 @@ static void mate_ldexp(lat_mv *mv) {
     latC_apilar(mv, tmp);
 }
 
+// NOTA: Antigua funcion para numeros aleatorios (Obsoleta)
+//
+// static void mate_random(lat_mv *mv) {
+//     lat_objeto *secundario = latC_desapilar(mv);
+//     lat_objeto *primario = latC_desapilar(mv);
+//     int resultado, min, max;
+//     min = (int)latC_checar_numerico(mv, primario);
+//     max = (int)latC_checar_numerico(mv, secundario);
+//     if (min <= max) {
+//         max = max + 1;
+//     } else {
+//         min = (int)latC_checar_numerico(mv, secundario);
+//         max = (int)latC_checar_numerico(mv, primario) + 1;
+//     }
+//     srand(time(NULL));
+//     resultado = (rand() % (max - min)) + min;
+//     lat_objeto *tmp = latC_crear_numerico(mv, resultado);
+//     latC_apilar(mv, tmp);
+// }
+
 static void mate_random(lat_mv *mv) {
-    lat_objeto *secundario = latC_desapilar(mv);
-    lat_objeto *primario = latC_desapilar(mv);
-    int resultado, min, max;
-    min = latC_checar_numerico(mv, primario);
-    max = latC_checar_numerico(mv, secundario);
-    if (min <= max) {
-        max = max + 1;
+    lat_objeto *o = latC_desapilar(mv);
+    int res=0, i=0, vlmx=0, cant = (int)latC_checar_numerico(mv, o);
+    if (cant <= 0) {
+        res = (rand() % 2);
+    } else if (cant == 1) {
+        vlmx = (int)latC_checar_numerico(mv, latC_desapilar(mv));
+        res = (rand() % (vlmx + 1));
+    } else if (cant == 2) {
+        int vlmn = (int)latC_checar_numerico(mv, latC_desapilar(mv));
+        vlmx = (int)latC_checar_numerico(mv, latC_desapilar(mv));
+        if (vlmn <= vlmx) {
+            vlmx = vlmx + 1;
+        } else {
+            //Se intercambian los valores
+            vlmn = vlmn - vlmx;
+            vlmx = vlmn + vlmx;
+            vlmn = vlmx - vlmn;
+            vlmx = vlmx + 1;
+        }
+        res = (rand() % (vlmx - vlmn)) + vlmn;
     } else {
-        min = latC_checar_numerico(mv, secundario);
-        max = latC_checar_numerico(mv, primario) + 1;
+        latC_error(mv, "Numero invalido de argumentos");
     }
-    srand(time(NULL));
-    resultado = (rand() % (max - min)) + min;
-    lat_objeto *tmp = latC_crear_numerico(mv, resultado);
+    lat_objeto *tmp = latC_crear_numerico(mv, res);
     latC_apilar(mv, tmp);
 }
 
 static void mate_pi(lat_mv *mv) {
-    long double pi = PI;
+    double pi = PI;
     lat_objeto *ret = latO_crear(mv);
-    ret->tam += sizeof(long double);
+    ret->tam += sizeof(double);
     setNumerico(ret, pi);
     latC_apilar(mv, ret);
 }
 
 static void mate_tau(lat_mv *mv) {
-    long float tau = TAU;
+    double tau = TAU;
     lat_objeto *ret = latO_crear(mv);
-    ret->tam += sizeof(long float);
+    ret->tam += sizeof(double);
     setNumerico(ret, tau);
     latC_apilar(mv, ret);
 }
 
 static void mate_e(lat_mv *mv) {
-    long float eu = Eu;
+    double eu = Eu;
     lat_objeto *ret = latO_crear(mv);
-    ret->tam += sizeof(long float);
+    ret->tam += sizeof(double);
     setNumerico(ret, eu);
     latC_apilar(mv, ret);
 }
@@ -274,9 +304,12 @@ static void mate_round(lat_mv *mv) {
 static void mate_max(lat_mv *mv) {
     lat_objeto *o = latC_desapilar(mv);
     int i=0, cant = (int)latC_checar_numerico(mv, o);
+    if (cant <= 0) {
+        latC_error(mv, "Numero invalido de argumentos");
+    }
     double e=0, vl= INF_NEV;
     lista *valores = latL_crear(mv);
-    while (i < cant){
+    while (i < cant) {
         latL_insertar_inicio(mv, valores, latO_clonar(mv, latC_desapilar(mv)));
         i++;
     }
@@ -295,6 +328,9 @@ static void mate_max(lat_mv *mv) {
 static void mate_min(lat_mv *mv) {
     lat_objeto *o = latC_desapilar(mv);
     int i=0, cant = (int)latC_checar_numerico(mv, o);
+    if (cant <= 0) {
+        latC_error(mv, "Numero invalido de argumentos");
+    }
     double e=0, vl=INF_POV;
     lista *valores = latL_crear(mv);
     while (i < cant){
@@ -315,28 +351,28 @@ static void mate_min(lat_mv *mv) {
 
 static const lat_CReg libmate_[] = {
     {"abs", mate_abs, 1},
-    {"acos", mate_acos, 1},                {"acosh", mate_acosh, 1},
-    {"asen", mate_asin, 1},                {"asenh", mate_asinh, 1},
-    {"atan", mate_atan, 1},                {"atanh", mate_atanh, 1},
+    {"acos", mate_acos, 1},                         {"acosh", mate_acosh, 1},
+    {"asen", mate_asin, 1},                         {"asenh", mate_asinh, 1},
+    {"atan", mate_atan, 1},                         {"atanh", mate_atanh, 1},
     {"atan2", mate_atan2, 2},
-    {"cos", mate_cos, 1},                  {"cosh", mate_cosh, 1},
-    {"sen", mate_sin, 1},                  {"senh", mate_sinh, 1},
-    {"tan", mate_tan, 1},                  {"tanh", mate_tanh, 1},
+    {"cos", mate_cos, 1},                           {"cosh", mate_cosh, 1},
+    {"sen", mate_sin, 1},                           {"senh", mate_sinh, 1},
+    {"tan", mate_tan, 1},                           {"tanh", mate_tanh, 1},
     {"exp", mate_exp, 1},
-    {"log", mate_log, 1},                  {"log10", mate_log10, 1},
-    {"max", mate_max, FUNCION_VAR_ARGS},   {"min", mate_min, FUNCION_VAR_ARGS},
-    {"raiz", mate_sqrt, 1},                {"raizc", mate_cbrt, 1},
-    {"techo", mate_ceil, 1},               {"piso", mate_floor, 1},
+    {"log", mate_log, 1},                           {"log10", mate_log10, 1},
+    {"max", mate_max, FUNCION_VAR_ARGS},            {"min", mate_min, FUNCION_VAR_ARGS},
+    {"raiz", mate_sqrt, 1},                         {"raizc", mate_cbrt, 1},
+    {"techo", mate_ceil, 1},                        {"piso", mate_floor, 1},
     {"pot", mate_pow, 2},
-    {"frexp", mate_frexp, 2},              {"ldexp", mate_ldexp, 2},
+    {"frexp", mate_frexp, 2},                       {"ldexp", mate_ldexp, 2},
     {"trunc", mate_trunc, 1},
-    {"aleatorio", mate_random, 2},
-    {"pi", mate_pi, 0},                    {"tau", mate_tau, 0},
+    {"aleatorio", mate_random, FUNCION_VAR_ARGS},   {"alt", mate_random, FUNCION_VAR_ARGS},
+    {"pi", mate_pi, 0},                             {"tau", mate_tau, 0},
     {"e", mate_e, 0},
-    {"redondear", mate_round, 1},          {"rnd", mate_round, 1},
-    {"base", mate_base, 2},                {"parte", mate_parte, 2},
-    {"porciento", mate_porc, 2},           {"porcentaje", mate_porc, 2},
-    {"porc", mate_porc, 2},                {NULL, NULL}};
+    {"redondear", mate_round, 1},                   {"rnd", mate_round, 1},
+    {"base", mate_base, 2},                         {"parte", mate_parte, 2},
+    {"porciento", mate_porc, 2},                    {"porcentaje", mate_porc, 2},
+    {"porc", mate_porc, 2},                         {NULL, NULL}};
 
 void latC_abrir_liblatino_mathlib(lat_mv *mv) {
     latC_abrir_liblatino(mv, LIB_MATE_NAME, libmate_);
