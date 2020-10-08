@@ -268,29 +268,53 @@ static void mate_round(lat_mv *mv) {
     latC_apilar(mv, tmp);
 }
 
+static void mate_max(lat_mv *mv) {
+    lat_objeto *o = latC_desapilar(mv);
+    int i=0, cant = (int)latC_checar_numerico(mv, o);
+    double e=0, vl=0;
+    lista *valores = latL_crear(mv);
+    while (i < cant){
+        latL_insertar_inicio(mv, valores, latO_clonar(mv, latC_desapilar(mv)));
+        i++;
+    }
+    for (i=0; i < cant; i++) {
+        e = latC_checar_numerico(mv, latL_extraer_inicio(mv, valores));
+        if (e > vl) {
+            vl = e;
+        }
+        // printf("e: %lf  | vl:  %lf\n", e, vl);
+    }
+    latL_destruir(mv, valores);
+    // printf("============== vl:  %lf\n", vl);
+    lat_objeto *tmp = latO_crear(mv);
+    setNumerico(tmp, vl);
+    latC_apilar(mv, tmp);
+}
+
 static const lat_CReg libmate_[] = {
     {"abs", mate_abs, 1},
-    {"acos", mate_acos, 1},        {"acosh", mate_acosh, 1},
-    {"asen", mate_asin, 1},        {"asenh", mate_asinh, 1},
-    {"atan", mate_atan, 1},        {"atanh", mate_atanh, 1},
+    {"acos", mate_acos, 1},                {"acosh", mate_acosh, 1},
+    {"asen", mate_asin, 1},                {"asenh", mate_asinh, 1},
+    {"atan", mate_atan, 1},                {"atanh", mate_atanh, 1},
     {"atan2", mate_atan2, 2},
-    {"cos", mate_cos, 1},          {"cosh", mate_cosh, 1},
-    {"sen", mate_sin, 1},          {"senh", mate_sinh, 1},
-    {"tan", mate_tan, 1},          {"tanh", mate_tanh, 1},
+    {"cos", mate_cos, 1},                  {"cosh", mate_cosh, 1},
+    {"sen", mate_sin, 1},                  {"senh", mate_sinh, 1},
+    {"tan", mate_tan, 1},                  {"tanh", mate_tanh, 1},
     {"exp", mate_exp, 1},
-    {"log", mate_log, 1},          {"log10", mate_log10, 1},
-    {"raiz", mate_sqrt, 1},        {"raizc", mate_cbrt, 1},
-    {"techo", mate_ceil, 1},       {"piso", mate_floor, 1},
+    {"log", mate_log, 1},                  {"log10", mate_log10, 1},
+    {"max", mate_max, FUNCION_VAR_ARGS},
+    {"raiz", mate_sqrt, 1},                {"raizc", mate_cbrt, 1},
+    {"techo", mate_ceil, 1},               {"piso", mate_floor, 1},
     {"pot", mate_pow, 2},
-    {"frexp", mate_frexp, 2},      {"ldexp", mate_ldexp, 2},
+    {"frexp", mate_frexp, 2},              {"ldexp", mate_ldexp, 2},
     {"trunc", mate_trunc, 1},
     {"aleatorio", mate_random, 2},
-    {"pi", mate_pi, 0},            {"tau", mate_tau, 0},
+    {"pi", mate_pi, 0},                    {"tau", mate_tau, 0},
     {"e", mate_e, 0},
-    {"redondear", mate_round, 1},  {"rnd", mate_round, 1},
-    {"base", mate_base, 2},        {"parte", mate_parte, 2},
-    {"porciento", mate_porc, 2},   {"porcentaje", mate_porc, 2},
-    {"porc", mate_porc, 2},        {NULL, NULL}};
+    {"redondear", mate_round, 1},          {"rnd", mate_round, 1},
+    {"base", mate_base, 2},                {"parte", mate_parte, 2},
+    {"porciento", mate_porc, 2},           {"porcentaje", mate_porc, 2},
+    {"porc", mate_porc, 2},                {NULL, NULL}};
 
 void latC_abrir_liblatino_mathlib(lat_mv *mv) {
     latC_abrir_liblatino(mv, LIB_MATE_NAME, libmate_);
