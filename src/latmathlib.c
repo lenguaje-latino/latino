@@ -24,14 +24,17 @@ THE SOFTWARE.
 
 #include "latino.h"
 
-#undef PI
-#define PI 3.141592653589793
+#undef   PI
+#define  PI       3.141592653589793
 
-#undef TAU
-#define TAU 6.283185307179586
+#undef   TAU
+#define  TAU      6.283185307179586
 
-#undef Eu
-#define Eu 2.718281828459045
+#undef   Eu
+#define  Eu       2.718281828459045
+
+#define  INF_NEV  -999999999999999
+#define  INF_POV   999999999999999
 
 #define LIB_MATE_NAME "mate"
 
@@ -271,7 +274,7 @@ static void mate_round(lat_mv *mv) {
 static void mate_max(lat_mv *mv) {
     lat_objeto *o = latC_desapilar(mv);
     int i=0, cant = (int)latC_checar_numerico(mv, o);
-    double e=0, vl=0;
+    double e=0, vl= INF_NEV;
     lista *valores = latL_crear(mv);
     while (i < cant){
         latL_insertar_inicio(mv, valores, latO_clonar(mv, latC_desapilar(mv)));
@@ -282,10 +285,29 @@ static void mate_max(lat_mv *mv) {
         if (e > vl) {
             vl = e;
         }
-        // printf("e: %lf  | vl:  %lf\n", e, vl);
     }
     latL_destruir(mv, valores);
-    // printf("============== vl:  %lf\n", vl);
+    lat_objeto *tmp = latO_crear(mv);
+    setNumerico(tmp, vl);
+    latC_apilar(mv, tmp);
+}
+
+static void mate_min(lat_mv *mv) {
+    lat_objeto *o = latC_desapilar(mv);
+    int i=0, cant = (int)latC_checar_numerico(mv, o);
+    double e=0, vl=INF_POV;
+    lista *valores = latL_crear(mv);
+    while (i < cant){
+        latL_insertar_inicio(mv, valores, latO_clonar(mv, latC_desapilar(mv)));
+        i++;
+    }
+    for (i=0; i < cant; i++) {
+        e = latC_checar_numerico(mv, latL_extraer_inicio(mv, valores));
+        if (e < vl) {
+            vl = e;
+        }
+    }
+    latL_destruir(mv, valores);
     lat_objeto *tmp = latO_crear(mv);
     setNumerico(tmp, vl);
     latC_apilar(mv, tmp);
@@ -302,7 +324,7 @@ static const lat_CReg libmate_[] = {
     {"tan", mate_tan, 1},                  {"tanh", mate_tanh, 1},
     {"exp", mate_exp, 1},
     {"log", mate_log, 1},                  {"log10", mate_log10, 1},
-    {"max", mate_max, FUNCION_VAR_ARGS},
+    {"max", mate_max, FUNCION_VAR_ARGS},   {"min", mate_min, FUNCION_VAR_ARGS},
     {"raiz", mate_sqrt, 1},                {"raizc", mate_cbrt, 1},
     {"techo", mate_ceil, 1},               {"piso", mate_floor, 1},
     {"pot", mate_pow, 2},
