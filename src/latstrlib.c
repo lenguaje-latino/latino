@@ -277,7 +277,6 @@ char *insertar(char *dest, char *src, int pos) {
 }
 
 char *rellenar_izquierda(char *base, char *c, int n) {
-    // FIXME: Windows
     int len = strlen(base);
     char *ret = malloc(len + n + 1);
 
@@ -983,8 +982,8 @@ static const lat_CReg libstr[] = {
     {"eliminar", str_eliminar, 2},
     {"separar", str_separar, 2},
     {"inicia_con", str_inicia_con, 2},
-    {"regex", str_regex, 2},
-    {"match", str_match, 2},
+    {"regexl", str_regex, 2},
+    {"regex", str_match, 2},
     {"insertar", str_insertar, 3},
     {"rellenar_izquierda", str_rellenar_izquierda, 3},
     {"rellenar_derecha", str_rellenar_derecha, 3},
