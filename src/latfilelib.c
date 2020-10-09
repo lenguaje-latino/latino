@@ -156,11 +156,19 @@ static void file_duplicar(lat_mv *mv) {
         latC_error(mv, "Error al duplicar archivo '%s', nombre o ruta deven ser distintos", latC_checar_cadena(mv, b));
     } else {
         FILE *archivo, *copiar;
+        int txt;
         archivo = fopen(latC_checar_cadena(mv, a), "r");
-        const char *txt = archivo;
-        fclose(archivo);
         copiar = fopen(latC_checar_cadena(mv, b), "wb");
-        fprintf(copiar, "%s", txt);
+        if (!archivo) {
+            latC_error(mv, "Error: No se pudo abrir el archivo '%s'", latC_checar_cadena(mv, a));
+        } else if (!copiar) {
+            latC_error(mv, "Error: No se pudo abrir el archivo '%s'", latC_checar_cadena(mv, b));
+        }
+        while ((txt=fgetc(archivo)) != EOF)
+        fputc(txt, copiar);
+        // const char *txt = archivo;
+        // fprintf(copiar, "%s", txt);
+        fclose(archivo);
         fclose(copiar);
     }
 }
