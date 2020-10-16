@@ -33,6 +33,7 @@ THE SOFTWARE.
 #define LAT_FUNC extern
 #include <limits.h>
 #include <windows.h>
+// #include <WinInet.h>
 
 #include "regex.h"
 #define snprintf(s, l, f, i) _snprintf(s, l, f, i)

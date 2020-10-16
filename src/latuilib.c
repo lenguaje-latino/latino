@@ -24,32 +24,41 @@ THE SOFTWARE.
 
 #include "latino.h"
 
-#define LIB_LAT_NAME "lat"
+#define LIB_UI_NAME "ui"
 
-char *tipo(int tipo);
+#define MB_ICONQUETION H20
 
-static void dev_mostrar(lat_mv *mv) {
-    lat_objeto *o = latC_desapilar(mv);
-    char *tmp = latC_astring(mv, o);
-    printf("Tipo : %s\n", tipo(o->tipo));
-    printf("Marca : %i\n", o->marca);
-    printf("Num. Referencias : %i\n", o->nref);
-    printf("Tamanio : %zu\n", o->tam);
-    printf("Direccion : %p\n", o);
-    printf("Contenido : %s\n", tmp);
-    printf("------------------------------------\n");
-    free(tmp);
+//Mensajes
+static void ui_messagebeep(lat_mv *mv) {
+    // lat_objeto *a = latC_desapilar(mv);
+    // char *aa = latC_checar_caracter(mv, a);
+    // if (strcmp(aa, MB_ICONQUETION) == 0) {
+    //     MessageBeep(aa)
+    // }
+    MessageBeep(MB_ICONQUESTION);
+    Beep(800,2000);
 }
 
-void imprimir_pila(lat_mv *mv);
-static void dev_imprimir_pila(lat_mv *mv) { imprimir_pila(mv); }
-
-static const lat_CReg liblat[] = {{"mostrar", dev_mostrar, 1},
-                                  {"imprimir_pila", dev_imprimir_pila, 0},
-                                  {NULL, NULL, 0}};
-
-void latC_abrir_liblatino_devlib(lat_mv *mv) {
-    latC_abrir_liblatino(mv, LIB_LAT_NAME, liblat);
+static void ui_messagebox(lat_mv *mv) {
+    lat_objeto *d = latC_desapilar(mv);
+    lat_objeto *c = latC_desapilar(mv);
+    lat_objeto *b = latC_desapilar(mv);
+    lat_objeto *a = latC_desapilar(mv);
+    int *dd = (int)latC_checar_numerico(mv, d);
+    char *cc = latC_checar_cadena(mv, c);
+    char *bb = latC_checar_cadena(mv, b);
+    int *aa = (int)latC_checar_numerico(mv, a);
+    int m = (int)MessageBox(aa,bb,cc,dd);
+    lat_objeto *msj = latC_crear_numerico(mv, m);
+    latC_apilar(mv, msj);
 }
-// Mirar Python Debbuger
-//https://docs.python.org/3/library/pdb.html
+
+
+static const lat_CReg libui[] = {
+    {"mensajebeep", ui_messagebeep, 0},
+    {"mensaje", ui_messagebox, 4},
+    {NULL, NULL}};
+
+void latC_abrir_liblatino_uilib(lat_mv *mv) {
+    latC_abrir_liblatino(mv, LIB_UI_NAME, libui);
+}

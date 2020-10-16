@@ -237,3 +237,7 @@ static const lat_CReg libfile[] = {{"leer", file_leer, 1},
 void latC_abrir_liblatino_filelib(lat_mv *mv) {
     latC_abrir_liblatino(mv, LIB_ARCHIVO_NAME, libfile);
 }
+//agregar funcion de elegiar donde escribir
+// {"escribir", file_escribir, 3},
+// archivo.escribir("archivo1.lat", "añadir", 10)
+//https://medium.com/10-goto-10/manejo-de-archivos-en-c-19f85b31ddd

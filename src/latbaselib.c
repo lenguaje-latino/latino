@@ -248,6 +248,23 @@ static void base_error(lat_mv *mv) {
     latC_error(mv, "%s", latC_checar_cadena(mv, error));
 }
 
+static void base_beep(lat_mv *mv) {
+    lat_objeto *o = latC_desapilar(mv);
+    int cant = (int)latC_checar_numerico(mv, o);
+    if (cant <= 0) {
+        Beep(500,200);
+    } else if (cant == 1) {
+        int bvol = (int)latC_checar_numerico(mv, latC_desapilar(mv));
+        Beep(bvol,200);
+    } else if (cant == 2) {
+        int bvol = (int)latC_checar_numerico(mv, latC_desapilar(mv));
+        int btmp = (int)latC_checar_numerico(mv, latC_desapilar(mv));
+        Beep(bvol,btmp);
+    } else {
+        latC_error(mv, "Numero invalido de argumentos");
+    }
+}
+
 static const lat_CReg libbase[] = {
     {"poner", base_poner, 1},
     {"escribir", base_poner, 1},
@@ -261,6 +278,7 @@ static const lat_CReg libbase[] = {
     {"tipo", base_tipo, 1},
     {"imprimirf", base_imprimirf, FUNCION_VAR_ARGS},
     {"error", base_error, FUNCION_VAR_ARGS},
+    {"beep", base_beep, FUNCION_VAR_ARGS},
     {NULL, NULL}};
 
 void latC_abrir_liblatino_baselib(lat_mv *mv) {

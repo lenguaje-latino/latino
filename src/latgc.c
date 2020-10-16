@@ -20,7 +20,7 @@ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
 LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
- */
+*/
 
 #include "latgc.h"
 #include "latino.h"
@@ -111,3 +111,8 @@ static const lat_CReg libgc[] = {
     {"mostrar", gc_mostrar, 0}, {"limpiar", gc_checar, 0}, {NULL, NULL}};
 
 void latC_abrir_liblatino_gc(lat_mv *mv) { latC_abrir_liblatino(mv, LIB_GC_NAME, libgc); }
+
+//Lua GC
+//https://www.tutorialspoint.com/lua/lua_garbage_collection.htm
+//https://poga.github.io/lua53-notes/gc.html
+//Algoritmo Mark-and-sweep
