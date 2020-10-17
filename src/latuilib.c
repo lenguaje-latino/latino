@@ -29,16 +29,6 @@ THE SOFTWARE.
 #define MB_ICONQUETION H20
 
 //Mensajes
-static void ui_messagebeep(lat_mv *mv) {
-    // lat_objeto *a = latC_desapilar(mv);
-    // char *aa = latC_checar_caracter(mv, a);
-    // if (strcmp(aa, MB_ICONQUETION) == 0) {
-    //     MessageBeep(aa)
-    // }
-    MessageBeep(MB_ICONQUESTION);
-    Beep(800,2000);
-}
-
 static void ui_messagebox(lat_mv *mv) {
     lat_objeto *d = latC_desapilar(mv);
     lat_objeto *c = latC_desapilar(mv);
@@ -55,7 +45,6 @@ static void ui_messagebox(lat_mv *mv) {
 
 
 static const lat_CReg libui[] = {
-    {"mensajebeep", ui_messagebeep, 0},
     {"mensaje", ui_messagebox, 4},
     {NULL, NULL}};
 
