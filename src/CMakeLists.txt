@@ -6,7 +6,11 @@ SET(INSTALL_LIB ${CMAKE_INSTALL_PREFIX}/lib)
 SET(INSTALL_INCLUDE ${CMAKE_INSTALL_PREFIX}/include)
 SET(INSTALL_SHARE ${CMAKE_INSTALL_PREFIX}/share)
 
+find_package(Curses REQUIRED)
+include_directories(${CURSES_INCLUDE_DIR})
+
 if (WIN32)
+    # SET(BUILD_SHARED_LIBS "ON")
     option ( LATINO_BUILD_AS_DLL "Crea latino como libreria DLL" ${BUILD_SHARED_LIBS} )
     IF(MSVC)
         SET(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} /W4")
@@ -51,7 +55,7 @@ SET(SRC_LIB latino.c latlex.c latparse.c latast.c latmem.c
 latdic.c latdo.c latlist.c latmv.c latobj.c latpaqlib.c latrepl.c latgc.c
 #librerias
 latbaselib.c latstrlib.c latlistlib.c latdiclib.c latfilelib.c
-latmathlib.c latsyslib.c latpaqlib.c latdevlib.c latuilib.c
+latmathlib.c latsyslib.c latpaqlib.c latdevlib.c latuilib.c latcurseslib.c
 #extra
 linenoise/utf8.c linenoise/linenoise.c)
 
@@ -61,22 +65,28 @@ SET(SRC_LATINO ${SRC_LIB})
 #SET(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${PROJECT_BINARY_DIR}/bin)
 
 ADD_EXECUTABLE(latino ${SRC_LATINO} ${SRC_LIB})
-target_link_libraries(latino LINK_PUBLIC ${CMAKE_DL_LIBS})
+
+#SET(CMAKE_DL_LIBS ${CMAKE_DL_LIBS} "${CMAKE_CURRENT_SOURCE_DIR}/cursers/bin")
+message(STATUS "CMAKE_DL_LIBS: ${CMAKE_DL_LIBS}")
+target_link_libraries(latino LINK_PUBLIC ${CMAKE_DL_LIBS} ${CURSES_LIBRARIES})
 
 IF(MSVC)
     message(STATUS "CMAKE_CURRENT_BINARY_DIR: ${CMAKE_CURRENT_BINARY_DIR}")
     link_directories("${CMAKE_CURRENT_BINARY_DIR}/regex-2.7-src/src/${CMAKE_BUILD_TYPE}")
+    #link_directories("${CMAKE_CURRENT_BINARY_DIR}/curses/bin/")
     target_link_libraries(latino regex2)
     set (LATINO_DEF latino.def )
-	link_libraries(regex2)
+    link_libraries(regex2)
+    #link_libraries(libncursesw6)
 ENDIF(MSVC)
 
 # Create dynamic library
 add_library ( liblatino SHARED ${SRC_LIB} ${LATINO_DEF})
 set_target_properties ( liblatino PROPERTIES OUTPUT_NAME latino CLEAN_DIRECT_OUTPUT 1 )
 
+message(STATUS "LATINO_BUILD_AS_DLL: ${LATINO_BUILD_AS_DLL}")
 if ( LATINO_BUILD_AS_DLL )
-	target_link_libraries ( liblatino regex2 )
+	target_link_libraries ( liblatino regex2)
     set_target_properties ( liblatino PROPERTIES COMPILE_DEFINITIONS LATINO_BUILD_AS_DLL )
 endif ( )
 
@@ -85,13 +95,13 @@ add_library(liblatino_static STATIC ${SRC_LIB})
 target_link_libraries(liblatino_static ${LIBS})
 
 IF(UNIX)
-  INSTALL(TARGETS latino DESTINATION ${INSTALL_BIN})
-  INSTALL(TARGETS liblatino DESTINATION ${INSTALL_LIB})
-  INSTALL(TARGETS liblatino_static DESTINATION ${INSTALL_LIB})
-  INSTALL(FILES man/latino.1.gz DESTINATION ${INSTALL_SHARE}/man/man1)
-  INSTALL(FILES gnu-utilities/latino.nanorc DESTINATION ${INSTALL_SHARE}/nano)
-  INSTALL(FILES gnu-utilities/latino.desktop DESTINATION ${INSTALL_SHARE}/applications)
-  INSTALL(FILES ../logo/desktop.png DESTINATION ${INSTALL_SHARE}/latino)
+  INSTALL (TARGETS latino DESTINATION ${INSTALL_BIN})
+  INSTALL (TARGETS liblatino DESTINATION ${INSTALL_LIB})
+  INSTALL (TARGETS liblatino_static DESTINATION ${INSTALL_LIB})
+  INSTALL (FILES man/latino.1.gz DESTINATION ${INSTALL_SHARE}/man/man1)
+  INSTALL (FILES gnu-utilities/latino.nanorc DESTINATION ${INSTALL_SHARE}/nano)
+  INSTALL (FILES gnu-utilities/latino.desktop DESTINATION ${INSTALL_SHARE}/applications)
+  INSTALL (FILES ../logo/desktop.png DESTINATION ${INSTALL_SHARE}/latino)
   INSTALL (FILES ../include/latino.h DESTINATION ${INSTALL_INCLUDE} COMPONENT Header)
   INSTALL (FILES ../include/latast.h DESTINATION ${INSTALL_INCLUDE} COMPONENT Header)
   INSTALL (FILES ../include/latcompat.h DESTINATION ${INSTALL_INCLUDE} COMPONENT Header)

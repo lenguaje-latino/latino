@@ -1,0 +1,37 @@
+incluir ("curses")
+
+curses.iniciarpantalla()
+
+
+h=10
+w=20
+y,x=10,10
+
+vent1=curses.ventana(h,w,y,x)
+curses.refrescar()
+
+l,r="|","|"
+t,b="-","_"
+tlc,trc,blc,brc = "<",">","^","^"
+
+//curses.caja(vent1,103,104)
+curses.bordevent(vent1,l,r,t,b,tlc,trc,blc,brc)
+curses.mvwprintw(vent1,2,5,"Ventana 1")
+curses.refrescarvent(vent1)
+
+//colores="A_BLINK|A_REVERSE|A_BOLD"
+curses.attron("A_BLINK")
+curses.printw("Prueva en Latino")
+curses.attroff("PARPADEO|AL_REVES|NEGRITAS")
+
+
+
+/*
+c=curses.getch()
+curses.printw(c)
+*/
+
+curses.leer()
+
+curses.finpantalla()
+

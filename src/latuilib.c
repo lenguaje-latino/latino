@@ -26,6 +26,42 @@ THE SOFTWARE.
 
 #define LIB_UI_NAME "ui"
 
+int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nCmdShow);
+
+static void ui_winProc(lat_mv *mv) {
+    // lat_objeto *l = latC_desapilar(mv);
+    // lat_objeto *k = latC_desapilar(mv);
+    // lat_objeto *j = latC_desapilar(mv);
+    // lat_objeto *i = latC_desapilar(mv);
+    // lat_objeto *h = latC_desapilar(mv);
+    // lat_objeto *g = latC_desapilar(mv);
+    // lat_objeto *f = latC_desapilar(mv);
+    // lat_objeto *e = latC_desapilar(mv);
+    // lat_objeto *d = latC_desapilar(mv);
+    // lat_objeto *c = latC_desapilar(mv);
+    // lat_objeto *b = latC_desapilar(mv);
+    // lat_objeto *a = latC_desapilar(mv);
+    // int *lpParam        = (int)latC_checar_numerico(mv, l);
+    // int *hInstance      = (int)latC_checar_numerico(mv, k);
+    // int *hMenu          = (int)latC_checar_numerico(mv, j);
+    // int *hWndParent     = (int)latC_checar_numerico(mv, i);
+    // int *nHeight        = (int)latC_checar_numerico(mv, h);
+    // int *nWidth         = (int)latC_checar_numerico(mv, g);
+    // int *y              = (int)latC_checar_numerico(mv, f);
+    // int *x              = (int)latC_checar_numerico(mv, e);
+    // int *dwStyle        = (int)latC_checar_numerico(mv, d);
+    // char *lpWindowName  = latC_checar_cadena(mv, b);
+    // int *lpClassName    = (int)latC_checar_numerico(mv, a);
+
+    HWND hwnd = CreateWindowEx(0,"lpWindowName","Learn to program", WS_OVERLAPPEDWINDOW,
+    CW_USEDEFAULT, CW_USEDEFAULT, CW_USEDEFAULT, CW_USEDEFAULT,
+    NULL, NULL, 3, NULL);
+    if (hwnd == NULL) {
+        return 0;
+    }
+    ShowWindow(hwnd, 5);
+}
+
 //Mensajes
 static void ui_messagebox(lat_mv *mv) {
     lat_objeto *d = latC_desapilar(mv);
@@ -41,12 +77,18 @@ static void ui_messagebox(lat_mv *mv) {
     latC_apilar(mv, msj);
 }
 
-static void ui_proc(lat_mv *mv) {
-    
+static void ui_flash(lat_mv *mv) {
+    FlashWindow(0,true);
 }
 
+// static void ui_proc(lat_mv *mv) {
+    
+// }
+
 static const lat_CReg libui[] = {
+    {"ventana", ui_winProc, 0},
     {"mensaje", ui_messagebox, 4},
+    {"flash", ui_flash, 0},
     {NULL, NULL}};
 
 void latC_abrir_liblatino_uilib(lat_mv *mv) {
