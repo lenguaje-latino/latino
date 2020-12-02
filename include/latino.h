@@ -57,15 +57,18 @@ THE SOFTWARE.
 /* Suprime warn_unused_result */ 
 #pragma GCC diagnostic ignored "-Wunused-result"
 
+#define LAT_STRINGIZE( x) #x
+#define LAT_stringize( x) LAT_STRINGIZE( x)
+
 /** Version mayor de Latino */
-#define LAT_VERSION_MAYOR "1"
+#define LAT_VERSION_MAYOR   1
 /** Version menor de Latino */
-#define LAT_VERSION_MENOR "3"
+#define LAT_VERSION_MENOR   3
 /** Version de correcion de errores */
-#define LAT_VERSION_PARCHE "2a"
+#define LAT_VERSION_PARCHE  7
 /** Version de Latino */
 #define LAT_VERSION                                                            \
-    "Latino " LAT_VERSION_MAYOR "." LAT_VERSION_MENOR "." LAT_VERSION_PARCHE
+    "Latino " LAT_stringize(LAT_VERSION_MAYOR) "." LAT_stringize(LAT_VERSION_MENOR) "." LAT_stringize(LAT_VERSION_PARCHE)
 /** Derechos de Latino */
 #define LAT_DERECHOS                                                           \
     LAT_VERSION                                                                \
