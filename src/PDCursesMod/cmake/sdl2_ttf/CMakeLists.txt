@@ -1,10 +1,5 @@
 CMAKE_MINIMUM_REQUIRED (VERSION 3.13)
 
-# if(NOT CMAKE_BUILD_TYPE)
-#     set(CMAKE_BUILD_TYPE "MinSizeRel" CACHE STRING "Choose the type of build, options are: Debug, Release, or MinSizeRel." FORCE)
-#     message(STATUS "CMAKE_BUILD_TYPE not set, defaulting to MinSizeRel.")
-# endif()
-
 PROJECT (sdl2_ttf VERSION ${SDL2_TTF_RELEASE} LANGUAGES C)
 
 if(MSVC)
@@ -29,35 +24,6 @@ set(SDL2_ttf_source_files SDL_ttf.c)
 IF(WIN32)
     LIST(INSERT SDL2_ttf_source_files 0 version.rc)
 ENDIF()    
-
-if (APPLE)
-    find_library(COREVIDEO CoreVideo)
-    list(APPEND EXTRA_LIBS ${COREVIDEO})
-
-    find_library(COCOA_LIBRARY Cocoa)
-    list(APPEND EXTRA_LIBS ${COCOA_LIBRARY})
-
-    find_library(IOKIT IOKit)
-    list(APPEND EXTRA_LIBS ${IOKIT})
-
-    find_library(FORCEFEEDBACK ForceFeedback)
-    list(APPEND EXTRA_LIBS ${FORCEFEEDBACK})
-
-    find_library(CARBON_LIBRARY Carbon)
-    list(APPEND EXTRA_LIBS ${CARBON_LIBRARY})
-
-    find_library(COREAUDIO CoreAudio)
-    list(APPEND EXTRA_LIBS ${COREAUDIO})
-
-    find_library(AUDIOTOOLBOX AudioToolbox)
-    list(APPEND EXTRA_LIBS ${AUDIOTOOLBOX})
-
-    include(CheckLibraryExists)
-    check_library_exists(iconv iconv_open "" HAVE_LIBICONV)
-    if(HAVE_LIBICONV)
-      list(APPEND EXTRA_LIBS iconv)
-    endif()
-endif()
 
 ADD_LIBRARY(SDL2_ttf-static STATIC ${SDL2_ttf_source_files} SDL_ttf.h)
 INSTALL (TARGETS SDL2_ttf-static 

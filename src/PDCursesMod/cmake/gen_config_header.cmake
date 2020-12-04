@@ -35,6 +35,6 @@ ENDIF ()
 #################################
 # Target Arch                   #
 #################################
-include (target_arch)
-get_target_arch(TARGET_ARCH)
+# include (target_arch)
+# get_target_arch(TARGET_ARCH)
 message(STATUS "Target ................. ${TARGET_ARCH}")

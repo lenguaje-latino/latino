@@ -12,6 +12,11 @@
 set(CMAKE_EXPORT_COMPILE_COMMANDS           ON  )
 set(CMAKE_VERBOSE_MAKEFILE                  TRUE)
 set(CMAKE_C_OUTPUT_EXTENSION_REPLACE        ON  )
+set(INSTALL_BIN                         ${CMAKE_INSTALL_PREFIX}/bin     )
+set(INSTALL_INCLUDE                     ${CMAKE_INSTALL_PREFIX}/include )
+set(INSTALL_LIB                         ${CMAKE_INSTALL_PREFIX}/lib     )
+set(INSTALL_SHARE                       ${CMAKE_INSTALL_PREFIX}/share   )
+
 
 #
 # Sistemas Operativos
@@ -23,8 +28,8 @@ if(WIN32)
     set(PDC_DLL_BUILD                       ON                                                                      )
     set(PDC_NCMOUSE                         ON                                                                      )
     set(CMAKE_MODULE_PATH                   "${CMAKE_MODULE_PATH}"  "${CMAKE_SOURCE_DIR}/src/PDCursesMod/cmake"     )
-    # set(CURSES_LIBRARY                    "${CMAKE_SOURCE_DIR}/build/src/PDCursesMod/wincon/${CMAKE_BUILD_TYPE}"  )
-    # set(CURSES_INCLUDE_PATH               "${CMAKE_SOURCE_DIR}/PDCursesMod/"                                      )
+    set(CURSES_LIBRARY                      "${CMAKE_SOURCE_DIR}/build/src/PDCursesMod/wincon/${CMAKE_BUILD_TYPE}"  )
+    set(CURSES_INCLUDE_PATH                 "${CMAKE_SOURCE_DIR}/src/PDCursesMod/"                                  )
 
     #
     # MS-VC configuraciones
@@ -45,10 +50,6 @@ else()
     # UNIX
     link_libraries(m)
     link_libraries(readline)
-    set(INSTALL_BIN                         ${CMAKE_INSTALL_PREFIX}/bin     )
-    set(INSTALL_INCLUDE                     ${CMAKE_INSTALL_PREFIX}/include )
-    set(INSTALL_LIB                         ${CMAKE_INSTALL_PREFIX}/lib     )
-    set(INSTALL_SHARE                       ${CMAKE_INSTALL_PREFIX}/share   )
     set(CMAKE_C_FLAGS                       "${CMAKE_C_FLAGS} -D_GNU_SOURCE -Wall -std=c11 -rdynamic -ldl -fPIC"        )
     set(CMAKE_C_FLAGS_DEBUG                 "${CMAKE_C_FLAGS} -D_GNU_SOURCE -g -O0 -Wall -std=c11 -rdynamic -ldl -fPIC" )
 endif()
@@ -56,7 +57,7 @@ endif()
 
 #
 # Arquitectura del build
-set(TARGET_ARCH_REGEX                        "^.*-march[= ]([^ ]+).*$")
+set(TARGET_ARCH_REGEX                       "^.*-march[= ]([^ ]+).*$")
 string(REGEX MATCH                          "${TARGET_ARCH_REGEX}" TARGET_ARCH_MATCH ${CMAKE_C_FLAGS} ${CMAKE_CXX_FLAGS})
 
 if(TARGET_ARCH_MATCH)
@@ -87,13 +88,14 @@ if(WIN32)
     include_directories(regex-2.7-src/src)
     add_subdirectory(regex-2.7-src)
 
-    # include_directories(PDCursesMod)
+    include_directories(PDCursesMod)
     # include_directories(PDCursesMod/SDL/include)
+    include_directories(PDCursesMod/sdl2)
     include_directories(PDCursesMod/common)
     include_directories(PDCursesMod/wincon)
-    # add_subdirectory(PDCursesMod)
-    add_subdirectory(PDCursesMod/wincon)
-    add_subdirectory(PDCursesMod/wingui)
+    add_subdirectory(PDCursesMod)
+    # add_subdirectory(PDCursesMod/wincon)
+    # add_subdirectory(PDCursesMod/wingui)
 endif()
 
 include_directories(linenoise)
@@ -115,7 +117,7 @@ set(SRC_LATINO ${SRC_LIB})
 add_executable(latino ${SRC_LATINO} ${SRC_LIB})
 
 #set(CMAKE_DL_LIBS ${CMAKE_DL_LIBS} "${CMAKE_CURRENT_SOURCE_DIR}/cursers/bin")
-message(STATUS "CMAKE_DL_LIBS: ${CMAKE_DL_LIBS}")
+# message(STATUS "CMAKE_DL_LIBS: ${CMAKE_DL_LIBS}")
 
 if(MSVC)
     message(STATUS "CMAKE_CURRENT_BINARY_DIR: ${CMAKE_CURRENT_BINARY_DIR}")

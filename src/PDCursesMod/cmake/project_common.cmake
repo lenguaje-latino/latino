@@ -1,12 +1,9 @@
-message(STATUS "**** ${PROJECT_NAME} ****")
+message(STATUS ">>> Processing ......... *** ${PROJECT_NAME} ***")
 
-# set(PDCURSES_SRCDIR ${CMAKE_SOURCE_DIR})
-set(PDCURSES_SRCDIR ${CMAKE_SOURCE_DIR}/src/PDCursesMod/)
-# set(PDCURSES_SRCDIR ../${CMAKE_CURRENT_SOURCE_DIR})
-set(PDCURSES_DIST ${CMAKE_INSTALL_PREFIX}/${CMAKE_BUILD_TYPE})
+set(PDCURSES_SRCDIR ${CMAKE_SOURCE_DIR}/src/PDCursesMod)
+set(PDCURSES_DIST ${CMAKE_INSTALL_PREFIX})
 
-set(osdir ${PDCURSES_SRCDIR}/wincon)
-# set(demodir ${PDCURSES_SRCDIR}/demos)
+set(osdir ${PDCURSES_SRCDIR}/${PROJECT_NAME})
 
 set(pdc_src_files
     ${osdir}/pdcclip.c
@@ -25,6 +22,7 @@ include_directories (${osdir})
 if(WIN32 AND NOT WATCOM)
     include(dll_version)
     list(APPEND pdc_src_files ${CMAKE_CURRENT_BINARY_DIR}/version.rc)
+    # message(STATUS "CMAKE_CURRENT_BINARY_DIR............................................. ${CMAKE_CURRENT_BINARY_DIR}")
 
     add_definitions(-D_WIN32 -D_CRT_SECURE_NO_WARNINGS)
 
@@ -39,53 +37,15 @@ elseif(WATCOM_WIN32)
     set(EXTRA_LIBS "")
     set(WINCON_WINGUI_DEP_LIBS winmm.lib)
     set(SDL2_DEP_LIBRARIES "dl")
-elseif(APPLE)
-    set(EXTRA_LIBS "")
-    set(WINCON_WINGUI_DEP_LIBS "")
-    set(SDL2_DEP_LIBRARIES "dl")
 else()
     set(EXTRA_LIBS "")
     set(WINCON_WINGUI_DEP_LIBS "")
     set(SDL2_DEP_LIBRARIES "dl")
 endif()
 
-if (APPLE)
-    find_library(COREVIDEO CoreVideo)
-    list(APPEND EXTRA_LIBS ${COREVIDEO})
-
-    find_library(COCOA_LIBRARY Cocoa)
-    list(APPEND EXTRA_LIBS ${COCOA_LIBRARY})
-
-    find_library(IOKIT IOKit)
-    list(APPEND EXTRA_LIBS ${IOKIT})
-
-    find_library(FORCEFEEDBACK ForceFeedback)
-    list(APPEND EXTRA_LIBS ${FORCEFEEDBACK})
-
-    find_library(CARBON_LIBRARY Carbon)
-    list(APPEND EXTRA_LIBS ${CARBON_LIBRARY})
-
-    find_library(COREAUDIO CoreAudio)
-    list(APPEND EXTRA_LIBS ${COREAUDIO})
-
-    find_library(AUDIOTOOLBOX AudioToolbox)
-    list(APPEND EXTRA_LIBS ${AUDIOTOOLBOX})
-
-    include(CheckLibraryExists)
-    check_library_exists(iconv iconv_open "" HAVE_LIBICONV)
-    if(HAVE_LIBICONV)
-      list(APPEND EXTRA_LIBS iconv)
-    endif()
-endif()
-
 if(PDC_BUILD_SHARED)
     set(PDCURSE_PROJ ${PROJECT_NAME}_pdcurses)
     add_library(${PDCURSE_PROJ} SHARED ${pdc_src_files} ${pdcurses_src_files})
-    # add_library(${PDCURSE_PROJ} SHARED ${pdc_src_files}/src/PDCursesMod/ ${pdcurses_src_files}/src/PDCursesMod/)
-
-    if(APPLE)
-        set_target_properties(${PDCURSE_PROJ} PROPERTIES MACOSX_RPATH 1)
-    endif()
 
     if(${PROJECT_NAME} STREQUAL "sdl2")
         if(PDC_WIDE)

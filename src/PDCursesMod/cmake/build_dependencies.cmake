@@ -4,7 +4,7 @@ IF (PDC_SDL2_DEPS_BUILD)
     INCLUDE(ExternalProject)
 
     IF(NOT WIN32)
-        set(FLAGS_FOR_DYNAMIC_LINK -fPIC) 
+        set(FLAGS_FOR_DYNAMIC_LINK -fPIC)
     ENDIF()
 
     SET(SDL2_RELEASE 2.0.12)
@@ -12,19 +12,19 @@ IF (PDC_SDL2_DEPS_BUILD)
         URL https://www.libsdl.org/release/SDL2-${SDL2_RELEASE}.zip
         URL_HASH "SHA256=476e84d6fcbc499cd1f4a2d3fd05a924abc165b5d0e0d53522c9604fe5a021aa"
         UPDATE_COMMAND ""
-        DOWNLOAD_DIR ${CMAKE_BINARY_DIR}
-        SOURCE_DIR ${CMAKE_BINARY_DIR}/SDL2-${SDL2_RELEASE}
+        DOWNLOAD_DIR ${CMAKE_BINARY_DIR}/src/PDCursesMod
+        SOURCE_DIR ${CMAKE_BINARY_DIR}/src/PDCursesMod/SDL2-${SDL2_RELEASE}
         BUILD_IN_SOURCE 0
         CMAKE_ARGS
             ${SDL_CMAKE_BUILD_OPTS}
             -DCMAKE_TOOLCHAIN_FILE=${CMAKE_TOOLCHAIN_FILE}
-            -DCMAKE_INSTALL_PREFIX=${CMAKE_INSTALL_PREFIX}/${CMAKE_BUILD_TYPE}
+            -DCMAKE_INSTALL_PREFIX=${CMAKE_INSTALL_PREFIX}
             -DCMAKE_BUILD_TYPE=${CMAKE_BUILD_TYPE}
         )
 
-    MESSAGE(STATUS "SDL2 Installing to: .... ${CMAKE_INSTALL_PREFIX}/${CMAKE_BUILD_TYPE}")
-    SET(SDL2_INCLUDE_DIR ${CMAKE_INSTALL_PREFIX}/${CMAKE_BUILD_TYPE}/include/SDL2)
-    SET(SDL2_LIBRARY_DIR ${CMAKE_INSTALL_PREFIX}/${CMAKE_BUILD_TYPE}/lib)
+    MESSAGE(STATUS "SDL2 Installing to: .... ${CMAKE_INSTALL_PREFIX}")
+    SET(SDL2_INCLUDE_DIR ${CMAKE_INSTALL_PREFIX}/include/SDL2)
+    SET(SDL2_LIBRARY_DIR ${CMAKE_INSTALL_PREFIX}/lib)
     IF("${CMAKE_BUILD_TYPE}" STREQUAL "Debug")
         IF(WIN32)
             set(SDL2_LIBRARIES "SDL2maind.lib;SDL2d.lib")
@@ -56,13 +56,13 @@ IF (PDC_SDL2_DEPS_BUILD)
             GIT_TAG "v1.2.11"
             GIT_SHALLOW true
             UPDATE_COMMAND ""
-            DOWNLOAD_DIR ${CMAKE_BINARY_DIR}
-            SOURCE_DIR ${CMAKE_BINARY_DIR}/zlib
+            DOWNLOAD_DIR ${CMAKE_BINARY_DIR}/src/PDCursesMod
+            SOURCE_DIR ${CMAKE_BINARY_DIR}/src/PDCursesMod/zlib
             BUILD_IN_SOURCE 1
             CMAKE_ARGS
                 ${ZLIB_CMAKE_BUILD_OPTS}
                 -DCMAKE_TOOLCHAIN_FILE=${CMAKE_TOOLCHAIN_FILE}
-                -DCMAKE_INSTALL_PREFIX=${CMAKE_INSTALL_PREFIX}/${CMAKE_BUILD_TYPE}
+                -DCMAKE_INSTALL_PREFIX=${CMAKE_INSTALL_PREFIX}
                 -DCMAKE_C_FLAGS=${EXTERNAL_C_FLAGS}
                 -DCMAKE_BUILD_TYPE=${CMAKE_BUILD_TYPE}
                 -DBUILD_SHARED_LIBS=${BUILD_SHARED}
@@ -70,9 +70,9 @@ IF (PDC_SDL2_DEPS_BUILD)
                 -DASM686=${ZLIB_ASM686}
             )
 
-        MESSAGE(STATUS "zlib Installing to: ${CMAKE_INSTALL_PREFIX}/${CMAKE_BUILD_TYPE}")
-        SET(ZLIB_INCLUDE_DIR ${CMAKE_INSTALL_PREFIX}/${CMAKE_BUILD_TYPE}/include)
-        SET(ZLIB_LIBRARY_DIR ${CMAKE_INSTALL_PREFIX}/${CMAKE_BUILD_TYPE}/lib)
+        MESSAGE(STATUS "zlib Installing to: ${CMAKE_INSTALL_PREFIX}")
+        SET(ZLIB_INCLUDE_DIR ${CMAKE_INSTALL_PREFIX}/include)
+        SET(ZLIB_LIBRARY_DIR ${CMAKE_INSTALL_PREFIX}/lib)
         IF("${CMAKE_BUILD_TYPE}" STREQUAL "Debug")
             IF(WIN32)
                 set(ZLIB_LIBRARY zlibd.lib)
@@ -92,13 +92,13 @@ IF (PDC_SDL2_DEPS_BUILD)
             GIT_TAG "VER-2-8-1"
             GIT_SHALLOW true
             UPDATE_COMMAND ""
-            DOWNLOAD_DIR ${CMAKE_BINARY_DIR}
-            SOURCE_DIR ${CMAKE_BINARY_DIR}/freetype2
+            DOWNLOAD_DIR ${CMAKE_BINARY_DIR}/src/PDCursesMod/
+            SOURCE_DIR ${CMAKE_BINARY_DIR}/src/PDCursesMod/freetype2
             BUILD_IN_SOURCE 0
             CMAKE_ARGS
                 ${FT2_CMAKE_BUILD_OPTS}
                 -DCMAKE_TOOLCHAIN_FILE=${CMAKE_TOOLCHAIN_FILE}
-                -DCMAKE_INSTALL_PREFIX=${CMAKE_INSTALL_PREFIX}/${CMAKE_BUILD_TYPE}
+                -DCMAKE_INSTALL_PREFIX=${CMAKE_INSTALL_PREFIX}
                 -DCMAKE_C_FLAGS=${FLAGS_FOR_DYNAMIC_LINK} ${EXTERNAL_C_FLAGS}
                 -DCMAKE_BUILD_TYPE=${CMAKE_BUILD_TYPE}
                 -DWITH_HarfBuzz=OFF
@@ -112,9 +112,9 @@ IF (PDC_SDL2_DEPS_BUILD)
             )
 
         ADD_DEPENDENCIES(freetype2_ext zlib_ext)
-        MESSAGE(STATUS "freetype2 Installing to: ${CMAKE_INSTALL_PREFIX}/${CMAKE_BUILD_TYPE}")
-        SET(FT2_INCLUDE_DIR ${CMAKE_INSTALL_PREFIX}/${CMAKE_BUILD_TYPE}/include/freetype2)
-        SET(FT2_LIBRARY_DIR ${CMAKE_INSTALL_PREFIX}/${CMAKE_BUILD_TYPE}/lib)
+        MESSAGE(STATUS "freetype2 Installing to: ${CMAKE_INSTALL_PREFIX}")
+        SET(FT2_INCLUDE_DIR ${CMAKE_INSTALL_PREFIX}/include/freetype2)
+        SET(FT2_LIBRARY_DIR ${CMAKE_INSTALL_PREFIX}/lib)
         IF("${CMAKE_BUILD_TYPE}" STREQUAL "Debug")
             IF(WIN32)
                 set(FT2_LIBRARY freetyped.lib)
@@ -127,24 +127,24 @@ IF (PDC_SDL2_DEPS_BUILD)
             ELSE()
                 set(FT2_LIBRARY freetype)
             ENDIF()
-        ENDIF()        
+        ENDIF()
         
         SET(SDL2_TTF_RELEASE 2.0.15)
 
         ExternalProject_Add(sdl2_ttf_ext
             URL https://www.libsdl.org/projects/SDL_ttf/release/SDL2_ttf-${SDL2_TTF_RELEASE}.zip
             URL_HASH "SHA256=cdb72b5b1c3b27795fa128af36f369fee5d3e38a96c350855da0b81880555dbc"
-            PATCH_COMMAND cmake -E copy 
-                ${CMAKE_SOURCE_DIR}/cmake/sdl2_ttf/CMakeLists.txt 
-                ${CMAKE_BINARY_DIR}/sdl2_ttf/CMakeLists.txt
+            PATCH_COMMAND cmake -E copy
+                ${CMAKE_SOURCE_DIR}/PDCursesMod/cmake/sdl2_ttf/CMakeLists.txt
+                ${CMAKE_BINARY_DIR}/src/PDCursesMod/sdl2_ttf/CMakeLists.txt
             UPDATE_COMMAND ""
-            DOWNLOAD_DIR ${CMAKE_BINARY_DIR}
-            SOURCE_DIR ${CMAKE_BINARY_DIR}/sdl2_ttf
+            DOWNLOAD_DIR ${CMAKE_BINARY_DIR}/src/PDCursesMod
+            SOURCE_DIR ${CMAKE_BINARY_DIR}/src/PDCursesMod/sdl2_ttf
             BUILD_IN_SOURCE 0
             CMAKE_ARGS
                 ${SDL2_TTF_CMAKE_BUILD_OPTS}
                 -DCMAKE_TOOLCHAIN_FILE=${CMAKE_TOOLCHAIN_FILE}
-                -DCMAKE_INSTALL_PREFIX=${CMAKE_INSTALL_PREFIX}/${CMAKE_BUILD_TYPE}
+                -DCMAKE_INSTALL_PREFIX=${CMAKE_INSTALL_PREFIX}
                 -DCMAKE_C_FLAGS=${EXTERNAL_C_FLAGS}
                 -DCMAKE_BUILD_TYPE=${CMAKE_BUILD_TYPE}
                 -DSDL2_TTF_RELEASE=${SDL2_TTF_RELEASE}
@@ -161,9 +161,9 @@ IF (PDC_SDL2_DEPS_BUILD)
             )
 
         ADD_DEPENDENCIES(sdl2_ttf_ext sdl2_ext freetype2_ext)
-        MESSAGE(STATUS "SDL2_ttf Installing to: ${CMAKE_INSTALL_PREFIX}/${CMAKE_BUILD_TYPE}")
-        SET(SDL2_TTF_INCLUDE_DIR ${CMAKE_INSTALL_PREFIX}/${CMAKE_BUILD_TYPE}/include/SDL2_ttf)
-        SET(SDL2_TTF_LIBRARY_DIR ${CMAKE_INSTALL_PREFIX}/${CMAKE_BUILD_TYPE}/lib)
+        MESSAGE(STATUS "SDL2_ttf Installing to: ${CMAKE_INSTALL_PREFIX}")
+        SET(SDL2_TTF_INCLUDE_DIR ${CMAKE_INSTALL_PREFIX}/include/SDL2_ttf)
+        SET(SDL2_TTF_LIBRARY_DIR ${CMAKE_INSTALL_PREFIX}/lib)
         IF("${CMAKE_BUILD_TYPE}" STREQUAL "Debug")
             IF(WIN32)
                 set(SDL2_TTF_LIBRARY "SDL2_ttfd.lib")
