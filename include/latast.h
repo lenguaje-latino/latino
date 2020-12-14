@@ -197,9 +197,9 @@ ast *latA_mientras(ast *cond, ast *stmts);
 ast *latA_hacer(ast *cond, ast *stmts);
 ast *latA_desde(ast *dec, ast *cond, ast *inc, ast *stmts);
 ast *latA_funcion(ast *nombre, ast *params, ast *stmts, int nlin, int ncol);
-void latA_destruir(ast *a);
 ast *latA_romper(ast *ls);
 ast *latA_analizar_exp(char *expr, int *status);
 ast *latA_analizar_arch(char *ruta, int *status);
 
+void latA_destruir(ast *a);
 #endif /*_LATINO_AST_H_*/

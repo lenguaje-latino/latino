@@ -8,20 +8,20 @@ con qué programa se va a ejecutar.
 
 
 Errores conocidos:
-  
+
   En un script path no se puede usar la función incluir() para incluir otros códigos.
 
 Darle permisos:
 
   chmod a+x 39-path
-  
+
 Forma de ejecutar:
-  
+
   ./39-path
-  
+
 El script aparte se puede ejecutar en Latino desde el comando "latino" en Linux, no abrá problemas.
-  
-  
+
+
 ¿Para qué desde PATH?
 
 Cuando no queremos usar la extensión .lat en un código programado en Latino (como este)

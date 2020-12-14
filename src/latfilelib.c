@@ -140,6 +140,7 @@ static void file_ejecutar(lat_mv *mv) {
         lat_objeto *func = latC_analizar(mv, nodo);
         if (status == 0) {
             status = latC_llamar_funcion(mv, func);
+            latO_destruir(mv, func);
             latA_destruir(nodo);
         } else {
             latC_error(mv, "Error al ejeuctar archivo '%s'", input);

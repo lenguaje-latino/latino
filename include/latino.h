@@ -116,15 +116,14 @@ extern int parse_silent;
 
 /** Tamanio maximo de instrucciones bytecode de una fun */
 #define MAX_BYTECODE_FUNCTION (1024 * 128)
-/** Tamanio maximo de memoria virtual permitida*/
+/** Tamanio maximo de memoria virtual permitida */
 #define MAX_VIRTUAL_MEMORY (MAX_BYTECODE_FUNCTION * 256)
 //#define MAX_VIRTUAL_MEMORY 134217728
 /** Tamanio maximo de una cadena para ser almacenada en HASH TABLE */
 #define MAX_STR_INTERN 64
-/** Tamanio maximo de una cadena almacenada dinamicamente*/
+/** Tamanio maximo de una cadena almacenada dinamicamente */
 #define MAX_STR_LENGTH (1024 * 1024)
 /** Tamanio maximo de la pila de la maquina virtual */
-//#define MAX_STACK_SIZE (1024 * 8)
 #define MAX_STACK_SIZE (1024 * 8)
 /** Tamanio maximo de una ruta de derectorio */
 #define MAX_PATH_LENGTH 1024

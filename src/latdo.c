@@ -732,7 +732,6 @@ LATINO_API int latC_llamar_funcion(lat_mv *mv, lat_objeto *func) {
 
 LATINO_API lat_objeto *latC_analizar(lat_mv *mv, ast *nodo) {
     // printf("%s\n", ">>> latC_analizar");
-    // FIXME: Much memory allocation
     lat_bytecode *codigo =
         latM_asignar(mv, sizeof(lat_bytecode) * MAX_BYTECODE_FUNCTION);
     int i = ast_analizar(mv, nodo, codigo, 0);
@@ -740,7 +739,11 @@ LATINO_API lat_objeto *latC_analizar(lat_mv *mv, ast *nodo) {
 #if DEPURAR_AST
     mostrar_bytecode(mv, codigo);
 #endif
-    lat_objeto *fun = latC_crear_funcion(mv, codigo, i);
+    lat_bytecode* nuevo_codigo =
+        latM_asignar(mv, sizeof(lat_bytecode) * (i+1));
+    memcpy(nuevo_codigo, codigo, sizeof(lat_bytecode) * (i + 1));
+    latM_liberar(mv, codigo);
+    lat_objeto *fun = latC_crear_funcion(mv, nuevo_codigo, i);
     fun->marca = 0;
     fun->nombre = "dummy";
     return fun;
