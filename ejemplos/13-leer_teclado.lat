@@ -1,4 +1,4 @@
-poner("Cómo te llamas?")
+poner("Como te llamas?")
 #pide al usuario su nombre por teclado
 nombre = leer()
 poner("hola " .. nombre)

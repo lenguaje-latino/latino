@@ -703,11 +703,12 @@ void str_ejecutar(lat_mv *mv) {
     lat_objeto *func = latC_analizar(mv, nodo);
     if (status == 0 && nodo != NULL) {
         status = latC_llamar_funcion(mv, func);
-        latA_destruir(nodo);
+        latO_destruir(mv, func);
     } else {
         latC_error(mv, "Error al ejecutar cadena");
     }
     mv->nombre_archivo = tmp_name;
+    latA_destruir(nodo);
 }
 
 void str_regex(lat_mv *mv) {

@@ -111,10 +111,11 @@ static void base_incluir(lat_mv *mv) {
         mv->nombre_archivo = latC_checar_cadena(mv, mod);
         ast *nodo = latA_analizar_arch(latC_checar_cadena(mv, mod), &status);
         if (status == 0 && nodo != NULL) {
-            lat_objeto *funmod = latC_analizar(mv, nodo);
-            status = latC_llamar_funcion(mv, funmod);
-            // latA_destruir(nodo);
+            // FIXME: Liberar la memoria de fun_mod
+            lat_objeto *fun_mod = latC_analizar(mv, nodo);
+            status = latC_llamar_funcion(mv, fun_mod);
             mv->nombre_archivo = tmp_name;
+            latA_destruir(nodo);
             return;
         }
     }
@@ -131,10 +132,11 @@ static void base_incluir(lat_mv *mv) {
             ast *nodo =
                 latA_analizar_arch(latC_checar_cadena(mv, modcurr), &status);
             if (status == 0 && nodo != NULL) {
-                lat_objeto *funmod = latC_analizar(mv, nodo);
-                status = latC_llamar_funcion(mv, funmod);
-                // latA_destruir(nodo);
+                // FIXME: Liberar la memoria de fun_mod
+                lat_objeto *fun_mod = latC_analizar(mv, nodo);
+                status = latC_llamar_funcion(mv, fun_mod);
                 mv->nombre_archivo = tmp_name;
+                latA_destruir(nodo);
                 return;
             }
         }
@@ -152,10 +154,11 @@ static void base_incluir(lat_mv *mv) {
             ast *nodo =
                 latA_analizar_arch(latC_checar_cadena(mv, mod_lib), &status);
             if (status == 0 && nodo != NULL) {
-                lat_objeto *funmod_lib = latC_analizar(mv, nodo);
-                status = latC_llamar_funcion(mv, funmod_lib);
-                // latA_destruir(nodo);
+                // FIXME: Liberar la memoria de fun_mod_lib
+                lat_objeto *fun_mod_lib = latC_analizar(mv, nodo);
+                status = latC_llamar_funcion(mv, fun_mod_lib);
                 mv->nombre_archivo = tmp_name;
+                latA_destruir(nodo);
                 return;
             }
         }

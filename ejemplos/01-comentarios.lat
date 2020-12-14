@@ -4,12 +4,12 @@
         #Este es un comentario tabulado
 ###################################################
 
-#
+# Otro comentario mas de una linea
 
-//tambien se permiten comentarios de este tipo
+// tambien se permiten comentarios de este tipo
 
-/* 
+/*
 y comentarios
 multilinea
-tambien
+tambien estilo C/C++
 */
