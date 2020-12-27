@@ -27,6 +27,7 @@ THE SOFTWARE.
 
 /** Determina el sistema operativo*/
 #if (defined __WIN32__) || (defined _WIN32)
+#define LATINO_BUILD_AS_DLL
 #define PATH_SEP "\\"
 #define LAT_FUNC extern
 #include <limits.h>

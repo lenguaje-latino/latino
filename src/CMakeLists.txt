@@ -65,10 +65,11 @@ IF(MSVC)
 	link_libraries(regex2)
 ENDIF(MSVC)
 
+# Create dynamic library
+add_library ( liblatino SHARED ${SRC_LIB} ${LATINO_DEF})
+set_target_properties ( liblatino PROPERTIES OUTPUT_NAME latino CLEAN_DIRECT_OUTPUT 1 )
+
 if ( LATINO_BUILD_AS_DLL )
-    # Create dynamic library
-    add_library ( liblatino SHARED ${SRC_LIB} ${LATINO_DEF})
-    set_target_properties ( liblatino PROPERTIES OUTPUT_NAME latino CLEAN_DIRECT_OUTPUT 1 )
 	target_link_libraries ( liblatino regex2 )
     set_target_properties ( liblatino PROPERTIES COMPILE_DEFINITIONS LATINO_BUILD_AS_DLL )
 endif ( )
