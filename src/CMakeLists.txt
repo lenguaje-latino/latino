@@ -11,9 +11,6 @@ if (WIN32)
     IF(MSVC)
         SET(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} /W4")
         SET(CMAKE_C_FLAGS_DEBUG "${CMAKE_C_FLAGS_DEBUG} /W4")
-        # ADD_LIBRARY(regex SHARED IMPORTED)
-        # SET_PROPERTY(TARGET regex PROPERTY IMPORTED_LOCATION "${CMAKE_CURRENT_SOURCE_DIR}/lib/Debug/regex2.dll")
-        # SET_PROPERTY(TARGET regex PROPERTY IMPORTED_IMPLIB "${CMAKE_CURRENT_SOURCE_DIR}/lib/Debug/regex.lib")
         SET_PROPERTY(DIRECTORY APPEND PROPERTY COMPILE_DEFINITIONS _CRT_SECURE_NO_WARNINGS)
     ELSEIF(CMAKE_COMPILER_IS_GNUCC OR CMAKE_COMPILER_IS_GNUCXX)
         SET(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -Wall -std=c11")
@@ -57,9 +54,6 @@ linenoise/utf8.c linenoise/linenoise.c)
 
 SET(SRC_LATINO ${SRC_LIB})
 
-#SET(EXECUTABLE_OUTPUT_PATH ${PROJECT_BINARY_DIR}/bin)
-#SET(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${PROJECT_BINARY_DIR}/bin)
-
 ADD_EXECUTABLE(latino ${SRC_LATINO} ${SRC_LIB})
 target_link_libraries(latino LINK_PUBLIC ${CMAKE_DL_LIBS})
 
@@ -71,10 +65,11 @@ IF(MSVC)
 	link_libraries(regex2)
 ENDIF(MSVC)
 
+# Create dynamic library
+add_library ( liblatino SHARED ${SRC_LIB} ${LATINO_DEF})
+set_target_properties ( liblatino PROPERTIES OUTPUT_NAME latino CLEAN_DIRECT_OUTPUT 1 )
+
 if ( LATINO_BUILD_AS_DLL )
-    # Create dynamic library
-    add_library ( liblatino SHARED ${SRC_LIB} ${LATINO_DEF})
-    set_target_properties ( liblatino PROPERTIES OUTPUT_NAME latino CLEAN_DIRECT_OUTPUT 1 )
 	target_link_libraries ( liblatino regex2 )
     set_target_properties ( liblatino PROPERTIES COMPILE_DEFINITIONS LATINO_BUILD_AS_DLL )
 endif ( )
@@ -85,7 +80,7 @@ target_link_libraries(liblatino_static ${LIBS})
 
 IF(UNIX)
   INSTALL(TARGETS latino DESTINATION ${INSTALL_BIN})
-#   INSTALL(TARGETS liblatino DESTINATION ${INSTALL_LIB})
+  INSTALL(TARGETS liblatino DESTINATION ${INSTALL_LIB})
   INSTALL(TARGETS liblatino_static DESTINATION ${INSTALL_LIB})
   INSTALL(FILES man/latino.1.gz DESTINATION ${INSTALL_SHARE}/man/man1)
   INSTALL(FILES gnu-utilities/latino.nanorc DESTINATION ${INSTALL_SHARE}/nano)
