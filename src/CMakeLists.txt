@@ -71,11 +71,10 @@ IF(MSVC)
 	link_libraries(regex2)
 ENDIF(MSVC)
 
-# Create dynamic library
-add_library ( liblatino SHARED ${SRC_LIB} ${LATINO_DEF})
-set_target_properties ( liblatino PROPERTIES OUTPUT_NAME latino CLEAN_DIRECT_OUTPUT 1 )
-
 if ( LATINO_BUILD_AS_DLL )
+    # Create dynamic library
+    add_library ( liblatino SHARED ${SRC_LIB} ${LATINO_DEF})
+    set_target_properties ( liblatino PROPERTIES OUTPUT_NAME latino CLEAN_DIRECT_OUTPUT 1 )
 	target_link_libraries ( liblatino regex2 )
     set_target_properties ( liblatino PROPERTIES COMPILE_DEFINITIONS LATINO_BUILD_AS_DLL )
 endif ( )
@@ -86,7 +85,7 @@ target_link_libraries(liblatino_static ${LIBS})
 
 IF(UNIX)
   INSTALL(TARGETS latino DESTINATION ${INSTALL_BIN})
-  INSTALL(TARGETS liblatino DESTINATION ${INSTALL_LIB})
+#   INSTALL(TARGETS liblatino DESTINATION ${INSTALL_LIB})
   INSTALL(TARGETS liblatino_static DESTINATION ${INSTALL_LIB})
   INSTALL(FILES man/latino.1.gz DESTINATION ${INSTALL_SHARE}/man/man1)
   INSTALL(FILES gnu-utilities/latino.nanorc DESTINATION ${INSTALL_SHARE}/nano)

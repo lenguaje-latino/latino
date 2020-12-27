@@ -1,6 +1,7 @@
 #ignora directorios
 bin/latino
 build/
+visualstudio/
 msvc/
 CMakeFiles/
 dist/
