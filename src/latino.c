@@ -33,8 +33,11 @@ Para depurar en Netbeans ir a propiedades del proyecto -> Run command y Agregar
 "${OUTPUT_PATH}" ejemplos/debug.lat
  */
 
-int yydebug = 0; /* 1 para debuguear analizador lexico/sintactico */
-int parse_silent = 0;
+#if YYDEBUG
+extern int yydebug = 0; /* 1 para debuguear analizador lexico/sintactico */
+#endif
+
+extern int parse_silent = 0;
 char *filename = NULL;
 
 void str_ejecutar(lat_mv *mv);
