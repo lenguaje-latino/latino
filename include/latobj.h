@@ -149,9 +149,9 @@ typedef struct lat_funcion {
     struct lat_funcion *prev;
 } lat_funcion;
 
-lat_objeto latO_nulo_;
-lat_objeto latO_verdadero_;
-lat_objeto latO_falso_;
+extern lat_objeto latO_nulo_;
+extern lat_objeto latO_verdadero_;
+extern lat_objeto latO_falso_;
 
 /* macros para asignar valores */
 #define setNulo(obj, v)                                                        \
