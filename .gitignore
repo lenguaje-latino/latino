@@ -17,8 +17,8 @@ codelite/
 mingw/
 visualstudio/
 Img-Orig/
-# .vs
-# .vscode
+.vs/
+.vscode/
 .vagrant/
 .codelite/
 .clang/
