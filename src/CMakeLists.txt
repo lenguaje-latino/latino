@@ -80,7 +80,7 @@ target_link_libraries(liblatino_static ${LIBS})
 
 IF(UNIX)
   INSTALL(TARGETS latino DESTINATION ${INSTALL_BIN})
-  # INSTALL(TARGETS liblatino DESTINATION ${INSTALL_LIB})
+  INSTALL(TARGETS liblatino DESTINATION ${INSTALL_LIB})
   INSTALL(TARGETS liblatino_static DESTINATION ${INSTALL_LIB})
   INSTALL(FILES man/latino.1.gz DESTINATION ${INSTALL_SHARE}/man/man1)
   INSTALL(FILES gnu-utilities/latino.nanorc DESTINATION ${INSTALL_SHARE}/nano)
