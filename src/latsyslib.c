@@ -162,12 +162,23 @@ static void latSO_iraxy(lat_mv *mv) {
     lat_objeto *x = latC_desapilar(mv);
     lat_objeto *y = latC_desapilar(mv);
     int yx = latC_checar_numerico(mv, y), xx = latC_checar_numerico(mv, x);
+#ifdef _WIN32
+    HANDLE hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
+    COORD pos = {yx, xx};
+    SetConsoleCursorPosition(hConsole, pos);
+    WriteConsole(hConsole, NULL, NULL, NULL, NULL);
+#else
     printf("%c[%d;%df", 0x1B, yx, xx);
+#endif
     fflush(stdout);
 }
 
 static void latSO_usuario(lat_mv *mv) {
+#ifdef _WIN32
+    char *user = getenv("username");
+#else
     char *user = getenv("USER");
+#endif
     lat_objeto *tmp;
     if (user != NULL || user) {
         tmp = latC_crear_cadena(mv, user);
@@ -175,6 +186,17 @@ static void latSO_usuario(lat_mv *mv) {
         tmp = latO_nulo;
     }
     latC_apilar(mv, tmp);
+}
+
+static void latSO_operativo(lat_mv *mv){
+    lat_objeto *o = latC_desapilar(mv);
+    lat_objeto *v = latO_falso;
+    char *os = latC_checar_cadena(mv, o);
+    char *ox = SISTEMAOPERATIVO;
+    if (strcmp(ox,os)==0){
+        v = latO_verdadero;
+    }
+    latC_apilar(mv, v);
 }
 
 /*
@@ -209,6 +231,8 @@ static const lat_CReg libsistema[] = {{"dormir", latSO_dormir, 1},
                                       {"iraxy", latSO_iraxy, 2},
                                       {"tiempo", latSO_tiempo, 2},
                                       {"usuario", latSO_usuario, 0},
+                                      {"operativo", latSO_operativo, 1},
+                                      {"op", latSO_operativo, 1},
                                       {NULL, NULL}};
 
 void latC_abrir_liblatino_syslib(lat_mv *mv) {

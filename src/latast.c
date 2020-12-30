@@ -94,7 +94,7 @@ ast *latA_literal(const char *s, int nlin, int ncol) {
     a->tipo = NODO_VALOR;
     nodo_valor *val = (nodo_valor *)malloc(sizeof(nodo_valor));
     val->tipo = VALOR_CADENA;
-    val->val.cadena = strdup(s);
+    val->val.cadena = analizar_fmt(s, strlen(s));
     a->valor = val;
     a->nlin = nlin;
     a->ncol = ncol;
@@ -102,7 +102,6 @@ ast *latA_literal(const char *s, int nlin, int ncol) {
 }
 
 ast *latA_var(const char *s, int nlin, int ncol, bool esconst) {
-    // printf("latA_var: %s - %i\n", s, esconst);
     ast *a = (ast *)malloc(sizeof(ast));
     a->tipo = NODO_IDENTIFICADOR;
     nodo_valor *val = (nodo_valor *)malloc(sizeof(nodo_valor));
@@ -225,8 +224,11 @@ void latA_destruir(ast *a) {
     }
 }
 
+/**
+  * latA_analizar_exp: Esta funcion crea el arbol abstracto de sintaxis a partir de una cadena
+  * REM: liberar el nodo cuando se deje de ocupar
+  **/
 ast *latA_analizar_exp(char *expr, int *status) {
-    // printf("latA_analizar_exp:\n%s\n", expr);
     ast *nodo = NULL;
     yyscan_t scanner;
     YY_BUFFER_STATE state;
@@ -239,6 +241,10 @@ ast *latA_analizar_exp(char *expr, int *status) {
     return nodo;
 }
 
+/**
+  * latA_analizar_exp: Esta funcion crea el arbol abstracto de sintaxis a partir de un archivo
+  * REM: liberar el nodo cuando se deje de ocupar
+  **/
 ast *latA_analizar_arch(char *infile, int *status) {
     if (infile == NULL) {
         printf("Especifique un archivo\n");

@@ -51,6 +51,10 @@ char *analizar_fmt(const char *s, size_t len) {
                         c = '\"';
                         i++;
                         goto save;
+                    case (int)39:
+                        c = '\'';
+                        i++;
+                        goto save;
                     case 'a':
                         c = '\a';
                         i++;
@@ -273,9 +277,11 @@ char *insertar(char *dest, char *src, int pos) {
 }
 
 char *rellenar_izquierda(char *base, char *c, int n) {
-    // FIXME: Windows
     int len = strlen(base);
     char *ret = malloc(len + n + 1);
+
+    strcpy(ret, "");
+    
     int i, final = len - 1;
     for (i = 0; i < (n - final); i++) {
         ret = strcat(ret, c);
@@ -697,11 +703,12 @@ void str_ejecutar(lat_mv *mv) {
     lat_objeto *func = latC_analizar(mv, nodo);
     if (status == 0 && nodo != NULL) {
         status = latC_llamar_funcion(mv, func);
-        latA_destruir(nodo);
+        latO_destruir(mv, func);
     } else {
         latC_error(mv, "Error al ejecutar cadena");
     }
     mv->nombre_archivo = tmp_name;
+    latA_destruir(nodo);
 }
 
 void str_regex(lat_mv *mv) {
@@ -863,28 +870,44 @@ void str_formato(lat_mv *mv) {
         } else if (*++strfrmt == '%') {
             sprintf(b, "%s%c", b, *strfrmt++);
         } else {
-            char buff[MAX_STR_LENGTH];
+            #ifdef _WIN32
+                char buff[MAX_BUFFERSIZE];
+            #else
+                char buff[MAX_STR_LENGTH];
+            #endif
             if (++arg > top) {
                 latC_error(mv, "Numero de argumentos invalido para el formato");
             }
             switch (*strfrmt++) {
-                case 'c': {
+                case 'c': {  //chacater
                     lat_objeto *cr = latL_extraer_inicio(mv, params);
                     sprintf(buff, "%c", (int)latC_adouble(mv, cr));
                 } break;
-                case 'i': {
+                case 'i': {  //integer
                     lat_objeto *ent = latL_extraer_inicio(mv, params);
                     sprintf(buff, "%i", (int)latC_adouble(mv, ent));
                 } break;
-                case 'f': {
+                case 'f': {  //float
                     lat_objeto *dec = latL_extraer_inicio(mv, params);
                     sprintf(buff, "%f", (float)latC_adouble(mv, dec));
                 } break;
-                case 'd': {
+                case 'd': {  //decimal
                     lat_objeto *dec = latL_extraer_inicio(mv, params);
                     sprintf(buff, LAT_NUMERIC_FMT, latC_adouble(mv, dec));
                 } break;
-                case 's': {
+                case 'o': {  //octal
+                    lat_objeto *oct = latL_extraer_inicio(mv, params);
+                    sprintf(buff, "%o", (int)latC_adouble(mv, oct));
+                } break;
+                case 'x': {  //hex
+                    lat_objeto *hex = latL_extraer_inicio(mv, params);
+                    sprintf(buff, "%x", (int)latC_adouble(mv, hex));
+                } break;
+                case 'e': {  //sci
+                    lat_objeto *sci = latL_extraer_inicio(mv, params);
+                    sprintf(buff, "%e", (int)latC_adouble(mv, sci));
+                } break;
+                case 's': {  //string
                     lat_objeto *str = latL_extraer_inicio(mv, params);
                     sprintf(buff, "%s", latC_astring(mv, str));
                 } break;
@@ -960,12 +983,12 @@ static const lat_CReg libstr[] = {
     {"eliminar", str_eliminar, 2},
     {"separar", str_separar, 2},
     {"inicia_con", str_inicia_con, 2},
-    {"regex", str_regex, 2},
-    {"match", str_match, 2},
+    {"regexl", str_regex, 2},
+    {"regex", str_match, 2},
     {"insertar", str_insertar, 3},
     {"rellenar_izquierda", str_rellenar_izquierda, 3},
     {"rellenar_derecha", str_rellenar_derecha, 3},
-    {"reemplazar", str_reemplazar, 3},
+    {"reemplazar", str_reemplazar, 4},
     {"subcadena", str_subcadena, 3},
     {"formato", str_formato, FUNCION_VAR_ARGS}, // para funciones var_arg
     {NULL, NULL}};

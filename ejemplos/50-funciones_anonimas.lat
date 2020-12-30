@@ -1,8 +1,8 @@
 //asignamos una funcion anonima a una variable
-x = funcion (a,b) 
-		si b == 0 
-			b=1 
-		fin 
+x = funcion (a,b)
+		si b == 0
+			b=1
+		fin
 		retorno a / b
 	fin
 

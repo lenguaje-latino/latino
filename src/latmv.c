@@ -84,7 +84,7 @@ static const char *const bycode_nombre[] = {
     "OP_PUSH",
     "OP_POP",
     "ADJUST_STACK",
-    "LOAD_VAR_ARGS",
+    "LOAD_VAR_ARGS", /*45*/
     "SET_LOCAL",
 };
 
@@ -379,23 +379,9 @@ LATINO_API lat_mv *latC_crear_mv() {
 
 LATINO_API void latC_destruir_mv(lat_mv *mv) {
     latO_destruir(mv, mv->global->argv);
-    // latO_destruir(mv, mv->pila);
-    /*if (mv->contexto[0] != NULL) {
-        latO_destruir(mv, mv->contexto[0]);
-    }*/
-    /*latM_liberar(mv, latO_verdadero);
-    latM_liberar(mv, latO_falso);
-    latM_liberar(mv, latO_nulo);*/
-    // latO_imprimir(mv, mv->global->gc_objetos, false);
-    // gc_recolectar(mv);
-    // latO_destruir(mv, mv->global->gc_objetos);
     lat_global *g = mv->global;
-    // latO_imprimir(mv, g->gc_objetos, false);
-    // gc_recolectar(mv);
     free(g->gc_objetos);
-    // latO_imprimir(mv, g->gc_objetos, false);
     free(mv->global->strt.hash);
-    // free(&mv->global->strt);
     free(mv->global);
     free(mv->pila);
     free(mv);

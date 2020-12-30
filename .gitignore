@@ -15,6 +15,10 @@ Testing/
 codeblocks/
 codelite/
 mingw/
+visualstudio/
+Img-Orig/
+# .vs
+# .vscode
 .vagrant/
 .codelite/
 .clang/
@@ -39,6 +43,7 @@ install_manifest.txt
 prueba.txt
 history.txt
 .history
+.lat_historial
 compile_commands.json
 compiling_error.txt
 <scratch>
