@@ -274,7 +274,7 @@ fin
 calificacion = 'B'
 elegir(calificacion)
     caso 'A':
-        escribir("Excelente!.")    
+        escribir("Excelente!.")
     caso 'B':
         escribir("Bien echo!.")
     caso 'C':
@@ -363,7 +363,7 @@ hasta i == 10
 Se puede salir de los bucles (`desde`, `mientras` y `repetir`) con la palabra reservada `romper`.
 ```python
 desde(i=0; i < 10; i++)
-    si (i == 5)        
+    si (i == 5)
         romper    #se sale del ciclo desde
     fin
     imprimir(i)

@@ -42,7 +42,7 @@ void str_ejecutar(lat_mv *mv);
 /**
  * Muestra solo la version de latino
  */
-static void lat_versionSolo() { printf("%s\n", LAT_VERSION); }
+static void lat_version_simple() { printf("%s\n", LAT_VERSION); }
 
 /**
  * Muestra la version de latino y los derechos en la consola
@@ -94,7 +94,7 @@ int main(int argc, char *argv[]) {
             break;
         }
         if (!strcmp(argv[i], "-v") || !strcmp(argv[i], "--version")) {
-            lat_versionSolo();
+            lat_version_simple();
             return EXIT_SUCCESS;
         } else if (!strcmp(argv[i], "-a") || !strcmp(argv[i], "--ayuda") || !strcmp(argv[i], "--help")) {
             lat_ayuda();
@@ -121,20 +121,19 @@ int main(int argc, char *argv[]) {
         mv->nombre_archivo = infile;
         mv->global->REPL = false;
         mv->global->argc = argc - 1;
-        int i;
-        for (i = 1; i < argc; i++) {
+        for (int j = 1; j < argc; j++) {
             latL_agregar(mv, latC_checar_lista(mv, mv->global->argv),
-                         latC_crear_cadena(mv, argv[i]));
+                         latC_crear_cadena(mv, argv[j]));
         }
         int status;
         ast *nodo = latA_analizar_arch(infile, &status);
         if (status == 0 && nodo != NULL) {
-            lat_objeto *mainFunc = latC_analizar(mv, nodo);
+            lat_objeto *main_func = latC_analizar(mv, nodo);
             if (mv->global->menu) {
-                // instrucciones para llamar a menu
-                lat_funcion *fval = (lat_funcion *)mainFunc->val.gc;
+                // inicio instrucciones para llamar a menu
+                lat_funcion *fval = (lat_funcion *)main_func->val.gc;
                 lat_bytecode *codigo = (lat_bytecode *)fval->codigo;
-                int ninst = mainFunc->ninst;
+                int ninst = main_func->ninst;
                 lat_bytecode *bc = (lat_bytecode *)latM_asignar(
                     NULL, sizeof(lat_bytecode) * (ninst + 2));
                 memcpy(bc, codigo, latM_tamanio(bc));
@@ -148,16 +147,16 @@ int main(int argc, char *argv[]) {
                 lat_objeto *num = latC_crear_numerico(mv, mv->global->argc);
                 latC_apilar(mv, num);
                 latC_apilar(mv, mv->global->argv);
-                lat_objeto *newMain = latC_crear_funcion(mv, bc, ninst + 2);
-                newMain->es_vararg = 0;
-                newMain->nparams = 2;
-                status = latC_llamar_funcion(mv, newMain);
-                latO_destruir(mv, newMain);
+                // fin instrucciones
+                lat_objeto *new_main = latC_crear_funcion(mv, bc, ninst + 2);
+                new_main->es_vararg = 0;
+                new_main->nparams = 2;
+                status = latC_llamar_funcion(mv, new_main);
+                latO_destruir(mv, new_main);
             } else {
-                status = latC_llamar_funcion(mv, mainFunc);
-                // printf("main status: %i\n", status);
-                latO_destruir(mv, mainFunc);
+                status = latC_llamar_funcion(mv, main_func);
             }
+            latO_destruir(mv, main_func);
         }
         latA_destruir(nodo);
     } else {
