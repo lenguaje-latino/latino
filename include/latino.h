@@ -31,12 +31,12 @@ THE SOFTWARE.
 #include <limits.h>
 #include <locale.h>
 #ifdef __APPLE__
-    #include <malloc/malloc.h>
-#elif(defined __WIN32__) || (defined _WIN32)
-    #define BUILD_REGEX_DLL 1
-    #include <malloc.h>
+#include <malloc/malloc.h>
+#elif (defined __WIN32__) || (defined _WIN32)
+#define BUILD_REGEX_DLL 1
+#include <malloc.h>
 #else
-    #include <malloc.h>
+#include <malloc.h>
 #endif
 #include <math.h>
 #include <memory.h>
@@ -54,7 +54,7 @@ THE SOFTWARE.
 #include "latlist.h"
 #include "latmv.h"
 #include "latobj.h"
-/* Suprime warn_unused_result */ 
+/* Suprime warn_unused_result */
 #pragma GCC diagnostic ignored "-Wunused-result"
 
 /** Version mayor de Latino */
@@ -145,13 +145,11 @@ extern int parse_silent;
 #define FUNCION_VAR_ARGS (-1)
 
 #if defined(LATINO_BUILD_AS_DLL)
-
 #if defined(LATINO_CORE) || defined(LATINO_LIB)
 #define LATINO_API __declspec(dllexport)
 #else
 #define LATINO_API __declspec(dllimport)
 #endif
-
 #else
 #define LATINO_API extern
 #endif
