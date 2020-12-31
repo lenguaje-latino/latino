@@ -25,6 +25,7 @@ if(CMAKE_COMPILER_IS_GNUCXX)
     target_link_libraries(${PROJECT_TEST_NAME} gcov)
 endif()
 
+set(program_files "$ENV{ProgramFiles}")
 
 #
 # Mensajes de construcion
@@ -51,22 +52,6 @@ add_subdirectory(src)
 if(LAT_EJEMPLOS)
   
 endif(LAT_EJEMPLOS)
-
-if(LAT_CURSES)
-  
-endif(LAT_CURSES)
-
-if(LAT_JSON)
-  
-endif(LAT_JSON)
-
-if(LAT_MySQL)
-  
-endif(LAT_MySQL)
-
-if(LAT_REDIS)
-  
-endif(LAT_REDIS)
 
 
 #

@@ -71,6 +71,7 @@ void gc_paso(lat_mv *mv) {
 }
 
 void gc_recolectar(lat_mv *mv) {
+    printf("gc_recolectar inici: %zu\n", mv->memoria_usada);
     if (!mv->global->gc_objetos) {
         return;
     }
@@ -85,6 +86,7 @@ void gc_recolectar(lat_mv *mv) {
         }
     }
     latL_limpiar_destruir(mv, list);
+    printf("gc_recolectar final: %zu\n", mv->memoria_usada);
 }
 
 void gc_checar(lat_mv *mv) {
@@ -92,7 +94,7 @@ void gc_checar(lat_mv *mv) {
         return;
     }
     // lat_lock(mv);
-    // printf("+++ memoria: %zu - %i\n", mv->memoria_usada, MAX_VIRTUAL_MEMORY);
+    printf("+++ memoria: %zu - %i\n", mv->memoria_usada, MAX_VIRTUAL_MEMORY);
     if (mv->memoria_usada > mv->gc_limite) {
         gc_paso(mv);
     } /*fin cond memoria_usada*/

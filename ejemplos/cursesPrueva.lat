@@ -20,9 +20,9 @@ curses.mvwprintw(vent1,2,5,"Ventana 1")
 curses.refrescarvent(vent1)
 
 //colores="A_BLINK|A_REVERSE|A_BOLD"
-curses.attron("A_BLINK")
-curses.printw("Prueva en Latino")
-curses.attroff("PARPADEO|AL_REVES|NEGRITAS")
+// curses.attron("A_BLINK")
+// curses.printw("Prueva en Latino")
+// curses.attroff("PARPADEO|AL_REVES|NEGRITAS")
 
 
 

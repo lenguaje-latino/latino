@@ -100,7 +100,6 @@ void latC_abrir_liblatino_mathlib   (lat_mv *mv);
 void latC_abrir_liblatino_syslib    (lat_mv *mv);
 void latC_abrir_liblatino_devlib    (lat_mv *mv);
 void latC_abrir_liblatino_uilib     (lat_mv *mv);
-void latC_abrir_liblatino_curseslib (lat_mv *mv);
 
 /*
 void latC_abrir_liblatino_gc(lat_mv *mv);
@@ -373,7 +372,6 @@ LATINO_API lat_mv *latC_crear_mv() {
     latC_abrir_liblatino_syslib     (mv);
     latC_abrir_liblatino_devlib     (mv);
     latC_abrir_liblatino_uilib      (mv);
-    latC_abrir_liblatino_curseslib  (mv);
     /*
     latC_abrir_liblatino_gc(mv);
     latC_abrir_liblatino_gtklib(mv);
@@ -1130,6 +1128,9 @@ int latMV_funcion_correr(lat_mv *mv, lat_objeto *func) {
 // printf("\n");
 #endif
         } // fin for
+#if HABILITAR_GC
+        gc_recolectar(mv);
+#endif
     }     // fin if (T_FUN)
     else if (func->tipo == T_CFUN) {
         // printf("%s\n", "llamando c fun");

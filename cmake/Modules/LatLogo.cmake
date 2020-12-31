@@ -1,4 +1,3 @@
-
 #
 # Latino Logo (Terminal)
 message(STATUS "
