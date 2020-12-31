@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 #[[
 /***********************************************************************************
  * Copyright (c) 2015-2020 Lenguaje-Latino, programación con sintaxis al Español.  *
@@ -33,6 +34,33 @@ if(WIN32)
         set(CMAKE_C_FLAGS                   "${CMAKE_C_FLAGS} -Wall -std=c11"               )
         set(CMAKE_C_FLAGS_DEBUG             "${CMAKE_C_FLAGS_DEBUG} -g -O0 -Wall -std=c11"  )
     endif(MSVC)
+=======
+set(CMAKE_EXPORT_COMPILE_COMMANDS 1)
+SET(CMAKE_VERBOSE_MAKEFILE true)
+SET(CMAKE_C_OUTPUT_EXTENSION_REPLACE 1)
+SET(INSTALL_BIN ${CMAKE_INSTALL_PREFIX}/bin)
+SET(INSTALL_LIB ${CMAKE_INSTALL_PREFIX}/lib)
+SET(INSTALL_INCLUDE ${CMAKE_INSTALL_PREFIX}/include)
+SET(INSTALL_SHARE ${CMAKE_INSTALL_PREFIX}/share)
+
+if (WIN32)
+    option ( LATINO_BUILD_AS_DLL "Crea latino como libreria DLL" ${BUILD_SHARED_LIBS} )
+    IF(MSVC)
+        SET(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} /W4")
+        SET(CMAKE_C_FLAGS_DEBUG "${CMAKE_C_FLAGS_DEBUG} /W4")
+        SET_PROPERTY(DIRECTORY APPEND PROPERTY COMPILE_DEFINITIONS _CRT_SECURE_NO_WARNINGS)
+    ELSEIF(CMAKE_COMPILER_IS_GNUCC OR CMAKE_COMPILER_IS_GNUCXX)
+        SET(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -Wall -std=c11")
+        SET(CMAKE_C_FLAGS_DEBUG "${CMAKE_C_FLAGS_DEBUG} -g -O0 -Wall -std=c11")
+    ENDIF(MSVC)
+else ()
+    LINK_LIBRARIES(m)
+    LINK_LIBRARIES(readline)
+    SET(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -D_GNU_SOURCE -Wall -std=c11 -rdynamic -ldl -fPIC")
+    # -fprofile-arcs -ftest-coverage -coverage
+    SET(CMAKE_C_FLAGS_DEBUG "${CMAKE_C_FLAGS} -D_GNU_SOURCE -g -O0 -Wall -std=c11 -rdynamic -ldl -fPIC")
+endif ()
+>>>>>>> origin/master
 
 else()
     #
@@ -80,9 +108,16 @@ latmathlib.c latsyslib.c latpaqlib.c latdevlib.c latuilib.c
 #extra
 linenoise/utf8.c linenoise/linenoise.c)
 
+<<<<<<< HEAD
 set(SRC_LATINO ${SRC_LIB})
 
 add_executable(latino ${SRC_LATINO} ${SRC_LIB})
+=======
+SET(SRC_LATINO ${SRC_LIB})
+
+ADD_EXECUTABLE(latino ${SRC_LATINO} ${SRC_LIB})
+target_link_libraries(latino LINK_PUBLIC ${CMAKE_DL_LIBS})
+>>>>>>> origin/master
 
 if(MSVC)
     message(STATUS "CMAKE_CURRENT_BINARY_DIR: ${CMAKE_CURRENT_BINARY_DIR}")

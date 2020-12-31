@@ -251,7 +251,7 @@ static void base_error(lat_mv *mv) {
     latC_error(mv, "%s", latC_checar_cadena(mv, error));
 }
 
-static void base_beep(lat_mv *mv){
+static void base_beep(lat_mv *mv) {
     fprintf(stderr, "\x7");
     fflush(stderr);
 }
