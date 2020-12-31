@@ -134,7 +134,6 @@ if(UNIX)
 #  add_custom_command(target latino
 #          POST_BUILD
 #          COMMAND ${CMAKE_COMMAND} -E copy ${EXAMPLE_BIN_NAME} ${PROJECT_BINARY_DIR}/.)
-<<<<<<< HEAD
 endif(UNIX)
 
 
@@ -153,17 +152,3 @@ set(CPACK_DEBIAN_PACKAGE_DESCRIPTION        "Lenguaje de programación de códig
 set(CPACK_DEBIAN_PACKAGE_SECTION            "education")
 
 include(CPack)
-=======
-ENDIF(UNIX)
-
-#crear paquete .deb https://cmake.org/Wiki/CMake/CPack/Examples/Linux/DEB
-#ejecutar en terminal
-#make package
-SET(CPACK_GENERATOR "DEB")
-SET(CPACK_DEBIAN_PACKAGE_NAME "latino")
-SET(CPACK_PACKAGE_VERSION "1.3.0")
-SET(CPACK_DEBIAN_PACKAGE_MAINTAINER "melving24@gmail.com")
-SET(CPACK_DEBIAN_PACKAGE_DESCRIPTION "Lenguaje de programación de código abierto para latinos y de habla hispana. http://lenguajelatino.org/")
-SET(CPACK_DEBIAN_PACKAGE_SECTION "education")
-INCLUDE(CPack)
->>>>>>> origin/master
