@@ -51,3 +51,5 @@ static const lat_CReg liblat[] = {{"mostrar", dev_mostrar, 1},
 void latC_abrir_liblatino_devlib(lat_mv *mv) {
     latC_abrir_liblatino(mv, LIB_LAT_NAME, liblat);
 }
+// Mirar Python Debbuger
+//https://docs.python.org/3/library/pdb.html

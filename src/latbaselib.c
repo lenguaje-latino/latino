@@ -251,6 +251,11 @@ static void base_error(lat_mv *mv) {
     latC_error(mv, "%s", latC_checar_cadena(mv, error));
 }
 
+static void base_beep(lat_mv *mv) {
+    fprintf(stderr, "\x7");
+    fflush(stderr);
+}
+
 static const lat_CReg libbase[] = {
     {"poner", base_poner, 1},
     {"escribir", base_poner, 1},
@@ -264,6 +269,7 @@ static const lat_CReg libbase[] = {
     {"tipo", base_tipo, 1},
     {"imprimirf", base_imprimirf, FUNCION_VAR_ARGS},
     {"error", base_error, FUNCION_VAR_ARGS},
+    {"beep", base_beep, 0},
     {NULL, NULL}};
 
 void latC_abrir_liblatino_baselib(lat_mv *mv) {

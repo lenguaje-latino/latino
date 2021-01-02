@@ -1,3 +1,4 @@
+expresion = "^\S{1,}@\S{2,}\.\S{2,}$"
 error=falso
 mientras verdadero
   si ! error
@@ -6,7 +7,7 @@ mientras verdadero
 	  poner("No has escrito un correo, vuelve a escribirlo")
   fin
   correo = leer()
-  es_un_correo = cadena.match(correo, "^[a-Z0-9._+-]+@[a-Z0-9.-]+\.[a-Z]{2,4}\b$")
+  es_un_correo = cadena.regex(correo, expresion)
   si es_un_correo
     poner("Correo escrito bien")
     retorno 0

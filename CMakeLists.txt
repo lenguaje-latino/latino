@@ -1,28 +1,72 @@
-CMAKE_MINIMUM_REQUIRED(VERSION 3.4.3)
+#[[
+/***********************************************************************************
+ * Copyright (c) 2015-2020 Lenguaje-Latino, programación con sintaxis al Español.  *
+ *                                                                                 *
+ *                            CMake_Root de Latino                                 *
+ ***********************************************************************************/
+]]
+
+
+#
+# CMAKE configuraciones
+cmake_minimum_required(VERSION 3.13)
 
 set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${CMAKE_CURRENT_LIST_DIR}/cmake/Modules/")
 
-if(NOT CMAKE_CONFIGURATION_TYPES AND NOT CMAKE_BUILD_TYPE) # Default to a Release build
-    set(CMAKE_BUILD_TYPE Release CACHE STRING "Choose the type of build [Release Debug]" FORCE)
+project(latino) 
+
+if(NOT CMAKE_CONFIGURATION_TYPES AND NOT CMAKE_BUILD_TYPE)
+    set(CMAKE_BUILD_TYPE "Debug" CACHE STRING "Choose the type of build [Debug]" FORCE) # Default to a Debug build
 endif()
+set(CMAKE_BUILD_TYPE "Debug")
+
 
 if(CMAKE_COMPILER_IS_GNUCXX)
     target_link_libraries(${PROJECT_TEST_NAME} gcov)
 endif()
 
+set(program_files "$ENV{ProgramFiles}")
+
+#
+# Mensajes de construcion
+include(LatLogo)
+message(STATUS ".............................................." )
+message(STATUS ">>>>>>   Latino ")
+message(STATUS ".............................................." )
+message(STATUS "Generador .............. ${CMAKE_GENERATOR}"    )
+message(STATUS "Tipo de Build .......... ${CMAKE_BUILD_TYPE}"   )
+
+include(GetLatVersion)
+message(STATUS "Latino Version ......... ${LATINO_VERSION}"     )
+
+include(BuildLatOptions)
+
+
+#
+# Codigo Fuente
+add_subdirectory(src)
+
+
+#
+# Opciones
+if(LAT_EJEMPLOS)
+  
+endif(LAT_EJEMPLOS)
+
+
+#
+# Extras
+
 #find_path(GLIB_INCLUDE_DIR NAMES glib.h PATH_SUFFIXES glib-2.0)
 
-PROJECT(latino)
-
-ADD_SUBDIRECTORY(src)
 #IF(UNIX)
 #  execute_process(COMMAND bash ${CMAKE_CURRENT_LIST_DIR}/tools/install_deps.sh)
 #  execute_process(COMMAND bash ${CMAKE_CURRENT_LIST_DIR}/tools/key.sh)
 #ENDIF(UNIX)
 
-enable_testing ()
+enable_testing()
 #se comentan los test que requieren entrada de datos leer()
-add_test (NAME coverage COMMAND latino ejemplos/coverage.lat)
+add_test(NAME coverage COMMAND latino ejemplos/coverage.lat)
 
 #if (CMAKE_BUILD_TYPE STREQUAL "Coverage")
 #    include(CodeCoverage)

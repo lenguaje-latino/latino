@@ -22,6 +22,7 @@
     * [Documentación](#doc)
     * [Latino-Wiki](#wiKi)
     * [Otras Ayudas](#ayuda)
+    * [Contribuciones](#contri)
     * [SINTAXIS DE LATINO](#sintx)
         * [Comentarios](#comt)
         * [Variables](#var)
@@ -94,6 +95,11 @@ Visita la Wiki de Latino aquí en GitHut para saber como colaborar en este proye
 - [Chat en Gitter](https://gitter.im/primitivorm/latino?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 - [Canal en Youtube](https://www.youtube.com/channel/UCLVTJpQn-TDbBSwR732kvnQ/featured)
 <!-- - [API de Latino](https://manuallatinoapi.blogspot.com) -->
+
+<a name="contri"></a>
+# Contribuciones
+Si deseas contribuir en este proyecto reportando errores, proponiendo sugerencias o aportando al código fuente, te dejamos el siguiente enlace con nuestras normas.
+- [Normas para contribuyentes](.readme/CONTRIBUTING.md)
 
 <a name="sintx"></a>
 # SINTAXIS DE LATINO

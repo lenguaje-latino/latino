@@ -90,15 +90,16 @@ static const char *const bycode_nombre[] = {
 
 void str_concatenar(lat_mv *mv);
 
-void latC_abrir_liblatino_baselib(lat_mv *mv);
-void latC_abrir_liblatino_listlib(lat_mv *mv);
-void latC_abrir_liblatino_strlib(lat_mv *mv);
-void latC_abrir_liblatino_diclib(lat_mv *mv);
-void latC_abrir_liblatino_paqlib(lat_mv *mv);
-void latC_abrir_liblatino_filelib(lat_mv *mv);
-void latC_abrir_liblatino_mathlib(lat_mv *mv);
-void latC_abrir_liblatino_syslib(lat_mv *mv);
-void latC_abrir_liblatino_devlib(lat_mv *mv);
+void latC_abrir_liblatino_baselib   (lat_mv *mv);
+void latC_abrir_liblatino_listlib   (lat_mv *mv);
+void latC_abrir_liblatino_strlib    (lat_mv *mv);
+void latC_abrir_liblatino_diclib    (lat_mv *mv);
+void latC_abrir_liblatino_paqlib    (lat_mv *mv);
+void latC_abrir_liblatino_filelib   (lat_mv *mv);
+void latC_abrir_liblatino_mathlib   (lat_mv *mv);
+void latC_abrir_liblatino_syslib    (lat_mv *mv);
+void latC_abrir_liblatino_devlib    (lat_mv *mv);
+void latC_abrir_liblatino_uilib     (lat_mv *mv);
 
 /*
 void latC_abrir_liblatino_gc(lat_mv *mv);
@@ -361,15 +362,16 @@ LATINO_API lat_mv *latC_crear_mv() {
     mv->contexto_actual = mv->contexto[mv->ptrctx];
     mv->error = NULL;
     mv->global->menu = false;
-    latC_abrir_liblatino_baselib(mv);
-    latC_abrir_liblatino_strlib(mv);
-    latC_abrir_liblatino_listlib(mv);
-    latC_abrir_liblatino_diclib(mv);
-    latC_abrir_liblatino_paqlib(mv);
-    latC_abrir_liblatino_filelib(mv);
-    latC_abrir_liblatino_mathlib(mv);
-    latC_abrir_liblatino_syslib(mv);
-    latC_abrir_liblatino_devlib(mv);
+    latC_abrir_liblatino_baselib    (mv);
+    latC_abrir_liblatino_strlib     (mv);
+    latC_abrir_liblatino_listlib    (mv);
+    latC_abrir_liblatino_diclib     (mv);
+    latC_abrir_liblatino_paqlib     (mv);
+    latC_abrir_liblatino_filelib    (mv);
+    latC_abrir_liblatino_mathlib    (mv);
+    latC_abrir_liblatino_syslib     (mv);
+    latC_abrir_liblatino_devlib     (mv);
+    latC_abrir_liblatino_uilib      (mv);
     /*
     latC_abrir_liblatino_gc(mv);
     latC_abrir_liblatino_gtklib(mv);
@@ -1112,6 +1114,9 @@ int latMV_funcion_correr(lat_mv *mv, lat_objeto *func) {
 // printf("\n");
 #endif
         } // fin for
+#if HABILITAR_GC
+        gc_recolectar(mv);
+#endif
     }     // fin if (T_FUN)
     else if (func->tipo == T_CFUN) {
         // printf("%s\n", "llamando c fun");
