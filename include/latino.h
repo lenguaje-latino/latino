@@ -65,14 +65,14 @@ THE SOFTWARE.
 /** Version menor de Latino */
 #define LAT_VERSION_MENOR   3
 /** Version de correcion de errores */
-#define LAT_VERSION_PARCHE  6
+#define LAT_VERSION_PARCHE  9
 /** Version de Latino */
 #define LAT_VERSION                                                            \
     "Latino " LAT_stringize(LAT_VERSION_MAYOR) "." LAT_stringize(LAT_VERSION_MENOR) "." LAT_stringize(LAT_VERSION_PARCHE)
 /** Derechos de Latino */
 #define LAT_DERECHOS                                                           \
     LAT_VERSION                                                                \
-    "\nTodos los derechos reservados (C) 2015-2020. Latinoamerica"
+    "\nTodos los derechos reservados (C) 2015-2021. Latinoamerica"
 
 #define LAT_ERRMEM 1
 #define LAT_ERRRUN 2

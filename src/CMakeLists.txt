@@ -80,19 +80,10 @@ latmathlib.c latsyslib.c latpaqlib.c latdevlib.c latuilib.c
 #extra
 linenoise/utf8.c linenoise/linenoise.c)
 
-<<<<<<< HEAD
 set(SRC_LATINO ${SRC_LIB})
 
-<<<<<<< HEAD
 add_executable(latino ${SRC_LATINO} ${SRC_LIB})
-=======
-SET(SRC_LATINO ${SRC_LIB})
-
-=======
->>>>>>> origin/master
-ADD_EXECUTABLE(latino ${SRC_LATINO} ${SRC_LIB})
 target_link_libraries(latino LINK_PUBLIC ${CMAKE_DL_LIBS})
->>>>>>> origin/master
 
 if(MSVC)
     message(STATUS "CMAKE_CURRENT_BINARY_DIR: ${CMAKE_CURRENT_BINARY_DIR}")

@@ -28,7 +28,7 @@ THE SOFTWARE.
 #include "latino.h"
 
 /**\brief Bandera habilitar o deshabilitar GC */
-#define HABILITAR_GC 1
+#define HABILITAR_GC 0
 
 void gc_agregar(lat_mv *mv, lat_objeto *o);
 void gc_checar(lat_mv *mv);

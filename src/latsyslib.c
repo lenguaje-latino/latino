@@ -36,6 +36,33 @@ THE SOFTWARE.
 #include "latmv.h"
 
 #define LIB_SISTEMA_NAME "sis"
+
+struct OS_VERSION_LAT { // estructura variable OS.Major, OS.Minor, OS.Build
+    double osMayor, osMenor, osBuild;
+};
+
+typedef struct OS_VERSION_LAT Struct;
+
+Struct buscar_os_version() { // Busca y asigna el valor del Build del sistema operativo
+    Struct os_v;
+
+    #ifdef WIN32
+        OSVERSIONINFO osvi;
+
+        ZeroMemory(&osvi, sizeof(OSVERSIONINFO));
+        osvi.dwOSVersionInfoSize = sizeof(OSVERSIONINFO);
+
+        GetVersionEx(&osvi);
+
+        os_v.osMayor = osvi.dwMajorVersion;
+        os_v.osMenor = osvi.dwMinorVersion;
+        os_v.osBuild = osvi.dwBuildNumber;
+    #else
+    #endif
+
+    return os_v;
+}
+
 volatile sig_atomic_t senial;
 
 void sleep_ms(int milliseconds) // cross-platform sleep function
@@ -199,6 +226,39 @@ static void latSO_operativo(lat_mv *mv){
     latC_apilar(mv, v);
 }
 
+static void latSO_ver_major(lat_mv *mv) {
+    double n;
+    Struct os_version;
+    os_version = buscar_os_version();
+    n = os_version.osMayor;
+    lat_objeto *tmp = latO_crear(mv);
+    tmp->tam += sizeof(double);
+    setNumerico(tmp, n);
+    latC_apilar(mv, tmp);
+}
+
+static void latSO_ver_menor(lat_mv *mv) {
+    double n;
+    Struct os_version;
+    os_version = buscar_os_version();
+    n = os_version.osMenor;
+    lat_objeto *tmp = latO_crear(mv);
+    tmp->tam += sizeof(double);
+    setNumerico(tmp, n);
+    latC_apilar(mv, tmp);
+}
+
+static void latSO_ver_build(lat_mv *mv) {
+    double n;
+    Struct os_version;
+    os_version = buscar_os_version();
+    n = os_version.osBuild;
+    lat_objeto *tmp = latO_crear(mv);
+    tmp->tam += sizeof(double);
+    setNumerico(tmp, n);
+    latC_apilar(mv, tmp);
+}
+
 /*
 void latSO_fork(lat_mv *mv) {
     bool pid_ok = false;
@@ -232,7 +292,10 @@ static const lat_CReg libsistema[] = {{"dormir", latSO_dormir, 1},
                                       {"tiempo", latSO_tiempo, 2},
                                       {"usuario", latSO_usuario, 0},
                                       {"operativo", latSO_operativo, 1},
-                                      {"op", latSO_operativo, 1},
+                                      {"os", latSO_operativo, 1},
+                                      {"os_version_mayor", latSO_ver_major, 0},
+                                      {"os_version_menor", latSO_ver_menor, 0},
+                                      {"os_version_parche", latSO_ver_build, 0},
                                       {NULL, NULL}};
 
 void latC_abrir_liblatino_syslib(lat_mv *mv) {
