@@ -26,7 +26,7 @@ THE SOFTWARE.
 
 #define LIB_UI_NAME "ui"
 
-int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nCmdShow);
+// int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nCmdShow);
 
 static void ui_winProc(lat_mv *mv) {
     // lat_objeto *l = latC_desapilar(mv);
@@ -53,32 +53,32 @@ static void ui_winProc(lat_mv *mv) {
     // char *lpWindowName  = latC_checar_cadena(mv, b);
     // int *lpClassName    = (int)latC_checar_numerico(mv, a);
 
-    HWND hwnd = CreateWindowEx(0,"lpWindowName","Learn to program", WS_OVERLAPPEDWINDOW,
-    CW_USEDEFAULT, CW_USEDEFAULT, CW_USEDEFAULT, CW_USEDEFAULT,
-    NULL, NULL, 3, NULL);
-    if (hwnd == NULL) {
-        return 0;
-    }
-    ShowWindow(hwnd, 5);
+    // HWND hwnd = CreateWindowEx(0,"lpWindowName","Learn to program", WS_OVERLAPPEDWINDOW,
+    // CW_USEDEFAULT, CW_USEDEFAULT, CW_USEDEFAULT, CW_USEDEFAULT,
+    // NULL, NULL, 3, NULL);
+    // if (hwnd == NULL) {
+    //     return 0;
+    // }
+    // ShowWindow(hwnd, 5);
 }
 
 //Mensajes
 static void ui_messagebox(lat_mv *mv) {
-    lat_objeto *d = latC_desapilar(mv);
-    lat_objeto *c = latC_desapilar(mv);
-    lat_objeto *b = latC_desapilar(mv);
-    lat_objeto *a = latC_desapilar(mv);
-    int *dd = (int)latC_checar_numerico(mv, d);
-    char *cc = latC_checar_cadena(mv, c);
-    char *bb = latC_checar_cadena(mv, b);
-    int *aa = (int)latC_checar_numerico(mv, a);
-    int m = (int)MessageBox(aa,bb,cc,dd);
-    lat_objeto *msj = latC_crear_numerico(mv, m);
-    latC_apilar(mv, msj);
+    // lat_objeto *d = latC_desapilar(mv);
+    // lat_objeto *c = latC_desapilar(mv);
+    // lat_objeto *b = latC_desapilar(mv);
+    // lat_objeto *a = latC_desapilar(mv);
+    // int *dd = (int)latC_checar_numerico(mv, d);
+    // char *cc = latC_checar_cadena(mv, c);
+    // char *bb = latC_checar_cadena(mv, b);
+    // int *aa = (int)latC_checar_numerico(mv, a);
+    // int m = (int)MessageBox(aa,bb,cc,dd);
+    // lat_objeto *msj = latC_crear_numerico(mv, m);
+    // latC_apilar(mv, msj);
 }
 
 static void ui_flash(lat_mv *mv) {
-    FlashWindow(0,true);
+    // FlashWindow(0,true);
 }
 
 // static void ui_proc(lat_mv *mv) {

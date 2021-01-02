@@ -57,6 +57,30 @@ Struct buscar_os_version() { // Busca y asigna el valor del Build del sistema op
         os_v.osMayor = osvi.dwMajorVersion;
         os_v.osMenor = osvi.dwMinorVersion;
         os_v.osBuild = osvi.dwBuildNumber;
+    #elif __APPLE__
+        char cmd[64];
+        for (int i=0; i<=3; i++){
+            sprintf(cmd, "sw_vers -productVersion | awk -F '.' '{print $%d}'", i);
+
+            FILE* stdoutFile = popen(cmd, "r");
+
+            int resp = 0;
+            if (stdoutFile) {
+                char buff[16];
+                char *stdout = fgets(buff, sizeof(buff), stdoutFile);
+                pclose(stdoutFile);
+                sscanf(stdout, "%d", &resp);
+            }
+            switch(i) {
+                case 1:
+                    os_v.osMayor = resp;
+                case 2:
+                    os_v.osMenor = resp;
+                case 3:
+                    os_v.osBuild = resp;
+                    break;
+            }
+        }
     #else
     #endif
 
