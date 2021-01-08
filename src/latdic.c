@@ -30,7 +30,6 @@ THE SOFTWARE.
 #include "latmem.h"
 
 LATINO_API hash_map *latH_crear(lat_mv *mv) {
-    // printf("latH_crear: %zu\n", sizeof(hash_map));
     hash_map *ret = (hash_map *)latM_asignar(mv, sizeof(hash_map));
     int c;
     for (c = 0; c < 256; c++) {
@@ -41,7 +40,6 @@ LATINO_API hash_map *latH_crear(lat_mv *mv) {
 }
 
 LATINO_API void latH_asignar(lat_mv *mv, hash_map *m, const char *key, void *val) {
-    // printf("\nlatH_asignar (hash_val): %zu\n", sizeof(hash_val));
     int hk = latH_hash(key);
     if (m->buckets[hk] == NULL) {
         m->buckets[hk] = latL_crear(mv);
@@ -115,7 +113,6 @@ LATINO_API void *latH_obtener(hash_map *m, const char *key) {
 }
 
 LATINO_API hash_map *latH_clonar(lat_mv *mv, hash_map *m) {
-    // printf("latH_clonar\n");
     hash_map *ret = latH_crear(mv);
     int i;
     for (i = 0; i < 256; i++) {
@@ -125,7 +122,6 @@ LATINO_API hash_map *latH_clonar(lat_mv *mv, hash_map *m) {
                 LIST_FOREACH(list, primero, siguiente, cur) {
                     if (cur->valor) {
                         char *str_key = ((hash_val *)cur->valor)->llave;
-                        // printf("str_key: %s\n", str_key);
                         latH_asignar(mv, ret, str_key,
                                      ((hash_val *)cur->valor)->valor);
                     }

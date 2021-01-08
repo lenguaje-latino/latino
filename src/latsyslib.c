@@ -199,28 +199,6 @@ static void latSO_operativo(lat_mv *mv){
     latC_apilar(mv, v);
 }
 
-/*
-void latSO_fork(lat_mv *mv) {
-    bool pid_ok = false;
-    pid_t pid = fork();
-    if (pid == 0) {
-        pid_ok = true;
-    } else if (pid > 0) {
-        pid_ok = true;
-    }
-    if (!pid_ok) {
-        latC_error(mv, "error en fork");
-    } else {
-        lat_objeto *datos = latC_crear_lista(mv, latL_crear(mv));
-        latL_agregar(mv, latC_checar_lista(mv, datos),
-                     latC_crear_numerico(mv, pid));
-        latL_agregar(mv, latC_checar_lista(mv, datos),
-                     latC_crear_numerico(mv, getpid()));
-        latC_apilar(mv, datos);
-    }
-}
-*/
-
 static const lat_CReg libsistema[] = {{"dormir", latSO_dormir, 1},
                                       {"ejecutar", latSO_ejecutar, 1},
                                       {"pipe", latSO_pipe, 1},

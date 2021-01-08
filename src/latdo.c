@@ -44,7 +44,6 @@ struct lat_longjmp {
     volatile int status;
 };
 
-// void str_formato(lat_mv *mv);
 void str_concatenar(lat_mv *mv);
 
 static ast *transformar_casos(ast *casos, ast *cond_izq) {
@@ -171,7 +170,6 @@ static int ast_analizar(lat_mv *mv, ast *nodo, lat_bytecode *codigo, int i) {
             dbc(LOAD_NAME, 0, 0, o, nodo->nlin, nodo->ncol, mv->nombre_archivo);
         } break;
         case NODO_ASIGNACION: {
-            // printf("%s\n", "NODO_ASIGNACION");
             int num_params = 1;
             if (nodo->der->tipo == NODO_FUNCION_PARAMETROS) {
                 num_params =
@@ -432,7 +430,6 @@ static int ast_analizar(lat_mv *mv, ast *nodo, lat_bytecode *codigo, int i) {
             }
         } break;
         case NODO_FUNCION_USUARIO: {
-            // printf("%s\n", "NODO_FUNCION_USUARIO");
             nodo_funcion *fun = (nodo_funcion *)nodo;
             funcion_codigo = (lat_bytecode *)latM_asignar(
                 mv, sizeof(lat_bytecode) * MAX_BYTECODE_FUNCTION);
@@ -457,7 +454,6 @@ static int ast_analizar(lat_mv *mv, ast *nodo, lat_bytecode *codigo, int i) {
             lat_objeto *o =
                 latC_crear_cadena(mv, fun->nombre->valor->val.cadena);
             o->marca = 0;
-            // printf("val.cadena: %s\n", fun->nombre->valor->val.cadena);
             f->nparams =
                 contar_num_parargs(fun->params, NODO_FUNCION_PARAMETROS);
             f->nombre = strdup(fun->nombre->valor->val.cadena);
@@ -720,7 +716,6 @@ LATINO_API void latC_error(lat_mv *mv, const char *fmt, ...) {
 }
 
 LATINO_API int latC_llamar_funcion(lat_mv *mv, lat_objeto *func) {
-    // printf("%s\n", func->nombre);
     struct lat_longjmp lj;
     lj.status = 0;
     lj.previo = mv->error;
@@ -731,7 +726,6 @@ LATINO_API int latC_llamar_funcion(lat_mv *mv, lat_objeto *func) {
 }
 
 LATINO_API lat_objeto *latC_analizar(lat_mv *mv, ast *nodo) {
-    // printf("%s\n", ">>> latC_analizar");
     lat_bytecode *codigo =
         latM_asignar(mv, sizeof(lat_bytecode) * MAX_BYTECODE_FUNCTION);
     int i = ast_analizar(mv, nodo, codigo, 0);

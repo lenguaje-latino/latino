@@ -118,7 +118,6 @@ extern int parse_silent;
 #define MAX_BYTECODE_FUNCTION (1024 * 128)
 /** Tamanio maximo de memoria virtual permitida */
 #define MAX_VIRTUAL_MEMORY (MAX_BYTECODE_FUNCTION * 256)
-//#define MAX_VIRTUAL_MEMORY 134217728
 /** Tamanio maximo de una cadena para ser almacenada en HASH TABLE */
 #define MAX_STR_INTERN 64
 /** Tamanio maximo de una cadena almacenada dinamicamente */
@@ -161,7 +160,7 @@ extern int parse_silent;
 #define latO_verdadero (&latO_verdadero_)
 #define latO_falso (&latO_falso_)
 
-/* maquina virutal */
+/* maquina virtual */
 typedef struct lat_mv lat_mv;
 typedef struct _lat_objeto lat_objeto;
 typedef struct lat_funcion lat_funcion;

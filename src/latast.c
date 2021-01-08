@@ -214,11 +214,12 @@ void latA_destruir(ast *a) {
                 }
                 free(a->valor);
                 break;
-            default:
+            default: {
                 if (a->izq)
                     latA_destruir(a->izq);
                 if (a->der)
                     latA_destruir(a->der);
+            }   
         }
         free(a);
     }

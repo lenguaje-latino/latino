@@ -24,7 +24,7 @@ THE SOFTWARE.
 
 #include "latino.h"
 
-//Define en donde el comando Escribir escribira
+// Define en donde el comando Escribir escribira
 #define _inicio 0
 #define _final -1
 
@@ -167,8 +167,6 @@ static void file_duplicar(lat_mv *mv) {
         }
         while ((txt=fgetc(archivo)) != EOF)
         fputc(txt, copiar);
-        // const char *txt = archivo;
-        // fprintf(copiar, "%s", txt);
         fclose(archivo);
         fclose(copiar);
     }
@@ -225,8 +223,6 @@ static const lat_CReg libfile[] = {{"leer", file_leer, 1},
                                    {"lineas", file_lineas, 1},
                                    {"ejecutar", file_ejecutar, 1},
                                    {"escribir", file_escribir, 2},
-                                //    {"agregar", file_agregar,3},
-                                //    {"copiar", file_duplicar, 2},
                                    {"duplicar", file_duplicar, 2},
                                    {"anexar", file_anexar, 2},
                                    {"eliminar", file_eliminar, 1},

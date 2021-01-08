@@ -31,7 +31,6 @@ THE SOFTWARE.
 
 void *latM_asignar(lat_mv *mv, size_t size) {
     void *ptr = calloc(1, size);
-    // void *ptr = malloc(size);
     if (ptr == NULL) {
         latC_error(mv, "Memoria virtual agotada");
     }

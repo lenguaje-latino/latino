@@ -42,7 +42,6 @@ int leer_linea(char *buffer) {
     char *tmp = malloc(MAX_INPUT_SIZE);
 REP:
     input = linenoise(prompt);
-    // printf("input: %s\n", input);
     if (input == NULL) {
         return -1;
     }
@@ -51,7 +50,6 @@ REP:
         memcpy(tmp, input, len);
         tmp[len] = '\0';
         int estatus;
-        // printf("tmp: %s\n", tmp);
         ast *nodo =latA_analizar_exp(tmp, &estatus);
         if (estatus == 1) {
             tmp = strcat(tmp, "\n");

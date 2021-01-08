@@ -67,8 +67,6 @@ typedef enum lat_tipo {
     T_CHAR,
 } lat_tipo;
 
-// typedef struct lat_objeto lat_objeto;
-
 typedef void (*lat_CFuncion)(lat_mv *mv);
 
 /**\brief Estructura que almacena las instrucciones bytecode de la MV */
@@ -318,7 +316,6 @@ void latL_modificar_elemento(lat_mv *mv, lista *list, void *data, int pos);
 int latL_comparar(lat_mv *mv, lista *lhs, lista *rhs);
 int latL_obtener_indice(lat_mv *mv, lista *list, void *data);
 
-// lat_cadena *latO_cadenaNueva(lat_mv *mv, const char *str, size_t len);
 void latS_resize(lat_mv *mv, int newsize);
 
-#endif // !_LATINO_OBJ_H_
+#endif // _LATINO_OBJ_H_

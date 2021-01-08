@@ -100,11 +100,6 @@ void latC_abrir_liblatino_mathlib(lat_mv *mv);
 void latC_abrir_liblatino_syslib(lat_mv *mv);
 void latC_abrir_liblatino_devlib(lat_mv *mv);
 
-/*
-void latC_abrir_liblatino_gc(lat_mv *mv);
-void latC_abrir_liblatino_gtklib(lat_mv *mv);
- */
-
 const char *latMV_bytecode_nombre(int inst) { return bycode_nombre[inst]; }
 
 static void igualdad(lat_mv *mv) {
@@ -142,11 +137,9 @@ static void igualdad(lat_mv *mv) {
             latC_apilar(mv, r);
             latM_liberar(mv, buffer);
             latM_liberar(mv, buffer2);
-        }
             return;
+        }
     }
-    r = latO_falso;
-    latC_apilar(mv, r);
 }
 
 void str_regex(lat_mv *mv);
@@ -189,8 +182,6 @@ static void diferente(lat_mv *mv) {
             return;
         }
     }
-    r = latO_falso;
-    latC_apilar(mv, r);
 }
 
 static void menor_que(lat_mv *mv) {
@@ -295,11 +286,9 @@ static void apilar_contexto(lat_mv *mv, lat_objeto *ctx) {
     mv->contexto[mv->ptrctx + 1] = latO_clonar(mv, mv->contexto[mv->ptrctx]);
     mv->ptrctx++;
     mv->contexto_actual = mv->contexto[mv->ptrctx];
-    // printf(">>> apilar_contexto: %i\n", mv->ptrctx);
 }
 
 static void desapilar_contexto(lat_mv *mv) {
-    // printf("<<< desapilar_contexto: %i\n", mv->ptrctx);
     if (mv->ptrctx == 0) {
         latC_error(mv, "Pila de contextos vacia");
     }
@@ -309,10 +298,9 @@ static void desapilar_contexto(lat_mv *mv) {
 
 LATINO_API void latC_abrir_liblatino(lat_mv *mv, const char *nombre_lib,
                                      const lat_CReg *funs) {
-    // printf("nombre_lib: %s\n", nombre_lib);
     lat_objeto *ctx = obtener_contexto_global(mv);
     if (!strcmp(nombre_lib, "")) {
-        /*alcance global o libreria base*/
+        // Alcance global o libreria base
         for (; funs->nombre; funs++) {
             lat_objeto *cfun = latC_crear_cfuncion(mv, funs->cfun);
             cfun->nombre = funs->nombre;
@@ -332,17 +320,16 @@ LATINO_API void latC_abrir_liblatino(lat_mv *mv, const char *nombre_lib,
             latH_asignar(mv, latC_checar_dic(mv, mod), funs->nombre, cfun);
         }
         latO_asignar_ctx(mv, ctx, nombre_lib, mod);
-        // latC_apilar(mv, mod);
     }
 }
 
 LATINO_API lat_mv *latC_crear_mv() {
-    // printf("creando mv\n");
     lat_mv *mv = (lat_mv *)malloc(sizeof(lat_mv));
-    mv->global = (lat_global *)malloc(sizeof(lat_global));
-    mv->global->gc_objetos = NULL;
+    mv->global = (lat_global *)latM_asignar(mv, sizeof(lat_global));
+#if HABILITAR_GC
     mv->global->gc_objetos = latC_crear_lista(mv, latL_crear(mv));
     mv->global->gc_objetos->marca = 0;
+#endif
     mv->global->argv = latC_crear_lista(mv, latL_crear(mv));
     mv->global->argv->marca = 0;
     mv->global->strt.size = 0;
@@ -361,6 +348,8 @@ LATINO_API lat_mv *latC_crear_mv() {
     mv->contexto_actual = mv->contexto[mv->ptrctx];
     mv->error = NULL;
     mv->global->menu = false;
+
+    // cargar librerias de latino
     latC_abrir_liblatino_baselib(mv);
     latC_abrir_liblatino_strlib(mv);
     latC_abrir_liblatino_listlib(mv);
@@ -370,19 +359,17 @@ LATINO_API lat_mv *latC_crear_mv() {
     latC_abrir_liblatino_mathlib(mv);
     latC_abrir_liblatino_syslib(mv);
     latC_abrir_liblatino_devlib(mv);
-    /*
-    latC_abrir_liblatino_gc(mv);
-    latC_abrir_liblatino_gtklib(mv);
-     */
     return mv;
 }
 
 LATINO_API void latC_destruir_mv(lat_mv *mv) {
     latO_destruir(mv, mv->global->argv);
-    lat_global *g = mv->global;
-    free(g->gc_objetos);
-    free(mv->global->strt.hash);
-    free(mv->global);
+#if HABILITAR_GC
+    latO_destruir(mv, mv->global->gc_objetos);
+#endif
+    latO_destruir(mv, mv->contexto[0]);
+    latM_liberar(mv, mv->global->strt.hash);
+    latM_liberar(mv, mv->global);
     free(mv->pila);
     free(mv);
 }
@@ -496,7 +483,6 @@ LATINO_API void latC_apilar_string(lat_mv *mv, const char *str) {
 
 LATINO_API lat_objeto *latC_crear_funcion(lat_mv *mv, lat_bytecode *inslist,
                                           int ninst) {
-    // printf("%s\n", "latC_crear_funcion");
     lat_objeto *ret = latO_crear_funcion(mv);
     lat_funcion *fval = (lat_funcion *)latM_asignar(mv, sizeof(lat_funcion));
     fval->codigo = inslist;
@@ -733,12 +719,6 @@ int latMV_funcion_correr(lat_mv *mv, lat_objeto *func) {
                         latC_apilar(mv, latO_nulo);
                         num_args++;
                     }
-                    /*printf("CALL_FUNCTION: %s\n", fun->nombre);
-                    printf("num_args: %i\n", num_args);
-                    printf("nparams: %i\n", nparams);
-                    imprimir_pila(mv);
-                    printf("%s\n",
-                    "-----------------------------------------");*/
                     if (nparams == FUNCION_VAR_ARGS) {
                         // T_CFUN y varargs
                         lat_objeto *ctx = obtener_contexto(mv);
@@ -754,7 +734,6 @@ int latMV_funcion_correr(lat_mv *mv, lat_objeto *func) {
                             num_args = (mv->ptrpila + mv->ptrprevio - 1) -
                                        mv->prev_args;
                         }
-                        // printf("num_args: %i", num_args);
                         latC_apilar_double(mv, (double)num_args);
                     } else if (num_args != nparams && !fun->es_vararg) {
                         if (num_args < nparams) {
@@ -803,12 +782,6 @@ int latMV_funcion_correr(lat_mv *mv, lat_objeto *func) {
                                    "retorna ningun valor\n",
                                    fun->nombre);
                     }
-                    /*if (!apilar && next.ins != ADJUST_STACK &&
-                        next.ins != LOAD_NAME) {
-                        for (int i = 0; i < mv->prev_args; i++) {
-                            latC_desapilar(mv);
-                        }
-                    }*/
                     if (fun->es_vararg) {
                         lat_objeto *ctx = obtener_contexto(mv);
                         latO_asignar_ctx(mv, ctx, "varargs",
@@ -1109,17 +1082,13 @@ int latMV_funcion_correr(lat_mv *mv, lat_objeto *func) {
 
 #if DEPURAR_MV
             imprimir_pila(mv);
-// printf("\n");
 #endif
         } // fin for
     }     // fin if (T_FUN)
     else if (func->tipo == T_CFUN) {
-        // printf("%s\n", "llamando c fun");
         lat_CFuncion f = getCfun(func);
         (f)(mv);
         return 0;
-        // imprimir_pila(mv);
-        // printf("\n");
     } else {
         latC_error(mv, "El objeto no es una funcion");
     }
