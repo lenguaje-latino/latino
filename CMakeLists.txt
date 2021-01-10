@@ -13,7 +13,7 @@ cmake_minimum_required(VERSION 3.13)
 
 set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${CMAKE_CURRENT_LIST_DIR}/cmake/Modules/")
 
-project(latino) 
+project(latino)
 
 if(NOT CMAKE_CONFIGURATION_TYPES AND NOT CMAKE_BUILD_TYPE)
     set(CMAKE_BUILD_TYPE "Debug" CACHE STRING "Choose the type of build [Debug]" FORCE) # Default to a Debug build
@@ -21,9 +21,9 @@ endif()
 set(CMAKE_BUILD_TYPE "Debug")
 
 
-if(CMAKE_COMPILER_IS_GNUCXX)
-    target_link_libraries(${PROJECT_TEST_NAME} gcov)
-endif()
+# if(CMAKE_COMPILER_IS_GNUCXX)
+#     target_link_libraries(${PROJECT_TEST_NAME} gcov)
+# endif()
 
 set(program_files "$ENV{ProgramFiles}")
 

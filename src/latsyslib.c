@@ -38,7 +38,7 @@ THE SOFTWARE.
 #define LIB_SISTEMA_NAME "sis"
 
 struct OS_VERSION_LAT { // estructura variable OS.Major, OS.Minor, OS.Build
-    double osMayor, osMenor, osBuild;
+    char osMayor, osMenor, osBuild;
 };
 
 typedef struct OS_VERSION_LAT Struct;
@@ -82,6 +82,14 @@ Struct buscar_os_version() { // Busca y asigna el valor del Build del sistema op
             }
         }
     #else
+        struct utsname buffer;
+
+        if (uname(&buffer) < 0) {
+            perror("Failed to uname");
+        }
+        // os_v.osMayor = (int)strtol(buffer.version, (char **)NULL, 10);
+        // os_v.osMayor = atoi(buffer.version);
+        os_v.osMayor = buffer.release;
     #endif
 
     return os_v;
@@ -250,38 +258,27 @@ static void latSO_operativo(lat_mv *mv){
     latC_apilar(mv, v);
 }
 
-static void latSO_ver_major(lat_mv *mv) {
-    double n;
+void latOS_veriones(lat_mv *mv, int i) {
+    char n;
     Struct os_version;
     os_version = buscar_os_version();
-    n = os_version.osMayor;
-    lat_objeto *tmp = latO_crear(mv);
-    tmp->tam += sizeof(double);
-    setNumerico(tmp, n);
+    switch (i) {
+        case 1: n = os_version.osMayor; break;
+        case 2: n = os_version.osMenor; break;
+        case 3: n = os_version.osBuild; break;
+    }
+    lat_objeto *tmp = latC_checar_cadena(mv, n);
+    // tmp->tam += sizeof(char);
+    // setCadena(tmp, n);
+    // setNumerico(tmp, n);
     latC_apilar(mv, tmp);
 }
 
-static void latSO_ver_menor(lat_mv *mv) {
-    double n;
-    Struct os_version;
-    os_version = buscar_os_version();
-    n = os_version.osMenor;
-    lat_objeto *tmp = latO_crear(mv);
-    tmp->tam += sizeof(double);
-    setNumerico(tmp, n);
-    latC_apilar(mv, tmp);
-}
+static void latSO_ver_major(lat_mv *mv) { latOS_veriones(mv, 1); }
 
-static void latSO_ver_build(lat_mv *mv) {
-    double n;
-    Struct os_version;
-    os_version = buscar_os_version();
-    n = os_version.osBuild;
-    lat_objeto *tmp = latO_crear(mv);
-    tmp->tam += sizeof(double);
-    setNumerico(tmp, n);
-    latC_apilar(mv, tmp);
-}
+static void latSO_ver_menor(lat_mv *mv) { latOS_veriones(mv, 2); }
+
+static void latSO_ver_build(lat_mv *mv) { latOS_veriones(mv, 3); }
 
 /*
 void latSO_fork(lat_mv *mv) {

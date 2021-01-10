@@ -85,6 +85,7 @@ int yylex (YYSTYPE * yylval_param,YYLTYPE * yylloc_param ,yyscan_t yyscanner);
     VERDADERO
     FALSO
     NULO
+    EXPONENTE
 
 %token
     MAYOR_QUE
@@ -135,6 +136,7 @@ int yylex (YYSTYPE * yylval_param,YYLTYPE * yylloc_param ,yyscan_t yyscanner);
 %left '+' '-'
 %left '*' '/' '%' '!'
 %left '^'
+%left EXPONENTE
 
 %start program
 
@@ -165,6 +167,10 @@ unary_expression
 
 multiplicative_expression
     : expression '^' expression {
+        $$ = latA_nodo(NODO_POTENCIA, $1, $3, @2.first_line, @2.first_column);
+        if($$ == NULL) YYABORT;
+    }
+    | expression EXPONENTE expression {
         $$ = latA_nodo(NODO_POTENCIA, $1, $3, @2.first_line, @2.first_column);
         if($$ == NULL) YYABORT;
     }

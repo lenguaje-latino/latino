@@ -110,6 +110,7 @@ EXP ([Ee][-+]?[0-9]+)
 "++"                                             { return INCREMENTO; }
 "--"                                             { return DECREMENTO; }
 "."                                              { return ATRIBUTO; }
+"**"                                             { return EXPONENTE; }
 
  /* palabras reservadas */
 "si"                                             { return SI; }

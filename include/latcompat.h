@@ -76,6 +76,7 @@ THE SOFTWARE.
 
 #ifdef __linux__
 #define SISTEMAOPERATIVO "LINUX"
+#include <sys/utsname.h>
 #include <dlfcn.h>
 #include <readline/history.h>
 #include <readline/readline.h>
