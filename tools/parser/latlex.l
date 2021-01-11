@@ -132,6 +132,9 @@ EXP ([Ee][-+]?[0-9]+)
 "caso"                                           { return CASO; }
 "otro"|"defecto"                                 { return DEFECTO; }
 "global"                                         { return GLOBAL; }
+"para"                                           { return PARA; }
+"en"                                             { return EN; }
+"rango"                                          { return RANGO; }
 
  /* names */
 [_A-Z]*                                          { yylval->node = latA_var(yytext, yylloc->first_line, yylloc->first_column, 1); return IDENTIFICADOR; }

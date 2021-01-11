@@ -73,25 +73,28 @@ extern int yydebug;
     FALSO = 279,
     NULO = 280,
     EXPONENTE = 281,
-    MAYOR_QUE = 282,
-    MENOR_QUE = 283,
-    MAYOR_IGUAL = 284,
-    MENOR_IGUAL = 285,
-    IGUAL_LOGICO = 286,
-    DIFERENTE = 287,
-    Y_LOGICO = 288,
-    O_LOGICO = 289,
-    INCREMENTO = 290,
-    DECREMENTO = 291,
-    CONCATENAR = 292,
-    CONCATENAR_IGUAL = 293,
-    MAS_IGUAL = 294,
-    MENOS_IGUAL = 295,
-    POR_IGUAL = 296,
-    ENTRE_IGUAL = 297,
-    MODULO_IGUAL = 298,
-    REGEX = 299,
-    GLOBAL = 300
+    PARA = 282,
+    EN = 283,
+    RANGO = 284,
+    MAYOR_QUE = 285,
+    MENOR_QUE = 286,
+    MAYOR_IGUAL = 287,
+    MENOR_IGUAL = 288,
+    IGUAL_LOGICO = 289,
+    DIFERENTE = 290,
+    Y_LOGICO = 291,
+    O_LOGICO = 292,
+    INCREMENTO = 293,
+    DECREMENTO = 294,
+    CONCATENAR = 295,
+    CONCATENAR_IGUAL = 296,
+    MAS_IGUAL = 297,
+    MENOS_IGUAL = 298,
+    POR_IGUAL = 299,
+    ENTRE_IGUAL = 300,
+    MODULO_IGUAL = 301,
+    REGEX = 302,
+    GLOBAL = 303
   };
 #endif
 /* Tokens.  */
@@ -119,25 +122,28 @@ extern int yydebug;
 #define FALSO 279
 #define NULO 280
 #define EXPONENTE 281
-#define MAYOR_QUE 282
-#define MENOR_QUE 283
-#define MAYOR_IGUAL 284
-#define MENOR_IGUAL 285
-#define IGUAL_LOGICO 286
-#define DIFERENTE 287
-#define Y_LOGICO 288
-#define O_LOGICO 289
-#define INCREMENTO 290
-#define DECREMENTO 291
-#define CONCATENAR 292
-#define CONCATENAR_IGUAL 293
-#define MAS_IGUAL 294
-#define MENOS_IGUAL 295
-#define POR_IGUAL 296
-#define ENTRE_IGUAL 297
-#define MODULO_IGUAL 298
-#define REGEX 299
-#define GLOBAL 300
+#define PARA 282
+#define EN 283
+#define RANGO 284
+#define MAYOR_QUE 285
+#define MENOR_QUE 286
+#define MAYOR_IGUAL 287
+#define MENOR_IGUAL 288
+#define IGUAL_LOGICO 289
+#define DIFERENTE 290
+#define Y_LOGICO 291
+#define O_LOGICO 292
+#define INCREMENTO 293
+#define DECREMENTO 294
+#define CONCATENAR 295
+#define CONCATENAR_IGUAL 296
+#define MAS_IGUAL 297
+#define MENOS_IGUAL 298
+#define POR_IGUAL 299
+#define ENTRE_IGUAL 300
+#define MODULO_IGUAL 301
+#define REGEX 302
+#define GLOBAL 303
 
 /* Value type.  */
 
