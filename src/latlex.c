@@ -1159,177 +1159,177 @@ YY_RULE_SETUP
 /* palabras reservadas */
 case 40:
 YY_RULE_SETUP
-#line 117 "latlex.l"
+#line 116 "latlex.l"
 { return SI; }
 	YY_BREAK
 case 41:
 YY_RULE_SETUP
-#line 118 "latlex.l"
+#line 117 "latlex.l"
 { return O_SI; }
 	YY_BREAK
 case 42:
 YY_RULE_SETUP
-#line 119 "latlex.l"
+#line 118 "latlex.l"
 { return FIN; }
 	YY_BREAK
 case 43:
 YY_RULE_SETUP
-#line 120 "latlex.l"
+#line 119 "latlex.l"
 { return SINO; }
 	YY_BREAK
 case 44:
 YY_RULE_SETUP
-#line 121 "latlex.l"
+#line 120 "latlex.l"
 { return ROMPER; }
 	YY_BREAK
 case 45:
 YY_RULE_SETUP
-#line 122 "latlex.l"
+#line 121 "latlex.l"
 { return CONTINUAR; }
 	YY_BREAK
 case 46:
 YY_RULE_SETUP
-#line 123 "latlex.l"
+#line 122 "latlex.l"
 { return MIENTRAS; }
 	YY_BREAK
 case 47:
 YY_RULE_SETUP
-#line 124 "latlex.l"
+#line 123 "latlex.l"
 { return REPETIR; }
 	YY_BREAK
 case 48:
 YY_RULE_SETUP
-#line 125 "latlex.l"
+#line 124 "latlex.l"
 { return HASTA; }
 	YY_BREAK
 case 49:
 YY_RULE_SETUP
-#line 126 "latlex.l"
+#line 125 "latlex.l"
 { return FUNCION; }
 	YY_BREAK
 case 50:
 YY_RULE_SETUP
-#line 127 "latlex.l"
+#line 126 "latlex.l"
 { return DESDE; }
 	YY_BREAK
 case 51:
 YY_RULE_SETUP
-#line 128 "latlex.l"
+#line 127 "latlex.l"
 { return VERDADERO; }
 	YY_BREAK
 case 52:
 YY_RULE_SETUP
-#line 129 "latlex.l"
+#line 128 "latlex.l"
 { return FALSO; }
 	YY_BREAK
 case 53:
 YY_RULE_SETUP
-#line 130 "latlex.l"
+#line 129 "latlex.l"
 { return NULO; }
 	YY_BREAK
 case 54:
 YY_RULE_SETUP
-#line 131 "latlex.l"
+#line 130 "latlex.l"
 { return RETORNO; }
 	YY_BREAK
 case 55:
 YY_RULE_SETUP
-#line 132 "latlex.l"
+#line 131 "latlex.l"
 { return ELEGIR; }
 	YY_BREAK
 case 56:
 YY_RULE_SETUP
-#line 133 "latlex.l"
+#line 132 "latlex.l"
 { return CASO; }
 	YY_BREAK
 case 57:
 YY_RULE_SETUP
-#line 134 "latlex.l"
+#line 133 "latlex.l"
 { return DEFECTO; }
 	YY_BREAK
 case 58:
 YY_RULE_SETUP
-#line 135 "latlex.l"
+#line 134 "latlex.l"
 { return GLOBAL; }
 	YY_BREAK
 case 59:
 YY_RULE_SETUP
-#line 136 "latlex.l"
+#line 135 "latlex.l"
 { return PARA; }
 	YY_BREAK
 case 60:
 YY_RULE_SETUP
-#line 137 "latlex.l"
+#line 136 "latlex.l"
 { return EN; }
 	YY_BREAK
 case 61:
 YY_RULE_SETUP
-#line 138 "latlex.l"
+#line 137 "latlex.l"
 { return RANGO; }
 	YY_BREAK
 /* names */
 case 62:
 YY_RULE_SETUP
-#line 141 "latlex.l"
+#line 140 "latlex.l"
 { yylval->node = latA_var(yytext, yylloc->first_line, yylloc->first_column, 1); return IDENTIFICADOR; }
 	YY_BREAK
 case 63:
 YY_RULE_SETUP
-#line 142 "latlex.l"
+#line 141 "latlex.l"
 { yylval->node = latA_var(yytext, yylloc->first_line, yylloc->first_column, 0); return IDENTIFICADOR; }
 	YY_BREAK
 case 64:
 YY_RULE_SETUP
-#line 143 "latlex.l"
+#line 142 "latlex.l"
 { yylval->node = latA_numerico(strtod(yytext, NULL), yylloc->first_line, yylloc->first_column); return NUMERICO; }
 	YY_BREAK
 case 65:
 /* rule 65 can match eol */
 YY_RULE_SETUP
-#line 144 "latlex.l"
+#line 143 "latlex.l"
 { yytext[strlen(yytext) - 1] = '\0'; yylval->node = latA_cadena(yytext+1, yylloc->first_line, yylloc->first_column); return CADENA; }
 	YY_BREAK
 case 66:
 /* rule 66 can match eol */
 YY_RULE_SETUP
-#line 145 "latlex.l"
+#line 144 "latlex.l"
 { yytext[strlen(yytext) - 1] = '\0'; yylval->node = latA_literal(yytext+1, yylloc->first_line, yylloc->first_column); return CADENA; }
 	YY_BREAK
 case 67:
 YY_RULE_SETUP
-#line 146 "latlex.l"
+#line 145 "latlex.l"
 { ; }  /* comentario de una linea estilo python */
 	YY_BREAK
 case 68:
 YY_RULE_SETUP
-#line 147 "latlex.l"
+#line 146 "latlex.l"
 { ; }  /* comentario de una linea estilo c/c++ */
 	YY_BREAK
 case 69:
 /* rule 69 can match eol */
 YY_RULE_SETUP
-#line 148 "latlex.l"
+#line 147 "latlex.l"
 { ; }  /* comentarios multilinea estilo c/c++ */
 	YY_BREAK
 case 70:
 /* rule 70 can match eol */
 YY_RULE_SETUP
-#line 149 "latlex.l"
+#line 148 "latlex.l"
 { ; }  /* ignora saltos de linea */
 	YY_BREAK
 case 71:
 YY_RULE_SETUP
-#line 150 "latlex.l"
+#line 149 "latlex.l"
 { ; }  /* ignora espacios en blanco y tabuladores */
 	YY_BREAK
 case 72:
 YY_RULE_SETUP
-#line 151 "latlex.l"
+#line 150 "latlex.l"
 { ; }  /* ignora caracteres incorrectos */
 	YY_BREAK
 case 73:
 YY_RULE_SETUP
-#line 153 "latlex.l"
+#line 152 "latlex.l"
 YY_FATAL_ERROR( "flex scanner jammed" );
 	YY_BREAK
 #line 1336 "latlex.c"
@@ -2495,6 +2495,6 @@ void yyfree (void * ptr , yyscan_t yyscanner)
 
 #define YYTABLES_NAME "yytables"
 
-#line 153 "latlex.l"
+#line 152 "latlex.l"
 
 

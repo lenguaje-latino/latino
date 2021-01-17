@@ -124,14 +124,22 @@ static void latSO_dormir(lat_mv *mv) {
 static void latSO_pipe(lat_mv *mv) {
     lat_objeto *cmd = latC_desapilar(mv);
     FILE *fp = latC_popen(mv, latC_checar_cadena(mv, cmd), "r");
+    if (fp == NULL) {
+        latC_error(mv, "Error! No se encontro el archivo");
+    }
+#ifndef _WIN32
     char *p = malloc(MAX_BUFFERSIZE);
     fread(p, sizeof(char), MAX_BUFFERSIZE, fp);
+#else
+
+#endif
     int rlen = strlen(p);
     p[rlen - 1] = '\0'; // elimina el ultimo '\n'
     lat_objeto *tmp = latC_crear_cadena(mv, p);
     latC_apilar(mv, tmp);
     latC_pclose(mv, fp);
     latM_liberar(mv, p);
+    fflush(fp);
 }
 
 static void latSO_fecha(lat_mv *mv) {
