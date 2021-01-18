@@ -652,19 +652,19 @@ static const yytype_int8 yytranslate[] =
   /* YYRLINE[YYN] -- Source line where rule number YYN was defined.  */
 static const yytype_int16 yyrline[] =
 {
-       0,   150,   150,   151,   155,   156,   157,   158,   162,   166,
-     173,   177,   181,   185,   189,   196,   200,   207,   208,   209,
-     210,   214,   215,   216,   220,   224,   228,   232,   236,   240,
-     241,   242,   243,   244,   245,   246,   247,   248,   249,   250,
-     251,   252,   253,   254,   255,   256,   257,   258,   259,   263,
-     266,   270,   275,   280,   284,   285,   286,   287,   288,   289,
-     290,   291,   295,   296,   300,   301,   302,   306,   307,   311,
-     314,   320,   321,   323,   325,   327,   329,   331,   333,   334,
-     338,   341,   344,   350,   357,   358,   364,   371,   373,   375,
-     377,   384,   385,   389,   392,   395,   401,   403,   405,   408,
-     417,   418,   422,   428,   434,   438,   439,   440,   450,   451,
-     452,   453,   459,   463,   467,   468,   469,   479,   483,   484,
-     485,   489,   490
+       0,   149,   149,   150,   154,   155,   156,   157,   161,   165,
+     172,   176,   180,   184,   188,   195,   199,   206,   207,   208,
+     209,   213,   214,   215,   219,   223,   227,   231,   235,   239,
+     240,   241,   242,   243,   244,   245,   246,   247,   248,   249,
+     250,   251,   252,   253,   254,   255,   256,   257,   258,   262,
+     265,   269,   274,   279,   283,   284,   285,   286,   287,   288,
+     289,   290,   294,   295,   299,   300,   301,   305,   306,   310,
+     313,   319,   320,   322,   324,   326,   328,   330,   332,   333,
+     337,   340,   343,   349,   356,   357,   363,   369,   371,   373,
+     375,   381,   382,   386,   389,   392,   398,   400,   402,   405,
+     414,   415,   419,   425,   431,   435,   436,   437,   447,   448,
+     449,   450,   456,   460,   464,   465,   466,   476,   480,   481,
+     482,   486,   487
 };
 #endif
 
@@ -1840,25 +1840,25 @@ yyreduce:
   switch (yyn)
     {
   case 5:
-#line 156 "latparse.y"
+#line 155 "latparse.y"
                 { (yyval.node) = latA_logico(1, (yylsp[0]).first_line, (yylsp[0]).first_column);}
 #line 1846 "latparse.c"
     break;
 
   case 6:
-#line 157 "latparse.y"
+#line 156 "latparse.y"
             { (yyval.node) = latA_logico(0, (yylsp[0]).first_line, (yylsp[0]).first_column);}
 #line 1852 "latparse.c"
     break;
 
   case 7:
-#line 158 "latparse.y"
+#line 157 "latparse.y"
            { (yyval.node) = latA_nulo(NULL, (yylsp[0]).first_line, (yylsp[0]).first_column);}
 #line 1858 "latparse.c"
     break;
 
   case 8:
-#line 162 "latparse.y"
+#line 161 "latparse.y"
                                {
         (yyval.node) = latA_nodo(NODO_MENOS_UNARIO, (yyvsp[0].node), NULL, (yylsp[-1]).first_line, (yylsp[-1]).first_column);
         if((yyval.node) == NULL) YYABORT;
@@ -1867,7 +1867,7 @@ yyreduce:
     break;
 
   case 9:
-#line 166 "latparse.y"
+#line 165 "latparse.y"
                                {
         (yyval.node) = latA_nodo(NODO_MAS_UNARIO, (yyvsp[0].node), NULL, (yylsp[-1]).first_line, (yylsp[-1]).first_column);
         if((yyval.node) == NULL) YYABORT;
@@ -1876,7 +1876,7 @@ yyreduce:
     break;
 
   case 10:
-#line 173 "latparse.y"
+#line 172 "latparse.y"
                                 {
         (yyval.node) = latA_nodo(NODO_POTENCIA, (yyvsp[-2].node), (yyvsp[0].node), (yylsp[-1]).first_line, (yylsp[-1]).first_column);
         if((yyval.node) == NULL) YYABORT;
@@ -1885,7 +1885,7 @@ yyreduce:
     break;
 
   case 11:
-#line 177 "latparse.y"
+#line 176 "latparse.y"
                                       {
         (yyval.node) = latA_nodo(NODO_POTENCIA, (yyvsp[-2].node), (yyvsp[0].node), (yylsp[-1]).first_line, (yylsp[-1]).first_column);
         if((yyval.node) == NULL) YYABORT;
@@ -1894,7 +1894,7 @@ yyreduce:
     break;
 
   case 12:
-#line 181 "latparse.y"
+#line 180 "latparse.y"
                                 {
         (yyval.node) = latA_nodo(NODO_MULTIPLICACION, (yyvsp[-2].node), (yyvsp[0].node), (yylsp[-1]).first_line, (yylsp[-1]).first_column);
         if((yyval.node) == NULL) YYABORT;
@@ -1903,7 +1903,7 @@ yyreduce:
     break;
 
   case 13:
-#line 185 "latparse.y"
+#line 184 "latparse.y"
                                 {
         (yyval.node) = latA_nodo(NODO_DIVISION, (yyvsp[-2].node), (yyvsp[0].node), (yylsp[-1]).first_line, (yylsp[-1]).first_column);
         if((yyval.node) == NULL) YYABORT;
@@ -1912,7 +1912,7 @@ yyreduce:
     break;
 
   case 14:
-#line 189 "latparse.y"
+#line 188 "latparse.y"
                                           {
         (yyval.node) = latA_nodo(NODO_MODULO, (yyvsp[-2].node), (yyvsp[0].node), (yylsp[-1]).first_line, (yylsp[-1]).first_column);
         if((yyval.node) == NULL) YYABORT;
@@ -1921,7 +1921,7 @@ yyreduce:
     break;
 
   case 15:
-#line 196 "latparse.y"
+#line 195 "latparse.y"
                                 {
         (yyval.node) = latA_nodo(NODO_RESTA, (yyvsp[-2].node), (yyvsp[0].node), (yylsp[-1]).first_line, (yylsp[-1]).first_column);
         if((yyval.node) == NULL) YYABORT;
@@ -1930,7 +1930,7 @@ yyreduce:
     break;
 
   case 16:
-#line 200 "latparse.y"
+#line 199 "latparse.y"
                                 {
         (yyval.node) = latA_nodo(NODO_SUMA, (yyvsp[-2].node), (yyvsp[0].node), (yylsp[-1]).first_line, (yylsp[-1]).first_column);
         if((yyval.node) == NULL) YYABORT;
@@ -1939,91 +1939,91 @@ yyreduce:
     break;
 
   case 17:
-#line 207 "latparse.y"
+#line 206 "latparse.y"
                                       { (yyval.node) = latA_nodo(NODO_MAYOR_QUE, (yyvsp[-2].node), (yyvsp[0].node), (yylsp[-1]).first_line, (yylsp[-1]).first_column); }
 #line 1945 "latparse.c"
     break;
 
   case 18:
-#line 208 "latparse.y"
+#line 207 "latparse.y"
                                       { (yyval.node) = latA_nodo(NODO_MENOR_QUE, (yyvsp[-2].node), (yyvsp[0].node), (yylsp[-1]).first_line, (yylsp[-1]).first_column); }
 #line 1951 "latparse.c"
     break;
 
   case 19:
-#line 209 "latparse.y"
+#line 208 "latparse.y"
                                         { (yyval.node) = latA_nodo(NODO_MAYOR_IGUAL, (yyvsp[-2].node), (yyvsp[0].node), (yylsp[-1]).first_line, (yylsp[-1]).first_column); }
 #line 1957 "latparse.c"
     break;
 
   case 20:
-#line 210 "latparse.y"
+#line 209 "latparse.y"
                                         { (yyval.node) = latA_nodo(NODO_MENOR_IGUAL, (yyvsp[-2].node), (yyvsp[0].node), (yylsp[-1]).first_line, (yylsp[-1]).first_column); }
 #line 1963 "latparse.c"
     break;
 
   case 21:
-#line 214 "latparse.y"
+#line 213 "latparse.y"
                                       { (yyval.node) = latA_nodo(NODO_DESIGUALDAD, (yyvsp[-2].node), (yyvsp[0].node), (yylsp[-1]).first_line, (yylsp[-1]).first_column); }
 #line 1969 "latparse.c"
     break;
 
   case 22:
-#line 215 "latparse.y"
+#line 214 "latparse.y"
                                          { (yyval.node) = latA_nodo(NODO_IGUALDAD, (yyvsp[-2].node), (yyvsp[0].node), (yylsp[-1]).first_line, (yylsp[-1]).first_column); }
 #line 1975 "latparse.c"
     break;
 
   case 23:
-#line 216 "latparse.y"
+#line 215 "latparse.y"
                                   { (yyval.node) = latA_nodo(NODO_REGEX, (yyvsp[-2].node), (yyvsp[0].node), (yylsp[-1]).first_line, (yylsp[-1]).first_column); }
 #line 1981 "latparse.c"
     break;
 
   case 24:
-#line 220 "latparse.y"
+#line 219 "latparse.y"
                                { (yyval.node) = latA_nodo(NODO_NO, (yyvsp[0].node), NULL, (yylsp[0]).first_line, (yylsp[0]).first_column); }
 #line 1987 "latparse.c"
     break;
 
   case 25:
-#line 224 "latparse.y"
+#line 223 "latparse.y"
                                      { (yyval.node) = latA_nodo(NODO_Y, (yyvsp[-2].node), (yyvsp[0].node), (yylsp[-1]).first_line, (yylsp[-1]).first_column); }
 #line 1993 "latparse.c"
     break;
 
   case 26:
-#line 228 "latparse.y"
+#line 227 "latparse.y"
                                            { (yyval.node) = latA_nodo(NODO_O, (yyvsp[-2].node), (yyvsp[0].node), (yylsp[-1]).first_line, (yylsp[-1]).first_column); }
 #line 1999 "latparse.c"
     break;
 
   case 27:
-#line 232 "latparse.y"
+#line 231 "latparse.y"
                                                  { (yyval.node) = latA_si((yyvsp[-4].node), (yyvsp[-2].node), (yyvsp[0].node)); }
 #line 2005 "latparse.c"
     break;
 
   case 28:
-#line 236 "latparse.y"
+#line 235 "latparse.y"
                                        { (yyval.node) = latA_nodo(NODO_CONCATENAR, (yyvsp[-2].node), (yyvsp[0].node), (yylsp[-1]).first_line, (yylsp[-1]).first_column); }
 #line 2011 "latparse.c"
     break;
 
   case 29:
-#line 240 "latparse.y"
+#line 239 "latparse.y"
                              { (yyval.node) = (yyvsp[-1].node); }
 #line 2017 "latparse.c"
     break;
 
   case 48:
-#line 259 "latparse.y"
+#line 258 "latparse.y"
                    { (yyval.node) = latA_nodo(NODO_LOAD_VAR_ARGS , NULL, NULL, 0, 0); }
 #line 2023 "latparse.c"
     break;
 
   case 49:
-#line 263 "latparse.y"
+#line 262 "latparse.y"
       { /* empty */
         *root = NULL;
     }
@@ -2031,13 +2031,13 @@ yyreduce:
     break;
 
   case 50:
-#line 266 "latparse.y"
+#line 265 "latparse.y"
                      { *root = (yyvsp[0].node); }
 #line 2037 "latparse.c"
     break;
 
   case 51:
-#line 270 "latparse.y"
+#line 269 "latparse.y"
                                {
         if((yyvsp[0].node)){
             (yyval.node) = latA_nodo(NODO_BLOQUE, (yyvsp[-1].node), (yyvsp[0].node), (yylsp[-1]).first_line, (yylsp[-1]).first_column);
@@ -2047,7 +2047,7 @@ yyreduce:
     break;
 
   case 52:
-#line 275 "latparse.y"
+#line 274 "latparse.y"
                 {
         if((yyvsp[0].node)){
           (yyval.node) = latA_nodo(NODO_BLOQUE, (yyvsp[0].node), NULL, (yylsp[0]).first_line, (yylsp[0]).first_column);
@@ -2057,37 +2057,37 @@ yyreduce:
     break;
 
   case 53:
-#line 280 "latparse.y"
+#line 279 "latparse.y"
                            { yyerrok; yyclearin;}
 #line 2063 "latparse.c"
     break;
 
   case 62:
-#line 295 "latparse.y"
+#line 294 "latparse.y"
                                  { (yyval.node) = latA_nodo(NODO_INC, (yyvsp[-1].node), NULL, (yylsp[0]).first_line, (yylsp[0]).first_column); }
 #line 2069 "latparse.c"
     break;
 
   case 63:
-#line 296 "latparse.y"
+#line 295 "latparse.y"
                                  { (yyval.node) = latA_nodo(NODO_DEC, (yyvsp[-1].node), NULL, (yylsp[0]).first_line, (yylsp[0]).first_column); }
 #line 2075 "latparse.c"
     break;
 
   case 67:
-#line 306 "latparse.y"
+#line 305 "latparse.y"
                                              { (yyval.node) = latA_nodo(NODO_ATRIBUTO, (yyvsp[-2].node), (yyvsp[0].node), (yylsp[0]).first_line, (yylsp[0]).first_column); }
 #line 2081 "latparse.c"
     break;
 
   case 68:
-#line 307 "latparse.y"
+#line 306 "latparse.y"
                                          { (yyval.node) = latA_nodo(NODO_LISTA_OBTENER_ELEMENTO, (yyvsp[-1].node), (yyvsp[-3].node), (yylsp[-1]).first_line, (yylsp[-1]).first_column); }
 #line 2087 "latparse.c"
     break;
 
   case 69:
-#line 311 "latparse.y"
+#line 310 "latparse.y"
                          {
         (yyval.node) = latA_nodo(NODO_GLOBAL, (yyvsp[0].node), NULL, (yylsp[-1]).first_line, (yylsp[-1]).first_column);
     }
@@ -2095,7 +2095,7 @@ yyreduce:
     break;
 
   case 70:
-#line 314 "latparse.y"
+#line 313 "latparse.y"
                                  {
         (yyval.node) = latA_nodo(NODO_GLOBAL, (yyvsp[0].node), NULL, (yylsp[-1]).first_line, (yylsp[-1]).first_column);
     }
@@ -2103,67 +2103,67 @@ yyreduce:
     break;
 
   case 71:
-#line 320 "latparse.y"
+#line 319 "latparse.y"
                                      { (yyval.node) = latA_asign((yyvsp[0].node), (yyvsp[-2].node)); }
 #line 2109 "latparse.c"
     break;
 
   case 72:
-#line 321 "latparse.y"
+#line 320 "latparse.y"
                                                   { (yyval.node) = latA_asign(
         (latA_nodo(NODO_CONCATENAR, (yyvsp[-2].node), (yyvsp[0].node), (yylsp[-1]).first_line, (yylsp[-1]).first_column)), (yyvsp[-2].node)); }
 #line 2116 "latparse.c"
     break;
 
   case 73:
-#line 323 "latparse.y"
+#line 322 "latparse.y"
                                            { (yyval.node) = latA_asign(
         (latA_nodo(NODO_SUMA, (yyvsp[-2].node), (yyvsp[0].node), (yylsp[-1]).first_line, (yylsp[-1]).first_column)), (yyvsp[-2].node)); }
 #line 2123 "latparse.c"
     break;
 
   case 74:
-#line 325 "latparse.y"
+#line 324 "latparse.y"
                                              { (yyval.node) = latA_asign(
         (latA_nodo(NODO_RESTA, (yyvsp[-2].node), (yyvsp[0].node), (yylsp[-1]).first_line, (yylsp[-1]).first_column)), (yyvsp[-2].node)); }
 #line 2130 "latparse.c"
     break;
 
   case 75:
-#line 327 "latparse.y"
+#line 326 "latparse.y"
                                            { (yyval.node) = latA_asign(
         (latA_nodo(NODO_MULTIPLICACION, (yyvsp[-2].node), (yyvsp[0].node), (yylsp[-1]).first_line, (yylsp[-1]).first_column)), (yyvsp[-2].node)); }
 #line 2137 "latparse.c"
     break;
 
   case 76:
-#line 329 "latparse.y"
+#line 328 "latparse.y"
                                              { (yyval.node) = latA_asign(
         (latA_nodo(NODO_DIVISION, (yyvsp[-2].node), (yyvsp[0].node), (yylsp[-1]).first_line, (yylsp[-1]).first_column)), (yyvsp[-2].node)); }
 #line 2144 "latparse.c"
     break;
 
   case 77:
-#line 331 "latparse.y"
+#line 330 "latparse.y"
                                               { (yyval.node) = latA_asign(
         (latA_nodo(NODO_MODULO, (yyvsp[-2].node), (yyvsp[0].node), (yylsp[-1]).first_line, (yylsp[-1]).first_column)), (yyvsp[-2].node)); }
 #line 2151 "latparse.c"
     break;
 
   case 78:
-#line 333 "latparse.y"
+#line 332 "latparse.y"
                                                   { (yyval.node) = latA_asign((yyvsp[0].node), (yyvsp[-2].node)); }
 #line 2157 "latparse.c"
     break;
 
   case 79:
-#line 334 "latparse.y"
+#line 333 "latparse.y"
                                                         { (yyval.node) = latA_asign_le((yyvsp[0].node), (yyvsp[-5].node), (yyvsp[-3].node)); }
 #line 2163 "latparse.c"
     break;
 
   case 80:
-#line 338 "latparse.y"
+#line 337 "latparse.y"
                                                 {
         (yyval.node) = latA_nodo(NODO_CASOS, (yyvsp[-1].node), (yyvsp[0].node), (yylsp[-1]).first_line, (yylsp[-1]).first_column);
     }
@@ -2171,7 +2171,7 @@ yyreduce:
     break;
 
   case 81:
-#line 341 "latparse.y"
+#line 340 "latparse.y"
                              {
         (yyval.node) = latA_nodo(NODO_CASOS, (yyvsp[0].node), NULL, (yylsp[0]).first_line, (yylsp[0]).first_column);
     }
@@ -2179,7 +2179,7 @@ yyreduce:
     break;
 
   case 82:
-#line 344 "latparse.y"
+#line 343 "latparse.y"
                                 {
         (yyval.node) = latA_nodo(NODO_CASOS, (yyvsp[0].node), NULL, (yylsp[0]).first_line, (yylsp[0]).first_column);
     }
@@ -2187,7 +2187,7 @@ yyreduce:
     break;
 
   case 83:
-#line 350 "latparse.y"
+#line 349 "latparse.y"
                                                       {
         (yyval.node) = latA_nodo(NODO_CASO, (yyvsp[-1].node), (yyvsp[0].node), (yylsp[-2]).first_line, (yylsp[-2]).first_column);
     }
@@ -2195,7 +2195,7 @@ yyreduce:
     break;
 
   case 85:
-#line 358 "latparse.y"
+#line 357 "latparse.y"
                                                                {
         (yyval.node) = latA_nodo(NODO_CASOS, (yyvsp[-3].node), (yyvsp[0].node), (yylsp[-3]).first_line, (yylsp[-3]).first_column);
     }
@@ -2203,147 +2203,145 @@ yyreduce:
     break;
 
   case 86:
-#line 364 "latparse.y"
+#line 363 "latparse.y"
                                  {
-        printf("se encontro la palabra defecto\n");
         (yyval.node) = latA_nodo(NODO_DEFECTO, NULL, (yyvsp[0].node), (yylsp[-2]).first_line, (yylsp[-2]).first_column);
     }
-#line 2212 "latparse.c"
+#line 2211 "latparse.c"
     break;
 
   case 87:
-#line 371 "latparse.y"
+#line 369 "latparse.y"
                                      {
         (yyval.node) = latA_si((yyvsp[-2].node), (yyvsp[-1].node), NULL); }
-#line 2219 "latparse.c"
+#line 2218 "latparse.c"
     break;
 
   case 88:
-#line 373 "latparse.y"
+#line 371 "latparse.y"
                                                            {
         (yyval.node) = latA_si((yyvsp[-4].node), (yyvsp[-3].node), (yyvsp[-1].node)); }
-#line 2226 "latparse.c"
+#line 2225 "latparse.c"
     break;
 
   case 89:
-#line 375 "latparse.y"
+#line 373 "latparse.y"
                                                       {
         (yyval.node) = latA_si((yyvsp[-3].node), (yyvsp[-2].node), (yyvsp[-1].node)); }
-#line 2233 "latparse.c"
+#line 2232 "latparse.c"
     break;
 
   case 90:
-#line 377 "latparse.y"
+#line 375 "latparse.y"
                                                {
-        printf("se encontro el nodo elegir\n");
         (yyval.node) = latA_nodo(NODO_ELEGIR, (yyvsp[-2].node), (yyvsp[-1].node), (yylsp[-3]).first_line, (yylsp[-3]).first_column);
     }
-#line 2242 "latparse.c"
+#line 2240 "latparse.c"
     break;
 
   case 93:
-#line 389 "latparse.y"
+#line 386 "latparse.y"
                                    {
           (yyval.node) = latA_si((yyvsp[-1].node), (yyvsp[0].node), NULL);
     }
-#line 2250 "latparse.c"
+#line 2248 "latparse.c"
     break;
 
   case 94:
-#line 392 "latparse.y"
+#line 389 "latparse.y"
                                                          {
           (yyval.node) = latA_si((yyvsp[-3].node), (yyvsp[-2].node), (yyvsp[0].node));
     }
-#line 2258 "latparse.c"
+#line 2256 "latparse.c"
     break;
 
   case 95:
-#line 395 "latparse.y"
+#line 392 "latparse.y"
                                                     {
           (yyval.node) = latA_si((yyvsp[-2].node), (yyvsp[-1].node), (yyvsp[0].node));
     }
-#line 2266 "latparse.c"
+#line 2264 "latparse.c"
     break;
 
   case 96:
-#line 401 "latparse.y"
+#line 398 "latparse.y"
                                              {
         (yyval.node) = latA_mientras((yyvsp[-2].node), (yyvsp[-1].node)); }
-#line 2273 "latparse.c"
+#line 2271 "latparse.c"
     break;
 
   case 97:
-#line 403 "latparse.y"
+#line 400 "latparse.y"
                                               {
         (yyval.node) = latA_hacer((yyvsp[0].node), (yyvsp[-2].node)); }
-#line 2280 "latparse.c"
+#line 2278 "latparse.c"
     break;
 
   case 98:
-#line 406 "latparse.y"
+#line 403 "latparse.y"
                             {
         (yyval.node) = latA_desde((yyvsp[-7].node), (yyvsp[-5].node), (yyvsp[-3].node), (yyvsp[-1].node)); }
-#line 2287 "latparse.c"
+#line 2285 "latparse.c"
     break;
 
   case 99:
-#line 409 "latparse.y"
+#line 406 "latparse.y"
                            {
         printf(LAT_ERROR_FMT, filename, (yylsp[-11]).first_line, (yylsp[-11]).first_column, "entre al para_loop de bison");
         (yyval.node) = latA_para((yyvsp[-11].node), (yyvsp[-7].node), (yyvsp[-5].node), (yyvsp[-3].node), (yyvsp[-1].node));
         printf(LAT_ERROR_FMT, filename, (yylsp[-11]).first_line, (yylsp[-11]).first_column, "sali del para_loop de bison");
         }
-#line 2297 "latparse.c"
+#line 2295 "latparse.c"
     break;
 
   case 100:
-#line 417 "latparse.y"
+#line 414 "latparse.y"
                          { (yyval.node) = latA_nodo(NODO_RETORNO, (yyvsp[0].node), NULL, (yylsp[-1]).first_line, (yylsp[-1]).first_column); }
-#line 2303 "latparse.c"
+#line 2301 "latparse.c"
     break;
 
   case 101:
-#line 418 "latparse.y"
+#line 415 "latparse.y"
                                        { (yyval.node) = latA_nodo(NODO_RETORNO, (yyvsp[0].node), NULL, (yylsp[-1]).first_line, (yylsp[-1]).first_column); }
-#line 2309 "latparse.c"
+#line 2307 "latparse.c"
     break;
 
   case 102:
-#line 422 "latparse.y"
+#line 419 "latparse.y"
                                                                       {
         (yyval.node) = latA_funcion((yyvsp[-5].node), (yyvsp[-3].node), (yyvsp[-1].node), (yylsp[-5]).first_line, (yylsp[-5]).first_column);
     }
-#line 2317 "latparse.c"
+#line 2315 "latparse.c"
     break;
 
   case 103:
-#line 428 "latparse.y"
+#line 425 "latparse.y"
                                                         {
         (yyval.node) = latA_funcion(latA_var("anonima", (yylsp[-5]).first_line, (yylsp[-5]).first_column, false), (yyvsp[-3].node), (yyvsp[-1].node), (yylsp[-5]).first_line, (yylsp[-5]).first_column);
     }
-#line 2325 "latparse.c"
+#line 2323 "latparse.c"
     break;
 
   case 104:
-#line 434 "latparse.y"
+#line 431 "latparse.y"
                                                        { (yyval.node) = latA_nodo(NODO_FUNCION_LLAMADA, (yyvsp[-3].node), (yyvsp[-1].node), (yylsp[-3]).first_line, (yylsp[-3]).first_column); }
-#line 2331 "latparse.c"
+#line 2329 "latparse.c"
     break;
 
   case 105:
-#line 438 "latparse.y"
+#line 435 "latparse.y"
                   { (yyval.node) = NULL; }
-#line 2337 "latparse.c"
+#line 2335 "latparse.c"
     break;
 
   case 106:
-#line 439 "latparse.y"
+#line 436 "latparse.y"
                  { (yyval.node) = latA_nodo(NODO_FUNCION_ARGUMENTOS, (yyvsp[0].node), NULL, (yylsp[0]).first_line, (yylsp[0]).first_column); }
-#line 2343 "latparse.c"
+#line 2341 "latparse.c"
     break;
 
   case 107:
-#line 440 "latparse.y"
+#line 437 "latparse.y"
                                               {
         if((yyvsp[-2].node)->tipo == NODO_VAR_ARGS){
             printf(LAT_ERROR_FMT, filename, (yylsp[-2]).first_line, (yylsp[-2]).first_column, "Parametro VAR_ARGS (...) debe de ser el ultimo parametro");
@@ -2351,64 +2349,64 @@ yyreduce:
         }
         (yyval.node) = latA_nodo(NODO_FUNCION_ARGUMENTOS, (yyvsp[-2].node), (yyvsp[0].node), (yylsp[-2]).first_line, (yylsp[-2]).first_column);
     }
-#line 2355 "latparse.c"
+#line 2353 "latparse.c"
     break;
 
   case 108:
-#line 450 "latparse.y"
+#line 447 "latparse.y"
                   { (yyval.node) = NULL; }
-#line 2361 "latparse.c"
+#line 2359 "latparse.c"
     break;
 
   case 109:
-#line 451 "latparse.y"
+#line 448 "latparse.y"
                     { (yyval.node) = latA_nodo(NODO_FUNCION_PARAMETROS, (yyvsp[0].node), NULL, (yylsp[0]).first_line, (yylsp[0]).first_column); }
-#line 2367 "latparse.c"
+#line 2365 "latparse.c"
     break;
 
   case 110:
-#line 452 "latparse.y"
+#line 449 "latparse.y"
                { (yyval.node) = latA_nodo(NODO_FUNCION_PARAMETROS, (yyvsp[0].node), NULL, 0, 0); }
-#line 2373 "latparse.c"
+#line 2371 "latparse.c"
     break;
 
   case 111:
-#line 453 "latparse.y"
+#line 450 "latparse.y"
                                        {
         if((yyvsp[-2].node)->izq->tipo == NODO_VAR_ARGS){
             printf(LAT_ERROR_FMT, (yylsp[0]).file_name, (yylsp[0]).first_line, (yylsp[0]).first_column, "Parametro VAR_ARGS (...) debe de ser el ultimo parametro");
             YYABORT;
         }
         (yyval.node) = latA_nodo(NODO_FUNCION_PARAMETROS, (yyvsp[0].node), (yyvsp[-2].node), (yylsp[0]).first_line, (yylsp[0]).first_column); }
-#line 2384 "latparse.c"
+#line 2382 "latparse.c"
     break;
 
   case 112:
-#line 459 "latparse.y"
+#line 456 "latparse.y"
                                   { (yyval.node) = latA_nodo(NODO_FUNCION_PARAMETROS, (yyvsp[0].node), (yyvsp[-2].node), 0, 0); }
-#line 2390 "latparse.c"
+#line 2388 "latparse.c"
     break;
 
   case 113:
-#line 463 "latparse.y"
+#line 460 "latparse.y"
                          { (yyval.node) = latA_nodo(NODO_LISTA, (yyvsp[-1].node), NULL, (yylsp[-2]).first_line, (yylsp[-2]).first_column); }
-#line 2396 "latparse.c"
+#line 2394 "latparse.c"
     break;
 
   case 114:
-#line 467 "latparse.y"
+#line 464 "latparse.y"
                   { (yyval.node) = NULL; }
-#line 2402 "latparse.c"
+#line 2400 "latparse.c"
     break;
 
   case 115:
-#line 468 "latparse.y"
+#line 465 "latparse.y"
                  { (yyval.node) = latA_nodo(NODO_LISTA_AGREGAR_ELEMENTO, (yyvsp[0].node), NULL, (yylsp[0]).first_line, (yylsp[0]).first_column); }
-#line 2408 "latparse.c"
+#line 2406 "latparse.c"
     break;
 
   case 116:
-#line 469 "latparse.y"
+#line 466 "latparse.y"
                                 {
         if((yyvsp[-2].node)->tipo == NODO_LOAD_VAR_ARGS){
             printf(LAT_ERROR_FMT, filename, (yylsp[-2]).first_line, (yylsp[-2]).first_column, "Parametro VAR_ARGS (...) debe de ser el ultimo parametro");
@@ -2416,47 +2414,47 @@ yyreduce:
         }
         (yyval.node) = latA_nodo(NODO_LISTA_AGREGAR_ELEMENTO, (yyvsp[-2].node), (yyvsp[0].node), (yylsp[0]).first_line, (yylsp[0]).first_column);
     }
-#line 2420 "latparse.c"
+#line 2418 "latparse.c"
     break;
 
   case 117:
-#line 479 "latparse.y"
+#line 476 "latparse.y"
                          { (yyval.node) = latA_nodo(NODO_DICCIONARIO, (yyvsp[-1].node), NULL, (yylsp[-1]).first_line, (yylsp[-1]).first_column); }
-#line 2426 "latparse.c"
+#line 2424 "latparse.c"
     break;
 
   case 118:
-#line 483 "latparse.y"
+#line 480 "latparse.y"
                   { (yyval.node) = NULL; }
-#line 2432 "latparse.c"
+#line 2430 "latparse.c"
     break;
 
   case 119:
-#line 484 "latparse.y"
+#line 481 "latparse.y"
                 { (yyval.node) = latA_nodo(NODO_DICC_AGREGAR_ELEMENTO, (yyvsp[0].node), NULL, (yylsp[0]).first_line, (yylsp[0]).first_column); }
-#line 2438 "latparse.c"
+#line 2436 "latparse.c"
     break;
 
   case 120:
-#line 485 "latparse.y"
+#line 482 "latparse.y"
                                { (yyval.node) = latA_nodo(NODO_DICC_AGREGAR_ELEMENTO, (yyvsp[0].node), (yyvsp[-2].node), (yylsp[0]).first_line, (yylsp[0]).first_column); }
-#line 2444 "latparse.c"
+#line 2442 "latparse.c"
     break;
 
   case 121:
-#line 489 "latparse.y"
+#line 486 "latparse.y"
       { /* empty */ (yyval.node) = NULL; }
-#line 2450 "latparse.c"
+#line 2448 "latparse.c"
     break;
 
   case 122:
-#line 490 "latparse.y"
+#line 487 "latparse.y"
                                 { (yyval.node) = latA_nodo(NODO_DICC_ELEMENTO, (yyvsp[-2].node), (yyvsp[0].node), (yylsp[-2]).first_line, (yylsp[-2]).first_column); }
-#line 2456 "latparse.c"
+#line 2454 "latparse.c"
     break;
 
 
-#line 2460 "latparse.c"
+#line 2458 "latparse.c"
 
       default: break;
     }
@@ -2694,7 +2692,7 @@ yyreturn:
 #endif
   return yyresult;
 }
-#line 493 "latparse.y"
+#line 490 "latparse.y"
 
 
 //se define para analisis sintactico (bison)

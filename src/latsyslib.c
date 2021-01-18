@@ -127,12 +127,8 @@ static void latSO_pipe(lat_mv *mv) {
     if (fp == NULL) {
         latC_error(mv, "Error! No se encontro el archivo");
     }
-#ifndef _WIN32
     char *p = malloc(MAX_BUFFERSIZE);
     fread(p, sizeof(char), MAX_BUFFERSIZE, fp);
-#else
-
-#endif
     int rlen = strlen(p);
     p[rlen - 1] = '\0'; // elimina el ultimo '\n'
     lat_objeto *tmp = latC_crear_cadena(mv, p);

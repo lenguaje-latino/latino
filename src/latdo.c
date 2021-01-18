@@ -47,141 +47,59 @@ struct lat_longjmp {
 // void str_formato(lat_mv *mv);
 void str_concatenar(lat_mv *mv);
 
+static ast *transformar_caso_casos(ast *cond_izq, ast *izq) {
+    if (izq->tipo == NODO_VALOR) {
+        ast *igualdad_izq = latA_nodo(NODO_IGUALDAD, cond_izq, izq, cond_izq->nlin, cond_izq->ncol);
+        return igualdad_izq;
+    }
+    if (izq->der->tipo == NODO_VALOR) {
+        // esto detiene la recursividad
+        ast *igualdad_izq = latA_nodo(NODO_IGUALDAD, cond_izq, izq->izq, cond_izq->nlin, cond_izq->ncol);
+        ast *igualdad_der = latA_nodo(NODO_IGUALDAD, cond_izq, izq->der, cond_izq->nlin, cond_izq->ncol);
+        return  latA_nodo(NODO_O, igualdad_izq, igualdad_der, cond_izq->nlin, cond_izq->ncol);
+    }
+    if (izq->tipo == NODO_CASOS) {
+        // recursion
+        // izq->der->tipo == NODO_CASOS
+        ast *primera_igualdad = latA_nodo(NODO_IGUALDAD, cond_izq, izq->izq, cond_izq->nlin, cond_izq->ncol);
+        ast *cond = latA_nodo(NODO_O, primera_igualdad, transformar_caso_casos(cond_izq, izq->der), cond_izq->nlin, cond_izq->ncol);
+        return cond;
+    }
+}
+
 static ast *transformar_casos(ast *casos, ast *cond_izq) {
-    /*
-        casos
-            izq -> caso
-                izq -> casos
-                    izq -> valor (10)
-                    der -> valor (1)
-                der -> Bloque // imprimir
-            der -> casos
-                izq -> caso
-                    izq -> valor (2)
-                    der -> bloque
-
-    x = 1
-    elegir(x) caso 10: caso 1:  poner(verdadero) caso 2: poner(falso) fin
-
-    */
-
-       /*
-        casos
-            izq -> caso
-                izq -> casos <- current
-                    izq -> valor (1)
-                    der -> casos
-                        izq -> valor (10)
-                        der -> valor (5)
-                der -> Bloque // imprimir
-            der -> casos
-                izq -> caso
-                    izq -> valor (2)
-                    der -> bloque
-
-    x = 1
-    elegir(x) caso 1: caso 10: caso 5:  poner(verdadero) caso 2: poner(falso) defecto: poner(">> == Defecto") fin
-
-    */
-    printf("inicia transformar_casos\n");
     if (casos == NULL) {
-        printf("ya no hay casos\n");
         return NULL;
     }
-    ast *caso_izq = casos->izq;
-    ast *caso_der = casos->der;
+    ast *caso_izq = casos->izq;     // caso
+    ast *caso_der = casos->der;     // casos
     ast *cond = NULL;
-    if (caso_der && caso_der->tipo == NODO_CASOS) {
-        /*
-        for (ast* current = caso_der; current->der->tipo == NODO_CASOS; current = current->der) {
-            ast *igualdad_der = latA_nodo(NODO_IGUALDAD, cond_izq, caso_izq->izq->izq, cond_izq->nlin, cond_izq->ncol);
-            ast *igualdad_izq = latA_nodo(NODO_IGUALDAD, cond_izq, caso_izq->izq->der, cond_izq->nlin, cond_izq->ncol);
-            cond = latA_nodo(NODO_O, igualdad_der, igualdad_izq, cond_izq->nlin, cond_izq->ncol);
-        }
-        ast *nSi = latA_si(cond, caso_izq->der, ((ast *)transformar_casos(caso_der, cond_izq)));
-        return nSi;
-        */
-        // para dos casos
-        if (caso_der->izq && caso_der->izq->tipo == NODO_CASO) {
-            ast *igualdad_der = latA_nodo(NODO_IGUALDAD, cond_izq, caso_izq->izq->izq, cond_izq->nlin, cond_izq->ncol);
-            ast *igualdad_izq = latA_nodo(NODO_IGUALDAD, cond_izq, caso_izq->izq->der, cond_izq->nlin, cond_izq->ncol);
-            cond = latA_nodo(NODO_O, igualdad_der, igualdad_izq, cond_izq->nlin, cond_izq->ncol);
-            ast *nSi = latA_si(cond, caso_izq->der, ((ast *)transformar_casos(caso_der, cond_izq)));
+
+    if (caso_izq->tipo == NODO_CASO) {
+        if (caso_izq->izq->tipo == NODO_CASOS) {
+            // evalua multicasos
+            ast *tmp = caso_izq->izq;
+            ast *cond = NULL;
+            ast *primera_igualdad = latA_nodo(NODO_IGUALDAD, cond_izq, caso_izq->izq->izq, cond_izq->nlin, cond_izq->ncol);
+            cond = latA_nodo(NODO_O, primera_igualdad, transformar_caso_casos(cond_izq, caso_izq->izq->der), cond_izq->nlin, cond_izq->ncol);
+            ast *nSi = latA_si(cond, caso_izq->der, ((ast *)transformar_casos(casos->der, cond_izq)));
             return nSi;
         }
-    }
-    if (caso_izq->tipo == NODO_CASO) {
-        cond = latA_nodo(NODO_IGUALDAD, cond_izq, caso_izq->izq, cond_izq->nlin,
-                         cond_izq->ncol);
+        // un solo caso
+        cond = latA_nodo(NODO_IGUALDAD, cond_izq, caso_izq->izq, cond_izq->nlin, cond_izq->ncol);
     }
     if (caso_izq->tipo == NODO_DEFECTO) {
-        cond = latA_nodo(NODO_IGUALDAD, cond_izq, cond_izq, cond_izq->nlin,
-                         cond_izq->ncol);
+        cond = latA_nodo(NODO_IGUALDAD, cond_izq, cond_izq, cond_izq->nlin, cond_izq->ncol);
     }
-    ast *nSi = latA_si(cond, caso_izq->der,
-                       ((ast *)transformar_casos(casos->der, cond_izq)));
-    printf("finaliza transformar_casos\n");
+    ast *nSi = latA_si(cond, caso_izq->der, ((ast *)transformar_casos(casos->der, cond_izq)));
     return nSi;
 }
 
-/*
-elegir (x)
-caso 1:
-    sentencias_1
-caso 2:
-    sentencias_2
-fin
-
-si (x == 1)
-    sentencias_1
-fin
-si (x == 2)
-    sentencias_2
-fin
-
-elegir (x)
-caso 1:
-caso 2:
-    sentencias_1
-caso 3:
-    sentencias_3
-fin
-
-si (x == 1 || x == 2)
-    sentencias_1
-fin
-si (x == 3)
-    sentencias_3
-fin
-
-*/
-
-
 static ast *transformar_elegir(ast *nodo_elegir) {
-    printf("inicia transformar_elegir\n");
-    // elegir x
-    //   caso 1:
-    //      sentencias_1
-    //   caso 2:
-    //      sentencias_2
-    // fin
-
-     // elegir x
-    //   caso 1:
-    //   caso 2:
-    //      sentencias_1
-    //   caso 3:
-    //      sentencias_3
-    // fin
-
-    // izq trae la condicion -> x
-    // der trae los casos
     ast *cond_izq = nodo_elegir->izq;
     ast *casos = nodo_elegir->der;
     ast *nSi = NULL;
-    printf("casos->tipo: %i\n: ", casos->tipo);
     nSi = transformar_casos(casos, cond_izq);
-    printf("finaliza transformar_elegir\n");
     return nSi;
 }
 
@@ -266,7 +184,6 @@ static int ast_analizar(lat_mv *mv, ast *nodo, lat_bytecode *codigo, int i) {
             }
             if (nodo->valor->tipo == VALOR_NUMERICO) {
                 o = latC_crear_numerico(mv, nodo->valor->val.numerico);
-                printf("    === VALOR_NUMERICO: %.16g\n", nodo->valor->val.numerico);
                 o->marca = 0;
             }
             if (nodo->valor->tipo == VALOR_CADENA) {
@@ -278,7 +195,6 @@ static int ast_analizar(lat_mv *mv, ast *nodo, lat_bytecode *codigo, int i) {
         } break;
         case NODO_IDENTIFICADOR: {
             lat_objeto *o = latC_crear_cadena(mv, nodo->valor->val.cadena);
-            printf("    === NODO_IDENTIFICADOR: %s\n", nodo->valor->val.cadena);
             o->marca = 0;
             o->esconst = nodo->valor->esconst;
             dbc(LOAD_NAME, 0, 0, o, nodo->nlin, nodo->ncol, mv->nombre_archivo);
@@ -401,7 +317,6 @@ static int ast_analizar(lat_mv *mv, ast *nodo, lat_bytecode *codigo, int i) {
                 mv->nombre_archivo);
         } break;
         case NODO_IGUALDAD: {
-            printf("    === NODO_IGUALDAD\n");
             pn(mv, nodo->izq);
             pn(mv, nodo->der);
             dbc(OP_EQ, 0, 0, NULL, nodo->izq->nlin, nodo->izq->ncol,
@@ -426,7 +341,6 @@ static int ast_analizar(lat_mv *mv, ast *nodo, lat_bytecode *codigo, int i) {
                 mv->nombre_archivo);
         } break;
         case NODO_O: {
-            printf("    === NODO_O\n");
             pn(mv, nodo->izq);
             pn(mv, nodo->der);
             dbc(OP_OR, 0, 0, NULL, nodo->izq->nlin, nodo->izq->ncol,
@@ -444,7 +358,6 @@ static int ast_analizar(lat_mv *mv, ast *nodo, lat_bytecode *codigo, int i) {
                 mv->nombre_archivo);
         } break;
         case NODO_SI: {
-            printf("    === NODO_SI\n");
             nodo_si *nIf = ((nodo_si *)nodo);
             pn(mv, nIf->cond);
             temp[0] = i;

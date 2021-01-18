@@ -120,10 +120,9 @@ int yylex (YYSTYPE * yylval_param,YYLTYPE * yylloc_param ,yyscan_t yyscanner);
 %type <node> constant_expression function_call selection_statement parameter_list
 %type <node> list_new list_items
 %type <node> dict_new dict_items dict_item
-%type <node> labeled_statements labeled_statement_case labeled_statement_default
+%type <node> labeled_statements labeled_statement_case labeled_statement_case_case labeled_statement_default
 %type <node> variable_access field_designator
 %type <node> osi_statements osi_statement global_declaration
-%type <node> labeled_statement_case_case
 
 /*
  * precedencia de operadores
@@ -345,7 +344,7 @@ labeled_statements
         $$ = latA_nodo(NODO_CASOS, $1, NULL, @1.first_line, @1.first_column);
     }
     ;
-    
+
 labeled_statement_case
     : CASO labeled_statement_case_case statement_list {
         $$ = latA_nodo(NODO_CASO, $2, $3, @1.first_line, @1.first_column);
@@ -362,7 +361,6 @@ labeled_statement_case_case
 
 labeled_statement_default
     : DEFECTO ':' statement_list {
-        printf("se encontro la palabra defecto\n");
         $$ = latA_nodo(NODO_DEFECTO, NULL, $3, @1.first_line, @1.first_column);
     }
     ;
@@ -375,7 +373,6 @@ selection_statement:
     | SI expression statement_list osi_statements FIN {
         $$ = latA_si($2, $3, $4); }
     | ELEGIR expression labeled_statements FIN {
-        printf("se encontro el nodo elegir\n");
         $$ = latA_nodo(NODO_ELEGIR, $2, $3, @1.first_line, @1.first_column);
     }
     ;
