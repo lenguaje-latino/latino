@@ -47,22 +47,51 @@ struct lat_longjmp {
 // void str_formato(lat_mv *mv);
 void str_concatenar(lat_mv *mv);
 
+static ast *transformar_caso_casos(ast *cond_izq, ast *izq) {
+    if (izq->tipo == NODO_VALOR) {
+        ast *igualdad_izq = latA_nodo(NODO_IGUALDAD, cond_izq, izq, cond_izq->nlin, cond_izq->ncol);
+        return igualdad_izq;
+    }
+    if (izq->der->tipo == NODO_VALOR) {
+        // esto detiene la recursividad
+        ast *igualdad_izq = latA_nodo(NODO_IGUALDAD, cond_izq, izq->izq, cond_izq->nlin, cond_izq->ncol);
+        ast *igualdad_der = latA_nodo(NODO_IGUALDAD, cond_izq, izq->der, cond_izq->nlin, cond_izq->ncol);
+        return  latA_nodo(NODO_O, igualdad_izq, igualdad_der, cond_izq->nlin, cond_izq->ncol);
+    }
+    if (izq->tipo == NODO_CASOS) {
+        // recursion
+        // izq->der->tipo == NODO_CASOS
+        ast *primera_igualdad = latA_nodo(NODO_IGUALDAD, cond_izq, izq->izq, cond_izq->nlin, cond_izq->ncol);
+        ast *cond = latA_nodo(NODO_O, primera_igualdad, transformar_caso_casos(cond_izq, izq->der), cond_izq->nlin, cond_izq->ncol);
+        return cond;
+    }
+}
+
 static ast *transformar_casos(ast *casos, ast *cond_izq) {
     if (casos == NULL) {
         return NULL;
     }
-    ast *caso = casos->izq;
+    ast *caso_izq = casos->izq;     // caso
+    ast *caso_der = casos->der;     // casos
     ast *cond = NULL;
-    if (caso->tipo == NODO_CASO) {
-        cond = latA_nodo(NODO_IGUALDAD, cond_izq, caso->izq, cond_izq->nlin,
-                         cond_izq->ncol);
+
+    if (caso_izq->tipo == NODO_CASO) {
+        if (caso_izq->izq->tipo == NODO_CASOS) {
+            // evalua multicasos
+            ast *tmp = caso_izq->izq;
+            ast *cond = NULL;
+            ast *primera_igualdad = latA_nodo(NODO_IGUALDAD, cond_izq, caso_izq->izq->izq, cond_izq->nlin, cond_izq->ncol);
+            cond = latA_nodo(NODO_O, primera_igualdad, transformar_caso_casos(cond_izq, caso_izq->izq->der), cond_izq->nlin, cond_izq->ncol);
+            ast *nSi = latA_si(cond, caso_izq->der, ((ast *)transformar_casos(casos->der, cond_izq)));
+            return nSi;
+        }
+        // un solo caso
+        cond = latA_nodo(NODO_IGUALDAD, cond_izq, caso_izq->izq, cond_izq->nlin, cond_izq->ncol);
     }
-    if (caso->tipo == NODO_DEFECTO) {
-        cond = latA_nodo(NODO_IGUALDAD, cond_izq, cond_izq, cond_izq->nlin,
-                         cond_izq->ncol);
+    if (caso_izq->tipo == NODO_DEFECTO) {
+        cond = latA_nodo(NODO_IGUALDAD, cond_izq, cond_izq, cond_izq->nlin, cond_izq->ncol);
     }
-    ast *nSi = latA_si(cond, caso->der,
-                       ((ast *)transformar_casos(casos->der, cond_izq)));
+    ast *nSi = latA_si(cond, caso_izq->der, ((ast *)transformar_casos(casos->der, cond_izq)));
     return nSi;
 }
 

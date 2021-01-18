@@ -38,7 +38,7 @@ THE SOFTWARE.
 #define LIB_SISTEMA_NAME "sis"
 
 struct OS_VERSION_LAT { // estructura variable OS.Major, OS.Minor, OS.Build
-    double osMayor, osMenor, osBuild;
+    char osMayor, osMenor, osBuild;
 };
 
 typedef struct OS_VERSION_LAT Struct;
@@ -57,7 +57,39 @@ Struct buscar_os_version() { // Busca y asigna el valor del Build del sistema op
         os_v.osMayor = osvi.dwMajorVersion;
         os_v.osMenor = osvi.dwMinorVersion;
         os_v.osBuild = osvi.dwBuildNumber;
+    #elif __APPLE__
+        char cmd[64];
+        for (int i=0; i<=3; i++){
+            sprintf(cmd, "sw_vers -productVersion | awk -F '.' '{print $%d}'", i);
+
+            FILE* stdoutFile = popen(cmd, "r");
+
+            int resp = 0;
+            if (stdoutFile) {
+                char buff[16];
+                char *stdout = fgets(buff, sizeof(buff), stdoutFile);
+                pclose(stdoutFile);
+                sscanf(stdout, "%d", &resp);
+            }
+            switch(i) {
+                case 1:
+                    os_v.osMayor = resp;
+                case 2:
+                    os_v.osMenor = resp;
+                case 3:
+                    os_v.osBuild = resp;
+                    break;
+            }
+        }
     #else
+        struct utsname buffer;
+
+        if (uname(&buffer) < 0) {
+            perror("Failed to uname");
+        }
+        // os_v.osMayor = (int)strtol(buffer.version, (char **)NULL, 10);
+        // os_v.osMayor = atoi(buffer.version);
+        os_v.osMayor = buffer.release;
     #endif
 
     return os_v;
@@ -92,6 +124,9 @@ static void latSO_dormir(lat_mv *mv) {
 static void latSO_pipe(lat_mv *mv) {
     lat_objeto *cmd = latC_desapilar(mv);
     FILE *fp = latC_popen(mv, latC_checar_cadena(mv, cmd), "r");
+    if (fp == NULL) {
+        latC_error(mv, "Error! No se encontro el archivo");
+    }
     char *p = malloc(MAX_BUFFERSIZE);
     fread(p, sizeof(char), MAX_BUFFERSIZE, fp);
     int rlen = strlen(p);
@@ -100,6 +135,7 @@ static void latSO_pipe(lat_mv *mv) {
     latC_apilar(mv, tmp);
     latC_pclose(mv, fp);
     latM_liberar(mv, p);
+    fflush(fp);
 }
 
 static void latSO_fecha(lat_mv *mv) {
@@ -226,38 +262,27 @@ static void latSO_operativo(lat_mv *mv){
     latC_apilar(mv, v);
 }
 
-static void latSO_ver_major(lat_mv *mv) {
-    double n;
+void latOS_veriones(lat_mv *mv, int i) {
+    char n;
     Struct os_version;
     os_version = buscar_os_version();
-    n = os_version.osMayor;
-    lat_objeto *tmp = latO_crear(mv);
-    tmp->tam += sizeof(double);
-    setNumerico(tmp, n);
+    switch (i) {
+        case 1: n = os_version.osMayor; break;
+        case 2: n = os_version.osMenor; break;
+        case 3: n = os_version.osBuild; break;
+    }
+    lat_objeto *tmp = latC_checar_cadena(mv, n);
+    // tmp->tam += sizeof(char);
+    // setCadena(tmp, n);
+    // setNumerico(tmp, n);
     latC_apilar(mv, tmp);
 }
 
-static void latSO_ver_menor(lat_mv *mv) {
-    double n;
-    Struct os_version;
-    os_version = buscar_os_version();
-    n = os_version.osMenor;
-    lat_objeto *tmp = latO_crear(mv);
-    tmp->tam += sizeof(double);
-    setNumerico(tmp, n);
-    latC_apilar(mv, tmp);
-}
+static void latSO_ver_major(lat_mv *mv) { latOS_veriones(mv, 1); }
 
-static void latSO_ver_build(lat_mv *mv) {
-    double n;
-    Struct os_version;
-    os_version = buscar_os_version();
-    n = os_version.osBuild;
-    lat_objeto *tmp = latO_crear(mv);
-    tmp->tam += sizeof(double);
-    setNumerico(tmp, n);
-    latC_apilar(mv, tmp);
-}
+static void latSO_ver_menor(lat_mv *mv) { latOS_veriones(mv, 2); }
+
+static void latSO_ver_build(lat_mv *mv) { latOS_veriones(mv, 3); }
 
 /*
 void latSO_fork(lat_mv *mv) {

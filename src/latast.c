@@ -169,6 +169,50 @@ ast *latA_desde(ast *dec, ast *cond, ast *inc, ast *stmts) {
     return a;
 }
 
+ast *latA_para(ast *identificador, ast* inicio, ast* fin, ast* incremento, ast *sentencias) {
+    // printf('inicia latA_para\n');
+    ast *a = (ast *)malloc(sizeof(ast));
+    ast *asign = latA_asign(inicio, identificador);
+    // printf('inicio: %d:\n', inicio->valor->val.numerico);
+    // printf('fin: %d:\n', fin->valor->val.numerico);
+    // printf('incremento: %d:\n', incremento->valor->val.numerico);
+    ast *cond = latA_nodo(NODO_MENOR_QUE, fin, asign, identificador->nlin, identificador->ncol);
+    a->tipo = NODO_MIENTRAS;
+    a->izq = cond;
+    a->der = sentencias;
+    a->valor = NULL;
+    return a;
+
+    // // crea nodo asignacion
+    // // identificador = valor
+    // printf('asignar valor a variable\n');
+    // ast *asign = latA_asign(inicio, identificador);
+
+    // printf('crea el bloque de codigo latA_para\n');
+    // a->tipo = NODO_BLOQUE;
+    // a->izq = asign;
+
+    // // cond -> identificador < fin
+    // printf('Expresion\n');
+    // ast *cond = latA_nodo(NODO_MENOR_QUE, fin, identificador, identificador->nlin, identificador->ncol);
+
+    // // nodo_suma -> exp + exp
+    // printf('Incrementa valor\n');
+    // ast *suma = latA_nodo(NODO_SUMA, incremento, identificador, identificador->nlin, identificador->ncol);
+
+    // // nodo_asig -> id = expr
+    // printf('asigna valor incrementado\n');
+    // ast *pasos = latA_nodo(NODO_ASIGNACION, suma, identificador, identificador->nlin, identificador->ncol);
+
+    // printf('latA_mientras\n');
+    // a->der = latA_mientras(
+    //     cond, latA_nodo(NODO_BLOQUE, sentencias, pasos, identificador->nlin, identificador->ncol));
+    // a->valor = NULL;
+
+    // printf('fin latA_mientras\n');
+    // return a;
+}
+
 ast *latA_funcion(ast *nombre, ast *params, ast *stmts, int nlin, int ncol) {
     nodo_funcion *a = (nodo_funcion *)malloc(sizeof(ast));
     a->tipo = NODO_FUNCION_USUARIO;

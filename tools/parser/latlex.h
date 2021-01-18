@@ -516,7 +516,7 @@ extern int yylex \
 #undef yyTABLES_NAME
 #endif
 
-#line 149 "latlex.l"
+#line 152 "latlex.l"
 
 
 #line 523 "latlex.h"

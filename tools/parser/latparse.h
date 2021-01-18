@@ -1,8 +1,9 @@
-/* A Bison parser, made by GNU Bison 3.0.4.  */
+/* A Bison parser, made by GNU Bison 3.5.1.  */
 
 /* Bison interface for Yacc-like parsers in C
 
-   Copyright (C) 1984, 1989-1990, 2000-2015 Free Software Foundation, Inc.
+   Copyright (C) 1984, 1989-1990, 2000-2015, 2018-2020 Free Software Foundation,
+   Inc.
 
    This program is free software: you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -29,6 +30,9 @@
 
    This special exception was added by the Free Software Foundation in
    version 2.2 of Bison.  */
+
+/* Undocumented macros, especially those whose name start with YY_,
+   are private implementation details.  Do not rely on them.  */
 
 #ifndef YY_YY_LATPARSE_H_INCLUDED
 # define YY_YY_LATPARSE_H_INCLUDED
@@ -68,25 +72,29 @@ extern int yydebug;
     VERDADERO = 278,
     FALSO = 279,
     NULO = 280,
-    MAYOR_QUE = 281,
-    MENOR_QUE = 282,
-    MAYOR_IGUAL = 283,
-    MENOR_IGUAL = 284,
-    IGUAL_LOGICO = 285,
-    DIFERENTE = 286,
-    Y_LOGICO = 287,
-    O_LOGICO = 288,
-    INCREMENTO = 289,
-    DECREMENTO = 290,
-    CONCATENAR = 291,
-    CONCATENAR_IGUAL = 292,
-    MAS_IGUAL = 293,
-    MENOS_IGUAL = 294,
-    POR_IGUAL = 295,
-    ENTRE_IGUAL = 296,
-    MODULO_IGUAL = 297,
-    REGEX = 298,
-    GLOBAL = 299
+    EXPONENTE = 281,
+    PARA = 282,
+    EN = 283,
+    RANGO = 284,
+    MAYOR_QUE = 285,
+    MENOR_QUE = 286,
+    MAYOR_IGUAL = 287,
+    MENOR_IGUAL = 288,
+    IGUAL_LOGICO = 289,
+    DIFERENTE = 290,
+    Y_LOGICO = 291,
+    O_LOGICO = 292,
+    INCREMENTO = 293,
+    DECREMENTO = 294,
+    CONCATENAR = 295,
+    CONCATENAR_IGUAL = 296,
+    MAS_IGUAL = 297,
+    MENOS_IGUAL = 298,
+    POR_IGUAL = 299,
+    ENTRE_IGUAL = 300,
+    MODULO_IGUAL = 301,
+    REGEX = 302,
+    GLOBAL = 303
   };
 #endif
 /* Tokens.  */
@@ -113,25 +121,29 @@ extern int yydebug;
 #define VERDADERO 278
 #define FALSO 279
 #define NULO 280
-#define MAYOR_QUE 281
-#define MENOR_QUE 282
-#define MAYOR_IGUAL 283
-#define MENOR_IGUAL 284
-#define IGUAL_LOGICO 285
-#define DIFERENTE 286
-#define Y_LOGICO 287
-#define O_LOGICO 288
-#define INCREMENTO 289
-#define DECREMENTO 290
-#define CONCATENAR 291
-#define CONCATENAR_IGUAL 292
-#define MAS_IGUAL 293
-#define MENOS_IGUAL 294
-#define POR_IGUAL 295
-#define ENTRE_IGUAL 296
-#define MODULO_IGUAL 297
-#define REGEX 298
-#define GLOBAL 299
+#define EXPONENTE 281
+#define PARA 282
+#define EN 283
+#define RANGO 284
+#define MAYOR_QUE 285
+#define MENOR_QUE 286
+#define MAYOR_IGUAL 287
+#define MENOR_IGUAL 288
+#define IGUAL_LOGICO 289
+#define DIFERENTE 290
+#define Y_LOGICO 291
+#define O_LOGICO 292
+#define INCREMENTO 293
+#define DECREMENTO 294
+#define CONCATENAR 295
+#define CONCATENAR_IGUAL 296
+#define MAS_IGUAL 297
+#define MENOS_IGUAL 298
+#define POR_IGUAL 299
+#define ENTRE_IGUAL 300
+#define MODULO_IGUAL 301
+#define REGEX 302
+#define GLOBAL 303
 
 /* Value type.  */
 

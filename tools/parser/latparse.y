@@ -85,6 +85,10 @@ int yylex (YYSTYPE * yylval_param,YYLTYPE * yylloc_param ,yyscan_t yyscanner);
     VERDADERO
     FALSO
     NULO
+    EXPONENTE
+    PARA
+    EN
+    RANGO
 
 %token
     MAYOR_QUE
@@ -116,7 +120,7 @@ int yylex (YYSTYPE * yylval_param,YYLTYPE * yylloc_param ,yyscan_t yyscanner);
 %type <node> constant_expression function_call selection_statement parameter_list
 %type <node> list_new list_items
 %type <node> dict_new dict_items dict_item
-%type <node> labeled_statements labeled_statement_case labeled_statement_default
+%type <node> labeled_statements labeled_statement_case labeled_statement_case_case labeled_statement_default
 %type <node> variable_access field_designator
 %type <node> osi_statements osi_statement global_declaration
 
@@ -135,6 +139,7 @@ int yylex (YYSTYPE * yylval_param,YYLTYPE * yylloc_param ,yyscan_t yyscanner);
 %left '+' '-'
 %left '*' '/' '%' '!'
 %left '^'
+%left EXPONENTE
 
 %start program
 
@@ -165,6 +170,10 @@ unary_expression
 
 multiplicative_expression
     : expression '^' expression {
+        $$ = latA_nodo(NODO_POTENCIA, $1, $3, @2.first_line, @2.first_column);
+        if($$ == NULL) YYABORT;
+    }
+    | expression EXPONENTE expression {
         $$ = latA_nodo(NODO_POTENCIA, $1, $3, @2.first_line, @2.first_column);
         if($$ == NULL) YYABORT;
     }
@@ -337,15 +346,21 @@ labeled_statements
     ;
 
 labeled_statement_case
-    :
-    CASO constant_expression ':' statement_list {
-        $$ = latA_nodo(NODO_CASO, $2, $4, @1.first_line, @1.first_column);
+    : CASO labeled_statement_case_case statement_list {
+        $$ = latA_nodo(NODO_CASO, $2, $3, @1.first_line, @1.first_column);
+    }
+    ;
+
+/* OR logico en CASE */
+labeled_statement_case_case
+    : constant_expression ':'
+    | constant_expression ':' CASO labeled_statement_case_case {
+        $$ = latA_nodo(NODO_CASOS, $1, $4, @1.first_line, @1.first_column);
     }
     ;
 
 labeled_statement_default
-    :
-    DEFECTO ':' statement_list {
+    : DEFECTO ':' statement_list {
         $$ = latA_nodo(NODO_DEFECTO, NULL, $3, @1.first_line, @1.first_column);
     }
     ;
@@ -387,6 +402,12 @@ iteration_statement
     | DESDE '(' declaration ';' expression ';' statement ')'
         statement_list  FIN {
         $$ = latA_desde($3, $5, $7, $9); }
+    | PARA IDENTIFICADOR EN RANGO '(' NUMERICO ',' NUMERICO ',' NUMERICO ')'
+        statement_list FIN {
+        printf(LAT_ERROR_FMT, filename, @2.first_line, @2.first_column, "entre al para_loop de bison");
+        $$ = latA_para($2, $6, $8, $10, $12);
+        printf(LAT_ERROR_FMT, filename, @2.first_line, @2.first_column, "sali del para_loop de bison");
+        }
     ;
 
 jump_statement

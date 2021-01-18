@@ -196,6 +196,7 @@ ast *latA_si(ast *cond, ast *th, ast *el);
 ast *latA_mientras(ast *cond, ast *stmts);
 ast *latA_hacer(ast *cond, ast *stmts);
 ast *latA_desde(ast *dec, ast *cond, ast *inc, ast *stmts);
+ast *latA_para(ast *identificador, ast *inicio, ast *fin, ast *incremento, ast *sentencias);
 ast *latA_funcion(ast *nombre, ast *params, ast *stmts, int nlin, int ncol);
 ast *latA_romper(ast *ls);
 ast *latA_analizar_exp(char *expr, int *status);
