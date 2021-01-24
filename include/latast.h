@@ -100,7 +100,7 @@ typedef enum {
     NODO_REGEX,
     NODO_VAR_ARGS,
     NODO_LOAD_VAR_ARGS,
-    NODO_ROMPER, /* 50 */
+    NODO_RANGO, /* 50 */
 } nodo_tipo;
 
 /** \brief Tipos de dato */
@@ -156,6 +156,18 @@ typedef struct {
     struct ast *_sino;
 } nodo_si;
 
+/** \brief Nodo para representar un ast RANGO (range).
+ *
+ * para id en (ini, fin, inc) [stmts] fin */
+typedef struct {
+    AST_COMUN
+    struct ast *id;
+    struct ast *ini;
+    struct ast *fin;
+    struct ast *inc;
+    struct ast *stmts;
+} nodo_rango;
+
 /** \brief Nodo para representar una fun.
  *
  * fun [nombre] (params) stmts fin */
@@ -198,7 +210,6 @@ ast *latA_hacer(ast *cond, ast *stmts);
 ast *latA_desde(ast *dec, ast *cond, ast *inc, ast *stmts);
 ast *latA_para(ast *identificador, ast *inicio, ast *fin, ast *incremento, ast *sentencias);
 ast *latA_funcion(ast *nombre, ast *params, ast *stmts, int nlin, int ncol);
-ast *latA_romper(ast *ls);
 ast *latA_analizar_exp(char *expr, int *status);
 ast *latA_analizar_arch(char *ruta, int *status);
 

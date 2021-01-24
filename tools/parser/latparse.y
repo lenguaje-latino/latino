@@ -221,11 +221,11 @@ logical_not_expression
 
 logical_and_expression
     : expression Y_LOGICO expression { $$ = latA_nodo(NODO_Y, $1, $3, @2.first_line, @2.first_column); }
-	  ;
+    ;
 
 logical_or_expression
-	  : expression O_LOGICO expression { $$ = latA_nodo(NODO_O, $1, $3, @2.first_line, @2.first_column); }
-	  ;
+    : expression O_LOGICO expression { $$ = latA_nodo(NODO_O, $1, $3, @2.first_line, @2.first_column); }
+    ;
 
 ternary_expression
     : expression '\?' expression ':' expression  { $$ = latA_si($1, $3, $5); }
@@ -236,27 +236,27 @@ concat_expression
     ;
 
 expression
-        : '(' expression ')' { $$ = $2; }
-        | constant_expression
-        | primary_expression
-        | unary_expression
-        | multiplicative_expression
-        | additive_expression
-        | relational_expression
-        | equality_expression
-        | logical_not_expression
-        | logical_and_expression
-        | logical_or_expression
-        | concat_expression
-        | function_call
-        | list_new
-        | dict_new
-        | variable_access
-        | function_anonymous
-        | ternary_expression
-        | incdec_statement
-        | VAR_ARGS { $$ = latA_nodo(NODO_LOAD_VAR_ARGS , NULL, NULL, 0, 0); }
-        ;
+    : '(' expression ')' { $$ = $2; }
+    | constant_expression
+    | primary_expression
+    | unary_expression
+    | multiplicative_expression
+    | additive_expression
+    | relational_expression
+    | equality_expression
+    | logical_not_expression
+    | logical_and_expression
+    | logical_or_expression
+    | concat_expression
+    | function_call
+    | list_new
+    | dict_new
+    | variable_access
+    | function_anonymous
+    | ternary_expression
+    | incdec_statement
+    | VAR_ARGS { $$ = latA_nodo(NODO_LOAD_VAR_ARGS , NULL, NULL, 0, 0); }
+    ;
 
 program
     : { /* empty */
@@ -351,7 +351,6 @@ labeled_statement_case
     }
     ;
 
-/* OR logico en CASE */
 labeled_statement_case_case
     : constant_expression ':'
     | constant_expression ':' CASO labeled_statement_case_case {
@@ -365,8 +364,8 @@ labeled_statement_default
     }
     ;
 
-selection_statement:
-    SI expression statement_list FIN {
+selection_statement
+    : SI expression statement_list FIN {
         $$ = latA_si($2, $3, NULL); }
     | SI expression statement_list SINO statement_list FIN {
         $$ = latA_si($2, $3, $5); }
@@ -377,13 +376,13 @@ selection_statement:
     }
     ;
 
-osi_statements:
-    osi_statement
+osi_statements
+    : osi_statement
     | osi_statements osi_statement
     ;
 
-osi_statement:
-    O_SI expression statement_list {
+osi_statement
+    : O_SI expression statement_list {
           $$ = latA_si($2, $3, NULL);
     }
     | O_SI expression statement_list SINO statement_list {
@@ -402,11 +401,17 @@ iteration_statement
     | DESDE '(' declaration ';' expression ';' statement ')'
         statement_list  FIN {
         $$ = latA_desde($3, $5, $7, $9); }
-    | PARA IDENTIFICADOR EN RANGO '(' NUMERICO ',' NUMERICO ',' NUMERICO ')'
+    | PARA IDENTIFICADOR EN RANGO '(' expression ')'
         statement_list FIN {
-        printf(LAT_ERROR_FMT, filename, @2.first_line, @2.first_column, "entre al para_loop de bison");
+        $$ = latA_para($2, NULL, $6, NULL, $8);
+        }
+    | PARA IDENTIFICADOR EN RANGO '(' expression ',' expression ')'
+        statement_list FIN {
+        $$ = latA_para($2, $6, $8, NULL, $10);
+        }
+    | PARA IDENTIFICADOR EN RANGO '(' expression ',' expression ',' expression ')'
+        statement_list FIN {
         $$ = latA_para($2, $6, $8, $10, $12);
-        printf(LAT_ERROR_FMT, filename, @2.first_line, @2.first_column, "sali del para_loop de bison");
         }
     ;
 
@@ -487,8 +492,24 @@ dict_item
     | expression ':' expression { $$ = latA_nodo(NODO_DICC_ELEMENTO, $1, $3, @1.first_line, @1.first_column); }
     ;
 
+
 %%
 
+/*
+    jump_statement 
+    | ROMPER { $$ = latA_nodo(NODO_ROMPER, NULL, NULL, @1.first_line, @1.first_column); }
+
+class_statement
+    : class_definition
+    | class_definition class_statement
+    ;
+
+class_definition
+    : CLASS IDENTIFICADOR valores FIN {
+        $$ = latA_class(NODO_, $2, $3);
+    }
+    ;
+*/
 //se define para analisis sintactico (bison)
 int yyerror(struct YYLTYPE *yylloc_param, void *scanner, struct ast **root,
 const char *s) {

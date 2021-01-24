@@ -2497,4 +2497,5 @@ void yyfree (void * ptr , yyscan_t yyscanner)
 
 #line 152 "latlex.l"
 
+/*"clase"                                         { return CLASS; }*/
 
