@@ -147,9 +147,15 @@ typedef struct lat_funcion {
     struct lat_funcion *prev;
 } lat_funcion;
 
+#ifdef WIN32
+__declspec(dllexport) lat_objeto latO_nulo_;
+__declspec(dllexport) lat_objeto latO_verdadero_;
+__declspec(dllexport) lat_objeto latO_falso_;
+#else
 extern lat_objeto latO_nulo_;
 extern lat_objeto latO_verdadero_;
 extern lat_objeto latO_falso_;
+#endif
 
 /* macros para asignar valores */
 #define setNulo(obj, v)                                                        \

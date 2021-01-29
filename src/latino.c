@@ -99,7 +99,8 @@ int main(int argc, char *argv[]) {
         if (!strcmp(argv[i], "-v") || !strcmp(argv[i], "--version")) {
             lat_version_simple();
             return EXIT_SUCCESS;
-        } else if (!strcmp(argv[i], "-a") || !strcmp(argv[i], "--ayuda") || !strcmp(argv[i], "--help")) {
+        } else if (!strcmp(argv[i], "-a") || !strcmp(argv[i], "--ayuda") ||
+                   !strcmp(argv[i], "--help")) {
             lat_ayuda();
             return EXIT_SUCCESS;
         } else if (!strcmp(argv[i], "-e")) {
@@ -121,45 +122,45 @@ int main(int argc, char *argv[]) {
     } else if (argc > 1 && pf) {
         /* Ejecuta un archivo de codigo */
         infile = argv[1];
-         mv->nombre_archivo = infile;
-         mv->global->REPL = false;
-         mv->global->argc = argc - 1;
-         for (int j = 1; j < argc; j++) {
-             latL_agregar(mv, latC_checar_lista(mv, mv->global->argv),
-                          latC_crear_cadena(mv, argv[j]));
-         }
+        mv->nombre_archivo = infile;
+        mv->global->REPL = false;
+        mv->global->argc = argc - 1;
+        for (int j = 1; j < argc; j++) {
+            latL_agregar(mv, latC_checar_lista(mv, mv->global->argv),
+                         latC_crear_cadena(mv, argv[j]));
+        }
         int status;
         ast *nodo = latA_analizar_arch(infile, &status);
         if (status == 0 && nodo != NULL) {
-           lat_objeto *main_func = latC_analizar(mv, nodo);
-           if (mv->global->menu) {
-               // inicio instrucciones para llamar a menu
-               lat_funcion *fval = (lat_funcion *)main_func->val.gc;
-               lat_bytecode *codigo = (lat_bytecode *)fval->codigo;
-               int ninst = main_func->ninst;
-               lat_bytecode *bc = (lat_bytecode *)latM_asignar(
-                   NULL, sizeof(lat_bytecode) * (ninst + 2));
-               memcpy(bc, codigo, latM_tamanio(bc));
-               bc[ninst - 1] = latMV_bytecode_crear(
-                   LOAD_NAME, 0, 0, latC_crear_cadena(mv, "menu"), 0, 0,
-                   mv->nombre_archivo);
-               bc[ninst] = latMV_bytecode_crear(CALL_FUNCTION, 2, 0, NULL, 0,
-                                                0, mv->nombre_archivo);
-               bc[ninst + 1] = latMV_bytecode_crear(HALT, 0, 0, NULL, 0, 0,
-                                                    mv->nombre_archivo);
-               lat_objeto *num = latC_crear_numerico(mv, mv->global->argc);
-               latC_apilar(mv, num);
-               latC_apilar(mv, mv->global->argv);
-               // fin instrucciones
-               lat_objeto *new_main = latC_crear_funcion(mv, bc, ninst + 2);
-               new_main->es_vararg = 0;
-               new_main->nparams = 2;
-               status = latC_llamar_funcion(mv, new_main);
-               latO_destruir(mv, new_main);
-           } else {
-               status = latC_llamar_funcion(mv, main_func);
-           }
-           latO_destruir(mv, main_func);
+            lat_objeto *main_func = latC_analizar(mv, nodo);
+            if (mv->global->menu) {
+                // inicio instrucciones para llamar a menu
+                lat_funcion *fval = (lat_funcion *)main_func->val.gc;
+                lat_bytecode *codigo = (lat_bytecode *)fval->codigo;
+                int ninst = main_func->ninst;
+                lat_bytecode *bc = (lat_bytecode *)latM_asignar(
+                    NULL, sizeof(lat_bytecode) * (ninst + 2));
+                memcpy(bc, codigo, latM_tamanio(bc));
+                bc[ninst - 1] = latMV_bytecode_crear(
+                    LOAD_NAME, 0, 0, latC_crear_cadena(mv, "menu"), 0, 0,
+                    mv->nombre_archivo);
+                bc[ninst] = latMV_bytecode_crear(CALL_FUNCTION, 2, 0, NULL, 0,
+                                                 0, mv->nombre_archivo);
+                bc[ninst + 1] = latMV_bytecode_crear(HALT, 0, 0, NULL, 0, 0,
+                                                     mv->nombre_archivo);
+                lat_objeto *num = latC_crear_numerico(mv, mv->global->argc);
+                latC_apilar(mv, num);
+                latC_apilar(mv, mv->global->argv);
+                // fin instrucciones
+                lat_objeto *new_main = latC_crear_funcion(mv, bc, ninst + 2);
+                new_main->es_vararg = 0;
+                new_main->nparams = 2;
+                status = latC_llamar_funcion(mv, new_main);
+                latO_destruir(mv, new_main);
+            } else {
+                status = latC_llamar_funcion(mv, main_func);
+            }
+            latO_destruir(mv, main_func);
         }
         latA_destruir(nodo);
     } else {

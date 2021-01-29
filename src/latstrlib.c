@@ -280,7 +280,7 @@ char *rellenar_izquierda(char *base, char *c, int n) {
     char *ret = malloc(len + n + 1);
 
     strcpy(ret, "");
-    
+
     int i, final = len - 1;
     for (i = 0; i < (n - final); i++) {
         ret = strcat(ret, c);
@@ -511,7 +511,7 @@ void str_longitud(lat_mv *mv) {
     latC_apilar(mv, tmp);
 }
 
-char *reemplazar_lat(char *orig, char *rep, char *with, int veces) {
+static char *reemplazar_lat(char *orig, char *rep, char *with, int veces) {
     char *result, *ins, *tmp;
     int len_rep, len_with, len_front, count;
     if (!orig && !rep) {
@@ -865,44 +865,44 @@ void str_formato(lat_mv *mv) {
         } else if (*++strfrmt == '%') {
             sprintf(b, "%s%c", b, *strfrmt++);
         } else {
-            #ifdef _WIN32
-                char buff[MAX_BUFFERSIZE];
-            #else
-                char buff[MAX_STR_LENGTH];
-            #endif
+#ifdef _WIN32
+            char buff[MAX_BUFFERSIZE];
+#else
+            char buff[MAX_STR_LENGTH];
+#endif
             if (++arg > top) {
                 latC_error(mv, "Numero de argumentos invalido para el formato");
             }
             switch (*strfrmt++) {
-                case 'c': {  // chacater
+                case 'c': { // chacater
                     lat_objeto *cr = latL_extraer_inicio(mv, params);
                     sprintf(buff, "%c", (int)latC_adouble(mv, cr));
                 } break;
-                case 'i': {  // integer
+                case 'i': { // integer
                     lat_objeto *ent = latL_extraer_inicio(mv, params);
                     sprintf(buff, "%i", (int)latC_adouble(mv, ent));
                 } break;
-                case 'f': {  // float
+                case 'f': { // float
                     lat_objeto *dec = latL_extraer_inicio(mv, params);
                     sprintf(buff, "%f", (float)latC_adouble(mv, dec));
                 } break;
-                case 'd': {  // decimal
+                case 'd': { // decimal
                     lat_objeto *dec = latL_extraer_inicio(mv, params);
                     sprintf(buff, LAT_NUMERIC_FMT, latC_adouble(mv, dec));
                 } break;
-                case 'o': {  // octal
+                case 'o': { // octal
                     lat_objeto *oct = latL_extraer_inicio(mv, params);
                     sprintf(buff, "%o", (int)latC_adouble(mv, oct));
                 } break;
-                case 'x': {  // hex
+                case 'x': { // hex
                     lat_objeto *hex = latL_extraer_inicio(mv, params);
                     sprintf(buff, "%x", (int)latC_adouble(mv, hex));
                 } break;
-                case 'e': {  // sci
+                case 'e': { // sci
                     lat_objeto *sci = latL_extraer_inicio(mv, params);
                     sprintf(buff, "%e", (int)latC_adouble(mv, sci));
                 } break;
-                case 's': {  // string
+                case 's': { // string
                     lat_objeto *str = latL_extraer_inicio(mv, params);
                     sprintf(buff, "%s", latC_astring(mv, str));
                 } break;

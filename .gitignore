@@ -32,6 +32,7 @@ Img-Orig/
 *.deb
 *.exe
 *.msi
+*.pdb
 Makefile
 CMakeCache.txt
 CPackConfig.cmake

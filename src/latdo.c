@@ -86,7 +86,9 @@ static void liberar_elegir(ast *a) {
                 free(a);
                 break;
             }
-            default: { ; }
+            default: {
+                ;
+            }
         }
     }
 }
@@ -656,8 +658,9 @@ void mostrar_bytecode(lat_mv *mv, lat_bytecode *codigo) {
                 printf("BUILD_MAP\t%i\n", cur.a);
             } break;
             case MAKE_FUNCTION: {
+                printf("\n-------------------------------------------\n");
                 printf("MAKE_FUNCTION\n");
-                printf("-------------------------------\n");
+                printf("-------------------------------------------\n");
                 o = (lat_objeto *)cur.meta;
                 lat_funcion *fun = getFun(o);
                 mostrar_bytecode(mv, fun->codigo);
@@ -679,7 +682,7 @@ void mostrar_bytecode(lat_mv *mv, lat_bytecode *codigo) {
             } break;
         }
     }
-    printf("-------------------------------\n");
+    printf("-------------------------------------------\n");
 }
 
 void latD_lanzar(lat_mv *mv, int errcode) {
@@ -699,15 +702,10 @@ LATINO_API void latC_error(lat_mv *mv, const char *fmt, ...) {
     va_start(args, fmt);
     vsprintf(buffer, fmt, args);
     va_end(args);
-#if (!defined _WIN32) // linux y mac
     char *info = malloc(MAX_INPUT_SIZE);
     snprintf(info, MAX_INPUT_SIZE, LAT_ERROR_FMT, mv->nombre_archivo, mv->nlin,
              mv->ncol);
     latC_apilar(mv, latC_crear_cadena(mv, info));
-#else
-    // windows
-    latC_apilar(mv, latC_crear_cadena(mv, ""));
-#endif
     latC_apilar(mv, latC_crear_cadena(mv, buffer));
     str_concatenar(mv);
     lat_objeto *err = latC_desapilar(mv);
@@ -733,8 +731,8 @@ LATINO_API lat_objeto *latC_analizar(lat_mv *mv, ast *nodo) {
 #if DEPURAR_AST
     mostrar_bytecode(mv, codigo);
 #endif
-    lat_bytecode* nuevo_codigo =
-        latM_asignar(mv, sizeof(lat_bytecode) * (i+1));
+    lat_bytecode *nuevo_codigo =
+        latM_asignar(mv, sizeof(lat_bytecode) * (i + 1));
     memcpy(nuevo_codigo, codigo, sizeof(lat_bytecode) * (i + 1));
     latM_liberar(mv, codigo);
     lat_objeto *fun = latC_crear_funcion(mv, nuevo_codigo, i);

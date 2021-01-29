@@ -706,7 +706,7 @@ int latMV_funcion_correr(lat_mv *mv, lat_objeto *func) {
                     break;
                 case CALL_FUNCTION: {
 #if DEPURAR_MV
-                    printf("\n>>> ");
+                    printf("\n[RESULTADO] >>> ");
 #endif
                     int num_args = cur.a;
                     lat_objeto *fun = latM_asignar(mv, sizeof(lat_objeto));
@@ -781,6 +781,13 @@ int latMV_funcion_correr(lat_mv *mv, lat_objeto *func) {
                                    "La funcion '%s' no "
                                    "retorna ningun valor\n",
                                    fun->nombre);
+                    }
+                    if (next.ins != ADJUST_STACK && fun->tipo == T_CFUN) {
+                        // Restaura la pila si la llamada en C no es asignada a
+                        // ningun valor
+                        while (mv->ptrpila >= (mv->ptrprevio)) {
+                            latC_desapilar(mv);
+                        }
                     }
                     if (fun->es_vararg) {
                         lat_objeto *ctx = obtener_contexto(mv);
