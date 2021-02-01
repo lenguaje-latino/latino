@@ -39,7 +39,8 @@ LATINO_API hash_map *latH_crear(lat_mv *mv) {
     return ret;
 }
 
-LATINO_API void latH_asignar(lat_mv *mv, hash_map *m, const char *key, void *val) {
+LATINO_API void latH_asignar(lat_mv *mv, hash_map *m, const char *key,
+                             void *val) {
     int hk = latH_hash(key);
     if (m->buckets[hk] == NULL) {
         m->buckets[hk] = latL_crear(mv);

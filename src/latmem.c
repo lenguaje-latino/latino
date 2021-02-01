@@ -59,14 +59,14 @@ void *latM_reasignar(lat_mv *mv, void *ptr, size_t size) {
     }
 #if DEPURAR_MEM
     size_t mem_ini = latM_tamanio(ptr);
-    printf("memoria inicial: %zu memoria nueva: %zu, %p\n", mem_ini, latM_tamanio(value), &value);
+    printf("memoria inicial: %zu memoria nueva: %zu, %p\n", mem_ini,
+           latM_tamanio(value), &value);
 #endif
     return value;
 }
 
 void latM_liberar(lat_mv *mv, void *ptr) {
-    if (ptr != NULL)
-    {
+    if (ptr != NULL) {
         if (mv != NULL) {
 #if DEPURAR_MEM
             size_t tam = latM_tamanio(ptr);

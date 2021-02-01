@@ -201,7 +201,8 @@ LATINO_API lat_objeto *latC_crear_cadena(lat_mv *mv, const char *val);
 LATINO_API lat_objeto *latC_crear_lista(lat_mv *mv, lista *l);
 LATINO_API lat_objeto *latC_crear_dic(lat_mv *mv, hash_map *dic);
 LATINO_API lat_objeto *latC_crear_cdato(lat_mv *mv, void *ptr);
-LATINO_API lat_objeto *latC_crear_funcion(lat_mv *mv, lat_bytecode *inslist, int ninst);
+LATINO_API lat_objeto *latC_crear_funcion(lat_mv *mv, lat_bytecode *inslist,
+                                          int ninst);
 LATINO_API lat_objeto *latC_crear_cfuncion(lat_mv *mv, lat_CFuncion func);
 
 /* funciones para obtener el objeto y envia error
@@ -236,18 +237,21 @@ LATINO_API void latL_extender(lat_mv *mv, lista *list1, lista *list2);
 LATINO_API bool latL_contiene_valor(lat_mv *mv, lista *l, void *data);
 LATINO_API nodo_lista *latL_obtener_nodo(lat_mv *mv, lista *list, int pos);
 LATINO_API lat_objeto *latL_obtener_elemento(lat_mv *mv, lista *list, int pos);
-LATINO_API void latL_insertar_elemento(lat_mv *mv, lista *list, void *data, int pos);
+LATINO_API void latL_insertar_elemento(lat_mv *mv, lista *list, void *data,
+                                       int pos);
 
 /* funciones para el manejo de diccionarios o hash_map*/
 LATINO_API hash_map *latH_crear(lat_mv *mv);
-LATINO_API void latH_asignar(lat_mv *mv, hash_map *m, const char *key, void *val);
+LATINO_API void latH_asignar(lat_mv *mv, hash_map *m, const char *key,
+                             void *val);
 LATINO_API void latH_limpiar(lat_mv *mv, hash_map *dic);
 LATINO_API void latH_destruir(lat_mv *mv, hash_map *dic);
 LATINO_API void *latH_obtener(hash_map *m, const char *key);
 LATINO_API hash_map *latH_clonar(lat_mv *mv, hash_map *m);
 
 /* funciones para el manejo de librerias dinamicas */
-LATINO_API void latC_abrir_liblatino(lat_mv *mv, const char *nombre_lib, const lat_CReg *funs);
+LATINO_API void latC_abrir_liblatino(lat_mv *mv, const char *nombre_lib,
+                                     const lat_CReg *funs);
 LATINO_API int latC_cargarlib(lat_mv *mv, const char *path, const char *sym);
 
 #endif /* _LATINO_H_ */

@@ -175,7 +175,8 @@ LATINO_API nodo_lista *latL_obtener_nodo(lat_mv *mv, lista *list, int pos) {
     return NULL;
 }
 
-LATINO_API void latL_insertar_elemento(lat_mv *mv, lista *list, void *data, int pos) {
+LATINO_API void latL_insertar_elemento(lat_mv *mv, lista *list, void *data,
+                                       int pos) {
     // FIXME: Memory leak and for performance
     int len = latL_longitud(list);
     if (pos < 0 || pos > len) {

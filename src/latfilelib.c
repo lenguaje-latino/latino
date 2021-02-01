@@ -87,7 +87,7 @@ static void file_leer(lat_mv *mv) {
         latC_apilar(mv, latO_falso);
         return;
     }
-    char * final;
+    char *final;
     size_t n = 0;
     int c;
     fseek(archivo, 0, SEEK_END);
@@ -153,20 +153,25 @@ static void file_duplicar(lat_mv *mv) {
     lat_objeto *a = latC_desapilar(mv);
     char *aa = latC_checar_cadena(mv, a);
     char *bb = latC_checar_cadena(mv, b);
-    if (strcmp(aa, bb)==0) {
-        latC_error(mv, "Error al duplicar archivo '%s', nombre o ruta deven ser distintos", latC_checar_cadena(mv, b));
+    if (strcmp(aa, bb) == 0) {
+        latC_error(
+            mv,
+            "Error al duplicar archivo '%s', nombre o ruta deven ser distintos",
+            latC_checar_cadena(mv, b));
     } else {
         FILE *archivo, *copiar;
         int txt;
         archivo = fopen(latC_checar_cadena(mv, a), "r");
         copiar = fopen(latC_checar_cadena(mv, b), "wb");
         if (!archivo) {
-            latC_error(mv, "Error: No se pudo abrir el archivo '%s'", latC_checar_cadena(mv, a));
+            latC_error(mv, "Error: No se pudo abrir el archivo '%s'",
+                       latC_checar_cadena(mv, a));
         } else if (!copiar) {
-            latC_error(mv, "Error: No se pudo abrir el archivo '%s'", latC_checar_cadena(mv, b));
+            latC_error(mv, "Error: No se pudo abrir el archivo '%s'",
+                       latC_checar_cadena(mv, b));
         }
-        while ((txt=fgetc(archivo)) != EOF)
-        fputc(txt, copiar);
+        while ((txt = fgetc(archivo)) != EOF)
+            fputc(txt, copiar);
         fclose(archivo);
         fclose(copiar);
     }
@@ -199,7 +204,7 @@ static void file_crear(lat_mv *mv) {
 static void file_renombrar(lat_mv *mv) {
     lat_objeto *b = latC_desapilar(mv);
     lat_objeto *a = latC_desapilar(mv);
-    char *nuevo = (char*)malloc(MAX_ID_LENGTH);
+    char *nuevo = (char *)malloc(MAX_ID_LENGTH);
     strcpy(nuevo, "");
     strcpy(nuevo, latC_checar_cadena(mv, b));
     bool ret = rename(latC_checar_cadena(mv, a), nuevo);
