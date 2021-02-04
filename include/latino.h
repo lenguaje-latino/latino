@@ -124,6 +124,7 @@ extern int parse_silent;
 #define MAX_STR_LENGTH (1024 * 1024)
 /** Tamanio maximo de la pila de la maquina virtual */
 #define MAX_STACK_SIZE (1024 * 8)
+#define MAX_STACK_CONTEXT_SIZE MAX_STACK_SIZE
 /** Tamanio maximo de una ruta de derectorio */
 #define MAX_PATH_LENGTH 1024
 /** Tamanio maximo de la entrada por teclado */

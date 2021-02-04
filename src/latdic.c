@@ -31,6 +31,9 @@ THE SOFTWARE.
 
 LATINO_API hash_map *latH_crear(lat_mv *mv) {
     hash_map *ret = (hash_map *)latM_asignar(mv, sizeof(hash_map));
+#if DEPURAR_MEM
+    printf("latH_crear.ret: %p\n", ret);
+#endif
     int c;
     for (c = 0; c < 256; c++) {
         ret->buckets[c] = NULL;
@@ -59,7 +62,11 @@ LATINO_API void latH_asignar(lat_mv *mv, hash_map *m, const char *key,
     }
     // crea una nueva llave
     hash_val *hv = (hash_val *)latM_asignar(mv, sizeof(hash_val));
+#if DEPURAR_MEM
+    printf("latH_asignar.hv: %p\n", hv);
+#endif
     strncpy(hv->llave, key, (strlen(key) + 1));
+    // FIXME: Memory leak
     lat_objeto *obj = latO_crear(mv);
     setobj2obj(obj, val);
     hv->valor = obj;

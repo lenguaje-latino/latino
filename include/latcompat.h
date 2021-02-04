@@ -44,9 +44,12 @@ THE SOFTWARE.
 #define latC_clear "@cls"
 #define latC_sleep(mili) Sleep(mili * 1000)
 #define latC_leer_linea(x) fgets(x, MAX_INPUT_SIZE, stdin)
-#define LAT_ERROR_FMT "%s:%d:%d: \0"
+#define LAT_ERROR_FMT "%s:%d:%d: %s\0"
+// #if DEPURAR_MEM
 /* Visual Leak Detector for Visual C++ */
-//#include <vld.h>
+// https://github.com/KindDragon/vld
+// #include <vld.h>
+// #endif
 #endif /* _WIN32 */
 
 /* __MacOS__ */

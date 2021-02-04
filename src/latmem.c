@@ -75,5 +75,6 @@ void latM_liberar(lat_mv *mv, void *ptr) {
             mv->memoria_usada -= latM_tamanio(ptr);
         }
         free(ptr);
+        ptr = NULL;
     }
 }

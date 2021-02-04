@@ -141,6 +141,9 @@ int main(int argc, char *argv[]) {
                 lat_bytecode *bc = (lat_bytecode *)latM_asignar(
                     NULL, sizeof(lat_bytecode) * (ninst + 2));
                 memcpy(bc, codigo, latM_tamanio(bc));
+#if DEPURAR_MEM
+                printf("main.bc: %p\n", bc);
+#endif
                 bc[ninst - 1] = latMV_bytecode_crear(
                     LOAD_NAME, 0, 0, latC_crear_cadena(mv, "menu"), 0, 0,
                     mv->nombre_archivo);

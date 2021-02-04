@@ -280,8 +280,10 @@ static lat_objeto *obtener_contexto_global(lat_mv *mv) {
 }
 
 static void apilar_contexto(lat_mv *mv, lat_objeto *ctx) {
-    if (mv->ptrctx >= MAX_STACK_SIZE) {
-        latC_error(mv, "Desborde de la pila de contextos");
+    if (mv->ptrctx >= MAX_STACK_CONTEXT_SIZE) {
+        printf(LAT_ERROR_FMT, mv->nombre_archivo, mv->nlin, mv->ncol,
+               "Desborde de la pila de contextos");
+        exit(EXIT_FAILURE);
     }
     mv->contexto[mv->ptrctx + 1] = latO_clonar(mv, mv->contexto[mv->ptrctx]);
     mv->ptrctx++;
@@ -290,7 +292,9 @@ static void apilar_contexto(lat_mv *mv, lat_objeto *ctx) {
 
 static void desapilar_contexto(lat_mv *mv) {
     if (mv->ptrctx == 0) {
-        latC_error(mv, "Pila de contextos vacia");
+        printf(LAT_ERROR_FMT, mv->nombre_archivo, mv->nlin, mv->ncol,
+               "Pila de contextos vacia");
+        exit(EXIT_FAILURE);
     }
     latO_destruir(mv, mv->contexto[mv->ptrctx--]);
     mv->contexto_actual = mv->contexto[mv->ptrctx];
@@ -325,7 +329,16 @@ LATINO_API void latC_abrir_liblatino(lat_mv *mv, const char *nombre_lib,
 
 LATINO_API lat_mv *latC_crear_mv() {
     lat_mv *mv = (lat_mv *)malloc(sizeof(lat_mv));
+    mv->memoria_usada = 0;
+#if DEPURAR_MEM
+    printf("------------------------------------------------------------\n");
+    printf("inicio latC_crear_mv.mv->memoria_usada: %zu\n", mv->memoria_usada);
+    printf("------------------------------------------------------------\n");
+#endif
     mv->global = (lat_global *)latM_asignar(mv, sizeof(lat_global));
+#if DEPURAR_MEM
+    printf("latC_crear_mv.mv->global: %p\n", mv->global);
+#endif
 #if HABILITAR_GC
     mv->global->gc_objetos = latC_crear_lista(mv, latL_crear(mv));
     mv->global->gc_objetos->marca = 0;
@@ -360,10 +373,22 @@ LATINO_API lat_mv *latC_crear_mv() {
     latC_abrir_liblatino_mathlib(mv);
     latC_abrir_liblatino_syslib(mv);
     latC_abrir_liblatino_devlib(mv);
+
+#if DEPURAR_MEM
+    printf("------------------------------------------------------------\n");
+    printf("fin latC_crear_mv.mv->memoria_usada: %zu\n", mv->memoria_usada);
+    printf("------------------------------------------------------------\n");
+#endif
     return mv;
 }
 
 LATINO_API void latC_destruir_mv(lat_mv *mv) {
+#if DEPURAR_MEM
+    printf("------------------------------------------------------------\n");
+    printf("inicio latC_destruir_mv.mv->memoria_usada: %zu\n",
+           mv->memoria_usada);
+    printf("------------------------------------------------------------\n");
+#endif
     latO_destruir(mv, mv->global->argv);
 #if HABILITAR_GC
     latO_destruir(mv, mv->global->gc_objetos);
@@ -371,6 +396,11 @@ LATINO_API void latC_destruir_mv(lat_mv *mv) {
     latO_destruir(mv, mv->contexto[0]);
     latM_liberar(mv, mv->global->strt.hash);
     latM_liberar(mv, mv->global);
+#if DEPURAR_MEM
+    printf("------------------------------------------------------------\n");
+    printf("fin latC_destruir_mv.mv->memoria_usada: %zu\n", mv->memoria_usada);
+    printf("------------------------------------------------------------\n");
+#endif
     free(mv->pila);
     free(mv);
 }
@@ -486,6 +516,9 @@ LATINO_API lat_objeto *latC_crear_funcion(lat_mv *mv, lat_bytecode *inslist,
                                           int ninst) {
     lat_objeto *ret = latO_crear_funcion(mv);
     lat_funcion *fval = (lat_funcion *)latM_asignar(mv, sizeof(lat_funcion));
+#if DEPURAR_MEM
+    printf("latC_crear_funcion.fval: %p\n", fval);
+#endif
     fval->codigo = inslist;
     setFun(ret, fval);
     ret->ninst = ninst;
@@ -555,6 +588,9 @@ static void latMV_call_function(lat_mv *mv, lat_objeto *func, lat_bytecode cur,
                                 lat_bytecode next) {
     int num_args = cur.a;
     lat_objeto *fun = latM_asignar(mv, sizeof(lat_objeto));
+#if DEPURAR_MEM
+    printf("latMV_call_function.fun: %p\n", fun);
+#endif
     setobj2obj(fun, latC_desapilar(mv));
     if (!(fun->tipo == T_CFUN || fun->tipo == T_FUN)) {
         latC_error(mv, "El objeto no es una funcion");

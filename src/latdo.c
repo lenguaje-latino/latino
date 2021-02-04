@@ -156,10 +156,18 @@ static int ast_analizar(lat_mv *mv, ast *nodo, lat_bytecode *codigo, int i) {
             }
             if (nodo->valor->tipo == VALOR_NUMERICO) {
                 o = latC_crear_numerico(mv, nodo->valor->val.numerico);
+#if DEPURAR_MEM
+                printf("NODO_VALOR.VALOR_NUMERICO:%p, %.16g\n", o,
+                       nodo->valor->val.numerico);
+#endif
                 o->marca = 0;
             }
             if (nodo->valor->tipo == VALOR_CADENA) {
                 o = latC_crear_cadena(mv, nodo->valor->val.cadena);
+#if DEPURAR_MEM
+                printf("NODO_VALOR.VALOR_CADENA:%p, %s\n", o,
+                       nodo->valor->val.cadena);
+#endif
                 o->marca = 0;
             }
             dbc(LOAD_CONST, 0, 0, o, nodo->nlin, nodo->ncol,
@@ -435,6 +443,9 @@ static int ast_analizar(lat_mv *mv, ast *nodo, lat_bytecode *codigo, int i) {
             nodo_funcion *fun = (nodo_funcion *)nodo;
             funcion_codigo = (lat_bytecode *)latM_asignar(
                 mv, sizeof(lat_bytecode) * MAX_BYTECODE_FUNCTION);
+#if DEPURAR_MEM
+            printf("NODO_FUNCION_USUARIO.funcion_codigo: %p\n", funcion_codigo);
+#endif
             fi = 0;
             // procesar lista de params
             bool es_vararg = false;
@@ -726,6 +737,9 @@ LATINO_API int latC_llamar_funcion(lat_mv *mv, lat_objeto *func) {
 LATINO_API lat_objeto *latC_analizar(lat_mv *mv, ast *nodo) {
     lat_bytecode *codigo =
         latM_asignar(mv, sizeof(lat_bytecode) * MAX_BYTECODE_FUNCTION);
+#if DEPURAR_MEM
+    printf("latC_analizar.codigo: %p\n", codigo);
+#endif
     int i = ast_analizar(mv, nodo, codigo, 0);
     dbc(HALT, 0, 0, NULL, 0, 0, mv->nombre_archivo);
 #if DEPURAR_AST
@@ -734,6 +748,9 @@ LATINO_API lat_objeto *latC_analizar(lat_mv *mv, ast *nodo) {
     lat_bytecode *nuevo_codigo =
         latM_asignar(mv, sizeof(lat_bytecode) * (i + 1));
     memcpy(nuevo_codigo, codigo, sizeof(lat_bytecode) * (i + 1));
+#if DEPURAR_MEM
+    printf("latC_analizar.nuevo_codigo: %p\n", nuevo_codigo);
+#endif
     latM_liberar(mv, codigo);
     lat_objeto *fun = latC_crear_funcion(mv, nuevo_codigo, i);
     fun->marca = 0;
