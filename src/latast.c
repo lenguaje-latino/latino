@@ -214,20 +214,21 @@ void latA_destruir(ast *a) {
                 }
                 free(a->valor);
                 break;
-            default:
+            default: {
                 if (a->izq)
                     latA_destruir(a->izq);
                 if (a->der)
                     latA_destruir(a->der);
+            }
         }
         free(a);
     }
 }
 
 /**
-  * latA_analizar_exp: Esta funcion crea el arbol abstracto de sintaxis a partir de una cadena
-  * REM: liberar el nodo cuando se deje de ocupar
-  **/
+ * latA_analizar_exp: Esta funcion crea el arbol abstracto de sintaxis a partir
+ *de una cadena REM: liberar el nodo cuando se deje de ocupar
+ **/
 ast *latA_analizar_exp(char *expr, int *status) {
     ast *nodo = NULL;
     yyscan_t scanner;
@@ -242,9 +243,9 @@ ast *latA_analizar_exp(char *expr, int *status) {
 }
 
 /**
-  * latA_analizar_exp: Esta funcion crea el arbol abstracto de sintaxis a partir de un archivo
-  * REM: liberar el nodo cuando se deje de ocupar
-  **/
+ * latA_analizar_exp: Esta funcion crea el arbol abstracto de sintaxis a partir
+ *de un archivo REM: liberar el nodo cuando se deje de ocupar
+ **/
 ast *latA_analizar_arch(char *infile, int *status) {
     if (infile == NULL) {
         printf("Especifique un archivo\n");

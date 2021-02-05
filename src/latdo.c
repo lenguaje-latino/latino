@@ -44,7 +44,6 @@ struct lat_longjmp {
     volatile int status;
 };
 
-// void str_formato(lat_mv *mv);
 void str_concatenar(lat_mv *mv);
 
 static ast *transformar_casos(ast *casos, ast *cond_izq) {
@@ -87,7 +86,9 @@ static void liberar_elegir(ast *a) {
                 free(a);
                 break;
             }
-            default: { ; }
+            default: {
+                ;
+            }
         }
     }
 }
@@ -155,10 +156,18 @@ static int ast_analizar(lat_mv *mv, ast *nodo, lat_bytecode *codigo, int i) {
             }
             if (nodo->valor->tipo == VALOR_NUMERICO) {
                 o = latC_crear_numerico(mv, nodo->valor->val.numerico);
+#if DEPURAR_MEM
+                printf("NODO_VALOR.VALOR_NUMERICO:%p, %.16g\n", o,
+                       nodo->valor->val.numerico);
+#endif
                 o->marca = 0;
             }
             if (nodo->valor->tipo == VALOR_CADENA) {
                 o = latC_crear_cadena(mv, nodo->valor->val.cadena);
+#if DEPURAR_MEM
+                printf("NODO_VALOR.VALOR_CADENA:%p, %s\n", o,
+                       nodo->valor->val.cadena);
+#endif
                 o->marca = 0;
             }
             dbc(LOAD_CONST, 0, 0, o, nodo->nlin, nodo->ncol,
@@ -171,7 +180,6 @@ static int ast_analizar(lat_mv *mv, ast *nodo, lat_bytecode *codigo, int i) {
             dbc(LOAD_NAME, 0, 0, o, nodo->nlin, nodo->ncol, mv->nombre_archivo);
         } break;
         case NODO_ASIGNACION: {
-            // printf("%s\n", "NODO_ASIGNACION");
             int num_params = 1;
             if (nodo->der->tipo == NODO_FUNCION_PARAMETROS) {
                 num_params =
@@ -432,10 +440,12 @@ static int ast_analizar(lat_mv *mv, ast *nodo, lat_bytecode *codigo, int i) {
             }
         } break;
         case NODO_FUNCION_USUARIO: {
-            // printf("%s\n", "NODO_FUNCION_USUARIO");
             nodo_funcion *fun = (nodo_funcion *)nodo;
             funcion_codigo = (lat_bytecode *)latM_asignar(
                 mv, sizeof(lat_bytecode) * MAX_BYTECODE_FUNCTION);
+#if DEPURAR_MEM
+            printf("NODO_FUNCION_USUARIO.funcion_codigo: %p\n", funcion_codigo);
+#endif
             fi = 0;
             // procesar lista de params
             bool es_vararg = false;
@@ -457,7 +467,6 @@ static int ast_analizar(lat_mv *mv, ast *nodo, lat_bytecode *codigo, int i) {
             lat_objeto *o =
                 latC_crear_cadena(mv, fun->nombre->valor->val.cadena);
             o->marca = 0;
-            // printf("val.cadena: %s\n", fun->nombre->valor->val.cadena);
             f->nparams =
                 contar_num_parargs(fun->params, NODO_FUNCION_PARAMETROS);
             f->nombre = strdup(fun->nombre->valor->val.cadena);
@@ -660,8 +669,9 @@ void mostrar_bytecode(lat_mv *mv, lat_bytecode *codigo) {
                 printf("BUILD_MAP\t%i\n", cur.a);
             } break;
             case MAKE_FUNCTION: {
+                printf("\n-------------------------------------------\n");
                 printf("MAKE_FUNCTION\n");
-                printf("-------------------------------\n");
+                printf("-------------------------------------------\n");
                 o = (lat_objeto *)cur.meta;
                 lat_funcion *fun = getFun(o);
                 mostrar_bytecode(mv, fun->codigo);
@@ -683,7 +693,7 @@ void mostrar_bytecode(lat_mv *mv, lat_bytecode *codigo) {
             } break;
         }
     }
-    printf("-------------------------------\n");
+    printf("-------------------------------------------\n");
 }
 
 void latD_lanzar(lat_mv *mv, int errcode) {
@@ -703,15 +713,10 @@ LATINO_API void latC_error(lat_mv *mv, const char *fmt, ...) {
     va_start(args, fmt);
     vsprintf(buffer, fmt, args);
     va_end(args);
-#if (!defined _WIN32) // linux y mac
     char *info = malloc(MAX_INPUT_SIZE);
     snprintf(info, MAX_INPUT_SIZE, LAT_ERROR_FMT, mv->nombre_archivo, mv->nlin,
              mv->ncol);
     latC_apilar(mv, latC_crear_cadena(mv, info));
-#else
-    // windows
-    latC_apilar(mv, latC_crear_cadena(mv, ""));
-#endif
     latC_apilar(mv, latC_crear_cadena(mv, buffer));
     str_concatenar(mv);
     lat_objeto *err = latC_desapilar(mv);
@@ -720,7 +725,6 @@ LATINO_API void latC_error(lat_mv *mv, const char *fmt, ...) {
 }
 
 LATINO_API int latC_llamar_funcion(lat_mv *mv, lat_objeto *func) {
-    // printf("%s\n", func->nombre);
     struct lat_longjmp lj;
     lj.status = 0;
     lj.previo = mv->error;
@@ -731,17 +735,22 @@ LATINO_API int latC_llamar_funcion(lat_mv *mv, lat_objeto *func) {
 }
 
 LATINO_API lat_objeto *latC_analizar(lat_mv *mv, ast *nodo) {
-    // printf("%s\n", ">>> latC_analizar");
     lat_bytecode *codigo =
         latM_asignar(mv, sizeof(lat_bytecode) * MAX_BYTECODE_FUNCTION);
+#if DEPURAR_MEM
+    printf("latC_analizar.codigo: %p\n", codigo);
+#endif
     int i = ast_analizar(mv, nodo, codigo, 0);
     dbc(HALT, 0, 0, NULL, 0, 0, mv->nombre_archivo);
 #if DEPURAR_AST
     mostrar_bytecode(mv, codigo);
 #endif
-    lat_bytecode* nuevo_codigo =
-        latM_asignar(mv, sizeof(lat_bytecode) * (i+1));
+    lat_bytecode *nuevo_codigo =
+        latM_asignar(mv, sizeof(lat_bytecode) * (i + 1));
     memcpy(nuevo_codigo, codigo, sizeof(lat_bytecode) * (i + 1));
+#if DEPURAR_MEM
+    printf("latC_analizar.nuevo_codigo: %p\n", nuevo_codigo);
+#endif
     latM_liberar(mv, codigo);
     lat_objeto *fun = latC_crear_funcion(mv, nuevo_codigo, i);
     fun->marca = 0;

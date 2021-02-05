@@ -1,0 +1,42 @@
+# Descargar imagen
+FROM alpine:latest
+
+# Instalar paquetes necesarios para compilacion
+RUN apk update && apk upgrade \
+  && apk add alpine-sdk cmake \
+  readline-dev gettext-dev libintl intltool \
+  valgrind vim bash
+
+RUN apk add --no-cache su-exec
+
+# Crear usuario latino
+RUN addgroup -S latino && adduser -S latino -G latino
+USER latino
+
+# Crear directorios para copiar archivos
+RUN mkdir /home/latino/codigo
+RUN mkdir /home/latino/codigo/src
+RUN mkdir /home/latino/codigo/include
+RUN mkdir /home/latino/codigo/ejemplos
+
+# Establecer directorio de trabajo
+WORKDIR /home/latino/codigo
+
+# Copiar solo los archivos necesarios para compilar y ejemplos de latino
+COPY --chown=latino:latino CMakeLists.txt .
+COPY --chown=latino:latino gcc_compilar.sh .
+COPY --chown=latino:latino src/. src/
+COPY --chown=latino:latino include/. include/
+COPY --chown=latino:latino ejemplos/. ejemplos/
+
+# Compilar latino e instalarlo
+# RUN cmake . && \
+#  make
+RUN cmake -DCMAKE_BUILD_TYPE=Debug -G "Unix Makefiles" .
+RUN make
+
+# RUN su-exec latino make install
+
+# Ejecutar latino
+WORKDIR /home/latino/codigo/src
+CMD ["latino", "../ejemplos/02-hola.lat"]

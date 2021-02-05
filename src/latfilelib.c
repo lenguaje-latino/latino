@@ -24,7 +24,7 @@ THE SOFTWARE.
 
 #include "latino.h"
 
-//Define en donde el comando Escribir escribira
+// Define en donde el comando Escribir escribira
 #define _inicio 0
 #define _final -1
 
@@ -87,7 +87,7 @@ static void file_leer(lat_mv *mv) {
         latC_apilar(mv, latO_falso);
         return;
     }
-    char * final;
+    char *final;
     size_t n = 0;
     int c;
     fseek(archivo, 0, SEEK_END);
@@ -153,22 +153,25 @@ static void file_duplicar(lat_mv *mv) {
     lat_objeto *a = latC_desapilar(mv);
     char *aa = latC_checar_cadena(mv, a);
     char *bb = latC_checar_cadena(mv, b);
-    if (strcmp(aa, bb)==0) {
-        latC_error(mv, "Error al duplicar archivo '%s', nombre o ruta deven ser distintos", latC_checar_cadena(mv, b));
+    if (strcmp(aa, bb) == 0) {
+        latC_error(
+            mv,
+            "Error al duplicar archivo '%s', nombre o ruta deven ser distintos",
+            latC_checar_cadena(mv, b));
     } else {
         FILE *archivo, *copiar;
         int txt;
         archivo = fopen(latC_checar_cadena(mv, a), "r");
         copiar = fopen(latC_checar_cadena(mv, b), "wb");
         if (!archivo) {
-            latC_error(mv, "Error: No se pudo abrir el archivo '%s'", latC_checar_cadena(mv, a));
+            latC_error(mv, "Error: No se pudo abrir el archivo '%s'",
+                       latC_checar_cadena(mv, a));
         } else if (!copiar) {
-            latC_error(mv, "Error: No se pudo abrir el archivo '%s'", latC_checar_cadena(mv, b));
+            latC_error(mv, "Error: No se pudo abrir el archivo '%s'",
+                       latC_checar_cadena(mv, b));
         }
-        while ((txt=fgetc(archivo)) != EOF)
-        fputc(txt, copiar);
-        // const char *txt = archivo;
-        // fprintf(copiar, "%s", txt);
+        while ((txt = fgetc(archivo)) != EOF)
+            fputc(txt, copiar);
         fclose(archivo);
         fclose(copiar);
     }
@@ -201,7 +204,7 @@ static void file_crear(lat_mv *mv) {
 static void file_renombrar(lat_mv *mv) {
     lat_objeto *b = latC_desapilar(mv);
     lat_objeto *a = latC_desapilar(mv);
-    char *nuevo = (char*)malloc(MAX_ID_LENGTH);
+    char *nuevo = (char *)malloc(MAX_ID_LENGTH);
     strcpy(nuevo, "");
     strcpy(nuevo, latC_checar_cadena(mv, b));
     bool ret = rename(latC_checar_cadena(mv, a), nuevo);
@@ -225,8 +228,6 @@ static const lat_CReg libfile[] = {{"leer", file_leer, 1},
                                    {"lineas", file_lineas, 1},
                                    {"ejecutar", file_ejecutar, 1},
                                    {"escribir", file_escribir, 2},
-                                //    {"agregar", file_agregar,3},
-                                //    {"copiar", file_duplicar, 2},
                                    {"duplicar", file_duplicar, 2},
                                    {"anexar", file_anexar, 2},
                                    {"eliminar", file_eliminar, 1},

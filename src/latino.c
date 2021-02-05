@@ -37,7 +37,7 @@ Para depurar en Netbeans ir a propiedades del proyecto -> Run command y Agregar
 extern int yydebug = 0; /* 1 para debuguear analizador lexico/sintactico */
 #endif
 
-extern int parse_silent = 0;
+int parse_silent = 0;
 char *filename = NULL;
 
 void str_ejecutar(lat_mv *mv);
@@ -99,7 +99,8 @@ int main(int argc, char *argv[]) {
         if (!strcmp(argv[i], "-v") || !strcmp(argv[i], "--version")) {
             lat_version_simple();
             return EXIT_SUCCESS;
-        } else if (!strcmp(argv[i], "-a") || !strcmp(argv[i], "--ayuda") || !strcmp(argv[i], "--help")) {
+        } else if (!strcmp(argv[i], "-a") || !strcmp(argv[i], "--ayuda") ||
+                   !strcmp(argv[i], "--help")) {
             lat_ayuda();
             return EXIT_SUCCESS;
         } else if (!strcmp(argv[i], "-e")) {
@@ -140,6 +141,9 @@ int main(int argc, char *argv[]) {
                 lat_bytecode *bc = (lat_bytecode *)latM_asignar(
                     NULL, sizeof(lat_bytecode) * (ninst + 2));
                 memcpy(bc, codigo, latM_tamanio(bc));
+#if DEPURAR_MEM
+                printf("main.bc: %p\n", bc);
+#endif
                 bc[ninst - 1] = latMV_bytecode_crear(
                     LOAD_NAME, 0, 0, latC_crear_cadena(mv, "menu"), 0, 0,
                     mv->nombre_archivo);
@@ -166,6 +170,6 @@ int main(int argc, char *argv[]) {
         lat_version();
         latR_REPL(mv);
     }
-    // latC_destruir_mv(mv);
+    latC_destruir_mv(mv);
     return EXIT_SUCCESS;
 }

@@ -121,10 +121,10 @@ void latSO_tiempo(lat_mv *mv) {
         struct tm estructura;
         char res[MAX_STR_INTERN];
 #ifndef _WIN32
-		localtime_r(&unix_time, &estructura); 
+        localtime_r(&unix_time, &estructura);
 #else
-		localtime_s(&estructura, &unix_time);
-#endif // !_WIN32        
+        localtime_s(&estructura, &unix_time);
+#endif // !_WIN32
         if (!strftime(res, sizeof(res), ftmstr, &estructura)) {
             latC_apilar(mv, latO_nulo);
         } else {
@@ -188,38 +188,16 @@ static void latSO_usuario(lat_mv *mv) {
     latC_apilar(mv, tmp);
 }
 
-static void latSO_operativo(lat_mv *mv){
+static void latSO_operativo(lat_mv *mv) {
     lat_objeto *o = latC_desapilar(mv);
     lat_objeto *v = latO_falso;
     char *os = latC_checar_cadena(mv, o);
     char *ox = SISTEMAOPERATIVO;
-    if (strcmp(ox,os)==0){
+    if (strcmp(ox, os) == 0) {
         v = latO_verdadero;
     }
     latC_apilar(mv, v);
 }
-
-/*
-void latSO_fork(lat_mv *mv) {
-    bool pid_ok = false;
-    pid_t pid = fork();
-    if (pid == 0) {
-        pid_ok = true;
-    } else if (pid > 0) {
-        pid_ok = true;
-    }
-    if (!pid_ok) {
-        latC_error(mv, "error en fork");
-    } else {
-        lat_objeto *datos = latC_crear_lista(mv, latL_crear(mv));
-        latL_agregar(mv, latC_checar_lista(mv, datos),
-                     latC_crear_numerico(mv, pid));
-        latL_agregar(mv, latC_checar_lista(mv, datos),
-                     latC_crear_numerico(mv, getpid()));
-        latC_apilar(mv, datos);
-    }
-}
-*/
 
 static const lat_CReg libsistema[] = {{"dormir", latSO_dormir, 1},
                                       {"ejecutar", latSO_ejecutar, 1},
