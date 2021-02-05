@@ -31,12 +31,12 @@ THE SOFTWARE.
 #include <limits.h>
 #include <locale.h>
 #ifdef __APPLE__
-    #include <malloc/malloc.h>
-#elif(defined __WIN32__) || (defined _WIN32)
-    #define BUILD_REGEX_DLL 1
-    #include <malloc.h>
+#include <malloc/malloc.h>
+#elif (defined __WIN32__) || (defined _WIN32)
+#define BUILD_REGEX_DLL 1
+#include <malloc.h>
 #else
-    #include <malloc.h>
+#include <malloc.h>
 #endif
 #include <math.h>
 #include <memory.h>
@@ -54,13 +54,13 @@ THE SOFTWARE.
 #include "latlist.h"
 #include "latmv.h"
 #include "latobj.h"
-/* Suprime warn_unused_result */ 
+/* Suprime warn_unused_result */
 #pragma GCC diagnostic ignored "-Wunused-result"
 
 /** Version mayor de Latino */
 #define LAT_VERSION_MAYOR "1"
 /** Version menor de Latino */
-#define LAT_VERSION_MENOR "1"
+#define LAT_VERSION_MENOR "3"
 /** Version de correcion de errores */
 #define LAT_VERSION_PARCHE "0"
 /** Version de Latino */
@@ -69,7 +69,7 @@ THE SOFTWARE.
 /** Derechos de Latino */
 #define LAT_DERECHOS                                                           \
     LAT_VERSION                                                                \
-    "\nTodos los derechos reservados (C) 2015-2019. Latinoamerica"
+    "\nTodos los derechos reservados (C) 2015-2020. Latinoamerica"
 
 #define LAT_ERRMEM 1
 #define LAT_ERRRUN 2
@@ -116,26 +116,21 @@ extern int parse_silent;
 
 /** Tamanio maximo de instrucciones bytecode de una fun */
 #define MAX_BYTECODE_FUNCTION (1024 * 128)
-/** Tamanio maximo de memoria virtual permitida*/
+/** Tamanio maximo de memoria virtual permitida */
 #define MAX_VIRTUAL_MEMORY (MAX_BYTECODE_FUNCTION * 256)
-//#define MAX_VIRTUAL_MEMORY 134217728
 /** Tamanio maximo de una cadena para ser almacenada en HASH TABLE */
 #define MAX_STR_INTERN 64
-/** Tamanio maximo de una cadena almacenada dinamicamente*/
+/** Tamanio maximo de una cadena almacenada dinamicamente */
 #define MAX_STR_LENGTH (1024 * 1024)
 /** Tamanio maximo de la pila de la maquina virtual */
-//#define MAX_STACK_SIZE (1024 * 8)
 #define MAX_STACK_SIZE (1024 * 8)
+#define MAX_STACK_CONTEXT_SIZE MAX_STACK_SIZE
 /** Tamanio maximo de una ruta de derectorio */
 #define MAX_PATH_LENGTH 1024
 /** Tamanio maximo de la entrada por teclado */
 #define MAX_INPUT_SIZE 512
 /** Maximo numero de llamadas recursivas a fun */
-#ifdef __APPLE__
 #define MAX_CALL_FUNCTION 1024
-#else
-#define MAX_CALL_FUNCTION 27
-#endif
 /** Maximo numero de caracteres para un identificador */
 #define MAX_ID_LENGTH 64
 /** Maximo numero de bits para un buffer */
@@ -150,13 +145,11 @@ extern int parse_silent;
 #define FUNCION_VAR_ARGS (-1)
 
 #if defined(LATINO_BUILD_AS_DLL)
-
 #if defined(LATINO_CORE) || defined(LATINO_LIB)
 #define LATINO_API __declspec(dllexport)
 #else
 #define LATINO_API __declspec(dllimport)
 #endif
-
 #else
 #define LATINO_API extern
 #endif
@@ -168,7 +161,7 @@ extern int parse_silent;
 #define latO_verdadero (&latO_verdadero_)
 #define latO_falso (&latO_falso_)
 
-/* maquina virutal */
+/* maquina virtual */
 typedef struct lat_mv lat_mv;
 typedef struct _lat_objeto lat_objeto;
 typedef struct lat_funcion lat_funcion;

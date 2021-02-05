@@ -121,10 +121,10 @@ void latSO_tiempo(lat_mv *mv) {
         struct tm estructura;
         char res[MAX_STR_INTERN];
 #ifndef _WIN32
-		localtime_r(&unix_time, &estructura); 
+        localtime_r(&unix_time, &estructura);
 #else
-		localtime_s(&estructura, &unix_time);
-#endif // !_WIN32        
+        localtime_s(&estructura, &unix_time);
+#endif // !_WIN32
         if (!strftime(res, sizeof(res), ftmstr, &estructura)) {
             latC_apilar(mv, latO_nulo);
         } else {
@@ -162,12 +162,23 @@ static void latSO_iraxy(lat_mv *mv) {
     lat_objeto *x = latC_desapilar(mv);
     lat_objeto *y = latC_desapilar(mv);
     int yx = latC_checar_numerico(mv, y), xx = latC_checar_numerico(mv, x);
+#ifdef _WIN32
+    HANDLE hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
+    COORD pos = {yx, xx};
+    SetConsoleCursorPosition(hConsole, pos);
+    WriteConsole(hConsole, NULL, NULL, NULL, NULL);
+#else
     printf("%c[%d;%df", 0x1B, yx, xx);
+#endif
     fflush(stdout);
 }
 
 static void latSO_usuario(lat_mv *mv) {
+#ifdef _WIN32
+    char *user = getenv("username");
+#else
     char *user = getenv("USER");
+#endif
     lat_objeto *tmp;
     if (user != NULL || user) {
         tmp = latC_crear_cadena(mv, user);
@@ -177,27 +188,16 @@ static void latSO_usuario(lat_mv *mv) {
     latC_apilar(mv, tmp);
 }
 
-/*
-void latSO_fork(lat_mv *mv) {
-    bool pid_ok = false;
-    pid_t pid = fork();
-    if (pid == 0) {
-        pid_ok = true;
-    } else if (pid > 0) {
-        pid_ok = true;
+static void latSO_operativo(lat_mv *mv) {
+    lat_objeto *o = latC_desapilar(mv);
+    lat_objeto *v = latO_falso;
+    char *os = latC_checar_cadena(mv, o);
+    char *ox = SISTEMAOPERATIVO;
+    if (strcmp(ox, os) == 0) {
+        v = latO_verdadero;
     }
-    if (!pid_ok) {
-        latC_error(mv, "error en fork");
-    } else {
-        lat_objeto *datos = latC_crear_lista(mv, latL_crear(mv));
-        latL_agregar(mv, latC_checar_lista(mv, datos),
-                     latC_crear_numerico(mv, pid));
-        latL_agregar(mv, latC_checar_lista(mv, datos),
-                     latC_crear_numerico(mv, getpid()));
-        latC_apilar(mv, datos);
-    }
+    latC_apilar(mv, v);
 }
-*/
 
 static const lat_CReg libsistema[] = {{"dormir", latSO_dormir, 1},
                                       {"ejecutar", latSO_ejecutar, 1},
@@ -209,6 +209,8 @@ static const lat_CReg libsistema[] = {{"dormir", latSO_dormir, 1},
                                       {"iraxy", latSO_iraxy, 2},
                                       {"tiempo", latSO_tiempo, 2},
                                       {"usuario", latSO_usuario, 0},
+                                      {"operativo", latSO_operativo, 1},
+                                      {"op", latSO_operativo, 1},
                                       {NULL, NULL}};
 
 void latC_abrir_liblatino_syslib(lat_mv *mv) {

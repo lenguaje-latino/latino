@@ -31,13 +31,14 @@ THE SOFTWARE.
 
 void *latM_asignar(lat_mv *mv, size_t size) {
     void *ptr = calloc(1, size);
-    // void *ptr = malloc(size);
     if (ptr == NULL) {
         latC_error(mv, "Memoria virtual agotada");
     }
     if (mv) {
-        // size_t tam = latM_tamanio(ptr);
-        // printf("+++ memoria asignada: %zu, %p\n", tam, ptr);
+#if DEPURAR_MEM
+        size_t tam = latM_tamanio(ptr);
+        printf("+++ memoria asignada: %zu, %p\n", tam, ptr);
+#endif
         mv->memoria_usada += latM_tamanio(ptr);
     }
     return ptr;
@@ -52,26 +53,28 @@ size_t latM_tamanio(void *ptr) {
 }
 
 void *latM_reasignar(lat_mv *mv, void *ptr, size_t size) {
-    // size_t mem_ini = latM_tamanio(ptr);
     void *value = realloc(ptr, size);
-    if (value == NULL)
+    if (value == NULL) {
         latC_error(mv, "Memoria virtual agotada");
-    /*printf("memoria inicial: %zu memoria nueva: %zu, %p\n",
-    mem_ini, latM_tamanio(value), &value);*/
+    }
+#if DEPURAR_MEM
+    size_t mem_ini = latM_tamanio(ptr);
+    printf("memoria inicial: %zu memoria nueva: %zu, %p\n", mem_ini,
+           latM_tamanio(value), &value);
+#endif
     return value;
 }
 
 void latM_liberar(lat_mv *mv, void *ptr) {
-    if (ptr != NULL) //&& latM_tamanio(ptr) > 0
-    {
-        // printf("--- memoria liberada: %zu, %p\n",
-        // latM_tamanio(ptr), ptr);
+    if (ptr != NULL) {
         if (mv != NULL) {
-            // size_t tam = latM_tamanio(ptr);
-            // printf("--- memoria liberada: %zu, %p\n", tam, ptr);
+#if DEPURAR_MEM
+            size_t tam = latM_tamanio(ptr);
+            printf("--- memoria liberada: %zu, %p\n", tam, ptr);
+#endif
             mv->memoria_usada -= latM_tamanio(ptr);
         }
-        ptr = NULL;
         free(ptr);
+        ptr = NULL;
     }
 }

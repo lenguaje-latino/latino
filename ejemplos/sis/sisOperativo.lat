@@ -1,0 +1,19 @@
+/*
+Este código muestra un mensaje diferente
+en cada sistema operativo reconocido por Latino.
+
+El comando que verifica el sistema operativo se puede
+invocar usando "sis.op" o "sis.operativo", ambas formas son correctas.
+"WIN32", "APPLE", "LINUX" son los parámetros reconocidos por Latino
+y estos debe ser escritos en mayúsculas.
+*/
+
+si sis.op("WIN32")
+    escribir("Latino esta corriendo en una MS-Windows")
+osi sis.operativo("APPLE")
+    escribir("Latino esta corriendo en macOS")
+osi sis.operativo("LINUX")
+    escribir ("Latino esta corriendo en Linux")
+sino
+    escribir("Lo sentimos, pero el sistema operativo solicitado no es reconocido por Latino. En caso de ser un error, verifique que usted tenga correctamente escrito el nombre del sistema.")
+fin

@@ -28,7 +28,7 @@ THE SOFTWARE.
 bool inicia_con(const char *base, const char *str);
 char *reemplazar(char *str, const char *orig, const char *rep);
 
-//void base_poner(lat_mv *mv);
+// void base_poner(lat_mv *mv);
 
 static void completion(const char *buf, linenoiseCompletions *lc) {
     if (inicia_con(buf, "pon")) {
@@ -42,7 +42,6 @@ int leer_linea(char *buffer) {
     char *tmp = malloc(MAX_INPUT_SIZE);
 REP:
     input = linenoise(prompt);
-    // printf("input: %s\n", input);
     if (input == NULL) {
         return -1;
     }
@@ -51,8 +50,7 @@ REP:
         memcpy(tmp, input, len);
         tmp[len] = '\0';
         int estatus;
-        // printf("tmp: %s\n", tmp);
-        latA_analizar_exp(tmp, &estatus);
+        ast *nodo = latA_analizar_exp(tmp, &estatus);
         if (estatus == 1) {
             tmp = strcat(tmp, "\n");
             prompt = "    >>> ";
@@ -61,6 +59,7 @@ REP:
             prompt = "latino> ";
             strcpy(buffer, tmp);
             free(tmp);
+            latA_destruir(nodo);
             return 0;
         }
     }
@@ -84,23 +83,14 @@ void latR_REPL(lat_mv *mv) {
     linenoiseSetCompletionCallback(completion);
     while (leer_linea(buf) != -1) {
         nodo = latA_analizar_exp(buf, &status);
-        if (nodo != NULL) {
+        if (status == 0 && nodo != NULL) {
             lat_objeto *curexpr = latC_analizar(mv, nodo);
             status = latC_llamar_funcion(mv, curexpr);
-            /*lat_objeto *o = latC_tope(mv);
-            if (strstr(buf, "imprimirf") != NULL) {
-                printf("\n");
-            } else if (o != NULL && o->tipo != T_NULL &&
-                       strstr(buf, "poner") == NULL &&
-                       strstr(buf, "escribir") == NULL &&
-                       strstr(buf, "imprimir") == NULL &&
-                       strstr(buf, "imprimirf") == NULL) {
-                base_poner(mv);
-            }*/
+            latO_destruir(mv, curexpr);
         }
-        /* se guarda el comando al historial aunque haya error */
+        latA_destruir(nodo);
+        // se guarda el comando al historial aunque haya error
         char *tmp = reemplazar(buf, "\n", "");
-        // printf("guardando en HISTORY_FILE: %s\n", buf);
         linenoiseHistoryAdd(tmp);
         linenoiseHistorySave(dir_history);
         free(tmp);

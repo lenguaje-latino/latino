@@ -27,6 +27,7 @@ THE SOFTWARE.
 
 /** Determina el sistema operativo*/
 #if (defined __WIN32__) || (defined _WIN32)
+#define SISTEMAOPERATIVO "WIN32"
 #define LATINO_BUILD_AS_DLL
 #define PATH_SEP "\\"
 #define LAT_FUNC extern
@@ -34,7 +35,7 @@ THE SOFTWARE.
 #include <windows.h>
 
 #include "regex.h"
-#define snprintf(s, l, f, i) _snprintf(s, l, f, i)
+#define snprintf(s, l, f, ...) _snprintf(s, l, f, __VA_ARGS__)
 #define getcwd(ruta, tam) GetCurrentDirectory(MAX_PATH, ruta);
 #define malloc_size(ptr) _msize(ptr)
 #define latC_popen(L, c, m) ((void)L, _popen(c, m))
@@ -43,9 +44,12 @@ THE SOFTWARE.
 #define latC_clear "@cls"
 #define latC_sleep(mili) Sleep(mili * 1000)
 #define latC_leer_linea(x) fgets(x, MAX_INPUT_SIZE, stdin)
-#define LAT_ERROR_FMT "%s:%d:%d: %s\n"
+#define LAT_ERROR_FMT "%s:%d:%d: %s\0"
+// #if DEPURAR_MEM
 /* Visual Leak Detector for Visual C++ */
-//#include <vld.h>
+// https://github.com/KindDragon/vld
+// #include <vld.h>
+// #endif
 #endif /* _WIN32 */
 
 /* __MacOS__ */
@@ -53,13 +57,14 @@ THE SOFTWARE.
 //#include "TargetConditionals.h"
 //#include <GLUT/glut.h>
 //#include <OpenGL/OpenGL.h>
+#define SISTEMAOPERATIVO "APPLE"
 #include <dlfcn.h>
 #include <readline/history.h>
 #include <readline/readline.h>
 #include <regex.h>
 #include <time.h>
 #include <unistd.h>
-#define PATH_SET "~/"
+#define PATH_SEP "/"
 #define LAT_FUNC extern
 #define malloc_size(ptr)
 #define latC_popen(L, c, m) ((void)L, fflush(NULL), popen(c, m))
@@ -72,6 +77,7 @@ THE SOFTWARE.
 /* --EndsMacOS-- */
 
 #ifdef __linux__
+#define SISTEMAOPERATIVO "LINUX"
 #include <dlfcn.h>
 #include <readline/history.h>
 #include <readline/readline.h>

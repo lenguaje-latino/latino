@@ -97,7 +97,7 @@ static void lista_insertar(lat_mv *mv) {
     lat_objeto *c = latC_desapilar(mv);
     lat_objeto *b = latC_desapilar(mv);
     lat_objeto *a = latC_desapilar(mv);
-    latL_insertar_elemento(mv, latC_checar_lista(mv, a), b,
+    latL_insertar_elemento(mv, latC_checar_lista(mv, a), latO_clonar(mv, b),
                            latC_checar_numerico(mv, c));
 }
 
@@ -148,6 +148,28 @@ static void lista_crear(lat_mv *mv) {
 }
 
 void lista_concatenar(lat_mv *mv) {
+    lat_objeto *l2 = latC_desapilar(mv);
+    lat_objeto *l1 = latC_desapilar(mv);
+
+    lista *nl = latL_crear(mv);
+    lista *lt1 = latC_checar_lista(mv, l1);
+    lista *lt2 = latC_checar_lista(mv, l2);
+
+    int i;
+    int len1 = latL_longitud(lt1), len2 = latL_longitud(lt2);
+
+    for (i = 0; i < len1; i++) {
+        latL_agregar(mv, nl, latL_obtener_elemento(mv, lt1, i));
+    }
+    for (i = 0; i < len2; i++) {
+        latL_agregar(mv, nl, latL_obtener_elemento(mv, lt2, i));
+    }
+
+    lat_objeto *tmp = latC_crear_lista(mv, nl);
+    latC_apilar(mv, tmp);
+}
+
+void lista_separar(lat_mv *mv) {
     lat_objeto *separador = latC_desapilar(mv);
     lat_objeto *list_ = latC_desapilar(mv);
     long int mem = 64; // incluyo en el valor de la memoria 64 espacios por si
@@ -211,6 +233,7 @@ static const lat_CReg liblist[] = {
     {"contiene", lista_contiene, 2},
     {"concatenar", lista_concatenar, 2},
     {"crear", lista_crear, 1},
+    {"separar", lista_separar, 2},
     {NULL, NULL}};
 
 void latC_abrir_liblatino_listlib(lat_mv *mv) {

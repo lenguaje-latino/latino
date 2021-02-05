@@ -1,5 +1,0 @@
-i=0
-mientras(i < 1000000)
-    poner(i)
-    i++
-fin

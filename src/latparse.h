@@ -31,10 +31,10 @@
    version 2.2 of Bison.  */
 
 #ifndef YY_YY_LATPARSE_H_INCLUDED
-# define YY_YY_LATPARSE_H_INCLUDED
+#define YY_YY_LATPARSE_H_INCLUDED
 /* Debug traces.  */
 #ifndef YYDEBUG
-# define YYDEBUG 0
+#define YYDEBUG 0
 #endif
 #if YYDEBUG
 extern int yydebug;
@@ -42,9 +42,8 @@ extern int yydebug;
 
 /* Token type.  */
 #ifndef YYTOKENTYPE
-# define YYTOKENTYPE
-  enum yytokentype
-  {
+#define YYTOKENTYPE
+enum yytokentype {
     NUMERICO = 258,
     CADENA = 259,
     IDENTIFICADOR = 260,
@@ -87,7 +86,7 @@ extern int yydebug;
     MODULO_IGUAL = 297,
     REGEX = 298,
     GLOBAL = 299
-  };
+};
 #endif
 /* Tokens.  */
 #define NUMERICO 258
@@ -136,21 +135,18 @@ extern int yydebug;
 /* Value type.  */
 
 /* Location type.  */
-#if ! defined YYLTYPE && ! defined YYLTYPE_IS_DECLARED
+#if !defined YYLTYPE && !defined YYLTYPE_IS_DECLARED
 typedef struct YYLTYPE YYLTYPE;
-struct YYLTYPE
-{
-  int first_line;
-  int first_column;
-  int last_line;
-  int last_column;
+struct YYLTYPE {
+    int first_line;
+    int first_column;
+    int last_line;
+    int last_column;
 };
-# define YYLTYPE_IS_DECLARED 1
-# define YYLTYPE_IS_TRIVIAL 1
+#define YYLTYPE_IS_DECLARED 1
+#define YYLTYPE_IS_TRIVIAL 1
 #endif
 
-
-
-int yyparse (ast **root, void *scanner);
+int yyparse(ast **root, void *scanner);
 
 #endif /* !YY_YY_LATPARSE_H_INCLUDED  */
