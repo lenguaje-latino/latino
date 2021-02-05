@@ -1,5 +1,5 @@
 #ignora directorios
-bin/latino
+bin/
 build/
 visualstudio/
 msvc/
