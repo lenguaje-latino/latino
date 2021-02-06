@@ -7,11 +7,9 @@ RUN apk update && apk upgrade \
   readline-dev gettext-dev libintl gnu-libiconv \
   pcre2 bash
 
-RUN apk add --no-cache su-exec
 
 # Crear usuario docker
 RUN addgroup -S docker && adduser -S docker -G docker
-RUN echo '%sudo ALL=(ALL) NOPASSWD:ALL' >> /etc/sudoers
 USER docker
 
 # Crear directorios para copiar archivos
@@ -34,14 +32,13 @@ COPY --chown=docker:docker ejemplos/. ejemplos/
 COPY --chown=docker:docker tools/parser/. tools/parser/
 
 # Compilar latino e instalarlo
-# RUN cmake . && \
-#  make
-
 WORKDIR /home/docker/codigo
 RUN cmake -DCMAKE_BUILD_TYPE=Debug -G "Unix Makefiles" .
 RUN make
-RUN su-exec make install
+
+USER root
+RUN make install
 
 # Ejecutar latino
-WORKDIR /home/latino/codigo/src
+WORKDIR /home/docker/codigo/src
 CMD ["latino", "../ejemplos/02-hola.lat"]

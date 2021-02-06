@@ -11,9 +11,9 @@ RUN apt-get install -y build-essential \
   valgrind vim bash
 
 # Crear usuario docker
-RUN addgroup docker
-RUN adduser docker --ingroup docker
-RUN usermod -aG sudo docker
+RUN adduser --disabled-password --gecos '' docker
+RUN adduser docker sudo
+RUN echo '%sudo ALL=(ALL) NOPASSWD:ALL' >> /etc/sudoers
 USER docker
 
 # Crear directorios para copiar archivos
@@ -36,7 +36,7 @@ COPY --chown=docker:docker ejemplos/. ejemplos/
 # Compilar latino en modo Debug
 RUN cmake -DCMAKE_BUILD_TYPE=Debug -G "Unix Makefiles" .
 RUN make
-# RUN sudo make install
+RUN sudo make install
 
 # Ejecutar latino
 WORKDIR /home/docker/codigo/src

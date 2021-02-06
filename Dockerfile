@@ -9,7 +9,7 @@ RUN apt-get install -y --assume-yes \
 RUN apt-get install -y build-essential \
 	cmake libreadline-dev sudo
 
-# Crear usuario latino
+# Crear usuario docker
 RUN adduser --disabled-password --gecos '' docker
 RUN adduser docker sudo
 RUN echo '%sudo ALL=(ALL) NOPASSWD:ALL' >> /etc/sudoers
@@ -36,5 +36,6 @@ RUN cmake . && \
 RUN sudo make install
 
 # Ejecutar latino
+USER docker
 WORKDIR /home/docker/codigo/src
 CMD ["latino", "../ejemplos/02-hola.lat"]
