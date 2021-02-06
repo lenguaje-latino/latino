@@ -7,7 +7,7 @@ RUN apt-get install -y --assume-yes \
 	apt-utils \
 	dialog
 RUN apt-get install -y build-essential \
-  cmake libreadline-dev sudo
+	cmake libreadline-dev sudo
 
 # Crear usuario latino
 RUN adduser --disabled-password --gecos '' docker
@@ -32,7 +32,7 @@ COPY --chown=docker:docker ejemplos/. ejemplos/
 
 # Compilar latino e instalarlo
 RUN cmake . && \
-make
+	make
 RUN sudo make install
 
 # Ejecutar latino
