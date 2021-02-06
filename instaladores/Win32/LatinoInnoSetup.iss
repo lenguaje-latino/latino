@@ -65,6 +65,7 @@ Source: "..\..\build\src\Debug\*"; DestDir: "{app}\bin"; Flags: ignoreversion
 Source: "..\..\build\src\regex-2.7-src\src\Debug\*"; DestDir: "{app}\lib"; Flags: ignoreversion
 Source: "..\..\build\src\linenoise\Debug\*"; DestDir: "{app}\lib"; Flags: ignoreversion
 Source: "..\..\include\*.h"; DestDir: "{app}\include"; Flags: ignoreversion recursesubdirs createallsubdirs
+Source: "..\..\src\regex-2.7-src\src\regex.h"; DestDir: "{app}\include"; Flags: ignoreversion recursesubdirs createallsubdirs
 Source: "..\Win32\bin\latino.ico"; DestDir: "{app}\bin"; Flags: ignoreversion
 Source: "..\Win32\bin\*.rtf"; DestDir: "{app}"; Flags: ignoreversion
 Source: "..\Win32\bin\manual.url"; DestDir: "{app}"; Flags: ignoreversion

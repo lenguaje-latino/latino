@@ -402,12 +402,6 @@ iteration_statement
     | DESDE '(' declaration ';' expression ';' statement ')'
         statement_list  FIN {
         $$ = latA_desde($3, $5, $7, $9); }
-    | PARA IDENTIFICADOR EN RANGO '(' NUMERICO ',' NUMERICO ',' NUMERICO ')'
-        statement_list FIN {
-        printf(LAT_ERROR_FMT, filename, @2.first_line, @2.first_column, "entre al para_loop de bison");
-        $$ = latA_para($2, $6, $8, $10, $12);
-        printf(LAT_ERROR_FMT, filename, @2.first_line, @2.first_column, "sali del para_loop de bison");
-        }
     ;
 
 jump_statement
