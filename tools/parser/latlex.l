@@ -149,3 +149,4 @@ EXP ([Ee][-+]?[0-9]+)
 .                                               { ; }  /* ignora caracteres incorrectos */
 
 %%
+/*"clase"                                         { return CLASS; }*/

@@ -99,9 +99,9 @@ void latC_abrir_liblatino_filelib   (lat_mv *mv);
 void latC_abrir_liblatino_mathlib   (lat_mv *mv);
 void latC_abrir_liblatino_syslib    (lat_mv *mv);
 void latC_abrir_liblatino_devlib    (lat_mv *mv);
-void latC_abrir_liblatino_uilib     (lat_mv *mv);
 
 /*
+void latC_abrir_liblatino_uilib     (lat_mv *mv);
 void latC_abrir_liblatino_gc(lat_mv *mv);
 void latC_abrir_liblatino_gtklib(lat_mv *mv);
  */
@@ -371,8 +371,8 @@ LATINO_API lat_mv *latC_crear_mv() {
     latC_abrir_liblatino_mathlib    (mv);
     latC_abrir_liblatino_syslib     (mv);
     latC_abrir_liblatino_devlib     (mv);
-    latC_abrir_liblatino_uilib      (mv);
     /*
+    latC_abrir_liblatino_uilib      (mv);
     latC_abrir_liblatino_gc(mv);
     latC_abrir_liblatino_gtklib(mv);
      */
