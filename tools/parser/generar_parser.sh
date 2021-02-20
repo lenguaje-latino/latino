@@ -1,6 +1,5 @@
 #!/bin/bash
 flex latlex.l
 bison -y latparse.y
-cp *.c ../../src
-# cp *.h ../../src
-cp *.h ../../include
+mv *.c ../../src
+mv *.h ../../include

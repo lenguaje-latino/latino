@@ -139,7 +139,9 @@ typedef struct ast {
 } ast;
 
 /** \brief Estado del analizador lexico */
-typedef struct lex_state { int insert; } lex_state;
+typedef struct lex_state {
+    int insert;
+} lex_state;
 
 /** \brief Tipo de dato que se envia al analizador lexico */
 typedef union YYSTYPE {

@@ -36,7 +36,7 @@ THE SOFTWARE.
 // #include <WinInet.h>
 
 #include "regex.h"
-#define snprintf(s, l, f, i) _snprintf(s, l, f, i)
+#define snprintf(s, l, f, ...) _snprintf(s, l, f, __VA_ARGS__)
 #define getcwd(ruta, tam) GetCurrentDirectory(MAX_PATH, ruta);
 #define malloc_size(ptr) _msize(ptr)
 #define latC_popen(L, c, m) ((void)L, _popen(c, m))
@@ -45,9 +45,12 @@ THE SOFTWARE.
 #define latC_clear "@cls"
 #define latC_sleep(mili) Sleep(mili * 1000)
 #define latC_leer_linea(x) fgets(x, MAX_INPUT_SIZE, stdin)
-#define LAT_ERROR_FMT "%s:%d:%d: %s\n"
+#define LAT_ERROR_FMT "%s:%d:%d: %s\0"
+// #if DEPURAR_MEM
 /* Visual Leak Detector for Visual C++ */
-//#include <vld.h>
+// https://github.com/KindDragon/vld
+// #include <vld.h>
+// #endif
 #endif /* _WIN32 */
 
 /* __MacOS__ */
