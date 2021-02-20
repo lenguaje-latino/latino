@@ -31,8 +31,10 @@ THE SOFTWARE.
 #include "latmem.h"
 
 LATINO_API lista *latL_crear(lat_mv *mv) {
-    // lista *l = (lista *)malloc(sizeof(lista));
     lista *l = latM_asignar(mv, sizeof(lista));
+#if DEPURAR_MEM
+    printf("latL_crear.l: %p\n", l);
+#endif
     l->longitud = 0;
     l->primero = NULL;
     l->ultimo = NULL;
@@ -64,6 +66,9 @@ LATINO_API void latL_limpiar_destruir(lat_mv *mv, lista *list) {
 
 LATINO_API void latL_agregar(lat_mv *mv, lista *list, void *value) {
     nodo_lista *node = latM_asignar(mv, sizeof(nodo_lista));
+#if DEPURAR_MEM
+    printf("latL_agregar.node: %p\n", node);
+#endif
     node->valor = value;
     node->siguiente = NULL;
     node->anterior = NULL;
@@ -84,8 +89,10 @@ LATINO_API void *latL_desapilar(lat_mv *mv, lista *list) {
 }
 
 LATINO_API void latL_insertar_inicio(lat_mv *mv, lista *list, void *value) {
-    // nodo_lista *node = (nodo_lista *)malloc(sizeof(nodo_lista));
     nodo_lista *node = latM_asignar(mv, sizeof(nodo_lista));
+#if DEPURAR_MEM
+    printf("latL_insertar_inicio.node: %p\n", node);
+#endif
     node->valor = value;
     if (list->primero == NULL) {
         list->primero = node;
@@ -175,7 +182,8 @@ LATINO_API nodo_lista *latL_obtener_nodo(lat_mv *mv, lista *list, int pos) {
     return NULL;
 }
 
-LATINO_API void latL_insertar_elemento(lat_mv *mv, lista *list, void *data, int pos) {
+LATINO_API void latL_insertar_elemento(lat_mv *mv, lista *list, void *data,
+                                       int pos) {
     // FIXME: Memory leak and for performance
     int len = latL_longitud(list);
     if (pos < 0 || pos > len) {

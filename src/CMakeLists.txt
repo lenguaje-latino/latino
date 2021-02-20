@@ -107,6 +107,7 @@ endif ()
 add_library(liblatino_static STATIC ${SRC_LIB})
 target_link_libraries(liblatino_static ${LIBS})
 
+<<<<<<< HEAD
 
 #
 # Ubicacion de archivos en UNIX
@@ -131,6 +132,25 @@ if(UNIX)
     install(FILES       ../include/latparse.h           DESTINATION     ${INSTALL_INCLUDE} COMPONENT Header )
     install(FILES       ../include/latrepl.h            DESTINATION     ${INSTALL_INCLUDE} COMPONENT Header )
 #else()
+=======
+IF(UNIX)
+  INSTALL(TARGETS latino DESTINATION ${INSTALL_BIN})
+  INSTALL(TARGETS liblatino DESTINATION ${INSTALL_LIB})
+  INSTALL(TARGETS liblatino_static DESTINATION ${INSTALL_LIB})
+  INSTALL(FILES man/latino.1.gz DESTINATION ${INSTALL_SHARE}/man/man1)
+  INSTALL(FILES gnu-utilities/latino.nanorc DESTINATION ${INSTALL_SHARE}/nano)
+  INSTALL(FILES gnu-utilities/latino.desktop DESTINATION ${INSTALL_SHARE}/applications)
+  INSTALL (FILES ../include/latino.h DESTINATION ${INSTALL_INCLUDE} COMPONENT Header)
+  INSTALL (FILES ../include/latast.h DESTINATION ${INSTALL_INCLUDE} COMPONENT Header)
+  INSTALL (FILES ../include/latcompat.h DESTINATION ${INSTALL_INCLUDE} COMPONENT Header)
+  INSTALL (FILES ../include/latdic.h DESTINATION ${INSTALL_INCLUDE} COMPONENT Header)
+  INSTALL (FILES ../include/latdo.h DESTINATION ${INSTALL_INCLUDE} COMPONENT Header)
+  INSTALL (FILES ../include/latlist.h DESTINATION ${INSTALL_INCLUDE} COMPONENT Header)
+  INSTALL (FILES ../include/latmem.h DESTINATION ${INSTALL_INCLUDE} COMPONENT Header)
+  INSTALL (FILES ../include/latmv.h DESTINATION ${INSTALL_INCLUDE} COMPONENT Header)
+  INSTALL (FILES ../include/latobj.h DESTINATION ${INSTALL_INCLUDE} COMPONENT Header)
+#ELSE()
+>>>>>>> 9e7c3d9aa5d238a80d09553b9ceabc7ba57941ca
 #https://stackoverflow.com/questions/13556885/how-to-change-the-executable-output-directory-for-win32-builds-in-cmake
 #  add_custom_command(target latino
 #          POST_BUILD

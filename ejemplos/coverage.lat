@@ -161,3 +161,63 @@ str = "hola mundo"
 poner(str[0])
 
 imprimirf("%s %s\n", "hola", "mundo")
+
+//una funcion varargs se crea con ... en su ultimo parametro
+  funcion concat(arg1, arg2, ...)
+    //obtenemos los parametros varargs
+    args = [...]
+    //concatenamos los primeros 2 argumentos
+    r= arg1 .. arg2
+    desde (i=0; i < args; i++)
+      r = r .. args[i]
+    fin
+    retornar r
+  fin
+  //enviamos N parametros
+  msg = concat("hola ", "mundo ", "este ", "es ", "un ", "mensaje ", "largo...")
+  escribir(msg)   //imprime: "hola mundo este es un mensaje largo..."
+
+  //otro ejemplo
+  funcion sumar(...)
+    args = [...]
+    r=0
+    desde (i=0; i < args; i++)
+      r = r + args[i]
+    fin
+    retornar r
+  fin
+  x = sumar(1,2,3,4,5)
+  imprimir(x)     //imprime: "15"
+
+  //una funcion multi-retorno es aquella que regresa N parametros
+funcion multi_ret(msg)
+  #proceso el mensaje
+  //mas codigo
+  //regreso un valor exitoso y un mensaje, puede retornar mas mensajes
+  retornar verdadero, "el mensaje se envio correctamente"
+fin
+
+//asignacion multiple de variables
+correcto, mensaje = multi_ret("hola amigos")
+
+si correcto
+  //imprime: "el mensaje se envio correctamente"
+  escribir(mensaje)
+fin
+
+//necesario para agregar la libreria dinamica
+// incluir("json")
+
+// escribir("-----------------------------------------------------")
+// escribir("convertimos de una cadena json a un objeto de latino:")
+// escribir("-----------------------------------------------------")
+// cad = '{"ok":true,"result":[{"update_id":558904697, "message":{"message_id":4507,"from":{"id":189041244,"first_name":"Bruno Ric (K)","username":"Jarriz"},"chat":{"id":189041244,"first_name":"Bruno Ric (K)","username":"Jarriz","type":"private"},"date":1475275449,"text":"hola latinos!!!"}}]}'
+// d = json.decodificar(cad)
+// escribir(d)
+
+// escribir("-----------------------------------------------------")
+// escribir("\nconvertimos un diccionario de latino a cadena json:")
+// escribir("-----------------------------------------------------")
+// dlat = { "uno" : 1, "dos" : 2, "tres" : ["esta" , "es", "una", "lista"]}
+// cad = json.codificar(dlat)
+// escribir(cad)

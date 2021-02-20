@@ -118,7 +118,6 @@ typedef struct stringtable {
 typedef struct lat_global {
     int argc;
     lat_objeto *argv;
-    lat_objeto *consts;
     lat_objeto *gc_objetos;
     stringtable strt;
     bool menu;
@@ -176,4 +175,4 @@ lat_bytecode latMV_bytecode_crear(int i, int a, int b, void *meta,
                                   char *nombre_archivo);
 int latMV_funcion_correr(lat_mv *mv, lat_objeto *func);
 
-#endif //_LATINO_MV_H_
+#endif // _LATINO_MV_H_

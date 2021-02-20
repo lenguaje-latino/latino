@@ -35,10 +35,10 @@
    are private implementation details.  Do not rely on them.  */
 
 #ifndef YY_YY_LATPARSE_H_INCLUDED
-# define YY_YY_LATPARSE_H_INCLUDED
+#define YY_YY_LATPARSE_H_INCLUDED
 /* Debug traces.  */
 #ifndef YYDEBUG
-# define YYDEBUG 0
+#define YYDEBUG 0
 #endif
 #if YYDEBUG
 extern int yydebug;
@@ -46,9 +46,8 @@ extern int yydebug;
 
 /* Token type.  */
 #ifndef YYTOKENTYPE
-# define YYTOKENTYPE
-  enum yytokentype
-  {
+#define YYTOKENTYPE
+enum yytokentype {
     NUMERICO = 258,
     CADENA = 259,
     IDENTIFICADOR = 260,
@@ -72,6 +71,7 @@ extern int yydebug;
     VERDADERO = 278,
     FALSO = 279,
     NULO = 280,
+<<<<<<< HEAD
     EXPONENTE = 281,
     PARA = 282,
     EN = 283,
@@ -96,6 +96,28 @@ extern int yydebug;
     REGEX = 302,
     GLOBAL = 303
   };
+=======
+    MAYOR_QUE = 281,
+    MENOR_QUE = 282,
+    MAYOR_IGUAL = 283,
+    MENOR_IGUAL = 284,
+    IGUAL_LOGICO = 285,
+    DIFERENTE = 286,
+    Y_LOGICO = 287,
+    O_LOGICO = 288,
+    INCREMENTO = 289,
+    DECREMENTO = 290,
+    CONCATENAR = 291,
+    CONCATENAR_IGUAL = 292,
+    MAS_IGUAL = 293,
+    MENOS_IGUAL = 294,
+    POR_IGUAL = 295,
+    ENTRE_IGUAL = 296,
+    MODULO_IGUAL = 297,
+    REGEX = 298,
+    GLOBAL = 299
+};
+>>>>>>> 9e7c3d9aa5d238a80d09553b9ceabc7ba57941ca
 #endif
 /* Tokens.  */
 #define NUMERICO 258
@@ -148,21 +170,18 @@ extern int yydebug;
 /* Value type.  */
 
 /* Location type.  */
-#if ! defined YYLTYPE && ! defined YYLTYPE_IS_DECLARED
+#if !defined YYLTYPE && !defined YYLTYPE_IS_DECLARED
 typedef struct YYLTYPE YYLTYPE;
-struct YYLTYPE
-{
-  int first_line;
-  int first_column;
-  int last_line;
-  int last_column;
+struct YYLTYPE {
+    int first_line;
+    int first_column;
+    int last_line;
+    int last_column;
 };
-# define YYLTYPE_IS_DECLARED 1
-# define YYLTYPE_IS_TRIVIAL 1
+#define YYLTYPE_IS_DECLARED 1
+#define YYLTYPE_IS_TRIVIAL 1
 #endif
 
-
-
-int yyparse (ast **root, void *scanner);
+int yyparse(ast **root, void *scanner);
 
 #endif /* !YY_YY_LATPARSE_H_INCLUDED  */

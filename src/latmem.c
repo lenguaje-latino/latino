@@ -31,7 +31,6 @@ THE SOFTWARE.
 
 void *latM_asignar(lat_mv *mv, size_t size) {
     void *ptr = calloc(1, size);
-    // void *ptr = malloc(size);
     if (ptr == NULL) {
         latC_error(mv, "Memoria virtual agotada");
     }
@@ -60,14 +59,14 @@ void *latM_reasignar(lat_mv *mv, void *ptr, size_t size) {
     }
 #if DEPURAR_MEM
     size_t mem_ini = latM_tamanio(ptr);
-    printf("memoria inicial: %zu memoria nueva: %zu, %p\n", mem_ini, latM_tamanio(value), &value);
+    printf("memoria inicial: %zu memoria nueva: %zu, %p\n", mem_ini,
+           latM_tamanio(value), &value);
 #endif
     return value;
 }
 
 void latM_liberar(lat_mv *mv, void *ptr) {
-    if (ptr != NULL)
-    {
+    if (ptr != NULL) {
         if (mv != NULL) {
 #if DEPURAR_MEM
             size_t tam = latM_tamanio(ptr);
@@ -76,5 +75,6 @@ void latM_liberar(lat_mv *mv, void *ptr) {
             mv->memoria_usada -= latM_tamanio(ptr);
         }
         free(ptr);
+        ptr = NULL;
     }
 }

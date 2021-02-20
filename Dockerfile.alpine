@@ -1,0 +1,44 @@
+# Descargar imagen
+FROM alpine:latest
+
+# Instalar paquetes necesarios para compilacion
+RUN apk update && apk upgrade \
+  && apk add alpine-sdk cmake \
+  readline-dev gettext-dev libintl gnu-libiconv \
+  pcre2 bash
+
+
+# Crear usuario docker
+RUN addgroup -S docker && adduser -S docker -G docker
+USER docker
+
+# Crear directorios para copiar archivos
+RUN mkdir /home/docker/codigo
+RUN mkdir /home/docker/codigo/src
+RUN mkdir /home/docker/codigo/include
+RUN mkdir /home/docker/codigo/ejemplos
+RUN mkdir -p /home/docker/codigo/tools/parser
+
+# Establecer directorio de trabajo
+WORKDIR /home/docker/codigo
+
+# Copiar solo los archivos necesarios para compilar y ejemplos de latino
+COPY --chown=docker:docker CMakeLists.txt .
+COPY --chown=docker:docker gcc_compilar.sh .
+COPY --chown=docker:docker src/. src/
+COPY --chown=docker:docker src/CMakeLists.alpine src/CMakeLists.txt
+COPY --chown=docker:docker include/. include/
+COPY --chown=docker:docker ejemplos/. ejemplos/
+COPY --chown=docker:docker tools/parser/. tools/parser/
+
+# Compilar latino e instalarlo
+WORKDIR /home/docker/codigo
+RUN cmake -DCMAKE_BUILD_TYPE=Debug -G "Unix Makefiles" .
+RUN make
+
+USER root
+RUN make install
+
+# Ejecutar latino
+WORKDIR /home/docker/codigo/src
+CMD ["latino", "../ejemplos/02-hola.lat"]

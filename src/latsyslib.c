@@ -184,10 +184,10 @@ void latSO_tiempo(lat_mv *mv) {
         struct tm estructura;
         char res[MAX_STR_INTERN];
 #ifndef _WIN32
-		localtime_r(&unix_time, &estructura); 
+        localtime_r(&unix_time, &estructura);
 #else
-		localtime_s(&estructura, &unix_time);
-#endif // !_WIN32        
+        localtime_s(&estructura, &unix_time);
+#endif // !_WIN32
         if (!strftime(res, sizeof(res), ftmstr, &estructura)) {
             latC_apilar(mv, latO_nulo);
         } else {
@@ -251,17 +251,18 @@ static void latSO_usuario(lat_mv *mv) {
     latC_apilar(mv, tmp);
 }
 
-static void latSO_operativo(lat_mv *mv){
+static void latSO_operativo(lat_mv *mv) {
     lat_objeto *o = latC_desapilar(mv);
     lat_objeto *v = latO_falso;
     char *os = latC_checar_cadena(mv, o);
     char *ox = SISTEMAOPERATIVO;
-    if (strcmp(ox,os)==0){
+    if (strcmp(ox, os) == 0) {
         v = latO_verdadero;
     }
     latC_apilar(mv, v);
 }
 
+<<<<<<< HEAD
 void latOS_veriones(lat_mv *mv, int i) {
     char n;
     Struct os_version;
@@ -306,6 +307,8 @@ void latSO_fork(lat_mv *mv) {
 }
 */
 
+=======
+>>>>>>> 9e7c3d9aa5d238a80d09553b9ceabc7ba57941ca
 static const lat_CReg libsistema[] = {{"dormir", latSO_dormir, 1},
                                       {"ejecutar", latSO_ejecutar, 1},
                                       {"pipe", latSO_pipe, 1},
