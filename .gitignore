@@ -1,5 +1,5 @@
 #ignora directorios
-bin/latino
+bin/
 build/
 visualstudio/
 msvc/
@@ -32,6 +32,7 @@ Img-Orig/
 *.deb
 *.exe
 *.msi
+*.pdb
 Makefile
 CMakeCache.txt
 CPackConfig.cmake

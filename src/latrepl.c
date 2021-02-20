@@ -28,7 +28,7 @@ THE SOFTWARE.
 bool inicia_con(const char *base, const char *str);
 char *reemplazar(char *str, const char *orig, const char *rep);
 
-//void base_poner(lat_mv *mv);
+// void base_poner(lat_mv *mv);
 
 static void completion(const char *buf, linenoiseCompletions *lc) {
     if (inicia_con(buf, "pon")) {
@@ -42,7 +42,6 @@ int leer_linea(char *buffer) {
     char *tmp = malloc(MAX_INPUT_SIZE);
 REP:
     input = linenoise(prompt);
-    // printf("input: %s\n", input);
     if (input == NULL) {
         return -1;
     }
@@ -51,8 +50,7 @@ REP:
         memcpy(tmp, input, len);
         tmp[len] = '\0';
         int estatus;
-        // printf("tmp: %s\n", tmp);
-        ast *nodo =latA_analizar_exp(tmp, &estatus);
+        ast *nodo = latA_analizar_exp(tmp, &estatus);
         if (estatus == 1) {
             tmp = strcat(tmp, "\n");
             prompt = "    >>> ";
@@ -92,10 +90,10 @@ void latR_REPL(lat_mv *mv) {
         }
         latA_destruir(nodo);
         // se guarda el comando al historial aunque haya error
-         char *tmp = reemplazar(buf, "\n", "");
-         linenoiseHistoryAdd(tmp);
-         linenoiseHistorySave(dir_history);
-         free(tmp);
+        char *tmp = reemplazar(buf, "\n", "");
+        linenoiseHistoryAdd(tmp);
+        linenoiseHistorySave(dir_history);
+        free(tmp);
     }
     free(buf);
 }

@@ -1,16 +1,1 @@
-colores = ['blanco','negro','amarillo','azul','rojo']
-imprimir(colores[2])
-
-desde(indice = 0; indice < 5; indice = indice + 1)
-  imprimir(colores[indice])
-fin
-
-desde(indice = 0; indice < 5; indice = indice + 1)
-  imprimir("Inserte nuevo color")
-  nuevoColor = leer()
-  colores [indice] = nuevoColor
-fin
-
-desde(indice = 0; indice < 5; indice = indice + 1)
-  imprimir(colores[indice])
-fin
+i=0

@@ -67,8 +67,6 @@ typedef enum lat_tipo {
     T_CHAR,
 } lat_tipo;
 
-// typedef struct lat_objeto lat_objeto;
-
 typedef void (*lat_CFuncion)(lat_mv *mv);
 
 /**\brief Estructura que almacena las instrucciones bytecode de la MV */
@@ -144,14 +142,17 @@ typedef struct lat_funcion {
     int ninst;
     char *nombre;
     lat_bytecode *codigo;
-    lat_objeto *base;
-    lat_objeto *locals;
-    struct lat_funcion *prev;
 } lat_funcion;
 
+#ifdef WIN32
+__declspec(dllexport) lat_objeto latO_nulo_;
+__declspec(dllexport) lat_objeto latO_verdadero_;
+__declspec(dllexport) lat_objeto latO_falso_;
+#else
 extern lat_objeto latO_nulo_;
 extern lat_objeto latO_verdadero_;
 extern lat_objeto latO_falso_;
+#endif
 
 /* macros para asignar valores */
 #define setNulo(obj, v)                                                        \
@@ -171,7 +172,7 @@ extern lat_objeto latO_falso_;
 #define setEntero(obj, v)                                                      \
     {                                                                          \
         lat_objeto *i_o = (obj);                                               \
-        i_o->val.entero = (v);                                                 \
+        i_o->val.numerico = (v);                                               \
         i_o->tipo = T_INTEGER;                                                 \
     }
 #define setCaracter(obj, v)                                                    \
@@ -287,7 +288,7 @@ extern lat_objeto latO_falso_;
 #define getTipo(o) ((o)->tipo)
 #define getLogico(o) ((o)->val.logico)
 #define getNumerico(o) ((o)->val.numerico)
-#define getEntero(o) ((o)->val.entero)
+#define getEntero(o) ((o)->val.numerico)
 #define getCaracter(o) ((o)->val.caracter)
 #define getCadena(o) ((lat_cadena *)(o)->val.gc)
 #define getLista(o) ((lista *)(o)->val.gc)
@@ -318,7 +319,6 @@ void latL_modificar_elemento(lat_mv *mv, lista *list, void *data, int pos);
 int latL_comparar(lat_mv *mv, lista *lhs, lista *rhs);
 int latL_obtener_indice(lat_mv *mv, lista *list, void *data);
 
-// lat_cadena *latO_cadenaNueva(lat_mv *mv, const char *str, size_t len);
 void latS_resize(lat_mv *mv, int newsize);
 
-#endif // !_LATINO_OBJ_H_
+#endif // _LATINO_OBJ_H_

@@ -29,7 +29,8 @@ THE SOFTWARE.
 static void dic_longitud(lat_mv *mv) {
     lat_objeto *o = latC_desapilar(mv);
     lat_objeto *tmp = NULL;
-    tmp = latC_crear_numerico(mv, (double)latH_longitud(latC_checar_dic(mv, o)));
+    tmp =
+        latC_crear_numerico(mv, (double)latH_longitud(latC_checar_dic(mv, o)));
     latC_apilar(mv, tmp);
 }
 
@@ -66,7 +67,8 @@ static void dic_valores(lat_mv *mv) {
             if (list->longitud > 0) {
                 LIST_FOREACH(list, primero, siguiente, cur) {
                     if (cur->valor != NULL) {
-                        lat_objeto *val = (lat_objeto *)((hash_val *)cur->valor)->valor;
+                        lat_objeto *val =
+                            (lat_objeto *)((hash_val *)cur->valor)->valor;
                         latL_agregar(mv, lst, val);
                     }
                 }
