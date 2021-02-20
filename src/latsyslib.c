@@ -262,7 +262,6 @@ static void latSO_operativo(lat_mv *mv) {
     latC_apilar(mv, v);
 }
 
-<<<<<<< HEAD
 void latOS_veriones(lat_mv *mv, int i) {
     char n;
     Struct os_version;
@@ -307,8 +306,6 @@ void latSO_fork(lat_mv *mv) {
 }
 */
 
-=======
->>>>>>> 9e7c3d9aa5d238a80d09553b9ceabc7ba57941ca
 static const lat_CReg libsistema[] = {{"dormir", latSO_dormir, 1},
                                       {"ejecutar", latSO_ejecutar, 1},
                                       {"pipe", latSO_pipe, 1},

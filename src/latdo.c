@@ -413,6 +413,40 @@ static int ast_analizar(lat_mv *mv, ast *nodo, lat_bytecode *codigo, int i) {
                 POP_JUMP_IF_FALSE, (temp[0] - 1), 0, NULL, nodo->izq->izq->nlin,
                 nodo->izq->izq->ncol, mv->nombre_archivo);
         } break;
+        // case NODO_RANGO: {
+        //     nodo_rango *nRango = ((nodo_rango *)nodo);
+        //     /*
+        //     x,y,z = 1,10,2
+        //     para i en rango(x,y,z)
+        //         poner (i)
+        //     fin
+        //     */
+        //     // pn(mv, nRango->id);     // i = inicio
+        //     //pn(mv, nRango->inc);    // evalua la expresion que trae en inc
+        //     // hasta este punto ya podriamos saber el valor que hay en el tope de la pila (positivo o negacion)
+        //     // pn(mv, nRango->inc);
+        //     /*
+        //     LOAD id
+        //     */
+        //     pn(mv, nRango->ini);
+        //     // temp[0] = i;
+        //     // pn(mv, nodo_rango->id); // i = 1
+        //     // temp[1] = i;
+        //     // dbc(NOP, 0, 0, NULL, nodo->izq->nlin, nodo->izq->ncol,
+        //     //     mv->nombre_archivo);
+            
+        //     // pn(mv, nodo->der);
+        //     // dbc(JUMP_ABSOLUTE, (temp[0] - 1), 0, NULL, nodo->izq->nlin,
+        //     //     nodo->izq->ncol, mv->nombre_archivo);
+        //     // codigo[temp[1]] = latMV_bytecode_crear(
+        //     //     POP_JUMP_IF_FALSE, (i - 1), 0, NULL, nodo->izq->nlin,
+        //     //     nodo->izq->ncol, mv->nombre_archivo);            temp[0] = i;
+        //     // temp[1] = i;
+        //     // dbc(NOP, 0, 0, NULL, 0, 0, mv->nombre_archivo);
+        //     // codigo[temp[1]] = latMV_bytecode_crear(
+        //     //     POP_JUMP_IF_FALSE, (temp[0] - 1), 0, NULL, nodo->izq->izq->nlin,
+        //     //     nodo->izq->izq->ncol, mv->nombre_archivo);
+        // } //break;
         case NODO_FUNCION_LLAMADA: {
             // argumentos
             if (nodo->der) {

@@ -170,47 +170,54 @@ ast *latA_desde(ast *dec, ast *cond, ast *inc, ast *stmts) {
 }
 
 ast *latA_para(ast *identificador, ast* inicio, ast* fin, ast* incremento, ast *sentencias) {
-    // printf('inicia latA_para\n');
+    if (inicio == NULL) {
+        inicio = latA_numerico(0, identificador->nlin, identificador->ncol);
+    }
+    if (incremento == NULL) {
+        incremento = latA_numerico(1, identificador->nlin, identificador->ncol);
+    }
+
+    // ast *asign = latA_asign(inicio, identificador); // i = 1
+    // nodo_rango *a = (nodo_rango *)malloc(sizeof(nodo_rango));
+    // a->tipo = NODO_RANGO;
+    // a->id = identificador;
+    // a->ini = inicio;
+    // a->fin = fin;
+    // a->inc = incremento;
+    // a->stmts = sentencias;
+    // return (ast *)a;
+
+    if (inicio->tipo == NODO_MENOS_UNARIO) {
+        inicio = latA_numerico(-(inicio->izq->valor->val.numerico), identificador->nlin, identificador->ncol);
+    }
+    if (fin->tipo == NODO_MENOS_UNARIO) {
+        fin = latA_numerico(-(fin->izq->valor->val.numerico), identificador->nlin, identificador->ncol);
+    }
     ast *a = (ast *)malloc(sizeof(ast));
+    /* asign -> (i = 3) */
     ast *asign = latA_asign(inicio, identificador);
-    // printf('inicio: %d:\n', inicio->valor->val.numerico);
-    // printf('fin: %d:\n', fin->valor->val.numerico);
-    // printf('incremento: %d:\n', incremento->valor->val.numerico);
-    ast *cond = latA_nodo(NODO_MENOR_QUE, fin, asign, identificador->nlin, identificador->ncol);
-    a->tipo = NODO_MIENTRAS;
-    a->izq = cond;
-    a->der = sentencias;
+    /* i  < 10 */
+    ast *cond = NULL;
+    if (incremento->tipo == NODO_MENOS_UNARIO) {
+        // cuando es decremento
+        if (inicio->valor->val.numerico > fin->valor->val.numerico) {
+            cond = latA_nodo(NODO_MAYOR_QUE, identificador, fin, identificador->nlin, identificador->ncol);
+            incremento = latA_numerico(-(incremento->izq->valor->val.numerico), identificador->nlin, identificador->ncol);
+        }
+    } else {
+        if (inicio->valor->val.numerico < fin->valor->val.numerico) {
+            cond = latA_nodo(NODO_MENOR_QUE, identificador, fin, identificador->nlin, identificador->ncol);
+        }
+    }
+    /* suma -> (i + inc) */
+    ast *suma = latA_nodo(NODO_SUMA, identificador, incremento, identificador->nlin, identificador->ncol);
+    /*inc -> (i = suma) -> i = i + 3 */
+    ast *inc = latA_asign(suma, identificador);
+    a->tipo = NODO_BLOQUE;
+    a->izq = asign;
+    a->der = latA_mientras(cond, latA_nodo(NODO_BLOQUE, sentencias, inc, identificador->nlin, identificador->ncol));
     a->valor = NULL;
     return a;
-
-    // // crea nodo asignacion
-    // // identificador = valor
-    // printf('asignar valor a variable\n');
-    // ast *asign = latA_asign(inicio, identificador);
-
-    // printf('crea el bloque de codigo latA_para\n');
-    // a->tipo = NODO_BLOQUE;
-    // a->izq = asign;
-
-    // // cond -> identificador < fin
-    // printf('Expresion\n');
-    // ast *cond = latA_nodo(NODO_MENOR_QUE, fin, identificador, identificador->nlin, identificador->ncol);
-
-    // // nodo_suma -> exp + exp
-    // printf('Incrementa valor\n');
-    // ast *suma = latA_nodo(NODO_SUMA, incremento, identificador, identificador->nlin, identificador->ncol);
-
-    // // nodo_asig -> id = expr
-    // printf('asigna valor incrementado\n');
-    // ast *pasos = latA_nodo(NODO_ASIGNACION, suma, identificador, identificador->nlin, identificador->ncol);
-
-    // printf('latA_mientras\n');
-    // a->der = latA_mientras(
-    //     cond, latA_nodo(NODO_BLOQUE, sentencias, pasos, identificador->nlin, identificador->ncol));
-    // a->valor = NULL;
-
-    // printf('fin latA_mientras\n');
-    // return a;
 }
 
 ast *latA_funcion(ast *nombre, ast *params, ast *stmts, int nlin, int ncol) {
@@ -226,46 +233,50 @@ ast *latA_funcion(ast *nombre, ast *params, ast *stmts, int nlin, int ncol) {
 
 void latA_destruir(ast *a) {
     if (a) {
-        switch (a->tipo) {
-            case NODO_SI: {
-                nodo_si *nsi = (nodo_si *)a;
-                latA_destruir(nsi->cond);
-                latA_destruir(nsi->entonces);
-                if (nsi->_sino)
-                    latA_destruir(nsi->_sino);
-                break;
-            }
-            case NODO_FUNCION_USUARIO: {
-                nodo_funcion *fun = (nodo_funcion *)a;
-                if (fun->params)
-                    latA_destruir(fun->params);
-                if (fun->stmts)
-                    latA_destruir(fun->stmts);
-                latA_destruir(fun->nombre);
-                break;
-            }
-            case NODO_LISTA_ASIGNAR_ELEMENTO: {
-                nodo_lista_elem *nelem = (nodo_lista_elem *)a;
-                latA_destruir(nelem->exp);
-                latA_destruir(nelem->id);
-                latA_destruir(nelem->pos);
-                break;
-            }
-            case NODO_IDENTIFICADOR:
-            case NODO_VALOR:
-                if (a->valor->tipo == VALOR_CADENA) {
-                    free(a->valor->val.cadena);
+        if(a->tipo < 51) { // a->tipo <= 50
+            switch (a->tipo) {
+                case NODO_SI: {
+                    nodo_si *nsi = (nodo_si *)a;
+                    latA_destruir(nsi->cond);
+                    latA_destruir(nsi->entonces);
+                    if (nsi->_sino)
+                        latA_destruir(nsi->_sino);
+                    break;
                 }
-                free(a->valor);
-                break;
-            default: {
-                if (a->izq)
-                    latA_destruir(a->izq);
-                if (a->der)
-                    latA_destruir(a->der);
+                case NODO_FUNCION_USUARIO: {
+                    nodo_funcion *fun = (nodo_funcion *)a;
+                    if (fun->params)
+                        latA_destruir(fun->params);
+                    if (fun->stmts)
+                        latA_destruir(fun->stmts);
+                    latA_destruir(fun->nombre);
+                    break;
+                }
+                case NODO_LISTA_ASIGNAR_ELEMENTO: {
+                    nodo_lista_elem *nelem = (nodo_lista_elem *)a;
+                    latA_destruir(nelem->exp);
+                    latA_destruir(nelem->id);
+                    latA_destruir(nelem->pos);
+                    break;
+                }
+                case NODO_IDENTIFICADOR:
+                case NODO_VALOR:
+                    if(a->valor) {
+                        if (a->valor->tipo == VALOR_CADENA) {
+                            free(a->valor->val.cadena);
+                        }
+                        free(a->valor);
+                    }
+                    break;
+                // TODO: liberar nuevo nodo rango
+                default:
+                    if (a->izq)
+                        latA_destruir(a->izq);
+                    if (a->der)
+                        latA_destruir(a->der);
             }
+            free(a);
         }
-        free(a);
     }
 }
 

@@ -57,7 +57,6 @@ ManualHint                        =   Manual Latino
 Name: "spanish"; MessagesFile: "compiler:Languages\Spanish.isl"
 
 [Files]
-<<<<<<< HEAD
 Source: "..\Win32\bin\web-icon.bmp";                                                      Flags: dontcopy
 Source: "..\Win32\bin\github-icon.bmp";                                                   Flags: dontcopy
 Source: "..\Win32\bin\manual-icon.bmp";                                                   Flags: dontcopy
@@ -72,23 +71,6 @@ Source: "..\Win32\bin\manual.url";                      DestDir: "{app}";       
 Source: "..\Win32\lib\*";                               DestDir: "{app}\lib";             Flags: ignoreversion recursesubdirs createallsubdirs
 Source: "..\Win32\System32\*.dll";                      DestDir: "C:\Windows\System32";   Flags: onlyifdoesntexist recursesubdirs
 Source: "..\Win32\sysWow64\*.dll";                      DestDir: "C:\Windows\SysWOW64";   Flags: onlyifdoesntexist recursesubdirs
-=======
-Source: "..\Win32\bin\web-icon.bmp"; Flags: dontcopy
-Source: "..\Win32\bin\github-icon.bmp"; Flags: dontcopy
-Source: "..\Win32\bin\manual-icon.bmp"; Flags: dontcopy
-;Source: "..\Win32\bin\isdonate.bmp"; Flags: dontcopy
-Source: "..\..\build\src\Debug\*"; DestDir: "{app}\bin"; Flags: ignoreversion
-Source: "..\..\build\src\regex-2.7-src\src\Debug\*"; DestDir: "{app}\lib"; Flags: ignoreversion
-Source: "..\..\build\src\linenoise\Debug\*"; DestDir: "{app}\lib"; Flags: ignoreversion
-Source: "..\..\include\*.h"; DestDir: "{app}\include"; Flags: ignoreversion recursesubdirs createallsubdirs
-Source: "..\..\src\regex-2.7-src\src\regex.h"; DestDir: "{app}\include"; Flags: ignoreversion recursesubdirs createallsubdirs
-Source: "..\Win32\bin\latino.ico"; DestDir: "{app}\bin"; Flags: ignoreversion
-Source: "..\Win32\bin\*.rtf"; DestDir: "{app}"; Flags: ignoreversion
-Source: "..\Win32\bin\manual.url"; DestDir: "{app}"; Flags: ignoreversion
-Source: "..\Win32\lib\*"; DestDir: "{app}\lib"; Flags: ignoreversion recursesubdirs createallsubdirs
-Source: "..\Win32\System32\*.dll"; DestDir: "C:\Windows\System32"; Flags: onlyifdoesntexist recursesubdirs
-Source: "..\Win32\sysWow64\*.dll"; DestDir: "C:\Windows\SysWOW64"; Flags: onlyifdoesntexist recursesubdirs
->>>>>>> 9e7c3d9aa5d238a80d09553b9ceabc7ba57941ca
 ; NOTE: Don't use "Flags: ignoreversion" on any shared system files
 
 [Icons]

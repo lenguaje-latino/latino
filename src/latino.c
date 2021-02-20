@@ -37,11 +37,7 @@ Para depurar en Netbeans ir a propiedades del proyecto -> Run command y Agregar
 extern int yydebug = 1; /* 1 para debuguear analizador lexico/sintactico */
 #endif
 
-<<<<<<< HEAD
-extern int parse_silent = 1;
-=======
 int parse_silent = 0;
->>>>>>> 9e7c3d9aa5d238a80d09553b9ceabc7ba57941ca
 char *filename = NULL;
 
 void str_ejecutar(lat_mv *mv);

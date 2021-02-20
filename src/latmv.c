@@ -99,7 +99,12 @@ void latC_abrir_liblatino_filelib   (lat_mv *mv);
 void latC_abrir_liblatino_mathlib   (lat_mv *mv);
 void latC_abrir_liblatino_syslib    (lat_mv *mv);
 void latC_abrir_liblatino_devlib    (lat_mv *mv);
+
+/*
 void latC_abrir_liblatino_uilib     (lat_mv *mv);
+void latC_abrir_liblatino_gc(lat_mv *mv);
+void latC_abrir_liblatino_gtklib(lat_mv *mv);
+ */
 
 const char *latMV_bytecode_nombre(int inst) { return bycode_nombre[inst]; }
 
@@ -363,22 +368,6 @@ LATINO_API lat_mv *latC_crear_mv() {
     mv->contexto_actual = mv->contexto[mv->ptrctx];
     mv->error = NULL;
     mv->global->menu = false;
-<<<<<<< HEAD
-    latC_abrir_liblatino_baselib    (mv);
-    latC_abrir_liblatino_strlib     (mv);
-    latC_abrir_liblatino_listlib    (mv);
-    latC_abrir_liblatino_diclib     (mv);
-    latC_abrir_liblatino_paqlib     (mv);
-    latC_abrir_liblatino_filelib    (mv);
-    latC_abrir_liblatino_mathlib    (mv);
-    latC_abrir_liblatino_syslib     (mv);
-    latC_abrir_liblatino_devlib     (mv);
-    latC_abrir_liblatino_uilib      (mv);
-    /*
-    latC_abrir_liblatino_gc(mv);
-    latC_abrir_liblatino_gtklib(mv);
-     */
-=======
 
     // cargar librerias de latino
     latC_abrir_liblatino_baselib(mv);
@@ -396,7 +385,6 @@ LATINO_API lat_mv *latC_crear_mv() {
     printf("fin latC_crear_mv.mv->memoria_usada: %zu\n", mv->memoria_usada);
     printf("------------------------------------------------------------\n");
 #endif
->>>>>>> 9e7c3d9aa5d238a80d09553b9ceabc7ba57941ca
     return mv;
 }
 

@@ -71,32 +71,6 @@ enum yytokentype {
     VERDADERO = 278,
     FALSO = 279,
     NULO = 280,
-<<<<<<< HEAD
-    EXPONENTE = 281,
-    PARA = 282,
-    EN = 283,
-    RANGO = 284,
-    MAYOR_QUE = 285,
-    MENOR_QUE = 286,
-    MAYOR_IGUAL = 287,
-    MENOR_IGUAL = 288,
-    IGUAL_LOGICO = 289,
-    DIFERENTE = 290,
-    Y_LOGICO = 291,
-    O_LOGICO = 292,
-    INCREMENTO = 293,
-    DECREMENTO = 294,
-    CONCATENAR = 295,
-    CONCATENAR_IGUAL = 296,
-    MAS_IGUAL = 297,
-    MENOS_IGUAL = 298,
-    POR_IGUAL = 299,
-    ENTRE_IGUAL = 300,
-    MODULO_IGUAL = 301,
-    REGEX = 302,
-    GLOBAL = 303
-  };
-=======
     MAYOR_QUE = 281,
     MENOR_QUE = 282,
     MAYOR_IGUAL = 283,
@@ -117,7 +91,6 @@ enum yytokentype {
     REGEX = 298,
     GLOBAL = 299
 };
->>>>>>> 9e7c3d9aa5d238a80d09553b9ceabc7ba57941ca
 #endif
 /* Tokens.  */
 #define NUMERICO 258

@@ -229,11 +229,7 @@ static void mate_ldexp(lat_mv *mv) {
 
 static void mate_random(lat_mv *mv) {
     lat_objeto *o = latC_desapilar(mv);
-<<<<<<< HEAD
     int res=0, vlmx=0, cant = (int)latC_checar_numerico(mv, o);
-=======
-    int res = 0, i = 0, vlmx = 0, cant = (int)latC_checar_numerico(mv, o);
->>>>>>> 9e7c3d9aa5d238a80d09553b9ceabc7ba57941ca
     if (cant <= 0) {
         res = (rand() % 2);
     } else if (cant == 1) {

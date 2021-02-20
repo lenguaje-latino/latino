@@ -90,6 +90,7 @@ typedef void (*lat_CFuncion)(lat_mv *mv);
 #define ADJUST_STACK 44
 #define LOAD_VAR_ARGS 45
 #define SET_LOCAL 46
+#define POP_JUMP_IF_NEGATIVE 47
 
 union lat_gcobjeto {
     lat_gcheader gch;
