@@ -115,7 +115,7 @@ int yylex (YYSTYPE * yylval_param,YYLTYPE * yylloc_param ,yyscan_t yyscanner);
 %type <node> logical_not_expression logical_and_expression logical_or_expression equality_expression
 %type <node> multiplicative_expression additive_expression concat_expression
 %type <node> statement statement_list unary_expression ternary_expression incdec_statement
-%type <node> iteration_statement jump_statement function_definition function_anonymous
+%type <node> iteration_statement jump_statement function_definition function_anonymous jump_loop
 %type <node> argument_expression_list declaration primary_expression
 %type <node> constant_expression function_call selection_statement parameter_list
 %type <node> list_new list_items
@@ -396,6 +396,8 @@ osi_statement
 iteration_statement
     : MIENTRAS expression statement_list FIN {
         $$ = latA_mientras($2, $3); }
+    | MIENTRAS expression jump_loop FIN {
+        $$ = latA_mientras($2, $3); }
     | REPETIR statement_list HASTA expression {
         $$ = latA_hacer($4, $2); }
     | DESDE '(' declaration ';' expression ';' statement ')'
@@ -418,6 +420,10 @@ iteration_statement
 jump_statement
     : RETORNO expression { $$ = latA_nodo(NODO_RETORNO, $2, NULL, @1.first_line, @1.first_column); }
     | RETORNO argument_expression_list { $$ = latA_nodo(NODO_RETORNO, $2, NULL, @1.first_line, @1.first_column); }
+    ;
+
+jump_loop
+    : ROMPER { $$ = latA_nodo(NODO_ROMPER, NULL, NULL, @1.first_line, @1.first_column); }
     ;
 
 function_definition

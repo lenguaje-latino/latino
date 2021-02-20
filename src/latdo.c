@@ -164,6 +164,67 @@ static int encontrar_load_vararg(ast *nodo) {
     return i;
 }
 
+static bool encontrar_romper(ast *nodo) {
+    if (nodo) {
+        ast *tmp;
+        tmp = nodo;
+        while (tmp->der != NULL && tmp->der->tipo != NODO_SI) {
+            if (tmp->der->der != NULL && tmp->der->der->tipo == NODO_SI) {
+                nodo_si *nIf = ((nodo_si *)tmp->der->der);
+                if(nIf->entonces->tipo == NODO_BLOQUE) {
+                    if (nIf->entonces->izq->tipo == NODO_ROMPER) { return true; }
+                    if (nIf->entonces->der->tipo == NODO_ROMPER) { return true; }
+                }
+                if(nIf->_sino && nIf->_sino->tipo == NODO_BLOQUE) {
+                    if (nIf->_sino->izq->tipo == NODO_ROMPER) { return true; }
+                    if (nIf->_sino->der->tipo == NODO_ROMPER) { return true; }
+                }
+            }
+            if (tmp->der->izq != NULL && tmp->der->izq->tipo == NODO_SI) {
+                nodo_si *nIf = ((nodo_si *)tmp->der->izq);
+                if(nIf->entonces->tipo == NODO_BLOQUE) {
+                    if (nIf->entonces->izq->tipo == NODO_ROMPER) { return true; }
+                    if (nIf->entonces->der->tipo == NODO_ROMPER) { return true; }
+                }
+                if(nIf->_sino && nIf->_sino->tipo == NODO_BLOQUE) {
+                    if (nIf->_sino->izq->tipo == NODO_ROMPER) { return true; }
+                    if (nIf->_sino->der->tipo == NODO_ROMPER) { return true; }
+                }
+            }
+            tmp = tmp->der;
+        }
+        tmp = nodo;
+        while (tmp->izq != NULL && tmp->izq->tipo != NODO_SI) {
+            if (tmp->izq->der != NULL && tmp->izq->der->tipo == NODO_SI) {
+                nodo_si *nIf = ((nodo_si *)tmp->izq->der);
+                if(nIf->entonces->tipo == NODO_BLOQUE) {
+                    if (nIf->entonces->izq->tipo == NODO_ROMPER) { return true; }
+                    if (nIf->entonces->der->tipo == NODO_ROMPER) { return true; }
+                }
+                if(nIf->_sino && nIf->_sino->tipo == NODO_BLOQUE) {
+                    if (nIf->_sino->izq->tipo == NODO_ROMPER) { return true; }
+                    if (nIf->_sino->der->tipo == NODO_ROMPER) { return true; }
+                }
+            }
+            if (tmp->izq->izq != NULL && tmp->izq->izq->tipo == NODO_SI) {
+                nodo_si *nIf = ((nodo_si *)tmp->izq->izq);
+                if(nIf->entonces->tipo == NODO_BLOQUE) {
+                    if (nIf->entonces->izq->tipo == NODO_ROMPER) { return true; }
+                    if (nIf->entonces->der->tipo == NODO_ROMPER) { return true; }
+                }
+                if(nIf->_sino && nIf->_sino->tipo == NODO_BLOQUE) {
+                    if (nIf->_sino->izq->tipo == NODO_ROMPER) { return true; }
+                    if (nIf->_sino->der->tipo == NODO_ROMPER) { return true; }
+                }
+            }
+            tmp = tmp->izq;
+        }
+    }
+    return false;
+}
+
+static int goto_fin = 0;
+
 static int ast_analizar(lat_mv *mv, ast *nodo, lat_bytecode *codigo, int i) {
     int temp[4] = {0};
     lat_bytecode *funcion_codigo = NULL;
@@ -384,11 +445,17 @@ static int ast_analizar(lat_mv *mv, ast *nodo, lat_bytecode *codigo, int i) {
         } break;
         case NODO_MIENTRAS: {
             temp[0] = i;
-            pn(mv, nodo->izq);
+            pn(mv, nodo->izq);  // condicion
             temp[1] = i;
             dbc(NOP, 0, 0, NULL, nodo->izq->nlin, nodo->izq->ncol,
                 mv->nombre_archivo);
-            pn(mv, nodo->der);
+            if (encontrar_romper(nodo->der)) {
+                lat_bytecode *code_tmp = latM_asignar(mv, sizeof(lat_bytecode) * MAX_BYTECODE_FUNCTION);
+                int tmp_i = ast_analizar(mv, nodo->der, code_tmp, 0);  // stmts
+                goto_fin = tmp_i + i; // 16
+                latM_liberar(mv, code_tmp);
+            }
+            pn(mv, nodo->der);  // stmts
             dbc(JUMP_ABSOLUTE, (temp[0] - 1), 0, NULL, nodo->izq->nlin,
                 nodo->izq->ncol, mv->nombre_archivo);
             codigo[temp[1]] = latMV_bytecode_crear(
@@ -457,6 +524,11 @@ static int ast_analizar(lat_mv *mv, ast *nodo, lat_bytecode *codigo, int i) {
                 contar_num_parargs(nodo->izq, NODO_FUNCION_ARGUMENTOS);
             dbc(RETURN_VALUE, num_args == 0 ? 1 : num_args, 0, NULL,
                 nodo->izq->nlin, nodo->izq->ncol, mv->nombre_archivo);
+        } break;
+        case NODO_ROMPER: {
+            printf("\nNODO_ROMPER: goto_fin: %i\n", goto_fin);
+            dbc(JUMP_ABSOLUTE, goto_fin, 0, NULL, mv->nlin, mv->ncol,
+                mv->nombre_archivo);
         } break;
         case NODO_FUNCION_ARGUMENTOS: {
             if (nodo->izq) {

@@ -28,7 +28,7 @@ THE SOFTWARE.
 #include <stdbool.h>
 
 /**\brief Muestra las instrucciones que se generan con el AST */
-#define DEPURAR_AST 0
+#define DEPURAR_AST 1
 
 extern char *filename;
 
@@ -101,6 +101,7 @@ typedef enum {
     NODO_VAR_ARGS,
     NODO_LOAD_VAR_ARGS,
     NODO_RANGO, /* 50 */
+    NODO_ROMPER,
 } nodo_tipo;
 
 /** \brief Tipos de dato */
