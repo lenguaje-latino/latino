@@ -46,7 +46,8 @@ char *reemplazar(char *str, const char *orig, const char *rep);
 char *analizar_fmt(const char *s, size_t len);
 char *analizar(const char *s, size_t len);
 
-void latO_asignar_ctx(lat_mv *mv, lat_objeto *ns, const char *name, lat_objeto *o) {
+void latO_asignar_ctx(lat_mv *mv, lat_objeto *ns, const char *name,
+                      lat_objeto *o) {
     if (ns->tipo != T_CONTEXT) {
         latC_error(mv, "Objeto no es un contexto");
     } else {
@@ -58,7 +59,8 @@ void latO_asignar_ctx(lat_mv *mv, lat_objeto *ns, const char *name, lat_objeto *
     }
 }
 
-lat_objeto *latO_obtener_contexto(lat_mv *mv, lat_objeto *ns, const char *name) {
+lat_objeto *latO_obtener_contexto(lat_mv *mv, lat_objeto *ns,
+                                  const char *name) {
     if (ns->tipo != T_CONTEXT) {
         latC_error(mv, "Objeto no es un contexto");
     } else {
@@ -70,19 +72,22 @@ lat_objeto *latO_obtener_contexto(lat_mv *mv, lat_objeto *ns, const char *name) 
 }
 
 lat_objeto *latO_crear(lat_mv *mv) {
-    // printf("lat_crear_objeto\n");
-    lat_objeto *ret = (lat_objeto *)malloc(sizeof(lat_objeto));
+    lat_objeto *ret = (lat_objeto *)latM_asignar(mv, sizeof(lat_objeto));
+#if DEPURAR_MEM
+    printf("latO_crear.ret: %p\n", ret);
+#endif
     ret->tipo = T_NULL;
     ret->tam = sizeof(lat_objeto);
     ret->nref = 0;
     ret->es_vararg = 0;
     ret->esconst = 0;
+#ifdef HABILITAR_GC
     gc_agregar(mv, ret);
+#endif // HABILITAR_GC
     return ret;
 }
 
 lat_objeto *latO_contexto_crear(lat_mv *mv) {
-    // printf("lat_contexto_crear\n");
     lat_objeto *ret = latO_crear(mv);
     ret->tipo = T_CONTEXT;
     ret->tam += sizeof(hash_map);
@@ -90,14 +95,17 @@ lat_objeto *latO_contexto_crear(lat_mv *mv) {
     return ret;
 }
 
-static lat_cadena *nuevaCad(lat_mv *mv, const char *str, size_t l, unsigned int h) {
-    // printf("nuevaCad : %s\n", str);
+static lat_cadena *nuevaCad(lat_mv *mv, const char *str, size_t l,
+                            unsigned int h) {
     lat_cadena *ts;
     stringtable *tb;
     if (l + 1 > LAT_SIZE_MAX - sizeof(lat_cadena)) {
         latC_error(mv, "Cadena muy larga");
     }
     ts = (lat_cadena *)latM_asignar(mv, (l + 1) + sizeof(lat_cadena));
+#if DEPURAR_MEM
+    printf("nuevaCad.ts: %p\n", ts);
+#endif
     ts->tsv.len = l;
     ts->tsv.hash = h;
     ts->tsv.marked = 0;
@@ -135,15 +143,16 @@ static lat_cadena *latO_cadenaNueva(lat_mv *mv, const char *str, size_t l) {
 }
 
 lat_objeto *latO_crear_funcion(lat_mv *mv) {
-    // printf("lat_funcion_crear\n");
     lat_objeto *ret = latO_crear(mv);
+#if DEPURAR_MEM
+    printf("latO_crear_funcion: %p\n", ret);
+#endif
     ret->tipo = T_FUN;
     return ret; // We don't do anything here: all bytecode will be added
                 // later
 }
 
 lat_objeto *latO_crear_cfuncion(lat_mv *mv) {
-    // printf("lat_cfuncion_crear\n");
     lat_objeto *ret = latO_crear(mv);
     ret->tipo = T_CFUN;
     ret->marca = 0;
@@ -151,10 +160,10 @@ lat_objeto *latO_crear_cfuncion(lat_mv *mv) {
 }
 
 void latO_destruir(lat_mv *mv, lat_objeto *o) {
-    // printf("eliminando objeto %p\n", o);
+    if (o == NULL)
+        return;
     switch (o->tipo) {
         case T_CONTEXT:
-            // printf("eliminando contexto...\n");
             latH_limpiar(mv, getCtx(o));
             break;
         case T_LIST: {
@@ -174,39 +183,24 @@ void latO_destruir(lat_mv *mv, lat_objeto *o) {
             latH_destruir(mv, latC_checar_dic(mv, o));
             break;
         case T_STR: {
-            // char *s = latC_checar_cadena(mv, o);
-            // printf("eliminando cadena... (%p): %s\n", s, s);
-            // latM_liberar(mv, s);
-            // mv->memoria_usada -= o->tam;
+            lat_cadena *str = (lat_cadena *)getCadena(o);
+            latM_liberar(mv, str);
         } break;
         case T_FUN: {
-            // printf("eliminando fun de usuario...\n");
             lat_funcion *fun = getFun(o);
             lat_bytecode *inslist = fun->codigo;
-            lat_bytecode cur;
-            int pos;
-            for (pos = 0, cur = inslist[pos]; pos < o->ninst;
-                 cur = inslist[++pos]) {
-                if (cur.meta != NULL) {
-                    // lat_objeto *tmp = (lat_objeto *)cur.meta;
-                    // latO_destruir(mv, tmp);
-                }
-            }
-            // latM_liberar(mv, fun->codigo);
-            // latM_liberar(mv, fun);
+            latM_liberar(mv, inslist);
+            latM_liberar(mv, fun);
         } break;
         case T_CFUN: {
-            // printf("eliminando cfun...\n");
-            // latM_liberar(mv, o->nombre);
+            ;
         } break;
         case T_NUMERIC: {
-            // printf("eliminando numerico: %.14g\n", latC_checar_numerico(mv,
-            // o));
-            // mv->memoria_usada -= o->tam;
+            ;
         } break;
         case T_NULL:
         case T_BOOL:
-            /* nunca colectar nulo y booleano */
+            // Nunca colectar nulo y booleano.
             return;
         default:
             return;
@@ -219,14 +213,12 @@ static lista *latL_clonar(lat_mv *mv, lista *list) {
 
     LIST_FOREACH(list, primero, siguiente, cur) {
         lat_objeto *tmp = (lat_objeto *)cur->valor;
-        // lat_objeto* nuevo = lat_clonar_objeto(mv, tmp);
         latL_agregar(mv, ret, tmp);
     }
     return ret;
 }
 
 lat_objeto *latO_clonar(lat_mv *mv, lat_objeto *obj) {
-    // printf("latO_clonar:\n");
     lat_objeto *ret = NULL;
     switch (obj->tipo) {
         case T_CONTEXT:
@@ -236,13 +228,13 @@ lat_objeto *latO_clonar(lat_mv *mv, lat_objeto *obj) {
             setCtx(ret, latH_clonar(mv, getCtx(obj)));
             break;
         case T_LIST:
-            ret = latC_crear_lista(mv, latL_clonar(mv, latC_checar_lista(mv, obj)));
+            ret = latC_crear_lista(mv,
+                                   latL_clonar(mv, latC_checar_lista(mv, obj)));
             break;
         case T_DIC:
             ret = latC_crear_dic(mv, latH_clonar(mv, latC_checar_dic(mv, obj)));
             break;
         case T_FUN:
-            // printf("nombre: %s\n", obj->nombre);
             ret = latO_crear(mv);
             ret->tipo = obj->tipo;
             ret->nombre = obj->nombre;
@@ -479,7 +471,6 @@ int latL_obtener_indice(lat_mv *mv, lista *list, void *data) {
 
 void latO_imprimir(lat_mv *mv, lat_objeto *o, bool fmt) {
     char *tmp = latC_astring(mv, o);
-    // printf("latO_imprimir: %s\n", tmp);
     char *tmp2 = NULL;
     if (fmt) {
         tmp2 = analizar_fmt(tmp, strlen(tmp));
@@ -493,11 +484,13 @@ void latO_imprimir(lat_mv *mv, lat_objeto *o, bool fmt) {
 }
 
 void latS_resize(lat_mv *mv, int newsize) {
-    // printf("latS_resize\n");
     lat_gcobjeto **newhash;
     stringtable *tb;
     int i;
-    newhash = latM_asignar(mv, newsize * sizeof(lat_gcobjeto));
+    newhash = latM_asignar(mv, newsize * sizeof(lat_gcobjeto *));
+#if DEPURAR_MEM
+    printf("latS_resize.newhash: %p\n", newhash);
+#endif
     tb = &mv->global->strt;
     for (i = 0; i < newsize; i++) {
         newhash[i] = NULL;
@@ -520,14 +513,19 @@ void latS_resize(lat_mv *mv, int newsize) {
 
 LATINO_API lat_objeto *latC_crear_logico(lat_mv *mv, bool val) {
     lat_objeto *ret = latO_crear(mv);
+#if DEPURAR_MEM
+    printf("latC_crear_logico: %p\n", ret);
+#endif
     ret->tam += sizeof(bool);
     setLogico(ret, val);
     return ret;
 }
 
 LATINO_API lat_objeto *latC_crear_numerico(lat_mv *mv, double val) {
-    // printf("lat_decimal_crear: %.14g\n", val);
     lat_objeto *ret = latO_crear(mv);
+#if DEPURAR_MEM
+    printf("latC_crear_numerico: %p\n", ret);
+#endif
     ret->tam += sizeof(double);
     setNumerico(ret, val);
     return ret;
@@ -535,6 +533,9 @@ LATINO_API lat_objeto *latC_crear_numerico(lat_mv *mv, double val) {
 
 LATINO_API lat_objeto *latC_crear_entero(lat_mv *mv, int val) {
     lat_objeto *ret = latO_crear(mv);
+#if DEPURAR_MEM
+    printf("latC_crear_entero: %p\n", ret);
+#endif
     ret->tam += sizeof(int);
     setEntero(ret, val);
     return ret;
@@ -542,6 +543,9 @@ LATINO_API lat_objeto *latC_crear_entero(lat_mv *mv, int val) {
 
 LATINO_API lat_objeto *latC_crear_caracter(lat_mv *mv, char val) {
     lat_objeto *ret = latO_crear(mv);
+#if DEPURAR_MEM
+    printf("latC_crear_caracter: %p\n", ret);
+#endif
     ret->tam += sizeof(int);
     setCaracter(ret, val);
     return ret;
@@ -549,6 +553,9 @@ LATINO_API lat_objeto *latC_crear_caracter(lat_mv *mv, char val) {
 
 LATINO_API lat_objeto *latC_crear_cadena(lat_mv *mv, const char *p) {
     lat_objeto *ret = latO_crear(mv);
+#if DEPURAR_MEM
+    printf("latC_crear_cadena: %p\n", ret);
+#endif
     ret->tam += strlen(p);
     setCadena(ret, latO_cadenaNueva(mv, p, strlen(p)));
     return ret;
@@ -556,6 +563,9 @@ LATINO_API lat_objeto *latC_crear_cadena(lat_mv *mv, const char *p) {
 
 LATINO_API lat_objeto *latC_crear_lista(lat_mv *mv, lista *l) {
     lat_objeto *ret = latO_crear(mv);
+#if DEPURAR_MEM
+    printf("latC_crear_lista: %p\n", ret);
+#endif
     ret->tam += sizeof(lista);
     setLista(ret, l);
     return ret;
@@ -563,6 +573,9 @@ LATINO_API lat_objeto *latC_crear_lista(lat_mv *mv, lista *l) {
 
 LATINO_API lat_objeto *latC_crear_dic(lat_mv *mv, hash_map *dic) {
     lat_objeto *ret = latO_crear(mv);
+#if DEPURAR_MEM
+    printf("latC_crear_dic: %p\n", ret);
+#endif
     ret->tam += sizeof(hash_map);
     setDic(ret, dic);
     return ret;
@@ -570,6 +583,9 @@ LATINO_API lat_objeto *latC_crear_dic(lat_mv *mv, hash_map *dic) {
 
 LATINO_API lat_objeto *latC_crear_cdato(lat_mv *mv, void *ptr) {
     lat_objeto *ret = latO_crear(mv);
+#if DEPURAR_MEM
+    printf("latC_crear_cdato: %p\n", ret);
+#endif
     setPtr(ret, ptr);
     return ret;
 }

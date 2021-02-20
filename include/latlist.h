@@ -25,7 +25,6 @@ THE SOFTWARE.
 #ifndef _LATINO_LIST_H_
 #define _LATINO_LIST_H_
 
-// typedef struct lat_objeto lat_objeto;
 typedef struct lat_mv lat_mv;
 
 #define latL_longitud(A) ((A)->longitud)

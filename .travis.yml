@@ -4,39 +4,39 @@ compiler:
     - clang
 sudo: false
 os:
-  - linux
-  - osx
+    - linux
+    - osx
 addons:
-  apt:
-    sources:
-      - ubuntu-toolchain-r-test
-    packages:
-      - gcc-4.8
-      - g++-4.8
-      - gettext
-      - libc6-dev
+    apt:
+        sources:
+            - ubuntu-toolchain-r-test
+        packages:
+            - gcc-4.8
+            - g++-4.8
+            - gettext
+            - libc6-dev
 before_install:
     - pip2 install --user cpp-coveralls
     - if [ $TRAVIS_OS_NAME == "linux" ]; then
-        export CC="gcc-4.8";
-        export CXX="g++-4.8";
-        export LINK="gcc-4.8";
-        export LINKXX="g++-4.8";
+      export CC="gcc-4.8";
+      export CXX="g++-4.8";
+      export LINK="gcc-4.8";
+      export LINKXX="g++-4.8";
       elif [ $TRAVIS_OS_NAME == "osx" ]; then
-        export CC="clang";
-        export CXX="clang++";
-        export LINK="clang";
-        export LINKXX="clang++";
+      export CC="clang";
+      export CXX="clang++";
+      export LINK="clang";
+      export LINKXX="clang++";
       fi
     - gcc --version
     - g++ --version
 script:
     - if [ $TRAVIS_OS_NAME == "linux" ]; then
-        ./compilar_gcc.sh;
-        ./run_coverage_gcc.sh;
+      ./compilar_gcc.sh;
+      ./run_coverage_gcc.sh;
       elif [ $TRAVIS_OS_NAME == "osx" ]; then
-        ./compilar_clang.sh;
-        ./run_coverage_clang.sh;
+      ./compilar_clang.sh;
+      ./run_coverage_clang.sh;
       fi
 after_success:
     - cd bin
