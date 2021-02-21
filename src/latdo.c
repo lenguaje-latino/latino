@@ -529,7 +529,11 @@ static int ast_analizar(lat_mv *mv, ast *nodo, lat_bytecode *codigo, int i) {
         case NODO_ROMPER: {
             // printf("\nNODO_ROMPER: goto_fin: %i\n", mv->goto_break[mv->enBucle]);
             if (mv->enBucle <= 0) {
-                latC_error(mv, "Comando \"romper\" esta fuera de un bucle");
+                // latC_error(mv, "Comando \"romper\" esta fuera de un bucle");
+                char *info = malloc(MAX_INPUT_SIZE);
+                snprintf(info, MAX_INPUT_SIZE, LAT_ERROR_FMT, mv->nombre_archivo, mv->nlin,
+                mv->ncol, "Comando \"romper\" esta fuera de un bucle");
+                fprintf(stderr, "%s\n", info);
             }
             dbc(JUMP_ABSOLUTE, mv->goto_break[mv->enBucle], 0, NULL, mv->nlin, mv->ncol,
                 mv->nombre_archivo);
