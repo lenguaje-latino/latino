@@ -45,6 +45,8 @@ struct lat_longjmp {
 };
 
 void str_concatenar(lat_mv *mv);
+static bool encontrar_romper(ast *nodo);
+static bool jumpLoop_buscar_NODO_SI(ast *nodo);
 
 static ast *transformar_caso_casos(ast *cond_izq, ast *izq) {
     if (izq->tipo == NODO_VALOR) {
@@ -165,66 +167,52 @@ static int encontrar_load_vararg(ast *nodo) {
     return i;
 }
 
-static bool encontrar_romper(ast *nodo) {
-    if (nodo) {
-        ast *tmp;
-        tmp = nodo;
-        while (tmp->der != NULL && tmp->der->tipo != NODO_SI) {
-            if (tmp->der->der != NULL && tmp->der->der->tipo == NODO_SI) {
-                nodo_si *nIf = ((nodo_si *)tmp->der->der);
-                if(nIf->entonces->tipo == NODO_BLOQUE) {
-                    if (nIf->entonces->izq->tipo == NODO_ROMPER) { return true; }
-                    if (nIf->entonces->der->tipo == NODO_ROMPER) { return true; }
-                }
-                if(nIf->_sino && nIf->_sino->tipo == NODO_BLOQUE) {
-                    if (nIf->_sino->izq->tipo == NODO_ROMPER) { return true; }
-                    if (nIf->_sino->der->tipo == NODO_ROMPER) { return true; }
-                }
+static bool jumpLoop_buscar_NODO_SI(ast *nodo) {
+    ast *tmp = nodo;
+    if(tmp == NULL) {
+        return false;
+    }
+    while (tmp->izq != NULL) {
+        if (tmp->izq->tipo == NODO_SI) {
+            nodo_si *nIf = ((nodo_si *)tmp->izq->der);
+            if(nIf->entonces->tipo == NODO_BLOQUE) {
+                if (nIf->entonces->izq->tipo == NODO_ROMPER) { return true; }
+                if (nIf->entonces->der != NULL && nIf->entonces->der->tipo == NODO_ROMPER) { return true; }
             }
-            if (tmp->der->izq != NULL && tmp->der->izq->tipo == NODO_SI) {
-                nodo_si *nIf = ((nodo_si *)tmp->der->izq);
-                if(nIf->entonces->tipo == NODO_BLOQUE) {
-                    if (nIf->entonces->izq->tipo == NODO_ROMPER) { return true; }
-                    if (nIf->entonces->der->tipo == NODO_ROMPER) { return true; }
-                }
-                if(nIf->_sino && nIf->_sino->tipo == NODO_BLOQUE) {
-                    if (nIf->_sino->izq->tipo == NODO_ROMPER) { return true; }
-                    if (nIf->_sino->der->tipo == NODO_ROMPER) { return true; }
-                }
+            if(nIf->_sino && nIf->_sino->tipo == NODO_BLOQUE) {
+                if (nIf->_sino->izq->tipo == NODO_ROMPER) { return true; }
+                if (nIf->_sino->der->tipo == NODO_ROMPER) { return true; }
             }
-            tmp = tmp->der;
+        } else {
+            bool found = encontrar_romper(tmp->izq);
+            if(found) return found;
         }
-        tmp = nodo;
-        while (tmp->izq != NULL && tmp->izq->tipo != NODO_SI) {
-            if (tmp->izq->der != NULL && tmp->izq->der->tipo == NODO_SI) {
-                nodo_si *nIf = ((nodo_si *)tmp->izq->der);
-                if(nIf->entonces->tipo == NODO_BLOQUE) {
-                    if (nIf->entonces->izq->tipo == NODO_ROMPER) { return true; }
-                    if (nIf->entonces->der->tipo == NODO_ROMPER) { return true; }
-                }
-                if(nIf->_sino && nIf->_sino->tipo == NODO_BLOQUE) {
-                    if (nIf->_sino->izq->tipo == NODO_ROMPER) { return true; }
-                    if (nIf->_sino->der->tipo == NODO_ROMPER) { return true; }
-                }
-            }
-            if (tmp->izq->izq != NULL && tmp->izq->izq->tipo == NODO_SI) {
-                nodo_si *nIf = ((nodo_si *)tmp->izq->izq);
-                if(nIf->entonces->tipo == NODO_BLOQUE) {
-                    if (nIf->entonces->izq->tipo == NODO_ROMPER) { return true; }
-                    if (nIf->entonces->der->tipo == NODO_ROMPER) { return true; }
-                }
-                if(nIf->_sino && nIf->_sino->tipo == NODO_BLOQUE) {
-                    if (nIf->_sino->izq->tipo == NODO_ROMPER) { return true; }
-                    if (nIf->_sino->der->tipo == NODO_ROMPER) { return true; }
-                }
-            }
-            tmp = tmp->izq;
-        }
+        tmp = tmp->der;
     }
     return false;
 }
 
-static int goto_fin = 0;
+static bool encontrar_romper(ast *nodo) {
+    // TODO: hacer esta funcion recursiva para ROMPER y CONTINUAR
+    bool rep = false;
+    if (nodo) {
+        ast *tmp = nodo;
+        if (tmp->izq->tipo == NODO_ROMPER) { rep = true; return rep; }
+        while (tmp->izq != NULL) {
+            if (tmp->izq->tipo == NODO_ROMPER) { rep = true; return rep; }
+            // funciones recursivas para buscar en NODO_SI NODO_MIENTRAS NODO_FOR NODO_WHILE NODO_CASE
+            if (tmp->izq->tipo == NODO_SI)      { rep = jumpLoop_buscar_NODO_SI(tmp->izq); if (rep) { return rep; } };
+            // if (tmp->izq->tipo == NODO_ELEGIR)  { rep = jumpLoop_buscar_NODO_ELEGIR  (tmp->izq); if (rep) { return rep; } };
+            if(tmp->der == NULL) {
+                break; 
+            }
+            tmp = tmp->der;
+        }
+    }
+    return rep;
+}
+
+// static int goto_fin = -1;
 
 static int ast_analizar(lat_mv *mv, ast *nodo, lat_bytecode *codigo, int i) {
     int temp[4] = {0};
@@ -452,6 +440,8 @@ static int ast_analizar(lat_mv *mv, ast *nodo, lat_bytecode *codigo, int i) {
             liberar_elegir(nSi);
         } break;
         case NODO_MIENTRAS: {
+            mv->enBucle++;
+            // printf("Entre en nodo_mientras: %i\n", mv->enBucle);
             temp[0] = i;
             pn(mv, nodo->izq);  // condicion
             temp[1] = i;
@@ -460,15 +450,18 @@ static int ast_analizar(lat_mv *mv, ast *nodo, lat_bytecode *codigo, int i) {
             if (encontrar_romper(nodo->der)) {
                 lat_bytecode *code_tmp = latM_asignar(mv, sizeof(lat_bytecode) * MAX_BYTECODE_FUNCTION);
                 int tmp_i = ast_analizar(mv, nodo->der, code_tmp, 0);  // stmts
-                goto_fin = tmp_i + i; // 16
+                mv->goto_break[mv->enBucle] = tmp_i + i; // 16
                 latM_liberar(mv, code_tmp);
             }
             pn(mv, nodo->der);  // stmts
+            // goto_fin = -1;
             dbc(JUMP_ABSOLUTE, (temp[0] - 1), 0, NULL, nodo->izq->nlin,
                 nodo->izq->ncol, mv->nombre_archivo);
             codigo[temp[1]] = latMV_bytecode_crear(
                 POP_JUMP_IF_FALSE, (i - 1), 0, NULL, nodo->izq->nlin,
                 nodo->izq->ncol, mv->nombre_archivo);
+            mv->enBucle--;
+            // printf("Sali de nodo_mientras: %i\n", mv->enBucle);
         } break;
         case NODO_REPETIR: {
             temp[0] = i;
@@ -534,8 +527,11 @@ static int ast_analizar(lat_mv *mv, ast *nodo, lat_bytecode *codigo, int i) {
                 nodo->izq->nlin, nodo->izq->ncol, mv->nombre_archivo);
         } break;
         case NODO_ROMPER: {
-            printf("\nNODO_ROMPER: goto_fin: %i\n", goto_fin);
-            dbc(JUMP_ABSOLUTE, goto_fin, 0, NULL, mv->nlin, mv->ncol,
+            // printf("\nNODO_ROMPER: goto_fin: %i\n", mv->goto_break[mv->enBucle]);
+            if (mv->enBucle <= 0) {
+                latC_error(mv, "Comando \"romper\" esta fuera de un bucle");
+            }
+            dbc(JUMP_ABSOLUTE, mv->goto_break[mv->enBucle], 0, NULL, mv->nlin, mv->ncol,
                 mv->nombre_archivo);
         } break;
         case NODO_FUNCION_ARGUMENTOS: {
@@ -849,13 +845,20 @@ LATINO_API void latC_error(lat_mv *mv, const char *fmt, ...) {
     vsprintf(buffer, fmt, args);
     va_end(args);
     char *info = malloc(MAX_INPUT_SIZE);
-    snprintf(info, MAX_INPUT_SIZE, LAT_ERROR_FMT, mv->nombre_archivo, mv->nlin,
-             mv->ncol);
-    latC_apilar(mv, latC_crear_cadena(mv, info));
-    latC_apilar(mv, latC_crear_cadena(mv, buffer));
-    str_concatenar(mv);
-    lat_objeto *err = latC_desapilar(mv);
-    fprintf(stderr, "%s\n", latC_astring(mv, err));
+    if(strstr(buffer, "%") != NULL) {
+        snprintf(info, MAX_INPUT_SIZE, LAT_ERROR_FMT, mv->nombre_archivo, mv->nlin,
+                mv->ncol);
+        latC_apilar(mv, latC_crear_cadena(mv, info));
+        latC_apilar(mv, latC_crear_cadena(mv, buffer));
+        str_concatenar(mv);
+        lat_objeto *err = latC_desapilar(mv);
+        fprintf(stderr, "%s\n", latC_astring(mv, err));
+    } else {
+        snprintf(info, MAX_INPUT_SIZE, LAT_ERROR_FMT, mv->nombre_archivo, mv->nlin,
+                mv->ncol, buffer);
+        fprintf(stderr, "%s\n", info);
+    }
+    // FIXME: Si esta en REPL que no finalice
     latD_lanzar(mv, LAT_ERRRUN);
 }
 

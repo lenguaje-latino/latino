@@ -86,6 +86,12 @@ void latR_REPL(lat_mv *mv) {
         if (status == 0 && nodo != NULL) {
             lat_objeto *curexpr = latC_analizar(mv, nodo);
             status = latC_llamar_funcion(mv, curexpr);
+            // struct lat_longjmp lj;
+            // lj.status = 0;
+            // lj.previo = mv->error;
+            // mv->error = &lj;
+            // LAT_TRY(mv, &lj, latMV_funcion_correr(mv, func););
+            // mv->error = lj.previo;
             latO_destruir(mv, curexpr);
         }
         latA_destruir(nodo);

@@ -146,6 +146,8 @@ typedef struct lat_mv {
     int ncol;
     int status;
     struct lat_longjmp *error;
+    int enBucle;
+    int goto_break[256]; // FIXME: Validar memoria utilizada
 } lat_mv;
 
 #define lati_numUmin(a) (-(a))

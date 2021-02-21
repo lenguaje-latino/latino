@@ -368,6 +368,8 @@ LATINO_API lat_mv *latC_crear_mv() {
     mv->contexto_actual = mv->contexto[mv->ptrctx];
     mv->error = NULL;
     mv->global->menu = false;
+    mv->enBucle = 0;
+    mv->goto_break;
 
     // cargar librerias de latino
     latC_abrir_liblatino_baselib(mv);

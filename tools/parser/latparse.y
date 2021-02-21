@@ -288,6 +288,7 @@ statement
     | function_definition
     | function_call
     | incdec_statement
+    | jump_loop
     ;
 
 incdec_statement
@@ -395,8 +396,6 @@ osi_statement
 
 iteration_statement
     : MIENTRAS expression statement_list FIN {
-        $$ = latA_mientras($2, $3); }
-    | MIENTRAS expression jump_loop FIN {
         $$ = latA_mientras($2, $3); }
     | REPETIR statement_list HASTA expression {
         $$ = latA_hacer($4, $2); }
