@@ -18,3 +18,60 @@ mientras i < 10
     poner(i)
     i++     #esto es lo mismo que i = i + 1
 fin
+poner("------------------------------")
+poner("---condicion con ROMPER #1 ---")
+poner("------------------------------")
+i = 0
+# Ejemplo #3            >>>Deberia de imprimir solo hasta el cero(0)
+mientras (i < 10)
+    imprimir(i)
+    romper
+    i++
+fin
+poner("------------------------------")
+poner("---condicion con ROMPER #2 ---")
+poner("------------------------------")
+i = 0
+# Ejemplo #4            >>>Deberia de imprimir solo hasta el cinco(5)
+mientras (i < 10)
+    imprimir(i)
+    si (i == 5)
+        romper
+    fin
+    i++
+fin
+poner("------------------------------")
+poner("---condicion con ROMPER #3 ---")
+poner("------------------------------")
+i = 0
+# Ejemplo #5            >>>Deberia de imprimir solo hasta el cinco(5)
+mientras (i < 10)
+    imprimirf("i: "..i)
+    e=0
+    mientras (e<10)
+        imprimirf(" | e: "..e)
+        // si (i==5 || e == 5) romper fin
+        si (e==5) romper fin
+        si (i==5) romper fin
+        e++
+    fin
+    imprimirf("\n")
+    i++
+fin
+poner("------------------------------")
+poner("---condicion con ROMPER #4 ---")
+poner("------------------------------")
+i = 0
+# Ejemplo #6            >>>Deberia de imprimir solo hasta el cinco(5)
+mientras (i < 10)
+    imprimirf("i: "..i)
+    e=0
+    mientras (e<10)
+        imprimirf(" | e: "..e)
+        si (e==5) romper fin
+        e++
+    fin
+    imprimirf("\n")
+    i++
+    si (i==5) romper fin
+fin

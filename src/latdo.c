@@ -212,8 +212,6 @@ static bool encontrar_romper(ast *nodo) {
     return rep;
 }
 
-// static int goto_fin = -1;
-
 static int ast_analizar(lat_mv *mv, ast *nodo, lat_bytecode *codigo, int i) {
     int temp[4] = {0};
     lat_bytecode *funcion_codigo = NULL;
@@ -441,7 +439,6 @@ static int ast_analizar(lat_mv *mv, ast *nodo, lat_bytecode *codigo, int i) {
         } break;
         case NODO_MIENTRAS: {
             mv->enBucle++;
-            // printf("Entre en nodo_mientras: %i\n", mv->enBucle);
             temp[0] = i;
             pn(mv, nodo->izq);  // condicion
             temp[1] = i;
@@ -454,24 +451,30 @@ static int ast_analizar(lat_mv *mv, ast *nodo, lat_bytecode *codigo, int i) {
                 latM_liberar(mv, code_tmp);
             }
             pn(mv, nodo->der);  // stmts
-            // goto_fin = -1;
             dbc(JUMP_ABSOLUTE, (temp[0] - 1), 0, NULL, nodo->izq->nlin,
                 nodo->izq->ncol, mv->nombre_archivo);
             codigo[temp[1]] = latMV_bytecode_crear(
                 POP_JUMP_IF_FALSE, (i - 1), 0, NULL, nodo->izq->nlin,
                 nodo->izq->ncol, mv->nombre_archivo);
             mv->enBucle--;
-            // printf("Sali de nodo_mientras: %i\n", mv->enBucle);
         } break;
         case NODO_REPETIR: {
+            mv->enBucle++;
             temp[0] = i;
-            pn(mv, nodo->der);
             pn(mv, nodo->izq);
+            if (encontrar_romper(nodo->der)) {
+                lat_bytecode *code_tmp = latM_asignar(mv, sizeof(lat_bytecode) * MAX_BYTECODE_FUNCTION);
+                int tmp_i = ast_analizar(mv, nodo->der, code_tmp, 0);
+                mv->goto_break[mv->enBucle] = tmp_i + i;
+                latM_liberar(mv, code_tmp);
+            }
+            pn(mv, nodo->der);
             temp[1] = i;
             dbc(NOP, 0, 0, NULL, 0, 0, mv->nombre_archivo);
             codigo[temp[1]] = latMV_bytecode_crear(
                 POP_JUMP_IF_FALSE, (temp[0] - 1), 0, NULL, nodo->izq->izq->nlin,
                 nodo->izq->izq->ncol, mv->nombre_archivo);
+            mv->enBucle--;
         } break;
         // case NODO_RANGO: {
         //     nodo_rango *nRango = ((nodo_rango *)nodo);
@@ -527,7 +530,6 @@ static int ast_analizar(lat_mv *mv, ast *nodo, lat_bytecode *codigo, int i) {
                 nodo->izq->nlin, nodo->izq->ncol, mv->nombre_archivo);
         } break;
         case NODO_ROMPER: {
-            // printf("\nNODO_ROMPER: goto_fin: %i\n", mv->goto_break[mv->enBucle]);
             if (mv->enBucle <= 0) {
                 // latC_error(mv, "Comando \"romper\" esta fuera de un bucle");
                 char *info = malloc(MAX_INPUT_SIZE);
