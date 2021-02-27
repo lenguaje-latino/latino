@@ -501,9 +501,6 @@ dict_item
 %%
 
 /*
-    jump_statement 
-    | ROMPER { $$ = latA_nodo(NODO_ROMPER, NULL, NULL, @1.first_line, @1.first_column); }
-
 class_statement
     : class_definition
     | class_definition class_statement

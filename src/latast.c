@@ -161,10 +161,14 @@ ast *latA_hacer(ast *cond, ast *stmts) {
 
 ast *latA_desde(ast *dec, ast *cond, ast *inc, ast *stmts) {
     ast *a = (ast *)malloc(sizeof(ast));
+    ast *tmp = stmts;
+    while(tmp->der != NULL) {
+        tmp = tmp->der;
+    }
+    tmp->der = inc;
     a->tipo = NODO_BLOQUE;
     a->izq = dec;
-    a->der = latA_mientras(
-        cond, latA_nodo(NODO_BLOQUE, stmts, inc, cond->nlin, cond->ncol));
+    a->der = latA_mientras(cond, stmts);
     a->valor = NULL;
     return a;
 }
