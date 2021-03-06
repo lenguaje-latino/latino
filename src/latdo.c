@@ -200,9 +200,7 @@ static bool encontrar_romper(ast *nodo) {
         if (tmp->izq->tipo == NODO_ROMPER) { rep = true; return rep; }
         while (tmp->izq != NULL) {
             if (tmp->izq->tipo == NODO_ROMPER) { rep = true; return rep; }
-            // funciones recursivas para buscar en NODO_SI NODO_MIENTRAS NODO_FOR NODO_WHILE NODO_CASE
             if (tmp->izq->tipo == NODO_SI)      { rep = jumpLoop_buscar_NODO_SI(tmp->izq); if (rep) { return rep; } };
-            // if (tmp->izq->tipo == NODO_ELEGIR)  { rep = jumpLoop_buscar_NODO_ELEGIR  (tmp->izq); if (rep) { return rep; } };
             if(tmp->der == NULL) {
                 break; 
             }
@@ -531,7 +529,6 @@ static int ast_analizar(lat_mv *mv, ast *nodo, lat_bytecode *codigo, int i) {
         } break;
         case NODO_ROMPER: {
             if (mv->enBucle <= 0) {
-                // latC_error(mv, "Comando \"romper\" esta fuera de un bucle");
                 char *info = malloc(MAX_INPUT_SIZE);
                 snprintf(info, MAX_INPUT_SIZE, LAT_ERROR_FMT, mv->nombre_archivo, mv->nlin,
                 mv->ncol, "Comando \"romper\" esta fuera de un bucle");

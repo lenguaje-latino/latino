@@ -180,17 +180,6 @@ ast *latA_para(ast *identificador, ast* inicio, ast* fin, ast* incremento, ast *
     if (incremento == NULL) {
         incremento = latA_numerico(1, identificador->nlin, identificador->ncol);
     }
-
-    // ast *asign = latA_asign(inicio, identificador); // i = 1
-    // nodo_rango *a = (nodo_rango *)malloc(sizeof(nodo_rango));
-    // a->tipo = NODO_RANGO;
-    // a->id = identificador;
-    // a->ini = inicio;
-    // a->fin = fin;
-    // a->inc = incremento;
-    // a->stmts = sentencias;
-    // return (ast *)a;
-
     if (inicio->tipo == NODO_MENOS_UNARIO) {
         inicio = latA_numerico(-(inicio->izq->valor->val.numerico), identificador->nlin, identificador->ncol);
     }
@@ -217,9 +206,14 @@ ast *latA_para(ast *identificador, ast* inicio, ast* fin, ast* incremento, ast *
     ast *suma = latA_nodo(NODO_SUMA, identificador, incremento, identificador->nlin, identificador->ncol);
     /*inc -> (i = suma) -> i = i + 3 */
     ast *inc = latA_asign(suma, identificador);
+    ast *tmp = sentencias;
+    while(tmp->der != NULL) {
+        tmp = tmp->der;
+    }
+    tmp->der = inc;
     a->tipo = NODO_BLOQUE;
     a->izq = asign;
-    a->der = latA_mientras(cond, latA_nodo(NODO_BLOQUE, sentencias, inc, identificador->nlin, identificador->ncol));
+    a->der = latA_mientras(cond, sentencias);
     a->valor = NULL;
     return a;
 }

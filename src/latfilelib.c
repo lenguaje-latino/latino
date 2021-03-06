@@ -143,7 +143,7 @@ static void file_ejecutar(lat_mv *mv) {
             latO_destruir(mv, func);
             latA_destruir(nodo);
         } else {
-            latC_error(mv, "Error al ejeuctar archivo '%s'", input);
+            latC_error(mv, "Error al ejecutar archivo '%s'", input);
         }
     }
 }
@@ -241,5 +241,5 @@ void latC_abrir_liblatino_filelib(lat_mv *mv) {
 }
 //agregar funcion de elegiar donde escribir
 // {"escribir", file_escribir, 3},
-// archivo.escribir("archivo1.lat", "añadir", 10)
+// archivo.escribir("archivo1.lat", "aï¿½adir", 10)
 //https://medium.com/10-goto-10/manejo-de-archivos-en-c-19f85b31ddd
