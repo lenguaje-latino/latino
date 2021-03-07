@@ -4,6 +4,8 @@
 | Versión | Instalador |
 |---|---|
 |  1.1.0  | [Instalador](https://github.com/MelvinG24/Latino/releases/download/v1.1.0/Latino-1.1.0-MacOS.pkg) |
+# Instalar en Mac con Homebrew 
+$`brew install latino`
 ### Requerimientos minimos de sistema:
 |Componentes|Versión|
 |---|---|

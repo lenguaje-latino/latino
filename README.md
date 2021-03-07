@@ -75,6 +75,7 @@
 - [Debian/Ubuntu](.readme/instalacion_debian.md)
 - [Fedora](.readme/instalacion_fedora.md)
 - [Mac](.readme/instalacion_mac.md)
+- &nbsp;&nbsp;&nbsp;&nbsp;$` brew install latino`
 - [Plugins](https://github.com/lenguaje-latino)
 
 <a name="doc"></a>
