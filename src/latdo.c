@@ -46,7 +46,8 @@ struct lat_longjmp {
 
 void str_concatenar(lat_mv *mv);
 static bool encontrar_romper(ast *nodo);
-static bool jumpLoop_buscar_NODO_SI(ast *nodo);
+static bool encontrar_continuar(ast *nodo);
+static bool jumpLoop_buscar_NODO_SI(ast *nodo, int NODO_JUMP);
 
 static ast *transformar_caso_casos(ast *cond_izq, ast *izq) {
     if (izq->tipo == NODO_VALOR) {
@@ -167,25 +168,30 @@ static int encontrar_load_vararg(ast *nodo) {
     return i;
 }
 
-static bool jumpLoop_buscar_NODO_SI(ast *nodo) {
+static bool jumpLoop_buscar_NODO_SI(ast *nodo, int NODO_JUMP) {
     ast *tmp = nodo;
     if(tmp == NULL) {
         return false;
     }
-    while (tmp->izq != NULL) {
+    while (tmp != NULL && tmp->izq != NULL) {
         if (tmp->izq->tipo == NODO_SI) {
             nodo_si *nIf = ((nodo_si *)tmp->izq->der);
             if(nIf->entonces->tipo == NODO_BLOQUE) {
-                if (nIf->entonces->izq->tipo == NODO_ROMPER) { return true; }
-                if (nIf->entonces->der != NULL && nIf->entonces->der->tipo == NODO_ROMPER) { return true; }
+                if (nIf->entonces->izq->tipo == NODO_JUMP) { return true; }
+                if (nIf->entonces->der != NULL && nIf->entonces->der->tipo == NODO_JUMP) { return true; }
             }
             if(nIf->_sino && nIf->_sino->tipo == NODO_BLOQUE) {
-                if (nIf->_sino->izq->tipo == NODO_ROMPER) { return true; }
-                if (nIf->_sino->der->tipo == NODO_ROMPER) { return true; }
+                if (nIf->_sino->izq->tipo == NODO_JUMP) { return true; }
+                if (nIf->_sino->der->tipo == NODO_JUMP) { return true; }
             }
         } else {
-            bool found = encontrar_romper(tmp->izq);
-            if(found) return found;
+            if (NODO_JUMP == NODO_ROMPER) {
+                bool found = encontrar_romper(tmp->izq);
+                if(found) return found;
+            } else {
+                bool found = encontrar_continuar(tmp->izq);
+                if(found) return found;
+            }
         }
         tmp = tmp->der;
     }
@@ -199,8 +205,8 @@ static bool encontrar_romper(ast *nodo) {
         ast *tmp = nodo;
         if (tmp->izq->tipo == NODO_ROMPER) { rep = true; return rep; }
         while (tmp->izq != NULL) {
-            if (tmp->izq->tipo == NODO_ROMPER) { rep = true; return rep; }
-            if (tmp->izq->tipo == NODO_SI)      { rep = jumpLoop_buscar_NODO_SI(tmp->izq); if (rep) { return rep; } };
+            if (tmp->izq->tipo == NODO_ROMPER)  { rep = true; return rep; }
+            if (tmp->izq->tipo == NODO_SI)      { rep = jumpLoop_buscar_NODO_SI(tmp->izq, NODO_ROMPER); if (rep) { return rep; } };
             if(tmp->der == NULL) {
                 break; 
             }
@@ -210,6 +216,25 @@ static bool encontrar_romper(ast *nodo) {
     return rep;
 }
 
+static bool encontrar_continuar(ast *nodo) {
+    // TODO: hacer esta funcion recursiva para ROMPER y CONTINUAR
+    bool rep = false;
+    if (nodo) {
+        ast *tmp = nodo;
+        if (tmp->izq->tipo == NODO_CONTINUAR) { rep = true; return rep; }
+        while (tmp->izq != NULL) {
+            if (tmp->izq->tipo == NODO_CONTINUAR)   { rep = true; return rep; }
+            if (tmp->izq->tipo == NODO_SI)          { rep = jumpLoop_buscar_NODO_SI(tmp->izq, NODO_CONTINUAR); if (rep) { return rep; } };
+            if(tmp->der == NULL) {
+                break; 
+            }
+            tmp = tmp->der;
+        }
+    }
+    return rep;
+}
+
+// analiza los nodos para crear el bytecode
 static int ast_analizar(lat_mv *mv, ast *nodo, lat_bytecode *codigo, int i) {
     int temp[4] = {0};
     lat_bytecode *funcion_codigo = NULL;
@@ -248,6 +273,7 @@ static int ast_analizar(lat_mv *mv, ast *nodo, lat_bytecode *codigo, int i) {
                 mv->nombre_archivo);
         } break;
         case NODO_IDENTIFICADOR: {
+            // nombre del identificador
             lat_objeto *o = latC_crear_cadena(mv, nodo->valor->val.cadena);
             o->marca = 0;
             o->esconst = nodo->valor->esconst;
@@ -448,6 +474,12 @@ static int ast_analizar(lat_mv *mv, ast *nodo, lat_bytecode *codigo, int i) {
                 mv->goto_break[mv->enBucle] = tmp_i + i; // 16
                 latM_liberar(mv, code_tmp);
             }
+            // if (encontrar_continuar(nodo->der)) {
+            //     lat_bytecode *code_tmp = latM_asignar(mv, sizeof(lat_bytecode) * MAX_BYTECODE_FUNCTION);
+            //     int tmp_i = ast_analizar(mv, nodo->der, code_tmp, 0);  // stmts
+            //     mv->goto_continue[mv->enBucle] = tmp_i + i; // 16
+            //     latM_liberar(mv, code_tmp);
+            // }
             pn(mv, nodo->der);  // stmts
             dbc(JUMP_ABSOLUTE, (temp[0] - 1), 0, NULL, nodo->izq->nlin,
                 nodo->izq->ncol, mv->nombre_archivo);
@@ -474,40 +506,6 @@ static int ast_analizar(lat_mv *mv, ast *nodo, lat_bytecode *codigo, int i) {
                 nodo->izq->izq->ncol, mv->nombre_archivo);
             mv->enBucle--;
         } break;
-        // case NODO_RANGO: {
-        //     nodo_rango *nRango = ((nodo_rango *)nodo);
-        //     /*
-        //     x,y,z = 1,10,2
-        //     para i en rango(x,y,z)
-        //         poner (i)
-        //     fin
-        //     */
-        //     // pn(mv, nRango->id);     // i = inicio
-        //     //pn(mv, nRango->inc);    // evalua la expresion que trae en inc
-        //     // hasta este punto ya podriamos saber el valor que hay en el tope de la pila (positivo o negacion)
-        //     // pn(mv, nRango->inc);
-        //     /*
-        //     LOAD id
-        //     */
-        //     pn(mv, nRango->ini);
-        //     // temp[0] = i;
-        //     // pn(mv, nodo_rango->id); // i = 1
-        //     // temp[1] = i;
-        //     // dbc(NOP, 0, 0, NULL, nodo->izq->nlin, nodo->izq->ncol,
-        //     //     mv->nombre_archivo);
-            
-        //     // pn(mv, nodo->der);
-        //     // dbc(JUMP_ABSOLUTE, (temp[0] - 1), 0, NULL, nodo->izq->nlin,
-        //     //     nodo->izq->ncol, mv->nombre_archivo);
-        //     // codigo[temp[1]] = latMV_bytecode_crear(
-        //     //     POP_JUMP_IF_FALSE, (i - 1), 0, NULL, nodo->izq->nlin,
-        //     //     nodo->izq->ncol, mv->nombre_archivo);            temp[0] = i;
-        //     // temp[1] = i;
-        //     // dbc(NOP, 0, 0, NULL, 0, 0, mv->nombre_archivo);
-        //     // codigo[temp[1]] = latMV_bytecode_crear(
-        //     //     POP_JUMP_IF_FALSE, (temp[0] - 1), 0, NULL, nodo->izq->izq->nlin,
-        //     //     nodo->izq->izq->ncol, mv->nombre_archivo);
-        // } //break;
         case NODO_FUNCION_LLAMADA: {
             // argumentos
             if (nodo->der) {
@@ -536,6 +534,29 @@ static int ast_analizar(lat_mv *mv, ast *nodo, lat_bytecode *codigo, int i) {
             }
             dbc(JUMP_ABSOLUTE, mv->goto_break[mv->enBucle], 0, NULL, mv->nlin, mv->ncol,
                 mv->nombre_archivo);
+        } break;
+        // case NODO_CONTINUAR: {
+        //     if (mv->enBucle <= 0) {
+        //         char *info = malloc(MAX_INPUT_SIZE);
+        //         snprintf(info, MAX_INPUT_SIZE, LAT_ERROR_FMT, mv->nombre_archivo, mv->nlin,
+        //         mv->ncol, "Comando \"continuar\" esta fuera de un bucle");
+        //         fprintf(stderr, "%s\n", info);
+        //     }
+        //     dbc(JUMP_ABSOLUTE, mv->goto_continue[mv->enBucle], 0, NULL, mv->nlin, mv->ncol,
+        //         mv->nombre_archivo);
+        // } break;
+        case NODO_ETIQUETA: {
+            lat_objeto *o = latC_crear_cadena(mv, nodo->izq->valor->val.cadena);
+            o->nombre = nodo->izq->valor->val.cadena;
+            o->tipo = T_LABEL;
+            o->jump_label = i; // hacia qué instruccion vamos a saltar
+            dbc(STORE_LABEL, 0, 0, o, nodo->nlin, nodo->ncol, mv->nombre_archivo);
+        } break;
+        case NODO_IR: {
+            // if (si no encuentra etiqueta) {}
+            lat_objeto *o = latC_crear_cadena(mv, nodo->izq->valor->val.cadena);
+            o->nombre = nodo->izq->valor->val.cadena;
+            dbc(JUMP_LABEL, 0, 0, o, nodo->nlin, nodo->ncol, mv->nombre_archivo);
         } break;
         case NODO_FUNCION_ARGUMENTOS: {
             if (nodo->izq) {
@@ -701,7 +722,7 @@ static int ast_analizar(lat_mv *mv, ast *nodo, lat_bytecode *codigo, int i) {
             printf("ERROR nodo->tipo:%i\n", nodo->tipo);
             return 0;
     }
-    return i;
+    return i; // instruccion actual
 }
 
 void mostrar_bytecode(lat_mv *mv, lat_bytecode *codigo) {
@@ -775,8 +796,20 @@ void mostrar_bytecode(lat_mv *mv, lat_bytecode *codigo) {
                 printf("STORE_NAME\t(%s)\n", buffer);
                 free(buffer);
             } break;
+            case STORE_LABEL: {
+                o = (lat_objeto *)cur.meta;
+                buffer = latC_astring(mv, o);
+                printf("STORE_LABEL\t(%s)\t%i\n", buffer, o->jump_label);
+                free(buffer);
+            } break;
             case JUMP_ABSOLUTE: {
                 printf("JUMP_ABSOLUTE\t(%i)\n", (cur.a + 1));
+            } break;
+            case JUMP_LABEL: {
+                o = (lat_objeto *)cur.meta;
+                buffer = latC_astring(mv, o);
+                printf("JUMP_LABEL\t(%s)\t%i\n", buffer, o->jump_label);
+                free(buffer);
             } break;
             case POP_JUMP_IF_FALSE: {
                 printf("POP_JUMP_IF_FALSE\t(%i)\n", (cur.a + 1));

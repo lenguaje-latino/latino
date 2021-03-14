@@ -89,6 +89,7 @@ int yylex (YYSTYPE * yylval_param,YYLTYPE * yylloc_param ,yyscan_t yyscanner);
     PARA
     EN
     RANGO
+    IR
 
 %token
     MAYOR_QUE
@@ -122,7 +123,7 @@ int yylex (YYSTYPE * yylval_param,YYLTYPE * yylloc_param ,yyscan_t yyscanner);
 %type <node> dict_new dict_items dict_item
 %type <node> labeled_statements labeled_statement_case labeled_statement_case_case labeled_statement_default
 %type <node> variable_access field_designator
-%type <node> osi_statements osi_statement global_declaration
+%type <node> osi_statements osi_statement global_declaration goto_etiqueta
 
 /*
  * precedencia de operadores
@@ -289,6 +290,7 @@ statement
     | function_call
     | incdec_statement
     | jump_loop
+    | goto_etiqueta
     ;
 
 incdec_statement
@@ -416,13 +418,19 @@ iteration_statement
         }
     ;
 
+goto_etiqueta
+    : IDENTIFICADOR ':' { $$ = latA_nodo(NODO_ETIQUETA, $1, NULL, @1.first_line, @1.first_column); }
+    ;
+
 jump_statement
     : RETORNO expression { $$ = latA_nodo(NODO_RETORNO, $2, NULL, @1.first_line, @1.first_column); }
     | RETORNO argument_expression_list { $$ = latA_nodo(NODO_RETORNO, $2, NULL, @1.first_line, @1.first_column); }
+    | IR IDENTIFICADOR { $$ =  latA_nodo(NODO_IR, $2, NULL, @1.first_line, @1.first_column); }
     ;
 
 jump_loop
-    : ROMPER { $$ = latA_nodo(NODO_ROMPER, NULL, NULL, @1.first_line, @1.first_column); }
+    : ROMPER    { $$ = latA_nodo(NODO_ROMPER, NULL, NULL, @1.first_line, @1.first_column); }
+    | CONTINUAR { $$ = latA_nodo(NODO_CONTINUAR, NULL, NULL, @1.first_line, @1.first_column); }
     ;
 
 function_definition

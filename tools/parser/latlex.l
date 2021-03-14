@@ -134,6 +134,7 @@ EXP ([Ee][-+]?[0-9]+)
 "para"                                          { return PARA; }
 "en"                                            { return EN; }
 "rango"                                         { return RANGO; }
+"ir"                                            { return IR; }
 
  /* names */
 [_A-Z]*                                         { yylval->node = latA_var(yytext, yylloc->first_line, yylloc->first_column, 1); return IDENTIFICADOR; }

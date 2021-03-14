@@ -254,6 +254,12 @@ lat_objeto *latO_clonar(lat_mv *mv, lat_objeto *obj) {
         case T_NUMERIC:
             ret = latC_crear_numerico(mv, latC_checar_numerico(mv, obj));
             break;
+        case T_LABEL: {
+            ret = latC_crear_cadena(mv, latC_checar_cadena(mv, obj));
+            ret->nombre = obj->nombre;
+            ret->tipo = obj->tipo;
+            ret->jump_label = obj->jump_label;
+        } break;
         default:
             ret = latO_crear(mv);
             ret->tipo = obj->tipo;
@@ -623,7 +629,7 @@ LATINO_API char latC_checar_caracter(lat_mv *mv, lat_objeto *o) {
 }
 
 LATINO_API char *latC_checar_cadena(lat_mv *mv, lat_objeto *o) {
-    if (o->tipo == T_STR) {
+    if (o->tipo == T_STR || o->tipo == T_LABEL) {
         return getstr(getCadena(o));
     }
     latC_error(mv, "El parametro debe de ser una cadena");
@@ -814,6 +820,8 @@ LATINO_API char *latC_astring(lat_mv *mv, lat_objeto *o) {
     } else if (o->tipo == T_CHAR) {
         return (char)getCaracter(o);
     } else if (o->tipo == T_STR) {
+        return strdup(latC_checar_cadena(mv, o));
+    } else if (o->tipo == T_LABEL) {
         return strdup(latC_checar_cadena(mv, o));
     } else if (o->tipo == T_FUN) {
         return strdup("fun");

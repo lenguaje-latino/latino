@@ -91,6 +91,8 @@ typedef void (*lat_CFuncion)(lat_mv *mv);
 #define LOAD_VAR_ARGS 45
 #define SET_LOCAL 46
 #define POP_JUMP_IF_NEGATIVE 47
+#define JUMP_LABEL 48
+#define STORE_LABEL 49
 
 union lat_gcobjeto {
     lat_gcheader gch;
@@ -147,7 +149,9 @@ typedef struct lat_mv {
     int status;
     struct lat_longjmp *error;
     int enBucle;
-    int goto_break[256]; // FIXME: Validar memoria utilizada
+    int goto_break[256];    // FIXME: Validar memoria utilizada
+    int goto_continue[256]; // FIXME: Validar memoria utilizada
+    int goto_goto[256];
 } lat_mv;
 
 #define lati_numUmin(a) (-(a))

@@ -65,6 +65,7 @@ typedef enum lat_tipo {
     T_CLASS, // 10
     T_INTEGER,
     T_CHAR,
+    T_LABEL,
 } lat_tipo;
 
 typedef void (*lat_CFuncion)(lat_mv *mv);
@@ -134,6 +135,7 @@ typedef struct _lat_objeto {
     int ninst;
     size_t tam;
     bool es_vararg;
+    int jump_label;
 } lat_objeto;
 
 /**\brief Define una fun de usuario */
@@ -235,6 +237,7 @@ extern lat_objeto latO_falso_;
         o1->nparams = o2->nparams;                                             \
         o1->es_vararg = o2->es_vararg;                                         \
         o1->esconst = o2->esconst;                                             \
+        o1->jump_label = o2->jump_label;                                       \
     }
 
 #define setobj2s setobj
@@ -260,6 +263,7 @@ extern lat_objeto latO_falso_;
                 setCaracter(oo1, getCaracter(oo2));                            \
                 break;                                                         \
             case T_STR:                                                        \
+            case T_LABEL:                                                      \
             case T_LIST:                                                       \
             case T_DIC:                                                        \
             case T_CONTEXT:                                                    \

@@ -102,6 +102,9 @@ typedef enum {
     NODO_LOAD_VAR_ARGS,
     NODO_RANGO, /* 50 */
     NODO_ROMPER,
+    NODO_CONTINUAR,
+    NODO_IR,
+    NODO_ETIQUETA,
 } nodo_tipo;
 
 /** \brief Tipos de dato */

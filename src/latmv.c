@@ -86,6 +86,9 @@ static const char *const bycode_nombre[] = {
     "ADJUST_STACK",
     "LOAD_VAR_ARGS", /*45*/
     "SET_LOCAL",
+    "POP_JUMP_IF_NEGATIVE",
+    "JUMP_LABEL",
+    "STORE_LABEL"
 };
 
 void str_concatenar(lat_mv *mv);
@@ -571,25 +574,23 @@ static lat_objeto *latMV_get_symbol(lat_mv *mv, lat_objeto *name) {
     return val;
 }
 
-static void latMV_set_symbol(lat_mv *mv, lat_bytecode cur) {
-    lat_objeto *val = NULL;
-    if (mv->ptrpila == 0) {
-        val = latO_nulo;
-    } else {
-        val = latC_desapilar(mv);
-    }
-    lat_objeto *name = (lat_objeto *)cur.meta;
+static void latMV_set_symbol(lat_mv *mv, lat_objeto *name, lat_objeto *val) {
+    char * str_name = latC_checar_cadena(mv, name);
+    // printf("latMV_set_symbol.str_name: %s\n", str_name);
+    // printf("latMV_set_symbol.val:");
+    // latO_imprimir(mv, val, false);
+    // printf("\n");
     lat_objeto *ctx = obtener_contexto(mv);
     // objeto anterior
     lat_objeto *tmp =
-        latO_obtener_contexto(mv, ctx, latC_checar_cadena(mv, name));
+        latO_obtener_contexto(mv, ctx, str_name);
     if (name->esconst) {
         if (tmp != NULL) {
             latC_error(mv, "Intento de reasignar valor a constante '%s'",
-                       latC_checar_cadena(mv, name));
+                       str_name);
         }
     }
-    latO_asignar_ctx(mv, ctx, latC_checar_cadena(mv, name), val);
+    latO_asignar_ctx(mv, ctx, str_name, val);
 }
 
 static void latMV_call_function(lat_mv *mv, lat_objeto *func, lat_bytecode cur,
@@ -1028,7 +1029,23 @@ int latMV_funcion_correr(lat_mv *mv, lat_objeto *func) {
                     latC_apilar(mv, o);
                 } break;
                 case STORE_NAME: {
-                    latMV_set_symbol(mv, cur);
+                    lat_objeto *val = NULL;
+                    if (mv->ptrpila == 0) {
+                        val = latO_nulo;
+                    } else {
+                        val = latC_desapilar(mv);
+                    }
+                    lat_objeto *name = (lat_objeto *)cur.meta;
+                    latMV_set_symbol(mv, name, val);
+#if DEPURAR_MV
+                    latO_imprimir(mv, name, false);
+                    printf("\t");
+#endif
+                } break;
+                case STORE_LABEL: {
+                    lat_objeto *name = (lat_objeto *)cur.meta;
+                    lat_objeto *val = latO_clonar(mv, name);
+                    latMV_set_symbol(mv, name, val);
 #if DEPURAR_MV
                     latO_imprimir(mv, name, false);
                     printf("\t");
@@ -1071,6 +1088,19 @@ int latMV_funcion_correr(lat_mv *mv, lat_objeto *func) {
 #endif
                     pc = cur.a;
                     break;
+                case JUMP_LABEL: {
+                    lat_objeto *name = (lat_objeto *)cur.meta;
+#if DEPURAR_MV
+                    latO_imprimir(mv, name, false);
+                    printf("\t");
+#endif
+                    lat_objeto *val = latMV_get_symbol(mv, name);
+                    if(val->tipo != T_LABEL) {
+                        char *nombre = latC_checar_cadena(mv, name);
+                        latC_error(mv, "El identificador '%s' no es un tipo etiqueta", nombre);
+                    }
+                    pc = val->jump_label;  // saltamos hacia la instruccion de la etiqueta
+                } break;
                 case CALL_FUNCTION: {
 #if DEPURAR_MV
                     printf("\n[RESULTADO] >>> ");

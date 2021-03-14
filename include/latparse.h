@@ -76,25 +76,26 @@ extern int yydebug;
     PARA = 282,
     EN = 283,
     RANGO = 284,
-    MAYOR_QUE = 285,
-    MENOR_QUE = 286,
-    MAYOR_IGUAL = 287,
-    MENOR_IGUAL = 288,
-    IGUAL_LOGICO = 289,
-    DIFERENTE = 290,
-    Y_LOGICO = 291,
-    O_LOGICO = 292,
-    INCREMENTO = 293,
-    DECREMENTO = 294,
-    CONCATENAR = 295,
-    CONCATENAR_IGUAL = 296,
-    MAS_IGUAL = 297,
-    MENOS_IGUAL = 298,
-    POR_IGUAL = 299,
-    ENTRE_IGUAL = 300,
-    MODULO_IGUAL = 301,
-    REGEX = 302,
-    GLOBAL = 303
+    IR = 285,
+    MAYOR_QUE = 286,
+    MENOR_QUE = 287,
+    MAYOR_IGUAL = 288,
+    MENOR_IGUAL = 289,
+    IGUAL_LOGICO = 290,
+    DIFERENTE = 291,
+    Y_LOGICO = 292,
+    O_LOGICO = 293,
+    INCREMENTO = 294,
+    DECREMENTO = 295,
+    CONCATENAR = 296,
+    CONCATENAR_IGUAL = 297,
+    MAS_IGUAL = 298,
+    MENOS_IGUAL = 299,
+    POR_IGUAL = 300,
+    ENTRE_IGUAL = 301,
+    MODULO_IGUAL = 302,
+    REGEX = 303,
+    GLOBAL = 304
   };
 #endif
 /* Tokens.  */
@@ -125,25 +126,26 @@ extern int yydebug;
 #define PARA 282
 #define EN 283
 #define RANGO 284
-#define MAYOR_QUE 285
-#define MENOR_QUE 286
-#define MAYOR_IGUAL 287
-#define MENOR_IGUAL 288
-#define IGUAL_LOGICO 289
-#define DIFERENTE 290
-#define Y_LOGICO 291
-#define O_LOGICO 292
-#define INCREMENTO 293
-#define DECREMENTO 294
-#define CONCATENAR 295
-#define CONCATENAR_IGUAL 296
-#define MAS_IGUAL 297
-#define MENOS_IGUAL 298
-#define POR_IGUAL 299
-#define ENTRE_IGUAL 300
-#define MODULO_IGUAL 301
-#define REGEX 302
-#define GLOBAL 303
+#define IR 285
+#define MAYOR_QUE 286
+#define MENOR_QUE 287
+#define MAYOR_IGUAL 288
+#define MENOR_IGUAL 289
+#define IGUAL_LOGICO 290
+#define DIFERENTE 291
+#define Y_LOGICO 292
+#define O_LOGICO 293
+#define INCREMENTO 294
+#define DECREMENTO 295
+#define CONCATENAR 296
+#define CONCATENAR_IGUAL 297
+#define MAS_IGUAL 298
+#define MENOS_IGUAL 299
+#define POR_IGUAL 300
+#define ENTRE_IGUAL 301
+#define MODULO_IGUAL 302
+#define REGEX 303
+#define GLOBAL 304
 
 /* Value type.  */
 
