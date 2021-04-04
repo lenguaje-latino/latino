@@ -3,7 +3,7 @@
 
 #define   MyAppName                   "Latino"
 ; #define   MyAppVersion                "1.3.0"
-#define   MyAppVersion                GetFileVersion ("..\..\build\src\Release\latino.exe")
+#define   MyAppVersion                GetFileVersion ("..\..\build\laitno-core\src\Release\latino.exe")
 #define   MyAppPublisher              "LenguajeLatino.org"
 #define   MyAppURL                    "http://lenguajelatino.org/"
 #define   MyAppSupURL                 "https://manual-latino.readthedocs.io/es/latest/"
@@ -57,20 +57,20 @@ ManualHint                        =   Manual Latino
 Name: "spanish"; MessagesFile: "compiler:Languages\Spanish.isl"
 
 [Files]
-Source: "..\Win32\bin\web-icon.bmp";                                                      Flags: dontcopy
-Source: "..\Win32\bin\github-icon.bmp";                                                   Flags: dontcopy
-Source: "..\Win32\bin\manual-icon.bmp";                                                   Flags: dontcopy
-; Source: "..\Win32\bin\isdonate.bmp";                                                      Flags: dontcopy
-Source: "..\..\build\src\Release\*";                    DestDir: "{app}\bin";             Flags: ignoreversion
-Source: "..\..\build\src\regex-2.7-src\src\Release\*";  DestDir: "{app}\lib";             Flags: ignoreversion
-Source: "..\..\build\src\linenoise\Release\*";          DestDir: "{app}\lib";             Flags: ignoreversion
-Source: "..\..\include\*.h";                            DestDir: "{app}\include";         Flags: ignoreversion recursesubdirs createallsubdirs
-Source: "..\Win32\bin\latino.ico";                      DestDir: "{app}\bin";             Flags: ignoreversion
-Source: "..\Win32\bin\*.rtf";                           DestDir: "{app}";                 Flags: ignoreversion
-Source: "..\Win32\bin\manual.url";                      DestDir: "{app}";                 Flags: ignoreversion
-Source: "..\Win32\lib\*";                               DestDir: "{app}\lib";             Flags: ignoreversion recursesubdirs createallsubdirs
-Source: "..\Win32\System32\*.dll";                      DestDir: "C:\Windows\System32";   Flags: onlyifdoesntexist recursesubdirs
-Source: "..\Win32\sysWow64\*.dll";                      DestDir: "C:\Windows\SysWOW64";   Flags: onlyifdoesntexist recursesubdirs
+Source: "..\Win32\bin\web-icon.bmp";                                                                  Flags: dontcopy
+Source: "..\Win32\bin\github-icon.bmp";                                                               Flags: dontcopy
+Source: "..\Win32\bin\manual-icon.bmp";                                                               Flags: dontcopy
+; Source: "..\Win32\bin\isdonate.bmp";                                                                  Flags: dontcopy
+Source: "..\..\build\laitno-core\src\Release\*";                    DestDir: "{app}\bin";             Flags: ignoreversion
+Source: "..\..\build\laitno-core\src\regex-2.7-src\src\Release\*";  DestDir: "{app}\lib";             Flags: ignoreversion
+Source: "..\..\build\laitno-core\src\linenoise\Release\*";          DestDir: "{app}\lib";             Flags: ignoreversion
+Source: "..\..\laitno-core\include\*.h";                            DestDir: "{app}\include";         Flags: ignoreversion recursesubdirs createallsubdirs
+Source: "..\Win32\bin\latino.ico";                                  DestDir: "{app}\bin";             Flags: ignoreversion
+Source: "..\Win32\bin\*.rtf";                                       DestDir: "{app}";                 Flags: ignoreversion
+Source: "..\Win32\bin\manual.url";                                  DestDir: "{app}";                 Flags: ignoreversion
+Source: "..\Win32\lib\*";                                           DestDir: "{app}\lib";             Flags: ignoreversion recursesubdirs createallsubdirs
+Source: "..\Win32\System32\*.dll";                                  DestDir: "C:\Windows\System32";   Flags: onlyifdoesntexist recursesubdirs
+Source: "..\Win32\sysWow64\*.dll";                                  DestDir: "C:\Windows\SysWOW64";   Flags: onlyifdoesntexist recursesubdirs
 ; NOTE: Don't use "Flags: ignoreversion" on any shared system files
 
 [Icons]
