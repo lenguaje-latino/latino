@@ -17,3 +17,42 @@ repetir
     poner(i)
     i++
 hasta i == 10 //se repite si la condicion es falsa
+poner("------------------------------")
+poner("---condicion con ROMPER #1 ---")
+poner("------------------------------")
+i = 0
+# Ejemplo #3            >>>Deberia de imprimir solo hasta el cero(0)
+repetir
+    imprimir(i)
+    romper
+    i++
+hasta (i == 10)
+poner("------------------------------")
+poner("---condicion con ROMPER #2 ---")
+poner("------------------------------")
+i = 0
+# Ejemplo #4            >>>Deberia de imprimir solo hasta el cinco(5)
+repetir
+    imprimir(i)
+    si (i == 5)
+        romper
+    fin
+    i++
+hasta (i == 10)
+poner("------------------------------")
+poner("---condicion con ROMPER #3 ---")
+poner("------------------------------")
+i = 0
+# Ejemplo #5            >>>Deberia de imprimir solo hasta el cinco(5)
+repetir
+    imprimirf("i: "..i)
+    e=0
+    repetir
+        imprimirf(" | e: "..e)
+        si (e == 5) romper fin
+        e++
+    hasta (e == 10)
+    imprimirf("\n")
+    si (i == 5) romper fin
+    i++
+hasta (i == 10)

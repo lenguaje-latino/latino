@@ -4,13 +4,20 @@
     </a>
 </p>
 
+<div align="center">
+
 ![GitHub release (latest by date)](https://img.shields.io/github/v/release/Lenguaje-Latino/Latino)
-[![https://t.me/joinchat/EBHu7z6l6_paWtcJgu9DVQ](https://img.shields.io/badge/Soporte-Telegram-green.svg?style=plastic)](https://t.me/joinchat/AAAAAD6l6_qIgQAAgu9DVQ)
+[![https://t.me/joinchat/EBHu7z6l6_paWtcJgu9DVQ](https://img.shields.io/badge/Soporte-Telegram-green.svg)](https://t.me/joinchat/AAAAAD6l6_qIgQAAgu9DVQ)
 [![Join the chat at https://gitter.im/primitivorm/latino](https://badges.gitter.im/primitivorm/latino.svg)](https://gitter.im/primitivorm/latino?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 
 [![Build Status](https://travis-ci.org/primitivorm/latino.svg?branch=master)](https://travis-ci.org/primitivorm/latino)
 <a href="http://lenguaje-latino.org"><img src="https://img.shields.io/npm/l/vue.svg" alt="License"></a>
 [![codecov.io](http://codecov.io/github/primitivorm/latino/coverage.svg?branch=master)](http://codecov.io/github/primitivorm/latino?branch=master)
+
+<!-- | README  | [English](.readme/readme_idioma/readme.en-US.md) | [Français](.readme/readme_idioma/readme.fr-FR.md) | [Português](.readme/readme_idioma/readme.pr-BR.md) | [Italiano](.readme/readme_idioma/readme.it-IT.md) |
+|---|---|---|---|---| -->
+
+</div>
 
 <a name="tabla"></a>
 # Tabla de contenidos
@@ -45,7 +52,7 @@
 
 <a name="queEs"></a>
 # ¿Qué es lenguaje Latino?
-*Latino* es un lenguaje de programación creado en [C](https://es.wikipedia.org/wiki/C_(lenguaje_de_programaci%C3%B3n)), inspirado en [Lua](https://www.lua.org/) y [Python](https://www.python.org). Éste proyecto nace de la necesidad de incrementar la educación de nivel básico y avanzado, para que niños, adolescentes y también adultos se motiven a entrar en el mundo de la programación y desarrollar aplicaciones en una sintaxis a su idioma. Además, *Latino* es también para desarrolladores que les gustaría programar en Español, ya que *Latino* es completamente funcional en cualquier [API](https://es.m.wikipedia.org/wiki/Interfaz_de_programaci%C3%B3n_de_aplicaciones) en raw.
+*Latino* es un lenguaje de programación con sintaxis en Español creado en [C](https://es.wikipedia.org/wiki/C_(lenguaje_de_programaci%C3%B3n)), inspirado en [Lua](https://www.lua.org/) y [Python](https://www.python.org). Éste proyecto nace de la necesidad de incrementar la educación de nivel básico y avanzado, para que niños, adolescentes y también adultos se motiven a entrar en el mundo de la programación y desarrollar aplicaciones en una sintaxis a su idioma. Además, *Latino* es también para desarrolladores que les gustaría programar en Español, ya que *Latino* es completamente funcional en cualquier [API](https://es.m.wikipedia.org/wiki/Interfaz_de_programaci%C3%B3n_de_aplicaciones) en raw.
 
 <a name="intro"></a>
 ### Vídeo introductorio de Latino (clic en la imagen)
@@ -71,11 +78,10 @@
 
 <a name="inst"></a>
 # Instalar Latino
-- [Windows](.readme/instalacion_windows.md)
-- [Debian/Ubuntu](.readme/instalacion_debian.md)
-- [Fedora](.readme/instalacion_fedora.md)
-- [Mac](.readme/instalacion_mac.md)
-- &nbsp;&nbsp;&nbsp;&nbsp;$` brew install latino`
+- [Windows](.readme/OS_install/instalacion_windows.md)
+- [Debian/Ubuntu](.readme/OS_install/instalacion_debian.md)
+- [Fedora](.readme/OS_install/instalacion_fedora.md)
+- [Mac](.readme/OS_install/instalacion_mac.md)
 - [Plugins](https://github.com/lenguaje-latino)
 
 <a name="doc"></a>
@@ -503,6 +509,7 @@ global
 hasta
 mientras
 nulo
+para
 repetir
 regresar | retornar | ret
 romper

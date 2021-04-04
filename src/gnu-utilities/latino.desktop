@@ -1,9 +1,0 @@
-[Desktop Entry]
-Version=1.3.0
-Name=Latino
-Comment=Ejecutable de Latino oficial v.1.3.0
-Exec=/usr/bin/latino
-Icon=/usr/share/latino/Latino-logo.png
-Terminal=true
-Type=Application
-Categories=Utility;Application;Development;
