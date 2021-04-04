@@ -11,7 +11,7 @@
 # CMAKE configuraciones
 cmake_minimum_required(VERSION 3.13)
 
-set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${CMAKE_CURRENT_LIST_DIR}/cmake/Modules/")
+set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${CMAKE_CURRENT_LIST_DIR}/latino-core/cmake/Modules/")
 
 project(latino)
 
@@ -44,7 +44,7 @@ include(BuildLatOptions)
 
 #
 # Codigo Fuente
-add_subdirectory(src)
+add_subdirectory(latino-core/src)
 
 
 #
