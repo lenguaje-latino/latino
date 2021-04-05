@@ -2,8 +2,8 @@
 ; SEE THE DOCUMENTATION FOR DETAILS ON CREATING INNO SETUP SCRIPT FILES!
 
 #define   MyAppName                   "Latino"
-; #define   MyAppVersion                "1.3.0"
-#define   MyAppVersion                GetFileVersion ("..\..\build\laitno-core\src\Release\latino.exe")
+#define   MyAppVersion                "1.4.0"
+; #define   MyAppVersion                GetFileVersion ("..\..\build\latino-core\src\Release\latino.exe")
 #define   MyAppPublisher              "LenguajeLatino.org"
 #define   MyAppURL                    "http://lenguajelatino.org/"
 #define   MyAppSupURL                 "https://manual-latino.readthedocs.io/es/latest/"
@@ -23,7 +23,7 @@ AppPublisherURL                   =   {#MyAppURL}
 AppSupportURL                     =   {#MyAppSupURL}
 AppUpdatesURL                     =   {#MyAppSupURL}
 AppComments                       =   Lenguaje de Programación con sintaxis en Español
-AppCopyright                      =   Copyleft (ɔ) 2015-2020 Lenguaje Latino
+AppCopyright                      =   Copyleft (ɔ) 2015-2021 Lenguaje Latino
 DefaultDirName                    =   {autopf}\{#MyAppName}
 DisableProgramGroupPage           =   yes
 DefaultGroupName                  =   {#MyAppName}
@@ -61,10 +61,10 @@ Source: "..\Win32\bin\web-icon.bmp";                                            
 Source: "..\Win32\bin\github-icon.bmp";                                                               Flags: dontcopy
 Source: "..\Win32\bin\manual-icon.bmp";                                                               Flags: dontcopy
 ; Source: "..\Win32\bin\isdonate.bmp";                                                                  Flags: dontcopy
-Source: "..\..\build\laitno-core\src\Release\*";                    DestDir: "{app}\bin";             Flags: ignoreversion
-Source: "..\..\build\laitno-core\src\regex-2.7-src\src\Release\*";  DestDir: "{app}\lib";             Flags: ignoreversion
-Source: "..\..\build\laitno-core\src\linenoise\Release\*";          DestDir: "{app}\lib";             Flags: ignoreversion
-Source: "..\..\laitno-core\include\*.h";                            DestDir: "{app}\include";         Flags: ignoreversion recursesubdirs createallsubdirs
+Source: "..\..\build\latino-core\src\Release\*";                    DestDir: "{app}\bin";             Flags: ignoreversion
+Source: "..\..\build\latino-core\src\latino-regex\src\Release\*";   DestDir: "{app}\lib";             Flags: ignoreversion
+Source: "..\..\build\latino-core\src\linenoise\Release\*";          DestDir: "{app}\lib";             Flags: ignoreversion
+Source: "..\..\latino-core\include\*.h";                            DestDir: "{app}\include";         Flags: ignoreversion recursesubdirs createallsubdirs
 Source: "..\Win32\bin\latino.ico";                                  DestDir: "{app}\bin";             Flags: ignoreversion
 Source: "..\Win32\bin\*.rtf";                                       DestDir: "{app}";                 Flags: ignoreversion
 Source: "..\Win32\bin\manual.url";                                  DestDir: "{app}";                 Flags: ignoreversion
