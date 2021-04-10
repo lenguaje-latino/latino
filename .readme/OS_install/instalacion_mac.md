@@ -1,19 +1,11 @@
 <img width="40%" src ="https://raw.githubusercontent.com/MelvinG24/Latino/master/.readme/imgs/macOS.svg" />
 
-# Requerimientos minimos de sistema:
-|Componentes|Versión|
-|---|---|
-|Sistema:|Mac OS X Tiger (10.4)|
-|Procesador:|Intel x86/64 bits|
-
-***Los procesadores PPC (Power PC) talvez como G5, G4, y G3 no son compatibles con *Latino*
-
-# Instalar Latino en Mac
+# Instalar en Mac
 | Versión | Instalador |
 |---|---|
 |  Ultima versión  | [Instalador](https://github.com/lenguaje-latino/latino/releases/latest) |
 
-# Instalar Latino en Mac desde la terminal
+# Instalar desde la terminal
 ## Con Brew
 Puedes descargar macBrew desde este enlace [aquí](https://brew.sh/)<br/>
 una vez descargado he instalado el macBrew abrimos la terminal y escribimos el siguiente comando:
@@ -23,7 +15,13 @@ brew install latino
 ## Con MacPort
 Aun no disponible
 
----
+# Requerimientos minimos de sistema:
+|Componentes|Versión|
+|---|---|
+|Sistema:|Mac OS X Tiger (10.4)|
+|Procesador:|Intel x86/64 bits|
+
+***Los procesadores PPC (Power PC) talvez como G5, G4, y G3 no son compatibles con *Latino*
 
 ### Nota:
 **En caso de que fuera necesario** instalaremos el Xcode Command Tool
