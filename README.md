@@ -88,7 +88,7 @@
 <a name="doc"></a>
 # Documentación
 Aprende sobre este lenguaje de programación visitando su documentación oficial en el siguiente enlace.
-- [Manual Latino](https://manual-latino.readthedocs.io/es/latest/)
+- [Manual Latino](https://manual-latino.readthedocs.io/es/stable/)
 
 <a name="wiKi"></a>
 # Latino-Wiki
