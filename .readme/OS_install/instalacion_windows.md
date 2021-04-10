@@ -3,7 +3,7 @@
 # Instalar en Windows
 | Versión | Instalador |
 |---|---|
-|  1.1.0  | [Instalador](https://github.com/MelvinG24/Latino/releases/download/v1.1.0/Latino-1.1.0-Win.exe) |
+|  Ultima versión  | [Instalador](https://github.com/lenguaje-latino/latino/releases/latest) |
 ### Requerimientos minimos de sistema:
 |Componentes|Versión|
 |---|---|
@@ -26,7 +26,7 @@ Para desinstalar Latino procedemos con los siguientes pasos:
 (llegado a este punto, solo tenemos que buscar el programa de Latino y darle a desinstalar)
 
 # Ayuda y Documentación:
-[Foro de Latino para Windows](http://lenguaje-latino.org/foro/windows/)<br/>
+[Comunidad de Latino en Stackoverflow](https://es.stackoverflow.com/questions/tagged/latino)<br/>
 [Manual Latino](http://manual.lenguaje-latino.org/)
 
 Cualquier aportación o sugerencia es bienvenida.
