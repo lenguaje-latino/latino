@@ -3,10 +3,19 @@
 # Instalar en Mac
 | Versión | Instalador |
 |---|---|
-|  1.1.0  | [Instalador](https://github.com/MelvinG24/Latino/releases/download/v1.1.0/Latino-1.1.0-MacOS.pkg) |
-# Instalar en Mac con Homebrew 
-$`brew install latino`
-### Requerimientos minimos de sistema:
+|  Ultima versión  | [Instalador](https://github.com/lenguaje-latino/latino/releases/latest) |
+
+# Instalar desde la terminal
+## Con Brew
+Puedes descargar macBrew desde este enlace [aquí](https://brew.sh/)<br/>
+una vez descargado he instalado el macBrew abrimos la terminal y escribimos el siguiente comando:
+```bash
+brew install latino
+```
+## Con MacPort
+Aun no disponible
+
+# Requerimientos minimos de sistema:
 |Componentes|Versión|
 |---|---|
 |Sistema:|Mac OS X Tiger (10.4)|
@@ -34,7 +43,7 @@ Para desinstalar Latino procedemos con los siguientes pasos:
 7. Presionamos **Enter** para correr el comando y procedemos con insertar nuestra contraseña de administrador.
 
 # Ayuda y Documentación:
-[Foro de Latino para Mac](http://lenguaje-latino.org/foro/mac/)<br/>
+[Comunidad de Latino en Stackoverflow](https://es.stackoverflow.com/questions/tagged/latino)<br/>
 [Manual Latino](http://manual.lenguaje-latino.org/)
 
 Cualquier aportación o sugerencia es bienvenida.

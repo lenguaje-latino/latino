@@ -82,12 +82,13 @@
 - [Debian/Ubuntu](.readme/OS_install/instalacion_debian.md)
 - [Fedora](.readme/OS_install/instalacion_fedora.md)
 - [Mac](.readme/OS_install/instalacion_mac.md)
+- [ArchLinux/Manjaro](.readme/OS_install/instalacion_archlinux.md)
 - [Plugins](https://github.com/lenguaje-latino)
 
 <a name="doc"></a>
 # Documentación
 Aprende sobre este lenguaje de programación visitando su documentación oficial en el siguiente enlace.
-- [Manual Latino](https://manual-latino.readthedocs.io/es/latest/)
+- [Manual Latino](https://manual-latino.readthedocs.io/es/stable/)
 
 <a name="wiKi"></a>
 # Latino-Wiki
