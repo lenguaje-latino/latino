@@ -1,0 +1,3 @@
+[submodule "latino-core"]
+	path = latino-core
+	url = https://github.com/lenguaje-latino/latino-core
