@@ -41,3 +41,10 @@ poner(_VERSION_)
 
 global _COPYRIGHT_ = "Copyright (C) 2015-2019"
 poner(_COPYRIGHT_)
+
+lista1 = [1,2,3,4]
+dic = {
+    "pera":9.5,
+    "manzaba": 10.85
+}
+

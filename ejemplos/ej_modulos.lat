@@ -1,0 +1,6 @@
+mod = incluir("modulo")
+
+r = mod.sumatoria(1, 2)
+
+escribir(r)
+
