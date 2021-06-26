@@ -47,3 +47,12 @@ sino
     poner("es positivo")
 fin
 poner("----------------------------------------------------")
+
+a=5
+si (a==10)
+    escribir("a vale 10")
+osi (a==5)
+    escribir("a vale 5")
+osi (a==8)
+    escribir("a vale 8")
+fin
