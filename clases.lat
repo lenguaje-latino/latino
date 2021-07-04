@@ -1,0 +1,19 @@
+clase Triangulo
+    base = 0
+    altura = 0
+
+    fun constructor(b, a)
+        mi.base = b
+        mi.altura = a
+    fin
+    
+    fun area()
+        ret (mi.base*mi.altura)/2
+    fin
+
+fin
+
+x = Triangulo(2, 3)
+escribir("base: " .. x.base)
+escribir("altura: " .. x.altura)
+escribir("el area del triangulo es: " .. x.area())
