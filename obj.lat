@@ -1,0 +1,22 @@
+/*
+funcion constructor(a, b)
+    triangulo.area = a
+    triangulo.base = b
+    retornar triangulo
+fin
+
+triangulo = {
+    "constructor": constructor
+}
+
+m = triangulo.constructor(45, 25)
+n = m.constructor
+escribir(m.." "..n)
+*/
+
+mi = {}
+mi.nombre = "Melvin"
+
+print = imprimir // esta es una funcion
+print("hola mundo")
+
