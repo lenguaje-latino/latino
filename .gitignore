@@ -22,7 +22,6 @@ Img-Orig/
 .vagrant/
 .codelite/
 .clang/
-msys2/
 
 #ignora archivo objeto
 *.o
