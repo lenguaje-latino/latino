@@ -1,0 +1,9 @@
+pruebas = incluir("pruebas")
+
+ej = fun ()
+    escribir('hola')
+fin
+
+pruebas.describir("conjunto de pruebas de ejemplo",
+    ej
+)

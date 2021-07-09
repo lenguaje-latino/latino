@@ -1,0 +1,133 @@
+# copiada de https://github.com/lenguaje-latino/colores.lat/blob/master/src/colores.lat
+
+// este es un modulo debe de tener alcance solo en este archivo
+escp = funcion(params) 
+  retornar cadena.char(27).."["..params.."m"
+fin
+
+colores = funcion()
+  escp = funcion (params) 
+    retornar cadena.char(27).."["..params.."m"
+  fin
+  desde (i = 1; i < 256; i++)
+    imprimirf(escp("30;48;5;"..i).."["..i.."]"..escp(0))
+    si (((i-16) % 6) == 0)
+      imprimirf("\n")
+    sino
+      imprimirf(" ")
+    fin
+  fin
+  imprimirf("\n"..escp(0))
+fin
+
+// color es una funcion
+color = funcion(n)
+  escp = funcion (params)
+    retornar cadena.char(27).."["..params.."m"
+  fin
+  retornar escp("38;5;"..n)
+fin
+
+funcion tipo_color(color) // color es un argumento
+  separador = '.'
+  escp = funcion (params) 
+    retornar cadena.char(27).."["..params.."m" 
+  fin
+  colores_disponibles = [
+  "negro",
+  "rojo",
+  "verde",
+  "amarillo",
+  "azul",
+  "purpura",
+  "cyan",
+  "blanco",
+  "rosa",
+  "naranja"
+  ]
+  colmat = cadena.match(color, "([[:alnum:]]+)"..separador.."([[:alnum:]]+)")
+  imprimirf("colmat: %s\n", colmat)
+  color_ = "0"
+  si lista.contiene(colores_disponibles, colmat[0][2]) || anumero(colmat[0][2])
+    desde (i=0; i<cadena.longitud(colmat[0][1]); i++)
+      elegir(colmat[0][1][i])
+      caso 'b':
+        color_ ..= ";1"
+      caso 'l':
+        color_ ..= ";2"
+      caso 'i':
+        color_ ..= ";3"
+      caso 's':
+        color_ ..= ";4"
+      caso 'p':
+        color_ ..= ";5"
+      caso 'm':
+        color_ ..= ";7"
+      caso 't':
+        color_ ..= ";9"
+      fin
+    fin
+    si anumero(colmat[0][2])
+      color_ = escp(color_..";".."38;5;"..colmat[0][2])
+      retornar color_
+    fin
+    elegir(colmat[0][2])
+    caso "negro": color_ = escp(color_..";"..30)
+    caso "rojo": color_ = escp(color_..";"..31)
+    caso "verde": color_ = escp(color_..";"..32)
+    caso "amarillo": color_ = escp(color_..";"..33)
+    caso "azul": color_ = escp(color_..";"..34)
+    caso "purpura": color_ = escp(color_..";"..35)
+    caso "cyan": color_ = escp(color_..";"..36)
+    caso "blanco": color_ = escp(color_..";"..37)
+    caso "rosa": color_ = escp(color_..";".."38;5;197")
+    caso "naranja": color_ = escp(color_..";".."38;5;208")
+    fin
+    retornar color_
+  fin
+  retornar ""
+fin
+
+retornar {
+  /* resetear el color */
+  "reset": escp(0),
+
+  /* tipos de texto */
+  "bold": escp(1),
+  "negritas": escp(1),
+  "ligero": escp(2),
+  "italicas": escp(3),
+  "subrayado": escp(4),
+  "parpadea": escp(5),
+  "marcado": escp(7),
+  "tachado": escp(9),
+
+  // /* colores normales */
+  "negro": escp(30),
+  "rojo": escp(31), # Pila vacia
+  "verde": escp(32),
+  "amarillo": escp(33),
+  "azul": escp(34),
+  "purpura": escp(35),
+  "cyan": escp(36),
+  "blanco": escp(37),
+  "rosa": escp("38;5;197"),
+  "naranja": escp("38;5;208"),
+
+  /* colores resaltados */
+  "r_negro": escp("1;30"),
+  "r_rojo": escp("1;31"),
+  "r_verde": escp("1;32"),
+  "r_amarillo": escp("1;33"),
+  "r_azul": escp("1;34"),
+  "r_purpura": escp("1;35"),
+  "r_cyan": escp("1;36"),
+  "r_blanco": escp("1;37"),
+  "r_rosa": escp("1;38;5;197"),
+  "r_naranja": escp("1;38;5;208"),
+
+  // /* herramientas */
+  "colores": colores,
+  "simp": tipo_color,
+  "color": color
+}

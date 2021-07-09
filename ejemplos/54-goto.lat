@@ -1,0 +1,92 @@
+// caso 1
+    poner ("mensaje")
+
+    etiqueta: # -> objeto cadena
+    
+    e = 0
+    poner(e)
+    
+    // sis.dormir(3)
+    
+    ir etiqueta # id: etiquetas
+    
+    // poner("hola") eti: poner("otro_mensaje") ir eti
+    
+    // // caso 1.b
+    // i = 0
+    // si i = 5
+    //     etiqueta:
+    //     poner ("Llego a la etiqueta")
+    // fin
+    // imprimir(10)
+    // ir etiqueta
+    
+    
+    
+    // // caso 2
+    // mientras(i < 10)
+    //     imprimir(i)
+    //     si ( i == 5)
+    //         ir aqui
+    //     fin
+    //     i++
+    // fin
+    
+    // aqui:
+    // poner ("Salio del bucle")
+    
+    
+    
+    // // caso 3
+    // aca:
+    // poner("hola desde aca")
+    
+    // desde (i=0; i<20; i++)
+    //     si i==10
+    //         ir aca
+    //     fin
+    //     si i==20
+    //         ir etiqueta
+    //     fin
+    //     poner ("aun dentro del bucle #"..i)
+    // fin
+    
+    
+    // etiqueta:
+    // poner ("Ya me mori XD")
+    
+    
+    
+    // // caso 4: no existe la etiqueta
+    // i = 0
+    // si i = 0
+    //     ir ningun_lado # error ningun_lado no existe!
+    // fin
+    
+    
+    
+    // // caso 5: no existe el 'ir'
+    // i = 0
+    // poner ("antes del SI")
+    // si i = 0
+    //     linea:
+    // fin
+    // poner ("salio del SI")
+    
+    
+    // // caso 6: Doble etiqueta
+    // aka:
+    // poner("hola desde aca")
+    
+    // desde (i=0; i<20; i++)
+    //     si i==10
+    //         ir aka
+    //     fin
+    //     si i==20
+    //         ir aka
+    //     fin
+    //     poner ("aun dentro del bucle #"..i)
+    // fin
+    
+    // aka:
+    // poner ("Salio del loop")

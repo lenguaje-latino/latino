@@ -1,0 +1,37 @@
+a=0
+fun hola(x)
+  i = 3
+fin
+hola(a)
+escribir(i) // i => indefinida
+imprimirf("==============================\n")
+a=15
+mientras a > 0
+	imprimirf("a dentro de mientras: %s\n", a)
+	a--
+fin
+imprimirf("a fuera de mientras: %s\n", a)
+a=1
+si a == 1
+	a=2
+    imprimirf("a dentro de si: %s\n", a)
+fin
+imprimirf("a fuera de si: %s\n", a)
+
+imprimirf("==============================\n")
+a=15
+mientras a > 0
+	imprimirf("a dentro de mientras: %s\n", a)
+	a--
+fin
+imprimirf("a fuera de mientras: %s\n", a)
+a=1
+si a == 1
+	a=2
+    imprimirf("a dentro de si: %s\n", a)
+sino
+   /*    x => indefinida ya que nunca entra en este bloque */
+    x=10
+fin
+imprimirf("a fuera de si: %s\n", a)
+imprimirf("x fuera de si: %s\n", x) // x => indefinida

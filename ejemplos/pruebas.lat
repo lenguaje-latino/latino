@@ -1,0 +1,19 @@
+color = incluir('colores')
+
+fun describir(nombre_pruebas, funcion_a_probar)
+    imprimirf(color.blanco .. nombre_pruebas .. ":\n")
+    funcion_a_probar()
+fin
+
+ret {
+    "describir": describir
+}
+
+/*
+RUN: file_name
+Test Suites: 1 failed, 1 total
+Tests:       0 total
+Snapshots:   0 total
+Time:        7.737 s
+Ran all test suites matching /job.model/i.
+*/
