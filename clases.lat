@@ -1,0 +1,61 @@
+clase Triangulo
+    base = 0
+    altura = 0
+
+    fun constructor(b, a)
+        escribir(">>>inicio un Triangulo")
+        escribir("---- b:  "..b)
+        escribir("---- a:  "..a)
+        mi.base = b
+        mi.altura = a
+        escribir("---- mi.base:  "..mi.base)
+        escribir("---- mi.altura:  "..mi.altura)
+    fin
+    
+    fun area()
+        escribir("dentro de area()")
+        escribir("---- mi.base:  "..mi.base)        
+        escribir("---- mi.altura:  "..mi.altura)
+        ret (mi.base*mi.altura)/2
+    fin
+
+fin
+
+escribir("Parametros de X")
+x = Triangulo(2, 3)
+escribir("base: " .. x.base)
+escribir("altura: " .. x.altura)
+escribir("el area del triangulo es: " .. x.area())
+
+escribir("Parametros de Y")
+y = Triangulo(4, 5)
+escribir("base: " .. y.base)
+escribir("altura: " .. y.altura)
+escribir("el area del triangulo es: " .. y.area())
+
+escribir("Parametros de X nuevamente")
+escribir("base: " .. x.base)
+escribir("altura: " .. x.altura)
+escribir("el area del triangulo es: " .. x.area())
+
+/*
+clase Persona
+    nombre = "" // <-- aqui
+    edad = ""
+
+    fun mostrarNombre()
+    fin
+
+fin
+
+// Herencia
+clase Empleado(Persona)
+    fechaIngreso = ""
+    compania = ""
+    salario = ""
+    nombre = ""  // <-- aqui
+
+    fun calcularSalario()
+    fin
+fin
+*/
