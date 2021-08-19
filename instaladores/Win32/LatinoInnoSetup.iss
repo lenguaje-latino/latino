@@ -2,13 +2,14 @@
 ; SEE THE DOCUMENTATION FOR DETAILS ON CREATING INNO SETUP SCRIPT FILES!
 
 #define   MyAppName                   "Latino"
-#define   MyAppVersion                "1.4.0"
-; #define   MyAppVersion                GetFileVersion ("..\..\build\latino-core\src\Release\latino.exe")
-#define   MyAppPublisher              "LenguajeLatino.org"
-#define   MyAppURL                    "http://lenguajelatino.org/"
-#define   MyAppSupURL                 "https://manual-latino.readthedocs.io/es/latest/"
-#define   MyAppUpURL                  "https://github.com/lenguaje-latino/latino"
 #define   MyAppExeName                "latino.exe"
+#define   MyAppPublisher              "LenguajeLatino.org"
+#define   MyAppURL                    "https://lenguajelatino.org/"
+#define   MyAppSupURL                 "https://manual.lenguajelatino.org/"
+#define   MyAppUpURL                  "https://github.com/lenguaje-latino/latino"
+; #define   MyAppVersion                "1.4.2"
+#define   MyAppVersion                GetFileVersion ("..\..\build\Release\latino.exe")
+#define   Year                        GetDateTimeString('yyyy', '','')
 
 [Setup]
 ; NOTE: The value of AppId uniquely identifies this application. Do not use the same AppId value in installers for other applications.
@@ -23,7 +24,8 @@ AppPublisherURL                   =   {#MyAppURL}
 AppSupportURL                     =   {#MyAppSupURL}
 AppUpdatesURL                     =   {#MyAppSupURL}
 AppComments                       =   Lenguaje de Programación con sintaxis en Español
-AppCopyright                      =   Copyleft (ɔ) 2015-2021 Lenguaje Latino
+AppCopyright                      =   Copyleft (ɔ) 2015-{#Year} Lenguaje Latino
+DisableDirPage                    =   yes
 DefaultDirName                    =   {autopf}\{#MyAppName}
 DisableProgramGroupPage           =   yes
 DefaultGroupName                  =   {#MyAppName}
@@ -37,7 +39,7 @@ Compression                       =   lzma
 SolidCompression                  =   yes
 ChangesEnvironment                =   yes
 VersionInfoVersion                =   {#MyAppVersion}
-VersionInfoDescription            =   "Instalador de Latino" 
+VersionInfoDescription            =   Instalador de Latino {#MyAppVersion}
 DisableWelcomePage                =   no
 ; WizardStyle                       =   modern
 WizardImageFile                   =   ..\Win32\bin\startSetup.bmp
@@ -45,10 +47,10 @@ WizardSmallImageFile              =   ..\Win32\bin\SmallImg.bmp
 ArchitecturesInstallIn64BitMode   =   x64
 
 [Messages]
-BeveledLabel                      =   Instalador Lenguaje Latino
+BeveledLabel                      =   Instalador Lenguaje Latino {#MyAppVersion}
 
 [CustomMessages]
-AppAddPath                        =   Agregar aplicacion a la variable de entorno PATH (requerido)
+AppAddPath                        =   Agregar aplicación a la variable de entorno PATH (requerido)
 WebHint                           =   Pagína Web
 GitHubHint                        =   Repositorio de Latino
 ManualHint                        =   Manual Latino
@@ -61,9 +63,11 @@ Source: "..\Win32\bin\web-icon.bmp";                                            
 Source: "..\Win32\bin\github-icon.bmp";                                                               Flags: dontcopy
 Source: "..\Win32\bin\manual-icon.bmp";                                                               Flags: dontcopy
 ; Source: "..\Win32\bin\isdonate.bmp";                                                                  Flags: dontcopy
-Source: "..\..\build\latino-core\src\Release\*";                    DestDir: "{app}\bin";             Flags: ignoreversion
-Source: "..\..\build\latino-core\src\latino-regex\src\Release\*";   DestDir: "{app}\lib";             Flags: ignoreversion
-Source: "..\..\build\latino-core\src\linenoise\Release\*";          DestDir: "{app}\lib";             Flags: ignoreversion
+Source: "..\..\build\Release\*.exe";                                DestDir: "{app}\bin";             Flags: ignoreversion
+Source: "..\..\build\Release\*.dll";                                DestDir: "{app}\lib";             Flags: ignoreversion
+Source: "..\..\build\Release\*.exp";                                DestDir: "{app}\lib";             Flags: ignoreversion
+Source: "..\..\build\Release\*.lib";                                DestDir: "{app}\lib";             Flags: ignoreversion
+Source: "..\..\latino-core\src\latino-regex\src\regex.h";           DestDir: "{app}\include";         Flags: ignoreversion
 Source: "..\..\latino-core\include\*.h";                            DestDir: "{app}\include";         Flags: ignoreversion recursesubdirs createallsubdirs
 Source: "..\Win32\bin\latino.ico";                                  DestDir: "{app}\bin";             Flags: ignoreversion
 Source: "..\Win32\bin\*.rtf";                                       DestDir: "{app}";                 Flags: ignoreversion
@@ -91,23 +95,62 @@ Root: HKCU; Subkey: "Environment"; ValueType:string; ValueName: "LATINO_LIB";   
 Name: modifypath; Description:{cm:AppAddPath};
 
 [Code]
-//procedure InitializeWizard();
-//begin
-//  MsgBox('Hola mundo', mbConfirmation, MB_OK);
-//  if FileExists(ExpandConstant('{app}\bin\latino.exe')) then begin
-//    MsgBox('Ya existe una versión de Latino en su sistema, ¿Desea continuar?', mbConfirmation, MB_YESNO);
-//  end;
-//end;
+var
+  appNew, appOld      : String;
+  FileNameA           : String;
+  VersionA64          : Int64;
+
 function NextButtonClick(PageId: Integer): Boolean;
 begin
   Result := True;
-  if (PageId = wpSelectDir) and FileExists(ExpandConstant('{app}\bin\latino.exe')) then begin
-    Result :=False;
-    if MsgBox('Latino ya se encuentra instalado en su sistema. Si prosigue con la instalación, la versión de Latino instalada será reemplazada.', mbConfirmation, MB_YESNO) = IDYES then begin
-      Result := True;
+  if (PageId = wpWelcome) and FileExists(ExpandConstant('{autopf}\{#MyAppName}\bin\{#MyAppExeName}')) then begin
+    Result := False;
+    appNew := ExpandConstant('{#MyAppVersion}');
+//====================
+    FileNameA := ExpandConstant('{autopf}\{#MyAppName}\bin\{#MyAppExeName}');
+    GetPackedVersion(FileNameA, VersionA64);
+    appOld := VersionToStr(VersionA64);
+//    appOld := FloatToStr(5);
+//====================
+
+//    msgbox(appnew+'    ===    '+appold, mbinformation, mb_ok);
+    if appOld <> '' then begin
+      if appNew = appOld then begin
+        if MsgBox('Esta versión de Latino ya existe en su sistema' + #13#10 +
+                  'Latino-' + appNew + ' (Instalado)' + #13#10 + #13#10 +
+                  '¿Desea reinstalar esta versión?', mbInformation, MB_YESNO) = IDYES then begin Result := True; end;
+      end else
+      if appNew < appOld then begin
+//        MsgBox('Su sistema ya dispone de una versión más actualizada de Latino.' + #13#10 +
+//               'La instalación será concluida.', mbInformation, mb_ok);
+//               PageId := wpFinished;
+        case TaskDialogMsgBox('¡IMPORTANTE!',
+                              'Su sistema ya dispone de una versión más actualizada de Latino,' + #13#10 +
+                              'si prosigue con esta instalación, la versión instalada de Latino será reemplazada.' + #13#10 + #13#10 +
+                              'Existente:                    Instalar:' + #13#10 +
+                              'Latino-' + appOld + '   <<<   ' + 'Latino-' + appNew + #13#10 + #13#10 +
+                              '¿Desea continuar?',
+                              mbInformation,
+                              MB_YESNO, ['Reemplazar versión existente'#13'Instalar Latino-'+appNew, 'Mantener versión actual'#13'Conservar Latino-'+appOld],
+                              IDYES) of
+                              IDYES: Result := True;
+        end;
+      end else
+      if appNew > appOld then begin
+        Result := True;
+      end;
+    end else
+      case TaskDialogMsgBox('¡Aviso!',
+                            'Usted dispone de una versión de Latino no reconocida o antigua en su sistema.' + #13#10 +
+                            'si prosigue con esta instalación, su versión instalada de latino será reemplazada.' + #13#10 + #13#10 +
+                            '¿Desea continuar?',
+                            mbInformation,
+                            MB_YESNO, ['Instalar Latino-'+appNew, 'Mantener versión antigua'],
+                            IDYES) of
+                            IDYES: Result := True;
+      end;
     end;
   end;
-end;
 //------------
 const
     ModPathName = 'modifypath';
