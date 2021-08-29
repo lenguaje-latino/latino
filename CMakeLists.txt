@@ -20,7 +20,6 @@ if(NOT CMAKE_CONFIGURATION_TYPES AND NOT CMAKE_BUILD_TYPE)
 endif()
 # set(CMAKE_BUILD_TYPE "Debug")
 
-
 # if(CMAKE_COMPILER_IS_GNUCXX)
 #     target_link_libraries(${PROJECT_TEST_NAME} gcov)
 # endif()
@@ -38,7 +37,7 @@ message(STATUS "Tipo de Build .......... ${CMAKE_BUILD_TYPE}"   )
 
 include(GetLatVersion)
 message(STATUS "Latino Version ......... ${LATINO_VERSION}"     )
-# include(ResourceUpdate)
+include(ResourceUpdate)
 
 include(BuildLatOptions)
 
