@@ -18,7 +18,6 @@ mingw/
 visualstudio/
 Img-Orig/
 .vs/
-.vscode/
 .vagrant/
 .codelite/
 .clang/
