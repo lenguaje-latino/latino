@@ -20,7 +20,7 @@ procedure ManualImgClic(Sender: TObject);
 var
   ErrorCode: Integer;
 begin
-  ShellExecAsOriginalUser('open', 'https://manual-latino.readthedocs.io/es/latest/', '', '', SW_SHOWNORMAL, ewNoWait, ErrorCode);
+  ShellExecAsOriginalUser('open', 'https://manual.lenguajelatino.org/es/stable/', '', '', SW_SHOWNORMAL, ewNoWait, ErrorCode);
 end;
 
 //------------------------------------------------------

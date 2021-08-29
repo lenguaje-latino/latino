@@ -8,7 +8,7 @@
 #define   MyAppSupURL                 "https://manual.lenguajelatino.org/"
 #define   MyAppUpURL                  "https://github.com/lenguaje-latino/latino"
 ; #define   MyAppVersion                "1.4.2"
-#define   MyAppVersion                GetFileVersion ("..\..\build\Release\latino.exe")
+#define   MyAppVersion                GetVersionNumbersString ("..\..\build\Release\latino.exe")
 #define   Year                        GetDateTimeString('yyyy', '','')
 
 [Setup]
@@ -29,25 +29,26 @@ DisableDirPage                    =   yes
 DefaultDirName                    =   {autopf}\{#MyAppName}
 DisableProgramGroupPage           =   yes
 DefaultGroupName                  =   {#MyAppName}
-LicenseFile                       =   ..\Win32\bin\licencia.rtf
-InfoBeforeFile                    =   ..\Win32\bin\leeme.rtf
+LicenseFile                       =   ..\Win32\resource\licencia.rtf
+InfoBeforeFile                    =   ..\Win32\resource\leeme.rtf
 OutputDir                         =   ..\Win32
 OutputBaseFilename                =   {#MyAppName}-{#MyAppVersion}-Win
-SetupIconFile                     =   ..\Win32\bin\latinoInstaller.ico
+SetupIconFile                     =   ..\Win32\resource\latinoInstaller.ico
 Compression                       =   lzma
 ; SignTool                          =
 SolidCompression                  =   yes
 ChangesEnvironment                =   yes
+ChangesAssociations               =   yes
 VersionInfoVersion                =   {#MyAppVersion}
 VersionInfoDescription            =   Instalador de Latino {#MyAppVersion}
 DisableWelcomePage                =   no
 ; WizardStyle                       =   modern
-WizardImageFile                   =   ..\Win32\bin\startSetup.bmp
-WizardSmallImageFile              =   ..\Win32\bin\SmallImg.bmp
+WizardImageFile                   =   ..\Win32\resource\startSetup.bmp
+WizardSmallImageFile              =   ..\Win32\resource\SmallImg.bmp
 ArchitecturesInstallIn64BitMode   =   x64
 
 [Messages]
-BeveledLabel                      =   Instalador Lenguaje Latino {#MyAppVersion}
+BeveledLabel                      =   Instalador Lenguaje Latino
 
 [CustomMessages]
 AppAddPath                        =   Agregar aplicación a la variable de entorno PATH (requerido)
@@ -59,55 +60,98 @@ ManualHint                        =   Manual Latino
 Name: "spanish"; MessagesFile: "compiler:Languages\Spanish.isl"
 
 [Files]
-Source: "..\Win32\bin\web-icon.bmp";                                                                  Flags: dontcopy
-Source: "..\Win32\bin\github-icon.bmp";                                                               Flags: dontcopy
-Source: "..\Win32\bin\manual-icon.bmp";                                                               Flags: dontcopy
-; Source: "..\Win32\bin\isdonate.bmp";                                                                  Flags: dontcopy
-Source: "..\..\build\Release\*.exe";                                DestDir: "{app}\bin";             Flags: ignoreversion
+Source: "..\Win32\resource\web-icon.bmp";                                                             Flags: dontcopy
+Source: "..\Win32\resource\github-icon.bmp";                                                          Flags: dontcopy
+Source: "..\Win32\resource\manual-icon.bmp";                                                          Flags: dontcopy
+; Source: "..\Win32\resource\isdonate.bmp";                                                             Flags: dontcopy
+Source: "..\..\build\Release\*.exe";                                DestDir: "{app}";                 Flags: ignoreversion
 Source: "..\..\build\Release\*.dll";                                DestDir: "{app}\lib";             Flags: ignoreversion
 Source: "..\..\build\Release\*.exp";                                DestDir: "{app}\lib";             Flags: ignoreversion
 Source: "..\..\build\Release\*.lib";                                DestDir: "{app}\lib";             Flags: ignoreversion
 Source: "..\..\latino-core\src\latino-regex\src\regex.h";           DestDir: "{app}\include";         Flags: ignoreversion
 Source: "..\..\latino-core\include\*.h";                            DestDir: "{app}\include";         Flags: ignoreversion recursesubdirs createallsubdirs
-Source: "..\Win32\bin\latino.ico";                                  DestDir: "{app}\bin";             Flags: ignoreversion
-Source: "..\Win32\bin\*.rtf";                                       DestDir: "{app}";                 Flags: ignoreversion
-Source: "..\Win32\bin\manual.url";                                  DestDir: "{app}";                 Flags: ignoreversion
+Source: "..\Win32\resource\latino.ico";                             DestDir: "{app}\resource\icons";  Flags: ignoreversion
+Source: "..\Win32\resource\latino_archivo_Win.ico";                 DestDir: "{app}\resource\icons";  Flags: ignoreversion
+Source: "..\Win32\resource\*.rtf";                                  DestDir: "{app}";                 Flags: ignoreversion
+Source: "..\Win32\resource\manual.url";                             DestDir: "{app}";                 Flags: ignoreversion
 Source: "..\Win32\lib\*";                                           DestDir: "{app}\lib";             Flags: ignoreversion recursesubdirs createallsubdirs
 Source: "..\Win32\System32\*.dll";                                  DestDir: "C:\Windows\System32";   Flags: onlyifdoesntexist recursesubdirs
 Source: "..\Win32\sysWow64\*.dll";                                  DestDir: "C:\Windows\SysWOW64";   Flags: onlyifdoesntexist recursesubdirs
 ; NOTE: Don't use "Flags: ignoreversion" on any shared system files
 
 [Icons]
-Name: "{group}\{#MyAppName}";                           Filename: "{app}\bin\{#MyAppExeName}"; IconFilename: "{app}\bin\latino.ico"
+Name: "{group}\{#MyAppName}";                           Filename: "{app}\{#MyAppExeName}"; IconFilename: "{app}\resource\icons\latino.ico"
 Name: "{group}\{cm:UninstallProgram,{#MyAppName}}";     Filename: "{uninstallexe}"
 Name: "{group}\Manual Latino";                          Filename: "{app}\manual.url"
 
 [Run]
-Filename: "{app}\bin\{#MyAppExeName}"; Description: "{cm:LaunchProgram,{#StringChange(MyAppName, '&', '&&')}}"; Flags: nowait postinstall skipifsilent
+Filename: "{app}\{#MyAppExeName}"; Description: "{cm:LaunchProgram,{#StringChange(MyAppName, '&', '&&')}}"; Flags: nowait postinstall skipifsilent
 
 [Registry]
-Root: HKLM; Subkey: "SYSTEM\CurrentControlSet\Control\Session Manager\Environment"; ValueType: expandsz; ValueName: "Path"; ValueData: "{olddata};{app}\bin;{app}\lib"
-Root: HKCU; Subkey: "Environment"; ValueType:string; ValueName: "LATINO_PATH";  ValueData: "{app}";         Flags: preservestringtype
-Root: HKCU; Subkey: "Environment"; ValueType:string; ValueName: "LATINO_LIBC";  ValueData: "{app}\lib\";    Flags: preservestringtype
-Root: HKCU; Subkey: "Environment"; ValueType:string; ValueName: "LATINO_LIB";   ValueData: "{app}\stdlib\"; Flags: preservestringtype
+Root: HKLM; Subkey: "SYSTEM\CurrentControlSet\Control\Session Manager\Environment"; ValueName: "Path"; ValueType: expandsz; ValueData: "{olddata};{app};{app}\lib";
+Root: HKCU; Subkey: "Environment"; ValueName: "LATINO_PATH"; ValueType:string;  ValueData: "{app}";         Flags: preservestringtype
+Root: HKCU; Subkey: "Environment"; ValueName: "LATINO_LIBC"; ValueType:string;  ValueData: "{app}\lib\";    Flags: preservestringtype
+Root: HKCU; Subkey: "Environment"; ValueName: "LATINO_LIB";  ValueType:string;  ValueData: "{app}\stdlib\"; Flags: preservestringtype
+; Icon File
+Root: HKCR; Subkey: ".lat";                                 ValueName: ""; ValueType:string;  ValueData: "{#MyAppName}.File";       Flags: uninsdeletevalue
+Root: HKCR; Subkey: "{#MyAppName}.File";                    ValueName: ""; ValueType:string;  ValueData: "{#MyAppName} File";       Flags: uninsdeletekey
+Root: HKCR; Subkey: "{#MyAppName}.File\DefaultIcon";        ValueName: ""; ValueType:string;  ValueData: "{app}\resource\icons\latino_archivo_Win.ico, 1"
+Root: HKCR; Subkey: "{#MyAppName}.File\shell\open\command"; ValueName: ""; ValueType:string;  ValueData: """{app}\{#MyAppExeName}"" ""%L"" %*"
 
 [Tasks]
 Name: modifypath; Description:{cm:AppAddPath};
 
 [Code]
+//Variables Globales
 var
   appNew, appOld      : String;
   FileNameA           : String;
   VersionA64          : Int64;
+  Buleano             : Boolean;
+  bln                 : Boolean;
 
+//function UpdateReadyMemo(Space, NewLine, MemoUserInfoInfo, MemoDirInfo, MemoTypeInfo, MemoComponentsInfo, MemoGroupInfo, MemoTasksInfo: String): String;
+
+
+//Salir del Instalador
+procedure ExitProcess(exitCode:integer);
+  external 'ExitProcess@kernel32.dll stdcall';
+
+procedure salirWizard(b: Boolean);
+begin
+bln := b;
+  if bln then begin
+    ExitProcess(2);
+  end;
+end;
+
+
+
+//Comparar versiones instaladas
 function NextButtonClick(PageId: Integer): Boolean;
 begin
-  Result := True;
-  if (PageId = wpWelcome) and FileExists(ExpandConstant('{autopf}\{#MyAppName}\bin\{#MyAppExeName}')) then begin
+  Result      := True;
+  Buleano     := False;
+  bln         := False;
+
+  if FileExists(ExpandConstant('{autopf}\{#MyAppName}\{#MyAppExeName}')) then begin
+    FileNameA := ExpandConstant('{autopf}\{#MyAppName}\{#MyAppExeName}');
+    Buleano   := True;
+  end else
+  if FileExists(ExpandConstant('{autopf}\{#MyAppName}\bin\{#MyAppExeName}')) then begin
+    FileNameA := ExpandConstant('{autopf}\{#MyAppName}\bin\{#MyAppExeName}');
+    Buleano   := True;
+  end else
+  if FileExists(ExpandConstant('{pf32}\{#MyAppName}\{#MyAppExeName}')) then begin
+    FileNameA := ExpandConstant('{pf32}\{#MyAppName}\{#MyAppExeName}');
+    Buleano   := True;
+  end;
+
+  if (PageId = wpWelcome) and Buleano then begin
     Result := False;
+
     appNew := ExpandConstant('{#MyAppVersion}');
 //====================
-    FileNameA := ExpandConstant('{autopf}\{#MyAppName}\bin\{#MyAppExeName}');
     GetPackedVersion(FileNameA, VersionA64);
     appOld := VersionToStr(VersionA64);
 //    appOld := FloatToStr(5);
@@ -118,7 +162,10 @@ begin
       if appNew = appOld then begin
         if MsgBox('Esta versión de Latino ya existe en su sistema' + #13#10 +
                   'Latino-' + appNew + ' (Instalado)' + #13#10 + #13#10 +
-                  '¿Desea reinstalar esta versión?', mbInformation, MB_YESNO) = IDYES then begin Result := True; end;
+                  '¿Desea reinstalar esta versión?', mbInformation, MB_YESNO) = IDYES then begin Result := True;
+        end else begin
+          salirWizard(True);
+        end;
       end else
       if appNew < appOld then begin
 //        MsgBox('Su sistema ya dispone de una versión más actualizada de Latino.' + #13#10 +
@@ -133,7 +180,8 @@ begin
                               mbInformation,
                               MB_YESNO, ['Reemplazar versión existente'#13'Instalar Latino-'+appNew, 'Mantener versión actual'#13'Conservar Latino-'+appOld],
                               IDYES) of
-                              IDYES: Result := True;
+                              IDYES:  Result := True;
+                              IDNO:   salirWizard(True);
         end;
       end else
       if appNew > appOld then begin
