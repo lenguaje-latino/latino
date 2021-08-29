@@ -1,17 +1,17 @@
 #[[
 /***********************************************************************************
- * Copyright (c) 2015-2020 Lenguaje-Latino, programación con sintaxis al Español.  *
+ * Copyright (c) 2015-2021 Lenguaje-Latino, programación con sintaxis al Español.  *
  *                                                                                 *
  *                            CMake_Root de Latino                                 *
  ***********************************************************************************/
 ]]
 
-
 #
 # CMAKE configuraciones
 cmake_minimum_required(VERSION 3.13)
 
-set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${CMAKE_CURRENT_LIST_DIR}/cmake/Modules/")
+set(NOT latCore TRUE)
+set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${CMAKE_CURRENT_LIST_DIR}/latino-core/cmake/Modules/")
 
 project(latino)
 
@@ -38,6 +38,7 @@ message(STATUS "Tipo de Build .......... ${CMAKE_BUILD_TYPE}"   )
 
 include(GetLatVersion)
 message(STATUS "Latino Version ......... ${LATINO_VERSION}"     )
+# include(ResourceUpdate)
 
 include(BuildLatOptions)
 
