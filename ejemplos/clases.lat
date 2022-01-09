@@ -1,0 +1,66 @@
+// clase Triangulo
+//     base    = 0
+//     altura  = 0
+
+//     funcion constructor(b,a)
+//         mi.base     = b
+//         mi.altura   = a
+//     fin
+
+//     funcion area()
+//         retorno (mi.base*mi.altura)/2
+//     fin
+// fin
+
+// x = Triangulo(2,3)
+// escribir ("base:   "..x.base)
+// escribir ("altura: "..x.altura)
+// escribir ("El area del truangulo es: ".. x.area())
+
+/*
+clase Triangulo() 
+    base    = 0
+    altura  = 0
+
+    funcion constructor(b,a)
+        mi.base     = b
+        mi.altura   = a
+        // ret mi
+    fin
+
+    funcion area()
+        retorno (mi.base*mi.altura)/2
+    fin
+
+    // mi = {
+    //     "base": base,
+    //     "altura": altura,
+    //     "constructor": constructor,
+    //     "area": area
+    // }
+
+    // ret mi
+fin
+
+// obj = Triangulo()
+// t = obj.constructor(2,3.0)
+obj = Triangulo()
+a = obj.area()
+poner(a)
+
+*/
+
+sis.(algo)
+
+fun main ()
+    global a = 5 // sabria que se refiere a la global
+    fun suma(a,b)
+        a = 10
+        imprimirf("dentro de funcion: %s\n", a)
+        ret a+b
+    fin
+    x=suma(3, 4)
+    imprimirf("a global: %s\n", a) // 5
+fin
+
+main()
