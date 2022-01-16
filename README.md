@@ -110,11 +110,9 @@ sudo dnf update
 sudo dnf install gcc-c++ git cmake kernel-devel
 sudo dnf install readline-devel
 ```
-
-git clone https://github.com/lenguaje-latino/instalacion/blob/main/instalacion.sh
-
 ```bash
-  cd instalacion 
+git clone https://github.com/lenguaje-latino/instalacion/blob/main/instalacion.sh &&
+ cd instalacion &&
   ./*.sh
 ```
 
