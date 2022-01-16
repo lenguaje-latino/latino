@@ -110,6 +110,9 @@ sudo dnf update
 sudo dnf install gcc-c++ git cmake kernel-devel
 sudo dnf install readline-devel
 ```
+Instalador 
+Copiar y pegar el siguiente comando en la terminal
+
 ```bash
 git clone  https://github.com/lenguaje-latino/instalacion.git &&
  cd instalacion &&
