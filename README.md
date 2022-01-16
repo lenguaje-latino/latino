@@ -111,7 +111,7 @@ sudo dnf update
 sudo dnf install gcc-c++ git cmake kernel-devel
 sudo dnf install readline-devel
 ```
-Instalador 
+### Instalador
 Copiar y pegar el siguiente comando en la terminal
 
 ```bash
