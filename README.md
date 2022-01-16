@@ -79,10 +79,46 @@
 <a name="inst"></a>
 # Instalar Latino
 - [Windows](.readme/OS_install/instalacion_windows.md)
-- [Debian/Ubuntu](.readme/OS_install/instalacion_debian.md)
-- [Fedora](.readme/OS_install/instalacion_fedora.md)
-- [Mac](.readme/OS_install/instalacion_mac.md)
-- [ArchLinux/Manjaro](.readme/OS_install/instalacion_archlinux.md)
+
+- [Linux]
+## Depedencias
+
+```bash
+  git
+  cmake 
+  make
+```
+## Distros
+Debian/Ubuntu 
+<img width="20%" src ="https://raw.githubusercontent.com/MelvinG24/Latino/master/.readme/imgs/debian.svg" />
+```bash
+  sudo apt-get update
+  sudo apt-get install build-essential cmake git
+```
+Arch linux/Manjaro
+<img width="30%" src ="https://raw.githubusercontent.com/MelvinG24/Latino/master/.readme/imgs/archlinux.svg" />
+
+```bash
+  sudo pacman -Syu
+  sudo pacman -S base-devel cmake git --noconfirm
+```
+Fedora
+<img width="40%" src ="https://raw.githubusercontent.com/MelvinG24/Latino/master/.readme/imgs/fedora.svg" />
+
+```bash
+sudo dnf update
+sudo dnf install gcc-c++ git cmake kernel-devel
+sudo dnf install readline-devel
+```
+
+git clone https://github.com/lenguaje-latino/instalacion/blob/main/instalacion.sh
+
+```bash
+  cd instalacion 
+  ./*.sh
+```
+
+
 - [Plugins](https://github.com/lenguaje-latino)
 
 <a name="doc"></a>
