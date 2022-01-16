@@ -78,17 +78,18 @@
 
 <a name="inst"></a>
 # Instalar Latino
+## Windows
 - [Windows](.readme/OS_install/instalacion_windows.md)
 
-- [Linux]
-## Depedencias
+## Linux
+### Depedencias
 
 ```bash
   git
   cmake 
   make
 ```
-## Distros
+### Distros
 Debian/Ubuntu 
 <img width="20%" src ="https://raw.githubusercontent.com/MelvinG24/Latino/master/.readme/imgs/debian.svg" />
 ```bash
