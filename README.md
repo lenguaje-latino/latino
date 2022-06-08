@@ -79,11 +79,16 @@
 <a name="inst"></a>
 # Instalar Latino
 - [Windows](.readme/OS_install/instalacion_windows.md)
+- [Mac](.readme/OS_install/instalacion_mac.md)
 - [Debian/Ubuntu](.readme/OS_install/instalacion_debian.md)
 - [Fedora](.readme/OS_install/instalacion_fedora.md)
-- [Mac](.readme/OS_install/instalacion_mac.md)
 - [ArchLinux/Manjaro](.readme/OS_install/instalacion_archlinux.md)
-- [Plugins](https://github.com/lenguaje-latino)
+
+Puedes instalar Latino en Linux usando los paquetes de instalación disponibles en el "release" o utilizar el siguiente "bash script" para una instalación totalmente automatizada (solo en Linux)
+```bash
+git clone https://github.com/lenguaje-latino/instalacion.git && cd instalacion && sudo chmod +x latino_instalacion-linux.sh && ./latino_instalacion-linux.sh
+```
+Para mayor información sobre el script de arribe, mirar aquí [git:lenguaje-latino/instalacion](https://github.com/lenguaje-latino/instalacion)
 
 <a name="doc"></a>
 # Documentación
