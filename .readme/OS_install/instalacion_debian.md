@@ -22,6 +22,8 @@ sudo make install
 sudo dpkg -i latino-XXX-Debian.deb
 ```
 
+… y listo! para ejecutar Latino solo escribimos en nuestra terminal el comando latino
+
 # DESINSTALAR
 #### 1- Opción
 Para desinstalar Latino de su sistema, necesitara el archivo "latino_desinstalacion-linux.sh" el cual puede conseguir desde el siguiente repositorio:
