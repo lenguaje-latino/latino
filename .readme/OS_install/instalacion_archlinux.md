@@ -4,7 +4,7 @@ Para instalar Latino en Arch Linux y Manjaro, primero abrimos la consola (Termin
 
 ```bash
 sudo pacman -Syu
-sudo pacman -S base-devel
+sudo pacman -S --noconfirm base-devel cmake git
 ```
 
 Una vez concluido esto, pasamos a instalar propiamente Latino en nuestro sistema
@@ -13,17 +13,18 @@ Una vez concluido esto, pasamos a instalar propiamente Latino en nuestro sistema
 cd ~
 sudo git clone https://github.com/lenguaje-latino/latino-core
 cd latino-core
-cmake .
+sudo cmake .
 sudo make install 
 ```
 
 … y listo! para ejecutar Latino solo escribimos en nuestra terminal el comando latino
 
 # DESINSTALAR
-#### 1- Opción
+Para desinstalar Latino de su sistema, necesitara el archivo "latino_desinstalacion-linux.sh" el cual puede conseguir desde el siguiente repositorio:
+[https://github.com/lenguaje-latino/instalacion](https://github.com/lenguaje-latino/instalacion)
+
 ```bash
-# Si instalaste con `sudo make install`:
-sudo ./uninstall.sh
+sudo chmod +x latino_desinstalacion-linux.sh && ./latino_desinstalacion-linux.sh
 ```
 
 # Ayuda y Documentación:
