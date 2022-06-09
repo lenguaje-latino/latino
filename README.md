@@ -82,6 +82,7 @@
 - [Mac](.readme/OS_install/instalacion_mac.md)
 - [Debian/Ubuntu](.readme/OS_install/instalacion_debian.md)
 - [Fedora](.readme/OS_install/instalacion_fedora.md)
+- [RHEL/CentOS](.readme/OS_install/instalacion_centos.md)
 - [ArchLinux/Manjaro](.readme/OS_install/instalacion_archlinux.md)
 
 Puedes instalar Latino en Linux usando los paquetes de instalación disponibles en el "release" o utilizar el siguiente "bash script" para una instalación totalmente automatizada (solo en Linux)
