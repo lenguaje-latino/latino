@@ -1,4 +1,4 @@
-<img width="40%" src ="https://raw.githubusercontent.com/MelvinG24/Latino/master/.readme/imgs/fedora.svg" />
+<img width="40%" src ="../imgs/fedora.svg" />
 
 Para instalar Latino en Fedora, primero abrimos la consola (Terminal) y ejecutamos los siguientes comandos:
 
