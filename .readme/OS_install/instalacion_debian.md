@@ -1,10 +1,10 @@
-<img width="20%" src ="https://raw.githubusercontent.com/MelvinG24/Latino/master/.readme/imgs/debian.svg" />
+<img width="20%" src ="../imgs/debian.svg" />
 
 Para instalar Latino en Debian y Ubuntu, primero abrimos la consola (Terminal) y ejecutamos los siguientes comandos:
 
 ```bash
 sudo apt-get update
-sudo apt-get install git cmake gcc g++ libreadline-dev libpthread-stubs0-dev
+sudo apt-get install git cmake build-essential libreadline-dev libpthread-stubs0-dev
 ```
 Una vez concluido esto, pasamos a instalar propiamente Latino en nuestro sistema
 
