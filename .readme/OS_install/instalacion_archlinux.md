@@ -1,4 +1,4 @@
-<img width="30%" src ="https://raw.githubusercontent.com/MelvinG24/Latino/master/.readme/imgs/archlinux.svg" />
+<img width="30%" src ="../imgs/archlinux.svg" />
 
 Para instalar Latino en Arch Linux y Manjaro, primero abrimos la consola (Terminal) y ejecutamos los siguientes comandos:
 
