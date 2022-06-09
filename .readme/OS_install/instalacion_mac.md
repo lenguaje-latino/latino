@@ -1,4 +1,4 @@
-<img width="40%" src ="https://raw.githubusercontent.com/MelvinG24/Latino/master/.readme/imgs/macOS.svg" />
+<img width="40%" src ="../imgs/macOS.svg" />
 
 # Instalar en Mac
 | Versión | Instalador |
