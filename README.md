@@ -113,7 +113,7 @@ Visita la Wiki de Latino aquí en GitHut para saber como colaborar en este proye
 <a name="contri"></a>
 # Contribuciones
 Si deseas contribuir en este proyecto reportando errores, proponiendo sugerencias o aportando al código fuente, te dejamos el siguiente enlace con nuestras normas.
-- [Normas para contribuyentes](.readme/CONTRIBUTING.md)
+- [Normas para contribuyentes](CONTRIBUTING.md)
 
 <a name="sintx"></a>
 # SINTAXIS DE LATINO
