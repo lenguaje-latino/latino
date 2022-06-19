@@ -95,6 +95,7 @@ Para mayor información sobre el script de arribe, mirar aquí [git:lenguaje-lat
 # Documentación
 Aprende sobre este lenguaje de programación visitando su documentación oficial en el siguiente enlace.
 - [Manual Latino](https://manual-latino.readthedocs.io/es/stable/)
+- [API de Latino](https://manuallatinoapi.blogspot.com)
 
 <a name="wiKi"></a>
 # Latino-Wiki
@@ -106,9 +107,9 @@ Visita la Wiki de Latino aquí en GitHut para saber como colaborar en este proye
 *Latino* dispone de un foro en su página web oficial, así como también un grupo en Telegram y Gitter, además de un canal en Youtube a las que puedes dirigirte en caso de cualquier duda.
 - [Stack Overflow](https://es.stackoverflow.com/questions/tagged/latino)
 - [Chat en Telegram](https://t.me/joinchat/AAAAAD6l6_qIgQAAgu9DVQ)
+- [Chat en Discord](https://discord.com/invite/YgMGNhv3)
 - [Chat en Gitter](https://gitter.im/primitivorm/latino?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 - [Canal en Youtube](https://www.youtube.com/channel/UCLVTJpQn-TDbBSwR732kvnQ/featured)
-<!-- - [API de Latino](https://manuallatinoapi.blogspot.com) -->
 
 <a name="contri"></a>
 # Contribuciones
