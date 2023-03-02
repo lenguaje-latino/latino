@@ -1,4 +1,4 @@
-<img width="50%" src ="https://raw.githubusercontent.com/MelvinG24/Latino/master/.readme/imgs/ms-windows.svg" />
+<img width="50%" src ="../imgs/ms-windows.svg" />
 
 # Instalar en Windows
 | Versión | Instalador |

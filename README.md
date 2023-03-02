@@ -14,8 +14,8 @@
 <a href="http://lenguaje-latino.org"><img src="https://img.shields.io/npm/l/vue.svg" alt="License"></a>
 [![codecov.io](http://codecov.io/github/primitivorm/latino/coverage.svg?branch=master)](http://codecov.io/github/primitivorm/latino?branch=master)
 
-<!-- | README  | [English](.readme/readme_idioma/readme.en-US.md) | [Français](.readme/readme_idioma/readme.fr-FR.md) | [Português](.readme/readme_idioma/readme.pr-BR.md) | [Italiano](.readme/readme_idioma/readme.it-IT.md) |
-|---|---|---|---|---| -->
+| <!-- | README | [English](.readme/readme_idioma/readme.en-US.md) | [Français](.readme/readme_idioma/readme.fr-FR.md) | [Português](.readme/readme_idioma/readme.pr-BR.md) | [Italiano](.readme/readme_idioma/readme.it-IT.md) |
+| ---- | ------ | ------------------------------------------------ | ------------------------------------------------- | -------------------------------------------------- | ------------------------------------------------- |>
 
 </div>
 
@@ -80,54 +80,23 @@
 # Instalar Latino
 ## Windows
 - [Windows](.readme/OS_install/instalacion_windows.md)
+- [Mac](.readme/OS_install/instalacion_mac.md)
+- [Debian/Ubuntu](.readme/OS_install/instalacion_debian.md)
+- [Fedora](.readme/OS_install/instalacion_fedora.md)
+- [RHEL/CentOS](.readme/OS_install/instalacion_centos.md)
+- [ArchLinux/Manjaro](.readme/OS_install/instalacion_archlinux.md)
 
-## Linux
-### Depedencias
-
+Puedes instalar Latino en Linux usando los paquetes de instalación disponibles en el "release" o utilizar el siguiente "bash script" para una instalación totalmente automatizada (solo en Linux)
 ```bash
-  git
-  cmake 
-  make
+git clone https://github.com/lenguaje-latino/instalacion.git && cd instalacion && sudo chmod +x latino_instalacion-linux.sh && ./latino_instalacion-linux.sh
 ```
-### Distros
-Debian/Ubuntu 
-<img width="20%" src ="https://raw.githubusercontent.com/MelvinG24/Latino/master/.readme/imgs/debian.svg" />
-```bash
-  sudo apt-get update
-  sudo apt-get install build-essential cmake git
-```
-Arch linux/Manjaro
-<img width="30%" src ="https://raw.githubusercontent.com/MelvinG24/Latino/master/.readme/imgs/archlinux.svg" />
-
-```bash
-  sudo pacman -Syu
-  sudo pacman -S base-devel cmake git --noconfirm
-```
-Fedora
-<img width="40%" src ="https://raw.githubusercontent.com/MelvinG24/Latino/master/.readme/imgs/fedora.svg" />
-
-```bash
-sudo dnf update
-sudo dnf install gcc-c++ git cmake kernel-devel
-sudo dnf install readline-devel
-```
-### Instalador
-Copiar y pegar el siguiente comando en la terminal
-
-```bash
-git clone  https://github.com/lenguaje-latino/instalacion.git &&
- cd instalacion &&
- chmod +x *.sh &&
-  ./*.sh
-```
-
-
-- [Plugins](https://github.com/lenguaje-latino)
+Para mayor información sobre el script de arribe, mirar aquí [git:lenguaje-latino/instalacion](https://github.com/lenguaje-latino/instalacion)
 
 <a name="doc"></a>
 # Documentación
 Aprende sobre este lenguaje de programación visitando su documentación oficial en el siguiente enlace.
 - [Manual Latino](https://manual-latino.readthedocs.io/es/stable/)
+- [API de Latino](https://manuallatinoapi.blogspot.com)
 
 <a name="wiKi"></a>
 # Latino-Wiki
@@ -139,14 +108,14 @@ Visita la Wiki de Latino aquí en GitHut para saber como colaborar en este proye
 *Latino* dispone de un foro en su página web oficial, así como también un grupo en Telegram y Gitter, además de un canal en Youtube a las que puedes dirigirte en caso de cualquier duda.
 - [Stack Overflow](https://es.stackoverflow.com/questions/tagged/latino)
 - [Chat en Telegram](https://t.me/joinchat/AAAAAD6l6_qIgQAAgu9DVQ)
+- [Chat en Discord](https://discord.com/invite/YgMGNhv3)
 - [Chat en Gitter](https://gitter.im/primitivorm/latino?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 - [Canal en Youtube](https://www.youtube.com/channel/UCLVTJpQn-TDbBSwR732kvnQ/featured)
-<!-- - [API de Latino](https://manuallatinoapi.blogspot.com) -->
 
 <a name="contri"></a>
 # Contribuciones
 Si deseas contribuir en este proyecto reportando errores, proponiendo sugerencias o aportando al código fuente, te dejamos el siguiente enlace con nuestras normas.
-- [Normas para contribuyentes](.readme/CONTRIBUTING.md)
+- [Normas para contribuyentes](CONTRIBUTING.md)
 
 <a name="sintx"></a>
 # SINTAXIS DE LATINO
@@ -209,18 +178,18 @@ G = 9.8
 <a name="datos"></a>
 ## IV. Tipos de datos
 | latino           | tipo de dato en C |
-| --- |:---:|
-| lógico           |       **bool**        |
-| numérico         |      **double**       |
-| cadena o literal |      **`char*`**      |
-| lista (arreglo)  |      **struct**       |
-| diccionario      |      **struct**       |
+| ---------------- | :---------------: |
+| lógico           |     **bool**      |
+| numérico         |    **double**     |
+| cadena o literal |    **`char*`**    |
+| lista (arreglo)  |    **struct**     |
+| diccionario      |    **struct**     |
 
 <a name="opds"></a>
 ## V. Operadores:
 A continuación se listan los operadores:
 | Categoría              | Operadores                             |
-| --- | --- |
+| ---------------------- | -------------------------------------- |
 | Aritmético             | `+, -, *, /, % (modulo), ^ (potencia)` |
 | Lógico                 | && (y), &#124;&#124; (o)               |
 | Concatenación          | `..`                                   |
@@ -228,7 +197,7 @@ A continuación se listan los operadores:
 | Relacional             | `==, !=, <, >, <=, >=, ~= (regex)`     |
 | Asignación             | `=`                                    |
 | Acceso a miembro       | `.`                                    |
-| Operador ternario      |  `(condicion) ? opcion1 : opcion2`     |
+| Operador ternario      | `(condicion) ? opcion1 : opcion2`      |
 
 La precedencia de operadores es la misma que otros lenguajes de programación como C / Python / Lua.
 

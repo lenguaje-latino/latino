@@ -1,0 +1,56 @@
+screen = [  
+            [0,0,0,0,0,0,0,0,0,0],
+            [0,0,0,0,0,0,0,0,0,0],
+            [0,0,0,0,0,0,0,0,0,0],
+            [0,0,0,0,0,0,0,0,0,0],
+            [0,0,0,0,0,0,0,0,0,0],
+            [0,0,0,0,0,0,0,0,0,0],
+            [0,0,0,0,0,0,0,0,0,0],
+            [0,0,0,0,0,0,0,0,0,0],
+            [0,0,0,0,0,0,0,0,0,0],
+            [0,0,0,0,0,0,0,0,0,0]
+        ]
+progama=0
+x=3
+y=4
+x_v=1.618
+y_v=1.618
+funcion acelerar()
+    x+=x_v
+    y+=y_v
+fin
+funcion rebotar()
+    si x>=9
+        x_v*= -1
+    fin
+    si x<=1
+        x_v*= -1
+    fin
+    si y>=9
+        y_v*= -1
+    fin
+    si y<=1
+        y_v*= -1
+    fin     
+fin
+funcion limpiar_mapa()
+    desde (i = 0; i <= 9; i++)
+        desde (j = 0; j <= 9; j++)
+            screen[i][j]=0
+        fin
+    fin
+fin
+
+mientras progama==0
+    limpiar()
+    desde (i = 0; i <= 10; i++)
+        desde (j = 0; j <= 10; j++)
+            imprimirf("%d ",screen[i][j])
+        fin
+        escribir ("")
+    fin
+    limpiar_mapa()
+    rebotar()
+    acelerar()
+    screen[x][y]=1
+fin

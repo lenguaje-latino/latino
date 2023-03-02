@@ -1,0 +1,33 @@
+fun burbuja(arreglo)
+    n = lista.longitud(arreglo)
+    desde (i = 0; i < n - 1; i++)
+        desde(j = 0; j < n - 1; j++)
+            imprimirf("arreglo[%i]: %i\t", j, arreglo[j])
+            imprimirf("arreglo[%i]: %i\n", j+1, arreglo[j+1])
+            si (arreglo[j] > arreglo[j + 1])
+                tmp = arreglo[j]                
+                arreglo[j] = arreglo[j + 1]
+                arreglo[j + 1] = tmp
+                imprimirf("tmp: %i\t", tmp)
+                imprimirf("arreglo[%i]: %i\t", j, arreglo[j])
+                imprimirf("arreglo[%i]: %i\n", j+1, arreglo[j+1])
+            fin
+        fin
+    fin
+    ret arreglo
+fin
+
+elementos = []
+n = 100 // Con 500 elementos falla
+// FIXME: Implementar arreglos en latino. Y usar en lugar de listas
+
+desde(i = 0; i < n; i++)
+    elementos[i] = mate.aleatorio(0, n)
+fin
+
+imprimir("Elementos desordenados\n")
+imprimir(elementos)
+ordenados = burbuja(elementos)
+
+imprimir("Elementos ordenados\n")
+imprimir(ordenados)

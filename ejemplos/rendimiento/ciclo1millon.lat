@@ -1,0 +1,14 @@
+i=0
+cerrar=0
+b=[]
+mientras i<1000000
+    lista.agregar(b, i%2)
+    i++
+    si i % 1000==0
+        escribir(i)
+    fin
+fin
+escribir("listo")
+mientras cerrar==0
+    i=1
+fin

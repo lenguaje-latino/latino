@@ -1,0 +1,30 @@
+/*
+def fastFib(n,memo={}):
+    if n in memo:
+        return memo[n]
+    if n <= 2:
+        return 1
+    memo[n] = fastFib(n-1,memo) + fastFib(n-2,memo)
+    return memo[n];
+*/
+
+fun fastFib(num, memo)
+    // imprimirf("num: %d", num)
+    // imprimirf("\nmemo: %s", memo)
+    si (dic.contiene(memo, acadena(num))) 
+        ret memo[acadena(num)]
+    fin
+    si (num <= 2) 
+        memo[num] = 1       
+        ret 1 
+    fin
+    memo[num] = fastFib(num-1, memo) + fastFib(num-2, memo)
+    ret memo[acadena(num)]    
+fin
+
+desde(i = 0; i <= 1000; i++) 
+    // imprimirf("iteracion %i", i)
+    memo = {}
+    x = fastFib(i, memo)
+    imprimir(x)
+fin

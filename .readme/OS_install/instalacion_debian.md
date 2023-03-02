@@ -1,56 +1,40 @@
-<img width="20%" src ="https://raw.githubusercontent.com/MelvinG24/Latino/master/.readme/imgs/debian.svg" />
+<img width="20%" src ="../imgs/debian.svg" />
 
-# Dependencias en Debian / Ubuntu
-Antes de instalar latino, vamos a instalar todos paquetes necesarios:
+Para instalar Latino en Debian y Ubuntu, primero abrimos la consola (Terminal) y ejecutamos los siguientes comandos:
+
 ```bash
 sudo apt-get update
-sudo apt-get install git cmake gcc g++
-sudo apt-get install libreadline-dev libpthread-stubs0-dev
+sudo apt-get install git cmake build-essential libreadline-dev libpthread-stubs0-dev
 ```
+Una vez concluido esto, pasamos a instalar propiamente Latino en nuestro sistema
 
-# Clonar
 ```bash
 cd ~
 sudo git clone https://github.com/lenguaje-latino/latino-core
 cd latino-core
-```
-
-# Compilar e instalar
-Para compilarlo hay dos formas, puedes elegir la que desees:<br><br>
-##### I.
-```bash
- cmake .
- make
- sudo make install
- ```
-
-##### II.
-```bash
- sudo bash configure
- sudo make install
+sudo cmake .
+sudo make install 
 ```
 
 # Instalación desde paquete .deb:
 ```bash
- # Descarga la version que desees desde:  https://github.com/primitivorm/latino/releases/download/
-sudo dpkg -i Latino-XXX-Debian.deb
+ # Descarga la version que desees desde:  https://github.com/lenguaje-latino/latino/releases/latest
+sudo dpkg -i latino-XXX-Debian.deb
 ```
+
+… y listo! para ejecutar Latino solo escribimos en nuestra terminal el comando latino
 
 # DESINSTALAR
 #### 1- Opción
+Para desinstalar Latino de su sistema, necesitara el archivo "latino_desinstalacion-linux.sh" el cual puede conseguir desde el siguiente repositorio:
+[https://github.com/lenguaje-latino/instalacion](https://github.com/lenguaje-latino/instalacion)
+
 ```bash
-# Si instalaste con `sudo make install`:
-sudo ./uninstall.sh
+sudo chmod +x latino_desinstalacion-linux.sh && ./latino_desinstalacion-linux.sh
 ```
 
 #### 2- Opción
-Puedes ver un video de como proceder aquí: https://youtu.be/Q5xGm_Bp22k
- ```bash
-sudo rm -f $(which latino)
- ```
-
-#### 3- Opción
- Sólo Debian / Ubuntu. Si instalaste paquete deb
+ Sólo Debian / Ubuntu. Si instalaste paquete .deb
  ```bash
  sudo apt-get remove --purge latino -y
 ```

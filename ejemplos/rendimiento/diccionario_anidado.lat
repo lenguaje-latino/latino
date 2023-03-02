@@ -1,0 +1,12 @@
+producto = {
+    "nombre": "coca cola", 
+    "precio": 15.5, 
+    "cantidad": 5,
+    "origen": {
+        "ciudad": "Tequila",
+        "calle": "siempreviva",
+        "numero": 50
+    }
+}
+
+imprimir(producto.origen.ciudad)
