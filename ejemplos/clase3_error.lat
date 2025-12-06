@@ -14,7 +14,7 @@ clase Bocho : Auto
 
     #funciones sobrecargadas
     funcion Encender()
-        #retorno
+        #retornar
     fin
 
     #funcion Encender(logico l, cadena = "empty")

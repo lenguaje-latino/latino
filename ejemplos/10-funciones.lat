@@ -1,20 +1,20 @@
 funcion promedio(a,b)
-    retorno (a+b)/2
+    retornar (a+b)/2
 fin
 
 funcion max(a,b)
     si (a > b)
-        retorno a
+        retornar a
     sino
-        retorno b
+        retornar b
     fin
 fin
 
 funcion min(a,b)
     si (a < b)
-        retorno a
+        retornar a
     sino
-        retorno b
+        retornar b
     fin
 fin
 

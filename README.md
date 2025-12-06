@@ -392,7 +392,7 @@ Una función consiste generalmente de una lista de sentencias a ejecutar, una li
 
 Las funciones se definen con la palabra reservada `funcion` o la forma corta `fun`.
 
-Se puede regresar el valor con la palabra clave `regresar`, `retornar` o la forma corta `ret`.
+Se puede regresar el valor con la palabra clave `retornar`, `regresar`, `devolver`, o la forma corta `ret`.
 La estructura de una función es la siguiente:
 ```python
 funcion nombreFuncion (argumento1, argumento2)
@@ -520,7 +520,7 @@ mientras
 nulo
 para
 repetir
-regresar | retornar | ret
+retornar | regresar | devolver | ret
 romper
 si
 sino

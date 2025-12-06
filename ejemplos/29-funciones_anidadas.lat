@@ -2,7 +2,7 @@ funcion algo (a,b)
   x=a*b   #x=6
   funcion inner_fun (c,d)
     #c=6, d=36
-    retorno c*c+d*d   #36+1296 = 1332
+    retornar c*c+d*d   #36+1296 = 1332
   fin
   inner_fun(x, x*x)
 fin

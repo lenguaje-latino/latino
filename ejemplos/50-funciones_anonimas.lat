@@ -3,11 +3,11 @@ x = funcion (a,b)
 		si b == 0
 			b=1
 		fin
-		retorno a / b
+		retornar a / b
 	fin
 
 //igual las podemos agregar a una lista
-hola = [ funcion (a, b) retorno a+b fin, funcion (a, b) retorno a*b fin ]
+hola = [ funcion (a, b) retornar a+b fin, funcion (a, b) retornar a*b fin ]
 
 //ejecutamos cada funcion
 poner(hola[0](1,2))	//suma

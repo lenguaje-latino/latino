@@ -8,7 +8,7 @@
 //     fin
 
 //     funcion area()
-//         retorno (mi.base*mi.altura)/2
+//         retornar (mi.base*mi.altura)/2
 //     fin
 // fin
 
@@ -18,7 +18,7 @@
 // escribir ("El area del truangulo es: ".. x.area())
 
 /*
-clase Triangulo() 
+clase Triangulo()
     base    = 0
     altura  = 0
 
@@ -29,7 +29,7 @@ clase Triangulo()
     fin
 
     funcion area()
-        retorno (mi.base*mi.altura)/2
+        retornar (mi.base*mi.altura)/2
     fin
 
     // mi = {

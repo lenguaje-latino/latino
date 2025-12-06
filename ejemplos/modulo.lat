@@ -1,7 +1,7 @@
 variable = 23
 
 funcion sumatoria(a, b)
-  retorno (a + b)
+  retornar (a + b)
 fin
 
 funcion privada(arg)

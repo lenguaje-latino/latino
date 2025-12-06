@@ -14,7 +14,7 @@ elegir(opcion)
 		accion = copia
 	defecto:
 		poner("Opción inválida.")
-		retorno 0
+		retornar 0
 fin
 poner("Escribe el nombre del nuevo archivo ó de un archivo ya existente para añadir el texto")
 archivo_nuevo = leer()

@@ -23,7 +23,7 @@ funcion algo (a)
   #contexto local a la funcion
   a=15
   poner("local a dentro de la funcion:" .. a) #15
-  retorno 10
+  retornar 10
 fin
 
 #contexto global
@@ -34,7 +34,7 @@ global x=algo(a)
 global funcion cuadrado(y)
   poner("global dentro de funcion cuadrado x : " .. x)
   global a = 13 	//se cambia variable global a
-  retorno y*y
+  retornar y*y
 fin
 
 poner("global a:" .. a) #20

@@ -54,37 +54,37 @@ fin
 funcion operacion(op, a, b)
 	elegir(op)
 	caso "+":
-		retorno a+b
+		retornar a+b
 	caso "-":
-		retorno a-b
+		retornar a-b
 	caso "*":
-		retorno a*b
+		retornar a*b
 	caso "/":
-		retorno a/b
+		retornar a/b
 	caso "%":
-		retorno a%b
+		retornar a%b
 	caso ">":
-		retorno a>b
+		retornar a>b
 	caso ">=":
-		retorno a>=b
+		retornar a>=b
 	caso "<":
-		retorno a<b
+		retornar a<b
 	caso "<=":
-		retorno a<=b
+		retornar a<=b
 	caso "==":
-		retorno a==b
+		retornar a==b
 	caso "!=":
-		retorno a!=b
+		retornar a!=b
 	caso "~=":
-		retorno a~=b
+		retornar a~=b
 	caso "&&":
-		retorno a&&b
+		retornar a&&b
 	caso "||":
-		retorno a||b
+		retornar a||b
 	caso "!":
-		retorno !a
+		retornar !a
 	caso "..":
-		retorno a..b
+		retornar a..b
 	fin
 fin
 
@@ -110,9 +110,9 @@ poner(operacion("..", "hola", "mundo"))
 
 funcion fibo_rec(n)
     si ( n < 2 )
-        retorno n
+        retornar n
     fin
-    retorno fibo_rec(n-1) + fibo_rec(n-2)
+    retornar fibo_rec(n-1) + fibo_rec(n-2)
 fin
 
 poner(fibo_rec(10))
@@ -189,7 +189,7 @@ imprimirf("%s %s\n", "hola", "mundo")
   x = sumar(1,2,3,4,5)
   imprimir(x)     //imprime: "15"
 
-  //una funcion multi-retorno es aquella que regresa N parametros
+  //una funcion multi-retornar es aquella que regresa N parametros
 funcion multi_ret(msg)
   #proceso el mensaje
   //mas codigo

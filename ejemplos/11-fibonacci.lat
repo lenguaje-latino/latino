@@ -11,15 +11,15 @@
 #mala implementacion (recursiva)
 funcion fibo_rec(n)
     si ( n < 2 )
-        retorno n
+        retornar n
     fin
-    retorno fibo_rec(n-1) + fibo_rec(n-2)
+    retornar fibo_rec(n-1) + fibo_rec(n-2)
 fin
 
 #mejor implementacion (iterativa)
 funcion fibo_iter(n)
     si ( n < 2 )
-        retorno n
+        retornar n
     fin
     prevPrev = 0
     prev = 1
@@ -31,7 +31,7 @@ funcion fibo_iter(n)
         prev = res
         i = i + 1
     fin
-    retorno res
+    retornar res
 fin
 
 #imprimir la serie de 45 provoca desborde de la pila (stack overflow)
