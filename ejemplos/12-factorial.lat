@@ -20,7 +20,7 @@ funcion factorial(n)
         //poner("x vale: " .. x)
     fin
     //poner("x vale: " .. x)
-    retorno x
+    retornar x
 fin
 
 poner("el factorial de 5 es: " .. factorial(5))

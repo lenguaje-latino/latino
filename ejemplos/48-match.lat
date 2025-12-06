@@ -10,7 +10,7 @@ mientras verdadero
   es_un_correo = cadena.regex(correo, expresion)
   si es_un_correo
     poner("Correo escrito bien")
-    retorno 0
+    retornar 0
   fin
   error=verdadero
 fin
