@@ -1,0 +1,35 @@
+cff-version: 1.2.0
+title: "Latino: Lenguaje de programación de código abierto para latinos y de habla hispana"
+message: "If you use this software, please cite it as below."
+type: software
+
+authors:
+  - name: "Lenguaje Latino Contributors"
+
+repository-code: "https://github.com/lenguaje-latino/latino"
+url: "https://github.com/lenguaje-latino/latino"
+
+abstract: >
+  Latino is an open-source programming language with Spanish syntax, written in C
+  and inspired by languages such as Lua and Python. It is designed to make programming
+  more accessible to Spanish speakers, including beginners and experienced developers.
+
+keywords:
+  - programming language
+  - Spanish programming
+  - latino
+  - compiler
+  - education
+
+license: "MIT"
+
+version: "1.4.4"
+date-released: "2024-11-09"
+
+preferred-citation:
+  type: software
+  authors:
+    - name: "Lenguaje Latino Contributors"
+  title: "Latino: Lenguaje de programación de código abierto para latinos y de habla hispana"
+  year: 2024
+  url: "https://github.com/lenguaje-latino/latino"
